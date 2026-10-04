@@ -29,10 +29,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.dirname(HERE)
 SUBJECTS = ["mathe", "deutsch", "englisch", "nawi", "gewi", "musik", "kunst"]
-DEFAULT_MODEL = os.environ.get("GEMINI_TTS_MODEL", "gemini-2.5-flash-preview-tts")
+DEFAULT_MODEL = os.environ.get("GEMINI_TTS_MODEL", "gemini-3.8-flash-tts")
+# Gemini 3.8 TTS reads plain instructions aloud and rejects system instructions; a leading [tag] steers the
+# delivery without being spoken (checked with whisper, 2026-10-04).
 STYLE = {
-    "de": "Lies den folgenden Text freundlich, warm und deutlich vor, in ruhigem Tempo, für ein zehnjähriges Kind:",
-    "en": "Read the following text aloud in a friendly, clear British English voice, at a calm pace, for a ten-year-old learner:",
+    "de": "[warm, freundlich, ruhig]",
+    "en": "[warm, friendly, clear British English, calm]",
 }
 
 
@@ -108,12 +110,14 @@ def collect(subject):
 
 # ---------------------------------------------------------------- gen
 def tts(text, lang, model, voice, key):
-    style = STYLE["en" if lang.lower().startswith("en") else "de"]
+    en = lang.lower().startswith("en")
+    style = STYLE["en" if en else "de"]
     body = {
-        "contents": [{"parts": [{"text": f"{style}\n\n{text}"}]}],
+        "contents": [{"parts": [{"text": f"{style} {text}"}]}],
         "generationConfig": {
             "responseModalities": ["AUDIO"],
-            "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}},
+            "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}},
+                             "languageCode": "en-GB" if en else "de-DE"},
         },
     }
     req = urllib.request.Request(
@@ -139,8 +143,11 @@ def tts(text, lang, model, voice, key):
 
 
 def to_mp3(pcm, mime, out):
-    rate = int((re.search(r"rate=(\d+)", mime) or [0, "24000"])[1])
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "s16le", "-ar", str(rate), "-ac", "1", "-i", "-",
+    if pcm[:4] == b"RIFF":  # 3.x models return WAV
+        inp = []
+    else:  # 2.5 models return raw 16-bit PCM ("audio/L16;codec=pcm;rate=24000")
+        inp = ["-f", "s16le", "-ar", (re.search(r"rate=(\d+)", mime) or [0, "24000"])[1], "-ac", "1"]
+    subprocess.run(["ffmpeg", "-v", "error", "-y", *inp, "-i", "-",
                     "-af", "silenceremove=start_periods=1:start_threshold=-50dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse",
                     "-c:a", "libmp3lame", "-b:a", "40k", out], input=pcm, check=True)
 
