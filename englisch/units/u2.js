@@ -240,7 +240,7 @@
     goals: [
       "Rubys Familie kennenlernen: mum, dad, cousin …",
       "Sagen, was du hast: I've got a sister.",
-      "my, your, his, her … und Julia's cat",
+      "my, your, his … me, him, them – und Julia's cat",
       "Plural: dogs, boxes, babies – und children, feet, mice",
       "Leute und Haustiere beschreiben, Geburtstage feiern",
     ],
@@ -436,6 +436,102 @@
           s.step(async () => { s.sfx.pop(); await s.show(EX.slice(0, 2), "up"); s.say("Ruby ist ein Mädchen: her dog. Lukas ist ein Junge: his sister."); });
           s.step(async () => { s.sfx.pop(); await s.show(EX.slice(2), "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(pLife, "up"); });
+        },
+      },
+      /* 5a ----------------------------------------------------------- */
+      {
+        title: "me, you, him, her …",
+        say: "Steht ein Pronomen hinter dem Verb, ändert es oft seine Form: Aus he wird him, aus they wird them. Gleiche Farbe, gleiche Person!",
+        build(s) {
+          const P = [["I", "me", "mich / mir"], ["you", "you", "dich / dir"], ["he", "him", "ihn / ihm"], ["she", "her", "sie / ihr"], ["it", "it", "es / ihm"], ["we", "us", "uns"], ["they", "them", "sie / ihnen"]];
+          const objs = [];
+          const rows = P.map(([p, o, d]) => {
+            const oe = s.h("span", { class: "e2poss later", style: { background: PC[p] } }, o);
+            objs.push(oe);
+            const b = s.h("button", { class: "e2spk sm", style: { width: "100%", display: "grid", gridTemplateColumns: "80px 34px 90px 1fr", alignItems: "center", gap: "8px", padding: "18px 12px 18px 6px" } },
+              s.h("span", { class: "e2pron", style: { background: PC[p] } }, p), s.h("span", { class: "pencil" }, "→"), oe, s.h("span", { class: "small pencil" }, d));
+            b.addEventListener("click", () => { EN(s, `${p}. ${o}.`); s.sfx.pop(); bump(s, b, 0.05); });
+            return b;
+          });
+          /* the swap demo: She loves Biscuit. <-> Biscuit loves her. */
+          const tk = (t, c, st) => s.h("span", { class: "e2tok " + (c || ""), style: st || null }, t);
+          const A = tk("She", "", { background: PC.she, color: "#fff", borderColor: PC.she });
+          const V = tk("loves", "v"), Bt = tk("Biscuit", "p"), end = tk(".", "q");
+          const row = s.h("div", { class: "row", style: { gap: "10px", justifyContent: "center", flexWrap: "nowrap", minHeight: "64px" } }, A, V, Bt, end);
+          const cap = s.h("p", { class: "small pencil", style: { textAlign: "center" } }, "Ruby tut etwas: Sie steht vor dem Verb – she.");
+          let swapped = false;
+          const swap = async () => {
+            s.sfx.whoosh();
+            if (!swapped) { await reorder(s, row, [Bt, V, A, end], 60); s.sfx.snap(); await flip(s, A, "her"); }
+            else { await reorder(s, row, [A, V, Bt, end], 60); s.sfx.snap(); await flip(s, A, "She"); }
+            swapped = !swapped; bump(s, A, 0.25);
+            cap.textContent = swapped ? "Jetzt tut Biscuit etwas. Ruby steht hinter dem Verb – her." : "Ruby tut etwas: Sie steht vor dem Verb – she.";
+            EN(s, swapped ? "Biscuit loves her." : "She loves Biscuit.");
+          };
+          const swapBtn = s.h("button", { class: "btn later" }, "⇄ Tauschen");
+          swapBtn.addEventListener("click", swap);
+          cap.style.flex = "1"; cap.style.textAlign = "left";
+          const demo = s.h("div", { class: "card stack", style: { alignItems: "stretch", gap: "8px", padding: "10px 14px" } }, row, s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap" } }, cap, swapBtn));
+          const col = (w, p) => s.h("b", { style: { color: PC[p] } }, w);
+          const EX = [
+            [["Biscuit is hungry. Can you feed ", col("him", "he"), ", please?"], "Biscuit is hungry. Can you feed him, please?", "Haustier: Kannst du ihn füttern?"],
+            [["That's my grandma. I visit ", col("her", "she"), " on Sundays."], "That's my grandma. I visit her on Sundays.", "Familienfoto: Ich besuche sie sonntags."],
+            [["Sam and Leo? I play football with ", col("them", "they"), "."], "Sam and Leo? I play football with them.", "nach with: mit ihnen"],
+            [["Text ", col("me", "I"), " after school!"], "Text me after school!", "Chat: Schreib mir nach der Schule!"],
+          ].map(([lb, t, d]) => spk(s, t, { label: s.h("span", null, ...lb), de: d, cls: "sm full later" }));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Nach dem Verb oder nach ", s.h("b", null, "with, for, to"), ": ", s.h("b", null, "me, him, her, us, them"), ".", s.h("br"), s.h("b", null, "you"), " und ", s.h("b", null, "it"), " bleiben gleich.");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "470px 1fr", gap: "22px", height: "100%" } },
+            s.h("div", { class: "stack", style: { gap: "10px" } }, ...rows),
+            s.h("div", { class: "stack", style: { gap: "10px" } }, demo, ...EX, merk)));
+          s.show(rows, "left"); s.sfx.whoosh();
+          s.step(async () => { for (const [i, e] of objs.entries()) { s.sfx.count(i); s.show(e, "right"); await s.wait(170); } await s.wait(400); s.say("I wird zu me, he zu him, we zu us, they zu them."); });
+          s.step(async () => { s.sound("dog-bark", { vol: 0.5 }); await swap(); s.show(swapBtn, "pop"); });
+          s.step(async () => { s.sfx.pop(); await s.show(EX.slice(0, 2), "up"); s.say("Biscuit ist ein Junge: him. Die Oma: her."); });
+          s.step(async () => { s.sfx.pop(); await s.show(EX.slice(2), "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5b ----------------------------------------------------------- */
+      {
+        title: "Im Alltag: me, him, them",
+        say: "Objektpronomen hörst du überall: wenn jemand auf ein Haustier aufpasst, Familienfotos zeigt oder im Chat schreibt.",
+        build(s) {
+          const col = (w, p) => s.h("b", { style: { color: PC[p] } }, w);
+          const bub = (who, parts, side) => { const t = parts.map(x => (typeof x === "string" ? x : x[0])).join(""); return spk(s, t, { who, label: s.h("span", null, ...parts.map(x => (typeof x === "string" ? x : col(x[0], x[1])))), cls: "bub sm later " + (side || "") }); };
+          const card = (label, vis, bubs) => s.h("div", { class: "card stack later", style: { gap: "8px", padding: "10px 14px" } }, s.h("span", { class: "exlabel", style: { marginBottom: 0 } }, label), vis, ...bubs);
+          // 1 pet care
+          const b1 = [
+            bub("Julia", ["Mo is hungry. Can you feed ", ["her", "she"], ", Lukas?"]),
+            bub("Lukas", ["OK! I can give ", ["her", "she"], " some fish."], "r"),
+            bub("Julia", ["Thanks! Look – she likes ", ["you", "you"], "!"]),
+          ];
+          const c1 = card("Pet care", s.photo("cat", { w: 316, h: 126, pos: "50% 40%", caption: "Mo" }), b1);
+          // 2 family photo
+          const fv = s.svg(316, 140); fv.style.height = "126px";
+          fv.append(s.el("rect", { x: 3, y: 3, width: 310, height: 134, rx: 8, fill: "#fff", stroke: "#8a5a2b", "stroke-width": 6 }), s.el("rect", { x: 12, y: 12, width: 292, height: 116, fill: "#e8f6ff" }), s.el("rect", { x: 12, y: 104, width: 292, height: 24, fill: "#b9e3b0" }));
+          [["pat", 60, 128, 108], ["ken", 120, 128, 114], ["sam", 200, 128, 78], ["leo", 255, 128, 78]].forEach(([k, x, y, h]) => fv.append(person(s, Object.assign({}, FAM[k].o, { x, y, h }))));
+          const b2 = [
+            bub("Ruby", ["That's my grandma, Pat. I visit ", ["her", "she"], " every Sunday."]),
+            bub("Ruby", ["Grandpa Ken plays chess with ", ["me", "I"], "."]),
+            bub("Ruby", ["Sam and Leo? I walk to school with ", ["them", "they"], "."]),
+          ];
+          const c2 = card("Family photos", fv, b2);
+          // 3 chat
+          const b3 = [
+            bub("Lukas", ["Can you send ", ["me", "I"], " a photo of Biscuit?"], "r"),
+            bub("Ruby", ["Here he is! Do you like ", ["him", "he"], "?"]),
+            bub("Lukas", ["I love ", ["him", "he"], "! Say hi to ", ["him", "he"], " from ", ["us", "we"], "!"], "r"),
+          ];
+          const c3 = card("Chat", s.photo("dog", { w: 316, h: 126, pos: "50% 35%", caption: "Biscuit" }), b3);
+          const short = life(s, "Ganz kurz – nur das Objektpronomen", s.h("div", { class: "cols3", style: { gap: "10px" } },
+            spk(s, "Who wants ice cream? – Me!", { cls: "sm full", de: "Wer will Eis? – Ich!" }), spk(s, "Who broke the cup? – Not me!", { cls: "sm full", de: "Ich nicht!" }), spk(s, "Who's at the door? – It's him!", { cls: "sm full", de: "Er ist es!" })));
+          short.classList.add("later");
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, s.h("div", { class: "cols3", style: { gap: "16px", alignItems: "start" } }, c1, c2, c3), short));
+          const run = async (c, bs, snd) => { if (snd) s.sound(snd, { vol: 0.6 }); else s.sfx.whoosh(); await s.show(c, "up"); for (const b of bs) { s.sfx.pop(); await s.show(b, "up"); await s.wait(120); } };
+          run(c1, b1, "cat-meow");
+          s.step(async () => { s.sound("camera-shutter", { vol: 0.5 }); await run(c2, b2); s.say("Ich besuche sie – her. Mit ihnen – with them."); });
+          s.step(async () => { await run(c3, b3, "dog-bark"); s.say("Schick mir – send me. Ich liebe ihn – I love him."); });
+          s.step(async () => { s.sfx.ding(); await s.show(short, "up"); s.say("In kurzen Antworten sagst du: Me! Not me! – nicht I."); });
         },
       },
       /* 6 ------------------------------------------------------------ */

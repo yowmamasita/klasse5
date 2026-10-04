@@ -670,7 +670,7 @@
           const calc = later(s.h("div", { class: "card stack", style: { gap: "6px", padding: "12px 18px", borderColor: P.red } }, s.h("span", { class: "exlabel", style: { marginBottom: 0, color: P.red } }, "So rechnest du"),
             s.h("p", { class: "t mono", style: { fontSize: "22px" } }, "(19 + 22 + 17 + 21 + 16) : 5"), s.h("p", { class: "t mono", style: { fontSize: "22px" } }, "= 95 : 5 = ", s.h("b", { class: "red" }, "19 cm"))));
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "21px", padding: "10px 18px 12px" } }, b(s, "Mittelwert = Summe aller Werte : Anzahl der Werte."), " Er ist genauer als eine einzelne Messung."));
-          s.add(root(s, "stack", { gap: "12px", justifyContent: "center" }, s.h("p", { class: "t a-up", style: { textAlign: "center" } }, "Julian macht den Lineal-Test fünfmal (Beispielwerte):"), svg, s.h("div", { class: "cols", style: { gap: "18px" } }, why, calc), merk));
+          s.add(root(s, "stack", { gap: "12px", justifyContent: "center" }, s.h("p", { class: "t a-up", style: { textAlign: "center" } }, "Leon macht den Lineal-Test fünfmal (Beispielwerte):"), svg, s.h("div", { class: "cols", style: { gap: "18px" } }, why, calc), merk));
           s.sfx.whoosh();
           s.step(async () => { for (let i = 0; i < 5; i++) { const bar = bars[i]; s.sfx.count(i * 2); s.show(bar.t, "fade"); await s.tween({ from: 0, to: bar.v, dur: 350, ease: "out", update: v => setH(bar, v) }); } s.say("Fünf Versuche, fünf verschiedene Werte."); });
           s.step(async () => { s.sfx.pop(); await s.show(why, "up"); });

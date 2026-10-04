@@ -197,7 +197,7 @@
           const box = (lab, btns) => s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, lab), s.h("div", { class: "cols", style: { gap: "10px" } }, ...btns));
           const b1 = box("nach langem Vokal", g1), b2 = box("nach Doppellaut (ei, au, eu)", g2);
           const sign = s.photo("strassenschild", { w: "100%", h: 190, pos: "50% 45%", caption: "echtes Berliner Straßenschild", cls: "later" });
-          const signBox = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"), P(s, "t", "Julians Schule liegt an der Emser Straße. Auf Briefen: „Viele Grüße“."));
+          const signBox = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"), P(s, "t", "Leons Schule liegt an der Emser Straße. Auf Briefen: „Viele Grüße“."));
           const facts = s.h("div", { class: "card soft later", style: { padding: "14px 18px" } },
             P(s, "t", s.h("b", null, "Großbuchstaben: "), "STRAẞE oder STRASSE"),
             P(s, "t", s.h("b", null, "Schweiz: "), "dort schreibt man immer ss – Strasse."));
@@ -305,9 +305,9 @@
           const D = t => s.h("span", { class: "u5das" }, t), DS = t => s.h("span", { class: "u5dass" }, t);
           const msgs = [
             { me: false, nm: "Mama", tx: ["Denk dran, ", DS("dass"), " heute Orchesterprobe ist!"], pr: "dass – ersetzen geht nicht" },
-            { me: true, nm: "Julian", tx: ["Ist ", D("das"), " die Probe in der Aula?"], pr: "das → „Ist dies die Probe …“ ✓" },
+            { me: true, nm: "Leon", tx: ["Ist ", D("das"), " die Probe in der Aula?"], pr: "das → „Ist dies die Probe …“ ✓" },
             { me: false, nm: "Emil", tx: [D("Das"), " Spiel, ", D("das"), " wir gestern hatten, war super!"], pr: "Dieses Spiel ✓ · welches wir … ✓" },
-            { me: true, nm: "Julian", tx: ["Schade, ", DS("dass"), " ich nicht da war."], pr: "dass – ersetzen geht nicht" },
+            { me: true, nm: "Leon", tx: ["Schade, ", DS("dass"), " ich nicht da war."], pr: "dass – ersetzen geht nicht" },
           ];
           const bubs = msgs.map(m => s.h("div", { class: "u5bub later" + (m.me ? " me" : "") },
             s.h("div", { class: "nm" }, m.nm), s.h("div", { class: "tx" }, ...m.tx), s.h("div", { class: "pr" }, m.pr)));
@@ -464,9 +464,9 @@
         build(s) {
           const T = (cls, t) => s.h("span", { class: cls + " later" }, t);
           const rows = [
-            ["vorne", [T("u5bs", "Julian sagt"), T("u5pz", ":"), " ", T("u5qm", "„"), T("u5wr", "Ich habe heute Probe."), T("u5qm", "“")], "Begleitsatz: „Rede.“"],
-            ["hinten", [T("u5qm", "„"), T("u5wr", "Ich habe heute Probe"), T("u5qm", "“"), T("u5pz", ","), " ", T("u5bs", "sagt Julian.")], "„Rede“, Begleitsatz."],
-            ["eingeschoben", [T("u5qm", "„"), T("u5wr", "Heute"), T("u5qm", "“"), T("u5pz", ","), " ", T("u5bs", "sagt Julian"), T("u5pz", ","), " ", T("u5qm", "„"), T("u5wr", "habe ich Probe."), T("u5qm", "“")], "„Rede“, Begleitsatz, „Rede.“"],
+            ["vorne", [T("u5bs", "Leon sagt"), T("u5pz", ":"), " ", T("u5qm", "„"), T("u5wr", "Ich habe heute Probe."), T("u5qm", "“")], "Begleitsatz: „Rede.“"],
+            ["hinten", [T("u5qm", "„"), T("u5wr", "Ich habe heute Probe"), T("u5qm", "“"), T("u5pz", ","), " ", T("u5bs", "sagt Leon.")], "„Rede“, Begleitsatz."],
+            ["eingeschoben", [T("u5qm", "„"), T("u5wr", "Heute"), T("u5qm", "“"), T("u5pz", ","), " ", T("u5bs", "sagt Leon"), T("u5pz", ","), " ", T("u5qm", "„"), T("u5wr", "habe ich Probe."), T("u5qm", "“")], "„Rede“, Begleitsatz, „Rede.“"],
           ];
           const els = rows.map(([lab, toks, schema]) => {
             const sch = s.h("span", { class: "u5tag v later" }, schema);
@@ -477,7 +477,7 @@
           const legend = s.h("div", { class: "row", style: { gap: "12px" } },
             s.h("span", { class: "u5tag b" }, "Begleitsatz"), s.h("span", { class: "u5tag", style: { color: "#9a3412", background: "#fdecd8" } }, "wörtliche Rede"),
             s.h("span", { class: "u5tag" }, "„ Anführungszeichen “"), s.h("span", { class: "u5tag g" }, "Doppelpunkt : und Komma ,"));
-          const note = s.h("div", { class: "merk later" }, "Frage- und Ausrufezeichen bleiben: ", s.h("b", null, "„Kommst du mit?“, fragt Louisa."), " Folgt der Begleitsatz, fällt nur der Punkt weg.");
+          const note = s.h("div", { class: "merk later" }, "Frage- und Ausrufezeichen bleiben: ", s.h("b", null, "„Kommst du mit?“, fragt Nora."), " Folgt der Begleitsatz, fällt nur der Punkt weg.");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px", justifyContent: "center" } }, legend, ...els.map(x => x.r), note));
           els.forEach((x, i) => s.step(async () => {
             s.say(["Begleitsatz vorne, dann Doppelpunkt.", "Begleitsatz hinten, dann Komma nach dem Anführungszeichen.", "Begleitsatz eingeschoben, mit zwei Kommas."][i]);
@@ -507,8 +507,8 @@
           };
           const Q = t => s.h("span", { class: "u5qm" }, t), Z = t => s.h("span", { class: "u5pz" }, t), BS = t => s.h("span", { class: "u5bs" }, t), WR = t => s.h("span", { class: "u5wr" }, t);
           const panels = [
-            { who: "Louisa", col: "#7b4fd6", prop: "swing", snd: ["playground", 3], bub: "Kommst du mit auf den Spielplatz?", tag: "Begleitsatz hinten",
-              sent: [Q("„"), WR("Kommst du mit auf den Spielplatz?"), Q("“"), Z(","), " ", BS("fragt Louisa.")] },
+            { who: "Nora", col: "#7b4fd6", prop: "swing", snd: ["playground", 3], bub: "Kommst du mit auf den Spielplatz?", tag: "Begleitsatz hinten",
+              sent: [Q("„"), WR("Kommst du mit auf den Spielplatz?"), Q("“"), Z(","), " ", BS("fragt Nora.")] },
             { who: "Mama", col: "#138a5a", prop: "pot", snd: ["sizzle", 2], bub: "Das Essen ist fertig!", tag: "Begleitsatz vorne",
               sent: [BS("Mama ruft"), Z(":"), " ", Q("„"), WR("Das Essen ist fertig!"), Q("“")] },
             { who: "Trainer", col: "#1d5bd0", prop: "ball", snd: ["whistle", 1.3], bub: "Heute üben wir Elfmeter.", tag: "Begleitsatz eingeschoben",

@@ -39,7 +39,7 @@
     goals: [
       "Ein Bild gut aufbauen: Drittelregel, Gleichgewicht, Tiefe",
       "Collagen kennen – von Braque und Picasso bis Schwitters",
-      "Additiv und subtraktiv bauen unterscheiden",
+      "Additiv und subtraktiv bauen, mit Ton modellieren",
       "Ein Relief und ein Pappmodell planen",
     ],
     icon(svg, el) {
@@ -571,6 +571,137 @@
           s.show(a, "zoom"); s.sfx.pop();
           s.step(async () => { s.sound("meissel", { vol: .7 }); s.show(e2, "up"); await s.show(b, "zoom"); s.say("Bei Michelangelo steckt die Figur noch halb im Stein."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 13c -------------------------------------------------------------- */
+      {
+        title: "Ton: Kugel, Wulst und Platte",
+        say: "Ton ist weiche Erde. Du knetest ihn und formst daraus Kugeln, Würste und Platten. Daraus baust du Gefäße und Figuren.",
+        build(s) {
+          const CL = "#c47a4a", CS = "#8d5538";
+          const svg = s.svg(1100, 190);
+          const lump = s.el("g", {}, s.el("path", { d: "M-70,30 C-80,-10 -50,-45 -5,-42 C40,-48 80,-15 72,22 C66,46 -60,52 -70,30 Z", fill: CL, stroke: CS, "stroke-width": 4 }));
+          setT(lump, 130, 100);
+          const arrow = s.el("g", { class: "later" }, s.el("line", { x1: 225, y1: 100, x2: 285, y2: 100, stroke: INK, "stroke-width": 5, "stroke-linecap": "round" }), arrowHead(s, 300, 100, 0, INK, 18));
+          const ball = s.el("g", { class: "later" }, s.el("circle", { cx: 400, cy: 98, r: 52, fill: CL, stroke: CS, "stroke-width": 4 }), s.el("ellipse", { cx: 384, cy: 80, rx: 16, ry: 10, fill: "#fff", opacity: .35 }), lbl(s, 400, 182, "Kugel"));
+          const coil = s.el("g", { class: "later" }, s.el("rect", { x: 510, y: 78, width: 250, height: 42, rx: 21, fill: CL, stroke: CS, "stroke-width": 4 }), s.el("line", { x1: 530, y1: 90, x2: 740, y2: 90, stroke: "#fff", "stroke-width": 5, opacity: .3, "stroke-linecap": "round" }), lbl(s, 635, 182, "Wulst (Wurst)"));
+          const slab = s.el("g", { class: "later" }, s.el("polygon", { points: "860,120 1060,120 1030,70 890,70", fill: CL, stroke: CS, "stroke-width": 4, "stroke-linejoin": "round" }), s.el("polygon", { points: "860,120 1060,120 1060,138 860,138", fill: CS, stroke: CS, "stroke-width": 4, "stroke-linejoin": "round" }), lbl(s, 960, 182, "Platte"));
+          svg.append(lump, lbl(s, 130, 182, "Ton kneten"), arrow, ball, coil, slab);
+          /* three building techniques, each with a little animation */
+          const card = (title, text, draw) => {
+            const v = s.svg(220, 120); const api = draw(v);
+            const c = s.h("div", { class: "card later", style: { padding: "10px 12px", display: "flex", flexDirection: "column", gap: "4px" } }, v, P(s, "<b>" + title + "</b>", "t"), P(s, text, "small"));
+            c.api = api; return c;
+          };
+          const c1 = card("Daumenschale", "Kugel formen, Daumen hineindrücken und die Wand rundherum dünn drücken.", v => {
+            const b = s.el("circle", { cx: 110, cy: 70, r: 42, fill: CL, stroke: CS, "stroke-width": 4 });
+            const bowl = s.el("g", { opacity: 0 }, s.el("path", { d: "M50,60 Q50,112 110,112 Q170,112 170,60 Z", fill: CL, stroke: CS, "stroke-width": 4, "stroke-linejoin": "round" }), s.el("ellipse", { cx: 110, cy: 60, rx: 60, ry: 14, fill: "#8d5538", stroke: CS, "stroke-width": 4 }));
+            const th = s.el("g", {}, s.el("rect", { x: 96, y: -30, width: 28, height: 46, rx: 14, fill: "#f2c9a0", stroke: "#b88a5e", "stroke-width": 3 }));
+            v.append(b, bowl, th);
+            return async () => { b.setAttribute("opacity", 1); bowl.setAttribute("opacity", 0);
+              await s.tween({ from: 0, to: 1, dur: 700, ease: "inOut", update: t => th.setAttribute("transform", `translate(0,${t * 52})`) });
+              s.sound("ton-patsch", { vol: .6 });
+              await s.tween({ from: 0, to: 1, dur: 600, update: t => { b.setAttribute("opacity", 1 - t); bowl.setAttribute("opacity", t); th.setAttribute("transform", `translate(0,${52 - t * 70})`); } }); };
+          });
+          const c2 = card("Wulsttechnik", "Würste rollen, als Ringe aufeinanderlegen und innen glatt verstreichen.", v => {
+            v.append(s.el("ellipse", { cx: 110, cy: 106, rx: 66, ry: 10, fill: CS }));
+            const rings = [0, 1, 2, 3, 4].map(i => s.el("rect", { x: 46, y: 88 - i * 18, width: 128, height: 18, rx: 9, fill: CL, stroke: CS, "stroke-width": 3, opacity: 0 }));
+            v.append(...rings);
+            return async () => { rings.forEach(r => r.setAttribute("opacity", 0));
+              for (let i = 0; i < rings.length; i++) { s.sfx.note(i * 2, .12); await s.tween({ from: -30, to: 0, dur: 280, ease: "out", update: y => { rings[i].setAttribute("opacity", 1); rings[i].setAttribute("transform", `translate(0,${y})`); } }); } };
+          });
+          const c3 = card("Plattentechnik", "Platte ausrollen wie Plätzchenteig, Teile ausschneiden und zu einem Kasten bauen.", v => {
+            const base = s.el("polygon", { points: "50,100 150,100 180,78 80,78", fill: CL, stroke: CS, "stroke-width": 3, "stroke-linejoin": "round" });
+            const walls = [s.el("polygon", { points: "80,78 180,78 180,28 80,28", fill: "#b06a3e", stroke: CS, "stroke-width": 3 }), s.el("polygon", { points: "50,100 80,78 80,28 50,50", fill: "#a8653f", stroke: CS, "stroke-width": 3 }),
+              s.el("polygon", { points: "150,100 180,78 180,28 150,50", fill: "#a8653f", stroke: CS, "stroke-width": 3 }), s.el("polygon", { points: "50,100 150,100 150,50 50,50", fill: CL, stroke: CS, "stroke-width": 3, opacity: .92 })];
+            walls.forEach(w => w.setAttribute("opacity", 0)); v.append(base, ...walls);
+            return async () => { walls.forEach(w => w.setAttribute("opacity", 0)); for (const w of walls) { s.sfx.snap(); await s.tween({ from: 0, to: 1, dur: 260, update: t => w.setAttribute("opacity", t) }); } };
+          });
+          const ph = s.photo("daumenschale", { w: 280, h: 296, pos: "62% 50%", caption: "Eine Daumenschale entsteht", cls: "later" });
+          const m = merk(s, "Erst gut <b>kneten</b>: Das drückt <b>Luftblasen</b> heraus. Sonst kann die Figur im Ofen platzen.");
+          s.add(stack(s, 12, svg, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr 280px", gap: "14px", alignItems: "start" } }, c1, c2, c3, ph), m));
+          s.step(async () => {
+            s.say("Erst wird geknetet. Der Ton wird weich und gleichmäßig.");
+            for (let k = 0; k < 3; k++) { s.sound("ton-patsch", { vol: .6 }); await s.tween({ from: 0, to: Math.PI, dur: 420, update: a => setT(lump, 130, 100, 1 + .18 * Math.sin(a), 1 - .18 * Math.sin(a)) }); }
+            setT(lump, 130, 100);
+          });
+          s.step(async () => { s.sfx.whoosh(); await s.show(arrow, "left"); for (const g of [ball, coil, slab]) { s.sfx.pop(); await s.show(g, "pop"); await s.wait(150); } s.say("Kugel, Wulst und Platte sind die drei Grundformen."); });
+          [c1, c2, c3].forEach((c, i) => s.step(async () => { s.sfx.swoosh(); await s.show(c, "up"); if (i === 0) s.show(ph, "zoom"); await c.api(); }));
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 13d -------------------------------------------------------------- */
+      {
+        title: "Verbinden, trocknen, brennen",
+        say: "Teile aus Ton klebst du mit Schlicker zusammen. Dann muss der Ton trocknen. Zum Schluss wird er im Brennofen steinhart.",
+        build(s) {
+          const svg = s.svg(1100, 248);
+          const CL = "#c47a4a", CS = "#8d5538";
+          svg.append(lbl(s, 180, 26, "1. Verbinden"), lbl(s, 550, 26, "2. Trocknen"), lbl(s, 900, 26, "3. Brennen"),
+            s.el("line", { x1: 365, y1: 50, x2: 365, y2: 240, stroke: "#c9d2dc", "stroke-width": 3, "stroke-dasharray": "8 8" }), s.el("line", { x1: 730, y1: 50, x2: 730, y2: 240, stroke: "#c9d2dc", "stroke-width": 3, "stroke-dasharray": "8 8" }));
+          /* 1: cup + handle */
+          const cup = (x, y, fill) => s.el("path", { d: `M${x},${y} L${x + 120},${y} L${x + 110},${y + 120} Q${x + 60},${y + 134} ${x + 10},${y + 120} Z`, fill, stroke: CS, "stroke-width": 4, "stroke-linejoin": "round" });
+          const handle = s.el("path", { d: "M0,0 C46,0 46,70 0,70", fill: "none", stroke: CL, "stroke-width": 16, "stroke-linecap": "round" });
+          const hG = s.el("g", {}, handle); setT(hG, 300, 92);
+          const scratch = s.el("path", { d: "M218,88 l12,12 M230,88 l-12,12 M212,150 l12,12 M224,150 l-12,12", stroke: "#5a3420", "stroke-width": 3, fill: "none", class: "later" });
+          const slip = s.el("g", { class: "later" }, ...[[222, 94], [218, 156]].map(([x, y]) => s.el("ellipse", { cx: x, cy: y, rx: 12, ry: 9, fill: "#e3b38c", stroke: "#a8653f", "stroke-width": 2 })));
+          svg.append(cup(90, 70, CL), hG, scratch, slip);
+          /* 2: drying cup */
+          const dryCup = cup(-60, -66, CL); const dG = s.el("g", {}, dryCup); setT(dG, 550, 136);
+          const drops = [0, 1, 2].map(i => s.el("path", { d: "M0,-10 Q7,0 0,6 Q-7,0 0,-10 Z", fill: "#5aa9e6", opacity: 0 }));
+          const days = s.el("text", { x: 550, y: 238, "text-anchor": "middle", class: "lbl", text: "einige Tage", opacity: 0 });
+          svg.append(dG, ...drops, days);
+          /* 3: kiln */
+          const glow = s.el("rect", { x: 830, y: 90, width: 110, height: 90, rx: 8, fill: "#3a2a22" });
+          svg.append(s.el("rect", { x: 805, y: 52, width: 160, height: 160, rx: 10, fill: "#9aa3b2", stroke: "#5b6474", "stroke-width": 4 }), glow,
+            s.el("path", { d: "M860,170 L920,170 L915,120 L865,120 Z", fill: "#5a3420", opacity: .55 }), s.el("rect", { x: 820, y: 212, width: 130, height: 12, fill: "#5b6474" }));
+          const th = s.el("rect", { x: 1003, y: 208, width: 18, height: 0, rx: 4, fill: "#dc3b2a" });
+          svg.append(s.el("rect", { x: 1000, y: 52, width: 24, height: 160, rx: 12, fill: "#fff", stroke: "#5b6474", "stroke-width": 3 }), th, s.el("circle", { cx: 1012, cy: 218, r: 15, fill: "#dc3b2a" }));
+          const temp = s.el("text", { x: 885, y: 240, "text-anchor": "middle", "font-size": 26, "font-weight": 800, fill: "#dc3b2a", text: "20 °C" });
+          svg.append(temp);
+          const e1 = box(s, "ex", "Verbinden", "Beide Stellen <b>aufrauen</b> (mit einer Gabel ritzen), <b>Schlicker</b> darauf und fest andrücken. Schlicker ist Ton mit Wasser – dein Kleber.");
+          const e2 = box(s, "ex", "Trocknen", "Langsam trocknen lassen. Das Wasser verdunstet. Der Ton wird <b>heller</b>, hart – und ein bisschen <b>kleiner</b>.");
+          const e3 = box(s, "ex", "Brennen", "Im <b>Brennofen</b> wird es etwa <b>900 °C</b> heiß. Ein Küchenbackofen schafft nur ungefähr 250 °C.");
+          const ph = s.photo("toepferofen", { w: 200, h: 214, pos: "50% 55%", caption: "Töpferofen (Modell)", cls: "later" });
+          const m = merk(s, "Gebrannter Ton heißt <b>Keramik</b>. Er löst sich in Wasser nicht mehr auf.");
+          s.add(stack(s, 12, svg, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr 200px", gap: "14px", alignItems: "start" } }, e1, e2, e3, ph), m));
+          s.step(async () => {
+            s.say("Erst ritzt du beide Stellen auf und streichst Schlicker darauf.");
+            s.sound("papier-reiben", { vol: .5, dur: 1 }); await s.show(scratch, "draw"); s.sfx.pop(); await s.show(slip, "pop");
+            await s.tween({ from: 300, to: 214, dur: 800, ease: "inOut", update: x => setT(hG, x, 92) }); s.sound("ton-patsch", { vol: .6 }); await s.show(e1, "up");
+          });
+          s.step(async () => {
+            s.say("Beim Trocknen verdunstet das Wasser. Der Ton wird heller und etwas kleiner.");
+            const c0 = [196, 122, 74], c1 = [222, 190, 158];
+            s.tween({ from: 0, to: 1, dur: 1600, update: t => { drops.forEach((d, i) => { const k = (t * 1.5 + i / 3) % 1; d.setAttribute("opacity", (1 - k).toFixed(2)); d.setAttribute("transform", `translate(${520 + i * 30},${70 - k * 30})`); }); } }).then(() => drops.forEach(d => d.setAttribute("opacity", 0)));
+            await s.tween({ from: 0, to: 1, dur: 1600, ease: "inOut", update: t => { dryCup.setAttribute("fill", `rgb(${c0.map((c, i) => Math.round(c + (c1[i] - c) * t)).join(",")})`); setT(dG, 550, 136, 1 - .08 * t, 1 - .08 * t); days.setAttribute("opacity", t); } });
+            s.sfx.pop(); await s.show(e2, "up");
+          });
+          s.step(async () => {
+            s.say("Im Brennofen wird es etwa neunhundert Grad heiß. Danach ist der Ton steinhart.");
+            s.sound("fire", { vol: .45, dur: 3.5 });
+            await s.tween({ from: 20, to: 900, dur: 2200, ease: "inOut", update: v => { const k = (v - 20) / 880; temp.textContent = Math.round(v / 10) * 10 + " °C"; th.setAttribute("y", 208 - 150 * k); th.setAttribute("height", 150 * k); glow.setAttribute("fill", `rgb(${Math.round(58 + 197 * k)},${Math.round(42 + 110 * k)},${Math.round(34 + 10 * k)})`); } });
+            temp.textContent = "900 °C"; s.sfx.ding(); s.show(e3, "up"); await s.show(ph, "zoom");
+          });
+          s.step(async () => { s.sfx.success(); await s.show(m, "up"); });
+        },
+      },
+      /* 13e -------------------------------------------------------------- */
+      {
+        title: "Terrakotta: gebrannte Erde",
+        say: "Terrakotta ist Italienisch und heißt gebrannte Erde. Menschen formen seit Tausenden von Jahren Kunst aus Ton.",
+        build(s) {
+          const mk = (id, pos, cap, text) => s.h("div", { class: "card later", style: { padding: "10px", display: "flex", flexDirection: "column", gap: "8px" } }, s.photo(id, { w: 324, h: 220, pos, caption: cap }), P(s, text, "small"));
+          const k1 = mk("terrakotta-armee", "50% 45%", "Terrakotta-Armee, China", "Rund <b>8000</b> lebensgroße Figuren aus Ton bewachen das Grab des ersten Kaisers von China. Gefunden wurden sie <b>1974</b> beim Brunnengraben.");
+          const k2 = mk("amphore", "50% 42%", "Griechische Amphore", "Aus Athen, um <b>550 v. Chr.</b>: Der Maler hat schwarze Figuren auf den roten Ton gemalt.");
+          const k3 = mk("rotes-rathaus-fries", "50% 40%", "Rotes Rathaus, Berlin", "<b>36 Tafeln</b> aus Terrakotta (1877–1879) erzählen die Geschichte Berlins: die „Steinerne Chronik“.");
+          const top = merk(s, "<b>Terrakotta</b> ist Italienisch und heißt <b>„gebrannte Erde“</b>: Ton, der ohne Glasur gebrannt wurde.", false);
+          const life = box(s, "life", "Im Alltag", "Blumentöpfe, Dachziegel und Backsteine sind gebrannter Ton. Tassen und Teller sind Keramik mit Glasur.");
+          s.add(stack(s, 14, top, s.h("div", { class: "cols3" }, k1, k2, k3), life));
+          s.step(async () => { s.sfx.whoosh(); await s.show(k1, "zoom"); s.say("In China stehen Tausende Soldaten aus Ton."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(k2, "zoom"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(k3, "zoom"); s.say("Und in Berlin: Am Roten Rathaus erzählen Bilder aus Terrakotta die Stadtgeschichte."); });
+          s.step(async () => { s.sfx.success(); await s.show(life, "up"); });
         },
       },
       /* 14 --------------------------------------------------------------- */

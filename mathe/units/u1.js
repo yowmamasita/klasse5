@@ -56,6 +56,98 @@
     return { svg, run };
   }
 
+  /* schriftliche Division (deutsche Schreibweise): o = {n:"8448", d:4, cw, rh, fs}
+     returns {svg, run(expl, phase), done} – run() plays all steps; phase(i) is called with 0..3 (teilen, mal, minus, runterholen) */
+  function longDiv(s, o) {
+    const digs = o.n.split("").map(Number), d = o.d, ds = String(d), CW = o.cw || 36, RH = o.rh || 42, FS = o.fs || 34;
+    let k = 1; while (k < digs.length && Number(o.n.slice(0, k)) < d) k++;
+    const steps = []; let part = Number(o.n.slice(0, k)), q = "";
+    for (let p = k - 1; p < digs.length; p++) {
+      const qd = Math.floor(part / d), prod = qd * d, rem = part - prod;
+      steps.push({ p, part, qd, prod, rem, next: p + 1 < digs.length ? digs[p + 1] : null });
+      q += qd; part = p + 1 < digs.length ? rem * 10 + digs[p + 1] : rem;
+    }
+    const rest = steps[steps.length - 1].rem;
+    const n = digs.length, X0 = 1;                    // one spare column on the left for the minus sign
+    const qCol = X0 + n + 1 + ds.length + 1;          // first column of the quotient
+    const restTxt = rest ? " Rest " + rest : "";
+    const W = CW * (qCol + q.length) + (rest ? restTxt.length * CW * 0.55 : 0) + 8, Hh = RH * (1 + 2 * steps.length) + 18;
+    const svg = s.svg(W, Hh);
+    const cx = c => CW * c + CW / 2, ry = r => RH * r + RH / 2 + FS * 0.36 + 6;
+    const hl = s.el("rect", { x: 0, y: 8, width: CW, height: RH, rx: 8, fill: "#fff1a8", opacity: 0 });
+    svg.append(hl);
+    const Tx = (c, r, t, col, extra) => T(s, cx(c), ry(r), String(t), Object.assign({ "font-size": FS, fill: col || P.ink }, extra || {}));
+    const top = digs.map((g, i) => Tx(X0 + i, 0, g));
+    svg.append(...top, Tx(X0 + n, 0, ":", P.red), ...ds.split("").map((g, i) => Tx(X0 + n + 1 + i, 0, g, P.blue)), Tx(qCol - 1, 0, "=", P.pencil));
+    const qEls = q.split("").map((g, i) => later(fb(Tx(qCol + i, 0, g, P.red))));
+    svg.append(...qEls);
+    let restEl = null;
+    if (rest) { restEl = later(fb(T(s, CW * (qCol + q.length) + 4, ry(0), restTxt.trim(), { "font-size": FS * 0.8, fill: P.violet, "text-anchor": "start" }))); svg.append(restEl); }
+    const rows = steps.map((st, i) => {
+      const ps = String(st.prod), rs = String(st.rem), pl = String(st.part).length, w = Math.max(ps.length, pl);
+      const prodG = later(fb(s.el("g")));
+      ps.split("").forEach((g, j) => prodG.append(Tx(X0 + st.p - ps.length + 1 + j, 2 * i + 1, g, P.blue)));
+      prodG.append(Tx(X0 + st.p - ps.length, 2 * i + 1, "−", P.blue));
+      const line = later(s.el("line", { x1: CW * (X0 + st.p - w) + 4, x2: CW * (X0 + st.p + 1) - 4, y1: RH * (2 * i + 2) + 6, y2: RH * (2 * i + 2) + 6, stroke: P.ink, "stroke-width": 2.5, "stroke-linecap": "round" }));
+      const remG = later(fb(s.el("g")));
+      rs.split("").forEach((g, j) => remG.append(Tx(X0 + st.p - rs.length + 1 + j, 2 * i + 2, g, P.green)));
+      let down = null;
+      if (st.next != null) { down = Tx(X0 + st.p + 1, 2 * i + 2, st.next, P.orange); down.style.opacity = 0; }
+      svg.append(prodG, line, remG); if (down) svg.append(down);
+      return { prodG, line, remG, down };
+    });
+    // where is the current partial dividend? (row, first col, last col)
+    const partBox = i => {
+      const st = steps[i];
+      if (i === 0) return [0, X0, X0 + st.p];
+      const prev = steps[i - 1], rl = String(prev.rem).length;
+      return [2 * i, X0 + prev.p - rl + 1, X0 + st.p];
+    };
+    let busy = false;
+    function reset() {
+      qEls.forEach(later); if (restEl) later(restEl);
+      rows.forEach(r => { later(r.prodG); later(r.line); later(r.remG); if (r.down) r.down.style.opacity = 0; });
+      top.forEach(t => t.setAttribute("fill", P.ink)); hl.setAttribute("opacity", 0);
+    }
+    async function moveHl(i) {
+      const [r, c0, c1] = partBox(i);
+      const to = { x: CW * c0 + 2, y: RH * r + 7, w: CW * (c1 - c0 + 1) - 4 };
+      const fr = { x: +hl.getAttribute("x"), y: +hl.getAttribute("y"), w: +hl.getAttribute("width") };
+      hl.setAttribute("opacity", 1); hl.setAttribute("height", RH - 2);
+      await s.tween({ from: 0, to: 1, dur: 320, ease: "inOut", update: t => { hl.setAttribute("x", fr.x + (to.x - fr.x) * t); hl.setAttribute("y", fr.y + (to.y - fr.y) * t); hl.setAttribute("width", fr.w + (to.w - fr.w) * t); } });
+    }
+    async function runStep(i, expl, phase) {
+      const st = steps[i], r = rows[i], say = t => { if (expl) expl.textContent = t; };
+      if (i === 0) for (let c = 0; c <= st.p; c++) top[c].setAttribute("fill", P.violet);
+      await moveHl(i);
+      phase && phase(0); say(`${st.part} : ${d} = ${st.qd}` + (st.qd === 0 ? " – passt nicht, also 0 ins Ergebnis!" : " → ins Ergebnis"));
+      s.sfx.count(i + 2); await s.show(qEls[i], "pop"); await s.wait(650);
+      phase && phase(1); say(`${st.qd} · ${d} = ${st.prod} → darunter schreiben`);
+      s.sound("pencil-write", { vol: .4, dur: .6 }); await s.show(r.prodG, "left"); await s.wait(650);
+      phase && phase(2); say(`${st.part} − ${st.prod} = ${st.rem}`);
+      s.show(r.line, "draw"); s.sfx.tick(); await s.show(r.remG, "pop", 150); await s.wait(650);
+      if (r.down) {
+        phase && phase(3); say(`Die nächste ${st.next} runterholen`);
+        const el = r.down, y1 = ry(2 * i + 2), y0 = ry(0);
+        top[st.p + 1].setAttribute("fill", P.violet); s.sfx.whoosh();
+        el.style.opacity = 1;
+        await s.tween({ from: y0, to: y1, dur: 520, ease: "out", update: v => el.setAttribute("y", v) });
+        s.sfx.snap(); await s.wait(450);
+      } else {
+        hl.setAttribute("opacity", 0);
+        if (restEl) { say(`Es bleibt ${st.rem} übrig – Rest ${st.rem}.`); s.sfx.boing(); await s.show(restEl, "bounce"); }
+        else { say(`Kein Rest – fertig: ${s.fmt(Number(o.n))} : ${d} = ${s.fmt(Number(q))}`); }
+        s.sfx.success(); phase && phase(-1);
+      }
+    }
+    async function run(expl, phase) {
+      if (busy) return; busy = true; reset();
+      for (let i = 0; i < steps.length && s.alive; i++) await runStep(i, expl, phase);
+      busy = false;
+    }
+    return { svg, run, runStep, reset, steps, q, rest, get busy() { return busy; }, set busy(v) { busy = v; } };
+  }
+
   Deck.unit({
     id: "u1", num: 1, title: "Natürliche Zahlen", color: "#1d5bd0", soft: "#e4ecfb",
     subtitle: "Große Zahlen, schlaues Rechnen, Größen",
@@ -573,6 +665,102 @@
           s.step(async () => { s.sfx.ding(); await s.show(e4, "up"); s.show(lf, "up"); });
         },
       },
+      /* 10b -------------------------------------------------------------- */
+      {
+        title: "Schriftlich dividieren",
+        say: "Vier Klassen teilen sich die Busse für die Klassenfahrt. Das kostet 8448 Euro. Wie viel zahlt jede Klasse?",
+        build(s) {
+          const dv = longDiv(s, { n: "8448", d: 4, cw: 44, rh: 45, fs: 40 });
+          const expl = s.h("p", { class: "t", style: { minHeight: "62px", flex: "1", fontSize: "23px", color: P.blue, fontWeight: 700 } }, "Wir rechnen von links nach rechts, Ziffer für Ziffer.");
+          const PH = [["1", "Teilen", P.red, "Wie oft passt 4?"], ["2", "Malnehmen", P.blue, "Ergebnis · 4"], ["3", "Abziehen", P.green, "Was bleibt übrig?"], ["4", "Runterholen", P.orange, "nächste Ziffer holen"]];
+          const chips = PH.map(([n, t, c, sub]) => s.h("div", { class: "card", style: { display: "flex", alignItems: "center", gap: "12px", padding: "8px 14px", transition: "background .25s, box-shadow .25s" } },
+            s.h("span", { style: { flex: "none", width: "40px", height: "40px", borderRadius: "50%", background: c, color: "#fff", display: "grid", placeItems: "center", font: "800 22px/1 var(--f-display)" } }, n),
+            s.h("div", null, s.h("b", { style: { color: c, fontSize: "22px" } }, t), s.h("p", { class: "small pencil" }, sub))));
+          const phase = i => chips.forEach((c, j) => { c.style.background = j === i ? "#fff6c9" : ""; c.style.boxShadow = j === i ? "0 0 0 3px #ffd94a" : ""; });
+          const cyc = s.h("div", { class: "cols later", style: { gap: "10px", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)" } }, ...chips);
+          const btn = s.h("button", { class: "btn", onclick: () => { if (dv.busy) return; s.sfx.click(); s.sound("bus-faehrt", { vol: .35, dur: 2 }); dv.run(expl, phase); } }, "↻ nochmal");
+          const res = s.h("p", { class: "h2 later" }, "Jede Klasse zahlt ", s.h("b", { class: "red" }, "2.112 €"), ".");
+          const left = ex(s, "Beispiel: Klassenfahrt", { class: "ex a-left", style: { display: "flex", flexDirection: "column", gap: "6px" } },
+            s.h("p", { class: "small" }, "Busse für 4 Klassen: 8.448 €. Jede Klasse zahlt gleich viel."),
+            dv.svg, s.h("div", { class: "row", style: { flexWrap: "nowrap", justifyContent: "space-between", alignItems: "center" } }, expl, btn));
+          const bus = s.photo("reisebus", { w: 250, h: 170, caption: "Reisebus", cls: "a-zoom" });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Immer wieder im Kreis: ", s.h("b", null, "teilen – malnehmen – abziehen – runterholen"), ", bis keine Ziffer mehr übrig ist.");
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "560px 1fr", gap: "22px", alignItems: "center" }, left,
+            s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, bus, res), cyc, merk)));
+          s.sound("bus-faehrt", { vol: .35, dur: 2.5 });
+          s.step(async () => { s.sfx.whoosh(); await s.show(cyc, "up"); s.say("Vier Schritte, immer im Kreis: teilen, malnehmen, abziehen, runterholen."); });
+          dv.steps.forEach((st, i) => s.step(async () => {
+            dv.busy = true; await dv.runStep(i, expl, phase); dv.busy = false;
+            s.say([ "Acht geteilt durch vier ist zwei. Zwei mal vier ist acht. Acht minus acht ist null. Die Vier runterholen.", "Vier geteilt durch vier ist eins. Dann wieder malnehmen, abziehen, runterholen.", "Wieder vier geteilt durch vier: eins.", "Acht geteilt durch vier ist zwei. Kein Rest – fertig!"][i]);
+          }));
+          s.step(async () => { phase(-1); s.sound("coins", { vol: .5 }); await s.show(res, "pop"); await s.show(merk, "up"); });
+        },
+      },
+      /* 10c -------------------------------------------------------------- */
+      {
+        title: "Dividieren mit Rest und Null",
+        say: "Manchmal bleibt etwas übrig. Und manchmal passt der Teiler gar nicht hinein – dann schreiben wir eine Null.",
+        build(s) {
+          const A = longDiv(s, { n: "1390", d: 6, cw: 34, rh: 38, fs: 29 });
+          const B = longDiv(s, { n: "1224", d: 4, cw: 34, rh: 38, fs: 29 });
+          const mk = (lab, ctx, dv, photo, first) => {
+            const expl = s.h("p", { class: "t", style: { minHeight: "60px", fontSize: "22px", color: P.blue, fontWeight: 700 } }, "Drücke „Weiter“.");
+            expl.style.flex = "1"; const btn = s.h("button", { class: "btn", onclick: () => { if (dv.busy) return; s.sfx.click(); dv.run(expl); } }, "↻ nochmal");
+            const c = ex(s, lab, { class: "ex " + (first ? "a-left" : "later"), style: { display: "flex", flexDirection: "column", gap: "8px" } },
+              s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, photo, s.h("p", { class: "small" }, ctx)),
+              dv.svg, s.h("div", { class: "row", style: { flexWrap: "nowrap", justifyContent: "space-between", alignItems: "center", gap: "10px" } }, expl, btn));
+            c.expl = expl; return c;
+          };
+          const cA = mk("Beispiel 1: mit Rest", "Die Bäckerei packt 1.390 Brötchen in Tüten zu je 6 Stück.", A, s.photo("broetchen", { w: 120, h: 80 }), true);
+          const cB = mk("Beispiel 2: Null im Ergebnis", "Ein Reisebus fährt in 4 Tagen 1.224 km. Wie viele km pro Tag?", B, s.photo("reisebus", { w: 120, h: 80 }));
+          const m1 = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "10px 18px 12px" } }, "Der ", s.h("b", null, "Rest"), " ist immer ", s.h("b", null, "kleiner als der Teiler"), ". Sonst passt noch einmal mehr hinein!");
+          const m2 = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "10px 18px 12px" } }, "Passt der Teiler ", s.h("b", null, "nicht hinein"), ", schreibe eine ", s.h("b", { class: "red" }, "0"), " ins Ergebnis – nie vergessen!");
+          s.add(root(s, "stack", { justifyContent: "space-between", gap: "14px" }, s.h("div", { class: "cols", style: { gap: "22px", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)" } }, cA, cB), s.h("div", { class: "cols", style: { gap: "22px" } }, m1, m2)));
+          s.sfx.pop();
+          s.step(async () => { s.sound("paper-crumple", { vol: .4, dur: 1.2 }); await A.run(cA.expl); s.say("Zweihunderteinunddreißig volle Tüten, und vier Brötchen bleiben übrig."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m1, "up"); });
+          s.step(async () => { await s.show(cB, "right"); s.sound("bus-faehrt", { vol: .35, dur: 2 }); await B.run(cB.expl); s.say("Zwei geteilt durch vier geht nicht – also eine Null ins Ergebnis. Dreihundertsechs Kilometer pro Tag."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m2, "up"); });
+        },
+      },
+      /* 10d -------------------------------------------------------------- */
+      {
+        title: "Die Probe und Teilen im Alltag",
+        say: "Mit der Probe prüfst du dein Ergebnis: Malnehmen ist das Gegenteil von Teilen.",
+        build(s) {
+          const probe = (calc, check, extra) => {
+            const l1 = s.h("p", { class: "h2 mono" }, calc);
+            const l2 = s.h("p", { class: "h2 mono later", style: { color: P.blue } }, check);
+            const ok = s.h("span", { class: "hand later", style: { color: P.green, fontSize: "34px", marginLeft: "10px" } }, "✓ stimmt");
+            l2.append(ok);
+            const box = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "4px", padding: "10px 16px" } }, l1, l2, extra ? s.h("p", { class: "small pencil" }, extra) : "");
+            box.run = async () => { await s.show(box, "left"); s.sfx.pop(); await s.wait(250); s.sound("pencil-write", { vol: .4, dur: .7 }); await s.show(l2, "up"); await s.wait(250); s.sfx.success(); await s.show(ok, "pop"); };
+            return box;
+          };
+          const p1 = probe("8.448 : 4 = 2.112", "2.112 · 4 = 8.448");
+          const p2 = probe("1.390 : 6 = 231 Rest 4", "231 · 6 + 4 = 1.390", "Den Rest zum Schluss dazuzählen!");
+          const p3 = probe("1.224 : 4 = 306", "306 · 4 = 1.224");
+          const head = s.h("div", { class: "merk a-up", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "Probe:"), " Ergebnis mal Teiler (plus Rest) muss wieder die Startzahl geben.");
+          const lc = (photo, txt, calc) => s.h("div", { class: "life later", style: { display: "flex", gap: "14px", alignItems: "center", padding: "10px 14px" } }, photo,
+            s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("span", { style: LBL }, "Im Alltag"), s.h("p", { class: "small" }, txt), s.h("p", { class: "t mono", style: { fontWeight: 700, color: P.green } }, calc)));
+          const L = [
+            lc(s.photo("stoppuhr", { w: 150, h: 130 }), "Wie viele Wochen hat ein Jahr mit 365 Tagen?", "365 : 7 = 52 Rest 1"),
+            lc(s.photo("fahrradrad", { w: 150, h: 130 }), "Radtour: 345 km in 5 Tagen", "345 : 5 = 69 km pro Tag"),
+            lc(s.photo("pizza-8", { w: 150, h: 130 }), "8 Pizzas mit je 8 Stücken für 9 Kinder", "64 : 9 = 7 Rest 1"),
+          ];
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "22px", alignItems: "center" },
+            s.h("div", { class: "stack", style: { gap: "16px" } }, head, p1, p2, p3), s.h("div", { class: "stack", style: { gap: "18px" } }, ...L)));
+          s.sfx.pop();
+          s.step(async () => { await p1.run(); s.say("Zweitausendeinhundertzwölf mal vier gibt wieder achttausendvierhundertachtundvierzig. Stimmt!"); });
+          s.step(async () => { await p2.run(); s.say("Beim Rest: erst malnehmen, dann den Rest dazuzählen."); });
+          s.step(async () => { await p3.run(); });
+          L.forEach((c, i) => s.step(async () => {
+            [() => s.sound("clock-tick", { vol: .5, dur: 2 }), () => s.sound("bike-bell", { vol: .5 }), () => s.sound("pizza-schneiden", { vol: .5 })][i]();
+            await s.show(c, "right");
+            s.say(["Ein Jahr hat zweiundfünfzig Wochen und einen Tag.", "Neunundsechzig Kilometer pro Tag.", "Jedes Kind bekommt sieben Stücke, eins bleibt übrig."][i]);
+          }));
+        },
+      },
       /* 11 --------------------------------------------------------------- */
       {
         title: "Punkt vor Strich",
@@ -846,7 +1034,7 @@
             panL.setAttribute("transform", `translate(${PX - c},${PY - sn})`); panR.setAttribute("transform", `translate(${PX + c},${PY + sn})`);
           }
           setAngle(0);
-          const story = ex(s, "Die Geschichte", { class: "ex a-right", style: { padding: "12px 18px" } }, s.h("p", { class: "t" }, "Julian hat ein paar Sticker. Er bekommt ", s.h("b", null, "7"), " neue dazu. Jetzt hat er ", s.h("b", null, "15"), ". Wie viele hatte er vorher?"));
+          const story = ex(s, "Die Geschichte", { class: "ex a-right", style: { padding: "12px 18px" } }, s.h("p", { class: "t" }, "Leon hat ein paar Sticker. Er bekommt ", s.h("b", null, "7"), " neue dazu. Jetzt hat er ", s.h("b", null, "15"), ". Wie viele hatte er vorher?"));
           const eq0 = s.h("p", { class: "big mono" }, sp(s, "x", P.orange), " + 7 = 15");
           const eqNote = s.h("p", { class: "small" }, sp(s, "x", P.orange, { fontWeight: 700 }), " ist ein ", s.h("b", null, "Platzhalter"), " (Variable) für die Zahl, die wir suchen.");
           const eq1 = s.h("p", { class: "h2 mono later" }, "x + 7 − 7 = 15 − 7  →  ", s.h("b", { class: "red" }, "x = 8"));

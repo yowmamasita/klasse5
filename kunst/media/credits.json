@@ -11,6 +11,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Bruno-Baum-Stra%C3%9Fe_-_Gr%C3%BCnzug_(8).jpg",
   "orig": "File:Bruno-Baum-Straße - Grünzug (8).jpg"
  },
+ "amphore": {
+  "file": "amphore.jpg",
+  "kind": "img",
+  "w": 593,
+  "h": 800,
+  "title": "Attic black-figure amphora by Lydos, side A - Getty Museum (86.AE.60)",
+  "author": "The J. Paul Getty Museum",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Attic_black-figure_amphora_by_Lydos,_side_A_-_Getty_Museum_(86.AE.60).jpg",
+  "orig": "File:Attic black-figure amphora by Lydos, side A - Getty Museum (86.AE.60).jpg"
+ },
  "anspitzer": {
   "file": "anspitzer.mp3",
   "kind": "snd",
@@ -118,6 +130,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_Hunters_in_the_Snow_(Winter)_-_Google_Art_Project.jpg",
   "orig": "File:Pieter Bruegel the Elder - Hunters in the Snow (Winter) - Google Art Project.jpg"
  },
+ "buehnenbild-tristan": {
+  "file": "buehnenbild-tristan.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 656,
+  "title": "Angelo Quaglio - Bühnenbild Tristan und Isolde",
+  "author": "Angelo Quaglio (1829–1890)unknown photographer",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Angelo_Quaglio_-_B%C3%BChnenbild_Tristan_und_Isolde.jpg",
+  "orig": "File:Angelo Quaglio - Bühnenbild Tristan und Isolde.jpg"
+ },
  "buntstifte-kreis": {
   "file": "buntstifte-kreis.jpg",
   "kind": "img",
@@ -154,6 +178,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Cercle_chromatique_Chevreul_3.jpg",
   "orig": "File:Cercle chromatique Chevreul 3.jpg"
  },
+ "china-schattenspiel": {
+  "file": "china-schattenspiel.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 672,
+  "title": "Chinese shadow puppetry",
+  "author": "악준동",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Chinese_shadow_puppetry.jpg",
+  "orig": "File:Chinese shadow puppetry.jpg"
+ },
  "citta-ideale": {
   "file": "citta-ideale.jpg",
   "kind": "img",
@@ -165,6 +201,30 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Formerly_Piero_della_Francesca_-_Ideal_City_-_Galleria_Nazionale_delle_Marche_Urbino.jpg",
   "orig": "File:Formerly Piero della Francesca - Ideal City - Galleria Nazionale delle Marche Urbino.jpg"
+ },
+ "dan-maske": {
+  "file": "dan-maske.jpg",
+  "kind": "img",
+  "w": 507,
+  "h": 700,
+  "title": "Poro Society mask, Dan people, Honolulu Museum of Art, 4295.1",
+  "author": "Hiart",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Poro_Society_mask,_Dan_people,_Honolulu_Museum_of_Art,_4295.1.JPG",
+  "orig": "File:Poro Society mask, Dan people, Honolulu Museum of Art, 4295.1.JPG"
+ },
+ "daumenschale": {
+  "file": "daumenschale.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "Pinch Pot Workshop at Rancho Sierra Vista (38539310952)",
+  "author": "Santa Monica Mountains National Recreation Area",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Pinch_Pot_Workshop_at_Rancho_Sierra_Vista_(38539310952).jpg",
+  "orig": "File:Pinch Pot Workshop at Rancho Sierra Vista (38539310952).jpg"
  },
  "druckerpatronen": {
   "file": "druckerpatronen.jpg",
@@ -560,6 +620,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Close-up,_portrait_of_a_big_red_cat_in_the_rays_of_the_evening_sun._Pets_in_the_nature_-_Flickr_-_Yuliya_Sergeevna.jpg",
   "orig": "File:Close-up, portrait of a big red cat in the rays of the evening sun. Pets in the nature - Flickr - Yuliya Sergeevna.jpg"
  },
+ "kineograph": {
+  "file": "kineograph.jpg",
+  "kind": "img",
+  "w": 521,
+  "h": 700,
+  "title": "Linnet kineograph 1886",
+  "author": "Original author is de:John Barnes Linnet",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Linnet_kineograph_1886.jpg",
+  "orig": "File:Linnet kineograph 1886.jpg"
+ },
  "kohle-papier": {
   "file": "kohle-papier.mp3",
   "kind": "snd",
@@ -750,6 +822,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Coccinella_septempunctata_on_the_leaf_-_1.jpg",
   "orig": "File:Coccinella septempunctata on the leaf - 1.jpg"
  },
+ "max-moritz": {
+  "file": "max-moritz.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 441,
+  "title": "Max und Moritz (Busch) 018",
+  "author": "Wilhelm Busch",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Max_und_Moritz_(Busch)_018.png",
+  "orig": "File:Max und Moritz (Busch) 018.png"
+ },
  "meissel": {
   "file": "meissel.mp3",
   "kind": "snd",
@@ -903,6 +987,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin_Museumsinsel_Fernsehturm.jpg",
   "orig": "File:Berlin Museumsinsel Fernsehturm.jpg"
  },
+ "muybridge-pferd": {
+  "file": "muybridge-pferd.jpg",
+  "kind": "img",
+  "w": 1100,
+  "h": 678,
+  "title": "The Horse in Motion high res",
+  "author": "Eadweard Muybridge",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Horse_in_Motion_high_res.jpg",
+  "orig": "File:The Horse in Motion high res.jpg"
+ },
  "nebamun-jagd": {
   "file": "nebamun-jagd.jpg",
   "kind": "img",
@@ -1032,6 +1128,17 @@
   "source": "https://commons.wikimedia.org/wiki/File:Pixel_geometry_01_Pengo.jpg",
   "orig": "File:Pixel geometry 01 Pengo.jpg"
  },
+ "projektor": {
+  "file": "projektor.mp3",
+  "kind": "snd",
+  "dur": 6.0,
+  "title": "Alter Filmprojektor",
+  "author": "bobv2",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/bobv2/sounds/400862/",
+  "orig": "400862"
+ },
  "pyramiden-gizeh": {
   "file": "pyramiden-gizeh.jpg",
   "kind": "img",
@@ -1067,6 +1174,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:The_Thinker,_Rodin.jpg",
   "orig": "File:The Thinker, Rodin.jpg"
+ },
+ "rotes-rathaus-fries": {
+  "file": "rotes-rathaus-fries.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 721,
+  "title": "Rotes Rathaus Berlin Relief Kuenstler",
+  "author": "Manfred Brückels",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rotes_Rathaus_Berlin_Relief_Kuenstler.jpg",
+  "orig": "File:Rotes Rathaus Berlin Relief Kuenstler.jpg"
  },
  "schneehase": {
   "file": "schneehase.jpg",
@@ -1171,6 +1290,30 @@
   "source": "https://freesound.org/people/Breviceps/sounds/465700/",
   "orig": "465700"
  },
+ "terrakotta-armee": {
+  "file": "terrakotta-armee.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "China - Xian 21 - Terracotta warriors (135952563)",
+  "author": "McKay Savage from London, UK",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:China_-_Xian_21_-_Terracotta_warriors_(135952563).jpg",
+  "orig": "File:China - Xian 21 - Terracotta warriors (135952563).jpg"
+ },
+ "theatermaske-mosaik": {
+  "file": "theatermaske-mosaik.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "Theatre mask mosaic MAN Napoli Inv9994",
+  "author": "Marie-Lan Nguyen (2011)",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Theatre_mask_mosaic_MAN_Napoli_Inv9994.jpg",
+  "orig": "File:Theatre mask mosaic MAN Napoli Inv9994.jpg"
+ },
  "tintendrucker": {
   "file": "tintendrucker.mp3",
   "kind": "snd",
@@ -1181,6 +1324,29 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/Kleber_KGF/sounds/529987/",
   "orig": "529987"
+ },
+ "toepferofen": {
+  "file": "toepferofen.jpg",
+  "kind": "img",
+  "w": 394,
+  "h": 700,
+  "title": "Pottery oven in Nová budova Národního muzea Prague",
+  "author": "Geertivp",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pottery_oven_in_Nov%C3%A1_budova_N%C3%A1rodn%C3%ADho_muzea_Prague.jpg",
+  "orig": "File:Pottery oven in Nová budova Národního muzea Prague.jpg"
+ },
+ "ton-patsch": {
+  "file": "ton-patsch.mp3",
+  "kind": "snd",
+  "dur": 0.36,
+  "title": "Ton klatscht auf den Tisch",
+  "author": "Breviceps",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/Breviceps/sounds/445109/",
+  "orig": "445109"
  },
  "totenbuch-hunefer": {
   "file": "totenbuch-hunefer.jpg",
@@ -1230,6 +1396,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg",
   "orig": "File:Van Gogh - Starry Night - Google Art Project.jpg"
  },
+ "venedig-masken": {
+  "file": "venedig-masken.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "23 Souvenir from Venice, Italy - small Venetian carnival mask magnet in gift shop",
+  "author": "Marek Ślusarczyk (Tupungato) Photo portfolio",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:23_Souvenir_from_Venice,_Italy_-_small_Venetian_carnival_mask_magnet_in_gift_shop.jpg",
+  "orig": "File:23 Souvenir from Venice, Italy - small Venetian carnival mask magnet in gift shop.jpg"
+ },
  "vitruv-mensch": {
   "file": "vitruv-mensch.jpg",
   "kind": "img",
@@ -1264,6 +1442,18 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/florianreichelt/sounds/683102/",
   "orig": "683102"
+ },
+ "wayang-schatten": {
+  "file": "wayang-schatten.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 548,
+  "title": "Bali Wayang Kulit shadow puppet Ramayana Hanoman dramatic show 4",
+  "author": "Rebecca Marshall from San Francisco, USA",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bali_Wayang_Kulit_shadow_puppet_Ramayana_Hanoman_dramatic_show_4.jpg",
+  "orig": "File:Bali Wayang Kulit shadow puppet Ramayana Hanoman dramatic show 4.jpg"
  },
  "wespe": {
   "file": "wespe.jpg",

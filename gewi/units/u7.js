@@ -621,15 +621,15 @@
           });
           const setName = n => async () => { s.sfx.click(); name = ""; render(); for (const ch of n) { if (!s.alive) return; add(ch); await s.wait(220); } s.sfx.ding(); };
           const ctrl = s.h("div", { class: "row", style: { justifyContent: "center" } },
-            s.h("button", { class: "btn solid", onclick: setName("JULIAN") }, "Julian"),
-            s.h("button", { class: "btn", onclick: setName("LOUISA") }, "Louisa"),
+            s.h("button", { class: "btn solid", onclick: setName("LEON") }, "Leon"),
+            s.h("button", { class: "btn", onclick: setName("NORA") }, "Nora"),
             s.h("button", { class: "btn", onclick: () => { if (!name) return; name = name.slice(0, -1); s.sfx.swoosh(); render(); } }, "⌫ Zurück"),
             s.h("button", { class: "btn", onclick: () => { name = ""; s.sfx.whoosh(); render(); } }, "Alles löschen"));
           const note = s.h("p", { class: "small pencil", style: { textAlign: "center" } }, "Vereinfachtes Schul-Alphabet: Echte Hieroglyphen haben keine Vokale und über 1.000 Zeichen.");
           s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%", justifyContent: "center" } }, svg,
             s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(13, 1fr)", gap: "7px" } }, ...keys), ctrl, note));
           s.show(svg, "zoom"); s.sfx.whoosh();
-          s.step(async () => { await setName("JULIAN")(); s.say("Julian: Kobra, Küken, Löwe, Schilfblatt, Geier, Wasser."); });
+          s.step(async () => { await setName("LEON")(); s.say("Leon: Löwe, Schilfblatt, Lasso, Wasser."); });
         },
       },
       /* 15 --------------------------------------------------------------- */

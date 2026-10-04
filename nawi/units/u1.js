@@ -462,7 +462,7 @@
           ];
           const head = s.h("div", { class: "row a-down", style: { justifyContent: "space-between", flexWrap: "nowrap" } },
             s.h("span", { class: "h2", style: { color: P.unit } }, "Versuchsprotokoll: Kresse und Licht"),
-            s.h("span", { class: "t pencil", style: { fontSize: "21px" } }, "Name: Julian · Datum: ____"));
+            s.h("span", { class: "t pencil", style: { fontSize: "21px" } }, "Name: Leon · Datum: ____"));
           const sheet = s.h("div", { class: "card stack a-zoom", style: { height: "100%", gap: "12px", background: "#fdfdf8", padding: "14px 18px" } }, head,
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gridTemplateRows: "1fr 1fr", gap: "12px", flex: 1 } }, ...f));
           s.add(sheet);

@@ -382,6 +382,18 @@
   "source": "https://freesound.org/people/Sojan/sounds/400663/",
   "orig": "400663"
  },
+ "dampfer-erie": {
+  "file": "dampfer-erie.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 446,
+  "title": "Brand des Dampfers „Erie“ 1841 (Holzstich)",
+  "author": "Thomasmoody",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Steamboat_Erie.jpg",
+  "orig": "File:Steamboat Erie.jpg"
+ },
  "ddsg-dampfer": {
   "file": "ddsg-dampfer.jpg",
   "kind": "img",
@@ -476,6 +488,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:6-Pack-Chicken-Eggs.jpg",
   "orig": "File:6-Pack-Chicken-Eggs.jpg"
  },
+ "einkaufszettel": {
+  "file": "einkaufszettel.jpg",
+  "kind": "img",
+  "w": 674,
+  "h": 700,
+  "title": "Handgeschriebener Einkaufszettel",
+  "author": "BlueBreezeWiki",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:170423-Einkaufszettel-01.jpg",
+  "orig": "File:170423-Einkaufszettel-01.jpg"
+ },
  "eisbecher": {
   "file": "eisbecher.jpg",
   "kind": "img",
@@ -535,6 +559,42 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Anyang_fans_away_at_Ulsan.jpg",
   "orig": "File:Anyang fans away at Ulsan.jpg"
+ },
+ "fernsehturm-bau": {
+  "file": "fernsehturm-bau.jpg",
+  "kind": "img",
+  "w": 784,
+  "h": 516,
+  "title": "Der Berliner Fernsehturm im Bau (1968)",
+  "author": "Horst Sturm",
+  "license": "CC BY-SA 3.0 de",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-G0822-0020-001,_Berlin,_Fernsehturm,_Bau.jpg",
+  "orig": "File:Bundesarchiv Bild 183-G0822-0020-001, Berlin, Fernsehturm, Bau.jpg"
+ },
+ "fernsehturm-blick": {
+  "file": "fernsehturm-blick.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 678,
+  "title": "Blick aus der Aussichtsetage des Fernsehturms",
+  "author": "Sir James at [1]",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Fernsehturm_Berlin_view_from_inside_20070228.jpg",
+  "orig": "File:Fernsehturm Berlin view from inside 20070228.jpg"
+ },
+ "fernsehturm-kugel": {
+  "file": "fernsehturm-kugel.jpg",
+  "kind": "img",
+  "w": 581,
+  "h": 800,
+  "title": "Kugel des Berliner Fernsehturms",
+  "author": "Commons:Sir James or german WP:Sir James",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:2010-07-09_Berliner_Fernsehturm_Kugel_und_Antennen.jpg",
+  "orig": "File:2010-07-09 Berliner Fernsehturm Kugel und Antennen.jpg"
  },
  "fernsehturm-rathaus": {
   "file": "fernsehturm-rathaus.jpg",
@@ -1105,6 +1165,18 @@
   "source": "https://freesound.org/people/Martina_Leitschuh/sounds/582764/",
   "orig": "582764"
  },
+ "plenarsaal": {
+  "file": "plenarsaal.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Plenarsaal des Bundestags im Reichstagsgebäude",
+  "author": "Gerd Eichmann",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Berlin-Reichstag-Plenarsaal_des_Bundestags-04-2022-gje.jpg",
+  "orig": "File:Berlin-Reichstag-Plenarsaal des Bundestags-04-2022-gje.jpg"
+ },
  "raven": {
   "file": "raven.mp3",
   "kind": "snd",
@@ -1553,6 +1625,18 @@
   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://commons.wikimedia.org/wiki/File:De-Tiger.ogg",
   "orig": "File:De-Tiger.ogg"
+ },
+ "zauberlehrling-barth": {
+  "file": "zauberlehrling-barth.jpg",
+  "kind": "img",
+  "w": 816,
+  "h": 900,
+  "title": "Der Zauberlehrling, Zeichnung von Ferdinand Barth (1882)",
+  "author": "Ferdinand Barth",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Tovenaarsleerling_S_Barth.png",
+  "orig": "File:Tovenaarsleerling S Barth.png"
  },
  "ziege": {
   "file": "ziege.jpg",

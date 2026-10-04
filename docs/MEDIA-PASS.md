@@ -1,6 +1,6 @@
 # Media pass brief (photos + real sounds) – for the agent working on <SUBJECT> units <UNITS>
 
-App: `~/claude/juju/klasse5-app` – interactive iPad slide decks for Julian (10, Klasse 5, Gymnasium Berlin,
+App: `~/claude/juju/klasse5-app` – interactive iPad slide decks for a pupil (10, Klasse 5, Gymnasium Berlin,
 visual learner, learns through real-life examples). Read `docs/AUTHORING.md` first (rules + slide API, incl. the
 new "Real photos and sounds" section), then `shared/engine.js` around `photo(`, `sound(`, `soundBtn(`.
 

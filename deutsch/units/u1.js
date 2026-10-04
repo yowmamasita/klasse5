@@ -682,11 +682,11 @@
         title: "Pronomen: die Stellvertreter",
         say: "Pronomen stehen für ein Nomen. So musst du nicht immer denselben Namen wiederholen.",
         build(s) {
-          const n1 = s.h("span", { class: "d1word", style: { color: WT.n.c, fontWeight: 700 } }, "Julian");
-          const n2 = s.h("span", { class: "d1word", style: { color: WT.n.c, fontWeight: 700 } }, "Julians");
+          const n1 = s.h("span", { class: "d1word", style: { color: WT.n.c, fontWeight: 700 } }, "Leon");
+          const n2 = s.h("span", { class: "d1word", style: { color: WT.n.c, fontWeight: 700 } }, "Leons");
           const chat = life(s, "Im Alltag: Chat",
             s.h("div", { class: "stack", style: { gap: "14px" } },
-              s.h("div", { class: "d1bub" }, s.h("b", { style: { color: WT.n.c } }, "Julian"), " kommt heute später."),
+              s.h("div", { class: "d1bub" }, s.h("b", { style: { color: WT.n.c } }, "Leon"), " kommt heute später."),
               s.h("div", { class: "d1bub" }, n1, " hat noch Training."),
               s.h("div", { class: "d1bub" }, n2, " Trainer ist streng."),
               s.h("div", { class: "d1bub me" }, "Okay! Ich warte auf ", s.h("b", { style: { color: WT.pr.c } }, "euch"), ".")));
@@ -703,8 +703,8 @@
             s.h("p", { class: "t", style: { fontSize: "22px", marginTop: "10px" } }, s.h("b", { style: { color: WT.pr.c } }, "Mein"), " Ball? Nein, das ist ", s.h("b", { style: { color: WT.pr.c } }, "deine"), " Trinkflasche. ", s.h("b", { style: { color: WT.pr.c } }, "Unser"), " Team gewinnt!"));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "0.9fr 1.1fr", gap: "24px", height: "100%", alignItems: "start" } }, chat, s.h("div", { class: "stack", style: { gap: "14px" } }, pers, poss)));
           s.sfx.pop();
-          s.step(async () => { s.sfx.zap(); await flipText(s, n1, "Er"); n1.style.color = WT.pr.c; bump(s, n1, 0.3); s.say("Statt Julian sagen wir er."); });
-          s.step(async () => { s.sfx.zap(); await flipText(s, n2, "Sein"); n2.style.color = WT.pr.c; bump(s, n2, 0.3); s.say("Statt Julians Trainer sagen wir sein Trainer."); });
+          s.step(async () => { s.sfx.zap(); await flipText(s, n1, "Er"); n1.style.color = WT.pr.c; bump(s, n1, 0.3); s.say("Statt Leon sagen wir er."); });
+          s.step(async () => { s.sfx.zap(); await flipText(s, n2, "Sein"); n2.style.color = WT.pr.c; bump(s, n2, 0.3); s.say("Statt Leons Trainer sagen wir sein Trainer."); });
           s.step(async () => { s.sfx.pop(); await s.show(pers, "left"); s.say("Ich, du, er, sie, es, wir, ihr, sie."); });
           s.step(async () => { s.sfx.pop(); await s.show(poss, "left"); s.sfx.ding(); s.say("Mein, dein, sein, ihr, unser, euer. Sie sagen, wem etwas gehört."); });
         },

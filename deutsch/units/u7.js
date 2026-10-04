@@ -485,7 +485,7 @@
       /* 12 --------------------------------------------------------------- */
       {
         title: "Der Bericht: W-Fragen",
-        say: "Ein Bericht beantwortet die W-Fragen. Julian hat seinen Turnbeutel verloren und schreibt einen Bericht für den Hausmeister.",
+        say: "Ein Bericht beantwortet die W-Fragen. Leon hat seinen Turnbeutel verloren und schreibt einen Bericht für den Hausmeister.",
         build(s) {
           const Wq = [["Wer?", P.blue], ["Was?", P.violet], ["Wann?", P.orange], ["Wo?", P.green], ["Wie?", "#0e7490"], ["Warum?", P.red], ["Folgen?", "#8a5a2b"]];
           const svg = s.svg(360, 360);
@@ -497,7 +497,7 @@
             g.style.transition = "opacity .4s"; svg.append(g); return g;
           });
           const S = (i, t) => { const e = s.h("span", null, t); e.i = i; return e; };
-          const parts = [S(2, "Am Mittwoch, dem 30. September 2026,"), " ", S(2, "nach dem Sportunterricht"), " ", S(1, "vergaß"), " ", S(0, "ich, Julian S. aus der 5a,"), " ", S(1, "meinen blauen Turnbeutel"), " ", S(3, "in der Umkleide der Sporthalle"), ". ", S(4, "Ich hatte ihn an einen Haken gehängt."), " ", S(5, "Weil mein Bus gleich kam, ging ich schnell los."), " ", S(6, "Am nächsten Morgen war der Beutel weg."), " Darin sind meine Turnschuhe und ein grünes T-Shirt."];
+          const parts = [S(2, "Am Mittwoch, dem 30. September 2026,"), " ", S(2, "nach dem Sportunterricht"), " ", S(1, "vergaß"), " ", S(0, "ich, Leon S. aus der 5a,"), " ", S(1, "meinen blauen Turnbeutel"), " ", S(3, "in der Umkleide der Sporthalle"), ". ", S(4, "Ich hatte ihn an einen Haken gehängt."), " ", S(5, "Weil mein Bus gleich kam, ging ich schnell los."), " ", S(6, "Am nächsten Morgen war der Beutel weg."), " Darin sind meine Turnschuhe und ein grünes T-Shirt."];
           const txt = s.h("p", { style: { fontSize: "21px", lineHeight: 1.5, margin: 0 } }, ...parts);
           const lf = later(life(s, null, s.h("p", { class: "small" }, "Unfallbericht für die Versicherung, Polizeibericht, Spielbericht in der Zeitung, Artikel für die Schülerzeitung.")));
           const m = later(merk(s, null, "Ein Bericht ist ", B(s, "sachlich"), ": Präteritum, richtige Reihenfolge, genaue Angaben, ", B(s, "keine Gefühle"), " und keine wörtliche Rede."));
@@ -508,7 +508,7 @@
             for (const i of ids) { nodes[i].setAttribute("opacity", 1); s.sfx.count(i); parts.filter(p => p.i === i).forEach(p => mark(p, Wq[i][1])); await s.wait(300); }
             s.say(say);
           };
-          s.step(light([0, 1], "Wer? Julian. Was? Er vergaß seinen Turnbeutel."));
+          s.step(light([0, 1], "Wer? Leon. Was? Er vergaß seinen Turnbeutel."));
           s.step(light([2, 3], "Wann? Am Mittwoch nach dem Sport. Wo? In der Umkleide."));
           s.step(light([4, 5], "Wie und warum? Er hatte es eilig, weil der Bus kam."));
           s.step(light([6], "Welche Folgen? Der Beutel war weg."));
@@ -519,7 +519,7 @@
       /* 13 --------------------------------------------------------------- */
       {
         title: "Einen Gegenstand beschreiben",
-        say: "Julians Rucksack ist weg! Für die Suchanzeige beschreibt er ihn ganz genau, vom Großen zum Kleinen.",
+        say: "Leons Rucksack ist weg! Für die Suchanzeige beschreibt er ihn ganz genau, vom Großen zum Kleinen.",
         build(s) {
           const svg = s.svg(380, 400);
           svg.append(
@@ -615,8 +615,8 @@
         say: "Eine E-Mail an die Lehrerin klingt anders als eine an Oma. Der Aufbau ist aber gleich.",
         build(s) {
           const V = {
-            f: { Betreff: "Frage zu den Mathe-Hausaufgaben", Anrede: "Sehr geehrte Frau Weber,", Text: "ich war gestern krank. Könnten Sie mir bitte sagen, welche Aufgaben wir bis Freitag machen sollen?", Gruß: "Mit freundlichen Grüßen", Name: "Julian Sarmiento, Klasse 5a" },
-            i: { Betreff: "Danke für das Buch!", Anrede: "Liebe Oma,", Text: "vielen Dank für das tolle Buch! Ich habe schon drei Kapitel gelesen. Wann kommst du uns besuchen?", Gruß: "Viele liebe Grüße", Name: "dein Julian" },
+            f: { Betreff: "Frage zu den Mathe-Hausaufgaben", Anrede: "Sehr geehrte Frau Weber,", Text: "ich war gestern krank. Könnten Sie mir bitte sagen, welche Aufgaben wir bis Freitag machen sollen?", Gruß: "Mit freundlichen Grüßen", Name: "Leon Weber, Klasse 5a" },
+            i: { Betreff: "Danke für das Buch!", Anrede: "Liebe Oma,", Text: "vielen Dank für das tolle Buch! Ich habe schon drei Kapitel gelesen. Wann kommst du uns besuchen?", Gruß: "Viele liebe Grüße", Name: "dein Leon" },
           };
           const colors = { Betreff: P.pencil, Anrede: P.blue, Text: P.ink, Gruß: P.green, Name: P.violet };
           const rows = {};

@@ -618,6 +618,170 @@
       },
       /* 15 --------------------------------------------------------------- */
       {
+        title: "Der Zauberlehrling",
+        say: "Noch eine Ballade von Goethe: Der Zauberlehrling. Der Lehrling will zaubern wie sein Meister – und das geht gründlich schief.",
+        build(s) {
+          const L = P.blue, M = P.violet;
+          const verse = (lines, color, it) => s.h("div", { class: "stack", style: { gap: "0", borderLeft: "6px solid " + color, paddingLeft: "10px" } },
+            ...lines.map(t => s.h("p", { style: { margin: 0, fontSize: "21px", lineHeight: 1.3, color, fontStyle: it ? "italic" : "normal", fontWeight: color === P.ink ? 400 : 700 } }, t)));
+          const who = (t, c) => s.h("p", { class: "small", style: { fontWeight: 700, color: c } }, t);
+          const a = s.h("div", { class: "stack", style: { gap: "6px" } }, who("Der Lehrling freut sich:", L), verse(["Hat der alte Hexenmeister", "Sich doch einmal wegbegeben!", "Und nun sollen seine Geister", "Auch nach meinem Willen leben."], L));
+          const b = later(s.h("div", { class: "stack", style: { gap: "6px" } }, who("Er zaubert den Besen:", L), verse(["Walle! walle", "Manche Strecke,", "Dass, zum Zwecke,", "Wasser fließe …"], L, true)));
+          const c = later(s.h("div", { class: "stack", style: { gap: "6px" } }, who("Er hat das Wort vergessen:", P.red), verse(["Herr, die Not ist groß!", "Die ich rief, die Geister,", "Werd’ ich nun nicht los."], P.red)));
+          const d = later(s.h("div", { class: "stack", style: { gap: "6px" } }, who("Der Meister rettet alles:", M), verse(["„In die Ecke,", "Besen! Besen!", "Seid’s gewesen.“"], M)));
+          const poem = s.h("div", { class: "card", style: { padding: "12px 16px", display: "flex", flexDirection: "column", gap: "10px" } },
+            s.h("p", { class: "h2", style: { fontSize: "24px" } }, "Der Zauberlehrling ", s.h("span", { class: "small pencil", style: { fontWeight: 400 } }, "Johann Wolfgang von Goethe, 1797 · Auszüge")),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px 20px" } }, a, c, b, d));
+          const pic = s.photo("zauberlehrling-barth", { w: 330, h: 450, pos: "50% 20%", caption: "Zeichnung von Ferdinand Barth" });
+          const rb = later(readBtn(s, "Auszüge vorlesen", "Hat der alte Hexenmeister sich doch einmal wegbegeben! Und nun sollen seine Geister auch nach meinem Willen leben. Walle! walle manche Strecke, dass, zum Zwecke, Wasser fließe. Herr, die Not ist groß! Die ich rief, die Geister, werd ich nun nicht los. In die Ecke, Besen! Besen! Seid's gewesen."));
+          const gl = later(s.h("div", { class: "card soft", style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, B(s, "Alte Wörter: "), "Hexenmeister = Zauberer · sich wegbegeben = weggehen · walle = fließe, ströme · Seid’s gewesen = Hört auf!")));
+          const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Bis heute sagt man „Die Geister, die ich rief …“, wenn einem etwas über den Kopf wächst. Paul Dukas machte 1897 daraus ein Orchesterstück.")));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "330px 1fr", gap: "20px", alignItems: "start" },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, pic, rb),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, poem, gl, lf)));
+          s.show(pic, "zoom"); s.sound("magic-chime", { vol: .5 });
+          s.step(async () => { s.sound("water-pour", { vol: .5, dur: 2.5, fade: .6 }); await s.show(b, "up"); s.say("Walle, walle, manche Strecke. Der Besen holt Wasser."); });
+          s.step(async () => { s.sound("splash", { vol: .5, dur: 2 }); await s.show(c, "up"); s.sfx.chord([-12, -9, -6]); s.say("Herr, die Not ist groß! Die ich rief, die Geister, werd ich nun nicht los."); });
+          s.step(async () => { s.sound("gong", { vol: .45, dur: 2.5 }); await s.show(d, "up"); s.say("In die Ecke, Besen! Besen! Seid's gewesen."); });
+          s.step(async () => { s.sfx.pop(); await s.show(gl, "up"); s.show(rb, "pop"); });
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+        },
+      },
+      /* 16 --------------------------------------------------------------- */
+      {
+        title: "Zauberlehrling: Spannungskurve",
+        say: "Die Spannung steigt Schritt für Schritt, bis zum Höhepunkt. Dann kommt der Meister, und alles ist gut.",
+        build(s) {
+          const pts = [
+            [2, "Der Meister ist weg.", "Der Lehrling ist frech und froh."],
+            [4, "Der Besen holt Wasser.", "Erst klappt alles prima."],
+            [7, "Das Zauberwort ist weg!", "Der Besen hört nicht mehr auf."],
+            [6, "Er spaltet den Besen.", "Kurz Hoffnung: „Und nun kann ich hoffen.“"],
+            [10, "Zwei Besen! Alles wird nass.", "Der Höhepunkt: „Wehe! wehe!“"],
+            [1, "Der Meister kommt.", "Ein Zauberwort – und alles ist still."],
+          ];
+          const W = 640, H = 360, x0 = 50, y0 = 300, dx = (W - 110) / 5, ky = 25;
+          const svg = s.svg(W, H);
+          svg.append(s.el("line", { x1: x0 - 20, y1: y0, x2: W - 10, y2: y0, stroke: P.ink, "stroke-width": 3 }), s.el("line", { x1: x0 - 20, y1: y0, x2: x0 - 20, y2: 20, stroke: P.ink, "stroke-width": 3 }),
+            T(s, 16, 160, "Spannung", { "font-size": 19, fill: P.pencil, transform: "rotate(-90 16 160)" }));
+          const XY = pts.map(([v], i) => [x0 + 20 + i * dx, y0 - v * ky]);
+          const segs = XY.slice(1).map((p, i) => { const q = XY[i]; return s.el("line", { x1: q[0], y1: q[1], x2: p[0], y2: p[1], stroke: i === 4 ? P.green : P.unit, "stroke-width": 6, "stroke-linecap": "round", class: "later" }); });
+          const dots = XY.map(([x, y], i) => fb(s.el("circle", { cx: x, cy: y, r: 13, fill: i === 4 ? P.red : P.unit, stroke: "#fff", "stroke-width": 3, class: i ? "later" : "" })));
+          const nums = XY.map(([x], i) => T(s, x, y0 + 30, String(i + 1), { "font-size": 21, fill: P.pencil, class: i ? "later" : "" }));
+          const peak = later(T(s, XY[4][0], XY[4][1] - 24, "Höhepunkt", { "font-size": 21, fill: P.red }));
+          svg.append(...segs, ...dots, ...nums, peak);
+          /* Raum mit Wasser */
+          const R = s.svg(330, 300);
+          R.append(s.el("rect", { x: 10, y: 10, width: 310, height: 280, rx: 14, fill: "#fff", stroke: P.line, "stroke-width": 3 }), T(s, 165, 42, "Im Saal des Meisters", { "font-size": 20, fill: P.pencil }));
+          const water = s.el("rect", { x: 13, y: 287, width: 304, height: 0, fill: "#5aa9e6", opacity: .7 });
+          const broom = x => { const g = s.el("g", null, s.el("line", { x1: 0, y1: -110, x2: 0, y2: 0, stroke: "#8a5a2b", "stroke-width": 7, "stroke-linecap": "round" }), s.el("path", { d: "M-22 40 L-8 0 L8 0 L22 40 Z", fill: "#e0a800", stroke: "#8a5a2b", "stroke-width": 3 }),
+            s.el("circle", { cx: 0, cy: -118, r: 12, fill: "#c7ab83", stroke: "#8a5a2b", "stroke-width": 3 }), s.el("rect", { x: 14, y: -60, width: 30, height: 32, rx: 4, fill: "#8a96a8", stroke: P.ink, "stroke-width": 2 })); g.setAttribute("transform", `translate(${x} 220)`); return g; };
+          const b1 = broom(110), b2 = later(broom(230));
+          R.append(b1, b2, water);
+          const lvl = { v: 0 };
+          const setW = async to => { const from = lvl.v; lvl.v = to; await s.tween({ from, to, dur: 800, ease: "inOut", update: v => { water.setAttribute("y", 287 - v * 2.74); water.setAttribute("height", v * 2.74); } }); };
+          const qEl = s.h("p", { style: { margin: 0, font: "700 26px/1.2 var(--f-display)", color: P.unit } }, pts[0][1]);
+          const eEl = s.h("p", { class: "small", style: { fontSize: "21px" } }, pts[0][2]);
+          const cap = s.h("div", { class: "card", style: { minHeight: "100px", display: "flex", flexDirection: "column", justifyContent: "center", gap: "4px", padding: "10px 16px" } }, qEl, eEl);
+          const lf7 = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Genauso baust du den Spannungsbogen in deinen eigenen Geschichten (Kapitel 7).")));
+          const m = later(merk(s, { style: { fontSize: "21px", padding: "10px 16px 12px" } }, "Wie in einer Erzählung steigt die Spannung bis zum ", B(s, "Höhepunkt", P.red), ". Dann kommt die ", B(s, "Auflösung", P.green), "."));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "640px 1fr", gap: "20px", alignItems: "start" },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, svg, m), s.h("div", { class: "stack", style: { gap: "12px" } }, R, cap, lf7)));
+          s.sfx.pop();
+          const go = async (i, snd) => {
+            await s.show(segs[i - 1], "draw"); await s.show(dots[i], "pop"); s.show(nums[i], "fade");
+            qEl.textContent = pts[i][1]; qEl.style.color = i === 4 ? P.red : P.unit; eEl.textContent = pts[i][2]; snd();
+          };
+          s.step(async () => { await go(1, () => s.sound("water-pour", { vol: .5, dur: 2, fade: .5 })); await setW(18); });
+          s.step(async () => { await go(2, () => s.sound("splash", { vol: .45, dur: 1.5 })); s.sfx.error(); await setW(45); });
+          s.step(async () => { await go(3, () => s.sound("twig-snap", { vol: .7 })); await setW(48); });
+          s.step(async () => { s.show(b2, "pop"); await go(4, () => s.sound("waves", { vol: .5, dur: 3, fade: .8 })); s.show(peak, "pop"); s.sfx.chord([0, 3, 6]); await setW(88); });
+          s.step(async () => { await go(5, () => s.sound("magic-chime", { vol: .6 })); s.hide(b2); await setW(0); s.sfx.success(); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.show(lf7, "up"); });
+        },
+      },
+      /* 17 --------------------------------------------------------------- */
+      {
+        title: "John Maynard",
+        say: "Theodor Fontane erzählt von einem Schiff, das brennt. Der Steuermann John Maynard bleibt am Steuer, bis alle gerettet sind.",
+        build(s) {
+          const st = [
+            ["30", 2, "Noch 30 Minuten … Halbe Stund’.", "Alle sind froh, das Ufer ist nah."],
+            ["20", 6, "„Feuer“ war es, was da klang,", "Qualm, dann Flammen!"],
+            ["15", 7, "„Wo sind wir? wo?“", "Die Passagiere drängen sich vorn."],
+            ["10", 9, "„Noch da, John Maynard?“ – „Ja, Herr. Ich bin.“", "Er steuert durch den Qualm."],
+            ["0", 10, "Rettung: der Strand von Buffalo.", "Höhepunkt: Er jagt das Schiff an den Strand."],
+            ["", 3, "Gerettet alle. Nur Einer fehlt!", "John Maynard ist tot. Die Stadt trauert."],
+          ];
+          const W = 560, H = 270, bw = 64, gap = (W - 40 - 6 * bw) / 5;
+          const svg = s.svg(W, H);
+          svg.append(s.el("line", { x1: 10, y1: 230, x2: W - 10, y2: 230, stroke: P.ink, "stroke-width": 3 }));
+          const col = v => (v < 5 ? P.unit : v < 9 ? P.orange : P.red);
+          const bars = st.map(([mn, v], i) => {
+            const x = 20 + i * (bw + gap);
+            const r = s.el("rect", { x, y: 230, width: bw, height: 0, rx: 8, fill: i === 5 ? P.pencil : col(v) });
+            const lab = T(s, x + bw / 2, 258, mn === "" ? "Ende" : mn === "0" ? "Ufer" : mn + " Min.", { "font-size": 19, fill: P.pencil });
+            svg.append(r, lab); return r;
+          });
+          const grow = async i => { const hh = st[i][1] * 20; await s.tween({ from: 0, to: hh, dur: 450, ease: "back", update: v => { bars[i].setAttribute("y", 230 - v); bars[i].setAttribute("height", Math.max(0, v)); } }); };
+          const qEl = s.h("p", { style: { margin: 0, font: "700 24px/1.25 var(--f-display)", color: P.unit } }, "");
+          const eEl = s.h("p", { class: "small", style: { fontSize: "21px" } }, "");
+          const cap = s.h("div", { class: "card", style: { minHeight: "112px", display: "flex", flexDirection: "column", justifyContent: "center", gap: "4px", padding: "10px 16px" } }, qEl, eEl);
+          const sel = i => { qEl.textContent = st[i][2]; qEl.style.color = i === 5 ? P.pencil : col(st[i][1]); eEl.textContent = st[i][3]; };
+          const pic = s.photo("dampfer-erie", { w: "100%", h: 220, pos: "50% 40%", caption: "Das echte Vorbild: Brand der „Erie“, 1841" });
+          const intro = s.h("div", { class: "card soft", style: { padding: "10px 16px" } }, s.h("p", { class: "small", style: { fontSize: "21px" } }, "Theodor Fontane, 1886: Das Schiff „Schwalbe“ fährt über den Erie-See von Detroit nach Buffalo. Da bricht Feuer aus."));
+          const dl = (who, c, t) => s.h("p", { style: { margin: 0, fontSize: "21px", lineHeight: 1.35 } }, s.h("b", { style: { color: c } }, who + ": "), s.h("span", { style: { color: c, fontWeight: 700 } }, t));
+          const dia = later(s.h("div", { class: "card", style: { padding: "10px 16px", borderLeft: "6px solid " + P.unit } },
+            s.h("p", { class: "small pencil", style: { marginBottom: "4px" } }, "Dramatischer Dialog durchs Sprachrohr:"),
+            dl("Kapitän", P.blue, "„Noch da, John Maynard?“"), dl("John Maynard", P.green, "„Ja, Herr. Ich bin.“"),
+            dl("Kapitän", P.blue, "„Auf den Strand. In die Brandung.“"), dl("John Maynard", P.green, "„Ich halte drauf hin.“")));
+          const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "1841 brannte auf dem Erie-See in Nordamerika der Dampfer „Erie“. Der Steuermann Luther Fuller soll bis zuletzt am Steuer geblieben sein.")));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "1fr 560px", gap: "20px", alignItems: "start" },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, pic, intro, lf),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, svg, cap, dia)));
+          sel(0); bars[0].setAttribute("y", 230 - 40); bars[0].setAttribute("height", 40);
+          s.show(pic, "zoom"); s.sound("waves", { vol: .4, dur: 3, fade: .8 });
+          s.step(async () => { s.sound("fire", { vol: .5, dur: 3, fade: .8 }); await grow(1); sel(1); s.say("Feuer! Noch zwanzig Minuten bis Buffalo."); });
+          s.step(async () => { s.sfx.count(2); await grow(2); sel(2); s.say("Wo sind wir? Wo? Noch fünfzehn Minuten."); });
+          s.step(async () => { s.sound("ship-horn", { vol: .4, dur: 2 }); await grow(3); sel(3); s.show(dia, "up"); read(s, "Noch da, John Maynard? Ja, Herr. Ich bin. Auf den Strand. In die Brandung. Ich halte drauf hin."); });
+          s.step(async () => { s.sound("splash", { vol: .5, dur: 2 }); await grow(4); sel(4); s.sfx.chord([0, 4, 7]); s.say("Rettung: der Strand von Buffalo."); });
+          s.step(async () => { s.sound("church-bells", { vol: .4, dur: 4, fade: 1 }); await grow(5); sel(5); s.say("Gerettet alle. Nur einer fehlt."); });
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+        },
+      },
+      /* 18 --------------------------------------------------------------- */
+      {
+        title: "Was macht eine Ballade aus?",
+        say: "Drei Balladen, ein Bauplan: eine spannende Handlung, in Versen und Strophen erzählt, mit Figuren, die selbst sprechen.",
+        build(s) {
+          const heads = ["", "Erlkönig", "Der Zauberlehrling", "John Maynard"];
+          const rows = [
+            ["Dichter", "Goethe, 1782", "Goethe, 1797", "Fontane, 1886"],
+            ["Handlung", "Ritt durch die Nacht", "Besen außer Kontrolle", "Ein Schiff brennt"],
+            ["Wer spricht?", "Vater, Sohn, Erlkönig", "Lehrling, Meister", "Kapitän, Steuermann"],
+            ["Höhepunkt", "„… so brauch’ ich Gewalt.“", "Zwei Besen, alles nass", "In die Brandung!"],
+            ["Ende", "Das Kind ist tot.", "Der Meister rettet.", "Alle gerettet – bis auf einen."],
+          ];
+          const cell = (t, i, j) => s.h(i < 0 ? "th" : "td", { style: { padding: "10px 10px", fontSize: j === 0 ? "19px" : "20px", fontWeight: j === 0 || i < 0 ? 700 : 400, color: j === 0 ? P.unit : P.ink, textAlign: "left", borderBottom: "2px solid " + P.line } }, t);
+          const trs = rows.map((r, i) => later(s.h("tr", null, ...r.map((t, j) => cell(t, i, j)))));
+          const table = s.h("table", { style: { width: "100%", borderCollapse: "collapse", background: "#fff", borderRadius: "14px" } },
+            s.h("thead", null, s.h("tr", null, ...heads.map((t, j) => cell(t, -1, j)))), s.h("tbody", null, ...trs));
+          const pieces = [["Handlung", "eine spannende Geschichte", P.blue], ["Gedicht", "Verse, Strophen, Reime", P.green], ["Spannung", "steigt bis zum Höhepunkt", P.red], ["Dialog", "Figuren sprechen selbst", P.violet]];
+          const pz = pieces.map(([a, b, c]) => later(s.h("div", { class: "card", style: { borderColor: c, borderWidth: "3px", padding: "10px 14px", textAlign: "center" } }, s.h("p", { style: { margin: 0, font: "700 24px/1.1 var(--f-display)", color: c } }, a), s.h("p", { class: "small" }, b))));
+          const plus = () => later(s.h("b", { style: { font: "700 32px/1 var(--f-display)", color: P.pencil, alignSelf: "center" } }, "+"));
+          const pl = [plus(), plus(), plus()];
+          const eq = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr auto 1fr auto 1fr auto 1fr", gap: "8px" } }, pz[0], pl[0], pz[1], pl[1], pz[2], pl[2], pz[3]);
+          const m = later(merk(s, { style: { fontSize: "21px", padding: "10px 16px 12px" } }, "Eine ", B(s, "Ballade"), " ist eine spannende Geschichte in Gedichtform – oft mit wörtlicher Rede, fast wie ein kleines Theaterstück."));
+          s.add(root(s, "stack", { gap: "14px" }, s.h("div", { class: "card", style: { padding: "6px 10px" } }, table), eq, m));
+          s.sfx.pop();
+          s.step(async () => { for (const i of [0, 1]) { s.sfx.count(i); await s.show(trs[i], "left"); } });
+          s.step(async () => { for (const i of [2, 3, 4]) { s.sfx.count(i); await s.show(trs[i], "left"); } s.sound("horse-gallop", { vol: .4, dur: 2 }); });
+          s.step(async () => { for (let i = 0; i < 4; i++) { if (i) s.show(pl[i - 1], "pop"); s.sfx.snap(); await s.show(pz[i], "zoom"); } s.say("Handlung plus Gedicht plus Spannung plus Dialog."); });
+          s.step(async () => { s.sfx.success(); await s.show(m, "up"); });
+        },
+      },
+      /* 19 --------------------------------------------------------------- */
+      {
         title: "Ein Buch vorstellen",
         say: "Bei einer Buchvorstellung erzählst du so viel, dass alle neugierig werden. Aber das Ende verrätst du nicht!",
         build(s) {
@@ -653,7 +817,7 @@
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },
-      /* 16 --------------------------------------------------------------- */
+      /* 20 --------------------------------------------------------------- */
       {
         title: "Vorlesen wie ein Profi",
         say: "Gut vorlesen heißt: richtig betonen, Pausen machen und das passende Tempo finden. Probiere es mit dem Regler aus!",

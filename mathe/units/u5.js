@@ -551,7 +551,7 @@
       /* 12 --------------------------------------------------------------- */
       {
         title: "Wer hat mehr Saft?",
-        say: "Julian hat zwei Drittel Glas, Louisa drei Viertel. Mit dem Hauptnenner zwölf sehen wir: Louisa hat mehr.",
+        say: "Leon hat zwei Drittel Glas, Nora drei Viertel. Mit dem Hauptnenner zwölf sehen wir: Nora hat mehr.",
         build(s) {
           const svg = s.svg(520, 440);
           const H = 320, B = 360;
@@ -569,11 +569,11 @@
             svg.append(cp, juice, fine, marks, s.el("path", { d: path, fill: "none", stroke: INK, "stroke-width": 4.5, "stroke-linejoin": "round" }), T(s, x0 + 80, 18, name, { size: 22 }), lbl, eq);
             return { juice, fine, eq, h: (H * z) / n };
           };
-          const G1 = glass(60, "Julian", 2, 3), G2 = glass(300, "Louisa", 3, 4);
+          const G1 = glass(60, "Leon", 2, 3), G2 = glass(300, "Nora", 3, 4);
           const pour = async G => { s.sound("water-pour", { vol: .6, dur: 1.1 }); await s.tween({ dur: 900, ease: "out", update: v => { G.juice.setAttribute("y", B - G.h * v); G.juice.setAttribute("height", G.h * v); } }); };
           const hn = P(s, "t later", s.h("b", null, "Hauptnenner"), " = kgV(3, 4) = 12");
           const eq = s.h("div", { class: "u5eq later", style: { fontSize: "34px" } }, F(s, 2, 3), "=", F(s, 8, 12, { color: UC }), "<", F(s, 9, 12, { color: UC }), "=", F(s, 3, 4));
-          const concl = P(s, "h2 later", s.h("span", { style: { color: GREEN } }, "→ Louisa hat mehr Saft!"));
+          const concl = P(s, "h2 later", s.h("span", { style: { color: GREEN } }, "→ Nora hat mehr Saft!"));
           const mk = merk(s, "Erst auf den ", s.h("b", null, "Hauptnenner"), " erweitern, dann die Zähler vergleichen.");
           const wall = s.svg(540, 202), wrows = [];
           [[1, 2], [2, 3], [3, 4], [5, 6]].forEach(([z, n], r) => {
@@ -583,7 +583,7 @@
             wall.append(g); wrows.push(g);
           });
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", alignItems: "center", height: "100%" } }, svg,
-            s.h("div", { class: "stack", style: { gap: "12px" } }, P(s, "t", "Julian: ", F(s, 2, 3), " Glas, Louisa: ", F(s, 3, 4), " Glas. Wer hat mehr?"), hn, eq, concl, mk, wall)));
+            s.h("div", { class: "stack", style: { gap: "12px" } }, P(s, "t", "Leon: ", F(s, 2, 3), " Glas, Nora: ", F(s, 3, 4), " Glas. Wer hat mehr?"), hn, eq, concl, mk, wall)));
           s.sfx.pop();
           s.step(async () => { await pour(G1); await pour(G2); s.sfx.ding(); });
           s.step(async () => { s.sound("pencil-write"); await s.show([G1.fine, G2.fine], "fade"); await s.show(hn, "up"); s.show([G1.eq, G2.eq], "pop"); s.sfx.count(4); await s.show(eq, "up"); });
@@ -738,11 +738,11 @@
           for (let i = 0; i < 20; i++) { const r = s.el("rect", { x: 6 + i * 14.4, y: 8, width: 12.4, height: 40, rx: 3, fill: "#fff", stroke: INK, "stroke-width": 1.5 }); t3.append(r); cells.push(r); }
           const tb = L(T(s, 42, 70, "Buch", { size: 19, fill: UC })), tkino = L(T(s, 107, 70, "Kino", { size: 19, fill: BLUE }));
           t3.append(tb, tkino);
-          const A = card("BVG: 4-Fahrten-Karte", ["Julian fährt 1 Fahrt, Louisa 2 Fahrten. Wie viel der Karte ist verbraucht, wie viel übrig?"], t1,
+          const A = card("BVG: 4-Fahrten-Karte", ["Leon fährt 1 Fahrt, Nora 2 Fahrten. Wie viel der Karte ist verbraucht, wie viel übrig?"], t1,
             [P(s, "small", F(s, 1, 4), " + ", F(s, 2, 4), " = ", F(s, 3, 4), " verbraucht."), P(s, "small", "Übrig: 1 − ", F(s, 3, 4), " = ", F(s, 1, 4), " – noch 1 Fahrt.")]);
           const B = card("Kuchenbasar", ["Ein Blech hat 12 Stücke. Vormittags wird ", F(s, 5, 12), " verkauft, nachmittags ", F(s, 1, 3), "."], t2,
             [P(s, "small", F(s, 5, 12), " + ", F(s, 4, 12), " = ", F(s, 9, 12), " = ", F(s, 3, 4), " verkauft."), P(s, "small", "Übrig: ", F(s, 1, 4), " = 3 Stücke.")]);
-          const C = card("Taschengeld", ["Julian hat 20 €. Er gibt ", F(s, 1, 4), " für ein Buch und ", F(s, 1, 5), " fürs Kino aus."], t3,
+          const C = card("Taschengeld", ["Leon hat 20 €. Er gibt ", F(s, 1, 4), " für ein Buch und ", F(s, 1, 5), " fürs Kino aus."], t3,
             [P(s, "small", F(s, 1, 4), " von 20 € = 5 €, ", F(s, 1, 5), " von 20 € = 4 €."), P(s, "small", "Zusammen 9 € = ", F(s, 9, 20), ". Übrig: 11 €.")]);
           const mk = merk(s, "Brüche sind überall: Pizza, Schokolade, Uhr, Noten, Saft, Fahrkarten und Geld!");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { alignItems: "stretch" } }, A.c, B.c, C.c), mk));

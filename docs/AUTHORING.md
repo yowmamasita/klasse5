@@ -1,7 +1,7 @@
 # Writing a unit (Kapitel) for "Deutsch Klasse 5"
 
 An interactive motion-graphics slide deck (plain HTML/CSS/JS/SVG/canvas, no libraries) covering the whole
-Klasse 5 German language and literature (Deutsch) year for **Julian** (10, Albrecht-Dürer-Gymnasium Berlin, Schnelllerner class, is in the
+Klasse 5 German language and literature (Deutsch) year for **a 10-year-old pupil** (Albrecht-Dürer-Gymnasium Berlin, Schnelllerner class, is in the
 Instrumentalklasse: he picks a string or wind instrument at the end of Klasse 5 and starts lessons in Klasse 6). He is a **visual learner** and learns through **real-life examples**.
 It runs on an **iPad** (landscape, touch). Everything on screen is **German** (German school terms).
 

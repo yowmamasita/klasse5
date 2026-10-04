@@ -591,7 +591,7 @@
       /* 11 ----------------------------------------------------------------- */
       {
         title: "Eine Wand streichen",
-        say: "Julian will eine Wand streichen. Fenster und Tür werden nicht gestrichen.",
+        say: "Leon will eine Wand streichen. Fenster und Tür werden nicht gestrichen.",
         build(s) {
           const S = 80, X = 70, Y = 20, W = 5 * S, H = 3 * S;
           const win = { x: X + .5 * S, y: Y + .6 * S, w: 2 * S, h: S }, door = { x: X + 3.4 * S, y: Y + S, w: S, h: 2 * S };

@@ -173,7 +173,7 @@
         say: "Wir stellen einen Satz um, wie Bausteine. Achte darauf, welche Wörter immer zusammenbleiben.",
         build(s) {
           const B = {
-            S: blk(s, "x", "Julian", { label: "", size: "l" }),
+            S: blk(s, "x", "Leon", { label: "", size: "l" }),
             P: blk(s, "x", "spielt", { label: "", size: "l" }),
             Z: blk(s, "x", "am Samstag", { label: "", size: "l" }),
             AO: blk(s, "x", "Fußball", { label: "", size: "l" }),
@@ -260,7 +260,7 @@
         build(s) {
           const L = [
             ["P", "spielt", "Was tut …? Was geschieht?"],
-            ["S", "Julian", "Wer oder was?"],
+            ["S", "Leon", "Wer oder was?"],
             ["AO", "den Ball", "Wen oder was?"],
             ["DO", "dem Trainer", "Wem?"],
             ["Z", "am Samstag", "Wann? Wie lange?"],
@@ -277,13 +277,13 @@
           const steps = ["1. Prädikat suchen", "2. Subjekt erfragen", "3. Objekte erfragen", "4. Adverbiale erfragen"];
           const way = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 14px" } },
             s.h("div", { class: "row", style: { gap: "10px" } }, steps.map((t, i) => [i ? s.h("b", { class: "pencil" }, "→") : null, s.h("span", { class: "chip", style: { fontSize: "20px", background: "#fff" } }, t)])));
-          const exRow = s.h("div", { class: "d2row", style: { justifyContent: "center" } }, [["Z", "Am Samstag"], ["P", "gibt"], ["S", "Julian"], ["DO", "seinem Freund"], ["O", "im Park"], ["AO", "den Ball"]].map(([k, t]) => blk(s, k, t)), P(s, "."));
+          const exRow = s.h("div", { class: "d2row", style: { justifyContent: "center" } }, [["Z", "Am Samstag"], ["P", "gibt"], ["S", "Leon"], ["DO", "seinem Freund"], ["O", "im Park"], ["AO", "den Ball"]].map(([k, t]) => blk(s, k, t)), P(s, "."));
           const exCard = ex(s, "Ein Satz – sechs Farben", exRow); exCard.classList.add("later");
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, grid, exCard, way));
           s.sfx.pop();
           s.step(async () => { for (const c of cards.slice(0, 4)) { s.sfx.pop(); s.show(c, "pop"); await s.wait(160); } s.say("Prädikat, Subjekt, Akkusativobjekt und Dativobjekt."); });
           s.step(async () => { for (const c of cards.slice(4)) { s.sfx.pop(); s.show(c, "pop"); await s.wait(160); } s.say("Und vier Adverbiale. Sie antworten auf wann, wo, wie und warum."); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(exCard, "up"); const bs = [...exRow.querySelectorAll(".d2tok")]; for (const b of bs) { bump(s, b, 0.2); s.sfx.count(bs.indexOf(b) + 2); await s.wait(150); } s.say("Am Samstag gibt Julian seinem Freund im Park den Ball."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(exCard, "up"); const bs = [...exRow.querySelectorAll(".d2tok")]; for (const b of bs) { bump(s, b, 0.2); s.sfx.count(bs.indexOf(b) + 2); await s.wait(150); } s.say("Am Samstag gibt Leon seinem Freund im Park den Ball."); });
           s.step(async () => { s.sfx.ding(); await s.show(way, "up"); s.say("Fang immer mit dem Prädikat an."); });
         },
       },
@@ -325,7 +325,7 @@
         say: "Manchmal hat das Prädikat zwei Teile. Der zweite Teil wandert ans Satzende. So entsteht eine Klammer um den Satz.",
         build(s) {
           const R = [
-            ["Perfekt", "Fußball", [["S", "Julian"], ["P1", "hat"], ["P2", "geschossen"], ["AO", "ein Tor"]], ["S", "P1", "AO", "P2"]],
+            ["Perfekt", "Fußball", [["S", "Leon"], ["P1", "hat"], ["P2", "geschossen"], ["AO", "ein Tor"]], ["S", "P1", "AO", "P2"]],
             ["trennbares Verb", "Telefon", [["S", "Lea"], ["P1", "ruft"], ["P2", "an"], ["AO", "ihre Oma"]], ["S", "P1", "AO", "P2"]],
             ["mit Modalverb", "Essen", [["S", "wir"], ["P1", "wollen"], ["P2", "essen"], ["Z", "heute"], ["AO", "Pizza"]], ["S", "P1", "Z", "AO", "P2"]],
           ];
@@ -363,7 +363,7 @@
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Ein zweiteiliges Prädikat bildet eine ", s.h("b", null, "Klammer"), ": Teil 1 an Platz 2, Teil 2 am Ende.");
           s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, rows.map(r => r.el), lf, merk));
           s.show(rows.map(r => r.el), "left"); s.sfx.whoosh();
-          rows.forEach((r, i) => s.step(async () => { await r.run(); s.say(["Julian hat ein Tor geschossen.", "Lea ruft ihre Oma an.", "Wir wollen heute Pizza essen."][i]); }));
+          rows.forEach((r, i) => s.step(async () => { await r.run(); s.say(["Leon hat ein Tor geschossen.", "Lea ruft ihre Oma an.", "Wir wollen heute Pizza essen."][i]); }));
           s.step(async () => { s.sound("ubahn-announce", { vol: 0.5, dur: 4, fade: 0.8 }); await s.show(lf, "up"); s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -390,7 +390,7 @@
         say: "Das Akkusativobjekt findest du mit der Frage: Wen oder was?",
         build(s) {
           const C = [
-            qcard(s, "Fußball", [["S", "Julian"], ["P", "schießt"], ["x", "den Ball"], ["x", "ins Tor"]], "Wen oder was schießt Julian?", 2, "AO", "den Ball", s.photo("fussball-zweikampf", { w: 210, h: 110 }), ["ball-kick", { vol: 0.7 }]),
+            qcard(s, "Fußball", [["S", "Leon"], ["P", "schießt"], ["x", "den Ball"], ["x", "ins Tor"]], "Wen oder was schießt Leon?", 2, "AO", "den Ball", s.photo("fussball-zweikampf", { w: 210, h: 110 }), ["ball-kick", { vol: 0.7 }]),
             qcard(s, "Einkaufen", [["S", "Mama"], ["P", "kauft"], ["x", "einen Kürbis"]], "Wen oder was kauft Mama?", 2, "AO", "einen Kürbis", s.photo("kuerbisse", { w: 210, h: 110 }), ["cash-register", { vol: 0.5 }]),
             qcard(s, "U-Bahn", [["S", "Der Kontrolleur"], ["P", "prüft"], ["x", "die Fahrkarte"]], "Wen oder was prüft der Kontrolleur?", 2, "AO", "die Fahrkarte", s.photo("fahrkartenautomat", { w: 210, h: 110 })),
           ];
@@ -401,7 +401,7 @@
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Bei maskulinen Nomen siehst du den Akkusativ am Artikel: ", s.h("b", null, "der → den"), ", ", s.h("b", null, "ein → einen"), ".");
           s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, C.map(c => c.el), s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" } }, flip, merk)));
           s.show(C.map(c => c.el), "up"); s.sfx.pop();
-          C.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Wen oder was schießt Julian? Den Ball.", "Wen oder was kauft Mama? Einen Kürbis.", "Wen oder was prüft der Kontrolleur? Die Fahrkarte."][i]); }));
+          C.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Wen oder was schießt Leon? Den Ball.", "Wen oder was kauft Mama? Einen Kürbis.", "Wen oder was prüft der Kontrolleur? Die Fahrkarte."][i]); }));
           s.step(async () => { s.sfx.pop(); await s.show(flip, "up"); await flipText(s, art, "den"); s.sfx.zap(); s.sfx.ding(); await s.show(merk, "up"); s.say("Aus der Ball wird den Ball."); });
         },
       },
@@ -411,14 +411,14 @@
         say: "Das Dativobjekt findest du mit der Frage: Wem? Oft bekommt jemand etwas.",
         build(s) {
           const C = [
-            qcard(s, "Fußball", [["S", "Julian"], ["P", "gibt"], ["x", "dem Trainer"], ["AO", "den Ball"]], "Wem gibt Julian den Ball?", 2, "DO", "dem Trainer", s.photo("fussball", { w: 210, h: 100 }), ["whistle", { vol: 0.6 }]),
+            qcard(s, "Fußball", [["S", "Leon"], ["P", "gibt"], ["x", "dem Trainer"], ["AO", "den Ball"]], "Wem gibt Leon den Ball?", 2, "DO", "dem Trainer", s.photo("fussball", { w: 210, h: 100 }), ["whistle", { vol: 0.6 }]),
             qcard(s, "Chat", [["S", "Ich"], ["P", "schreibe"], ["x", "meiner Freundin"], ["AO", "eine Nachricht"]], "Wem schreibe ich eine Nachricht?", 2, "DO", "meiner Freundin", s.photo("handy-tippen", { w: 210, h: 100 })),
             qcard(s, "Restaurant", [["S", "Die Kellnerin"], ["P", "bringt"], ["x", "dem Gast"], ["AO", "die Suppe"]], "Wem bringt die Kellnerin die Suppe?", 2, "DO", "dem Gast", s.photo("tomatensuppe", { w: 210, h: 100 }), ["besteck", { vol: 0.7 }]),
           ];
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Nach ", s.h("b", null, "helfen, danken, gehören, gefallen"), " steht ein Dativobjekt: Ich helfe ", s.h("b", { style: { color: SG.DO.c } }, "meiner Oma"), ". Das Trikot gehört ", s.h("b", { style: { color: SG.DO.c } }, "mir"), ".");
           s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, C.map(c => c.el), merk, legend(s, ["P", "S", "AO", "DO"])));
           s.show(C.map(c => c.el), "up"); s.sfx.pop();
-          C.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Wem gibt Julian den Ball? Dem Trainer.", "Wem schreibe ich? Meiner Freundin.", "Wem bringt die Kellnerin die Suppe? Dem Gast."][i]); }));
+          C.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Wem gibt Leon den Ball? Dem Trainer.", "Wem schreibe ich? Meiner Freundin.", "Wem bringt die Kellnerin die Suppe? Dem Gast."][i]); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -428,7 +428,7 @@
         say: "Adverbiale Bestimmungen erzählen mehr: wann, wo, wie und warum etwas passiert. Schau, wie der Satz wächst.",
         build(s) {
           const B = {
-            S: blk(s, "S", "Julian", { label: "Wer?" }),
+            S: blk(s, "S", "Leon", { label: "Wer?" }),
             P: blk(s, "P", "spielt", { label: "Was tut er?" }),
             AO: blk(s, "AO", "Fußball", { label: "Was?" }),
             Z: blk(s, "Z", "am Samstag", { label: "Wann?" }),
@@ -457,7 +457,7 @@
             s.sfx.snap(); bump(s, B[Q[i][0]], 0.2); s.show(hints[Q[i][0]], "fade");
             s.say(["Wann? Am Samstag.", "Warum? Wegen des schönen Wetters.", "Wie? Begeistert.", "Wo? Im Park."][i]);
           }));
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Julian spielt am Samstag wegen des schönen Wetters begeistert im Park Fußball."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Leon spielt am Samstag wegen des schönen Wetters begeistert im Park Fußball."); });
         },
       },
       /* 10 ----------------------------------------------------------------- */
@@ -672,11 +672,154 @@
       },
       /* 15 ----------------------------------------------------------------- */
       {
+        title: "Komma bei Aufzählungen",
+        say: "Zählst du mehrere Dinge auf, trennst du sie mit einem Komma. Vor und und oder steht kein Komma.",
+        build(s) {
+          const RED = "var(--red)";
+          const items = ["Eis", "Käse", "Olivenöl", "Toast"];
+          const word = t => s.h("span", { class: "d2b", style: { borderColor: SG.AO.c, background: SG.AO.b, fontSize: "25px" } }, t);
+          const comma = () => s.h("b", { class: "later", style: { font: "700 44px/1 var(--f-display)", color: RED, alignSelf: "flex-end", marginLeft: "-8px" } }, ",");
+          const W = items.map(word), C = [comma(), comma(), comma()];
+          const und = s.h("span", { class: "d2b later", style: { borderColor: KONJ.c, background: KONJ.b } }, "und");
+          const no = s.h("span", { class: "later", "data-overlap-ok": "", style: { position: "relative", display: "inline-block", alignSelf: "flex-end" } },
+            s.h("b", { style: { font: "700 44px/1 var(--f-display)", color: "#a3adbb" } }, ","),
+            s.h("b", { style: { position: "absolute", left: "-6px", top: "-4px", font: "700 34px/1 var(--f-display)", color: RED } }, "✕"));
+          const row = s.h("div", { class: "row", style: { gap: "9px", alignItems: "flex-end", flexWrap: "nowrap" } },
+            s.h("span", { class: "d2b", style: { borderColor: "#a3adbb", fontSize: "25px" } }, "Ich kaufe"), W[0], C[0], W[1], C[1], W[2], no, und, W[3], P(s, "."));
+          W.forEach(w => w.classList.add("later"));
+          const pic = s.photo("einkaufszettel", { w: 300, h: 300, pos: "50% 30%", caption: "Ein echter Einkaufszettel" });
+          const top = s.h("div", { style: { display: "grid", gridTemplateColumns: "300px 1fr", gap: "22px", alignItems: "center" } }, pic,
+            s.h("div", { class: "stack", style: { gap: "14px" } },
+              s.h("p", { class: "t" }, "Auf dem Zettel steht alles untereinander. Im Satz brauchst du dafür ", s.h("b", { style: { color: RED } }, "Kommas"), "."),
+              s.h("div", { class: "card", style: { padding: "16px 18px" } }, row)));
+          const L = [
+            ["Im Alltag: Klassenfahrt", "Ich packe Schlafsack", ", ", "Taschenlampe", ", ", "Zahnbürste", " und ", "Badehose ein."],
+            ["Im Alltag: Pizzeria", "Möchtest du Salami", ", ", "Pilze", ", ", "Schinken", " oder ", "Tomaten?"],
+            ["Im Alltag: Wetter", "Heute ist es kalt", ", ", "nass", ", ", "windig", " und ", "grau."],
+          ];
+          const lifes = L.map(([lab, ...parts]) => { const c = life(s, lab, s.h("p", { class: "t", style: { fontSize: "22px" } }, parts.map(p => p.trim() === "," ? [s.h("b", { style: { color: RED, fontSize: "30px" } }, ","), " "] : /^ (und|oder) $/.test(p) ? s.h("b", { style: { color: KONJ.c } }, p) : p))); c.classList.add("later"); return c; });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Bei Aufzählungen trennt ein ", s.h("b", { style: { color: RED } }, "Komma"), " die Teile. Vor ", s.h("b", null, "und"), " und ", s.h("b", null, "oder"), " steht ", s.h("b", null, "kein"), " Komma – die Wörter übernehmen seine Arbeit.");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, top, s.h("div", { class: "cols3", style: { gap: "12px" } }, lifes), merk));
+          s.show(pic, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sound("pencil-write", { vol: 0.5, dur: 1.6 }); for (let i = 0; i < 3; i++) { await s.show(W[i], "pop"); s.sfx.pop(); if (i < 2) { await s.show(C[i], "bounce"); s.sfx.tick(); } } s.say("Ich kaufe Eis, Käse, Olivenöl …"); });
+          s.step(async () => { await s.show(no, "pop"); s.sfx.error(); await s.show(und, "zoom"); s.sfx.snap(); await s.show(W[3], "pop"); s.sfx.ding(); s.say("Ich kaufe Eis, Käse, Olivenöl und Toast. Vor und steht kein Komma."); });
+          s.step(async () => { s.sound("zipper", { vol: 0.5, dur: 1.2 }); await s.show(lifes[0], "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(lifes[1], "up"); s.say("Auch vor oder steht kein Komma."); });
+          s.step(async () => { s.sound("wind", { vol: 0.35, dur: 2.5, fade: 0.6 }); await s.show(lifes[2], "up"); s.say("Auch Adjektive kann man aufzählen."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 16 ----------------------------------------------------------------- */
+      {
+        title: "Komma vor aber, weil, dass …",
+        say: "Vor aber, sondern und denn steht ein Komma. Und zwischen Hauptsatz und Nebensatz steht immer ein Komma.",
+        build(s) {
+          const HS = "#0f766e", NS = "#b45309", RED = "var(--red)";
+          const MSG = [
+            [0, "Ich will mit", "aber", "ich muss erst Hausaufgaben machen.", "HS"],
+            [1, "Wir fahren nicht mit dem Bus", "sondern", "mit dem Fahrrad.", "HS"],
+            [0, "Nimm eine Jacke mit", "denn", "es wird kalt.", "HS"],
+            [1, "Ich bin spät dran", "weil", "die U8 Verspätung hat.", "NS"],
+            [0, "Ich komme", "obwohl", "es regnet.", "NS"],
+            [1, "", "Wenn", "ich da bin, rufe ich dich an.", "NS"],
+          ];
+          const bub = ([me, a, k, b, typ]) => {
+            const kEl = s.h("b", { style: { color: typ === "HS" ? HS : NS } }, k);
+            const cm = s.h("b", { style: { color: RED, fontSize: "28px" } }, ",");
+            let kids;
+            if (!a) { const [x, ...rest] = b.split(", "); kids = [kEl, " " + x, cm, " " + rest.join(", ")]; }
+            else kids = [a, cm, " ", kEl, " " + b];
+            const el = s.h("div", { class: "later", style: { alignSelf: me ? "flex-end" : "flex-start", maxWidth: "88%", background: me ? "#d9fdd3" : "#fff", border: "2px solid " + (me ? "#a6e3a0" : "#d5dde6"), borderRadius: me ? "16px 16px 4px 16px" : "16px 16px 16px 4px", padding: "6px 12px", font: "400 20px/1.3 var(--f-body)", color: "var(--ink)" } }, ...kids);
+            el.cm = cm; return el;
+          };
+          const bubs = MSG.map(bub);
+          const phone = s.h("div", { style: { width: "470px", height: "100%", boxSizing: "border-box", background: "#1b2740", borderRadius: "34px", padding: "12px" } },
+            s.h("div", { style: { height: "100%", boxSizing: "border-box", background: "#ece5dd", borderRadius: "24px", display: "flex", flexDirection: "column", overflow: "hidden" } },
+              s.h("div", { style: { background: "#0f766e", color: "#fff", font: "700 20px/1 var(--f-display)", padding: "12px 16px" } }, "Lea"),
+              s.h("div", { style: { flex: "1", display: "flex", flexDirection: "column", gap: "8px", padding: "10px 12px", justifyContent: "flex-start" } }, bubs)));
+          const card = (title, color, words, note) => s.h("div", { class: "card later", style: { padding: "12px 16px", display: "flex", flexDirection: "column", gap: "8px" } },
+            s.h("p", { class: "small", style: { fontWeight: 700, color } }, title),
+            s.h("div", { class: "row", style: { gap: "8px" } }, words.map(w => s.h("span", { class: "d2b s", style: { borderColor: color, background: "#fff", fontSize: "21px" } }, w))),
+            s.h("p", { class: "small" }, note));
+          const c1 = card("Hauptsatz + Hauptsatz", HS, [", aber", ", sondern", ", denn"], "Gegensatz oder Grund: Komma davor.");
+          const c2 = card("Hauptsatz + Nebensatz", NS, [", weil", ", dass", ", wenn", ", als", ", obwohl"], "Der Nebensatz wird immer mit Komma abgetrennt – auch wenn er vorne steht.");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 16px 12px" } }, "Vor ", s.h("b", null, "aber, sondern, denn"), " und zwischen ", s.h("b", { style: { color: HS } }, "Hauptsatz"), " und ", s.h("b", { style: { color: NS } }, "Nebensatz"), " steht ein ", s.h("b", { style: { color: RED } }, "Komma"), ".");
+          const pic = s.photo("handy-tippen", { w: "100%", h: 170, pos: "50% 50%", caption: "Auch im Chat zählt das Komma.", cls: "later" });
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "470px 1fr", gap: "22px", height: "100%" } }, phone, s.h("div", { class: "stack", style: { gap: "14px" } }, c1, c2, merk, pic)));
+          s.sfx.pop();
+          const post = async i => { s.sound("keyboard", { vol: 0.4, dur: 0.8 }); await s.show(bubs[i], i % 2 ? "left" : "right"); bubs[i].cm.classList.add("a-bounce"); s.sfx.tick(); s.say(MSG[i].slice(1, 4).filter(Boolean).join(" ")); };
+          s.step(async () => { await post(0); });
+          s.step(async () => { await post(1); });
+          s.step(async () => { await post(2); s.sfx.ding(); await s.show(c1, "up"); });
+          s.step(async () => { await post(3); });
+          s.step(async () => { await post(4); });
+          s.step(async () => { await post(5); s.sfx.ding(); await s.show(c2, "up"); });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); s.show(pic, "zoom"); });
+        },
+      },
+      /* 17 ----------------------------------------------------------------- */
+      {
+        title: "Komma bei Anrede und Ausruf",
+        say: "Sprichst du jemanden an, trennst du den Namen mit einem Komma ab. Ein Komma kann sogar Leben retten!",
+        build(s) {
+          const RED = "var(--red)";
+          const v = s.svg(420, 300); v.style.width = "420px"; v.style.height = "300px";
+          // Tisch, Teller, Kochtopf
+          v.append(
+            s.el("rect", { x: 20, y: 200, width: 380, height: 16, rx: 6, fill: "#b07a4a" }),
+            s.el("rect", { x: 40, y: 216, width: 14, height: 76, fill: "#8a5a2b" }), s.el("rect", { x: 366, y: 216, width: 14, height: 76, fill: "#8a5a2b" }),
+            s.el("ellipse", { cx: 120, cy: 196, rx: 52, ry: 9, fill: "#fff", stroke: "#a3adbb", "stroke-width": 3 }),
+            s.el("rect", { x: 250, y: 140, width: 120, height: 58, rx: 10, fill: "#8a96a8", stroke: "#5d6678", "stroke-width": 3 }),
+            s.el("rect", { x: 240, y: 132, width: 140, height: 14, rx: 6, fill: "#5d6678" }));
+          const steam = s.el("path", { d: "M280 120 q-10 -16 0 -32 q10 -16 0 -32 M310 120 q-10 -16 0 -32 q10 -16 0 -32 M340 120 q-10 -16 0 -32 q10 -16 0 -32", fill: "none", stroke: "#a3adbb", "stroke-width": 4, "stroke-linecap": "round", opacity: 0 });
+          const opa = s.el("g", null,
+            s.el("circle", { cx: 0, cy: 0, r: 34, fill: "#f6d2b4", stroke: "#b07a4a", "stroke-width": 3 }),
+            s.el("path", { d: "M-30 6 Q0 52 30 6 Q16 20 0 18 Q-16 20 -30 6 Z", fill: "#e9edf2", stroke: "#a3adbb", "stroke-width": 2 }),
+            s.el("path", { d: "M-34 -8 Q-36 -36 -12 -36 M34 -8 Q36 -36 12 -36", fill: "none", stroke: "#e9edf2", "stroke-width": 6, "stroke-linecap": "round" }),
+            s.el("circle", { cx: -12, cy: -6, r: 4, fill: "#1b2740" }), s.el("circle", { cx: 12, cy: -6, r: 4, fill: "#1b2740" }),
+            s.el("circle", { cx: -12, cy: -6, r: 10, fill: "none", stroke: "#5d6678", "stroke-width": 2 }), s.el("circle", { cx: 12, cy: -6, r: 10, fill: "none", stroke: "#5d6678", "stroke-width": 2 }));
+          const mouth = s.el("path", { d: "M-8 10 Q0 16 8 10", fill: "none", stroke: "#8a2e1e", "stroke-width": 3, "stroke-linecap": "round" });
+          opa.append(mouth);
+          v.append(steam, opa);
+          const place = (x, y, sc) => opa.setAttribute("transform", `translate(${x} ${y}) scale(${sc})`);
+          place(120, 140, 1);
+          const cm = s.h("b", { style: { color: RED } }, ",");
+          const sent = s.h("p", { style: { margin: 0, font: "700 40px/1.1 var(--f-display)", color: "var(--ink)", textAlign: "center", whiteSpace: "nowrap" } }, "Komm", s.h("b", { style: { color: RED } }, ","), " wir essen", cm, " Opa!");
+          const meaning = s.h("p", { class: "t", style: { textAlign: "center", minHeight: "34px" } }, "Opa wird zum Essen gerufen.");
+          let on = true;
+          const toggle = async () => {
+            on = !on; s.sfx.click();
+            cm.textContent = on ? "," : "";
+            flipText(s, meaning, on ? "Opa wird zum Essen gerufen." : "Oh nein! Opa ist das Essen!");
+            if (on) { s.sfx.boing(); steam.setAttribute("opacity", 0); mouth.setAttribute("d", "M-8 10 Q0 16 8 10"); }
+            else { s.sfx.error(); s.sound("sizzle", { vol: 0.4, dur: 1.5 }); steam.setAttribute("opacity", 1); mouth.setAttribute("d", "M-8 14 Q0 6 8 14"); }
+            const [x0, y0, x1, y1] = on ? [310, 112, 120, 140] : [120, 140, 310, 112];
+            await s.tween({ dur: s.fast ? 1 : 700, ease: "inOut", update: (k, t) => place(x0 + (x1 - x0) * k, y0 + (y1 - y0) * k - 60 * Math.sin(Math.PI * t), 1) });
+          };
+          const tBtn = s.h("button", { class: "btn later", onclick: () => toggle() }, "Komma weg / zurück");
+          const left = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", padding: "12px 16px" } }, sent, v, meaning, tBtn);
+          const ex1 = ex(s, "Anrede", s.h("p", { class: "t", style: { fontSize: "22px" } }, "Leon", s.h("b", { style: { color: RED } }, ","), " kommst du?"), s.h("p", { class: "t", style: { fontSize: "22px" } }, "Kommst du", s.h("b", { style: { color: RED } }, ","), " Leon?"), s.h("p", { class: "t", style: { fontSize: "22px" } }, "Hör mal", s.h("b", { style: { color: RED } }, ","), " Oma", s.h("b", { style: { color: RED } }, ","), " das ist lecker!"));
+          const ex2 = ex(s, "Ausruf", s.h("p", { class: "t", style: { fontSize: "22px" } }, "Oh", s.h("b", { style: { color: RED } }, ","), " ein Eichhörnchen!"), s.h("p", { class: "t", style: { fontSize: "22px" } }, "Ja", s.h("b", { style: { color: RED } }, ","), " ich komme mit."), s.h("p", { class: "t", style: { fontSize: "22px" } }, "Aua", s.h("b", { style: { color: RED } }, ","), " das tut weh!"));
+          [ex1, ex2].forEach(e => { e.classList.add("later"); e.style.padding = "12px 18px"; });
+          const lf = life(s, "Im Alltag: Brief", s.h("p", { class: "t", style: { fontSize: "22px" } }, "Liebe Oma", s.h("b", { style: { color: RED } }, ","), s.h("br"), "danke für das Paket!"));
+          lf.classList.add("later"); lf.style.padding = "12px 18px";
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 16px 12px" } }, s.h("b", null, "Anreden"), " und ", s.h("b", null, "Ausrufe"), " trennst du mit ", s.h("b", { style: { color: RED } }, "Komma"), " vom Satz ab.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "470px 1fr", gap: "20px", height: "100%", alignItems: "start" } }, left, s.h("div", { class: "stack", style: { gap: "12px" } }, ex1, ex2, lf, merk)));
+          s.show(left, "up"); s.sfx.pop();
+          s.step(async () => { s.show(tBtn, "pop"); await toggle(); s.say("Komm, wir essen Opa! Ohne Komma ist Opa das Essen."); });
+          s.step(async () => { await toggle(); s.sfx.ding(); s.say("Mit Komma wird Opa nur gerufen. Puh!"); });
+          s.step(async () => { s.sound("knock", { vol: 0.5, dur: 1.2 }); await s.show(ex1, "up"); s.say("Leon, kommst du?"); });
+          s.step(async () => { s.sound("kids-wow", { vol: 0.5, dur: 1.5 }); await s.show(ex2, "up"); s.say("Oh, ein Eichhörnchen!"); });
+          s.step(async () => { s.sound("pencil-write", { vol: 0.5, dur: 1.5 }); await s.show(lf, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 18 ----------------------------------------------------------------- */
+      {
         title: "Im Alltag: der Satz-Baukasten",
         say: "Bau dir eigene Sätze! Tippe auf die Bausteine. Mit Umstellen wandern sie, und das Prädikat bleibt an Platz zwei.",
         build(s) {
           const OPT = {
-            S: ["Julian", "meine Oma", "der Trainer", "die Katze"],
+            S: ["Leon", "meine Oma", "der Trainer", "die Katze"],
             P: ["kauft", "sucht", "findet", "malt"],
             Z: ["heute", "am Montag", "nach der Schule"],
             AO: ["einen Kuchen", "den Ball", "eine Pizza", "das Ticket"],

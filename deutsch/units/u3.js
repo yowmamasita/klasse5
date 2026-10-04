@@ -113,9 +113,9 @@
           const clock = s.el("circle", { cx: 14, cy: tl.y, r: 9, fill: U });
           tl.svg.append(clock);
           const cards = [
-            ex(s, "Vergangenheit", s.h("p", { class: "t" }, rt(s, "Gestern [spielte] Julian Fußball. ⚽"))),
-            ex(s, "Gegenwart", s.h("p", { class: "t" }, rt(s, "Jetzt [liest] Julian ein Buch. 📖", ORANGE))),
-            ex(s, "Zukunft", s.h("p", { class: "t" }, rt(s, "Morgen [wird] Julian [schwimmen].", GREEN))),
+            ex(s, "Vergangenheit", s.h("p", { class: "t" }, rt(s, "Gestern [spielte] Leon Fußball. ⚽"))),
+            ex(s, "Gegenwart", s.h("p", { class: "t" }, rt(s, "Jetzt [liest] Leon ein Buch. 📖", ORANGE))),
+            ex(s, "Zukunft", s.h("p", { class: "t" }, rt(s, "Morgen [wird] Leon [schwimmen].", GREEN))),
           ];
           cards.forEach(c => c.classList.add("later"));
           const m = merk(s, "Das ", s.h("b", null, "Verb"), " verrät, ", s.h("b", null, "wann"), " etwas passiert. Seine Formen heißen ", s.h("span", { class: "hl" }, "Zeitformen"), " (Fachwort: Tempus).");
@@ -148,8 +148,8 @@
           const morgen = T(s, 850, 168, "morgen", { class: "hlbl later", "font-weight": 600, "font-size": 30, fill: ORANGE });
           tl.svg.append(pulse, ...habit, habitLbl, arc, arcDot, morgen);
           const cards = [
-            ex(s, "1 · Jetzt gerade", s.photo("geige-foto", { w: "100%", h: 130 }), s.h("p", { class: "t", style: { marginTop: "8px" } }, rt(s, "Julian [übt] gerade Geige.", ORANGE))),
-            ex(s, "2 · Immer wieder", s.photo("u8", { w: "100%", h: 130, pos: "50% 45%" }), s.h("p", { class: "t", style: { marginTop: "8px" } }, rt(s, "Jeden Morgen [fährt] Julian mit der U-Bahn.", ORANGE))),
+            ex(s, "1 · Jetzt gerade", s.photo("geige-foto", { w: "100%", h: 130 }), s.h("p", { class: "t", style: { marginTop: "8px" } }, rt(s, "Leon [übt] gerade Geige.", ORANGE))),
+            ex(s, "2 · Immer wieder", s.photo("u8", { w: "100%", h: 130, pos: "50% 45%" }), s.h("p", { class: "t", style: { marginTop: "8px" } }, rt(s, "Jeden Morgen [fährt] Leon mit der U-Bahn.", ORANGE))),
             ex(s, "3 · Zukunft + Zeitwort", s.photo("auto", { w: "100%", h: 130, pos: "50% 60%" }), s.h("p", { class: "t", style: { marginTop: "8px" } }, rt(s, "Morgen [fahren] wir zu Oma.", ORANGE))),
           ];
           cards.forEach(c => c.classList.add("later"));
@@ -468,7 +468,7 @@
           const m = merk(s, s.h("b", { style: { color: BROWN } }, "Plusquamperfekt"), " = ", s.h("b", null, "hatte/war"), " + ", s.h("b", null, "Partizip II"), ". Es zeigt, was ", s.h("span", { class: "hl" }, "vor"), " einer anderen Sache in der Vergangenheit passiert war.");
           const card = (lbl, a, b) => s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, lbl),
             s.h("p", { class: "small", style: { fontSize: "21px" } }, rt(s, a, BROWN, BLUE)), s.h("p", { class: "small", style: { fontSize: "21px" } }, rt(s, b, BROWN, BLUE)));
-          const c1 = card("Nach dem Üben", "① Julian [hatte] Geige [geübt].", "② Dann {spielte} er Fußball. ⚽");
+          const c1 = card("Nach dem Üben", "① Leon [hatte] Geige [geübt].", "② Dann {spielte} er Fußball. ⚽");
           const c2 = card("In der Pause", "① Lena [hatte] ihr Pausenbrot [vergessen].", "② Deshalb {kaufte} sie eine Brezel. 🥨");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, svg, m, s.h("div", { class: "cols" }, c1, c2)));
           s.sfx.pop();
@@ -597,9 +597,9 @@
           const KEYS = ["plusq", "prat", "perf", "pras", "fut"];
           const XS = [175, 420, 420, 700, 950];
           const FORMS = {
-            spielen: ["Julian [hatte] Geige [gespielt].", "Julian [spielte] Geige.", "Julian [hat] Geige [gespielt].", "Julian [spielt] Geige.", "Julian [wird] Geige [spielen]."],
-            gehen: ["Julian [war] zur Schule [gegangen].", "Julian [ging] zur Schule.", "Julian [ist] zur Schule [gegangen].", "Julian [geht] zur Schule.", "Julian [wird] zur Schule [gehen]."],
-            singen: ["Julian [hatte] im Chor [gesungen].", "Julian [sang] im Chor.", "Julian [hat] im Chor [gesungen].", "Julian [singt] im Chor.", "Julian [wird] im Chor [singen]."],
+            spielen: ["Leon [hatte] Geige [gespielt].", "Leon [spielte] Geige.", "Leon [hat] Geige [gespielt].", "Leon [spielt] Geige.", "Leon [wird] Geige [spielen]."],
+            gehen: ["Leon [war] zur Schule [gegangen].", "Leon [ging] zur Schule.", "Leon [ist] zur Schule [gegangen].", "Leon [geht] zur Schule.", "Leon [wird] zur Schule [gehen]."],
+            singen: ["Leon [hatte] im Chor [gesungen].", "Leon [sang] im Chor.", "Leon [hat] im Chor [gesungen].", "Leon [singt] im Chor.", "Leon [wird] im Chor [singen]."],
           };
           let verb = "spielen", cur = 3, mx = XS[3];
           const svg = s.svg(1100, 190), y = 72;

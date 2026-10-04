@@ -1,4 +1,16 @@
 {
+ "altes-museum": {
+  "file": "altes-museum.jpg",
+  "kind": "img",
+  "w": 768,
+  "h": 309,
+  "title": "Altes Museum Berlin, Inschrift mit MDCCCXXVIII",
+  "author": "Michielverbeek",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Berlin-Mitte,_Altes_Museum_Dm09030059_IMG_2978_2024-06-09_12.18.jpg",
+  "orig": "File:Berlin-Mitte, Altes Museum Dm09030059 IMG 2978 2024-06-09 12.18.jpg"
+ },
  "bahnhofsuhr": {
   "file": "bahnhofsuhr.jpg",
   "kind": "img",
@@ -81,6 +93,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin,_Brandenburger_Tor_--_2008_--_0153.jpg",
   "orig": "File:Berlin, Brandenburger Tor -- 2008 -- 0153.jpg"
  },
+ "broetchen": {
+  "file": "broetchen.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 525,
+  "title": "Korb mit Brötchen",
+  "author": "3268zauber",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Korb_mit_Br%C3%B6tchen.JPG",
+  "orig": "File:Korb mit Brötchen.JPG"
+ },
  "bus-faehrt": {
   "file": "bus-faehrt.mp3",
   "kind": "snd",
@@ -150,6 +174,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Tour_Eiffel_Wikimedia_Commons.jpg",
   "orig": "File:Tour Eiffel Wikimedia Commons.jpg"
+ },
+ "eiskugeln": {
+  "file": "eiskugeln.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Zwei Kugeln Eis",
+  "author": "snickclunk",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:John%27s_$1_scoops.jpg",
+  "orig": "File:John's $1 scoops.jpg"
  },
  "elefant": {
   "file": "elefant.mp3",
@@ -582,6 +618,17 @@
   "source": "https://commons.wikimedia.org/wiki/File:Road-cones,sankaku-cones,japan.JPG",
   "orig": "File:Road-cones,sankaku-cones,japan.JPG"
  },
+ "lichtschalter": {
+  "file": "lichtschalter.mp3",
+  "kind": "snd",
+  "dur": 0.6,
+  "title": "Lichtschalter klickt",
+  "author": "kwahmah_02",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0/",
+  "source": "https://freesound.org/people/kwahmah_02/sounds/244923/",
+  "orig": "244923"
+ },
  "litfass-denkmal": {
   "file": "litfass-denkmal.jpg",
   "kind": "img",
@@ -736,6 +783,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Pediment_and_dome_of_the_Reichstag_building,_Berlin.jpg",
   "orig": "File:Pediment and dome of the Reichstag building, Berlin.jpg"
  },
+ "reisebus": {
+  "file": "reisebus.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Reisebus auf der Autobahn",
+  "author": "EveryPicture",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:VanHool_Reisebus_--_Autobahn_4_bei_Eschweiler.JPG",
+  "orig": "File:VanHool Reisebus -- Autobahn 4 bei Eschweiler.JPG"
+ },
  "schachbrett": {
   "file": "schachbrett.jpg",
   "kind": "img",
@@ -770,6 +829,18 @@
   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
   "source": "https://commons.wikimedia.org/wiki/File:Ritter_Sport_dark_chocolate_with_marzipan_2.jpg",
   "orig": "File:Ritter Sport dark chocolate with marzipan 2.jpg"
+ },
+ "schulessen": {
+  "file": "schulessen.jpg",
+  "kind": "img",
+  "w": 600,
+  "h": 406,
+  "title": "Schulessen auf dem Tablett",
+  "author": "Jukajuha",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:School_lunch_in_yl%C3%A4st%C3%B6_school.jpg",
+  "orig": "File:School lunch in ylästö school.jpg"
  },
  "senklot": {
   "file": "senklot.jpg",
@@ -877,6 +948,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:2019-08-07_Train_on_platform_at_U-Bahnhof_Frankfurter_Tor,_Berlin.jpg",
   "orig": "File:2019-08-07 Train on platform at U-Bahnhof Frankfurter Tor, Berlin.jpg"
  },
+ "uhr-roemisch": {
+  "file": "uhr-roemisch.jpg",
+  "kind": "img",
+  "w": 684,
+  "h": 800,
+  "title": "Wanduhr mit römischen Ziffern",
+  "author": "No machine-readable author provided. Notwist assumed (based on copyright claims).",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Roman_Clock.JPG",
+  "orig": "File:Roman Clock.JPG"
+ },
  "uhr-rohrdamm": {
   "file": "uhr-rohrdamm.jpg",
   "kind": "img",
@@ -901,6 +984,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Zeichen_205_20220508_HOF01297.png",
   "orig": "File:Zeichen 205 20220508 HOF01297.png"
  },
+ "weitsprung": {
+  "file": "weitsprung.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 533,
+  "title": "Landung in der Weitsprung-Grube",
+  "author": "Pierre-Yves Beaudouin",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:2014_D%C3%A9caNation_-_Long_Jump_27.jpg",
+  "orig": "File:2014 DécaNation - Long Jump 27.jpg"
+ },
  "wuerfel": {
   "file": "wuerfel.jpg",
   "kind": "img",
@@ -923,6 +1018,18 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/Flem0527/sounds/629982/",
   "orig": "629982"
+ },
+ "zahlenschloss": {
+  "file": "zahlenschloss.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 525,
+  "title": "Zahlenschloss mit 4 Rädchen",
+  "author": "Superbass",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:2021-12-06-Burg-W%C3%A4chter_Zahlenschloss-6285.jpg",
+  "orig": "File:2021-12-06-Burg-Wächter Zahlenschloss-6285.jpg"
  },
  "zauberwuerfel": {
   "file": "zauberwuerfel.jpg",
@@ -971,5 +1078,17 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Pergel_(pair_of_compasses,_drafting).jpg",
   "orig": "File:Pergel (pair of compasses, drafting).jpg"
+ },
+ "zuse-z3": {
+  "file": "zuse-z3.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Nachbau der Zuse Z3 im Deutschen Museum",
+  "author": "Venusianer at German Wikipedia",
+  "license": "CC BY-SA 3.0",
+  "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Z3_Deutsches_Museum.JPG",
+  "orig": "File:Z3 Deutsches Museum.JPG"
  }
 }

@@ -1,5 +1,5 @@
 /* Kapitel 2 – Karten lesen (Vogelperspektive, Kartenarten, Höhenfarben, Legende, Maßstab, Himmelsrichtungen, Kompass,
-   Gradnetz, Globus und Karte, Kontinente und Ozeane, Bundesländer, Berliner Bezirke, Schulweg, BVG-Plan)
+   Gradnetz, Globus und Karte, Kontinente und Ozeane, Bundesländer, Großlandschaften, Flüsse, Berliner Bezirke, Schulweg, BVG-Plan)
    Kartendaten selbst vereinfacht (Douglas-Peucker) und projiziert aus:
    - Bundesländer: github.com/isellsoap/deutschlandGeoJSON (Quelle: © GeoBasis-DE / BKG, dl-de/by-2-0)
    - Berliner Bezirke: github.com/funkeinteraktiv/Berlin-Geodaten (Daten: Amt für Statistik Berlin-Brandenburg)
@@ -104,7 +104,7 @@
     id: "u2", num: 2, title: "Karten lesen", color: P.unit, soft: P.soft,
     subtitle: "Von oben sieht die Welt anders aus",
     blurb: "Plan, Kartenarten, Maßstab, Himmelsrichtungen, Berlin und die Welt.",
-    goals: ["Vom Bild zum Plan: die Vogelperspektive", "Legende und Maßstab benutzen", "Himmelsrichtungen und Kompass", "Bundesländer, Berliner Bezirke, Kontinente", "Den eigenen Schulweg auf der Karte finden"],
+    goals: ["Vom Bild zum Plan: die Vogelperspektive", "Legende und Maßstab benutzen", "Himmelsrichtungen und Kompass", "Bundesländer, Berliner Bezirke, Kontinente", "Großlandschaften und große Flüsse Deutschlands", "Den eigenen Schulweg auf der Karte finden"],
     icon(svg, el) {
       svg.append(el("path", { d: "M8 16 L26 10 L44 16 L62 10 L62 56 L44 62 L26 56 L8 62 Z", fill: "#dcf3ef", stroke: "#0f766e", "stroke-width": 4, "stroke-linejoin": "round" }));
       svg.append(el("path", { d: "M26 10 L26 56 M44 16 L44 62", stroke: "#0f766e", "stroke-width": 3 }));
@@ -676,6 +676,144 @@
           s.step(async () => { s.sfx.ding(); show("Berlin"); s.show([berlinL, brandL], "pop"); await s.show(merk, "up"); s.say("Berlin liegt mitten in Brandenburg."); });
           s.step(async () => { s.sfx.pop(); show("Hamburg"); await s.wait(800); s.sfx.pop(); show("Bremen"); s.say("Auch Hamburg und Bremen sind Stadtstaaten."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(list, "up"); s.say("Und hier sind alle Hauptstädte."); });
+        },
+      },
+      /* 13b -------------------------------------------------------------- */
+      {
+        title: "Deutschlands Großlandschaften",
+        say: "Wir reisen einmal quer durch Deutschland, von der Nordsee im Norden bis zu den Alpen im Süden. Dabei durchqueren wir vier Großlandschaften.",
+        build(s) {
+          const W = 1060, H = 292;
+          const svg = s.svg(W, H);
+          const Y = m => 250 - m * 0.075;
+          const prof = [[0, -20], [36, -20], [44, 0], [70, 8], [120, 40], [190, 60], [260, 34], [330, 75], [400, 110], [430, 240], [462, 620], [492, 380], [520, 1141], [552, 520], [590, 820], [622, 430], [660, 700], [694, 480], [722, 560], [760, 480], [800, 519], [850, 600], [892, 760], [920, 1500], [950, 1150], [980, 2350], [1010, 2962], [1036, 2100], [1060, 1750]];
+          const elev = x => { for (let i = 1; i < prof.length; i++) { const [x0, m0] = prof[i - 1], [x1, m1] = prof[i]; if (x <= x1) return m0 + (m1 - m0) * (x - x0) / (x1 - x0); } return prof[prof.length - 1][1]; };
+          const d = "M0 " + H + " " + prof.map(([x, m]) => `L${x} ${Y(Math.max(m, 0)).toFixed(1)}`).join(" ") + ` L${W} ${H} Z`;
+          const zones = [[0, 420, "#e3f1d6", "#79b960", "Tiefland"], [420, 722, "#f6ecd2", "#d8ad66", "Mittelgebirge"], [722, 900, "#f1f4d6", "#c9cf62", "Alpenvorland"], [900, 1060, "#ece9f3", "#a8703a", "Alpen"]];
+          const bg = zones.map(([a, c, soft]) => s.el("rect", { x: a, y: 0, width: c - a, height: H, fill: soft }));
+          svg.append(...bg);
+          const sea = s.el("rect", { x: 0, y: Y(0), width: 46, height: H - Y(0), fill: "#7fb4e3" });
+          const clipId = "gl" + Math.random().toString(36).slice(2, 7);
+          svg.append(s.el("defs", null, s.el("clipPath", { id: clipId }, s.el("path", { d }))));
+          const ground = s.el("g", { "clip-path": `url(#${clipId})` });
+          zones.forEach(([a, c, , col]) => ground.append(s.el("rect", { x: a, y: 0, width: c - a, height: H, fill: col })));
+          const outline = s.el("path", { d, fill: "none", stroke: P.ink, "stroke-width": 3, "stroke-linejoin": "round" });
+          svg.append(sea, ground, outline);
+          zones.forEach(([a, c, , , name]) => svg.append(T(s, (a + c) / 2, H - 12, name, { "font-size": 20, fill: "#fff", stroke: "rgba(27,39,64,.55)", "stroke-width": 3, "paint-order": "stroke" })));
+          svg.append(T(s, 22, H - 12, "Meer", { "font-size": 19, fill: "#fff" }));
+          // markers
+          const mk = (x, m, label, dx, dy, anchor) => {
+            const g = later(s.el("g")); fb(g);
+            g.append(s.el("circle", { cx: x, cy: Y(m), r: 7, fill: P.red, stroke: "#fff", "stroke-width": 2.5 }), T(s, x + dx, Y(m) + dy, label, { "text-anchor": anchor || "middle", "font-size": 20, fill: P.red, stroke: "#fff", "stroke-width": 4, "paint-order": "stroke" }));
+            svg.append(g); return g;
+          };
+          const marks = [mk(260, 34, "Berlin 34 m", 0, -18), mk(520, 1141, "Brocken 1.141 m", 0, -18), mk(800, 519, "München 519 m", 0, -18), mk(1010, 2962, "Zugspitze 2.962 m", -16, 8, "end")];
+          // traveller
+          const trav = s.el("g", { opacity: 0 });
+          trav.append(s.el("circle", { cx: 0, cy: -16, r: 11, fill: P.blue, stroke: "#fff", "stroke-width": 3 }), s.el("path", { d: "M0 -5 L0 0", stroke: P.blue, "stroke-width": 4 }));
+          svg.append(trav);
+          let tx = 30;
+          const place = x => { tx = x; trav.setAttribute("transform", `translate(${x} ${Y(Math.max(elev(x), 0))})`); };
+          place(30);
+          const go = async (x2, dur) => { trav.setAttribute("opacity", 1); const x1 = tx; s.sound("footsteps", { vol: .35, dur: Math.min(3, dur / 1000) }); await s.tween({ from: x1, to: x2, dur, ease: "inOut", update: place }); };
+          const card = (col, head, txt) => s.h("div", { class: "card later", style: { padding: "10px 14px", borderTop: `8px solid ${col}` } }, s.h("p", { class: "t", style: { fontWeight: 700, color: P.ink } }, head), s.h("p", { class: "small" }, txt));
+          const cards = [
+            card("#79b960", "Norddeutsches Tiefland", "Flach, meist unter 200 m hoch. Berlin liegt auf etwa 34 m."),
+            card("#d8ad66", "Mittelgebirge", "Runde, bewaldete Berge: Harz mit dem Brocken (1.141 m), Schwarzwald mit dem Feldberg (1.493 m)."),
+            card("#c9cf62", "Alpenvorland", "Hügel und Seen aus der Eiszeit, etwa 300 bis 800 m hoch. München liegt auf 519 m."),
+            card("#a8703a", "Alpen", "Hochgebirge mit Fels und Schnee. Der höchste Berg Deutschlands: die Zugspitze, 2.962 m."),
+          ];
+          const dir = s.h("div", { class: "row", style: { justifyContent: "space-between", padding: "0 4px" } }, s.h("span", { class: "small pencil" }, "← Norden"), s.h("span", { class: "small pencil" }, "Schnitt durch Deutschland, Höhen stark übertrieben"), s.h("span", { class: "small pencil" }, "Süden →"));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 16px" } }, "Von Norden nach Süden wird Deutschland ", b(s, "immer höher"), ": Tiefland → Mittelgebirge → Alpenvorland → Alpen.");
+          s.add(root(s, "stack", { gap: "10px" }, svg, dir, s.h("div", { class: "cols4", style: { gap: "12px" } }, ...cards), merk));
+          s.show(outline, "draw"); s.sfx.whoosh();
+          s.step(async () => { await go(260, 1400); s.sfx.pop(); s.show(marks[0], "pop"); await s.show(cards[0], "up"); s.say("Im Norden ist alles flach: das Norddeutsche Tiefland. Hier liegt Berlin."); });
+          s.step(async () => { await go(520, 1400); s.sfx.pop(); s.show(marks[1], "pop"); await s.show(cards[1], "up"); s.say("Dann kommen die Mittelgebirge, zum Beispiel der Harz mit dem Brocken."); });
+          s.step(async () => { await go(800, 1300); s.sfx.pop(); s.show(marks[2], "pop"); await s.show(cards[2], "up"); s.say("Im Alpenvorland liegt München."); });
+          s.step(async () => { await go(1010, 1300); s.sound("wind", { vol: .35, dur: 2.5 }); s.show(marks[3], "pop"); await s.show(cards[3], "up"); s.sfx.fanfare(); s.say("Ganz im Süden: die Alpen mit der Zugspitze."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 13c -------------------------------------------------------------- */
+      {
+        title: "Im Alltag: flach oder bergig?",
+        say: "Jede Großlandschaft fühlt sich anders an: beim Radfahren, auf Klassenfahrt oder im Urlaub.",
+        build(s) {
+          const col = (id, cap, pos, head, t) => s.h("div", { class: "stack later", style: { gap: "8px" } },
+            s.photo(id, { w: "100%", h: 270, caption: cap, pos }), s.h("p", { class: "t", style: { fontWeight: 700, color: "var(--unit)" } }, head), s.h("p", { class: "small" }, t));
+          const cols = [
+            col("brandenburg-flach", "Tiefland bei Nauen", "50% 50%", "Radtour", "Rund um Berlin fährst du fast ohne Steigung. Gut für Felder: Spargel aus Beelitz!"),
+            col("harz-brocken", "Der Harz", "50% 50%", "Klassenfahrt", "Im Harz fährt eine alte Dampflok bis auf den Brocken."),
+            col("alpenvorland-isar", "Die Isar im Alpenvorland", "50% 60%", "Baden im See", "Gletscher der Eiszeit haben Seen geformt, z. B. Chiemsee und Starnberger See."),
+            col("zugspitze", "Zugspitze, 2.962 m", "50% 40%", "Skiurlaub", "In den Alpen wird gewandert und Ski gefahren. Eine Seilbahn fährt bis auf die Zugspitze."),
+          ];
+          const lf = life(s, { class: "life later", style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Schau mal auf eine physische Karte: Wo ist es grün, wo braun? Dann weißt du, wo es flach ist – und wo man Berge hochstrampeln muss."));
+          s.add(root(s, "stack", { gap: "14px", justifyContent: "center" }, s.h("div", { class: "cols4", style: { gap: "14px" } }, ...cols), lf));
+          s.show(cols[0], "up"); s.sound("bike-bell", { vol: .5 });
+          s.step(async () => { s.sound("birds", { vol: .35, dur: 3 }); await s.show(cols[1], "up"); s.say("Der Brocken ist der höchste Berg im Harz."); });
+          s.step(async () => { s.sound("waves", { vol: .35, dur: 3 }); await s.show(cols[2], "up"); s.say("Im Alpenvorland gibt es viele Seen."); });
+          s.step(async () => { s.sound("wind", { vol: .4, dur: 3 }); await s.show(cols[3], "up"); s.say("Und in den Alpen ist es richtig hoch."); });
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+        },
+      },
+      /* 13d -------------------------------------------------------------- */
+      {
+        title: "Große Flüsse in Deutschland",
+        say: "Durch Deutschland fließen große Flüsse. Die meisten fließen nach Norden in die Nordsee. Tippe auf einen Fluss.",
+        build(s) {
+          const RIV = [
+            ["Rhein", "rund 1.230 km", "in die Nordsee (in den Niederlanden)", "Er fließt durch Basel, Köln und Düsseldorf.", "rhein-loreley", "Der Rhein an der Loreley", [[9.17, 47.66], [8.63, 47.69], [7.59, 47.56], [7.8, 48.58], [8.33, 49.03], [8.46, 49.49], [8.27, 50.0], [7.9, 49.97], [7.6, 50.36], [7.1, 50.73], [6.96, 50.94], [6.77, 51.23], [6.73, 51.43], [6.25, 51.83], [5.9, 51.86]], [6.3, 50.05, "start"]],
+            ["Elbe", "rund 1.090 km", "in die Nordsee bei Cuxhaven", "Sie fließt durch Dresden, Magdeburg und Hamburg.", "elbe-dresden", "Die Elbe in Dresden", [[14.25, 50.88], [13.74, 51.05], [13.47, 51.16], [13.0, 51.56], [12.65, 51.86], [12.25, 51.87], [11.64, 52.13], [11.97, 52.54], [11.75, 53.0], [10.57, 53.37], [9.99, 53.54], [9.5, 53.65], [8.7, 53.87]], [11.35, 52.6, "end"]],
+            ["Donau", "rund 2.850 km", "ins Schwarze Meer", "Sie fließt durch Ulm, Regensburg und Passau – und dann durch Österreich bis nach Rumänien.", "donau-weltenburg", "Die Donau bei Weltenburg", [[8.5, 47.95], [9.22, 48.09], [9.99, 48.4], [11.42, 48.76], [11.87, 48.92], [12.1, 49.02], [12.57, 48.88], [12.96, 48.83], [13.47, 48.57], [13.8, 48.5]], [10.4, 48.1, "middle"]],
+            ["Oder", "rund 850 km", "in die Ostsee (Stettiner Haff)", "Sie ist die Grenze zu Polen, z. B. in Frankfurt (Oder).", "oder-frankfurt", "Die Oder in Frankfurt (Oder)", [[15.02, 51.95], [14.75, 52.07], [14.55, 52.34], [14.63, 52.58], [14.15, 52.87], [14.3, 53.06], [14.39, 53.21], [14.55, 53.43], [14.3, 53.75]], [14.45, 52.1, "end"]],
+            ["Weser", "452 km", "in die Nordsee bei Bremerhaven", "Sie fließt durch Hameln, Minden und Bremen.", "weser-porta", "Die Weser an der Porta Westfalica", [[9.65, 51.42], [9.45, 51.83], [9.36, 52.1], [8.92, 52.29], [9.21, 52.64], [8.8, 53.08], [8.57, 53.55], [8.5, 53.7]], [8.25, 52.6, "end"]],
+            ["Main", "527 km", "in den Rhein bei Mainz", "Er fließt durch Würzburg und Frankfurt am Main.", "main-frankfurt", "Der Main in Frankfurt", [[11.58, 49.95], [10.9, 49.9], [10.23, 50.05], [9.93, 49.79], [9.52, 49.76], [9.15, 49.97], [8.68, 50.11], [8.29, 50.0]], [10.1, 50.3, "middle"]],
+            ["Spree", "knapp 400 km", "in die Havel in Berlin-Spandau", "Sie fließt durch Cottbus und mitten durch Berlin.", "spree-museumsinsel", "Die Spree an der Museumsinsel", [[14.65, 51.0], [14.43, 51.18], [14.33, 51.76], [13.9, 51.94], [14.07, 52.36], [13.58, 52.44], [13.4, 52.52], [13.21, 52.53]], [14.15, 51.5, "end"]],
+            ["Havel", "334 km", "in die Elbe bei Havelberg", "Sie fließt durch Berlin und Potsdam.", "havel-spandau", "Die Havel in Berlin-Spandau", [[12.95, 53.45], [13.14, 53.18], [13.24, 52.75], [13.21, 52.53], [13.06, 52.4], [12.55, 52.41], [12.33, 52.6], [12.07, 52.83], [11.98, 52.88]], [12.85, 53.25, "end"]],
+          ];
+          const svg = s.svg(420, 556);
+          const gg = s.el("g", { transform: "translate(10 8)" }); svg.append(gg);
+          germany(s, gg, { fill: "#eef1e4", stroke: "#fff", sw: 1.5 });
+          gg.append(T(s, deX(7.1), deY(54.45), "Nordsee", { "font-size": 19, fill: P.waterD, "font-style": "italic" }), T(s, deX(12.3), deY(54.7), "Ostsee", { "font-size": 19, fill: P.waterD, "font-style": "italic" }));
+          const bx = deX(13.4), by = deY(52.52);
+          gg.append(s.el("circle", { cx: bx, cy: by, r: 5, fill: P.ink }));
+          const sel = s.h("div", { class: "card", style: { padding: "10px 16px", minHeight: "104px" } });
+          const photoBox = s.h("div", { style: { position: "relative", height: "250px" } });
+          const photos = {}, paths = {}, labels = {}, chips = {};
+          const show = name => {
+            const r = RIV.find(q => q[0] === name);
+            Object.values(paths).forEach(p => { p.setAttribute("stroke", P.waterD); p.setAttribute("stroke-width", 4); });
+            paths[name].setAttribute("stroke", P.red); paths[name].setAttribute("stroke-width", 6); paths[name].parentNode.append(paths[name]);
+            Object.entries(photos).forEach(([n, f]) => { f.style.display = n === name ? "" : "none"; });
+            Object.entries(chips).forEach(([n, c]) => { c.style.background = n === name ? P.unit : ""; c.style.color = n === name ? "#fff" : ""; });
+            sel.innerHTML = "";
+            sel.append(s.h("p", { class: "h2", style: { color: "var(--unit)" } }, `${r[0]} · ${r[1]}`), s.h("p", { class: "small" }, `Mündet ${r[2]}. ${r[3]}`));
+          };
+          RIV.forEach(([name, , , , pid, cap, pts, [llo, lla, anc]]) => {
+            const d = "M" + pts.map(([lo, la]) => `${deX(lo).toFixed(1)} ${deY(la).toFixed(1)}`).join(" L");
+            const p = later(s.el("path", { d, fill: "none", stroke: P.waterD, "stroke-width": 4, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+            const hit = s.el("path", { d, fill: "none", stroke: "transparent", "stroke-width": 22, style: "cursor:pointer" });
+            const lb = later(T(s, deX(llo), deY(lla), name, { "font-size": 19, fill: P.waterD, "text-anchor": anc, stroke: "#fff", "stroke-width": 4, "paint-order": "stroke" }));
+            gg.append(p, hit, lb); paths[name] = p; labels[name] = lb;
+            hit.addEventListener("click", () => { if (p.classList.contains("later")) return; s.sfx.pop(); show(name); });
+            const f = s.photo(pid, { w: "100%", h: 250, caption: cap, style: { position: "absolute", inset: "0", display: "none" } });
+            photos[name] = f; photoBox.append(f);
+          });
+          const chipRow = s.h("div", { class: "row", style: { gap: "8px", flexWrap: "wrap" } }, ...RIV.map(([n]) => { const c = s.h("button", { class: "chip later", style: { fontSize: "19px", minHeight: "44px", cursor: "pointer", border: "2px solid var(--unit)" } }, n); c.addEventListener("click", () => { s.sfx.pop(); show(n); }); chips[n] = c; return c; }));
+          gg.append(s.el("circle", { cx: bx, cy: by, r: 5, fill: P.ink }), T(s, bx + 8, by - 12, "Berlin", { "font-size": 19, "text-anchor": "start", stroke: "#fff", "stroke-width": 4, "paint-order": "stroke" }));
+          const intro = s.h("p", { class: "t" }, "Tippe auf „Weiter“: Die Flüsse erscheinen nacheinander.");
+          sel.append(intro);
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "8px 14px" } }, "Rhein, Elbe und Weser fließen in die ", b(s, "Nordsee"), ", die Oder in die ", b(s, "Ostsee"), ", die Donau ins ", b(s, "Schwarze Meer"), ". Spree → Havel → Elbe: Berliner Wasser landet in der Nordsee!");
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "420px 1fr", gap: "22px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "10px" } }, photoBox, sel, chipRow, merk)));
+          const reveal = async (name, snd) => { if (snd) s.sound("fluss", { vol: .35, dur: 3 }); else s.sfx.swoosh(); await s.show(paths[name], "draw"); s.show([labels[name], chips[name]], "pop"); show(name); };
+          s.sfx.whoosh();
+          s.step(async () => { await reveal("Rhein", true); s.say("Der Rhein fließt in die Nordsee."); });
+          s.step(async () => { await reveal("Elbe"); s.say("Die Elbe fließt durch Dresden und Hamburg in die Nordsee."); });
+          s.step(async () => { await reveal("Donau"); s.say("Die Donau ist anders: Sie fließt nach Osten bis ins Schwarze Meer."); });
+          s.step(async () => { await reveal("Oder"); s.say("Die Oder ist die Grenze zu Polen. Sie fließt in die Ostsee."); });
+          s.step(async () => { await reveal("Weser"); await s.wait(500); await reveal("Main"); s.say("Der Main fließt in den Rhein."); });
+          s.step(async () => { await reveal("Spree"); await s.wait(500); await reveal("Havel"); s.say("Die Spree fließt in Spandau in die Havel, die Havel in die Elbe."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 14 --------------------------------------------------------------- */

@@ -23,6 +23,29 @@
   "source": "https://commons.wikimedia.org/wiki/File:Templo_de_Rams%C3%A9s_II,_Abu_Simbel,_Egipto,_2022-04-02,_DD_03.jpg",
   "orig": "File:Templo de Ramsés II, Abu Simbel, Egipto, 2022-04-02, DD 03.jpg"
  },
+ "alpenvorland-isar": {
+  "file": "alpenvorland-isar.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 750,
+  "title": "Alpenvorland an der Isar bei Wolfratshausen",
+  "author": "Gras-Ober (talk)",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Isar_Wolfratshausen_Icking.JPG",
+  "orig": "File:Isar Wolfratshausen Icking.JPG"
+ },
+ "amboss": {
+  "file": "amboss.mp3",
+  "kind": "snd",
+  "dur": 3.0,
+  "title": "Hammer auf Amboss",
+  "author": "MrAuralization",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/MrAuralization/sounds/274846/",
+  "orig": "274846"
+ },
  "assuan-staudamm": {
   "file": "assuan-staudamm.jpg",
   "kind": "img",
@@ -83,6 +106,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Beelitz_Spargel.JPG",
   "orig": "File:Beelitz Spargel.JPG"
  },
+ "berliner-goldhut": {
+  "file": "berliner-goldhut.jpg",
+  "kind": "img",
+  "w": 436,
+  "h": 1000,
+  "title": "Berliner Goldhut, um 1000–800 v. Chr. (Neues Museum)",
+  "author": "Photograph: Andreas Praefcke",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Berliner_Goldhut.jpg",
+  "orig": "File:Berliner Goldhut.jpg"
+ },
  "bezoarziege": {
   "file": "bezoarziege.jpg",
   "kind": "img",
@@ -142,6 +177,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Wild_Blackberry,_Rubus_sp.,_September_2020_-_geograph.org.uk_-_6629665.jpg",
   "orig": "File:Wild Blackberry, Rubus sp., September 2020 - geograph.org.uk - 6629665.jpg"
+ },
+ "bronze-waffen": {
+  "file": "bronze-waffen.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 750,
+  "title": "Schwerter, Lanzenspitzen und Beile aus Bronze",
+  "author": "ZemplinTemplar",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Zempl%C3%ADn_Museum_in_Michalovce_-_Archaeological_permanent_exhibition_-_Bronze_Age_exhibit_12.jpg",
+  "orig": "File:Zemplín Museum in Michalovce - Archaeological permanent exhibition - Bronze Age exhibit 12.jpg"
  },
  "catalhoeyuek": {
   "file": "catalhoeyuek.jpg",
@@ -215,6 +262,30 @@
   "source": "https://commons.wikimedia.org/wiki/File:Reu%C3%9Fenk%C3%B6ge;_Schafe_am_Deich-2.jpg",
   "orig": "File:Reußenköge; Schafe am Deich-2.jpg"
  },
+ "donau-weltenburg": {
+  "file": "donau-weltenburg.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 667,
+  "title": "Donaudurchbruch bei Weltenburg (Bayern)",
+  "author": "Guido Radig",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Donaudurchbruch_bei_Kloster_Weltenburg_(Weltenburger_Enge).JPG",
+  "orig": "File:Donaudurchbruch bei Kloster Weltenburg (Weltenburger Enge).JPG"
+ },
+ "eberswalder-gold": {
+  "file": "eberswalder-gold.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 668,
+  "title": "Eberswalder Goldschatz (Nachbildung in Berlin)",
+  "author": "Photograph: Andreas Praefcke",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Goldfund_von_Eberswalde.jpg",
+  "orig": "File:Goldfund von Eberswalde.jpg"
+ },
  "echnaton-altar": {
   "file": "echnaton-altar.jpg",
   "kind": "img",
@@ -238,6 +309,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Triticum_monococcum_MHNT.BOT.2015.2.37.jpg",
   "orig": "File:Triticum monococcum MHNT.BOT.2015.2.37.jpg"
+ },
+ "elbe-dresden": {
+  "file": "elbe-dresden.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 564,
+  "title": "Die Elbe in Dresden",
+  "author": "JopkeB",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:View_of_Dresden_Altstadt_from_across_the_Elbe_2010.jpg",
+  "orig": "File:View of Dresden Altstadt from across the Elbe 2010.jpg"
  },
  "elefant": {
   "file": "elefant.mp3",
@@ -273,6 +356,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Erntekrone_Doberlug_2014b.jpg",
   "orig": "File:Erntekrone Doberlug 2014b.jpg"
+ },
+ "euro-muenzen": {
+  "file": "euro-muenzen.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 667,
+  "title": "Euro- und Centmünzen",
+  "author": "European Commission",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Croatian_euro_coins_(10).jpg",
+  "orig": "File:Croatian euro coins (10).jpg"
  },
  "faehre-dageboell": {
   "file": "faehre-dageboell.jpg",
@@ -380,6 +475,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Einblick_in_das_Depot_des_PETRI_%C2%A9_Staatliche_Museen_zu_Berlin,_Museum_f%C3%BCr_Vor-_und_Fr%C3%BChgeschichte.jpg",
   "orig": "File:Einblick in das Depot des PETRI © Staatliche Museen zu Berlin, Museum für Vor- und Frühgeschichte.jpg"
  },
+ "glocke": {
+  "file": "glocke.jpg",
+  "kind": "img",
+  "w": 621,
+  "h": 800,
+  "title": "Kirchenglocke aus Bronze (1813)",
+  "author": "Didier Descouens",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:San_Geremia_(Venice)_-_Bronze_bell_from_1813.jpg",
+  "orig": "File:San Geremia (Venice) - Bronze bell from 1813.jpg"
+ },
  "gott-anubis": {
   "file": "gott-anubis.jpg",
   "kind": "img",
@@ -476,6 +583,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin_Petrikirche_Grabungen_(2).JPG",
   "orig": "File:Berlin Petrikirche Grabungen (2).JPG"
  },
+ "gussform-stein": {
+  "file": "gussform-stein.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 531,
+  "title": "Gussformen aus Stein, Bronzezeit (1700–1200 v. Chr.)",
+  "author": "Bjoertvedt",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bronze_age_1700-1200BC_IMG_1024_moulds.JPG",
+  "orig": "File:Bronze age 1700-1200BC IMG 1024 moulds.JPG"
+ },
  "harpunen": {
   "file": "harpunen.jpg",
   "kind": "img",
@@ -548,6 +667,42 @@
   "source": "https://commons.wikimedia.org/wiki/File:Capra_aegagrus_hircus_in_isla_Margarita.jpg",
   "orig": "File:Capra aegagrus hircus in isla Margarita.jpg"
  },
+ "havel-spandau": {
+  "file": "havel-spandau.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 666,
+  "title": "Die Havel in Berlin-Spandau",
+  "author": "Leonhard Lenz",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:MS_Goldberg_Havel_Berlin-Spandau_2026-04-06_01.jpg",
+  "orig": "File:MS Goldberg Havel Berlin-Spandau 2026-04-06 01.jpg"
+ },
+ "heuneburg": {
+  "file": "heuneburg.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 307,
+  "title": "Heuneburg: nachgebaute Häuser und Lehmziegelmauer",
+  "author": "LepoRello",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Freilichtmuseum_Heuneburg_(Rekonstruierte_Geb%C3%A4ude_und_Lehmziegelmauer).jpg",
+  "orig": "File:Freilichtmuseum Heuneburg (Rekonstruierte Gebäude und Lehmziegelmauer).jpg"
+ },
+ "hochdorf-grab": {
+  "file": "hochdorf-grab.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 663,
+  "title": "Nachbau der Grabkammer von Hochdorf (Keltenmuseum)",
+  "author": "marsupium photography",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Hochdorf_1.jpg",
+  "orig": "File:Hochdorf 1.jpg"
+ },
  "hoehle-tropfen": {
   "file": "hoehle-tropfen.mp3",
   "kind": "snd",
@@ -558,6 +713,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/tosha73/sounds/546359/",
   "orig": "546359"
+ },
+ "huegelgrab": {
+  "file": "huegelgrab.jpg",
+  "kind": "img",
+  "w": 750,
+  "h": 1000,
+  "title": "Grabhügel aus der Bronzezeit in Bargteheide",
+  "author": "Pauli-Pirat",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bargteheider_Grabh%C3%BCgel_aus_der_Bronzezeit_(6).jpg",
+  "orig": "File:Bargteheider Grabhügel aus der Bronzezeit (6).jpg"
  },
  "husum-ebbe": {
   "file": "husum-ebbe.jpg",
@@ -582,6 +749,30 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:00_2586_Husum_(Schleswig-Holstein)_-_Binnenhafen.jpg",
   "orig": "File:00 2586 Husum (Schleswig-Holstein) - Binnenhafen.jpg"
+ },
+ "ischtar-drache": {
+  "file": "ischtar-drache.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 759,
+  "title": "Drache (Muschhuschschu) vom Ischtar-Tor",
+  "author": "Osama Shukir Muhammed Amin FRCP(Glasg)",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:One_dragon_of_the_Ishtar_Gate_of_Babylon,_Iraq,_colored_glazed_and_molded_bricks,_6th_century_BCE._Pergamon_Museum_in_Berlin.jpg",
+  "orig": "File:One dragon of the Ishtar Gate of Babylon, Iraq, colored glazed and molded bricks, 6th century BCE. Pergamon Museum in Berlin.jpg"
+ },
+ "ischtar-tor": {
+  "file": "ischtar-tor.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 683,
+  "title": "Ischtar-Tor im Pergamonmuseum Berlin",
+  "author": "Joyofmuseums",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Ishtar_Gate_-_Pergamon_Museum_-_Joy_of_Museums_-_5.jpg",
+  "orig": "File:Ishtar Gate - Pergamon Museum - Joy of Museums - 5.jpg"
  },
  "kairo-nil": {
   "file": "kairo-nil.jpg",
@@ -630,6 +821,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Berliner_Stra%C3%9Fe_Karl-Marx-Stra%C3%9Fe_Rixdorf_Neuk%C3%B6lln_Berlin_circa_1910.jpg",
   "orig": "File:Berliner Straße Karl-Marx-Straße Rixdorf Neukölln Berlin circa 1910.jpg"
+ },
+ "keilschrift-uruk": {
+  "file": "keilschrift-uruk.jpg",
+  "kind": "img",
+  "w": 707,
+  "h": 1000,
+  "title": "Tontafel aus Uruk, um 3200 v. Chr. (Berlin)",
+  "author": "Osama Shukir Muhammed Amin FRCP(Glasg)",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Clay_tablet,_lexical_text,_listing_58_different_terms_for_pig._From_Uruk,_Iraq._3200_BCE._Pergamon_Museum.jpg",
+  "orig": "File:Clay tablet, lexical text, listing 58 different terms for pig. From Uruk, Iraq. 3200 BCE. Pergamon Museum.jpg"
  },
  "kelle-graben": {
   "file": "kelle-graben.mp3",
@@ -723,6 +926,30 @@
   "source": "https://freesound.org/people/invertedturtle/sounds/546479/",
   "orig": "546479"
  },
+ "kupfer-nugget": {
+  "file": "kupfer-nugget.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 800,
+  "title": "Gediegenes Kupfer, ein Klumpen reines Metall",
+  "author": "Hi-Res Images of Chemical Elements",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Copper_(29_Cu).jpg",
+  "orig": "File:Copper (29 Cu).jpg"
+ },
+ "kupferkabel": {
+  "file": "kupferkabel.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 718,
+  "title": "Stromkabel mit drei Kupferdrähten",
+  "author": "Petar Milošević",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Electric_guide_3%C3%972.5_mm.jpg",
+  "orig": "File:Electric guide 3×2.5 mm.jpg"
+ },
  "lagerfeuer": {
   "file": "lagerfeuer.jpg",
   "kind": "img",
@@ -782,6 +1009,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Combine_in_wheat_field.jpg",
   "orig": "File:Combine in wheat field.jpg"
+ },
+ "main-frankfurt": {
+  "file": "main-frankfurt.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 667,
+  "title": "Der Main in Frankfurt am Main",
+  "author": "Norbert Nagel",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Frankfurt_Skyline_with_river_Main_2014.jpg",
+  "orig": "File:Frankfurt Skyline with river Main 2014.jpg"
  },
  "mammut-skelett": {
   "file": "mammut-skelett.jpg",
@@ -865,6 +1104,18 @@
   "source": "https://freesound.org/people/Canardo55/sounds/538015/",
   "orig": "538015"
  },
+ "mohenjo-daro": {
+  "file": "mohenjo-daro.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 750,
+  "title": "Ruinen von Mohenjo-Daro (Pakistan)",
+  "author": "Saqib Qayyum",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mohenjo-daro.jpg",
+  "orig": "File:Mohenjo-daro.jpg"
+ },
  "muenze-roemisch": {
   "file": "muenze-roemisch.jpg",
   "kind": "img",
@@ -888,6 +1139,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
   "source": "https://commons.wikimedia.org/wiki/File:Ovis_orientalis_LC0267.jpg",
   "orig": "File:Ovis orientalis LC0267.jpg"
+ },
+ "nebra-scheibe": {
+  "file": "nebra-scheibe.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 987,
+  "title": "Himmelsscheibe von Nebra (Landesmuseum Halle)",
+  "author": "Shonagon",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Himmelsscheibe_von_Nebra_-_Landesmuseum_f%C3%BCr_Vorgeschichte_in_Halle_-_HD.jpg",
+  "orig": "File:Himmelsscheibe von Nebra - Landesmuseum für Vorgeschichte in Halle - HD.jpg"
  },
  "neues-museum": {
   "file": "neues-museum.jpg",
@@ -973,6 +1236,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Nofretete_Neues_Museum_Place.jpg",
   "orig": "File:Nofretete Neues Museum Place.jpg"
  },
+ "oder-frankfurt": {
+  "file": "oder-frankfurt.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 665,
+  "title": "Die Oder in Frankfurt (Oder)",
+  "author": "Sebastian Wallroth",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Oder_River_in_Frankfurt_Oder_and_Slubice_05.JPG",
+  "orig": "File:Oder River in Frankfurt Oder and Slubice 05.JPG"
+ },
  "oetzi-beil": {
   "file": "oetzi-beil.jpg",
   "kind": "img",
@@ -996,6 +1271,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Obelisk_Eismann_Fundstelle_20090908b.jpg",
   "orig": "File:Obelisk Eismann Fundstelle 20090908b.jpg"
+ },
+ "orakelknochen": {
+  "file": "orakelknochen.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 667,
+  "title": "Orakelknochen der Shang-Zeit mit Schriftzeichen",
+  "author": "Gary Lee Todd, Ph.D. Complete indexed photo collection at WorldHistoryPics.com.",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Shang_Ox_Scapula_Oracle_Bones_1.jpg",
+  "orig": "File:Shang Ox Scapula Oracle Bones 1.jpg"
  },
  "papier-rascheln": {
   "file": "papier-rascheln.mp3",
@@ -1115,6 +1402,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Interior_of_the_Reichstag_dome_2015_2.jpg",
   "orig": "File:Interior of the Reichstag dome 2015 2.jpg"
  },
+ "rennofen": {
+  "file": "rennofen.jpg",
+  "kind": "img",
+  "w": 667,
+  "h": 1000,
+  "title": "Nachbau eines Rennofens in Betrieb",
+  "author": "Przykuta",
+  "license": "CC BY-SA 3.0",
+  "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:%C5%9Awi%C4%99to_%C5%9Al%C4%85ska_piec_p.jpg",
+  "orig": "File:Święto Śląska piec p.jpg"
+ },
  "rentier": {
   "file": "rentier.jpg",
   "kind": "img",
@@ -1126,6 +1425,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:20070818-0001-strolling_reindeer.jpg",
   "orig": "File:20070818-0001-strolling reindeer.jpg"
+ },
+ "rhein-loreley": {
+  "file": "rhein-loreley.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 512,
+  "title": "Der Rhein an der Loreley, links Burg Katz",
+  "author": "Jörg Braukmann",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Burg_Katz_und_Loreley.jpg",
+  "orig": "File:Burg Katz und Loreley.jpg"
  },
  "rind": {
   "file": "rind.jpg",
@@ -1292,6 +1603,18 @@
   "source": "https://freesound.org/people/DominikBraun/sounds/504567/",
   "orig": "504567"
  },
+ "schmied": {
+  "file": "schmied.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 667,
+  "title": "Ein Schmied schmiedet glühendes Eisen",
+  "author": "Jorge Royan",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Vintage_smith%27s_workshop_-_0159.jpg",
+  "orig": "File:Vintage smith's workshop - 0159.jpg"
+ },
  "schoeninger-speer": {
   "file": "schoeninger-speer.jpg",
   "kind": "img",
@@ -1338,6 +1661,18 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/qubodup/sounds/442906/",
   "orig": "442906"
+ },
+ "seddin-zeichnung": {
+  "file": "seddin-zeichnung.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 480,
+  "title": "Königsgrab von Seddin (alte Zeichnung)",
+  "author": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:K%C3%B6nigsgrab_von_Seddin.jpg",
+  "orig": "File:Königsgrab von Seddin.jpg"
  },
  "seehunde-sandbank": {
   "file": "seehunde-sandbank.jpg",
@@ -1433,6 +1768,17 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Sphinx_and_pyramids_of_Giza_panorama.jpg",
   "orig": "File:Sphinx and pyramids of Giza panorama.jpg"
+ },
+ "spitzhacke": {
+  "file": "spitzhacke.mp3",
+  "kind": "snd",
+  "dur": 1.3,
+  "title": "Spitzhacke schlägt auf Stein",
+  "author": "ryanconway",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/ryanconway/sounds/240801/",
+  "orig": "240801"
  },
  "spree-museumsinsel": {
   "file": "spree-museumsinsel.jpg",
@@ -1810,6 +2156,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Lugworm_casts_on_mudflats_of_Gullmarsviken,_Gullmarn_4.jpg",
   "orig": "File:Lugworm casts on mudflats of Gullmarsviken, Gullmarn 4.jpg"
  },
+ "weser-porta": {
+  "file": "weser-porta.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 750,
+  "title": "Die Weser an der Porta Westfalica",
+  "author": "Jochenbergmann",
+  "license": "CC BY-SA 2.0 de",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Blick_von_Porta_Kanzel.JPG",
+  "orig": "File:Blick von Porta Kanzel.JPG"
+ },
  "wildpferd": {
   "file": "wildpferd.jpg",
   "kind": "img",
@@ -1868,6 +2226,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/OBXJohn/sounds/266616/",
   "orig": "266616"
+ },
+ "zinnstein": {
+  "file": "zinnstein.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 624,
+  "title": "Zinnstein (Kassiterit), das wichtigste Zinnerz",
+  "author": "Ralph Bottrill",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Cassiterite_-_Mt_Bischoff_mine,_Waratah,_Tasmania,_Australia.jpg",
+  "orig": "File:Cassiterite - Mt Bischoff mine, Waratah, Tasmania, Australia.jpg"
  },
  "zugspitze": {
   "file": "zugspitze.jpg",

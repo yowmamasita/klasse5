@@ -60,7 +60,7 @@
     id: "u6", num: 6, title: "Ägypten: Geschenk des Nils", color: C, soft: "#e3f2e4",
     subtitle: "Wie ein Fluss eine Hochkultur möglich machte",
     blurb: "Nilschwemme, Schaduf, Kalender, Schreiber und Papyrus.",
-    goals: ["Ägypten und den Nil auf der Karte zeigen", "Die Nilschwemme und die drei Jahreszeiten erklären", "Bewässerung mit Kanälen und Schaduf verstehen", "Merkmale einer Hochkultur nennen", "Die Gesellschaft als Pyramide beschreiben"],
+    goals: ["Ägypten und den Nil auf der Karte zeigen", "Die Nilschwemme und die drei Jahreszeiten erklären", "Bewässerung mit Kanälen und Schaduf verstehen", "Merkmale einer Hochkultur nennen", "Andere Hochkulturen an Flüssen und die Keilschrift kennen", "Die Gesellschaft als Pyramide beschreiben"],
     icon(svg, el) {
       svg.append(el("path", { d: "M8,60 L35,14 L62,60 Z", fill: "#f0c987", stroke: "#9b6b2f", "stroke-width": 3 }),
         el("path", { d: "M4,66 Q20,58 35,66 T66,66", fill: "none", stroke: "#2f86c9", "stroke-width": 5, "stroke-linecap": "round" }));
@@ -376,6 +376,119 @@
           s.step(async () => { for (let i = 2; i < 4; i++) { s.sfx.count(i * 2); await s.show(tiles[i], "pop"); } });
           s.step(async () => { for (let i = 4; i < 6; i++) { s.sfx.count(i * 2); await s.show(tiles[i], "pop"); } });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 9b --------------------------------------------------------------- */
+      {
+        title: "Hochkulturen an Flüssen",
+        say: "Ägypten war nicht allein. Auch an anderen großen Flüssen entstanden früh Hochkulturen: in Mesopotamien, am Indus und am Gelben Fluss in China.",
+        build(s) {
+          const K = 9.8, X = lon => (lon - 20) * K + 8, Y = lat => (45 - lat) * K;
+          const pts = a => a.map(([lo, la]) => `${X(lo).toFixed(1)},${Y(la).toFixed(1)}`).join(" L");
+          const svg = svgBox(s, 1060, 336);
+          svg.append(s.el("rect", { x: 0, y: 0, width: 1060, height: 336, rx: 14, fill: "#efe1bf" }));
+          const seas = [
+            [[20, 45], [20, 39.5], [21, 38], [22.5, 37], [23, 40.5], [26, 40.5], [26.5, 39], [27.5, 37], [30, 36.2], [34, 36.3], [36, 36.7], [35.9, 35.5], [35, 33], [34.3, 31.3], [32, 31.3], [29, 31], [25, 31.8], [20, 32], [20, 45]].filter(q => q[1] < 45 || q[0] === 20),
+            [[28, 41.2], [29, 41.2], [33, 42], [36, 41.7], [38.5, 40.9], [41.5, 41.5], [41.7, 42.3], [40, 43.5], [38, 44.5], [36.6, 45], [33.5, 44.5], [32.5, 45], [29.6, 45], [28.6, 44], [28, 41.2]],
+            [[47, 45], [53, 45], [51.5, 44.5], [52.5, 42], [53.9, 40.7], [53.9, 37.3], [51, 36.8], [49, 37.6], [49, 40.5], [49.5, 41], [47.5, 43], [47, 45]],
+            [[43.3, 12.6], [42.4, 13.6], [41.2, 14.8], [39.6, 15.6], [38.6, 18], [37.4, 21], [36.8, 22.5], [35.6, 23.9], [34.6, 26], [33.6, 27.6], [32.6, 29.9], [33.2, 29], [34.25, 27.8], [35, 28.1], [35.7, 27.2], [36.7, 25.5], [37.8, 24.2], [39, 22], [39.8, 20.3], [41, 18.6], [42.3, 16.5], [42.8, 14.8], [43.5, 12.7],
+              [45, 12.8], [48.5, 14], [52.2, 15.6], [55.3, 17.2], [57, 18.9], [58.6, 20.4], [59.8, 22.4], [58.8, 23.6], [57, 24], [56.4, 24.9], [56.4, 26.3], [55.6, 25.4], [54.5, 24.2], [52.6, 24.2], [51.6, 24.6], [51.6, 25.9], [51, 26], [50.6, 25.2], [50.1, 26.2], [49.6, 27], [48.6, 28], [48, 29.4], [48.6, 30],
+              [49.6, 30], [50.8, 28.9], [51.5, 27.9], [53.5, 26.8], [55.5, 26.6], [56.5, 27.1], [57.3, 25.8], [59.5, 25.4], [61.6, 25.2], [64.5, 25.2], [66.6, 25.4], [67.2, 24.8],
+              [68.4, 23.6], [69.2, 22.8], [70.2, 22.6], [69, 22.2], [70.8, 20.8], [72.6, 21.3], [72.9, 19], [73.4, 16.5], [74.2, 14.6], [74.9, 12.8], [75.8, 11], [76.5, 9], [77.5, 8.1],
+              [78.2, 9], [79.3, 10.3], [79.9, 11.5], [80.3, 13.5], [80.1, 15.6], [81.3, 16.4], [82.3, 16.8], [84, 18.3], [85.5, 19.6], [86.9, 20.8], [87, 21.6], [88.6, 21.6], [89.5, 21.9], [90.6, 22.5], [91.8, 22.2], [92.3, 20.7], [93.6, 19.5], [94.3, 18], [94.3, 16.2], [95.4, 15.8], [97.5, 16.6], [97.8, 14.8], [98.6, 13], [98.6, 10], [98.4, 8],
+              [100.3, 8], [100, 9.5], [99.2, 10.5], [99.9, 12.6], [100.6, 13.5], [101.8, 12.7], [102.6, 12.1], [103.5, 10.6], [104.8, 8.6], [106.6, 9.8], [107.5, 10.5], [109.2, 11.5], [109.3, 13.5], [108.9, 15.3], [107.2, 16.8], [106.5, 17.9], [105.7, 18.9], [105.9, 19.9], [106.8, 20.8], [108, 21.6], [109.6, 21.5], [110.5, 21.2], [111.6, 21.6], [113.5, 22.2], [114.3, 22.5], [116.5, 22.9], [117.6, 23.7], [118.7, 24.6], [119.6, 25.6], [119.9, 26.7], [120.8, 28], [121.9, 29.8], [121.3, 30.7], [121.9, 31], [120.9, 32.6], [120.3, 34.3], [119.3, 35], [120.5, 36.2], [122.5, 36.9], [121.6, 37.5], [120.3, 37.6], [118.9, 37.4], [118.2, 38.5], [117.6, 39], [118.9, 39.2], [119.9, 40], [121.2, 40.9], [122.2, 40.5], [121.2, 39], [122.3, 39.4], [123.6, 39.8], [125.5, 39.7],
+              [125.5, 7], [49.8, 7], [49.8, 8], [51.2, 10.5], [51.3, 11.8], [49, 11.3], [47, 11.1], [45, 10.5], [43.5, 11.4], [43.2, 12]],
+          ];
+          seas.forEach(a => svg.append(s.el("path", { d: "M" + pts(a) + " Z", fill: SEA })));
+          svg.append(txt(s, X(27), Y(34.2), "Mittelmeer", { fill: "#1d5bd0", "font-size": 19 }), txt(s, X(62), Y(16), "Arabisches Meer", { fill: "#1d5bd0", "font-size": 19 }));
+          const R = {
+            nil: [[32.5, 8], [32.5, 15.6], [33.5, 17.5], [32, 19], [31.5, 21.5], [32.9, 24.1], [32.64, 25.69], [31.7, 26.56], [31.18, 27.18], [30.75, 28.1], [31.24, 30.04], [31.1, 31.3]],
+            euph: [[38.8, 39.4], [38.2, 37.5], [38.5, 36], [40.1, 35.3], [41.4, 34.4], [43, 33.6], [44.3, 32.5], [45.5, 31.3], [46.6, 31], [47.4, 31], [48.5, 30]],
+            tig: [[39.8, 38.3], [41.2, 37.4], [42.5, 36.9], [43.1, 36.3], [43.8, 34.6], [44.4, 33.3], [45.8, 32.5], [47.4, 31]],
+            indus: [[81, 31], [77.5, 34.5], [75, 35.7], [73, 35.5], [72.2, 33.9], [71.5, 32], [70.6, 30.5], [69.8, 28.5], [68.5, 26.5], [68.2, 25.4], [67.6, 24.2]],
+            huang: [[96, 35], [100, 36], [103.8, 36.1], [105.7, 37.5], [106.5, 39.5], [107.5, 40.9], [110.5, 40.5], [111.2, 39.6], [110.5, 37], [110.4, 34.6], [113.6, 34.8], [116.5, 36.2], [118.8, 37.7]],
+          };
+          const river = (k, w, col) => { const e = s.el("path", { d: "M" + pts(R[k]), fill: "none", stroke: col, "stroke-width": w, "stroke-linejoin": "round", "stroke-linecap": "round", class: "later" }); svg.append(e); return e; };
+          const band = k => river(k, 18, "rgba(124,191,90,.75)");
+          const halo = { stroke: "#fff", "stroke-width": 4, "paint-order": "stroke" };
+          const lab = (x, y, a, b, col, anchor) => { const g = s.el("g", { class: "later" }); g.append(txt(s, x, y, a, Object.assign({ fill: col, "text-anchor": anchor || "middle" }, halo)), txt(s, x, y + 23, b, Object.assign({ fill: col, "font-size": 19, "font-weight": 600, "text-anchor": anchor || "middle" }, halo))); svg.append(g); return g; };
+          const city = (lon, lat, name, col, dx, anchor) => { const g = s.el("g", { class: "later" }); g.append(s.el("circle", { cx: X(lon), cy: Y(lat), r: 6, fill: col, stroke: "#fff", "stroke-width": 2 }), txt(s, X(lon) + dx, Y(lat) + 6, name, Object.assign({ fill: col, "font-size": 19, "text-anchor": anchor }, halo))); svg.append(g); return g; };
+          const cul = [
+            { b: [band("nil")], r: [river("nil", 5, NILE)], l: lab(X(29.5), Y(25.5), "Ägypten", "am Nil", C, "end"), c: city(31.2, 29.9, "Memphis", C, -10, "end") },
+            { b: [band("euph"), band("tig")], r: [river("euph", 4, NILE), river("tig", 4, NILE)], l: lab(X(40), Y(27.2), "Mesopotamien", "Euphrat und Tigris", "#c2410c"), c: city(45.64, 31.32, "Uruk", "#c2410c", 10, "start") },
+            { b: [band("indus")], r: [river("indus", 5, NILE)], l: lab(X(65.5), Y(21.2), "Indus-Kultur", "am Indus", "#7b4fd6", "end"), c: city(68.14, 27.33, "Mohenjo-Daro", "#7b4fd6", 10, "start") },
+            { b: [band("huang")], r: [river("huang", 5, NILE)], l: lab(X(110), Y(31.6), "China", "am Huang He (Gelber Fluss)", "#dc3b2a"), c: city(114.35, 36.1, "Anyang", "#dc3b2a", 10, "start") },
+          ];
+          // timeline
+          const tl = svgBox(s, 1060, 118);
+          const TX = y => 40 + (3500 - y) / 2500 * 980;
+          tl.append(s.el("path", { d: `M30 84 L1040 84`, stroke: "#1b2740", "stroke-width": 3 }));
+          [3500, 3000, 2500, 2000, 1500, 1000].forEach(y => tl.append(s.el("path", { d: `M${TX(y)} 78 L${TX(y)} 90`, stroke: "#1b2740", "stroke-width": 3 }), txt(s, TX(y), 112, (y === 3500 || y === 1000) ? s.fmt(y) + " v. Chr." : s.fmt(y), { "font-size": 19, "font-weight": 600, "text-anchor": y === 3500 ? "start" : y === 1000 ? "end" : "middle", fill: "#5d6678" })));
+          const tick = (y, row, label, col) => { const g = s.el("g", { class: "later" }); const yy = row ? 50 : 22; g.append(s.el("path", { d: `M${TX(y)} ${yy + 6} L${TX(y)} 84`, stroke: col, "stroke-width": 3 }), s.el("circle", { cx: TX(y), cy: 84, r: 8, fill: col }), txt(s, TX(y), yy, label, { fill: col, "font-size": 20 })); tl.append(g); return g; };
+          const ticks = [tick(3100, 1, "Ägypten: ca. 3100", C), tick(3300, 0, "Sumer: ca. 3300", "#c2410c"), tick(2600, 0, "Indus: ca. 2600", "#7b4fd6"), tick(1600, 0, "China (Shang): ca. 1600", "#dc3b2a")];
+          const tlHead = p(s, "small pencil", "Ungefährer Beginn: Städte, Schrift, Herrscher");
+          const merk = s.h("div", { class: "merk later", style: { padding: "8px 16px" } }, "Alle frühen Hochkulturen lagen an ", B(s, "großen Flüssen"), ": Wasser für die Felder → mehr Ernte → Städte, Schrift und Herrscher.");
+          s.add(s.h("div", { class: "stack", style: { gap: "6px" } }, svg, tlHead, tl, merk));
+          s.show(svg, "fade"); s.sfx.whoosh();
+          const showCul = async (i, say) => { const c = cul[i]; s.sound("fluss", { vol: .3, dur: 2.5 }); await s.show(c.r, "draw"); s.show(c.b, "draw"); s.sfx.pop(); s.show([c.l, c.c], "pop"); s.sfx.count(i * 2); await s.show(ticks[i], "up"); s.say(say); };
+          s.step(() => showCul(0, "Ägypten am Nil kennst du schon."));
+          s.step(() => showCul(1, "Zwischen Euphrat und Tigris liegt Mesopotamien, das Zweistromland. Dort lebten die Sumerer, zum Beispiel in der Stadt Uruk."));
+          s.step(() => showCul(2, "Am Indus, im heutigen Pakistan, bauten Menschen große Städte wie Mohenjo-Daro."));
+          s.step(() => showCul(3, "Und in China entstand am Gelben Fluss das Reich der Shang."));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 9c --------------------------------------------------------------- */
+      {
+        title: "Vier Flusskulturen in echt",
+        say: "So sehen Spuren der vier Flusskulturen heute aus: Pyramiden, Tontafeln, Ruinen und beschriebene Knochen.",
+        build(s) {
+          const col = (id, cap, pos, head, color, t) => s.h("div", { class: "stack later", style: { gap: "8px" } },
+            s.photo(id, { w: "100%", h: 250, caption: cap, pos }), s.h("p", { class: "t", style: { fontWeight: 700, color } }, head), p(s, "small", t));
+          const cols = [
+            col("pyramiden-gizeh", "Pyramiden von Gizeh", "50% 60%", "Ägypten", C, "Am Nil: Pharaonen, Pyramiden und Hieroglyphen."),
+            col("keilschrift-uruk", "Tontafel aus Uruk", "50% 40%", "Mesopotamien", "#c2410c", "Uruk war eine der ersten Städte der Welt. Hier entstand um 3300 v. Chr. die Keilschrift."),
+            col("mohenjo-daro", "Mohenjo-Daro (Pakistan)", "50% 50%", "Indus-Kultur", "#7b4fd6", "Städte mit geraden Straßen und Abwasserkanälen. Ihre Schrift kann bis heute niemand lesen."),
+            col("orakelknochen", "Orakelknochen", "50% 50%", "China", "#dc3b2a", "Auf Knochen ritzte man Fragen an die Ahnen: die älteste chinesische Schrift."),
+          ];
+          const lf = lifeBox(s, "later", p(s, "small", "Mesopotamien heißt heute ", B(s, "Irak"), ". Die Ruinen von Mohenjo-Daro liegen in ", B(s, "Pakistan"), ". Und viele chinesische Schriftzeichen von heute gehen auf die Zeichen der Orakelknochen zurück."));
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", justifyContent: "center", height: "100%" } }, s.h("div", { class: "cols4", style: { gap: "14px" } }, ...cols), lf));
+          s.show(cols[0], "up"); s.sfx.pop();
+          s.step(async () => { s.sound("pencil-write", { vol: .5 }); await s.show(cols[1], "up"); s.say("Die Sumerer schrieben auf Tontafeln."); });
+          s.step(async () => { s.sound("wind", { vol: .35, dur: 2.5 }); await s.show(cols[2], "up"); s.say("Mohenjo-Daro war eine geplante Stadt."); });
+          s.step(async () => { s.sfx.scribble(); await s.show(cols[3], "up"); s.say("In China schrieb man auf Knochen."); });
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+        },
+      },
+      /* 9d --------------------------------------------------------------- */
+      {
+        title: "Keilschrift: Schreiben in Ton",
+        say: "Die Sumerer drückten mit einem Griffel aus Schilfrohr kleine Keile in weichen Ton. So entstand die Keilschrift.",
+        build(s) {
+          const svg = svgBox(s, 500, 300);
+          svg.append(s.el("rect", { x: 40, y: 20, width: 420, height: 260, rx: 34, fill: "#c99a68", stroke: "#8a5f34", "stroke-width": 4 }), s.el("rect", { x: 56, y: 34, width: 388, height: 232, rx: 26, fill: "#d6aa78" }));
+          const dark = "#7a4f28";
+          const vert = (x, y) => { const e = s.el("path", { d: `M${x - 14},${y} L${x + 14},${y} L${x + 3},${y + 22} L${x + 1},${y + 76} L${x - 1},${y + 76} L${x - 3},${y + 22} Z`, fill: dark, class: "later" }); svg.append(e); return e; };
+          const hook = (x, y) => { const e = s.el("path", { d: `M${x},${y} L${x + 42},${y - 28} L${x + 28},${y} L${x + 42},${y + 28} Z`, fill: dark, class: "later" }); svg.append(e); return e; };
+          const wedges = [hook(110, 150), hook(170, 150), vert(270, 112), vert(310, 112), vert(350, 112)];
+          const pen = s.el("g", { opacity: 0 });
+          pen.append(s.el("path", { d: "M0,0 L14,-10 L150,-110 L140,-122 L4,-22 Z", fill: "#d9c27a", stroke: "#8a6a2a", "stroke-width": 2.5 }), s.el("path", { d: "M0,0 L14,-10 L4,-22 Z", fill: "#8a6a2a" }));
+          svg.append(pen);
+          const lbl = [txt(s, 160, 250, "2 × 10", { fill: "#fff", class: "later" }), txt(s, 310, 250, "3 × 1", { fill: "#fff", class: "later" })];
+          svg.append(...lbl);
+          const press = async (i, x, y) => { pen.setAttribute("opacity", 1); await s.tween({ from: 0, to: 1, dur: s.fast ? 0 : 260, update: v => pen.setAttribute("transform", `translate(${x + 30 * (1 - v)} ${y - 30 * (1 - v)})`) }); s.sfx.snap(); await s.show(wedges[i], "zoom"); };
+          const how = exc(s, "So schrieb man die Zahl 23", "later", p(s, "small", "Ein Winkelhaken bedeutet 10, ein senkrechter Keil bedeutet 1. Also: 10 + 10 + 1 + 1 + 1 = 23."));
+          const ph1 = s.photo("ischtar-tor", { w: 330, h: 250, caption: "Das Ischtar-Tor in Berlin", pos: "50% 60%" });
+          const ph2 = s.photo("ischtar-drache", { w: 200, h: 250, caption: "Drache vom Tor", pos: "88% 50%" });
+          const berlin = exc(s, "In Berlin", "later", p(s, "small", "Das Vorderasiatische Museum im Pergamonmuseum zeigt Tontafeln aus Uruk und das Ischtar-Tor aus Babylon (um 575 v. Chr., König Nebukadnezar II.). Wegen Bauarbeiten soll das Tor erst ab etwa 2037 wieder zu sehen sein."));
+          const photos = s.h("div", { class: "row later", style: { gap: "12px", flexWrap: "nowrap" } }, ph1, ph2);
+          const merk = s.h("div", { class: "merk later", style: { padding: "8px 14px" } }, "Erfunden um ", B(s, "3300 v. Chr."), " in Uruk, zuerst für Listen und Abrechnungen. Benutzt wurde sie über ", B(s, "3.000 Jahre"), " lang.");
+          s.add(grid(s, "500px 1fr", s.h("div", { class: "stack", style: { gap: "12px" } }, svg, how, merk), s.h("div", { class: "stack", style: { gap: "12px" } }, photos, berlin)));
+          s.show(svg, "fade"); s.sfx.pop();
+          s.step(async () => { await press(0, 108, 152); await press(1, 168, 152); s.show(lbl[0], "pop"); s.say("Ein Winkelhaken bedeutet zehn."); });
+          s.step(async () => { for (let i = 2; i < 5; i++) await press(i, 266 + (i - 2) * 40, 114); pen.setAttribute("opacity", 0); s.show(lbl[1], "pop"); await s.show(how, "up"); s.say("Ein senkrechter Keil bedeutet eins. Zusammen: dreiundzwanzig."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(photos, "zoom"); s.sfx.pop(); await s.show(berlin, "left"); s.say("Das Ischtar-Tor aus Babylon steht in Berlin."); });
         },
       },
       /* 10 --------------------------------------------------------------- */

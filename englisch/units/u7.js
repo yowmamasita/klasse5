@@ -124,7 +124,7 @@
     id: "u7", num: 7, title: "Food, shopping and festivals", color: "#a21caf", soft: "#f7e3f9",
     subtitle: "Essen, Einkaufen und Feste – in London und Berlin",
     blurb: "Food, British money, have to – und Feste von Halloween bis Pancake Day.",
-    goals: ["Essen und Trinken auf Englisch benennen", "a/an oder some? How much oder How many?", "Im Laden mit Pfund und Pence einkaufen", "have to / don't have to für Regeln", "Feste und Daten: on the 5th of November"],
+    goals: ["Essen und Trinken auf Englisch benennen", "a/an oder some? How much oder How many?", "Im Laden mit Pfund und Pence einkaufen – this, that, these, those", "have to / don't have to für Regeln", "Feste und Daten: on the 5th of November"],
     icon(svg, el) {
       svg.append(el("circle", { cx: 35, cy: 35, r: 28, fill: "#a21caf", opacity: .14 }),
         el("ellipse", { cx: 35, cy: 44, rx: 22, ry: 7, fill: "#a21caf", opacity: .35 }),
@@ -465,6 +465,112 @@
           s.step(async () => { s.sfx.pop(); await s.show(L[2], "right"); s.sfx.pop(); await s.show(L[3], "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(L[4], "right"); s.sound("coins", { vol: .6 }); s.show(coins, "bounce"); await s.show(L[5], "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 8a --------------------------------------------------------------- */
+      {
+        title: "this, that, these, those",
+        say: "Was nah ist, ist this oder these. Was weiter weg ist, ist that oder those. Tippe auf die Kästchen – Ruby zeigt darauf.",
+        build(s) {
+          const E = s.el, svg = s.svg(470, 420); svg.style.height = "392px";
+          svg.append(
+            E("rect", { x: 0, y: 0, width: 470, height: 420, rx: 16, fill: "#fbf3fc" }),
+            E("rect", { x: 0, y: 372, width: 470, height: 48, rx: 0, fill: "#e6d9c8" }),
+            E("line", { x1: 282, y1: 70, x2: 282, y2: 400, stroke: "#a21caf", "stroke-width": 3, "stroke-dasharray": "8 8", opacity: .6 }),
+            E("text", { x: 150, y: 40, "text-anchor": "middle", "font-size": 26, "font-weight": 800, fill: "#a21caf", text: "here" }),
+            E("text", { x: 150, y: 66, "text-anchor": "middle", "font-size": 20, fill: "#5d6678", text: "hier" }),
+            E("text", { x: 378, y: 40, "text-anchor": "middle", "font-size": 26, "font-weight": 800, fill: "#5d6678", text: "over there" }),
+            E("text", { x: 378, y: 66, "text-anchor": "middle", "font-size": 20, fill: "#5d6678", text: "dort drüben" }),
+            // near table
+            E("rect", { x: 120, y: 290, width: 150, height: 14, rx: 4, fill: "#8b5a2b" }), E("rect", { x: 130, y: 304, width: 10, height: 70, fill: "#8b5a2b" }), E("rect", { x: 250, y: 304, width: 10, height: 70, fill: "#8b5a2b" }),
+            // far stall
+            E("rect", { x: 300, y: 250, width: 160, height: 14, rx: 4, fill: "#8b5a2b" }), E("rect", { x: 308, y: 264, width: 10, height: 110, fill: "#8b5a2b" }), E("rect", { x: 442, y: 264, width: 10, height: 110, fill: "#8b5a2b" }),
+            E("rect", { x: 306, y: 120, width: 8, height: 130, fill: "#8b5a2b" }), E("rect", { x: 446, y: 120, width: 8, height: 130, fill: "#8b5a2b" }),
+            ...[0, 1, 2, 3].map(i => E("path", { d: `M${296 + i * 42} 100 h42 v28 a21 14 0 0 1 -42 0 z`, fill: i % 2 ? "#fff" : "#a21caf" })));
+          const g = (kids, cx, cy) => { const gg = E("g", { class: "ek-g" }); kids.forEach(k => gg.append(k)); gg.cx = cx; gg.cy = cy; return gg; };
+          const shirt = g([E("path", { d: "M150 248 l18 -12 h24 l18 12 l-8 14 l-8 -4 v32 h-38 v-32 l-8 4 z", fill: "#1d5bd0", stroke: "#123a8a", "stroke-width": 2 })], 180, 262);
+          const apples = g([[220, 278], [240, 278], [260, 278], [230, 262], [250, 262]].map(([x, y]) => E("circle", { cx: x, cy: y, r: 10, fill: "#dc3b2a", stroke: "#8f1d12", "stroke-width": 1.5 })), 240, 270);
+          const cake = g([E("rect", { x: 318, y: 214, width: 52, height: 34, rx: 6, fill: "#f2c879", stroke: "#a0703c", "stroke-width": 2 }), E("rect", { x: 318, y: 214, width: 52, height: 10, rx: 4, fill: "#f7a8c4" }), E("circle", { cx: 344, cy: 208, r: 6, fill: "#dc3b2a" })], 344, 230);
+          const bananas = g([0, 1, 2].map(i => E("path", { d: `M${396 + i * 14} 246 q-6 -34 20 -44`, stroke: "#e8b923", "stroke-width": 9, fill: "none", "stroke-linecap": "round" })), 416, 226);
+          svg.append(shirt, apples, cake, bananas, cast(s, "ruby", 62, 386, { h: 190, wave: true }));
+          const hand = [112, 288];
+          const arrows = [shirt, cake, apples, bananas].map(t => {
+            const ex = t.cx, ey = t.cy - 34, mx = (hand[0] + ex) / 2, my = Math.min(hand[1], ey) - 70;
+            const p = E("path", { d: `M${hand[0]} ${hand[1] - 60} Q${mx} ${my} ${ex} ${ey}`, stroke: "#dc3b2a", "stroke-width": 5, fill: "none", "stroke-linecap": "round", "stroke-dasharray": "2 10", class: "later" });
+            const dot = E("circle", { cx: ex, cy: ey, r: 8, fill: "#dc3b2a", class: "later" });
+            svg.append(p, dot); return [p, dot];
+          });
+          const W = [
+            ["this", "How much is this T-shirt?", "Einzahl, nah", shirt],
+            ["that", "How much is that cake?", "Einzahl, weit weg", cake],
+            ["these", "How much are these apples?", "Mehrzahl, nah", apples],
+            ["those", "How much are those bananas?", "Mehrzahl, weit weg", bananas],
+          ];
+          let cur = -1;
+          const point = async i => {
+            if (cur >= 0 && cur !== i) arrows[cur].forEach(a => s.hide(a));
+            cur = i; s.sfx.swoosh();
+            await s.show(arrows[i][0], "fade"); s.show(arrows[i][1], "pop");
+            const t = W[i][3]; t.classList.remove("ek-ping"); void t.getBBox(); t.classList.add("ek-ping");
+          };
+          const cells = W.map(([w, sent, de], i) => {
+            const words = sent.split(" ");
+            const show = s.h("span", null, ...words.map((x, k) => (k === 3 ? s.h("b", { style: { color: "var(--unit)" } }, x + " ") : k === 2 ? s.h("span", { style: { color: "var(--red)" } }, x + " ") : x.replace("-", "\u2011") + " ")));
+            const c = s.h("div", { class: "card later", style: { padding: "14px 14px", display: "flex", flexDirection: "column", gap: "8px", cursor: "pointer", borderColor: i % 2 ? "var(--line)" : "var(--unit)" } },
+              s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap", justifyContent: "space-between" } }, s.h("span", { style: { font: "800 40px/1 var(--f-display)", color: "var(--unit)" } }, w), s.h("span", { class: "ek-tag" }, de)),
+              line(s, sent, { show, size: 21 }));
+            c.addEventListener("click", e => { if (e.target.closest("button")) return; point(i); s.speak(sent, EN); });
+            return c;
+          });
+          const head = (t, c) => s.h("p", { class: "ek-tag", style: { textAlign: "center", color: c } }, t);
+          const grid = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" } },
+            head("nah – hier", "var(--unit)"), head("weit weg – dort", "var(--pencil)"), cells[0], cells[1], cells[2], cells[3]);
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, B(s, "this / these"), " = nah (hier) · ", B(s, "that / those"), " = weiter weg (dort).", s.h("br"), "Einzahl → ", B(s, "is"), " · Mehrzahl → ", B(s, "are"), ": How much ", B(s, "are"), " these apples?");
+          const pron = s.h("div", { class: "card soft later", style: { padding: "10px 16px", display: "flex", alignItems: "center", gap: "14px" } },
+            s.h("p", { class: "t", style: { flex: 1, fontSize: "21px" } }, "Hör genau hin: ", B(s, "this"), " hat ein kurzes i, ", B(s, "these"), " ein langes i – wie in ", B(s, "see"), "."),
+            hear(s, "this. these. this. these.", "this – these"));
+          const tl = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Im Alltag – nicht nur im Laden"),
+            s.h("div", { class: "stack", style: { gap: "6px" } }, line(s, "Look at that dog over there!", { size: 21 }), line(s, "This is my friend Lukas.", { size: 21 }), line(s, "Are these your trainers?", { size: 21 })));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "470px 1fr", gap: "22px", height: "100%", alignItems: "start" } },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, svg, tl), s.h("div", { class: "stack", style: { gap: "14px" } }, grid, merk, pron)));
+          s.show(svg, "zoom"); s.sound("shop-bell", { vol: .5 });
+          const reveal = async i => { s.sfx.pop(); await s.show(cells[i], "up"); await point(i); s.speak(W[i][1], EN); };
+          s.step(async () => { await reveal(0); s.say("Das T-Shirt ist ganz nah: this T-shirt."); });
+          s.step(async () => { await reveal(1); s.say("Der Kuchen ist weiter weg: that cake."); });
+          s.step(async () => { await reveal(2); s.say("Mehrere Äpfel, ganz nah: these apples – und dann are."); });
+          s.step(async () => { await reveal(3); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sfx.pop(); await s.show(pron, "up"); s.speak("this. these.", EN); });
+          s.step(async () => { s.sound("dog-bark", { vol: .5 }); await s.show(tl, "up"); s.say("Auch im Alltag: Look at that dog! This is my friend."); });
+        },
+      },
+      /* 8b --------------------------------------------------------------- */
+      {
+        title: "Im Alltag: at the market",
+        say: "Ruby kauft auf einem Markt in London ein. Achte auf this, that, these und those.",
+        build(s) {
+          const C = t => s.h("b", { style: { color: "var(--red)" } }, t);
+          const L = [
+            ["T", "Hello! What would you like?"],
+            ["R", ["How much are ", C("these"), " strawberries?"], "How much are these strawberries?"],
+            ["T", "They're £3 a box.", "They're three pounds a box."],
+            ["R", ["And ", C("that"), " melon over there?"], "And that melon over there?"],
+            ["T", [C("That"), " one is £2.50."], "That one is two pounds fifty."],
+            ["R", ["I'd like ", C("these"), " strawberries and ", C("that"), " melon, please."], "I'd like these strawberries and that melon, please."],
+            ["T", "Here you are. That's £5.50, please.", "Here you are. That's five pounds fifty, please."],
+          ].map(([who, t, sp]) => s.h("div", { class: "ek-line later", style: { flexDirection: who === "T" ? "row" : "row-reverse" } },
+            s.h("span", { class: "ek-av", style: { background: who === "T" ? "var(--unit)" : "var(--blue)" } }, who),
+            s.h("p", { class: "ek-bub", style: { fontSize: "24px", padding: "10px 16px", borderColor: who === "T" ? "var(--unit)" : "var(--blue)" } }, t), hear(s, sp || t)));
+          const tip = s.h("div", { class: "life later", style: { padding: "10px 14px" } }, s.h("span", { class: "exlabel" }, "Auch im Kleiderladen"),
+            s.h("div", { class: "stack", style: { gap: "6px" } }, line(s, "Can I try on these trainers?", { size: 20 }), line(s, "I like those T-shirts!", { size: 20 })));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "330px 1fr", gap: "22px", height: "100%" } },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.photo("market-stall", { w: 330, h: 400, pos: "50% 55%", caption: "Borough Market, London" }), tip),
+            s.h("div", { class: "stack", style: { gap: "20px" } },
+              s.h("div", { class: "row", style: { gap: "10px" } }, s.h("span", { class: "ek-av", style: { background: "var(--unit)" } }, "T"), s.h("span", { class: "small pencil" }, "market trader (Händler)"), s.h("span", { class: "ek-av", style: { background: "var(--blue)" } }, "R"), s.h("span", { class: "small pencil" }, "Ruby")), L)));
+          s.sfx.whoosh(); s.show(L[0], "right");
+          s.step(async () => { s.sfx.pop(); await s.show(L[1], "left"); s.sfx.pop(); await s.show(L[2], "right"); s.say("These strawberries – die Erdbeeren hier, direkt vor Ruby."); });
+          s.step(async () => { s.sfx.pop(); await s.show(L[3], "left"); s.sfx.pop(); await s.show(L[4], "right"); s.say("That melon – die Melone dort drüben."); });
+          s.step(async () => { s.sfx.pop(); await s.show(L[5], "left"); s.sound("coins", { vol: .6 }); await s.show(L[6], "right"); });
+          s.step(async () => { s.sfx.ding(); await s.show(tip, "up"); });
         },
       },
       /* 9 ---------------------------------------------------------------- */

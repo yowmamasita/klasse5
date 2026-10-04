@@ -34,6 +34,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin_-_Neuk%C3%B6lln._Apotheke_(Hermannstrasse).JPG",
   "orig": "File:Berlin - Neukölln. Apotheke (Hermannstrasse).JPG"
  },
+ "berlin-snow": {
+  "file": "berlin-snow.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "Schnee am Brandenburger Tor, Berlin",
+  "author": "Diego Delso",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Puerta_de_Brandeburgo,_Berlin,_Alemania1.jpg",
+  "orig": "File:Puerta de Brandeburgo, Berlin, Alemania1.jpg"
+ },
  "big-ben": {
   "file": "big-ben.jpg",
   "kind": "img",
@@ -288,6 +300,17 @@
   "source": "https://freesound.org/people/lennartgreen/sounds/860527/",
   "orig": "860527"
  },
+ "duck-quack": {
+  "file": "duck-quack.mp3",
+  "kind": "snd",
+  "dur": 1.1,
+  "title": "Ente quakt",
+  "author": "qubodup",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/qubodup/sounds/442820/",
+  "orig": "442820"
+ },
  "fireworks": {
   "file": "fireworks.jpg",
   "kind": "img",
@@ -453,6 +476,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:King%27s_Cross_station_front_August_2020.jpg",
   "orig": "File:King's Cross station front August 2020.jpg"
  },
+ "kite-park": {
+  "file": "kite-park.jpg",
+  "kind": "img",
+  "w": 640,
+  "h": 480,
+  "title": "Drachensteigen im Regent's Park, London",
+  "author": "Stephen McKay",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Kite_Flying,_Regent%27s_Park_-_geograph.org.uk_-_205300.jpg",
+  "orig": "File:Kite Flying, Regent's Park - geograph.org.uk - 205300.jpg"
+ },
  "lido": {
   "file": "lido.jpg",
   "kind": "img",
@@ -510,6 +545,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:London,_London_Eye_--_2016_--_4625.jpg",
   "orig": "File:London, London Eye -- 2016 -- 4625.jpg"
+ },
+ "market-stall": {
+  "file": "market-stall.jpg",
+  "kind": "img",
+  "w": 675,
+  "h": 900,
+  "title": "Obst- und Gemüsestand, Borough Market, London",
+  "author": "Christine Matthews",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Fruit_and_Vegetable_Stall,_Borough_Market,_London_SE1_-_geograph.org.uk_-_4725647.jpg",
+  "orig": "File:Fruit and Vegetable Stall, Borough Market, London SE1 - geograph.org.uk - 4725647.jpg"
  },
  "mice": {
   "file": "mice.jpg",
@@ -660,6 +707,30 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Heimtier_004_2023_08_26.jpg",
   "orig": "File:Heimtier 004 2023 08 26.jpg"
+ },
+ "rain-oxford-street": {
+  "file": "rain-oxford-street.jpg",
+  "kind": "img",
+  "w": 640,
+  "h": 480,
+  "title": "Regen in der Oxford Street, London",
+  "author": "Stephen McKay",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Oxford_Street_in_the_Rain_-_geograph.org.uk_-_336737.jpg",
+  "orig": "File:Oxford Street in the Rain - geograph.org.uk - 336737.jpg"
+ },
+ "regents-boating": {
+  "file": "regents-boating.jpg",
+  "kind": "img",
+  "w": 640,
+  "h": 480,
+  "title": "Bootssee im Regent's Park, London",
+  "author": "David Hawgood",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Regent%27s_Park_boating_lake_-_geograph.org.uk_-_21750.jpg",
+  "orig": "File:Regent's Park boating lake - geograph.org.uk - 21750.jpg"
  },
  "ruegen-cliffs": {
   "file": "ruegen-cliffs.jpg",
@@ -836,6 +907,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Tower_bridge_works_1892.jpg",
   "orig": "File:Tower bridge works 1892.jpg"
  },
+ "tower-bridge-fog": {
+  "file": "tower-bridge-fog.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 559,
+  "title": "Tower Bridge im Nebel",
+  "author": "A J Butler",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_in_the_Fog_-_panoramio.jpg",
+  "orig": "File:Tower Bridge in the Fog - panoramio.jpg"
+ },
  "trumpet": {
   "file": "trumpet.jpg",
   "kind": "img",
@@ -916,6 +999,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/Robhog/sounds/685582/",
   "orig": "685582"
+ },
+ "wellies": {
+  "file": "wellies.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Gummistiefel (wellies)",
+  "author": "Erikamthompson",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rain_boots_on_Stairs.jpg",
+  "orig": "File:Rain boots on Stairs.jpg"
  },
  "wembley": {
   "file": "wembley.jpg",

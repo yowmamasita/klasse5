@@ -66,7 +66,7 @@
     id: "u8", num: 8, title: "Daten und Diagramme", color: "#0e7490", soft: "#dff3f7",
     subtitle: "Zählen, ordnen, zeichnen, lesen",
     blurb: "Umfragen auswerten: Strichliste, Tabelle, Säulen und Balken.",
-    goals: ["Daten sammeln: Umfrage, Zählen, Experiment", "Urliste → Strichliste → Häufigkeitstabelle", "Säulen- und Balkendiagramme zeichnen und lesen", "Häufigsten und seltensten Wert finden", "Tricks mit Diagrammen durchschauen"],
+    goals: ["Daten sammeln: Umfrage, Zählen, Experiment", "Urliste → Strichliste → Häufigkeitstabelle", "Säulen- und Balkendiagramme zeichnen und lesen", "Häufigster Wert, Mittelwert und Spannweite", "Tricks durchschauen, Möglichkeiten zählen"],
     icon(svg, el) {
       [[10, 30, "#0e7490"], [26, 14, "#dc3b2a"], [42, 38, "#ffd94a"]].forEach(([x, y, c]) => svg.append(el("rect", { x, y, width: 13, height: 60 - y, rx: 3, fill: c })));
       svg.append(el("line", { x1: 6, x2: 62, y1: 60, y2: 60, stroke: "#1b2740", "stroke-width": 3 }));
@@ -477,6 +477,112 @@
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(lf, "up"); });
         },
       },
+      /* 10b -------------------------------------------------------------- */
+      {
+        title: "Mittelwert: Türme ausgleichen",
+        say: "Fünf Kinder erzählen, wie viele Bücher sie in den Ferien gelesen haben. Wir machen alle Türme gleich hoch.",
+        build(s) {
+          const SETS = {
+            buch: { t: "Gelesene Bücher in den Ferien", names: ["Lina", "Emil", "Mia", "Ben", "Ali"], v: [2, 6, 3, 5, 4], unit: "Bücher", who: "Kinder", c: P.teal },
+            tor: { t: "Tore in 4 Fußballspielen", names: ["Spiel 1", "Spiel 2", "Spiel 3", "Spiel 4"], v: [1, 5, 0, 2], unit: "Tore", who: "Spiele", c: P.orange },
+          };
+          const W = 600, H = 400, BW = 64, BH = 44, base = 340;
+          const svg = s.svg(W, H);
+          svg.append(s.el("line", { x1: 10, x2: W - 10, y1: base + 2, y2: base + 2, stroke: P.ink, "stroke-width": 3 }));
+          const layer = s.el("g"); svg.append(layer);
+          const meanLine = later(s.el("g")); svg.append(meanLine);
+          let towers = [], cur = null, busy = false, xs = [];
+          const head = s.h("p", { class: "t", style: { fontWeight: 700 } });
+          const calc1 = s.h("p", { class: "h2 mono later" }), calc2 = s.h("p", { class: "h2 mono later", style: { color: P.red } });
+          function build(key) {
+            cur = SETS[key]; layer.innerHTML = ""; meanLine.innerHTML = ""; later(meanLine); later(calc1); later(calc2);
+            head.textContent = cur.t;
+            const n = cur.v.length, slot = (W - 40) / n;
+            xs = cur.v.map((_, i) => 20 + slot * i + slot / 2);
+            towers = cur.v.map((v, i) => {
+              layer.append(T(s, xs[i], base + 36, cur.names[i], { "font-size": 20, "font-weight": 600 }));
+              const arr = [];
+              for (let k = 0; k < v; k++) {
+                const g = s.el("g", { transform: `translate(${xs[i] - BW / 2},${base - (k + 1) * BH})` });
+                g.append(s.el("rect", { x: 1, y: 1, width: BW - 2, height: BH - 3, rx: 6, fill: cur.c, stroke: "#fff", "stroke-width": 2 }), s.el("rect", { x: 8, y: 8, width: BW - 16, height: 6, rx: 3, fill: "#fff", opacity: .35 }));
+                layer.append(g); arr.push(g);
+              }
+              return arr;
+            });
+            const sum = cur.v.reduce((a, b) => a + b, 0), m = sum / n;
+            const y = base - m * BH;
+            meanLine.append(s.el("line", { x1: 14, x2: W - 14, y1: y, y2: y, stroke: P.red, "stroke-width": 3.5, "stroke-dasharray": "10 8" }),
+              T(s, W - 16, y - 10, `Mittelwert: ${m}`, { "font-size": 22, fill: P.red, "text-anchor": "end" }));
+            calc1.textContent = `${cur.v.join(" + ")} = ${sum} ${cur.unit}`;
+            calc2.textContent = `${sum} : ${n} ${cur.who} = ${m} ${cur.unit}`;
+          }
+          async function level() {
+            if (busy) return; busy = true;
+            for (let guard = 0; guard < 20 && s.alive; guard++) {
+              const h = towers.map(t => t.length), mx = Math.max(...h), mn = Math.min(...h);
+              if (mx - mn <= 1) break;
+              const from = h.indexOf(mx), to = h.indexOf(mn), blk = towers[from].pop();
+              const x0 = xs[from] - BW / 2, y0 = base - mx * BH, x1 = xs[to] - BW / 2, y1 = base - (mn + 1) * BH;
+              s.sfx.whoosh();
+              await s.tween({ from: 0, to: 1, dur: 700, ease: "inOut", update: t => blk.setAttribute("transform", `translate(${x0 + (x1 - x0) * t},${y0 + (y1 - y0) * t - Math.sin(Math.PI * t) * 70})`) });
+              towers[to].push(blk); s.sound("holzblock", { vol: .6 }); await s.wait(250);
+            }
+            s.sfx.chord([0, 4, 7]); await s.show(meanLine, "draw");
+            busy = false;
+          }
+          build("buch");
+          const b1 = s.h("button", { class: "btn solid", onclick: () => { if (busy) return; s.sfx.click(); build("buch"); b1.classList.add("solid"); b2.classList.remove("solid"); level(); } }, "Bücher");
+          const b2 = s.h("button", { class: "btn", onclick: () => { if (busy) return; s.sfx.click(); build("tor"); b2.classList.add("solid"); b1.classList.remove("solid"); s.sound("ball-kick", { vol: .5 }); level().then(() => { s.show(calc1, "up"); s.show(calc2, "up"); }); } }, "Tore");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "Mittelwert"), " (Durchschnitt) = ", s.h("b", null, "Summe aller Werte : Anzahl der Werte"), ". So viel hätte jeder, wenn man gerecht ausgleicht.");
+          const rows = s.h("div", { class: "row later", style: { gap: "12px" } }, s.h("span", { class: "small pencil" }, "Andere Daten:"), b1, b2);
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "600px 1fr", gap: "26px", alignItems: "center" },
+            ex(s, "Türme ausgleichen", { class: "ex a-left", style: { display: "flex", flexDirection: "column", gap: "4px", padding: "14px 16px" } }, head, svg),
+            s.h("div", { class: "stack", style: { gap: "16px" } }, calc1, calc2, merk, rows)));
+          s.sfx.pop();
+          s.step(async () => { s.say("Nimm von den hohen Türmen und gib den niedrigen, bis alle gleich hoch sind."); await level(); s.say("Jetzt hat jeder vier. Vier ist der Mittelwert."); });
+          s.step(async () => { s.sound("pencil-write", { vol: .4, dur: .8 }); await s.show(calc1, "up"); s.say("Ohne Klötze geht es auch: Erst alles zusammenzählen …"); });
+          s.step(async () => { s.sfx.ding(); await s.show(calc2, "up"); s.say("… dann durch die Anzahl der Kinder teilen. Zwanzig durch fünf ist vier."); });
+          s.step(async () => { s.sfx.pop(); s.show(merk, "up"); await s.show(rows, "up", 150); s.say("Probier es auch mit den Toren aus!"); });
+        },
+      },
+      /* 10c -------------------------------------------------------------- */
+      {
+        title: "Mittelwert und Spannweite",
+        say: "Der Mittelwert sagt, wie viel im Durchschnitt. Die Spannweite sagt, wie weit die Werte auseinanderliegen.",
+        build(s) {
+          const sets = [
+            { lab: "Weitsprung: 3 Versuche", ph: "weitsprung", snd: "crowd-cheer", d: [["1.", 312], ["2.", 298], ["3.", 335]], u: "cm", yMax: 400, yStep: 100 },
+            { lab: "Berlin: eine Woche im Mai", ph: "tempelhofer-feld", snd: "birds", d: [["Mo", 14], ["Di", 16], ["Mi", 11], ["Do", 9], ["Fr", 12], ["Sa", 15], ["So", 14]], u: "°C", yMax: 20, yStep: 5 },
+            { lab: "Lesezeit an 5 Tagen", ph: "stoppuhr", snd: "clock-tick", d: [["Mo", 20], ["Di", 35], ["Mi", 15], ["Do", 30], ["Fr", 25]], u: "min", yMax: 40, yStep: 10 },
+          ];
+          const cards = sets.map((st, k) => {
+            const vals = st.d.map(x => x[1]), n = vals.length, sum = vals.reduce((a, b) => a + b, 0), m = sum / n, mx = Math.max(...vals), mn = Math.min(...vals);
+            const ch = colChart(s, { w: 320, h: 270, data: st.d.map(([l]) => ({ l, v: 0, c: "#8fb8c4" })), yMax: st.yMax, yStep: st.yStep, L: 46, Tp: 24, bottom: 36, bw: .62, valSize: 19, labSize: 19 });
+            const mLine = later(s.el("line", { x1: ch.L, x2: ch.R, y1: ch.Y(m), y2: ch.Y(m), stroke: P.red, "stroke-width": 3, "stroke-dasharray": "8 6" }));
+            ch.svg.append(mLine);
+            const l1 = s.h("p", { class: "small later" }, `Mittelwert: ${s.fmt(sum)} : ${n} = `, s.h("b", { class: "red" }, `${m} ${st.u}`));
+            const l2 = s.h("p", { class: "small later" }, `Spannweite: ${mx} − ${mn} = `, s.h("b", { style: { color: P.violet } }, `${mx - mn} ${st.u}`));
+            const c = ex(s, st.lab, { class: "ex " + (k ? "later" : "a-up"), style: { display: "flex", flexDirection: "column", gap: "6px", alignItems: "center", padding: "12px 14px" } },
+              s.photo(st.ph, { w: 310, h: 130 }), ch.svg, l1, l2);
+            c.run = async () => {
+              s.sound(st.snd, { vol: .45, dur: 2 });
+              for (let i = 0; i < n; i++) { ch.grow(i, vals[i], 450); s.sfx.note(i * 2, .1); await s.wait(120); }
+              await s.wait(450); ch.bars.forEach(b => { b.val.setAttribute("y", ch.B - 12); b.val.setAttribute("fill", "#fff"); }); s.sfx.zap(); await s.show(mLine, "fade"); await s.show(l1, "up");
+              const iMx = vals.indexOf(mx), iMn = vals.indexOf(mn);
+              ch.bars[iMx].rect.setAttribute("fill", P.violet); ch.bars[iMn].rect.setAttribute("fill", P.violet); s.sfx.boing();
+              await s.show(l2, "up");
+            };
+            return c;
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "8px 18px 10px" } }, s.h("b", null, "Spannweite"), " = größter Wert − kleinster Wert. Der Mittelwert muss in der Liste gar nicht vorkommen!");
+          s.add(root(s, "stack", { justifyContent: "space-between", gap: "12px" }, s.h("div", { class: "cols3", style: { gap: "16px" } }, ...cards), merk));
+          s.sfx.pop();
+          s.step(async () => { await cards[0].run(); s.say("Im Mittel ist das Kind dreihundertfünfzehn Zentimeter weit gesprungen. Die Sprünge liegen siebenunddreißig Zentimeter auseinander."); });
+          s.step(async () => { await s.show(cards[1], "up"); await cards[1].run(); s.say("Im Mittel war es dreizehn Grad warm."); });
+          s.step(async () => { await s.show(cards[2], "up"); await cards[2].run(); s.say("Im Durchschnitt fünfundzwanzig Minuten Lesen am Tag."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Die Spannweite ist der Abstand zwischen dem größten und dem kleinsten Wert."); });
+        },
+      },
       /* 11 --------------------------------------------------------------- */
       {
         title: "Darstellungen wechseln",
@@ -492,7 +598,7 @@
           const g1 = good("genaue Werte nachschauen"), g2 = good("auf einen Blick vergleichen"), g3 = good("eine wichtige Aussage");
           const card = (lab, body, g, first) => ex(s, lab, { class: "ex " + (first ? "a-up" : "later"), style: { display: "flex", flexDirection: "column", gap: "10px" } }, body, g);
           const c1 = card("1 · Tabelle", tbl, g1, true), c2 = card("2 · Säulendiagramm", ch.svg, g2), c3 = card("3 · Text", txt, g3);
-          const head = s.h("p", { class: "t a-up" }, s.h("b", null, "Julians Bildschirmzeit"), " in einer Woche (Beispiel)");
+          const head = s.h("p", { class: "t a-up" }, s.h("b", null, "Leons Bildschirmzeit"), " in einer Woche (Beispiel)");
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 20px 12px" } }, "Gleiche Daten – drei Darstellungen. Nimm die, die deine Frage am schnellsten beantwortet.");
           s.add(root(s, "stack", { gap: "12px" }, head, s.h("div", { class: "cols3", style: { gap: "18px", flex: 1 } }, c1, c2, c3), merk));
           s.sfx.pop();
@@ -545,6 +651,78 @@
           s.step(async () => { s.sfx.boing(); await s.show(c2, "right"); s.say("Rechts sieht es aus, als hätte die 5a dreimal so viel verkauft!"); });
           s.step(async () => { s.sfx.zap(); await s.show(trick.ring, "draw"); s.say("Der Trick: Die Achse beginnt erst bei sechsundvierzig. Schieb den Regler auf null!"); });
           s.step(async () => { s.sfx.ding(); s.show(merk, "up"); await s.show(lf, "up", 150); });
+        },
+      },
+      /* 12b -------------------------------------------------------------- */
+      {
+        title: "Zählen mit dem Baumdiagramm",
+        say: "Leon hat drei T-Shirts und zwei Hosen. Wie viele verschiedene Outfits kann er anziehen?",
+        build(s) {
+          const SH = [["rot", P.red], ["blau", P.blue], ["grün", P.green]], PA = [["Jeans", "#3b5b8c"], ["kurz", "#b08850"]];
+          const shirt = (x, y, c, sc = 1) => s.el("path", { d: `M${x - 18 * sc},${y - 14 * sc} l${10 * sc},${-6 * sc} l${4 * sc},${4 * sc} h${8 * sc} l${4 * sc},${-4 * sc} l${10 * sc},${6 * sc} l${6 * sc},${10 * sc} l${-8 * sc},${4 * sc} v${20 * sc} h${-32 * sc} v${-20 * sc} l${-8 * sc},${-4 * sc} z`, fill: c, stroke: P.ink, "stroke-width": 1.5, "stroke-linejoin": "round" });
+          const pants = (x, y, c, short, sc = 1) => { const L = (short ? 14 : 28) * sc; return s.el("path", { d: `M${x - 13 * sc},${y - 14 * sc} h${26 * sc} l${2 * sc},${L + 6 * sc} h${-11 * sc} l${-4 * sc},${-L + 6 * sc} l${-4 * sc},${L - 6 * sc} h${-11 * sc} z`, fill: c, stroke: P.ink, "stroke-width": 1.5, "stroke-linejoin": "round" }); };
+          const W = 640, H = 540, svg = s.svg(W, H), rx = 30, ry0 = H / 2;
+          const shY = [95, 270, 445], leafY = [50, 140, 225, 315, 400, 490];
+          svg.append(s.el("circle", { cx: rx, cy: ry0, r: 10, fill: P.ink }), T(s, rx + 4, ry0 + 40, "Start", { "font-size": 19, fill: P.pencil }));
+          const lvl1 = [], lvl2 = [], leaves = [];
+          SH.forEach(([n, c], i) => {
+            const ln = later(s.el("line", { x1: rx, y1: ry0, x2: 190, y2: shY[i], stroke: c, "stroke-width": 4, "stroke-linecap": "round" }));
+            const g = later(fb(s.el("g"))); g.append(s.el("circle", { cx: 220, cy: shY[i], r: 32, fill: "#fff", stroke: c, "stroke-width": 3 }), shirt(220, shY[i] + 4, c));
+            svg.append(ln, g); lvl1.push([ln, g]);
+            PA.forEach(([pn, pc], j) => {
+              const k = i * 2 + j, ly = leafY[k];
+              const l2 = later(s.el("line", { x1: 252, y1: shY[i], x2: 360, y2: ly, stroke: P.pencil, "stroke-width": 3, "stroke-linecap": "round" }));
+              const pg = later(fb(s.el("g"))); pg.append(s.el("circle", { cx: 386, cy: ly, r: 26, fill: "#fff", stroke: pc, "stroke-width": 3 }), pants(386, ly + 2, pc, j === 1, .85));
+              const lf = later(fb(s.el("g"))); lf.append(shirt(450, ly + 4, c, .8), pants(486, ly + 2, pc, j === 1, .75), T(s, 516, ly + 8, `Outfit ${k + 1}`, { "font-size": 20, "text-anchor": "start" }));
+              svg.append(l2, pg, lf); lvl2.push([l2, pg]); leaves.push(lf);
+            });
+          });
+          const st1 = s.h("p", { class: "t later" }, s.h("b", { class: "red" }, "1. Stufe:"), " 3 T-Shirts → 3 Äste");
+          const st2 = s.h("p", { class: "t later" }, s.h("b", { class: "blue" }, "2. Stufe:"), " an jedem Ast 2 Hosen");
+          const res = s.h("p", { class: "big mono later", style: { color: P.teal } }, "3 · 2 = 6");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "Zählprinzip:"), " Die Anzahlen jeder Stufe ", s.h("b", null, "malnehmen"), ". Jeder Weg im Baum ist eine Möglichkeit.");
+          const more = s.h("p", { class: "small later", style: { color: P.violet } }, "Mit 2 Paar Schuhen dazu: 3 · 2 · 2 = 12 Outfits!");
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "640px 1fr", gap: "24px", alignItems: "center" }, svg,
+            s.h("div", { class: "stack", style: { gap: "16px" } }, st1, st2, res, merk, more)));
+          s.sound("zipper", { vol: .5, dur: 1.5 });
+          s.step(async () => { for (const [ln, g] of lvl1) { s.show(ln, "draw"); await s.wait(200); s.show(g, "pop"); s.sfx.pop(); await s.wait(200); } await s.show(st1, "up"); s.say("Erst wählt er ein T-Shirt: drei Äste."); });
+          s.step(async () => { for (const [ln, g] of lvl2) { s.show(ln, "draw"); await s.wait(120); s.show(g, "pop"); s.sfx.tick(); await s.wait(120); } await s.show(st2, "up"); s.say("Zu jedem T-Shirt passen zwei Hosen."); });
+          s.step(async () => { for (let i = 0; i < leaves.length; i++) { s.show(leaves[i], "left"); s.sfx.count(i); await s.wait(220); } s.sfx.fanfare(); await s.show(res, "zoom"); s.say("Sechs Wege, sechs Outfits. Drei mal zwei ist sechs."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); await s.show(more, "up"); });
+        },
+      },
+      /* 12c -------------------------------------------------------------- */
+      {
+        title: "Das Zählprinzip im Alltag",
+        say: "Mit dem Zählprinzip zählst du Möglichkeiten, ohne alle aufzuschreiben.",
+        build(s) {
+          const chain = (parts, total) => {
+            const row = s.h("div", { class: "row", style: { gap: "6px", flexWrap: "nowrap" } });
+            const els = parts.map((p, i) => { const e = s.h("span", { class: "later", style: { font: "800 30px/1 var(--f-display)", color: P.teal } }, (i ? "· " : "") + p); row.append(e); return e; });
+            const t = s.h("span", { class: "later", style: { font: "800 30px/1 var(--f-display)", color: P.red } }, "= " + total); row.append(t); els.push(t);
+            return { row, els };
+          };
+          const card = (lab, ph, txt, ch, first) => s.h("div", { class: "life " + (first ? "a-up" : "later"), style: { display: "flex", gap: "16px", alignItems: "center", padding: "12px 16px" } },
+            ph, s.h("div", { class: "stack", style: { gap: "8px", minWidth: 0 } }, s.h("span", { style: LBL }, lab), s.h("p", { class: "small" }, txt), ch.row));
+          const c1 = chain(["2", "6"], "12"), c2 = chain(["3", "2"], "6"), c3 = chain(["10", "10", "10", "10"], "10.000");
+          const cards = [
+            card("Eisdiele", s.photo("eiskugeln", { w: 170, h: 130 }), "Waffel oder Becher – und eine von 6 Sorten.", c1, true),
+            card("Schul-Mensa", s.photo("schulessen", { w: 170, h: 130 }), "3 Hauptgerichte, dazu Obst oder Pudding.", c2),
+            card("Zahlenschloss / PIN", s.photo("zahlenschloss", { w: 170, h: 130 }), "4 Rädchen, jedes mit den Ziffern 0 bis 9: von 0000 bis 9999.", c3),
+          ];
+          const out = s.h("p", { class: "h2 mono", style: { color: P.red } });
+          const upd = n => { out.textContent = `${Array(n).fill("10").join(" · ")} = ${s.fmt(Math.pow(10, n))}`; };
+          upd(3);
+          const sl = s.slider({ label: "Rädchen am Schloss", min: 1, max: 6, value: 3, onInput: upd });
+          const play = ex(s, "Ausprobieren", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "10px" } }, sl, out,
+            s.h("p", { class: "small pencil" }, "Jedes Rädchen mehr: zehnmal so viele Möglichkeiten. Deshalb ist eine lange PIN sicherer."));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "600px 1fr", gap: "22px", alignItems: "center" }, s.h("div", { class: "stack", style: { gap: "14px" } }, ...cards), play));
+          const run = async (c, i) => { for (const e of c.els) { s.show(e, "pop"); s.sfx.count(i++); await s.wait(260); } s.sfx.ding(); };
+          s.sfx.pop();
+          s.step(async () => { s.sound("cash-register", { vol: .4 }); await run(c1, 0); s.say("Zwei mal sechs: zwölf verschiedene Eis."); });
+          s.step(async () => { await s.show(cards[1], "left"); s.sound("glass-clink", { vol: .5 }); await run(c2, 2); s.say("Drei mal zwei: sechs Menüs."); });
+          s.step(async () => { await s.show(cards[2], "left"); s.sfx.snap(); await run(c3, 4); s.say("Zehn mal zehn mal zehn mal zehn: zehntausend Möglichkeiten!"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(play, "right"); s.say("Schieb den Regler: Wie viele Möglichkeiten hat ein Schloss mit sechs Rädchen?"); });
         },
       },
       /* 13 --------------------------------------------------------------- */
