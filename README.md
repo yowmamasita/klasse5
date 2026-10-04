@@ -21,6 +21,16 @@ python3 serve.py 8790 0.0.0.0
 Any static file server works; `serve.py` only adds a no-cache header and a bigger connection queue.
 On the iPad: open the address in Safari, then *Teilen → Zum Home-Bildschirm* for a full-screen app.
 
+## Deploy (home server)
+
+Runs on `kids` as a user systemd service (`~/.config/systemd/user/klasse5.service`, port 8790):
+
+```bash
+ssh ben@kids 'git -C ~/klasse5 pull && systemctl --user restart klasse5'
+```
+
+Open `http://192.168.88.242:8790/` on the home Wi-Fi or `http://kids:8790/` on the tailnet.
+
 ## Layout
 
 ```
