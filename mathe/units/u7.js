@@ -100,13 +100,13 @@
           s.show(svg, "zoom"); s.sfx.whoosh();
           s.step(async () => {
             s.say("Der Zaun läuft einmal rundherum: 26 Meter.");
-            s.sfx.scribble(); await s.show(fence, "draw");
-            cascade(s, posts, "pop", 25, i => i % 4 === 0 && s.sfx.tick());
+            s.sound("hammer", { vol: .6 }); await s.show(fence, "draw");
+            cascade(s, posts, "pop", 25);
             s.sfx.pop(); await s.show(cu, "up");
           });
           s.step(async () => {
             s.say("Der Rasen füllt die Fläche innen: 40 Quadratmeter.");
-            await cascade(s, tiles, "pop", 45, i => s.sfx.count(i % 15));
+            s.sound("birds", { vol: .4, dur: 4 }); await cascade(s, tiles, "pop", 45);
             s.sfx.ding(); await s.show(ca, "up");
           });
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
@@ -264,7 +264,7 @@
           s.show([sv1, sv2], "zoom"); s.sfx.whoosh();
           s.step(async () => {
             s.say("Wir schneiden die Form in zwei Rechtecke.");
-            s.sfx.scribble(); await s.show(cut, "draw");
+            s.sound("scissors", { vol: .7 }); await s.show(cut, "draw");
             s.sfx.whoosh();
             await s.tween({ from: 0, to: 46, dur: 700, ease: "back", update: v => gB.setAttribute("transform", `translate(${v},0)`) });
             s.sfx.pop(); s.show(lA, "fade"); await s.show(lB, "fade");
@@ -326,7 +326,7 @@
           s.step(async () => {
             s.say("Rundherum: zweimal a und zweimal b.");
             edgesOn = true;
-            for (const e of edges) { s.sfx.scribble(); await s.show(e, "draw"); }
+            s.sound("pencil-write"); for (const e of edges) await s.show(e, "draw");
             s.sfx.pop(); await s.show(cu, "up");
           });
           s.step(async () => {
@@ -573,7 +573,7 @@
           s.show(svg, "zoom"); s.sfx.whoosh();
           s.step(async () => {
             s.say("Wir zerlegen in zwei Rechtecke.");
-            s.sfx.scribble(); await s.show(split, "draw");
+            s.sound("pencil-write"); await s.show(split, "draw");
             s.sfx.pop(); s.show([p1, p2], "fade"); s.show([l1, l2], "pop");
             await s.show(c1, "up");
           });
@@ -583,7 +583,7 @@
             await s.tween({ from: 0, to: 7 * S, dur: 1400, ease: "out", update: v => carpet.setAttribute("width", v) });
             s.sfx.ding(); await s.show(c2, "up");
           });
-          s.step(async () => { s.sfx.coin(); await s.show(c3, "up"); });
+          s.step(async () => { s.sound("cash-register", { vol: .6 }); await s.show(c3, "up"); });
           s.step(async () => { s.say("Die Fußleiste läuft am Rand entlang. Das ist der Umfang: 22 Meter."); s.sfx.scribble(); await s.show(skirt, "draw"); s.sfx.pop(); await s.show(c4, "up"); });
         },
       },
@@ -631,7 +631,7 @@
           s.step(async () => {
             s.say("Jetzt wird gerollt!");
             await s.show(roller, "fade");
-            s.sfx.whoosh();
+            s.sound("farbroller", { vol: .7, dur: 2.2 });
             await s.tween({ from: 0, to: W, dur: 2000, ease: "inOut", update: v => { paint.setAttribute("width", v); rollPos.setAttribute("transform", `translate(${X + v},0)`); } });
             s.sfx.ding(); await s.show(c3, "up");
           });
@@ -658,8 +658,8 @@
           const sum = s.h("div", { class: "card later" }, s.h("p", { class: "h2" }, "O = 1200 + 600 + 400 = 2200 cm²"));
           const merk = s.h("div", { class: "merk later" }, "Oberfläche = alle 6 Flächen zusammen.", s.h("br"), s.h("b", null, "Quader: O = 2·(a·b + a·c + b·c)"));
           let busy = false;
-          const toggle = async () => {
-            if (busy) return; busy = true; s.sfx.whoosh();
+          const toggle = async (snd) => {
+            if (busy) return; busy = true; if (snd) s.sound("geschenkpapier", { vol: .6 }); else s.sfx.whoosh();
             const from = net.t, to = net.t > .5 ? 0 : 1;
             await s.tween({ from, to, dur: 1300, ease: "inOut", update: net.set }); busy = false;
           };
@@ -670,7 +670,7 @@
               s.h("p", { class: "t" }, "Geschenk: ", s.h("b", null, "a = 30 cm"), " lang, ", s.h("b", null, "b = 20 cm"), " breit, ", s.h("b", null, "c = 10 cm"), " hoch."),
               ...rows, sum, merk)));
           s.show(net.stage, "zoom"); s.sfx.whoosh();
-          s.step(async () => { s.say("Wir klappen das Geschenk auf. Das ist das Netz."); await toggle(); });
+          s.step(async () => { s.say("Wir klappen das Geschenk auf. Das ist das Netz."); await toggle(true); });
           s.step(async () => { s.say("Immer zwei Flächen sind gleich groß."); await cascade(s, rows, "left", 400, i => s.sfx.count(i * 2)); });
           s.step(async () => { s.sfx.ding(); await s.show(sum, "up"); s.say("Zusammen 2200 Quadratzentimeter Papier – plus ein bisschen zum Überlappen."); });
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
@@ -700,7 +700,26 @@
           sl.style.flex = "1";
           s.show(net.stage, "zoom"); s.sfx.whoosh();
           s.step(async () => { s.say("Aufklappen: sechs gleiche Quadrate."); await go(0); s.sfx.ding(); await s.show(f, "up"); });
-          s.step(async () => { await cascade(s, ex, "left", 300, i => s.sfx.count(i * 2)); });
+          s.step(async () => { s.sound("wuerfeln", { vol: .7 }); await cascade(s, ex, "left", 300); });
+        },
+      },
+
+      /* 13b ---------------------------------------------------------------- */
+      {
+        title: "Berliner Flächen von oben",
+        say: "Von oben sieht man Flächen besonders gut: das Tempelhofer Feld, den Müggelsee und viele kleine Gärten.",
+        build(s) {
+          const f1 = s.photo("tempelhofer-feld", { w: 540, h: 400, caption: "Tempelhofer Feld: 355 ha – bis 2008 ein Flughafen", cls: "later" });
+          const f2 = s.photo("mueggelsee", { w: 530, h: 188, caption: "Müggelsee: 7,4 km², Berlins größter See", cls: "later" });
+          const f3 = s.photo("kleingaerten", { w: 530, h: 188, pos: "50% 60%", caption: "Kleingärten: Zaun = Umfang, Beet = Fläche", cls: "later" });
+          const merk = s.h("div", { class: "merk later" }, "Große Flächen misst man in ", s.h("b", null, "ha"), " und ", s.h("b", null, "km²"), ": 1 km² = 100 ha.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "18px" } },
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "540px 530px", gap: "24px", alignItems: "center", justifyContent: "center" } },
+              f1, s.h("div", { class: "stack", style: { gap: "24px" } }, f2, f3)), merk));
+          s.step(async () => { s.sound("wind", { vol: .35, dur: 3 }); await s.show(f1, "zoom"); s.say("Auf dem Tempelhofer Feld landeten früher Flugzeuge. Heute ist es ein Park."); });
+          s.step(async () => { s.sound("waves", { vol: .4, dur: 3 }); await s.show(f2, "zoom"); });
+          s.step(async () => { s.sound("birds", { vol: .4, dur: 3 }); await s.show(f3, "zoom"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
 
@@ -747,8 +766,8 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "510px 1fr", alignItems: "center", height: "100%" } },
             s.h("div", { class: "stack", style: { gap: "8px" } }, svg, fu, fa), right));
           s.show(svg, "zoom"); s.sfx.whoosh();
-          s.step(async () => { s.say("Einmal rundherum sind 346 Meter."); s.sfx.zap(); await s.show(per, "draw"); s.sfx.pop(); await s.show(fu, "up"); });
-          s.step(async () => { s.say("Die Fläche: 7140 Quadratmeter."); s.sfx.boing(); await s.show(fillA, "zoom"); s.sfx.ding(); await s.show(fa, "up"); });
+          s.step(async () => { s.say("Einmal rundherum sind 346 Meter."); s.sound("whistle", { vol: .6 }); await s.show(per, "draw"); s.sfx.pop(); await s.show(fu, "up"); });
+          s.step(async () => { s.say("Die Fläche: 7140 Quadratmeter."); s.sound("ball-kick", { vol: .7 }); await s.show(fillA, "zoom"); s.sfx.ding(); await s.show(fa, "up"); });
           s.step(async () => {
             s.say("Das Tempelhofer Feld in Berlin ist so groß wie fast 500 Fußballfelder!");
             await s.show(right, "up");
@@ -758,7 +777,7 @@
               s.loop(t => {
                 const n = Math.min(500, Math.round(t / 2.5 * 500)); drawN(n); tCount.textContent = n;
                 if (Math.floor(n / 50) > last) { last = Math.floor(n / 50); s.sfx.count(last); }
-                if (n >= 500) { tCount.textContent = "≈ 500"; s.sfx.fanfare(); res(); return false; }
+                if (n >= 500) { tCount.textContent = "≈ 500"; s.sound("kids-wow", { vol: .6 }); res(); return false; }
               });
             });
           });

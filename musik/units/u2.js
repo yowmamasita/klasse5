@@ -10,27 +10,17 @@
   const nname = d => d >= 0 ? NAMES[pc(d)] + (d < 7 ? "′" : d < 14 ? "″" : "‴") : NAMES[pc(d)];
   const fmtHz = (s, d) => s.fmt(hz(semi(d)), 2) + " Hz";
 
-  /* ---------- audio ---------- */
-  function play(s, freq, dur = 1, o = {}) {
-    if (!s.sfx.on || s.fast || !s.alive) return;
-    const ac = s.sfx.unlock(); if (!ac) return;
-    const t = ac.currentTime + (o.when || 0);
-    const osc = ac.createOscillator();
-    const harm = o.harm || [1, .5, .3, .16, .09, .05];
-    const re = new Float32Array(harm.length + 1), im = new Float32Array(harm.length + 1);
-    harm.forEach((a, i) => { im[i + 1] = a; });
-    osc.setPeriodicWave(ac.createPeriodicWave(re, im));
-    osc.frequency.setValueAtTime(freq, t);
-    const g = ac.createGain(), v = (o.vol || .3) * .55;
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(v, t + .008);
-    if (o.hold) { g.gain.setValueAtTime(v, t + dur - .08); g.gain.exponentialRampToValueAtTime(0.0001, t + dur); }
-    else g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-    osc.connect(g); g.connect(ac.destination);
-    osc.start(t); osc.stop(t + dur + .05);
-    s.onLeave(() => { try { osc.stop(); } catch (e) {} });
+  /* ---------- audio: recorded piano (13 samples, pitched to the nearest note) ---------- */
+  const PS = [[36, "piano-c2"], [40, "piano-e2"], [45, "piano-a2"], [48, "piano-c3"], [52, "piano-e3"], [57, "piano-a3"], [60, "piano-c4"], [64, "piano-e4"], [69, "piano-a4"], [72, "piano-c5"], [76, "piano-e5"], [81, "piano-a5"], [84, "piano-c6"]];
+  const PIANO_IDS = PS.map(p => p[1]);
+  /** n = semitones relative to c″ (C5 = MIDI 72) */
+  function piano(s, n, dur = 1.1, when = 0, vol = .75) {
+    if (!s.alive) return;
+    const m = 72 + n;
+    let best = PS[0];
+    for (const p of PS) if (Math.abs(p[0] - m) < Math.abs(best[0] - m)) best = p;
+    s.sound(best[1], { rate: Math.pow(2, (m - best[0]) / 12), when, vol });
   }
-  const piano = (s, n, dur = 1.1, when = 0, vol = .3) => play(s, hz(n), dur, { when, vol });
   const pianoD = (s, d, dur, when) => piano(s, semi(d), dur, when);
 
   /* ---------- notation drawing ---------- */
@@ -201,13 +191,31 @@
       const letterL = txt(s, 820, st.bottom + 60, "aus dem Buchstaben G", { class: "lbl later", style: { fill: "#1d5bd0" } });
       v.append(gLbl, letter, letterL);
       const merk = s.h("div", { class: "merk later" }, "Der ", s.h("b", null, "Violinschlüssel"), " heißt auch ", s.h("b", null, "G-Schlüssel"), ". Er legt fest: Auf der 2. Linie steht das ", s.h("b", null, "g′"), ".");
-      const life = box(s, "life later", "Wer liest ihn?", s.h("p", { class: "small" }, "Geige, Flöte, Klarinette, Oboe, Trompete, hohe Singstimmen – und die rechte Hand am Klavier."));
+      const life = box(s, "life later", "Wer liest ihn?", s.h("p", { class: "small" }, "Geige, Flöte, Klarinette, Oboe, Trompete, hohe Singstimmen – und die rechte Hand am Klavier."),
+        s.h("div", { class: "row", style: { marginTop: "6px" } }, s.soundBtn("geige-melodie", "Geige hören", { dur: 5 })));
       s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, v, s.h("div", { class: "cols" }, merk, life)));
       s.step(async () => { s.sfx.scribble(); await s.show(st.clefEl, "draw"); });
       s.step(async () => { s.sfx.zap(); s.show(hiLine, "fade"); await s.show(gNote, "pop"); pianoD(s, 4, 1.4); s.show(gLbl, "fade"); });
       s.step(async () => { s.sfx.whoosh(); s.show(letter, "zoom"); await s.show(letterL, "fade"); s.say("Der Schlüssel war früher ein geschriebenes G."); });
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
       s.step(async () => { [4, 6, 8, 11].forEach((d, i) => pianoD(s, d, .5, i * .18)); await s.show(life, "up"); });
+    },
+  });
+
+  /* 3b --------------------------------------------------------------- */
+  slides.push({
+    title: "Noten mit der Feder",
+    say: "So hat Johann Sebastian Bach im Jahr 1720 Musik für die Geige aufgeschrieben – mit Feder und Tinte. Am Anfang jeder Zeile steht ein Violinschlüssel.",
+    build(s) {
+      const ph = s.photo("bach-autograph", { w: 680, h: 520, pos: "50% 30%", caption: "Bachs Handschrift, 1720: Sonate für Geige allein", kb: true });
+      const c1 = box(s, "card later", "Schau genau", s.h("p", { class: "t" }, "Jede Zeile beginnt mit einem ", s.h("b", null, "Violinschlüssel"), ". Er sieht schon fast so aus wie heute."));
+      const c2 = box(s, "card later", "Damals", s.h("p", { class: "t" }, "Es gab keinen Computer und keinen Kopierer. Jede Note wurde ", s.h("b", null, "mit der Hand"), " geschrieben."));
+      const c3 = box(s, "life later", "Heute", s.h("p", { class: "small" }, "Geigerinnen und Geiger spielen diese Musik noch immer – aus gedruckten Noten."), s.h("div", { class: "row", style: { marginTop: "6px" } }, s.soundBtn("geige-melodie", "Geige hören", { dur: 6 })));
+      s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "680px 1fr", alignItems: "start", gap: "22px" } }, ph, s.h("div", { class: "stack", style: { gap: "14px" } }, c1, c2, c3)));
+      s.sound("pencil-write", { vol: .5 });
+      s.step(async () => { s.sfx.scribble(); await s.show(c1, "left"); });
+      s.step(async () => { s.sound("paper-crumple", { dur: .8, vol: .4 }); await s.show(c2, "left"); });
+      s.step(async () => { s.sound("geige-melodie", { dur: 3, vol: .6 }); await s.show(c3, "left"); });
     },
   });
 
@@ -301,8 +309,9 @@
       const en = box(s, "card later", "Englisch", row("C D E F G A B".split(" "), "#dc3b2a"));
       const why = box(s, "ex later", "Warum?", s.h("p", { class: "t" }, "Früher gab es zwei Sorten b: ein ", s.h("b", null, "rundes"), " und ein ", s.h("b", null, "eckiges"), ". Das eckige sah im Druck aus wie ein ", s.h("b", null, "h"), " – so wurde daraus der Ton H."),
         s.h("p", { class: "small" }, "Das deutsche ", s.h("b", null, "b"), " ist heute die schwarze Taste links neben dem h."));
-      const bach = s.h("button", { class: "life later", style: { textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer" }, onclick: () => playBach() },
-        s.h("span", { class: "exlabel" }, "Im Alltag ▶ antippen"), s.h("p", { class: "t" }, "Der Komponist ", s.h("b", null, "Bach"), " konnte seinen Namen spielen: ", s.h("b", null, "b – a – c – h"), "."));
+      const bach = s.h("button", { class: "life later", style: { textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer", display: "flex", gap: "14px", alignItems: "center" }, onclick: () => playBach() },
+        s.photo("bach", { w: 150, h: 190, pos: "50% 20%" }),
+        s.h("div", null, s.h("span", { class: "exlabel" }, "Im Alltag ▶ antippen"), s.h("p", { class: "t" }, "Der Komponist ", s.h("b", null, "Johann Sebastian Bach"), " konnte seinen Namen spielen: ", s.h("b", null, "b – a – c – h"), ".")));
       const playBach = () => [-2, -3, 0, -1].forEach((n, i) => piano(s, n, .7, i * .45));
       const mk = keyboard(s, { w: 520, h: 150, n: 8, onKey: k => { mk.light(k); piano(s, k.n, .9); } });
       const kbH = mk.find(6), kbB = mk.blacks.find(k => pc(k.d) === 5);
@@ -310,7 +319,7 @@
       const kbBox = s.h("div", { class: "later", style: { display: "flex", flexDirection: "column", gap: "6px" } }, mk.svg, s.h("p", { class: "small pencil" }, "türkis = h, rot = b (schwarze Taste)"));
       s.add(s.h("div", { class: "stack", style: { gap: "16px" } }, s.h("div", { class: "cols" }, de, en), why, s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", alignItems: "center" } }, kbBox, bach)));
       s.step(async () => { pianoD(s, 6, 1); await s.show(en, "left"); });
-      s.step(async () => { s.sfx.pop(); await s.show(why, "up"); });
+      s.step(async () => { s.sfx.scribble(); await s.show(why, "up"); });
       s.step(async () => { showHB(); s.show(kbBox, "up"); pianoD(s, 6, .8); piano(s, -2, .8, .9); await s.wait(400); });
       s.step(async () => { playBach(); await s.show(bach, "up"); });
     },
@@ -390,13 +399,15 @@
         return [n, l, d];
       });
       const merk = s.h("div", { class: "merk later" }, "Der ", s.h("b", null, "Bassschlüssel"), " ist ein ", s.h("b", null, "F-Schlüssel"), ": Auf der 4. Linie steht das f. Er ist für ", s.h("b", null, "tiefe Töne"), ".");
-      const life = box(s, "life later", "Wer liest ihn?", s.h("p", { class: "small" }, "Cello, Kontrabass, Fagott, Posaune, Tuba, tiefe Männerstimmen – und die linke Hand am Klavier."));
-      s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, v, s.h("div", { class: "cols" }, merk, life)));
+      const life = box(s, "life later", "Wer liest ihn?", s.h("p", { class: "small" }, "Cello, Kontrabass, Fagott, Posaune, Tuba, tiefe Männerstimmen – und die linke Hand am Klavier."),
+        s.h("div", { class: "row", style: { marginTop: "6px" } }, s.soundBtn("cello-melodie", "Cello hören")));
+      const cel = s.photo("cello", { w: 170, h: 300, pos: "50% 50%", cls: "later" });
+      s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, v, s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr 170px", alignItems: "start" } }, merk, life, cel)));
       s.step(async () => { s.sfx.scribble(); await s.show(st.clefEl, "pop"); });
       s.step(async () => { s.sfx.zap(); s.show(hi, "fade"); s.show(notes[0][0], "pop"); s.show(notes[0][1], "up"); pianoD(s, -4, 1.4); await s.wait(500); });
       s.step(async () => { for (const [n, l, d] of notes.slice(1)) { s.show(n, "pop"); s.show(l, "up"); pianoD(s, d, 1.2); await s.wait(600); } });
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-      s.step(async () => { [-14, -10, -7, -4].forEach((d, i) => pianoD(s, d, .6, i * .2)); await s.show(life, "up"); });
+      s.step(async () => { s.sound("cello-melodie", { dur: 3, vol: .7 }); s.show(cel, "zoom"); await s.show(life, "up"); });
     },
   });
 
@@ -473,7 +484,7 @@
       const A = panel([0, 1, 2, 3, 4, 4, 5, 5, 5, 5, 4], "#138a5a");
       const B = panel([5, 8, 5, 8, 5, 8], "#ee7a1a");
       const sideA = s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("p", { class: "h2 green" }, "Tonschritt"), s.h("p", { class: "small" }, "„Alle meine Entchen“ geht wie eine Treppe: immer zum Nachbarton – oder der Ton bleibt gleich."), s.h("button", { class: "btn", onclick: () => A.run() }, "▶ anhören"));
-      const sideB = s.h("div", { class: "stack later", style: { gap: "8px" } }, s.h("p", { class: "h2 orange" }, "Tonsprung"), s.h("p", { class: "small" }, "Das Martinshorn springt hin und her, zum Beispiel a′ – d″. Dazwischen liegen Töne, die übersprungen werden."), s.h("button", { class: "btn", onclick: () => B.run() }, "▶ anhören"));
+      const sideB = s.h("div", { class: "stack later", style: { gap: "8px" } }, s.h("p", { class: "h2 orange" }, "Tonsprung"), s.h("p", { class: "small" }, "Das Martinshorn springt hin und her, zum Beispiel a′ – d″. Dazwischen liegen Töne, die übersprungen werden."), s.h("div", { class: "row" }, s.h("button", { class: "btn", onclick: () => B.run() }, "▶ anhören"), s.soundBtn("martinshorn", "echtes Martinshorn", { dur: 4 })));
       B.v.classList.add("later");
       const merk = s.h("div", { class: "merk later" }, s.h("b", { class: "green" }, "Tonschritt"), ": Linie → Zwischenraum, zum Nachbarton. ", s.h("b", { class: "orange" }, "Tonsprung"), ": mindestens ein Ton dazwischen.");
       s.add(s.h("div", { class: "stack", style: { gap: "10px" } },
@@ -490,26 +501,26 @@
     say: "Noten findest du an vielen Stellen. Tippe auf eine Karte, dann spielt die Melodie.",
     build(s) {
       const mini = (mel) => {
-        const v = s.svg(470, 140);
+        const v = s.svg(470, 140); v.setAttribute("height", 124);
         const st = staff(s, v, { x0: 4, x1: 466, top: 34, gap: 16 });
         const ns = mel.map((d, i) => st.note(80 + i * (370 / Math.max(1, mel.length - 1)), d));
         return { v, ns };
       };
       const tiles = [
-        ["📖", "Liederbuch", "Kinderlieder wie „Alle meine Entchen“ stehen in Noten im Liederbuch.", [0, 1, 2, 3, 4, 4]],
-        ["🎹", "Klavier-App", "Sie zeigt oft C D E F G A B – das englische B ist unser h.", [0, 1, 2, 3, 4, 5, 6, 7]],
-        ["🎻", "Instrumentalklasse", "Auf dem Notenständer liegt deine Stimme. Ab Klasse 6 spielst du daraus.", [4, 7, 6, 5, 4, 2, 4]],
-        ["📱", "Klingelton", "Auch ein Klingelton ist eine kleine Melodie – man kann ihn aufschreiben.", [7, 9, 11, 9, 7, 4, 7]],
+        ["music-book", "Liederbuch", "Kinderlieder wie „Alle meine Entchen“ stehen in Noten im Liederbuch.", [0, 1, 2, 3, 4, 4]],
+        ["piano-keys", "Klavier-App", "Sie zeigt oft C D E F G A B – das englische B ist unser h.", [0, 1, 2, 3, 4, 5, 6, 7]],
+        ["music-stand", "Instrumentalklasse", "Auf dem Notenständer liegt deine Stimme. Ab Klasse 6 spielst du daraus.", [4, 7, 6, 5, 4, 2, 4]],
+        ["smartphone", "Klingelton", "Auch ein Klingelton ist eine kleine Melodie – man kann ihn aufschreiben.", [7, 9, 11, 9, 7, 4, 7]],
       ];
-      const cards = tiles.map(([em, n, d, mel]) => {
+      const cards = tiles.map(([ph, n, d, mel]) => {
         const m = mini(mel);
         const play1 = async () => { for (let i = 0; i < mel.length; i++) { if (!s.alive) return; m.ns[i].setColor("#dc3b2a"); pianoD(s, mel[i], .45); await s.wait(260); m.ns[i].setColor(INK); } };
         return s.h("button", { class: "card later", style: { font: "inherit", color: "inherit", cursor: "pointer", textAlign: "left", display: "flex", flexDirection: "column", gap: "4px", padding: "12px 18px" }, onclick: play1 },
-          s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap" } }, s.h("span", { style: { fontSize: "40px", lineHeight: "1" } }, em), s.h("p", { class: "h2" }, n), s.h("span", { class: "chip", style: { marginLeft: "auto" } }, "▶")),
-          s.h("p", { class: "small" }, d), m.v);
+          s.h("div", { class: "row", style: { gap: "14px", flexWrap: "nowrap", alignItems: "flex-start" } }, s.photo(ph, { w: 175, h: 130, pos: "50% 45%" }),
+            s.h("div", { style: { flex: 1 } }, s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, s.h("p", { class: "h2" }, n), s.h("span", { class: "chip", style: { marginLeft: "auto" } }, "▶")), s.h("p", { class: "small" }, d))), m.v);
       });
       s.add(s.h("div", { class: "cols", style: { gap: "18px" } }, cards));
-      cards.forEach((c, i) => s.step(async () => { s.sfx.pop(); await s.show(c, "up"); c.click(); }));
+      cards.forEach((c, i) => s.step(async () => { await s.show(c, "up"); c.click(); }));
     },
   });
 
@@ -542,6 +553,8 @@
       s.step(async () => { s.sfx.success(); await s.show(life, "up"); });
     },
   });
+
+  slides.forEach(sl => { const b = sl.build; sl.build = s => { s.preload(PIANO_IDS); b(s); }; });
 
   Deck.unit({
     id: "u2", num: 2, title: "Noten lesen", color: COL, soft: "#dcf3ef",

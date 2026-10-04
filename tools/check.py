@@ -42,6 +42,10 @@ async () => {
   };
   const content = document.querySelector('.content');
   if (!content) return { issues: ['no .content'] };
+  // real photos: wait until decoded, then flag broken ones
+  const imgs = [...content.querySelectorAll('img')];
+  await Promise.all(imgs.map(i => i.complete ? 0 : new Promise(r => { i.addEventListener('load', r); i.addEventListener('error', r); setTimeout(r, 4000); })));
+  for (const i of imgs) if (!i.naturalWidth) issues.push(`BROKEN IMAGE: ${i.getAttribute('src')}`);
   const cr = rel(toS(content.getBoundingClientRect()));
   // text boxes
   const boxes = [];

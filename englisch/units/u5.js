@@ -194,7 +194,8 @@
             const rest = order.filter(w => !groups[verb].words.includes(w) && chips[w].parentNode === pool).map(w => chips[w]);
             s.sfx.whoosh();
             await fly(s, groups[verb].words.map(w => [chips[w], lists[verb]]), rest);
-            s.sfx.snap(); s.show(baskets[verb].querySelector(".bs"), "pop"); s.sfx.ding();
+            if (verb === "play") s.sound("ball-kick"); else if (verb === "go") s.sound("splash", { vol: .7 }); else s.sfx.snap();
+            s.show(baskets[verb].querySelector(".bs"), "pop");
             s.speak(groups[verb].words.map(w => verb + " " + w).join(", "), EN);
           };
           s.step(sort("play"));
@@ -203,24 +204,45 @@
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Play für Ballspiele und Instrumente, go für Sport mit i n g, do für Kampfsport und Turnen."); });
         },
       },
+      /* 2b */
+      {
+        title: "play, go, do – in echt",
+        say: "So sehen die drei Verben im echten Leben aus: Fußball auf einer Wiese in London, ein Freibad und ein Judo-Turnier.",
+        build(s) {
+          const items = [
+            ["football-park", "play football", "Hackney Marshes, London", "We play football in the park.", "Wir spielen im Park Fußball.", "ball-kick", "Ball"],
+            ["lido", "go swimming", "Brockwell Lido, London", "I go swimming at the lido.", "Ich gehe im Freibad schwimmen.", "splash", "Wasser"],
+            ["judo", "do judo", "Judo-Turnier für Kinder", "My brother does judo.", "Mein Bruder macht Judo.", "kids-cheer", "Jubel"],
+          ];
+          const cols = items.map(([img, verb, place, en, de, snd, lab]) => {
+            const fig = s.photo(img, { w: 340, h: 300, caption: place });
+            const head = s.h("p", { class: "h2", style: { textAlign: "center", color: "var(--unit)" } }, verb);
+            const col = s.h("div", { class: "stack later", style: { gap: "10px", alignItems: "stretch" } }, head, fig, hear(s, en, de), s.soundBtn(snd, lab));
+            col.snd = snd; return col;
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "23px", textAlign: "center" } }, s.h("b", null, "play"), " Ballspiele · ", s.h("b", null, "go"), " + -ing · ", s.h("b", null, "do"), " Kampfsport/Turnen. ", s.h("i", null, "lido"), " = Freibad in Großbritannien.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, s.h("div", { class: "cols3", style: { gap: "20px" } }, cols), merk));
+          cols.forEach((c, i) => s.step(async () => { s.sound(items[i][5], { vol: .6, dur: 2.5, fade: .4 }); await s.show(c, "up"); s.speak(items[i][3], EN); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
       /* 3 */
       {
         title: "Music: play an instrument",
         say: "Musik ist auch ein Hobby. Bei Instrumenten sagt man play the: I play the violin. Tippe auf ein Instrument!",
         build(s) {
           const inst = [
-            { em: "🎻", en: "the violin", de: "Geige", tune: [7, 9, 11, 12, 14], type: "sawtooth" },
-            { em: "🎺", en: "the trumpet", de: "Trompete", tune: [0, 4, 7, 12, 7], type: "square" },
-            { em: "🎷", en: "the saxophone", de: "Saxofon", tune: [-5, -2, 0, 3, 5], type: "square" },
-            { em: "🎸", en: "the guitar", de: "Gitarre", tune: [-12, -8, -5, 0, -5], type: "triangle" },
-            { em: "🥁", en: "the drums", de: "Schlagzeug", drum: true },
+            { em: "🎻", en: "the violin", de: "Geige", img: "violin", snd: "violin-play" },
+            { em: "🎺", en: "the trumpet", de: "Trompete", img: "trumpet", snd: "trumpet-play", fit: "contain" },
+            { em: "🎷", en: "the saxophone", de: "Saxofon", img: "saxophone", snd: "sax-play" },
+            { em: "🎸", en: "the guitar", de: "Gitarre", img: "guitar", snd: "guitar-play", fit: "contain" },
+            { em: "🥁", en: "the drums", de: "Schlagzeug", img: "drums", snd: "drums-play" },
           ];
+          s.preload(inst.map(it => it.snd));
           const W = 500, H = 330;
-          const svg = s.svg(W, H);
-          svg.append(s.el("rect", { x: 2, y: 2, width: W - 4, height: H - 4, rx: 22, fill: "#fff", stroke: "#c8d3de", "stroke-width": 3 }),
-            s.el("rect", { x: 30, y: 262, width: W - 60, height: 18, rx: 6, fill: "#e9c48f" }));
-          const big = s.el("text", { x: W / 2, y: 236, "text-anchor": "middle", "font-size": 160, text: "🎻" });
-          svg.append(big);
+          const pics = inst.map((it, i) => s.photo(it.img, { w: W, h: H, fit: it.fit || "cover", style: { position: "absolute", inset: "0", display: i ? "none" : "" } }));
+          const svg = s.svg(W, H, { style: "position:absolute;inset:0;pointer-events:none" });
+          const stage = s.h("div", { style: { position: "relative", width: W + "px", height: H + "px" } }, pics, svg);
           const notes = [];
           for (let i = 0; i < 6; i++) {
             const g = s.el("g", { opacity: 0 });
@@ -239,22 +261,26 @@
             });
           });
           const label = s.h("p", { class: "big", style: { textAlign: "center" } }, "I play the violin.");
+          let cur = null;
           const play = (it) => {
-            big.textContent = it.em; label.textContent = "I play " + it.en + ".";
-            big.classList.remove("a-pop"); void big.getBoundingClientRect(); big.classList.add("a-pop");
-            s.speak("I play " + it.en + ".", EN);
-            (it.tune || [0, 0, 0, 0, 0]).forEach((n, i) => setTimeout(() => { if (!s.alive) return; it.drum ? s.sfx.drum() : s.sfx.tone(523.25 * Math.pow(2, n / 12), 0.22, it.type, 0.12); }, 350 + i * 170));
+            const k = inst.indexOf(it);
+            pics.forEach((p, i) => { p.style.display = i === k ? "" : "none"; });
+            label.textContent = "I play " + it.en + ".";
+            pics[k].classList.remove("a-zoom"); void pics[k].getBoundingClientRect(); pics[k].classList.add("a-zoom");
+            if (cur) cur.stop();
+            cur = s.sound(it.snd, { vol: .8 });
+            setTimeout(() => s.alive && s.speak("I play " + it.en + ".", EN), 2600);
             notes.forEach((n, i) => { n.t0 = tnow + i * 0.17; n.x = 120 + i * 55; });
           };
           const btns = inst.map(it => s.h("button", { class: "u5-tile", style: { padding: "6px 4px" }, onclick: () => { s.sfx.click(); play(it); } },
             s.h("span", { class: "em", style: { fontSize: "38px" } }, it.em), s.h("span", { class: "de" }, it.de)));
-          const left = s.h("div", { class: "stack", style: { width: "500px" } }, svg, label, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "10px" } }, btns));
+          const left = s.h("div", { class: "stack", style: { width: "500px" } }, stage, label, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: "10px" } }, btns));
           const ex = [hear(s, "I play the violin.", "Ich spiele Geige."), hear(s, "My sister plays the piano.", "Meine Schwester spielt Klavier."), hear(s, "Do you play an instrument? – Yes, I play the trumpet.", "Spielst du ein Instrument? – Ja, Trompete.")];
           ex.forEach(e => e.classList.add("later"));
           const merk = s.h("div", { class: "merk later" }, "Instrumente: ", s.h("b", null, "play the …"), s.h("br"), "Sport ohne the: ", s.h("i", null, "play football"));
           const inst5 = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Bei dir"), s.h("p", { class: "small" }, "In der Instrumentalklasse suchst du dir am Ende von Klasse 5 ein Streich- oder Blasinstrument aus. Dann sagst du: ", s.h("b", null, "I play the cello."), " oder ", s.h("b", null, "I play the flute.")));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "500px 1fr", gap: "30px", height: "100%", alignItems: "start" } }, left, s.h("div", { class: "stack", style: { gap: "12px" } }, ex, merk, inst5)));
-          s.show(svg, "zoom"); s.show(btns, "up", 200); s.sfx.whoosh();
+          s.show(stage, "zoom"); s.show(btns, "up", 200); s.sound("violin-play", { vol: .6, dur: 3 });
           s.step(async () => { s.sfx.pop(); await s.show(ex[0], "left"); s.sfx.pop(); await s.show(ex[1], "left"); s.sfx.pop(); await s.show(ex[2], "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Bei Instrumenten steht play the. Bei Sport steht kein the."); });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(inst5, "up"); s.say("Welches Instrument wählst du in der Instrumentalklasse?"); });
@@ -265,8 +291,9 @@
         title: "can – das kann ich!",
         say: "Ruby aus London zeigt dir ihre Fähigkeiten-Karten. Mit can sagst du, was du kannst. Mit can't, was du nicht kannst.",
         build(s) {
-          const data = [["🏊", "swim?", true, "I can swim."], ["⛸️", "skate?", false, "I can't skate."], ["🎸", "play the guitar?", true, "I can play the guitar."], ["🐴", "ride a horse?", false, "I can't ride a horse."]];
-          const cards = data.map(([em, q, yes, sent]) => {
+          const data = [["🏊", "swim?", true, "I can swim.", "splash"], ["⛸️", "skate?", false, "I can't skate.", "skateboard"], ["🎸", "play the guitar?", true, "I can play the guitar.", "guitar-play"], ["🐴", "ride a horse?", false, "I can't ride a horse.", "horse"]];
+          s.preload("splash", "skateboard", "guitar-play", "horse");
+          const cards = data.map(([em, q, yes, sent, snd]) => {
             const front = s.h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" } }, s.h("span", { class: "em" }, em), s.h("span", { class: "q" }, q));
             const back = s.h("div", { style: { display: "none", flexDirection: "column", alignItems: "center", gap: "10px" } },
               s.h("span", { class: "mark", style: { color: yes ? "var(--green)" : "var(--red)" } }, yes ? "✓" : "✗"), s.h("span", { class: "sent" }, sent));
@@ -281,7 +308,7 @@
                 c.style.background = showBack ? (yes ? "#e6f6ee" : "#fdeceb") : "";
               } });
               c.style.transform = "";
-              yes ? s.sfx.success() : s.sfx.boing();
+              s.sound(snd, { vol: .7, dur: 2.5, fade: .3 });
               s.speak(sent, EN);
             };
             return c;
@@ -302,10 +329,11 @@
         build(s) {
           const bub = (cls, txt) => { const b = s.h("button", { class: "u5-bub later " + cls, onclick: () => { s.sfx.click(); s.speak(txt, EN); } }); b.innerHTML = SPK; b.appendChild(s.h("span", null, txt)); return b; };
           const sets = [
-            ["Beispiel 1 · at the pool", "🏊", "Can you swim?", "Yes, I can."],
-            ["Beispiel 2 · in the music room", "🎹", "Can you play the piano?", "No, I can't. But I can play the drums."],
-            ["Beispiel 3 · at the skate park", "🛹", "Can Lukas skate?", "Yes, he can. He's great!"],
+            ["Beispiel 1 · at the pool", "🏊", "Can you swim?", "Yes, I can.", "splash"],
+            ["Beispiel 2 · in the music room", "🎹", "Can you play the piano?", "No, I can't. But I can play the drums.", "piano"],
+            ["Beispiel 3 · at the skate park", "🛹", "Can Lukas skate?", "Yes, he can. He's great!", "skateboard"],
           ];
+          s.preload("splash", "piano", "skateboard");
           const cards = sets.map(([lab, em, q, a]) => {
             const bq = bub("q", q), ba = bub("a", a);
             const c = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "12px" } }, s.h("span", { class: "exlabel" }, lab), s.h("div", { style: { fontSize: "64px", lineHeight: 1, textAlign: "center" } }, em), bq, ba);
@@ -315,7 +343,7 @@
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag · Probetraining im Schwimmverein"), s.h("div", { class: "row", style: { gap: "10px" } }, hear(s, "Can you swim 25 metres?", "Kannst du 25 Meter schwimmen?"), hear(s, "Yes, I can!", "Ja, kann ich!", "g")));
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "16px" } }, s.h("div", { class: "cols3", style: { alignItems: "stretch" } }, cards), merk, life));
           cards.forEach((c, i) => s.step(async () => {
-            s.sfx.pop(); await s.show(c, "up"); s.sfx.note(4, .15); await s.show(c.q, "left"); s.speak(sets[i][2], EN);
+            s.sound(sets[i][4], { vol: .6, dur: 2.5, fade: .4 }); await s.show(c, "up"); s.sfx.note(4, .15); await s.show(c.q, "left"); s.speak(sets[i][2], EN);
             await s.wait(900); s.sfx.note(9, .2); await s.show(c.a, "right"); s.speak(sets[i][3], EN);
           }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Antworte mit Kurzantwort: Yes, I can. No, I can't."); });
@@ -425,7 +453,7 @@
           const whistle = s.el("g", { transform: "translate(120,82)" }, s.el("rect", { x: -6, y: 0, width: 26, height: 12, rx: 5, fill: "#9aa3b3" }));
           const waves = s.el("path", { d: "M150 20 q10 -10 20 0 q10 10 20 0 M160 40 q10 -10 20 0 q10 10 20 0", stroke: "#1d5bd0", "stroke-width": 4, fill: "none", class: "later" });
           svg.append(whistle, waves);
-          const whistleSnd = () => { s.sfx.tone(2400, 0.35, "sine", 0.18, 0, 2600); };
+          const whistleSnd = () => { s.sound("whistle", { vol: .6 }); };
           const pos = [["Stand up!", "Steh auf!"], ["Sit down, please.", "Setz dich bitte."], ["Listen!", "Hör zu!"], ["Open your books.", "Öffnet eure Bücher."]];
           const neg = [["Don't run!", "Renn nicht!"], ["Don't shout!", "Schrei nicht!"], ["Don't touch it!", "Fass das nicht an!"], ["Don't be late!", "Komm nicht zu spät!"]];
           const gp = pos.map(([e, d]) => { const b = hear(s, e, d, "g"); b.classList.add("later"); return b; });
@@ -446,19 +474,20 @@
         say: "Befehle stehen überall: auf Schildern im Schwimmbad, in Spielanleitungen und im Musikunterricht. Tippe auf einen Satz.",
         build(s) {
           const signs = [
-            { h: "🏊 SWIMMING POOL RULES", col: "#1f4f8a", lines: ["Take a shower first.", "Don't run!", "Don't push other people.", "Listen to the lifeguard."] },
-            { h: "🎲 HOW TO PLAY", col: "#7b4fd6", lines: ["Throw the dice.", "Move your counter.", "Don't look at the cards!", "Wait for your turn."] },
-            { h: "🎻 IN THE MUSIC LESSON", col: "#138a5a", lines: ["Hold the bow like this.", "Play softly.", "Don't stop – keep going!", "Listen to the others."] },
+            { h: "🏊 SWIMMING POOL RULES", col: "#1f4f8a", snd: "splash", lines: ["Take a shower first.", "Don't run!", "Don't push other people.", "Listen to the lifeguard."] },
+            { h: "🎲 HOW TO PLAY", col: "#7b4fd6", snd: "dice", lines: ["Throw the dice.", "Move your counter.", "Don't look at the cards!", "Wait for your turn."] },
+            { h: "🎻 IN THE MUSIC LESSON", col: "#138a5a", snd: "violin-play", lines: ["Hold the bow like this.", "Play softly.", "Don't stop – keep going!", "Listen to the others."] },
           ];
           const boxes = signs.map(sg => {
             const ls = sg.lines.map(l => { const b = hear(s, l); b.classList.add("later"); b.style.borderColor = sg.col; b.style.fontSize = "21px"; return b; });
             const box = s.h("div", { class: "u5-sign later", style: { borderColor: sg.col } }, s.h("div", { class: "sh", style: { background: sg.col } }, sg.h), s.h("div", { class: "sb" }, ls));
-            box.ls = ls; return box;
+            box.ls = ls; box.snd = sg.snd; return box;
           });
+          s.preload("splash", "dice", "violin-play");
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Tipp"), s.h("p", { class: "t" }, "Schilder und Anleitungen benutzen fast immer Befehle. Achte auf ", s.h("b", null, "Don't"), " – das ist ein Verbot!"));
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "18px" } }, s.h("div", { class: "cols3" }, boxes), life));
           s.sfx.whoosh();
-          boxes.forEach(b => s.step(async () => { s.sfx.snap(); await s.show(b, "down"); for (const l of b.ls) { s.sfx.tick(); await s.show(l, "fade", 0); } }));
+          boxes.forEach(b => s.step(async () => { s.sound(b.snd, { vol: .6, dur: 2.5, fade: .4 }); await s.show(b, "down"); for (const l of b.ls) { s.sfx.tick(); await s.show(l, "fade", 0); } }));
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
       },
@@ -499,7 +528,7 @@
           const btns = sents.map(([, e, d]) => { const b = hear(s, e, d); b.classList.add("later"); return b; });
           const merk = s.h("div", { class: "merk later" }, s.h("b", null, "There is"), " (kurz: ", s.h("b", null, "There's"), ") + eine Sache", s.h("br"), s.h("b", null, "There are"), " + mehrere Sachen", s.h("br"), "Deutsch: „Es gibt …“");
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: `${W}px 1fr`, gap: "30px", height: "100%", alignItems: "center" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, btns, merk)));
-          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.show(svg, "zoom"); s.sound("birds", { vol: .4, dur: 7, fade: 1 });
           sents.forEach(([g, e], i) => s.step(async () => { s.sfx.pop(); s.show(g, "pop"); await s.show(btns[i], "left"); s.speak(e, EN); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
@@ -544,7 +573,7 @@
           const facts = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Gut zu wissen"), s.h("p", { class: "small" }, "In Großbritannien heißen solche Gruppen ", s.h("b", null, "clubs"), ": after-school clubs. Bei dir heißen sie AGs (Arbeitsgemeinschaften). ", s.h("b", null, "on Mondays"), " = montags, also jede Woche."));
           const note = s.h("p", { class: "small pencil later" }, "Greenfield School ist ausgedacht – so ein Plakat hängt aber in vielen Schulen.");
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "560px 1fr", gap: "30px", height: "100%", alignItems: "start", paddingTop: "14px" } }, poster, s.h("div", { class: "stack", style: { gap: "16px" } }, ruby, lukas, facts, note)));
-          s.show(poster, "zoom"); s.sfx.snap();
+          s.show(poster, "zoom"); s.sound("school-bell", { vol: .5, dur: 3, fade: .5 });
           s.step(async () => { for (let i = 0; i < prs.length; i++) { s.sfx.count(i); await s.show(prs[i], "left", 0); } s.say("Montag Fußball, Dienstag Theater, Mittwoch Schach, Donnerstag Chor, Freitag Programmieren."); });
           s.step(async () => { s.sfx.pop(); await s.show(ruby, "right"); s.speak("I go to football club on Mondays.", EN); });
           s.step(async () => { s.sfx.pop(); await s.show(lukas, "right"); s.speak("In Berlin I'm in the chess club!", EN); });
@@ -562,8 +591,10 @@
           const phone = s.h("div", { class: "u5-phone" }, s.h("div", { class: "u5-screen" }, s.h("div", { class: "top" }, avatar(s, "ruby", 40), "Ruby → Zoe"), s.h("div", { class: "msgs" }, els, dots)));
           const phrases = [hear(s, "Do you want to come …?", "Willst du mitkommen …?"), hear(s, "Let's meet at …", "Lass uns treffen bei/um …"), hear(s, "See you!", "Bis dann!")];
           phrases.forEach(p => p.classList.add("later"));
-          const info = s.h("div", { class: "card soft" }, s.h("span", { class: "exlabel" }, "youth club"), s.h("p", { class: "small" }, "Ein Treffpunkt für Jugendliche: Tischtennis, Kicker, Basketball, Videospiele, Musik."));
-          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "400px 1fr", gap: "40px", height: "100%", alignItems: "center" } }, phone, s.h("div", { class: "stack", style: { gap: "14px" } }, info, s.h("p", { class: "h2" }, "Nützliche Sätze"), phrases)));
+          const info = s.h("div", { class: "card soft", style: { display: "grid", gridTemplateColumns: "300px 1fr", gap: "16px", alignItems: "center" } },
+            s.photo("table-football", { w: 300, h: 220, caption: "table football" }),
+            s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("span", { class: "exlabel" }, "youth club"), s.h("p", { class: "small" }, "Ein Treffpunkt für Jugendliche: Tischtennis, Kicker (table football), Basketball, Videospiele, Musik."), s.soundBtn("ping-pong", "table tennis")));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "400px 1fr", gap: "40px", height: "100%", alignItems: "center" } }, phone, s.h("div", { class: "stack", style: { gap: "12px" } }, info, s.h("p", { class: "h2" }, "Nützliche Sätze"), phrases)));
           s.show(phone, "up"); s.sfx.whoosh();
           const sendIt = async (i) => {
             const m = els[i];
@@ -633,6 +664,24 @@
           s.step(async () => { await grow(parts[1]); s.say("Das Olympiastadion in Berlin hat 73.877 Plätze."); });
           s.step(async () => { s.sfx.pop(); await s.show(c2, "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(c3, "left"); s.sfx.success(); });
+        },
+      },
+      /* 16 */
+      {
+        title: "Sport in London – in echt",
+        say: "So sehen die Sportorte in London wirklich aus: das Wembley-Stadion mit seinem großen Bogen, der See Serpentine im Hyde Park und das Olympia-Schwimmbad.",
+        build(s) {
+          const items = [
+            ["wembley", "Wembley Stadium", "It has got a big arch.", "Es hat einen großen Bogen.", "crowd-cheer", "Fans im Stadion", "50% 50%"],
+            ["serpentine", "The Serpentine, Hyde Park", "You can swim in the lake.", "Man kann im See schwimmen.", "waves", "Wasser am See", "50% 60%"],
+            ["aquatics-centre", "London Aquatics Centre", "Everybody can swim here.", "Hier darf jeder schwimmen.", "splash", "Sprung ins Becken", "50% 50%"],
+          ];
+          const cols = items.map(([img, cap, en, de, snd, lab, pos]) => s.h("div", { class: "stack later", style: { gap: "10px", alignItems: "stretch" } },
+            s.photo(img, { w: 346, h: 330, caption: cap, pos, kb: img === "wembley" }), hear(s, en, de), s.soundBtn(snd, lab, { vol: .6, dur: 5 })));
+          const note = s.h("p", { class: "small pencil later", style: { textAlign: "center" } }, "Wembley: 90.000 Plätze · Serpentine: Badestelle im See seit 1930 · Aquatics Centre: Olympia 2012");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, s.h("div", { class: "cols3", style: { gap: "20px" } }, cols), note));
+          cols.forEach((c, i) => s.step(async () => { s.sound(items[i][4], { vol: .5, dur: 3, fade: .6 }); await s.show(c, "zoom"); s.speak(items[i][2], EN); }));
+          s.step(async () => { s.show(note, "fade"); });
         },
       },
     ],

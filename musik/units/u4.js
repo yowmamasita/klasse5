@@ -9,8 +9,16 @@
   const WN = ["c", "cis", "d", "dis", "e", "f", "fis", "g", "gis", "a", "b", "h"];
 
   /* ---------- sounds (all through the engine's Sfx) ---------- */
-  const pno = (s, n, dur = 0.7, w = 0, v = 0.2) => { const f = hz(n); s.sfx.tone(f, dur, "triangle", v, w); s.sfx.tone(f * 2, dur * 0.5, "sine", v * 0.22, w); };
-  const bell = (s, n, dur = 1.4, w = 0, v = 0.18) => { const f = hz(n); s.sfx.tone(f, dur, "sine", v, w); s.sfx.tone(f * 2.76, dur * 0.4, "sine", v * 0.18, w); };
+  /* recorded piano (13 samples) and glockenspiel, pitched to the wanted note; s.sound respects mute + check mode */
+  const PS = [[36, "piano-c2"], [40, "piano-e2"], [45, "piano-a2"], [48, "piano-c3"], [52, "piano-e3"], [57, "piano-a3"], [60, "piano-c4"], [64, "piano-e4"], [69, "piano-a4"], [72, "piano-c5"], [76, "piano-e5"], [81, "piano-a5"], [84, "piano-c6"]];
+  const MEDIA_IDS = PS.map(p => p[1]).concat(["glockenspiel-g4"]);
+  const pno = (s, n, dur = 0.7, w = 0, v = 0.2) => {
+    if (!s.alive) return;
+    const m = 72 + n; let best = PS[0];
+    for (const p of PS) if (Math.abs(p[0] - m) < Math.abs(best[0] - m)) best = p;
+    s.sound(best[1], { rate: Math.pow(2, (m - best[0]) / 12), when: w, vol: Math.min(1, v * 3.4), dur: Math.max(.3, dur + .5) });
+  };
+  const bell = (s, n, dur = 1.4, w = 0, v = 0.18) => { if (s.alive) s.sound("glockenspiel-g4", { rate: Math.pow(2, (72 + n - 79) / 12), when: w, vol: Math.min(1, v * 4), dur: Math.max(.4, dur) }); };
   const box = (s, n, w = 0) => { const f = hz(n); s.sfx.tone(f, 0.9, "sine", 0.16, w); s.sfx.tone(f * 4, 0.25, "sine", 0.04, w); };
   const chord = (s, ns, dur = 1.2, w = 0, v = 0.12) => ns.forEach(n => pno(s, n, dur, w, v));
 
@@ -399,7 +407,7 @@
       });
       const playUp = async () => { const t = Q.start(); for (let i = 0; i < 8; i++) { if (!Q.ok(t)) return; pno(s, NN[i], 0.45); glow(i); await s.wait(380); } };
       const c1 = exCard(s, "Beispiel 1 · Klavier", "🎹", "C-Dur spielst du nur mit weißen Tasten – von c bis c.", playUp);
-      const c2 = exCard(s, "Beispiel 2 · Singen", "🎤", "Singe langsam hinauf: Jeder Ton liegt eine Stufe höher.", () => NN.forEach((n, i) => s.sfx.tone(hz(n - 12), 0.6, "sine", 0.22, i * 0.6)));
+      const c2 = exCard(s, "Beispiel 2 · Singen", "🎤", "Singe langsam hinauf: Jeder Ton liegt eine Stufe höher.", () => s.sound("sung-scale", { force: true }));
       const c3 = exCard(s, "Im Alltag", "⚽", "Musiker spielen Tonleitern zum Aufwärmen – wie Fußballer vor dem Spiel.", () => NN.concat(NN.slice(0, 7).reverse()).forEach((n, i) => pno(s, n, 0.25, i * 0.16, 0.16)), true);
       const merk = s.h("div", { class: "merk later" }, "Jede Note steht eine Stufe höher: abwechselnd ", s.h("b", null, "auf einer Linie"), " und ", s.h("b", null, "in einem Zwischenraum"), ". Das tiefe c bekommt eine Hilfslinie.");
       s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, svg, merk, s.h("div", { class: "cols3", style: { gap: "16px" } }, c1, c2, c3)));
@@ -581,7 +589,7 @@
       const merk = s.h("div", { class: "merk later", style: { flex: 1 } }, s.h("b", null, "Pentatonik"), " (griechisch „penta“ = fünf): eine Tonleiter aus 5 Tönen ", s.h("b", null, "ohne Halbtonschritte"), ". Darum passt fast alles zusammen.");
       const c1 = exCard(s, "Im Alltag · Volksmusik", "🌏", "Viele alte Volkslieder aus aller Welt kommen mit fünf Tönen aus.", () => [-6, -4, -2, 1, -2, -4, -6].forEach((n, i) => pno(s, n, 0.4, i * 0.3)), true);
       const c2 = exCard(s, "Im Alltag · Klassenzimmer", "🎶", "Am Xylofon nimmt man oft f und h heraus. Mit c, d, e, g, a klingt alles gut.", () => [0, 2, 4, 7, 9, 7, 4, 2, 0].forEach((n, i) => bell(s, n, 0.6, i * 0.22)), true);
-      const c3 = exCard(s, "Im Alltag · Windspiel", "🎐", "Viele Windspiele sind auf fünf Töne gestimmt – im Wind klingen sie nie schief.", () => { for (let i = 0; i < 7; i++) bell(s, [0, 2, 4, 7, 9][Math.floor(Math.random() * 5)] + 12, 1.6, i * 0.3 + Math.random() * 0.15, 0.1); }, true);
+      const c3 = exCard(s, "Im Alltag · Windspiel", "🎐", "Viele Windspiele sind auf fünf Töne gestimmt – im Wind klingen sie nie schief.", () => s.sound("windchimes", { force: true, vol: .8 }), true);
       s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, svg,
         s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "16px" } }, s.h("div", { class: "stack", style: { gap: "10px" } }, bRand, bDrone), merk),
         s.h("div", { class: "cols3", style: { gap: "16px" } }, c1, c2, c3)));
@@ -589,6 +597,31 @@
       s.step(async () => { for (const n of PEN.slice(0, 5)) { tap(n); await s.wait(260); } s.say("fis, gis, ais, cis, dis."); });
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); improv(); });
       s.step(async () => { for (const [i, c] of [c1, c2, c3].entries()) { s.sfx.count(i); s.show(c, "up"); await s.wait(200); } });
+    },
+  });
+
+  /* 12b -------------------------------------------------------------- */
+  SLIDES.push({
+    title: "Tonleitern zum Anfassen",
+    say: "Bei diesen Instrumenten siehst du die Tonleiter: Platten und Röhren, von groß und tief bis klein und hoch.",
+    build(s) {
+      const items = [
+        ["glockenspiel", "Glockenspiel", "Metallplatten wie Klaviertasten: lange Platte = tiefer Ton, kurze Platte = hoher Ton.", "glock"],
+        ["marimba", "Marimba", "Holzplatten mit Röhren darunter. Die Röhren machen den Ton lauter und voller.", "xylophone-sweep"],
+        ["wind-chime", "Windspiel", "Verschieden lange Röhren – der Wind spielt die Töne durcheinander.", "windchimes"],
+      ];
+      const glock = () => [0, 2, 4, 5, 7, 9, 11, 12].forEach((n, i) => bell(s, n, 1, i * 0.22, 0.2));
+      const cards = items.map(([id, n, d, snd], i) => {
+        const b = snd === "glock" ? btn(s, "▶ C-Dur-Tonleiter", glock, true) : s.soundBtn(snd, "anhören", { solid: true });
+        return s.h("div", { class: "card" + (i ? " later" : ""), style: { display: "flex", flexDirection: "column", gap: "10px", padding: "12px" } },
+          s.photo(id, { w: "100%", h: 270, pos: "50% 50%", caption: n }), s.h("p", { class: "small", style: { minHeight: "81px" } }, d), b);
+      });
+      const merk = s.h("div", { class: "merk later" }, "Je ", s.h("b", null, "länger"), " die Platte oder Röhre, desto ", s.h("b", null, "tiefer"), " der Ton. Nebeneinander gelegt ergeben sie eine ", s.h("b", null, "Tonleiter"), ".");
+      s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3" }, cards), merk));
+      glock();
+      s.step(async () => { s.sound("xylophone-sweep"); await s.show(cards[1], "up"); });
+      s.step(async () => { s.sound("windchimes", { dur: 3, vol: .6 }); await s.show(cards[2], "up"); });
+      s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
     },
   });
 
@@ -620,7 +653,7 @@
       const b1 = btn(s, "▶ nacheinander", () => arp([-12, -8, -5], C)), b2 = btn(s, "▶ zusammen", () => all([-12, -8, -5], C), true);
       const b3 = btn(s, "▶ a-Moll: a – c – e", () => all([-3, 0, 4], VIOLET)); b3.style.whiteSpace = "nowrap"; b3.style.flex = "none";
       const c1 = exCard(s, "Beispiel 1 · Gitarre", "🎸", "Ein Gitarren-Akkord: Dreiklangstöne auf mehreren Saiten zugleich.", () => [-24, -20, -17, -12, -8].forEach((n, i) => pno(s, n, 1.6, i * 0.04, 0.12)));
-      const c2 = exCard(s, "Beispiel 2 · Chor", "👥", "Drei Gruppen singen c, e und g gleichzeitig.", () => [-12, -8, -5].forEach(n => s.sfx.tone(hz(n), 1.6, "sine", 0.12)));
+      const c2 = exCard(s, "Beispiel 2 · Chor", "👥", "Drei Gruppen singen drei Töne gleichzeitig – zum Beispiel c, e und g.", () => s.sound("choir-chord", { force: true, dur: 3.5 }));
       const c3 = exCard(s, "Im Alltag · Spieluhr", "🎁", "Viele Spieluhr-Melodien springen über die Töne eines Dreiklangs.", () => [0, 4, 7, 12, 7, 4, 0].forEach((n, i) => box(s, n + 12, i * 0.28)), true);
       const merk = s.h("div", { class: "merk later" }, "Ein ", s.h("b", null, "Dreiklang"), ": drei Töne, zwischen denen immer ein Ton übersprungen wird – ", s.h("b", null, "c (d) e (f) g"), ".");
       s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%", justifyContent: "center" } },
@@ -648,32 +681,15 @@
       bellG.append(s.el("path", { d: "M75 8 C52 8 46 30 46 48 L38 62 L112 62 L104 48 C104 30 98 8 75 8 Z", fill: "#f2b705", stroke: INK, "stroke-width": 3 }), s.el("circle", { cx: 75, cy: 70, r: 8, fill: INK }));
       p1.append(bellG);
       const swing = () => s.tween({ from: 0, to: 1, dur: 1400, ease: "linear", update: k => bellG.setAttribute("transform", `rotate(${Math.sin(k * Math.PI * 4) * 18 * (1 - k)} 75 8)`) });
-      const ding2 = () => { bell(s, 4, 1.4, 0, 0.2); bell(s, 0, 1.8, 0.6, 0.2); swing(); };
+      const ding2 = () => { s.sound("doorbell", { force: true }); swing(); };
       const ding3 = () => { bell(s, 7, 1.2, 0, 0.18); bell(s, 4, 1.2, 0.45, 0.18); bell(s, 0, 1.8, 0.9, 0.18); swing(); };
       const c1 = card("🚪", "Türklingel", "Ding – dong: Ein Gong spielt zwei oder drei Töne aus einer Tonleiter, von hoch nach tief.", p1, [btn(s, "▶ 2 Töne", ding2, true), btn(s, "▶ 3 Töne", ding3)]);
       // 2 tuning
-      const p2 = s.svg(150, 84), needle = s.el("line", { x1: 75, y1: 78, x2: 75, y2: 18, stroke: RED, "stroke-width": 4, "stroke-linecap": "round", transform: "rotate(-40 75 78)" });
-      p2.append(s.el("path", { d: "M17 70 A60 60 0 0 1 133 70", fill: "none", stroke: "#9aa3b2", "stroke-width": 6, "stroke-linecap": "round" }), s.el("rect", { x: 71, y: 8, width: 8, height: 14, rx: 2, fill: GREEN }), needle, s.el("circle", { cx: 75, cy: 78, r: 6, fill: INK }));
-      const tune = async () => {
-        s.sfx.tone(410, 1.6, "triangle", 0.2, 0, 440); s.sfx.tone(440, 1.4, "triangle", 0.2, 1.6);
-        await s.tween({ from: -40, to: 0, dur: 1600, ease: "out", update: a => needle.setAttribute("transform", `rotate(${a} 75 78)`) });
-        s.sfx.ding();
-      };
-      const c2 = card("🎻", "Instrument stimmen", "Vor dem Spielen stimmen alle nach dem Ton a′. Er schwingt 440-mal pro Sekunde (440 Hz).", p2, [btn(s, "▶ stimmen", tune, true)]);
+      const p2 = s.photo("violin-pegs", { w: 230, h: 130, pos: "50% 50%", caption: "Wirbel der Geige" });
+      const c2 = card("🎻", "Instrument stimmen", "Vor dem Spielen stimmen alle nach dem Ton a′. Er schwingt 440-mal pro Sekunde (440 Hz).", p2, [s.soundBtn("orchestra-tuning", "Orchester", { solid: true })]);
       // 3 music box
-      const p3 = s.svg(150, 84), pins = s.el("g");
-      p3.append(s.el("rect", { x: 10, y: 14, width: 130, height: 58, rx: 14, fill: "#d9b26f", stroke: "#8a5a2b", "stroke-width": 3 }), pins);
-      const PX = []; for (let i = 0; i < 14; i++) { const c = s.el("circle", { cx: 14 + i * 10, cy: 24 + ((i * 7) % 5) * 10, r: 3.2, fill: "#5b3a1a" }); pins.append(c); PX.push(c); }
-      for (let i = 0; i < 6; i++) p3.append(s.el("line", { x1: 140, x2: 148, y1: 20 + i * 9, y2: 20 + i * 9, stroke: "#9aa3b2", "stroke-width": 3 }));
-      const BOX = [[7, 2], [12, 1], [11, 1], [9, 2], [7, 2], [5, 1], [4, 1], [5, 1], [7, 1], [4, 4], [2, 1], [4, 1], [5, 1], [9, 1], [7, 2], [5, 2], [4, 1], [2, 1], [4, 1], [2, 1], [0, 4]];
-      let spin = 0, spinning = false;
-      const playBox = () => {
-        let b = 0; BOX.forEach(([n, l]) => { box(s, n + 12, b * 0.22); b += l; });
-        spin = performance.now() + b * 220;
-        if (spinning) return; spinning = true;
-        s.loop(() => { const on = performance.now() < spin; PX.forEach(c => { let x = +c.getAttribute("cx") - 0.6; if (x < 14) x += 140; c.setAttribute("cx", x); }); if (!on) spinning = false; return on; });
-      };
-      const c3 = card("🎁", "Spieluhr", "Kleine Metallzungen werden von Stiften gezupft. Die Melodien sind oft in Dur – hell und fröhlich.", p3, [btn(s, "▶ aufziehen", playBox, true)]);
+      const p3 = s.photo("music-box-photo", { w: 230, h: 130, pos: "50% 50%", caption: "Walze und Kamm" });
+      const c3 = card("🎁", "Spieluhr", "Kleine Metallzungen werden von Stiften gezupft. Die Melodien sind oft in Dur – hell und fröhlich.", p3, [s.soundBtn("music-box", "aufziehen", { solid: true })]);
       // 4 film
       const p4 = s.svg(150, 84), mouth = s.el("path", { d: "M55 56 Q75 72 95 56", fill: "none", stroke: INK, "stroke-width": 5, "stroke-linecap": "round" });
       p4.append(s.el("circle", { cx: 75, cy: 44, r: 38, fill: "#fff", stroke: INK, "stroke-width": 3 }), s.el("circle", { cx: 62, cy: 36, r: 5, fill: INK }), s.el("circle", { cx: 88, cy: 36, r: 5, fill: INK }), mouth);
@@ -710,6 +726,8 @@
       s.step(async () => { s.sfx.fanfare(); await s.show(merk, "up"); s.confetti(590, 400, 80); });
     },
   });
+
+  SLIDES.forEach(sl => { const b = sl.build; sl.build = s => { s.preload(MEDIA_IDS); b(s); }; });
 
   Deck.unit({
     id: "u4", num: 4, title: "Tonleitern", color: C, soft: SOFT,

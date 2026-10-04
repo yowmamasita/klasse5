@@ -10,55 +10,15 @@
   const reveal = (s, els, kind = "pop", snd = "pop", delay = 0) => { fx(s, snd); return s.show(els, kind, delay); };
   const rng = seed => () => (seed = (seed * 1664525 + 1013904223) % 4294967296) / 4294967296;
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  let UID = 0;
   const pill = (s, text, onclick, extra = {}) => { const b = s.h("button", { style: Object.assign({ minHeight: "52px", padding: "0 18px", border: "2px solid " + UC, borderRadius: "14px", background: "#fff", color: UC, font: "700 19px var(--f-display)", cursor: "pointer" }, extra), onclick }, text); b.setOn = on => { b.style.background = on ? UC : "#fff"; b.style.color = on ? "#fff" : UC; }; return b; };
 
-  /* ---------- own homages (all drawn by me, 480x340) ---------- */
-  const spiral = (cx, cy, turns, rmax, a0 = 0) => { let d = ""; const n = 60 * turns; for (let i = 0; i <= n; i++) { const t = i / n, a = a0 + t * turns * 6.283, r = rmax * t; d += (i ? " L" : "M") + (cx + Math.cos(a) * r * 1.25).toFixed(1) + "," + (cy + Math.sin(a) * r * .8).toFixed(1); } return d; };
-  function skyPic(s, hide) {
-    const E = (t, a) => s.el(t, Object.assign(hide ? { class: "later" } : {}, a));
-    const svg = s.svg(480, 340); const L = {};
-    L.bg = E("rect", { x: 0, y: 0, width: 480, height: 340, fill: "#1a2c63" });
-    L.swirls = [[170, 120, 2.2, 70, 0, "#6fa8e0", 8], [330, 90, 1.8, 60, 2, "#9cc7f0", 6], [250, 190, 2, 55, 4, "#4c7fc4", 8], [90, 60, 1.2, 40, 1, "#7fb2e5", 5]].map(([x, y, tu, r, a, c, w]) => E("path", { d: spiral(x, y, tu, r, a), fill: "none", stroke: c, "stroke-width": w, "stroke-linecap": "round", opacity: .9 }));
-    L.stars = [[90, 100], [175, 50], [265, 110], [345, 55], [415, 130], [215, 175]].map(([x, y]) => { const g = E("g", {}); g.append(s.el("circle", { cx: x, cy: y, r: 22, fill: "none", stroke: "#f5c542", "stroke-width": 3, opacity: .45 }), s.el("circle", { cx: x, cy: y, r: 14, fill: "none", stroke: "#ffe15a", "stroke-width": 3, opacity: .7 }), s.el("circle", { cx: x, cy: y, r: 8, fill: "#ffe15a" })); return g; });
-    L.moon = E("g", {}); L.moon.append(s.el("circle", { cx: 440, cy: 50, r: 28, fill: "#ffe98a" }), s.el("circle", { cx: 450, cy: 42, r: 24, fill: "#1a2c63" }));
-    L.tree = E("g", {}); L.tree.append(s.el("path", { d: "M70,340 C26,262 44,160 70,64 C96,160 112,262 90,340 Z", fill: "#0d2b25", stroke: "#08140f", "stroke-width": 3 }), s.el("path", { d: "M70,320 C56,250 62,170 70,100 M80,330 C88,250 84,180 74,120", fill: "none", stroke: "#2f7a5c", "stroke-width": 4, "stroke-linecap": "round" }));
-    L.town = E("g", {}); L.town.append(s.el("path", { d: "M0,300 Q120,262 240,290 T480,282 L480,340 L0,340 Z", fill: "#15284f" }));
-    [[160, 300, 34, 28], [208, 306, 28, 24], [250, 296, 36, 32], [300, 304, 30, 26], [350, 292, 34, 30], [398, 298, 30, 28]].forEach(([x, y, w, h]) => L.town.append(s.el("rect", { x, y, width: w, height: h, fill: "#0e1c3d" }), s.el("rect", { x: x + w / 2 - 4, y: y + 8, width: 8, height: 9, fill: "#ffd54a" })));
-    L.town.append(s.el("path", { d: "M272,296 L282,246 L292,296 Z", fill: "#0e1c3d" }));
-    svg.append(L.bg, ...L.swirls, ...L.stars, L.moon, L.tree, L.town);
-    return { svg, L };
-  }
-  function liliesPic(s, hide) {
-    const E = (t, a) => s.el(t, Object.assign(hide ? { class: "later" } : {}, a));
-    const svg = s.svg(480, 340); const L = {}; const r = rng(7);
-    L.bg = E("rect", { x: 0, y: 0, width: 480, height: 340, fill: "#78b0c4" });
-    const pal = ["#4f86b8", "#8fb9d8", "#6aa38c", "#a9c9a0", "#b79ad0", "#d8ecf0"];
-    L.dabs = E("g", {}); for (let i = 0; i < 150; i++) { const x = r() * 470, y = r() * 330, w = 18 + r() * 34; L.dabs.append(s.el("line", { x1: x, y1: y, x2: x + w, y2: y + (r() - .5) * 4, stroke: pal[Math.floor(r() * pal.length)], "stroke-width": 6 + r() * 4, "stroke-linecap": "round", opacity: .8 })); }
-    L.pads = [[110, 230], [220, 170], [340, 250], [400, 140], [170, 290], [300, 100], [60, 120]].map(([x, y]) => { const g = E("g", {}); g.append(s.el("ellipse", { cx: x, cy: y, rx: 42, ry: 17, fill: "#3f7d52", stroke: "#2c5c3b", "stroke-width": 3 }), s.el("ellipse", { cx: x + 6, cy: y - 3, rx: 24, ry: 8, fill: "#5aa26b", opacity: .7 })); return g; });
-    L.flowers = [[130, 222], [350, 244], [225, 163], [410, 134], [180, 284]].map(([x, y]) => { const g = E("g", {}); for (let k = 0; k < 6; k++) g.append(s.el("ellipse", { cx: x + Math.cos(k) * 9, cy: y + Math.sin(k) * 5, rx: 9, ry: 5, fill: "#f3a3c4", stroke: "#d4739d", "stroke-width": 1.5 })); g.append(s.el("circle", { cx: x, cy: y, r: 4, fill: "#ffe15a" })); return g; });
-    svg.append(L.bg, L.dabs, ...L.pads, ...L.flowers);
-    return { svg, L };
-  }
-  function harePic(s, hide) {
-    const E = (t, a) => s.el(t, Object.assign(hide ? { class: "later" } : {}, a));
-    const svg = s.svg(480, 340); const L = {}; const r = rng(11); const id = "hc" + (++UID);
-    L.bg = E("rect", { x: 0, y: 0, width: 480, height: 340, fill: "#f2e8d0" });
-    L.shadow = E("ellipse", { cx: 235, cy: 300, rx: 170, ry: 14, fill: "rgba(90,70,40,.28)" });
-    const fur = "#a98353";
-    L.body = E("g", {}); L.body.append(s.el("ellipse", { cx: 215, cy: 215, rx: 115, ry: 78, fill: fur, stroke: "#5e4326", "stroke-width": 3 }), s.el("ellipse", { cx: 165, cy: 232, rx: 58, ry: 56, fill: "#b58e5c", stroke: "#5e4326", "stroke-width": 3 }), s.el("ellipse", { cx: 310, cy: 268, rx: 15, ry: 36, fill: "#a98353", stroke: "#5e4326", "stroke-width": 3 }), s.el("circle", { cx: 100, cy: 205, r: 15, fill: "#f4efe4", stroke: "#5e4326", "stroke-width": 3 }));
-    L.ears = E("g", {}); L.ears.append(s.el("ellipse", { cx: 330, cy: 92, rx: 15, ry: 58, fill: "#a98353", stroke: "#5e4326", "stroke-width": 3, transform: "rotate(-12 330 92)" }), s.el("ellipse", { cx: 366, cy: 98, rx: 14, ry: 54, fill: "#a98353", stroke: "#5e4326", "stroke-width": 3, transform: "rotate(10 366 98)" }), s.el("ellipse", { cx: 331, cy: 96, rx: 6, ry: 40, fill: "#d9a89a", transform: "rotate(-12 331 96)" }));
-    L.head = E("g", {}); L.head.append(s.el("ellipse", { cx: 340, cy: 172, rx: 54, ry: 44, fill: "#b58e5c", stroke: "#5e4326", "stroke-width": 3 }), s.el("ellipse", { cx: 388, cy: 184, rx: 10, ry: 7, fill: "#d98a93", stroke: "#5e4326", "stroke-width": 2 }));
-    L.fur = E("g", {}); const cp = s.el("clipPath", { id }, s.el("ellipse", { cx: 215, cy: 215, rx: 114, ry: 77 }), s.el("ellipse", { cx: 340, cy: 172, rx: 53, ry: 43 }), s.el("ellipse", { cx: 165, cy: 232, rx: 57, ry: 55 }));
-    svg.append(s.el("defs", {}, cp)); L.fur.setAttribute("clip-path", `url(#${id})`);
-    const fc = ["#7a5a34", "#9b7a4b", "#5e4326", "#c8a672", "#d6b98a"];
-    for (let i = 0; i < 300; i++) { const x = 80 + r() * 330, y = 100 + r() * 190, l = 8 + r() * 10; L.fur.append(s.el("line", { x1: x, y1: y, x2: x - l, y2: y + l * .4, stroke: fc[Math.floor(r() * fc.length)], "stroke-width": 1.6, "stroke-linecap": "round", opacity: .75 })); }
-    L.eye = E("g", {}); L.eye.append(s.el("circle", { cx: 358, cy: 160, r: 9, fill: "#3b2a1a", stroke: "#1a120a", "stroke-width": 2 }), s.el("circle", { cx: 361, cy: 157, r: 3, fill: "#fff" }));
-    L.whisk = E("g", {}); [[-6, -2], [0, 6], [6, 14]].forEach(([a, b]) => L.whisk.append(s.el("path", { d: `M388,${184 + a} Q430,${176 + b} 462,${172 + b * 1.6}`, fill: "none", stroke: "#5e4326", "stroke-width": 1.8 })));
-    svg.append(L.bg, L.shadow, L.body, L.ears, L.head, L.fur, L.eye, L.whisk);
-    return { svg, L };
-  }
-  const sized = (v, w) => { v.style.width = w + "px"; v.style.height = Math.round(w * 340 / 480) + "px"; v.style.display = "block"; v.style.borderRadius = "12px"; v.style.border = "3px solid " + INK; return v; };
+  /* real photo with an SVG overlay (same pixel size) for pins, rings and frames */
+  const photoLayer = (s, id, w, h, opts = {}) => {
+    const fig = s.photo(id, Object.assign({ w, h }, opts));
+    const ov = s.svg(w, h); ov.style.cssText = `position:absolute;left:0;top:0;width:${w}px;height:${h}px;pointer-events:none`;
+    const wrap = s.h("div", { style: { position: "relative", width: w + "px", height: h + "px" } }, fig, ov);
+    return { wrap, fig, ov };
+  };
   const pin = (s, svg, n, x, y) => { const g = s.el("g", { class: "later" }); g.append(s.el("circle", { cx: x, cy: y, r: 17, fill: RED, stroke: "#fff", "stroke-width": 3 }), s.el("text", { x, y: y + 8, "text-anchor": "middle", "font-size": 22, "font-weight": 800, fill: "#fff", text: String(n) })); svg.append(g); return g; };
 
   /* ---------- own landscape scene (640x440) ---------- */
@@ -118,16 +78,17 @@
       /* 2 ---- drei Bilder */
       {
         title: "Drei Bilder zum Üben",
-        say: "Diese drei Bilder habe ich selbst gezeichnet, im Stil von berühmten Künstlern. Damit üben wir.",
+        say: "Diese drei berühmten Bilder schauen wir uns genau an. Es sind echte Kunstwerke aus Museen.",
         build(s) {
-          const a = skyPic(s, true), b = liliesPic(s, true), c = harePic(s, true);
-          const mk = (p, title, sub) => s.h("div", { class: "card", style: { padding: "10px", display: "flex", flexDirection: "column", gap: "6px" } }, sized(p.svg, 322), P(s, `<b>${title}</b>`, "t"), P(s, sub, "small"));
-          const k1 = mk(a, "Nachthimmel", "Eigene Zeichnung im Stil von Vincent van Gogh (1853–1890)"), k2 = mk(b, "Seerosen", "Eigene Zeichnung im Stil von Claude Monet (gestorben 1926)"), k3 = mk(c, "Feldhase", "Eigene Zeichnung im Stil von Albrecht Dürer (gestorben 1528)");
-          const m = merk(s, "Das sind <b>meine eigenen Zeichnungen</b>, eine Verbeugung vor den Künstlern. Die Originale hängen in Museen, zum Beispiel van Goghs „Sternennacht“ (1889) in New York und Dürers „Feldhase“ (1502) in Wien.");
+          const mk = (id, pos, title, sub) => s.h("div", { class: "card later", style: { padding: "10px", display: "flex", flexDirection: "column", gap: "6px" } }, s.photo(id, { w: 322, h: 250, pos }), P(s, `<b>${title}</b>`, "t"), P(s, sub, "small"));
+          const k1 = mk("vangogh-sternennacht", "50% 50%", "Die Sternennacht", "Vincent van Gogh (1853–1890), gemalt 1889");
+          const k2 = mk("monet-seerosen", "50% 60%", "Seerosen", "Claude Monet (1840–1926), gemalt 1906");
+          const k3 = mk("duerer-feldhase", "50% 45%", "Feldhase", "Albrecht Dürer (1471–1528), gemalt 1502");
+          const m = merk(s, "Das sind <b>echte Kunstwerke</b>. Die Originale gehören Museen: die „Sternennacht“ dem MoMA in New York, die „Seerosen“ dem Art Institute in Chicago und der „Feldhase“ der Albertina in Wien.");
           s.add(stack(s, 14, s.h("div", { class: "cols3" }, k1, k2, k3), m));
-          s.step(async () => { s.sfx.whoosh(); s.show(a.L.bg, "fade"); await s.show(a.L.swirls, "draw"); s.show(a.L.stars, "pop"); s.show([a.L.moon, a.L.tree, a.L.town], "up"); await s.wait(600); });
-          s.step(async () => { s.sfx.scribble(); s.show([b.L.bg, b.L.dabs], "fade"); await s.show(b.L.pads, "pop"); await s.show(b.L.flowers, "pop"); });
-          s.step(async () => { s.sfx.scribble(); s.show([c.L.bg, c.L.shadow, c.L.body, c.L.ears, c.L.head], "up"); await s.show([c.L.fur, c.L.eye, c.L.whisk], "fade", 400); s.sfx.ding(); });
+          s.step(async () => { await reveal(s, k1, "zoom", "whoosh"); s.say("Van Gogh malte die Sternennacht 1889."); });
+          s.step(async () => { await reveal(s, k2, "zoom", "whoosh"); });
+          s.step(async () => { await reveal(s, k3, "zoom", "whoosh"); });
           s.step(async () => { await reveal(s, m, "up", "success"); });
         },
       },
@@ -136,17 +97,16 @@
         title: "Erster Eindruck und Beschreiben",
         say: "Schau das Bild an. Was fühlst du? Und danach: Was siehst du genau?",
         build(s) {
-          const p = skyPic(s, false); const svg = p.svg; sized(svg, 560);
-          const wrap = s.h("div", { style: { position: "relative", width: "560px" } }, svg);
-          const pins = [[1, 440, 50], [2, 175, 50], [3, 70, 150], [4, 300, 300], [5, 150, 120]].map(([n, x, y]) => pin(s, svg, n, x, y));
+          const L = photoLayer(s, "vangogh-sternennacht", 560, 443); const wrap = L.wrap;
+          const pins = [[1, 465, 53], [2, 420, 128], [3, 118, 244], [4, 370, 381], [5, 263, 137]].map(([n, x, y]) => pin(s, L.ov, n, x, y));
           const feel = ["geheimnisvoll", "unruhig", "kalt", "friedlich", "schön"];
           const chips = feel.map(f => { const b = pill(s, f, () => { b.on = !b.on; b.setOn(b.on); fx(s, "pop"); }); return b; });
           const row = s.h("div", { class: "later", style: { display: "flex", flexWrap: "wrap", gap: "10px" } }, ...chips);
           const t1 = s.h("div", { class: "later" }, P(s, "<b>1. Erster Eindruck:</b> Wie wirkt das Bild auf dich? Tippe die Wörter, die passen.", "t"));
-          const items = ["der Mond", "viele Sterne mit Strahlenringen", "ein dunkler, hoher Baum", "kleine Häuser mit gelben Fenstern", "blaue Wirbel am Himmel"];
+          const items = ["der Mond", "viele Sterne mit Strahlenringen", "ein dunkler, hoher Baum (eine Zypresse)", "kleine Häuser mit gelben Fenstern", "blaue Wirbel am Himmel"];
           const list = items.map((t, i) => s.h("div", { class: "later row", style: { gap: "10px", flexWrap: "nowrap" } }, s.h("span", { style: { width: "30px", height: "30px", borderRadius: "50%", background: RED, color: "#fff", fontWeight: 800, display: "grid", placeItems: "center", flex: "none", fontSize: "19px" } }, String(i + 1)), s.h("span", { class: "t", style: { fontSize: "21px" } }, t)));
           const t2 = s.h("div", { class: "later" }, P(s, "<b>2. Beschreiben:</b> Ich sehe …", "t"));
-          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, wrap, P(s, "Eigene Zeichnung im Stil von Vincent van Gogh", "small")), stack(s, 10, t1, row, t2, ...list), 560));
+          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, wrap, P(s, "Vincent van Gogh: Die Sternennacht (1889)", "small")), stack(s, 10, t1, row, t2, ...list), 560));
           s.step(async () => { s.show(t1, "up"); s.sfx.whoosh(); await s.show(row, "up", 200); s.say("Tippe auf Wörter, die zu deinem ersten Eindruck passen."); });
           s.step(async () => { s.show(t2, "up"); s.sfx.whoosh(); for (let i = 0; i < 5; i++) { s.sfx.note(i * 2, .15); s.show(list[i], "left"); await s.show(pins[[0, 1, 2, 3, 4][i]], "pop"); } });
         },
@@ -156,18 +116,18 @@
         title: "Untersuchen: Wie ist es gemacht?",
         say: "Jetzt gehen wir ins Detail. Farben, Pinselstriche und Aufbau verraten viel.",
         build(s) {
-          const p = liliesPic(s, false); const svg = p.svg; sized(svg, 560);
-          const ring = s.el("ellipse", { cx: 150, cy: 250, rx: 70, ry: 48, fill: "none", stroke: RED, "stroke-width": 5, "stroke-dasharray": "10 8", class: "later" });
-          const frame = s.el("rect", { x: 280, y: 80, width: 170, height: 190, rx: 10, fill: "none", stroke: UC, "stroke-width": 5, "stroke-dasharray": "10 8", class: "later" });
-          svg.append(ring, frame);
+          const L = photoLayer(s, "monet-seerosen", 470, 452); const svg = L.wrap;
+          const ring = s.el("ellipse", { cx: 258, cy: 352, rx: 80, ry: 46, fill: "none", stroke: RED, "stroke-width": 5, "stroke-dasharray": "10 8", class: "later" });
+          const frame = s.el("rect", { x: 90, y: 90, width: 170, height: 150, rx: 10, fill: "none", stroke: "#fff", "stroke-width": 5, "stroke-dasharray": "10 8", class: "later" });
+          L.ov.append(ring, frame);
           const sw = [["#4f86b8", "Blau"], ["#b79ad0", "Violett"], ["#6aa38c", "Grün"], ["#f3a3c4", "Rosa"]].map(([c, n]) => s.h("div", { class: "later row", style: { gap: "8px", flexWrap: "nowrap" } }, s.h("span", { style: { width: "34px", height: "34px", borderRadius: "50%", background: c, border: "2px solid " + INK, flex: "none" } }), s.h("span", { class: "t", style: { fontSize: "21px" } }, n)));
           const c1 = s.h("div", { class: "card later", style: { padding: "10px 16px" } }, P(s, "<b>Farben:</b> kühle, helle Töne. Kaum Schwarz.", "t"), s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 18px", marginTop: "8px" } }, ...sw));
           const c2 = s.h("div", { class: "card later", style: { padding: "10px 16px" } }, P(s, "<b>Pinselstriche:</b> kurz und tupfig. Aus der Nähe siehst du Striche, aus der Ferne Wasser.", "t"));
-          const c3 = s.h("div", { class: "card later", style: { padding: "10px 16px" } }, P(s, "<b>Aufbau:</b> kein Horizont. Wir schauen von oben auf den Teich. Die Blätter verteilen sich über das ganze Bild.", "t"));
+          const c3 = s.h("div", { class: "card later", style: { padding: "10px 16px" } }, P(s, "<b>Aufbau:</b> kein Horizont. Wir schauen aufs Wasser. Darin spiegeln sich Himmel und Bäume.", "t"));
           const m = merk(s, "Monet malte seine Seerosen in seinem Garten in Giverny. Mit der Zeit löste er das Motiv immer mehr in Farbflecken auf.");
-          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, svg, P(s, "Eigene Zeichnung im Stil von Claude Monet", "small")), stack(s, 10, P(s, "<b>3. Untersuchen:</b>", "t"), c1, c2, c3, m), 560));
+          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, svg, P(s, "Claude Monet: Seerosen (1906)", "small")), stack(s, 10, P(s, "<b>3. Untersuchen:</b>", "t"), c1, c2, c3, m), 480));
           s.step(async () => { await reveal(s, c1, "left", "pop"); await reveal(s, sw, "pop", "tick"); });
-          s.step(async () => { s.show(c2, "left"); s.sfx.scribble(); await s.show(ring, "draw"); });
+          s.step(async () => { s.show(c2, "left"); s.sound("pinsel-strich", { vol: .8 }); await s.show(ring, "draw"); });
           s.step(async () => { s.show(c3, "left"); s.sfx.swoosh(); await s.show(frame, "draw"); });
           s.step(async () => { await reveal(s, m, "up", "success"); });
         },
@@ -177,7 +137,7 @@
         title: "Deuten und Bewerten",
         say: "Jetzt darfst du deine Gedanken sagen. Baue dir Sätze aus den Bausteinen.",
         build(s) {
-          const p = harePic(s, false); sized(p.svg, 430);
+          const hare = s.photo("duerer-feldhase", { w: 420, h: 464, pos: "50% 50%" });
           const mkBuilder = (head, pre, mid, optsA, optsB) => {
             let a = "…", b = "…";
             const sent = s.h("p", { class: "t", style: { fontWeight: 700, fontSize: "22px", minHeight: "34px" } });
@@ -189,7 +149,7 @@
           const b1 = mkBuilder("4. Deuten", "Der Hase wirkt", ", weil", ["wachsam", "scheu", "ruhig"], ["er die Ohren aufstellt", "sein Auge glänzt", "er still sitzt"]);
           const b2 = mkBuilder("5. Bewerten", "Mir gefällt", ", weil", ["das Fell", "das Auge", "die Haltung"], ["es so echt aussieht", "es viele Details hat", "es ruhig wirkt"]);
           const m = merk(s, "Deuten: „Ich denke, …“. Bewerten: „Mir gefällt …, weil …“. Hier gibt es kein Richtig oder Falsch.");
-          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, p.svg, P(s, "Eigene Zeichnung im Stil von Albrecht Dürer", "small")), stack(s, 10, b1, b2, m), 440));
+          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, hare, P(s, "Albrecht Dürer: Feldhase (1502)", "small")), stack(s, 10, b1, b2, m), 440));
           s.step(async () => { await reveal(s, b1, "left", "pop"); s.say("Tippe die Bausteine und lies den Satz."); });
           s.step(async () => { await reveal(s, b2, "left", "pop"); });
           s.step(async () => { await reveal(s, m, "up", "success"); });
@@ -228,8 +188,8 @@
         title: "Porträt, Landschaft, Stillleben, Abstrakt",
         say: "Bilder gehören oft zu einer Gattung. Das hilft beim Sprechen über Kunst.",
         build(s) {
-          const items = [["Porträt", "Ein Mensch steht im Mittelpunkt, meist das Gesicht.", "Handy: Selfie", "face", "#f9e3d3"], ["Landschaft", "Natur oder Gegend: Berge, Felder, Meer.", "Handy: Urlaubsfoto", "land", "#d6ecf8"], ["Stillleben", "Dinge, die still stehen: Obst, Blumen, Geschirr.", "Handy: Foto vom Essen", "still", "#f3ecd2"], ["Abstrakt", "Keine echten Dinge, nur Farben, Formen und Linien.", "Handy: Hintergrundbild", "abs", "#fff"]];
-          const cards = items.map(([n, d, e, k, bg]) => { const v = mini(s, k, bg); v.style.width = "100%"; v.style.height = "auto"; v.style.borderRadius = "10px"; v.style.border = "3px solid " + INK; return s.h("div", { class: "card later", style: { padding: "10px", display: "flex", flexDirection: "column", gap: "8px" } }, v, P(s, `<b>${n}</b>`, "h2"), P(s, d, "small"), s.h("span", { class: "chip", style: { alignSelf: "flex-start", fontSize: "19px" } }, e)); });
+          const items = [["Porträt", "Ein Mensch steht im Mittelpunkt, meist das Gesicht.", "Handy: Selfie", "leonardo-mona-lisa", "50% 25%", "Leonardo: Mona Lisa"], ["Landschaft", "Natur oder Gegend: Berge, Felder, Meer.", "Handy: Urlaubsfoto", "duerer-innsbruck", "50% 50%", "Dürer: Innsbruck"], ["Stillleben", "Dinge, die still stehen: Obst, Blumen, Geschirr.", "Handy: Foto vom Essen", "cezanne-stillleben", "50% 60%", "Cézanne: Äpfel und Birnen"], ["Abstrakt", "Keine echten Dinge, nur Farben, Formen und Linien.", "Handy: Hintergrundbild", "kandinsky-komposition8", "50% 50%", "Kandinsky: Komposition VIII"]];
+          const cards = items.map(([n, d, e, id, pos, cap]) => s.h("div", { class: "card later", style: { padding: "10px", display: "flex", flexDirection: "column", gap: "8px" } }, s.photo(id, { w: "100%", h: 200, pos, caption: cap }), P(s, `<b>${n}</b>`, "h2"), P(s, d, "small"), s.h("span", { class: "chip", style: { alignSelf: "flex-start", fontSize: "19px" } }, e)));
           const m = merk(s, "Eine Gattung sagt, <b>was</b> auf dem Bild im Mittelpunkt steht. Ein Bild kann auch zwischen zwei Gattungen liegen.");
           s.add(stack(s, 16, s.h("div", { class: "cols4" }, ...cards), m));
           cards.forEach((c, i) => s.step(async () => { s.sfx.note(i * 3, .25); await s.show(c, "up"); }));
@@ -292,22 +252,34 @@
           s.step(async () => { await reveal(s, life, "up", "pop"); });
         },
       },
+      /* 9b ---- Mondrians Bäume */
+      {
+        title: "Mondrians Bäume",
+        say: "Piet Mondrian hat einen Baum immer wieder gemalt. Von Bild zu Bild wird er einfacher, bis fast nur noch Linien übrig sind.",
+        build(s) {
+          const mk = (id, year, txt, later) => s.h("div", { class: "stack" + (later ? " later" : ""), style: { gap: "8px" } }, s.photo(id, { w: 340, h: 250, caption: year }), P(s, txt, "small"));
+          const a = mk("mondrian-roter-baum", "1908–1910", "<b>Der rote Baum:</b> Man erkennt Stamm und Äste. Die Farben sind kräftig.", false);
+          const b = mk("mondrian-grauer-baum", "1911", "<b>Der graue Baum:</b> nur noch Grau. Die Äste werden zu Bögen.", true);
+          const c = mk("mondrian-apfelbaum", "1912", "<b>Blühender Apfelbaum:</b> Der Baum zerfällt in kurze Linien und Flächen.", true);
+          const m = merk(s, "Mondrian wurde Schritt für Schritt <b>abstrakt</b>. Alle drei Bilder hängen heute im Kunstmuseum Den Haag.");
+          s.add(s.h("div", { style: { display: "flex", flexDirection: "column", gap: "18px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { alignItems: "start" } }, a, b, c), m));
+          s.show(a, "zoom"); fx(s, "whoosh");
+          s.step(async () => { s.sound("pinsel-strich", { vol: .7 }); await s.show(b, "zoom"); s.say("Ein Jahr später ist der Baum grau und einfacher."); });
+          s.step(async () => { s.sound("pinsel-strich", { vol: .7 }); await s.show(c, "zoom"); s.say("Und dann bleiben fast nur noch Linien."); });
+          s.step(async () => { await reveal(s, m, "up", "success"); });
+        },
+      },
       /* 10 ---- Kunst in Berlin: Museen */
       {
         title: "Kunst in Berlin: Museen",
         say: "Berlin ist voll mit Kunst. Drei Orte stellen wir dir vor.",
         build(s) {
-          const svg = s.svg(520, 440);
-          svg.append(s.el("rect", { x: 0, y: 0, width: 520, height: 440, rx: 16, fill: "#f1efe6" }), s.el("path", { d: "M0,250 C110,200 200,300 300,240 S440,200 520,262", fill: "none", stroke: "#8cc4ea", "stroke-width": 34, "stroke-linecap": "round" }));
-          const isl = s.el("g", {}); isl.append(s.el("ellipse", { cx: 280, cy: 242, rx: 74, ry: 28, fill: "#c9d9a8", stroke: INK, "stroke-width": 3 })); [0, 1, 2, 3, 4].forEach(i => isl.append(s.el("rect", { x: 228 + i * 22, y: 222 + (i % 2) * 10, width: 18, height: 18, fill: "#b9a07a", stroke: INK, "stroke-width": 2 })));
-          svg.append(s.el("ellipse", { cx: 140, cy: 385, rx: 120, ry: 44, fill: "#b8dba0" }), s.el("text", { x: 140, y: 420, "text-anchor": "middle", class: "lbl", text: "Tiergarten" }),
-            s.el("rect", { x: 70, y: 112, width: 100, height: 30, fill: "#b9a07a", stroke: INK, "stroke-width": 3 }), s.el("line", { x1: 0, y1: 150, x2: 250, y2: 150, stroke: INK, "stroke-width": 3, "stroke-dasharray": "14 8" }),
-            isl, s.el("text", { x: 400, y: 330, class: "lbl", text: "Spree" }));
-          const pins = [[1, 280, 176], [2, 140, 335], [3, 120, 78]].map(([n, x, y]) => pin(s, svg, n, x, y));
+          const shots = [["museumsinsel", "Bode-Museum auf der Museumsinsel"], ["gemaeldegalerie", "Gemäldegalerie: ein Saal"], ["hamburger-bahnhof", "Hamburger Bahnhof"]].map(([id, cap], i) => s.photo(id, { w: 520, h: 420, caption: cap, cls: i ? "later" : "", style: { position: "absolute", left: "0", top: "0" } }));
+          const stackP = s.h("div", { "data-overlap-ok": "", style: { position: "relative", width: "520px", height: "420px" } }, ...shots);
           const mkc = (n, title, txt, col) => s.h("div", { class: "card later", style: { padding: "10px 16px", borderLeft: `10px solid ${col}` } }, s.h("p", { class: "t", html: `<b>${n}. ${title}</b>` }), s.h("p", { class: "small", html: txt }));
           const c = [mkc(1, "Museumsinsel", "Fünf Museen auf einer Insel in der Spree, zum Beispiel das Neue Museum mit der Nofretete. UNESCO-Welterbe seit 1999.", UC), mkc(2, "Gemäldegalerie", "Am Kulturforum im Tiergarten. Alte europäische Malerei vom 13. bis zum 18. Jahrhundert.", "#7b4fd6"), mkc(3, "Hamburger Bahnhof", "Ein alter Bahnhof (gebaut 1846–1847) ist heute ein Museum für zeitgenössische Kunst.", "#ee7a1a")];
-          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "4px", alignItems: "center" } }, svg, P(s, "Skizze, nicht maßstabsgetreu", "small")), stack(s, 12, ...c), 520));
-          c.forEach((cc, i) => s.step(async () => { s.show(pins[i], "bounce"); s.sfx.note(i * 4, .25); await s.show(cc, "left"); }));
+          s.add(cols2(s, stackP, stack(s, 12, ...c), 520));
+          c.forEach((cc, i) => s.step(async () => { if (i) s.show(shots[i], "zoom"); s.sfx.note(i * 4, .25); await s.show(cc, "left"); }));
         },
       },
       /* 11 ---- East Side Gallery */
@@ -315,20 +287,7 @@
         title: "East Side Gallery",
         say: "In Berlin gibt es eine lange Wand voller Bilder. Sie heißt East Side Gallery.",
         build(s) {
-          const r = rng(21); const pal = ["#d4202a", "#1d4aa8", "#f2c800", "#2f8f5b", "#ee7a1a", "#7b4fd6", "#ffffff", "#111111"];
-          const bgs = ["#bfe4f5", "#ffe9a8", "#f6c9d8", "#d3efd0", "#e6dcf5"];
-          const cc = Array.from({ length: 12 }, () => Array.from({ length: 6 }, () => pal[Math.floor(r() * pal.length)]));
-          const MW = 1092, MH = 170; const mv = s.canvas(MW, MH); const gm = mv.g;
-          const panel = (i, x) => { const c = cc[i], k = i % 5; gm.save(); gm.translate(x, 0); gm.beginPath(); gm.rect(0, 0, 200, 170); gm.clip(); gm.fillStyle = bgs[k]; gm.fillRect(0, 0, 200, 170); gm.strokeStyle = INK; gm.lineWidth = 3; gm.lineJoin = "round";
-            if (k === 0) for (let j = 0; j < 5; j++) { gm.fillStyle = c[j]; gm.fillRect(10, 14 + j * 30, 180, 18); }
-            if (k === 1) { gm.fillStyle = c[0]; gm.beginPath(); gm.arc(100, 85, 56, 0, 7); gm.fill(); gm.stroke(); gm.fillStyle = c[1]; gm.beginPath(); gm.arc(100, 85, 24, 0, 7); gm.fill(); gm.stroke(); }
-            if (k === 2) for (let j = 0; j < 6; j++) { gm.fillStyle = c[j]; gm.beginPath(); gm.moveTo(20 + j * 30, 150); gm.lineTo(35 + j * 30, 40); gm.lineTo(50 + j * 30, 150); gm.closePath(); gm.fill(); gm.stroke(); }
-            if (k === 3) { gm.lineWidth = 14; [100, 140].forEach((y, j) => { gm.strokeStyle = c[j]; gm.beginPath(); gm.moveTo(0, y); gm.quadraticCurveTo(50, y - 60, 100, y); gm.quadraticCurveTo(150, y + 60, 200, y); gm.stroke(); }); gm.fillStyle = c[2]; gm.beginPath(); gm.arc(150, 40, 20, 0, 7); gm.fill(); }
-            if (k === 4) for (let j = 0; j < 12; j++) { gm.fillStyle = c[j % 6]; gm.fillRect(14 + (j % 4) * 44, 14 + Math.floor(j / 4) * 50, 38, 44); gm.strokeRect(14 + (j % 4) * 44, 14 + Math.floor(j / 4) * 50, 38, 44); }
-            gm.restore(); gm.strokeStyle = INK; gm.lineWidth = 4; gm.strokeRect(x, 0, 200, 170); };
-          let off = 0; const paint = () => { gm.clearRect(0, 0, MW, MH); gm.fillStyle = "#888"; gm.fillRect(0, 0, MW, MH); const f = Math.floor(off / 210); for (let j = 0; j < 7; j++) panel((f + j) % 12, j * 210 - (off - f * 210)); }; paint();
-          const win = s.h("div", { class: "later", style: { width: "1100px", height: "178px", border: "4px solid " + INK, borderRadius: "10px", lineHeight: 0, background: "#888" } }, mv.canvas);
-          s.loop((t, dt) => { off = (off + dt * 70) % (12 * 210); paint(); });
+          const win = s.photo("east-side-gallery", { w: 1100, h: 186, pos: "50% 50%", kb: true, caption: "Ein Stück der East Side Gallery", cls: "later" });
           const num = s.h("span", { class: "huge mono", style: { color: UC } }, "0");
           const bar = s.h("div", { style: { flex: 1, height: "22px", borderRadius: "11px", background: "#e3eef0", overflow: "hidden", border: "2px solid " + INK } }); const bf = s.h("div", { style: { height: "100%", width: "0%", background: UC } }); bar.append(bf);
           const ruler = s.h("div", { class: "row later", style: { flexWrap: "nowrap", gap: "18px" } }, num, s.h("span", { class: "big" }, "m"), bar, P(s, "an der Mühlenstraße in Friedrichshain, zwischen Ostbahnhof und Oberbaumbrücke", "small"));
@@ -337,7 +296,7 @@
           const f = [fact("<b>Frühjahr 1990:</b> 118 Künstler aus 21 Ländern malten rund 100 Bilder auf die Mauer.", UC), fact("<b>Seit November 1991:</b> Die Wand steht unter Denkmalschutz.", "#7b4fd6"), fact("<b>Ein bekanntes Wandbild:</b> Zwei Männer küssen sich. Es heißt „Bruderkuss“ und ist von Dmitri Wrubel.", "#ee7a1a")];
           const m = merk(s, "Aus einem Stück Mauer wurde eine <b>Galerie unter freiem Himmel</b>.");
           s.add(stack(s, 12, win, ruler, s.h("div", { class: "cols3" }, ...f), m));
-          s.step(async () => { await reveal(s, win, "up", "whoosh"); });
+          s.step(async () => { s.sound("traffic", { vol: .35, dur: 5 }); await s.show(win, "zoom"); });
           s.step(async () => { s.show(ruler, "up"); s.say("Die Wand ist eintausenddreihundertsechzehn Meter lang."); let last = -1; await s.tween({ from: 0, to: 1316, dur: 2200, ease: "out", update: v => { num.textContent = s.fmt(Math.round(v)); bf.style.width = (v / 1316 * 100) + "%"; const i = Math.floor(v / 130); if (i !== last) { last = i; s.sfx.count(i); } } }); s.sfx.ding(); });
           s.step(async () => { for (const c of f) { s.sfx.pop(); await s.show(c, "up"); } });
           s.step(async () => { await reveal(s, m, "up", "success"); });
@@ -358,7 +317,7 @@
           wrap.append(cv.canvas, stSvg);
           let on = false, col = RED, X = 60; const setX = x => { X = x; stSvg.style.transform = `translateX(${x}px)`; stSvg.style.opacity = String(1 - x / 60); }; setX(60);
           const slide = async (to) => { s.sfx.swoosh(); const f = X; await s.tween({ from: f, to, dur: 700, ease: "inOut", update: setX }); };
-          const spray = async () => { if (!on) { on = true; await slide(0); } s.sfx.scribble(); g.save(); g.clip(star); g.fillStyle = col; const n = 90; const dots = () => { g.globalAlpha = .55; for (let i = 0; i < n; i++) { const a = Math.random() * 6.283, d = Math.sqrt(Math.random()) * 135; g.beginPath(); g.arc(260 + Math.cos(a) * d, 205 + Math.sin(a) * d, 1.5 + Math.random() * 2.5, 0, 7); g.fill(); } }; await s.tween({ from: 0, to: 1, dur: 1500, ease: "linear", update: () => { if (s.fast) for (let k = 0; k < 70; k++) dots(); else dots(); } }); g.restore(); s.sfx.ding(); };
+          const spray = async () => { if (!on) { on = true; await slide(0); } s.sound("spraydose", { vol: .8 }); g.save(); g.clip(star); g.fillStyle = col; const n = 90; const dots = () => { g.globalAlpha = .55; for (let i = 0; i < n; i++) { const a = Math.random() * 6.283, d = Math.sqrt(Math.random()) * 135; g.beginPath(); g.arc(260 + Math.cos(a) * d, 205 + Math.sin(a) * d, 1.5 + Math.random() * 2.5, 0, 7); g.fill(); } }; await s.tween({ from: 0, to: 1, dur: 1500, ease: "linear", update: () => { if (s.fast) for (let k = 0; k < 70; k++) dots(); else dots(); } }); g.restore(); s.sfx.ding(); };
           const off = async () => { if (on) { on = false; await slide(60); } };
           const cs = [["Rot", RED], ["Blau", BLUE], ["Gelb", OCK], ["Schwarz", "#25252e"]].map(([n, c]) => { const b = s.h("button", { class: "btn", "aria-label": n, style: { width: "64px", padding: 0 }, onclick: () => { col = c; s.sfx.click(); cs.forEach(x => x.style.outline = "none"); b.style.outline = "4px solid " + UC; } }, s.h("span", { style: { width: "32px", height: "32px", borderRadius: "50%", background: c, border: "2px solid " + INK } })); return b; }); cs[0].style.outline = "4px solid " + UC;
           const bSpray = s.h("button", { class: "btn solid", onclick: spray }, "Sprühen"); const bOff = s.h("button", { class: "btn", onclick: () => off() }, "Schablone abnehmen");
@@ -389,13 +348,13 @@
           const left = s.h("div", { class: "stack", style: { gap: "8px" } }, date, paper, s.h("div", { class: "row later", style: { gap: "10px" } }, ...tools, flip));
           const tipsData = [["5 Minuten am Tag", "Wenig, aber oft. So wird deine Hand sicher."], ["Datum aufschreiben", "Dann siehst du später, wie du besser wirst."], ["Nichts ist falsch", "Ein Skizzenbuch ist zum Üben da, nicht zum Vorzeigen."], ["Alles ist ein Motiv", "Ein Schuh, deine Tasse, ein Hund, die U-Bahn."]];
           const tips = tipsData.map(([a, b]) => s.h("div", { class: "card later", style: { padding: "10px 16px", borderLeft: `10px solid ${UC}` } }, P(s, `<b>${a}</b>`, "t"), P(s, b, "small")));
-          const life = box(s, "life", "Im Alltag", "Wie ein Fotoalbum, nur selbst gezeichnet. Und es passt in jede Schultasche.");
+          const life = s.photo("leonardo-skizzen", { w: 540, h: 230, pos: "50% 40%", caption: "Skizzen von Leonardo da Vinci", cls: "later" });
           s.add(cols2(s, left, stack(s, 10, ...tips, life), W + 6, 28));
           const stroke = async pts => { for (let i = 1; i < pts.length; i++) { await s.tween({ from: 0, to: 1, dur: 140, ease: "linear", update: t => { const a = { x: pts[i - 1][0], y: pts[i - 1][1] }, b = { x: pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * t, y: pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * t }; seg(a, b); } }); } };
-          s.step(async () => { s.show(left.children[2], "up"); s.sfx.scribble(); await stroke([[200, 150], [200, 280], [320, 280], [320, 150], [200, 150]]); await stroke([[320, 180], [360, 180], [372, 220], [345, 250], [320, 250]]); await stroke([[235, 125], [245, 95], [235, 65]]); });
+          s.step(async () => { s.show(left.children[2], "up"); s.sound("pencil-write"); await stroke([[200, 150], [200, 280], [320, 280], [320, 150], [200, 150]]); await stroke([[320, 180], [360, 180], [372, 220], [345, 250], [320, 250]]); await stroke([[235, 125], [245, 95], [235, 65]]); });
           s.step(async () => { await reveal(s, [tips[0], tips[1]], "left", "pop"); });
           s.step(async () => { await reveal(s, [tips[2], tips[3]], "left", "pop"); });
-          s.step(async () => { await reveal(s, life, "up", "ding"); });
+          s.step(async () => { await reveal(s, life, "zoom", "whoosh"); s.say("Auch berühmte Künstler hatten Skizzenbücher. Hier siehst du Skizzen von Leonardo da Vinci."); });
         },
       },
       /* 14 ---- Foto-Filter */
@@ -403,16 +362,19 @@
         title: "Foto-Filter sind Entscheidungen",
         say: "Wenn du ein Foto veränderst, entscheidest du über Farbe und Bildausschnitt. Das ist Bildsprache.",
         build(s) {
-          const svg = landscape(s); svg.style.cssText = "width:560px;height:385px;display:block"; svg.setAttribute("width", 560); svg.setAttribute("height", 385);
-          const win = s.h("div", { style: { width: "566px", height: "391px", border: "3px solid " + INK, borderRadius: "12px", lineHeight: 0 } }, svg);
+          const win = s.photo("brandenburger-tor", { w: 566, h: 391, pos: "50% 50%" });
+          const img = win.querySelector("img"); const CW = 566, CH = 391; const cv = s.canvas(CW, CH);
+          cv.canvas.style.cssText += ";position:absolute;left:0;top:0;opacity:0"; win.insertBefore(cv.canvas, img.nextSibling);
+          const paint = () => { if (!img.naturalWidth) return; const z = st.zoom / 100, iw = img.naturalWidth, ih = img.naturalHeight; const sc = Math.max(CW / iw, CH / ih) * z; const sw = CW / sc, sh = CH / sc; cv.g.clearRect(0, 0, CW, CH); cv.g.drawImage(img, (iw - sw) / 2, (ih - sh) * .45, sw, sh, 0, 0, CW, CH); cv.canvas.style.opacity = st.zoom > 100 ? "1" : "0"; };
+          img.addEventListener("load", () => paint());
           const st = { sat: 100, br: 100, sep: 0, zoom: 100 };
-          const apply = () => { svg.style.filter = `saturate(${st.sat}%) brightness(${st.br}%) sepia(${st.sep}%)`; const z = st.zoom / 100, w = 640 / z, h = 440 / z; svg.setAttribute("viewBox", `${320 - w / 2} ${262 - h / 2} ${w} ${h}`); };
+          const apply = () => { const f = `saturate(${st.sat}%) brightness(${st.br}%) sepia(${st.sep}%)`; img.style.filter = f; cv.canvas.style.filter = f; paint(); };
           const mk = (label, k, min, max, val, unit) => s.slider({ label, min, max, step: 1, value: val, fmt: v => v + unit, onInput: v => { st[k] = v; apply(); } });
           const sls = [mk("Farbstärke", "sat", 0, 200, 100, " %"), mk("Helligkeit", "br", 50, 150, 100, " %"), mk("Sepia (altes Foto)", "sep", 0, 100, 0, " %"), mk("Ausschnitt (Zoom)", "zoom", 100, 250, 100, " %")];
           const slw = s.h("div", { class: "stack later", style: { gap: "4px" } }, ...sls);
           const life = box(s, "life", "Im Alltag", "<b>Foto-App:</b> Mit Filtern stellst du die Stimmung ein.<br><b>Profilbild:</b> Du schneidest den Ausschnitt zu.<br><b>Schwarzweiß-Foto:</b> wirkt oft ernst oder alt.");
-          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, win, P(s, "Eigene Zeichnung, nur zum Verändern", "small")), stack(s, 10, P(s, "Du bist der <span class='hl'>Bild-Regisseur</span>", "h2"), slw, life), 566, 24));
-          s.step(async () => { await reveal(s, slw, "up", "ding"); s.say("Probiere die Regler aus."); });
+          s.add(cols2(s, s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, win, P(s, "Ein Foto vom Brandenburger Tor zum Verändern", "small")), stack(s, 10, P(s, "Du bist der <span class='hl'>Bild-Regisseur</span>", "h2"), slw, life), 566, 24));
+          s.step(async () => { s.sound("camera-shutter"); await s.show(slw, "up"); s.say("Probiere die Regler aus."); });
           s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 100, to: 0, dur: 900, update: v => sls[0].set(Math.round(v)) }); await s.wait(300); await s.tween({ from: 0, to: 100, dur: 700, update: v => sls[0].set(Math.round(v)) }); await s.tween({ from: 100, to: 170, dur: 800, update: v => sls[3].set(Math.round(v)) }); });
           s.step(async () => { await reveal(s, life, "up", "pop"); });
         },
@@ -431,7 +393,7 @@
           [v1, v2, v3].forEach(v => { v.style.width = "100%"; v.style.height = "auto"; });
           const mm = merk(s, "Frag in deiner Klasse nach einer <b>Ausstellung</b>. Deine Bilder aus der Galerie kannst du auch ausdrucken und ins Zimmer hängen.");
           s.add(stack(s, 18, s.h("div", { class: "cols3", style: { alignItems: "start" } }, ...c), mm));
-          c.forEach((cc, i) => s.step(async () => { s.sfx.note(i * 4, .25); await s.show(cc, "up"); }));
+          c.forEach((cc, i) => s.step(async () => { if (i === 0) s.sound("footsteps", { vol: .5 }); else s.sfx.note(i * 4, .25); await s.show(cc, "up"); }));
           s.step(async () => { await reveal(s, mm, "up", "success"); });
         },
       },
@@ -460,7 +422,7 @@
           const plaque = s.h("div", { style: { background: "#fff", border: "2px solid #8d8d8d", borderRadius: "6px", padding: "6px 14px", minWidth: "250px" } }, s.h("p", { class: "t", style: { fontWeight: 800, margin: 0 } }, "…"), s.h("p", { class: "small", style: { margin: 0 } }, "…"), s.h("p", { class: "small", style: { margin: 0 } }, "…"));
           const wall = s.h("div", { style: { height: "330px", borderRadius: "14px", background: "radial-gradient(ellipse at 50% 20%, #fffaf0 0, #ece6d8 70%)", border: "3px solid " + INK, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "14px" } }, s.h("div", { class: "later", id: "fr" }, frame), s.h("div", { class: "later", id: "pl" }, plaque));
           const frWrap = wall.children[0], plWrap = wall.children[1]; let hung = false;
-          const hang = async (anim = true) => { disp.g.clearRect(0, 0, FW, FH); disp.g.drawImage(cvEl, 0, 0, FW, FH); const yr = new Date().getFullYear(); plaque.children[0].textContent = title; plaque.children[1].textContent = "Julian, Klasse 5a, " + yr; plaque.children[2].textContent = tech + ", digital"; if (!hung || anim) { hung = true; s.sfx.boing(); await s.show(frWrap, "bounce"); await s.show(plWrap, "up"); s.sfx.ding(); } };
+          const hang = async (anim = true) => { disp.g.clearRect(0, 0, FW, FH); disp.g.drawImage(cvEl, 0, 0, FW, FH); const yr = new Date().getFullYear(); plaque.children[0].textContent = title; plaque.children[1].textContent = "Julian, Klasse 5a, " + yr; plaque.children[2].textContent = tech + ", digital"; if (!hung || anim) { hung = true; s.sound("knock", { vol: .6, dur: 1 }); await s.show(frWrap, "bounce"); await s.show(plWrap, "up"); s.sound("applause", { vol: .5, dur: 3 }); } };
           const bHang = pill(s, "Aufhängen", () => hang(true), { background: UC, color: "#fff", width: "100%" });
           const right = s.h("div", { class: "stack later", style: { gap: "10px" } }, P(s, "<b>Titel wählen</b>", "t"), s.h("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" } }, ...tcs), bHang, wall);
           s.add(cols2(s, left, right, W + 6, 22));

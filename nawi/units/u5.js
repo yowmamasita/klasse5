@@ -136,9 +136,36 @@
           const ex2 = box(s, "ex", "Beleuchtete Körper", "Mond, Buch, Fahrrad – und du! Sie leuchten nicht selbst. Sie werfen nur das Licht <b>zurück</b>, das auf sie fällt.");
           const m = merk(s, "Der Mond ist <b>keine</b> Lichtquelle. Er wird von der Sonne beleuchtet.");
           s.add(cols(s, svg, stack(s, 16, P(s, "Es gibt <b>selbstleuchtende</b> Körper und <b>beleuchtete</b> Körper."), ex1, ex2, m), 540));
-          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.show(svg, "zoom"); s.sound("match-strike", { vol: 0.7 });
           s.step(async () => { s.sfx.pop(); s.show(row2, "pop"); await s.show(ex2, "up"); s.say("Mond, Buch und Fahrrad leuchten nicht selbst. Sie werden beleuchtet."); });
           s.step(async () => { s.sfx.zap(); await s.show(arrows, "fade"); s.sfx.ding(); await s.show(m, "up"); s.say("Der Mond wird von der Sonne beleuchtet."); });
+        },
+      },
+      /* 1b – real photos ------------------------------------------------- */
+      {
+        title: "Lichtquellen in echt",
+        say: "Sonne, Blitz und Kerze erzeugen selbst Licht. Der Vollmond strahlt nur das Sonnenlicht zurück.",
+        build(s) {
+          const items = [
+            [s.photo("sonne-nasa", { w: 260, h: 330, caption: "Sonne" }), "Lichtquelle"],
+            [s.photo("blitz", { w: 260, h: 330, pos: "38% 50%", caption: "Blitz" }), "Lichtquelle"],
+            [s.photo("kerze", { w: 260, h: 330, pos: "50% 40%", caption: "Kerze" }), "Lichtquelle"],
+            [s.photo("vollmond", { w: 260, h: 330, caption: "Vollmond" }), "beleuchtet"],
+          ];
+          const figs = items.map(([fig, kind], i) => {
+            const chip = s.h("span", { class: "chip", style: { alignSelf: "center", background: i < 3 ? "#fff3c4" : "#eceff3", fontWeight: 700 } }, kind);
+            return s.h("div", { class: "stack later", style: { gap: "10px", alignItems: "stretch" } }, fig, chip);
+          });
+          const thunderBtn = s.soundBtn("thunder", "Donner anhören", { dur: 6 });
+          const m = merk(s, "Der Mond ist <b>keine</b> Lichtquelle: Er wirft nur das Sonnenlicht zurück.", false);
+          const bottom = s.h("div", { class: "row later", style: { flexWrap: "nowrap", gap: "18px", alignItems: "center" } }, thunderBtn, m);
+          s.add(s.h("div", { class: "stack", style: { gap: "16px", height: "100%", justifyContent: "center" } },
+            P(s, "So sehen echte <b>Lichtquellen</b> aus – und ein <b>beleuchteter</b> Körper:"),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center" } }, ...figs), bottom));
+          s.sfx.whoosh(); s.show(figs[0], "zoom");
+          s.step(async () => { s.sound("thunder", { vol: 0.6, dur: 4 }); await s.show(figs[1], "zoom"); s.say("Ein Blitz ist eine Lichtquelle. Den Donner hörst du erst danach."); });
+          s.step(async () => { s.sound("match-strike", { vol: 0.7 }); await s.show(figs[2], "zoom"); });
+          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(figs[3], "zoom"); s.show(bottom, "up"); s.say("Der Vollmond leuchtet nicht selbst. Er wird von der Sonne beleuchtet."); });
         },
       },
       /* 2 ---------------------------------------------------------------- */
@@ -182,7 +209,7 @@
             onStart: p => { grab = nearest(p, [L, B]); if (grab >= 0) s.sfx.click(); },
             onMove: p => { const o = [L, B][grab]; if (!o) return; o.x = clamp(p.x, 40, 400); o.y = clamp(p.y, 40, 450); },
           });
-          const btn = s.h("button", { class: "btn later", onclick: () => { on = !on; btn.textContent = on ? "Licht aus" : "Licht an"; on ? s.sfx.pop() : s.sfx.click(); s.say(on ? "Licht an: Du siehst den Apfel." : "Licht aus: Du siehst gar nichts."); } }, "Licht aus");
+          const btn = s.h("button", { class: "btn later", onclick: () => { on = !on; btn.textContent = on ? "Licht aus" : "Licht an"; s.sound("lichtschalter"); s.say(on ? "Licht an: Du siehst den Apfel." : "Licht aus: Du siehst gar nichts."); } }, "Licht aus");
           const m = merk(s, "Du siehst etwas nur, wenn Licht <b>von ihm</b> in dein Auge fällt. Augen senden kein Licht aus!");
           const tip = P(s, "Ziehe Lampe und Apfel herum!", "small pencil", true);
           const life = box(s, "life", "Im Alltag", "Im dunklen Keller siehst du nichts. Knipst du das Licht an, fällt Licht auf die Dinge – und von dort in dein Auge.");
@@ -241,7 +268,7 @@
           const sl = s.slider({ label: "Öffnung der Blende", min: 6, max: 170, value: 110, fmt: v => (v < 30 ? "ganz eng" : v < 90 ? "mittel" : "weit"), onInput: v => (w = v) });
           const ex1 = box(s, "ex", "Lichtbündel", "Hinter der Blende siehst du ein <b>Lichtbündel</b>. Je enger die Öffnung, desto schmaler ist es.");
           const ex2 = box(s, "ex", "Lichtstrahl", "Ganz dünn wird es nie. Der <b>Lichtstrahl</b> ist ein Modell: eine gerade Linie mit Pfeil.");
-          const life = box(s, "life", "Im Alltag", "Sonnenstrahlen durch Wolkenlücken · Taschenlampe im Nebel · Scheinwerfer im Konzert");
+          const life = s.photo("sonnenstrahlen-wolken", { w: 512, h: 196, pos: "50% 62%", caption: "Im Alltag: Sonnenstrahlen durch Wolkenlücken", cls: "later" });
           s.add(cols(s, canvas, stack(s, 14, P(s, "Licht breitet sich <b>geradlinig</b> aus – immer geradeaus, bis es auf etwas trifft."), sl, ex1, ex2, life)));
           s.show(canvas, "zoom"); s.sfx.whoosh();
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: w, to: 40, dur: 900, update: v => { w = v; sl.input.value = v; } }); sl.set(40); s.sfx.pop(); await s.show(ex1, "up"); });
@@ -337,7 +364,10 @@
           });
           const card = s.h("div", { class: "card soft" }, s.h("p", { class: "h2" }, "Schatten: ", ratioEl, "-mal so groß wie die Figur"));
           const ex = box(s, "ex", "Probier es aus", "Ziehe die Figur zur Lampe hin: Der Schatten wird <b>größer</b>. Ziehe sie zur Wand: Er wird <b>kleiner</b>.");
-          const life = box(s, "life", "Im Alltag", "Handschattenspiel an der Wand · Schatten unter dem Baum im Park · Sonnenschirm im Freibad");
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center", gap: "16px" } },
+              s.photo("schatten-strand", { w: 160, h: 210, pos: "50% 60%", style: { flex: "none" } }),
+              s.h("p", { class: "small", html: "Dein <b>eigener Schatten</b> am Strand · Handschattenspiel an der Wand · Schatten unter dem Baum im Park · Sonnenschirm im Freibad" })));
           s.add(cols(s, canvas, stack(s, 16,
             P(s, "Hinter einem <b>undurchsichtigen</b> Körper kommt kein Licht hin. Dort ist <b>Schatten</b>."), card, ex, life)));
           s.show(canvas, "zoom"); s.sfx.pop();
@@ -400,7 +430,7 @@
           s.add(cols(s, canvas, stack(s, 16,
             P(s, "Eine Lampe macht einen Schatten. Was passiert mit <b>zwei</b> Lampen?"), leg1, leg2, tip, life)));
           s.show(canvas, "zoom"); s.sfx.pop();
-          s.step(async () => { s.sfx.zap(); s.say("Die zweite Lampe geht an."); await s.tween({ from: 0, to: 1, dur: 700, update: v => (l2 = v) }); });
+          s.step(async () => { s.sound("lichtschalter"); s.say("Die zweite Lampe geht an."); await s.tween({ from: 0, to: 1, dur: 700, update: v => (l2 = v) }); });
           s.step(async () => { s.sfx.pop(); await s.show(leg1, "left"); s.sfx.pop(); await s.show(leg2, "left"); s.show(tip, "fade"); s.say("Kernschatten: kein Licht. Halbschatten: Licht von nur einer Lampe."); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
@@ -458,7 +488,7 @@
           s.loop(draw);
           s.drag(canvas, { space: canvas, onStart: () => s.sfx.click(), onMove: p => { th = clamp((p.x - 20) / 520 * 180, 2, 178); } });
           const go = (to) => { s.sfx.whoosh(); return s.tween({ from: th, to, dur: 900, update: v => (th = v) }); };
-          const b1 = s.h("button", { class: "btn", onclick: () => go(28) }, "Morgens"), b2 = s.h("button", { class: "btn", onclick: () => go(90) }, "Mittags"), b3 = s.h("button", { class: "btn", onclick: () => go(152) }, "Abends");
+          const b1 = s.h("button", { class: "btn", onclick: () => { s.sound("birds", { vol: 0.45, dur: 4 }); go(28); } }, "Morgens"), b2 = s.h("button", { class: "btn", onclick: () => go(90) }, "Mittags"), b3 = s.h("button", { class: "btn", onclick: () => go(152) }, "Abends");
           const seasonBtn = s.h("button", { class: "btn solid later", onclick: () => { maxEl = maxEl > 30 ? 14 : 61; seasonBtn.textContent = maxEl > 30 ? "Jetzt: Sommer" : "Jetzt: Winter"; s.sfx.pop(); } }, "Jetzt: Sommer");
           dial.style.flex = "none";
           const dialRow = s.h("div", { class: "row later", style: { flexWrap: "nowrap", gap: "14px" } }, dial, P(s, "<b>Sonnenuhr</b>: Der Schatten wandert mit der Sonne und zeigt die Uhrzeit.", "small"));
@@ -467,7 +497,7 @@
             P(s, "Steht die Sonne <b>tief</b>, ist der Schatten <b>lang</b>. Steht sie <b>hoch</b>, ist er <b>kurz</b>."),
             s.h("div", { class: "row", style: { gap: "10px" } }, b1, b2, b3), readout, s.h("div", { class: "row" }, seasonBtn), dialRow, life)));
           s.show(canvas, "zoom"); s.sfx.pop();
-          s.step(async () => { await go(28); s.say("Morgens: Die Sonne steht tief im Osten, der Schatten ist lang."); await s.wait(500); await go(90); s.say("Mittags: Die Sonne steht am höchsten, der Schatten ist kurz."); });
+          s.step(async () => { s.sound("birds", { vol: 0.45, dur: 4 }); await go(28); s.say("Morgens: Die Sonne steht tief im Osten, der Schatten ist lang."); await s.wait(500); await go(90); s.say("Mittags: Die Sonne steht am höchsten, der Schatten ist kurz."); });
           s.step(async () => { await go(152); s.sfx.pop(); await s.show(dialRow, "up"); s.say("Eine Sonnenuhr nutzt den wandernden Schatten."); });
           s.step(async () => { s.show(seasonBtn, "pop"); await go(90); maxEl = 14; seasonBtn.textContent = "Jetzt: Winter"; s.sfx.boing(); await s.show(life, "up"); s.say("Im Winter steht die Sonne in Berlin sehr tief. Die Schatten sind lang."); });
         },
@@ -508,12 +538,15 @@
           upd();
           const sl = s.slider({ label: "Abstand Kerze – Loch", min: 80, max: 220, value: 140, fmt: v => s.fmt(v / 10, 0) + " cm", onInput: v => { cx = HX - v; upd(); } });
           const m = merk(s, "Das Bild steht auf dem <b>Kopf</b> und ist <b>seitenverkehrt</b>. Denn die Lichtstrahlen kreuzen sich im Loch.");
-          const life = box(s, "life", "Im Alltag", "<b>Sonnentaler</b>: Lücken im Laub wirken wie Löcher – runde Sonnenbilder auf dem Weg · Lochkamera zum sicheren Beobachten einer Sonnenfinsternis · Dein <b>Auge</b> arbeitet ähnlich.");
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center", gap: "16px" } },
+              s.photo("sonnentaler-finsternis", { w: 230, h: 175, style: { flex: "none" } }),
+              s.h("p", { class: "small", html: "<b>Sonnentaler</b>: Lücken im Laub wirken wie Löcher. Bei einer Sonnenfinsternis werden die Sonnenbilder zu <b>Sicheln</b>! · Dein <b>Auge</b> arbeitet ähnlich." })));
           s.add(cols(s, svg, stack(s, 16, P(s, "Eine dunkle Schachtel mit einem kleinen <b>Loch</b> – und auf der Rückwand erscheint ein Bild!"), sl, m, life), 540));
           s.show(svg, "zoom"); s.sfx.pop();
-          s.step(async () => { s.sfx.zap(); await s.show([ray1, ray2], "draw"); s.sfx.zap(); await s.show([ray1b, ray2b], "draw"); s.sfx.ding(); await s.show(img, "fade"); s.say("Das Licht von oben landet unten. Das Licht von unten landet oben."); });
+          s.step(async () => { s.sfx.zap(); await s.show([ray1, ray2], "draw"); s.sfx.zap(); await s.show([ray1b, ray2b], "draw"); s.sound("camera-shutter"); await s.show(img, "fade"); s.say("Das Licht von oben landet unten. Das Licht von unten landet oben."); });
           s.step(async () => { s.sfx.pop(); await s.show(m, "up"); s.sfx.swoosh(); await s.tween({ from: 140, to: 90, dur: 900, update: v => { cx = HX - v; sl.input.value = v; upd(); } }); sl.set(90); s.say("Kommt die Kerze näher, wird das Bild größer."); });
-          s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(life, "up"); s.say("Lücken im Laub wirken wie viele kleine Lochkameras."); });
         },
       },
       /* 9 ---------------------------------------------------------------- */
@@ -565,7 +598,7 @@
           s.show(svg, "zoom"); s.sfx.zap();
           s.step(async () => { s.sfx.pop(); s.show([arcA, arcB], "pop"); s.show([tA, tB], "pop"); await s.show([cardA, cardB], "up"); await s.tween({ from: a, to: 25, dur: 900, update: v => { a = v; upd(); } }); s.sfx.tick(); await s.tween({ from: 25, to: 60, dur: 1100, update: v => { a = v; upd(); } }); s.say("Egal wie du den Laser drehst: Beide Winkel sind gleich."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
-          s.step(async () => { s.sfx.boing(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("ball-kick"); await s.show(life, "up"); });
         },
       },
       /* 10 --------------------------------------------------------------- */
@@ -626,12 +659,16 @@
           });
           const ex1 = box(s, "ex", "Spiegelbild", "Dein Spiegelbild ist <b>gleich groß</b> und steht <b>genauso weit</b> hinter dem Spiegel wie du davor. Ziehe die Figur!", false);
           const ex2 = box(s, "ex", "Periskop", "Zwei Spiegel, schräg im <b>45°-Winkel</b>: So schaust du über eine Mauer. Auch U-Boote haben ein Periskop.");
-          const life = box(s, "life", "Im Alltag", "Spiegel im Bad · Rück- und Außenspiegel am Auto · Verkehrsspiegel an unübersichtlichen Ausfahrten");
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center", gap: "18px" } },
+              s.photo("verkehrsspiegel", { w: 240, h: 160, pos: "50% 45%", style: { flex: "none" } }),
+              s.h("p", { class: "small", html: "Ein <b>Verkehrsspiegel</b> zeigt dir, was um die Ecke kommt. Auch: Spiegel im Bad · Rück- und Außenspiegel am Auto." })));
+          a.style.height = "270px"; b.style.height = "270px";
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } },
             s.h("div", { class: "cols", style: { gap: "20px", alignItems: "start" } }, stack(s, 10, a, ex1), stack(s, 10, b, ex2)), life));
           s.show(a, "zoom"); s.show(b, "zoom", 150); s.sfx.pop();
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: kx, to: 60, dur: 900, update: v => { kx = v; upd(); } }); s.sfx.tick(); s.say("Gehst du zurück, geht auch dein Spiegelbild zurück."); });
-          s.step(async () => { s.sfx.zap(); await s.show(path, "draw"); moving = true; s.show(dot, "pop"); await s.show(ex2, "up"); s.say("Das Licht wird zweimal umgelenkt."); });
+          s.step(async () => { s.sound("birds", { vol: 0.45, dur: 4 }); await s.show(path, "draw"); moving = true; s.show(dot, "pop"); await s.show(ex2, "up"); s.say("Das Licht wird zweimal umgelenkt."); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
       },
@@ -666,9 +703,10 @@
           const sl = s.slider({ label: "Oberfläche", min: 0, max: 10, value: 0, fmt: v => (v === 0 ? "spiegelglatt" : v <= 3 ? "fast glatt" : v <= 7 ? "rau" : "sehr rau"), onInput: v => (rough = v / 10) });
           const ex1 = box(s, "ex", "Glatt", "Spiegel, ruhiges Wasser, Fensterscheibe: Alle Strahlen fliegen <b>geordnet</b> weiter. Du siehst ein Spiegelbild.");
           const ex2 = box(s, "ex", "Rau", "Papier, Wand, T-Shirt: Das Licht wird in <b>alle</b> Richtungen gestreut. Das heißt <b>diffuse Reflexion</b>. Darum siehst du dein Heft von überall.");
-          s.add(cols(s, canvas, stack(s, 16, P(s, "Ob du ein Spiegelbild siehst, hängt von der <b>Oberfläche</b> ab."), sl, ex1, ex2)));
+          const lake = s.photo("see-spiegelung", { w: 512, h: 170, pos: "50% 50%", caption: "Ruhiger See: glatt wie ein Spiegel", cls: "later" });
+          s.add(cols(s, canvas, stack(s, 14, P(s, "Ob du ein Spiegelbild siehst, hängt von der <b>Oberfläche</b> ab."), sl, ex1, lake, ex2)));
           s.show(canvas, "zoom"); s.sfx.pop();
-          s.step(async () => { s.sfx.ding(); await s.show(ex1, "up"); s.say("Auf glatten Flächen bleiben alle Strahlen geordnet."); });
+          s.step(async () => { s.sfx.ding(); await s.show(ex1, "up"); s.sound("water-pour", { vol: 0.4 }); await s.show(lake, "zoom"); s.say("Auf glatten Flächen bleiben alle Strahlen geordnet. Ein ruhiger See wird zum Spiegel."); });
           s.step(async () => { s.sfx.scribble(); await s.tween({ from: 0, to: 10, dur: 1200, update: v => { rough = v / 10; sl.input.value = v; } }); sl.set(10); s.sfx.pop(); await s.show(ex2, "up"); s.say("Auf rauen Flächen wird das Licht in alle Richtungen gestreut."); });
         },
       },
@@ -713,20 +751,16 @@
           const cA = s.h("div", { class: "card later", style: { flex: "1" } }, s.h("p", { class: "small", style: { color: "#1d5bd0" } }, "Winkel in Luft"), s.h("p", { class: "big", style: { color: "#1d5bd0" } }, vA));
           const cB = s.h("div", { class: "card later", style: { flex: "1" } }, s.h("p", { class: "small", style: { color: "#0d6b45" } }, "Winkel in Wasser"), s.h("p", { class: "big", style: { color: "#0d6b45" } }, vB));
           const m = merk(s, "Von Luft in Wasser oder Glas wird das Licht <b>zum Lot hin</b> gebrochen.");
-          const straw = s.svg(130, 170);
-          straw.append(s.el("rect", { x: 15, y: 20, width: 100, height: 145, rx: 8, fill: "#eef6ff", stroke: "#4a87c5", "stroke-width": 3 }),
-            s.el("rect", { x: 17, y: 80, width: 96, height: 83, fill: "#9fd3ff" }),
-            s.el("line", { x1: 110, y1: 2, x2: 72, y2: 80, stroke: "#e0322b", "stroke-width": 8, "stroke-linecap": "round" }),
-            s.el("line", { x1: 82, y1: 80, x2: 58, y2: 150, stroke: "#e0322b", "stroke-width": 8, "stroke-linecap": "round", opacity: 0.85 }));
+          const straw = s.photo("bleistift-wasserglas", { w: 160, h: 215, pos: "50% 45%", style: { flex: "none" } });
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
-            s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center" } }, Object.assign(straw.style, { flex: "none" }) && straw,
-              s.h("p", { class: "small", html: "Der <b>Strohhalm</b> im Glas sieht geknickt aus · Der <b>Löffel</b> im Teeglas auch · Das <b>Schwimmbecken</b> wirkt flacher, als es ist." })));
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center" } }, straw,
+              s.h("p", { class: "small", html: "Der <b>Bleistift</b> im Wasserglas sieht geknickt aus. Der <b>Strohhalm</b> im Glas und der <b>Löffel</b> im Teeglas auch. Das <b>Schwimmbecken</b> wirkt flacher, als es ist." })));
           s.add(cols(s, canvas, stack(s, 14, P(s, "Licht ändert an der Grenze zum Wasser seine Richtung: <b>Brechung</b>. Ziehe den Laser!"),
             s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, cA, cB), m, life)));
           s.show(canvas, "zoom"); s.sfx.zap();
           s.step(async () => { s.sfx.pop(); s.tween({ from: 0, to: 1, dur: 500, update: v => (arcs = v) }); await s.show([cA, cB], "up"); await s.tween({ from: a, to: 70, dur: 1200, update: v => (a = v) }); s.say("Im Wasser ist der Winkel zum Lot kleiner."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
-          s.step(async () => { s.sfx.boing(); await s.show(life, "up"); s.say("Darum sieht der Strohhalm im Glas geknickt aus."); });
+          s.step(async () => { s.sound("water-pour", { vol: 0.6 }); await s.show(life, "up"); s.say("Darum sieht der Bleistift im Wasserglas geknickt aus."); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -760,14 +794,8 @@
           s.loop(t => { fGlow.setAttribute("r", 18 + 5 * Math.sin(t * 5)); });
           const sl = s.slider({ label: "Linse", min: 24, max: 64, value: 40, fmt: v => (v < 34 ? "dünn" : v < 52 ? "mittel" : "dick"), onInput: v => { th = v; upd(); } });
           const m = merk(s, "<b>Dicke</b> Linse: kurze <b>Brennweite</b>. <b>Dünne</b> Linse: lange Brennweite.");
-          const lupe = s.svg(150, 120);
-          lupe.append(s.el("circle", { cx: 28, cy: 92, r: 9, fill: "#e0322b" }), s.el("circle", { cx: 28, cy: 92, r: 2, fill: "#111" }),
-            s.el("line", { x1: 120, y1: 98, x2: 142, y2: 116, stroke: "#7a4a22", "stroke-width": 10, "stroke-linecap": "round" }),
-            s.el("circle", { cx: 88, cy: 58, r: 44, fill: "#eef6ff", stroke: "#4a87c5", "stroke-width": 6 }),
-            s.el("circle", { cx: 88, cy: 58, r: 26, fill: "#e0322b" }), s.el("line", { x1: 88, y1: 32, x2: 88, y2: 84, stroke: "#111", "stroke-width": 3 }),
-            s.el("circle", { cx: 78, cy: 48, r: 5, fill: "#111" }), s.el("circle", { cx: 98, cy: 66, r: 5, fill: "#111" }), s.el("circle", { cx: 97, cy: 46, r: 4, fill: "#111" }));
-          lupe.style.flex = "none";
-          const lupeRow = s.h("div", { class: "row later", style: { flexWrap: "nowrap" } }, lupe, P(s, "Eine <b>Lupe</b> ist eine Sammellinse. Hältst du sie nah über einen Marienkäfer, siehst du ihn groß.", "small"));
+          const lupe = s.photo("lupe-briefmarke", { w: 210, h: 140, pos: "50% 50%", style: { flex: "none" } });
+          const lupeRow = s.h("div", { class: "row later", style: { flexWrap: "nowrap" } }, lupe, P(s, "Eine <b>Lupe</b> ist eine Sammellinse. Hältst du sie nah über eine Briefmarke, siehst du sie groß.", "small"));
           const life = box(s, "life", "Im Alltag", "Brille für Weitsichtige · Kamera im Handy · die Linse in deinem Auge");
           s.add(cols(s, svg, stack(s, 14, P(s, "Eine <b>Sammellinse</b> ist in der Mitte dicker. Sie bündelt das Licht im <b>Brennpunkt</b>."), sl, m, lupeRow, life)));
           s.show(svg, "zoom"); s.sfx.pop();
@@ -820,9 +848,26 @@
           s.add(s.h("div", { class: "cols", style: { gap: "28px", alignItems: "start", height: "100%" } }, stack(s, 12, a, t1, life14), stack(s, 12, b, t2, sl, status)));
           s.show(a, "zoom"); s.sfx.pop();
           s.step(async () => { s.sfx.zap(); await s.show(inner, "draw"); s.sfx.chord([0, 4, 7, 12]); s.show(fan, "draw"); await s.show(names, "left"); s.say("Rot, Orange, Gelb, Grün, Blau und Violett."); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(b, "zoom"); s.sfx.chord([0, 5, 9]); await s.show(t2, "up"); s.say("Für einen Regenbogen brauchst du die Sonne im Rücken und Regen vor dir."); });
+          s.step(async () => { s.sound("rain", { vol: 0.4, dur: 5 }); await s.show(b, "zoom"); s.sfx.chord([0, 5, 9]); await s.show(t2, "up"); s.say("Für einen Regenbogen brauchst du die Sonne im Rücken und Regen vor dir."); });
           s.step(async () => { s.show([sl, status], "up"); s.sfx.swoosh(); await s.tween({ from: 15, to: 45, dur: 1600, update: v => { el = v; sl.input.value = v; updR(); } }); s.sfx.boing(); await s.wait(500); await s.tween({ from: 45, to: 10, dur: 1400, update: v => { el = v; sl.input.value = v; updR(); } }); sl.set(10); s.say("Steht die Sonne höher als zweiundvierzig Grad, gibt es keinen Regenbogen."); });
           s.step(async () => { s.sfx.ding(); await s.show(life14, "up"); });
+        },
+      },
+      /* 14b – real photos ------------------------------------------------ */
+      {
+        title: "Regenbogen und Prisma in echt",
+        say: "So sieht ein echter Regenbogen aus. Und so zerlegt ein Glasprisma weißes Licht in seine Farben.",
+        build(s) {
+          const rb = s.photo("doppelregenbogen", { w: 600, h: 346, caption: "Doppelter Regenbogen über Graz" });
+          const pr = s.photo("prisma-spektrum", { w: 470, h: 188, pos: "40% 50%", caption: "Glasprisma: weiß wird bunt", cls: "later" });
+          const t1 = box(s, "ex", "Hauptbogen", "Rot ist <b>außen</b>, Violett ist <b>innen</b>. Die Sonne stand dabei im Rücken der Kamera.");
+          const t2 = box(s, "ex", "Nebenbogen", "Der zweite, blassere Bogen entsteht, wenn das Licht im Tropfen <b>zweimal</b> reflektiert wird. Seine Farben sind <b>umgekehrt</b>: Rot ist innen.");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "600px 1fr", gap: "26px", alignItems: "start", alignContent: "center", height: "100%" } },
+            stack(s, 14, rb, t1), stack(s, 14, pr, t2)));
+          s.show(rb, "zoom"); s.sound("rain", { vol: 0.4, dur: 6 });
+          s.step(async () => { s.sfx.chord([0, 4, 7, 12]); await s.show(t1, "up"); s.say("Im Hauptbogen ist Rot außen und Violett innen."); });
+          s.step(async () => { s.sound("harp-gliss", { vol: 0.5 }); await s.show(t2, "up"); s.say("Im Nebenbogen sind die Farben umgekehrt."); });
+          s.step(async () => { s.sfx.zap(); await s.show(pr, "zoom"); s.say("Ein Glasprisma macht dasselbe wie die Regentropfen."); });
         },
       },
       /* 15 --------------------------------------------------------------- */
@@ -868,33 +913,43 @@
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
         },
       },
+      /* 15b – real photos ------------------------------------------------ */
+      {
+        title: "Pupille und Linse in echt",
+        say: "Im Dunkeln wird die Pupille groß, im Hellen klein. Und eine Linse stellt das Bild auf den Kopf.",
+        build(s) {
+          const d = s.photo("auge-dunkel", { w: 530, h: 250, pos: "50% 50%", caption: "Dämmerlicht: Pupille groß" });
+          const hh = s.photo("auge-hell", { w: 530, h: 250, pos: "50% 50%", caption: "Helles Licht: Pupille klein", cls: "later" });
+          const lens = s.photo("linse-kopfbild", { w: 330, h: 190, pos: "50% 50%", style: { flex: "none" } });
+          const lensRow = s.h("div", { class: "ex later", style: { display: "flex", gap: "20px", alignItems: "center" } }, lens,
+            s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("span", { class: "exlabel" }, "Linse"),
+              s.h("p", { class: "small", html: "Durch eine Glaslinse steht die Welt <b>auf dem Kopf</b>: Himmel unten, Haus oben. Genauso landet das Bild auf deiner <b>Netzhaut</b> – dein Gehirn dreht es wieder um." })));
+          s.add(s.h("div", { class: "stack", style: { gap: "20px", height: "100%", justifyContent: "center" } },
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center" } }, d, hh), lensRow));
+          s.show(d, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sound("lichtschalter"); await s.show(hh, "zoom"); s.say("Im hellen Licht wird die Pupille ganz klein. So schützt sich dein Auge."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(lensRow, "up"); s.say("Eine Linse stellt das Bild auf den Kopf. Das Gehirn dreht es wieder um."); });
+        },
+      },
       /* 16 --------------------------------------------------------------- */
       {
         title: "Im Alltag: Licht überall",
         say: "Licht begegnet dir überall: am Fahrrad, im Auto, in der U-Bahn und beim Sonnenuntergang.",
         build(s) {
-          const ic = (draw) => { const v = s.svg(110, 70); v.style.width = "150px"; v.style.height = "95px"; draw(v); return v; };
           const items = [
-            ["Katzenaugen", "Rückstrahler am Fahrrad werfen das Scheinwerferlicht zum Auto zurück. So sieht man dich im Dunkeln.", v => {
-              v.append(s.el("circle", { cx: 30, cy: 46, r: 20, fill: "none", stroke: "#1b2740", "stroke-width": 4 }), s.el("circle", { cx: 84, cy: 46, r: 20, fill: "none", stroke: "#1b2740", "stroke-width": 4 }),
-                s.el("rect", { x: 22, y: 38, width: 16, height: 16, rx: 3, fill: "#f2a600" }), s.el("rect", { x: 92, y: 10, width: 16, height: 12, rx: 3, fill: "#e0322b" }), s.el("path", { d: "M30,46 L56,20 L84,46 M56,20 L98,16", fill: "none", stroke: "#1b2740", "stroke-width": 4 })); }],
-            ["Spiegel im Auto", "Rück- und Außenspiegel reflektieren das Licht von hinten. So sieht der Fahrer, was hinter dem Auto ist.", v => {
-              v.append(s.el("rect", { x: 10, y: 14, width: 90, height: 40, rx: 14, fill: "#9fd3ff", stroke: "#1b2740", "stroke-width": 4 }), s.el("line", { x1: 55, y1: 54, x2: 55, y2: 68, stroke: "#1b2740", "stroke-width": 5 }), s.el("line", { x1: 26, y1: 24, x2: 42, y2: 44, stroke: "#fff", "stroke-width": 4 })); }],
-            ["Sonnenbrille", "Die dunklen Gläser lassen weniger Licht durch. Deine Augen werden nicht so stark geblendet.", v => {
-              v.append(s.el("path", { d: "M8,24 L102,24", stroke: "#1b2740", "stroke-width": 4 }), s.el("rect", { x: 12, y: 24, width: 38, height: 28, rx: 12, fill: "#1b2740" }), s.el("rect", { x: 60, y: 24, width: 38, height: 28, rx: 12, fill: "#1b2740" })); }],
-            ["Brille", "Brillengläser sind Linsen. Sie brechen das Licht so, dass das Bild scharf auf der Netzhaut landet.", v => {
-              v.append(s.el("circle", { cx: 32, cy: 38, r: 20, fill: "#eef6ff", stroke: "#1b2740", "stroke-width": 4 }), s.el("circle", { cx: 78, cy: 38, r: 20, fill: "#eef6ff", stroke: "#1b2740", "stroke-width": 4 }), s.el("path", { d: "M52,36 Q55,30 58,36 M12,34 L2,26 M98,34 L108,26", fill: "none", stroke: "#1b2740", "stroke-width": 4 })); }],
-            ["U-Bahn-Tunnel", "Im Tunnel ist es dunkel. Die Scheinwerfer der U-Bahn sind Lichtquellen – die Tunnelwände werden nur beleuchtet.", v => {
-              v.append(s.el("path", { d: "M8,68 L8,30 Q55,-6 102,30 L102,68 Z", fill: "#2a3040" }), s.el("rect", { x: 30, y: 26, width: 50, height: 42, rx: 8, fill: "#f6c800" }), s.el("rect", { x: 38, y: 32, width: 34, height: 14, rx: 3, fill: "#9fd3ff" }),
-                s.el("circle", { cx: 40, cy: 58, r: 5, fill: "#fff6b0" }), s.el("circle", { cx: 70, cy: 58, r: 5, fill: "#fff6b0" })); }],
-            ["Sonnenuntergang", "Abends ist der Weg des Lichts durch die Luft lang. Blau wird weggestreut – übrig bleiben Rot und Orange.", v => {
-              v.append(s.el("rect", { x: 0, y: 0, width: 110, height: 50, rx: 8, fill: "#ffb36b" }), s.el("circle", { cx: 55, cy: 50, r: 22, fill: "#e0322b" }), s.el("rect", { x: 0, y: 50, width: 110, height: 20, fill: "#2f6db5" })); }],
+            ["Katzenaugen", "Rückstrahler am Fahrrad werfen das Scheinwerferlicht zum Auto zurück. So sieht man dich im Dunkeln.", s.photo("rueckstrahler-fahrrad", { w: "100%", h: 128, pos: "50% 50%" })],
+            ["Spiegel im Auto", "Rück- und Außenspiegel reflektieren das Licht von hinten. So sieht der Fahrer, was hinter dem Auto ist.", s.photo("aussenspiegel", { w: "100%", h: 128, pos: "50% 50%" })],
+            ["Sonnenbrille", "Die dunklen Gläser lassen weniger Licht durch. Deine Augen werden nicht so stark geblendet.", s.photo("sonnenbrille", { w: "100%", h: 128, pos: "50% 55%" })],
+            ["Brille", "Brillengläser sind Linsen. Sie brechen das Licht so, dass das Bild scharf auf der Netzhaut landet.", s.photo("brille", { w: "100%", h: 128, pos: "50% 50%" })],
+            ["U-Bahn-Tunnel", "Die Lampen im Tunnel und die Scheinwerfer der U-Bahn sind Lichtquellen. Die Wände werden nur beleuchtet.", s.photo("ubahn-tunnel", { w: "100%", h: 128, pos: "50% 30%" })],
+            ["Sonnenuntergang", "Abends ist der Weg des Lichts durch die Luft lang. Blau wird weggestreut – übrig bleiben Rot und Orange.", s.photo("sonnenuntergang-nordsee", { w: "100%", h: 128, pos: "50% 45%" })],
           ];
-          const cards = items.map(([t, txt, d]) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px" } }, ic(d), s.h("p", { class: "h2", style: { fontSize: "25px" } }, t), s.h("p", { class: "small", html: txt })));
+          const cards = items.map(([t, txt, fig]) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "6px", padding: "12px 14px" } },
+            fig, s.h("p", { class: "h2", style: { fontSize: "24px" } }, t), s.h("p", { class: "small", html: txt })));
           s.add(s.h("div", { class: "cols3", style: { gridTemplateRows: "1fr 1fr", height: "100%", gap: "18px 20px" } }, ...cards));
-          s.sfx.whoosh(); s.show(cards[0], "pop"); s.show(cards[1], "pop", 150);
+          s.sound("bike-bell", { vol: 0.6 }); s.show(cards[0], "pop"); s.show(cards[1], "pop", 150);
           s.step(async () => { s.sfx.pop(); s.show(cards[2], "pop"); await s.show(cards[3], "pop", 150); s.say("Sonnenbrille und Brille."); });
-          s.step(async () => { s.sfx.pop(); s.show(cards[4], "pop"); await s.show(cards[5], "pop", 150); s.sfx.success(); s.say("Und beim Sonnenuntergang wird der Himmel rot."); });
+          s.step(async () => { s.sound("ubahn-train", { vol: 0.45, dur: 5 }); s.show(cards[4], "pop"); await s.show(cards[5], "pop", 150); s.sfx.success(); s.say("Und beim Sonnenuntergang wird der Himmel rot."); });
         },
       },
     ],

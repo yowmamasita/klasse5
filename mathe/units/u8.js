@@ -78,6 +78,8 @@
         say: "Bevor wir ein Diagramm zeichnen, brauchen wir Daten. Die kann man auf verschiedene Arten sammeln.",
         build(s) {
           const icon = kind => {
+            if (kind === 1) return s.photo("bvg-bus", { w: 230, h: 150, pos: "60% 55%" });
+            if (kind === 2) return s.photo("wuerfel", { w: 230, h: 150 });
             const v = s.svg(150, 104);
             if (kind === 0) {
               v.append(s.el("rect", { x: 40, y: 6, width: 72, height: 94, rx: 8, fill: "#b07a45" }), s.el("rect", { x: 47, y: 16, width: 58, height: 78, rx: 4, fill: "#fff" }), s.el("rect", { x: 62, y: 2, width: 28, height: 12, rx: 4, fill: P.pencil }));
@@ -107,7 +109,8 @@
           const merk = s.h("div", { class: "merk later" }, s.h("b", null, "Daten"), " sind gesammelte Antworten, Zählungen oder Messwerte. Vorher überlegen: ", s.h("b", null, "Was will ich wissen? Wen frage ich?"));
           s.add(root(s, "stack", { justifyContent: "center", gap: "28px" }, s.h("div", { class: "cols4" }, ...cards), merk));
           s.sfx.pop();
-          [1, 2, 3].forEach(i => s.step(async () => { s.sfx.pop(); await s.show(cards[i], "up"); s.sfx.count(i * 2); s.say(info[i][0] + ": " + info[i][1]); }));
+          const SND = [null, () => s.sound("bus-faehrt", { vol: .5, dur: 3 }), () => s.sound("wuerfeln", { vol: .7 }), () => s.sfx.count(6)];
+          [1, 2, 3].forEach(i => s.step(async () => { SND[i](); await s.show(cards[i], "up"); s.say(info[i][0] + ": " + info[i][1]); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -139,6 +142,28 @@
           s.step(async () => { s.sfx.boing(); await s.show(merk, "up"); s.say("Welches Instrument ist am beliebtesten? Das sieht man hier noch nicht auf einen Blick."); });
         },
       },
+      /* 2b --------------------------------------------------------------- */
+      {
+        title: "So klingen die Instrumente",
+        say: "Das sind die Instrumente aus der Umfrage. Tippe auf einen Knopf und hör sie dir an!",
+        build(s) {
+          const cell = (fig, btn) => s.h("div", { class: "stack later", style: { gap: "8px", alignItems: "center" } }, fig, btn);
+          const o = (caption, extra) => Object.assign({ w: 340, h: 170, caption }, extra || {});
+          const white = { fit: "contain", style: { background: "#fff" } };
+          const cells = [
+            cell(s.photo("inst-geige", o("Geige", white)), s.soundBtn("klang-geige", "Geige anhören")),
+            cell(s.photo("inst-trompete", o("Trompete", white)), s.soundBtn("klang-trompete", "Trompete anhören")),
+            cell(s.photo("inst-querfloete", o("Querflöte", { pos: "40% 45%" })), s.soundBtn("klang-querfloete", "Querflöte anhören")),
+            cell(s.photo("inst-cello", o("Cello", { pos: "50% 45%" })), s.soundBtn("klang-cello", "Cello anhören")),
+            cell(s.photo("inst-klarinette", o("Klarinette", white)), s.soundBtn("klang-klarinette", "Klarinette anhören")),
+            cell(s.photo("inst-schlagzeug", o("Schlagzeug", { pos: "50% 55%" })), s.soundBtn("klang-schlagzeug", "Schlagzeug anhören")),
+          ];
+          s.add(root(s, "stack", { justifyContent: "center", gap: "20px" },
+            s.h("div", { class: "cols3", style: { gap: "22px 24px" } }, ...cells)));
+          s.step(async () => { s.sound("klang-geige", { vol: .6, dur: 1.5 }); await s.show(cells.slice(0, 3), "up"); });
+          s.step(async () => { s.sound("klang-schlagzeug", { vol: .5, dur: 1.5 }); await s.show(cells.slice(3), "up"); s.say("Welches Instrument gefällt dir am besten?"); });
+        },
+      },
       /* 3 ---------------------------------------------------------------- */
       {
         title: "Die Strichliste",
@@ -160,10 +185,11 @@
           s.sfx.pop();
           s.step(async () => {
             s.say("Wir gehen die Urliste durch und machen für jede Antwort einen Strich.");
+            s.sound("chalk-write", { vol: .5, dur: 5.2 });
             for (let i = 0; i < URL_.length; i++) {
               const r = rows.find(x => x.k === URL_[i]);
               chips[i].style.opacity = ".3"; chips[i].style.textDecoration = "line-through";
-              s.show(r.t.marks[r.n++], "draw"); s.sfx.scribble();
+              s.show(r.t.marks[r.n++], "draw");
               await s.wait(190);
             }
             s.sfx.ding();
@@ -317,8 +343,9 @@
           async function roll(n) {
             if (busy) return; busy = true;
             if (n === 1) {
-              for (let k = 0; k < 8; k++) { face(1 + Math.floor(Math.random() * 6), (Math.random() - .5) * 40); s.sfx.tick(); await s.wait(70); }
-              const r = 1 + Math.floor(Math.random() * 6); face(r); counts[r - 1]++; s.sfx.drum(); refresh();
+              s.sound("wuerfeln", { vol: .7 });
+              for (let k = 0; k < 8; k++) { face(1 + Math.floor(Math.random() * 6), (Math.random() - .5) * 40); await s.wait(70); }
+              const r = 1 + Math.floor(Math.random() * 6); face(r); counts[r - 1]++; s.sfx.pop(); refresh();
             } else {
               const per = Math.max(1, Math.round(n / 25));
               for (let k = 0; k < n; k += per) {
@@ -336,7 +363,7 @@
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "330px 1fr", gap: "24px", alignItems: "center" },
             s.h("div", { class: "stack", style: { alignItems: "center", gap: "12px" } }, s.h("div", { class: "a-bounce" }, die), total, B("1× würfeln", 1, true), B("10× würfeln", 10), B("100× würfeln", 100), reset),
             s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("div", { class: "a-fade" }, ch.svg), merk)));
-          s.sfx.drum();
+          s.sfx.pop();
           s.step(async () => { await roll(1); s.say("Einmal gewürfelt. Eine Säule ist jetzt eins hoch."); });
           s.step(async () => { await roll(30); s.say("Dreißigmal gewürfelt. Die Säulen sind noch ziemlich unterschiedlich."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Würfle hundertmal und sieh, was passiert!"); });
@@ -431,10 +458,10 @@
             return { n, v, outer, pos: i };
           });
           let mode = "linie", busy = false;
-          async function sortBy(m) {
+          async function sortBy(m, train) {
             if (busy || m === mode) return; busy = true; mode = m;
             const sorted = m === "linie" ? [...rows].sort((a, b) => a.n.localeCompare(b.n)) : [...rows].sort((a, b) => b.v - a.v);
-            s.sfx.whoosh();
+            if (train) s.sound("ubahn-train", { vol: .45, dur: 2.5 }); else s.sfx.whoosh();
             await Promise.all(sorted.map((r, ni) => { const y0 = 8 + r.pos * PITCH, y1 = 8 + ni * PITCH; r.pos = ni; return s.tween({ from: 0, to: 1, dur: 900, update: k => r.outer.setAttribute("transform", `translate(${18 * Math.sin(Math.PI * k)},${y0 + (y1 - y0) * k})`) }); }));
             s.sfx.snap(); b1.classList.toggle("solid", m === "linie"); b2.classList.toggle("solid", m === "groesse"); busy = false;
           }
@@ -446,7 +473,7 @@
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "620px 1fr", gap: "24px", alignItems: "center" }, svg,
             s.h("div", { class: "stack", style: { gap: "16px" } }, s.h("p", { class: "t a-up" }, s.h("b", null, "Bahnhöfe pro U-Bahn-Linie"), " in Berlin"), s.h("p", { class: "small pencil" }, "Ordnen:"), s.h("div", { class: "row" }, b1, b2), res, merk, lf)));
           s.sfx.pop();
-          s.step(async () => { await sortBy("groesse"); s.show(res, "up"); s.sfx.ding(); s.say("Der Größe nach: Die U7 hat die meisten Bahnhöfe, die U4 die wenigsten."); });
+          s.step(async () => { await sortBy("groesse", true); s.show(res, "up"); s.sfx.ding(); s.say("Der Größe nach: Die U7 hat die meisten Bahnhöfe, die U4 die wenigsten."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(lf, "up"); });
         },
       },
@@ -470,7 +497,7 @@
           s.add(root(s, "stack", { gap: "12px" }, head, s.h("div", { class: "cols3", style: { gap: "18px", flex: 1 } }, c1, c2, c3), merk));
           s.sfx.pop();
           s.step(async () => { s.sfx.whoosh(); await s.show(c2, "right"); for (let i = 0; i < 7; i++) { ch.grow(i, D[i][1], 500); s.sfx.note(i * 2, 0.1); await s.wait(120); } await s.wait(400); s.say("Im Diagramm sieht man sofort: Samstag ist die höchste Säule."); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(c3, "right"); s.sfx.scribble(); s.say("Im Text steht nur das Wichtigste."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(c3, "right"); s.sound("pencil-write"); s.say("Im Text steht nur das Wichtigste."); });
           s.step(async () => { for (const g of [g1, g2, g3]) { s.show(g, "up"); s.sfx.pop(); await s.wait(250); } s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -547,7 +574,7 @@
           s.add(root(s, "cols", { gridTemplateRows: "1fr 1fr", gap: "16px 22px" }, ...cards));
           s.sfx.pop();
           s.step(async () => { await s.show(cards[1], "right"); for (const [r, tv, v] of wBars) { s.sfx.note(v - 8, 0.1); await s.tween({ from: 0, to: v * 5.2, dur: 260, update: hh => { r.setAttribute("y", 120 - hh); r.setAttribute("height", hh); tv.setAttribute("y", 120 - hh - 6); } }); tv.style.opacity = 1; } });
-          s.step(async () => { s.sfx.scribble(); await s.show(cards[2], "left"); s.say("Mia hat die meisten Stimmen."); });
+          s.step(async () => { s.sound("chalk-write", { vol: .5, dur: 2.5 }); await s.show(cards[2], "left"); s.say("Mia hat die meisten Stimmen."); });
           s.step(async () => { await s.show(cards[3], "right"); for (const [r, tv, v] of bzBars) { s.sfx.pop(); await s.tween({ from: 0, to: v * 6, dur: 400, update: ww => { r.setAttribute("width", ww); tv.setAttribute("x", 104 + ww); } }); tv.style.opacity = 1; } s.sfx.success(); });
         },
       },

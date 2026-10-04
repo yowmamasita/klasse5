@@ -94,12 +94,12 @@
           const reset = s.h("button", { class: "btn later", onclick: () => { s.sfx.swoosh(); const st = [[290, 450], [360, 465], [215, 475]]; objs.forEach((g, i) => { svg.append(g); const f = { ...g.pos }; s.tween({ from: 0, to: 1, dur: 400, update: v => { g.pos = { x: f.x + (st[i][0] - f.x) * v, y: f.y + (st[i][1] - f.y) * v }; g.setAttribute("transform", `translate(${g.pos.x} ${g.pos.y}) scale(1.35)`); } }); }); } }, "Zurück an den Start");
           const r1 = box(s, "ex", "Probiere es aus", "Ziehe Berg, Baum und Haus mit dem Finger. Was du anfasst, kommt nach vorne.");
           const m = merk(s, "<b>Überdeckung</b>: Was ein anderes Ding verdeckt, wirkt näher. Das verdeckte Ding wirkt weiter hinten.");
-          const r3 = box(s, "life", "Im Alltag", "Menschen in einer Schlange, Bäume im Wald, Hochhäuser in einer Skyline.");
+          const r3 = s.photo("berlin-ueberdeckung", { w: 470, h: 260, pos: "50% 60%", caption: "Berlin: Häuser verdecken sich, hinten der Fernsehturm", cls: "later" });
           s.add(cols(s, stack(s, 12, svg, reset), stack(s, 12, r1, m, r3), 600));
           s.step(async () => { s.sfx.pop(); s.say("Zuerst der Berg."); await s.show(mountain, "up"); });
           s.step(async () => { s.sfx.pop(); s.say("Dann der Baum, er steht vor dem Berg."); await s.show(tree, "up"); });
           s.step(async () => { s.sfx.pop(); s.say("Und das Haus ganz vorn."); await s.show(house, "up"); s.show(r1, "left"); s.show(reset, "up"); });
-          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.show(r3, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sound("traffic", { vol: .35, dur: 3 }); await s.show(r3, "zoom"); });
         },
       },
       /* 3 ---------------------------------------------------------------- */
@@ -126,11 +126,11 @@
           sl.classList.add("later");
           const r1 = box(s, "ex", "Gleich hoch, aber nicht gleich klein", "Alle Bäume sind gleich hoch. Im Bild werden sie nach hinten immer kleiner.");
           const m = merk(s, "<b>Größenabnahme</b>: Je weiter weg etwas ist, desto kleiner zeichnest du es.");
-          const r3 = box(s, "life", "Im Alltag", "Laternen an der Straße, Strommasten an der Bahnstrecke, Menschen in einer langen Schlange.");
+          const r3 = s.photo("allee-baeume", { w: 430, h: 220, caption: "Echte Bäume: hinten immer kleiner", cls: "later" });
           s.add(cols(s, svg, stack(s, 12, r1, sl, m, r3), 640));
           s.step(async () => { s.say("Die Bäume stehen alle gleich weit auseinander."); for (let i = 0; i < trees.length; i += 2) { s.sfx.count(7 - i / 2); s.show([trees[i], trees[i + 1]], "pop"); await s.wait(380); } s.show(r1, "left"); });
           s.step(async () => { s.sfx.pop(); s.say("Schiebe die Person weg und her."); s.show(pg, "pop"); await s.show(sl, "up"); });
-          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.show(r3, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sound("birds", { vol: .35, dur: 3 }); await s.show(r3, "zoom"); });
         },
       },
       /* 4 ---------------------------------------------------------------- */
@@ -159,11 +159,11 @@
           s.drag(ball, { space: svg, onMove: p => { bx = clamp(p.x, 40, 600); by = clamp(p.y + 20, VY + 28, H - 16); upd(); s.sfx.tick(); } });
           const r1 = box(s, "ex", "Ziehe den Ball", "Nach oben: er wirkt weit weg und klein. Nach unten: er wirkt nah und groß.");
           const m = merk(s, "<b>Höhe im Bild</b>: Was auf dem Boden weiter weg ist, steht im Bild höher, näher am Horizont.");
-          const r3 = box(s, "life", "Im Alltag", "Spieler auf dem Fußballplatz, Kühe auf der Wiese, Autos auf einem Parkplatz: die hinteren stehen höher im Foto.");
+          const r3 = s.photo("kuehe-wiese", { w: 430, h: 230, caption: "Weit weg: kleine Kühe, hoch am Horizont", cls: "later" });
           s.add(cols(s, svg, stack(s, 12, readout, r1, m, r3), 640));
           s.step(async () => { s.sfx.boing(); s.say("Der Ball steht auf dem Boden."); await s.show(ball, "bounce"); s.show(r1, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(r3, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(r3, "zoom"); });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -185,12 +185,12 @@
           const sl = s.slider({ label: "Dunst in der Luft", min: 0, max: 10, step: 1, value: 0, fmt: v => v === 0 ? "klar" : v >= 8 ? "sehr dunstig" : "dunstig", onInput: v => veils.forEach(x => x.setAttribute("opacity", (v * 0.045).toFixed(3))) });
           sl.classList.add("later");
           const r1 = box(s, "ex", "Warum ist das so?", "Zwischen dir und den Bergen liegt viel Luft. Sie lässt ferne Dinge heller und bläulicher wirken.");
-          const m = merk(s, "<b>Luftperspektive</b>: Je weiter weg, desto heller, bläulicher und blasser. Leonardo da Vinci hat das schon vor mehr als 500 Jahren beschrieben.");
-          const life = box(s, "life", "Im Alltag", "Berge am Horizont, ein Wald in der Ferne, Hochhäuser einer Stadt im Dunst.");
+          const m = merk(s, "<b>Luftperspektive</b>: Je weiter weg, desto heller, bläulicher und blasser. Das beschrieb schon Leonardo da Vinci.");
+          const life = s.photo("mona-lisa", { w: 430, h: 170, pos: "30% 45%", caption: "Mona Lisa (Ausschnitt): blasse, bläuliche Berge", cls: "later" });
           s.add(cols(s, svg, stack(s, 12, r1, sl, m, life), 640));
           s.step(async () => { s.say("Wir malen von hinten nach vorn."); for (let i = 0; i < 5; i++) { s.sfx.note(i * 2 - 4, 0.25); s.show(layers[i], "up"); await s.wait(520); } s.show(r1, "left"); });
           s.step(async () => { s.sfx.pop(); s.say("Mach die Luft dunstig."); await s.show(sl, "up"); });
-          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.whoosh(); await s.show(life, "zoom"); s.say("Auch Leonardo malte hinter der Mona Lisa blasse, bläuliche Berge."); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -273,13 +273,37 @@
           const r2 = mkRow("Fluchtpunkt", "#dc3b2a", "Hier treffen sich die Linien. Zieh ihn!");
           const r3 = mkRow("Fluchtlinien", "#dc3b2a", "Gleise, Schwellen und Masten führen hin.");
           const m = merk(s, "<b>Zentralperspektive</b>: Alle Linien nach hinten laufen zu einem Fluchtpunkt.");
-          const life = box(s, "life", "Im Alltag", "Bahngleise, lange Straßen, Flure.");
+          const life = s.photo("gleise", { w: 430, h: 164, pos: "50% 22%", caption: "Echte Gleise: sie treffen sich am Horizont", cls: "later" });
           s.add(cols(s, svg, stack(s, 10, r1, r2, r3, m, life), 640));
           s.step(async () => { s.sfx.swoosh(); s.say("Zuerst der Horizont, deine Augenhöhe."); s.show(r1, "left"); await s.show(horizon, "draw"); });
           s.step(async () => { s.sfx.boing(); s.say("Dann der Fluchtpunkt."); s.show(r2, "left"); await s.show(vpG, "bounce"); });
           s.step(async () => { s.sfx.scribble(); s.show(r3, "left"); await s.show(guides, "fade"); });
-          s.step(async () => { s.sfx.snap(); s.say("Jetzt kommen die Gleise."); s.show(railA, "draw"); await s.wait(500); s.show(sleepers, "fade"); await s.show(poles, "fade"); });
-          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.show(life, "up"); });
+          s.step(async () => { s.sound("ubahn-train", { vol: .4, dur: 4 }); s.say("Jetzt kommen die Gleise."); s.show(railA, "draw"); await s.wait(500); s.show(sleepers, "fade"); await s.show(poles, "fade"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.show(life, "zoom"); });
+        },
+      },
+      /* 7b --------------------------------------------------------------- */
+      {
+        title: "Zentralperspektive in der Kunst",
+        say: "Vor über fünfhundert Jahren malte ein Künstler in Italien diese ideale Stadt. Alles läuft auf die Mitte zu.",
+        build(s) {
+          const W = 1100, H = 317;
+          const pic = s.photo("citta-ideale", { w: W, h: H });
+          const ov = s.svg(W, H); ov.style.cssText = "position:absolute;left:0;top:0;pointer-events:none";
+          const vx = W * 0.5, vy = H * 0.74;
+          const hz = s.el("line", { x1: 0, y1: vy, x2: W, y2: vy, stroke: "#dc3b2a", "stroke-width": 3, "stroke-dasharray": "10 7", class: "later" });
+          const lines = s.el("g", { class: "later" }, ...[0, 180, 380, 720, 920, 1100].map(x => s.el("line", { x1: x, y1: H, x2: vx, y2: vy, stroke: "#dc3b2a", "stroke-width": 3, opacity: .85 })));
+          const vp = s.el("circle", { cx: vx, cy: vy, r: 10, fill: "#dc3b2a", stroke: "#fff", "stroke-width": 3, class: "later" });
+          ov.append(hz, lines, vp);
+          const wrap = s.h("div", { style: { position: "relative", width: W + "px", height: H + "px" } }, pic, ov);
+          const r1 = box(s, "ex", "Der Fluchtpunkt", "Er liegt in der Mitte, ungefähr bei der Tür des runden Gebäudes. Dort ist auch der <b>Horizont</b>.");
+          const r2 = box(s, "ex", "Die ideale Stadt (um 1480–1490)", "Wer sie gemalt hat, weiß niemand genau. Das Bild hängt heute in Urbino in Italien.");
+          const m = merk(s, "Im 15. Jahrhundert entdeckten Künstler in Italien die <b>Zentralperspektive</b> und probierten sie in Bildern wie diesem aus.");
+          s.add(stack(s, 14, wrap, s.h("div", { class: "cols3", style: { gap: "14px", gridTemplateColumns: "1fr 1fr 1.3fr" } }, r1, r2, m)));
+          s.show(pic, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.sfx.swoosh(); await s.show(hz, "draw"); s.say("Das ist der Horizont."); });
+          s.step(async () => { s.sfx.scribble(); await s.show(lines, "fade"); s.sfx.boing(); await s.show(vp, "pop"); await s.show(r1, "up"); s.say("Alle Linien laufen zum Fluchtpunkt in der Mitte."); });
+          s.step(async () => { s.sfx.pop(); await s.show(r2, "up"); await s.wait(150); s.sfx.ding(); await s.show(m, "up"); });
         },
       },
       /* 8 ---------------------------------------------------------------- */
@@ -331,15 +355,15 @@
           };
           render();
           s.drag(vpG, { space: svg, onMove: p => { vx = clamp(p.x, 150, 490); vy = clamp(p.y, 90, 300); render(); s.sfx.tick(); } });
-          const btns = {}; const set = n => { scene = n; s.sfx.swoosh(); Object.entries(btns).forEach(([k, b]) => b.classList.toggle("solid", k === n)); render(); };
+          const btns = {}; const set = n => { scene = n; s.sound(n === "str" ? "traffic" : "footsteps", { vol: .4, dur: 2.5 }); Object.entries(btns).forEach(([k, b]) => b.classList.toggle("solid", k === n)); render(); };
           btns.flur = s.h("button", { class: "btn solid later", onclick: () => set("flur") }, "Flur"); btns.str = s.h("button", { class: "btn later", onclick: () => set("str") }, "Straße");
           const r1 = box(s, "ex", "Ein Fluchtpunkt", "Alle Kanten, die nach hinten laufen, treffen sich im roten Punkt.");
           const r2 = box(s, "ex", "Zieh den Punkt", "Fluchtpunkt hoch: du schaust von oben. Tief: du bist klein. Seitlich: du stehst nicht in der Mitte.");
-          const life = box(s, "life", "Im Alltag", "Schulflur, Straße, Brücke: auf jedem Foto steckt ein Fluchtpunkt.");
+          const life = s.photo("karl-marx-allee", { w: 430, h: 250, caption: "Karl-Marx-Allee in Berlin: ein Fluchtpunkt", cls: "later" });
           s.add(cols(s, stack(s, 12, svg, s.h("div", { class: "row" }, btns.flur, btns.str)), stack(s, 12, r1, r2, life), 640));
           s.step(async () => { s.sfx.whoosh(); s.say("Das ist ein Flur."); s.show(r1, "left"); await s.show(g, "fade"); });
           s.step(async () => { s.sfx.boing(); s.say("Ziehe den roten Punkt."); s.show(r2, "left"); s.show(vpG, "bounce"); });
-          s.step(async () => { s.sfx.pop(); s.say("Probiere auch die Straße."); s.show(btns.flur, "up"); s.show(btns.str, "up", 120); await s.show(life, "up", 200); });
+          s.step(async () => { s.sfx.pop(); s.say("Probiere auch die Straße."); s.show(btns.flur, "up"); s.show(btns.str, "up", 120); await s.show(life, "zoom", 200); });
         },
       },
       /* 9 ---------------------------------------------------------------- */
@@ -418,19 +442,20 @@
           };
           render();
           const name = s.h("p", { class: "big", style: { color: UC } }), txt = s.h("p", { class: "t" }), hz = s.h("p", { class: "small pencil" });
-          const exBox = box(s, "life", "Beispiele", "", false), exP = exBox.querySelector("p");
-          const show = () => { const m = modes[mode]; name.textContent = m.name; txt.textContent = m.txt; hz.textContent = m.hz; exP.textContent = m.ex; };
+          const pics = { frog: s.photo("fernsehturm-unten", { w: 430, h: 210, pos: "50% 35%", caption: "Fernsehturm von unten" }), normal: s.photo("karl-marx-allee", { w: 430, h: 210, caption: "Straße in Augenhöhe" }), bird: s.photo("berlin-von-oben", { w: 430, h: 210, caption: "Blick vom Fernsehturm nach unten" }) };
+          const exBox = s.h("div", { style: { width: "430px", height: "210px", position: "relative" } }, ...Object.values(pics));
+          const show = () => { const m = modes[mode]; name.textContent = m.name; txt.textContent = m.txt; hz.textContent = m.hz; for (const k in pics) pics[k].style.display = k === mode ? "" : "none"; };
           show();
           const btns = {};
-          const go = k => { s.sfx.whoosh(); mode = k; show(); Object.entries(btns).forEach(([n, b]) => b.classList.toggle("solid", n === k)); const f = { ...cur }, t = modes[k]; s.tween({ from: 0, to: 1, dur: 800, update: v => { cur = { E: f.E + (t.E - f.E) * v, vy: f.vy + (t.vy - f.vy) * v, dz: f.dz + (t.dz - f.dz) * v }; render(); } }); };
+          const go = k => { if (k === "frog") s.sound("laubfrosch-ruf", { vol: .45, dur: 1.5 }); else if (k === "bird") s.sound("birds", { vol: .4, dur: 2.5 }); else s.sfx.whoosh(); mode = k; show(); Object.entries(btns).forEach(([n, b]) => b.classList.toggle("solid", n === k)); const f = { ...cur }, t = modes[k]; s.tween({ from: 0, to: 1, dur: 800, update: v => { cur = { E: f.E + (t.E - f.E) * v, vy: f.vy + (t.vy - f.vy) * v, dz: f.dz + (t.dz - f.dz) * v }; render(); } }); };
           [["frog", "Frosch"], ["normal", "Normal"], ["bird", "Vogel"]].forEach(([k, n]) => { btns[k] = s.h("button", { class: "btn later" + (k === "normal" ? " solid" : ""), onclick: () => go(k) }, n); });
           const m = merk(s, "Der Unterschied liegt im Horizont: tief im Bild = Frosch, in der Mitte = normal, oben = Vogel.");
           const right = stack(s, 12, name, txt, hz, exBox, m);
           [name, txt, hz, exBox].forEach(e => e.classList.add("later"));
           s.add(cols(s, stack(s, 12, svg, s.h("div", { class: "row" }, ...Object.values(btns))), right, 640));
           s.step(async () => { s.sfx.whoosh(); s.say("Das ist die Normalperspektive."); s.show([name, txt, hz, exBox], "left"); s.show(btns.frog, "up"); s.show(btns.normal, "up", 100); await s.show(btns.bird, "up", 200); });
-          s.step(async () => { s.sfx.pop(); s.say("Tippe auf Frosch oder Vogel."); go("frog"); await s.wait(1000); });
-          s.step(async () => { s.sfx.pop(); go("bird"); await s.wait(1000); });
+          s.step(async () => { s.say("Tippe auf Frosch oder Vogel."); go("frog"); await s.wait(1000); });
+          s.step(async () => { go("bird"); await s.wait(1000); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -465,11 +490,11 @@
           sl.classList.add("later");
           const r1 = box(s, "ex", "Parallel", "Alle Kanten, die nach hinten gehen, bleiben parallel. Das ist einfach zu zeichnen.");
           const r2 = box(s, "ex", "Mit Fluchtpunkt", "Die Kanten laufen zusammen. So sieht es auch ein Foto.");
-          const life = box(s, "life", "Im Alltag", "Würfel wie Minecraft-Blöcke und technische Zeichnungen: parallel. Fotos und Gleise: mit Fluchtpunkt.");
+          const life = s.photo("genji-emaki", { w: 430, h: 190, pos: "70% 50%", caption: "Japan, 12. Jh.: Kanten bleiben parallel", cls: "later" });
           s.add(cols(s, svg, stack(s, 10, word, sl, r1, r2, life), 640));
           s.step(async () => { s.sfx.snap(); s.say("Erst der Würfel ohne Fluchtpunkt."); s.show(r1, "left"); await s.show(cube, "pop"); });
           s.step(async () => { s.sfx.pop(); s.say("Jetzt holen wir den Fluchtpunkt heran."); await s.show(sl, "up"); });
-          s.step(async () => { s.sfx.ding(); s.show(r2, "left"); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.ding(); s.show(r2, "left"); await s.show(life, "zoom"); s.say("Alte japanische Bildrollen zeigen Häuser schräg von oben, mit parallelen Kanten. Minecraft-Blöcke werden oft genauso gezeichnet."); });
         },
       },
       /* 12 --------------------------------------------------------------- */
@@ -533,15 +558,14 @@
           sl.classList.add("later");
           const r1 = box(s, "ex", "Der Kopf als Maß", "Ein Kopf misst vom Scheitel bis zum Kinn. Damit zählst du die Körpergröße.");
           const r2 = box(s, "ex", "Erwachsene", "Etwa 7 bis 7,5 Köpfe groß. Gezeichnete Helden oft 8.");
-          const r3 = box(s, "ex", "Arme ausgestreckt", "So breit wie der Körper hoch ist: ein Quadrat!");
+          const r3 = s.h("div", { class: "ex later", style: { display: "flex", gap: "14px", alignItems: "center", padding: "8px 12px" } }, s.photo("vitruv-mensch", { w: 160, h: 160, pos: "50% 45%" }), s.h("div", {}, s.h("span", { class: "exlabel" }, "Arme ausgestreckt"), s.h("p", { class: "small", html: "So breit wie der Körper hoch ist: ein <b>Quadrat</b>! Leonardo da Vinci zeichnete das um 1490." })));
           const r4 = box(s, "ex", "Kinder", "Größerer Kopf im Verhältnis zum Körper. Schiebe den Regler!");
-          const life = box(s, "life", "Im Alltag", "Manga- und Anime-Figuren haben oft extra große Köpfe: das wirkt niedlich.");
-          s.add(cols(s, svg, stack(s, 8, r1, r2, r3, sl, r4, life), 520));
+          s.add(cols(s, svg, stack(s, 8, r1, r2, r3, sl, r4), 520));
           s.step(async () => { s.sfx.pop(); s.say("Das ist unser Holzmännchen."); await s.show(fig, "up"); });
           s.step(async () => { s.sfx.tick(); s.say("Wir zählen die Köpfe."); s.show(r1, "left"); await s.show(bands, "left"); s.show(r2, "left", 200); });
           s.step(async () => { s.sfx.snap(); s.show(r3, "left"); await s.show(frame, "draw"); });
           s.step(async () => { s.sfx.pop(); s.say("Und jetzt schrumpft das Männchen zum Kind."); s.show(r4, "left"); await s.show(sl, "up"); });
-          s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.ding(); s.say("Manga-Figuren haben oft extra große Köpfe. Das wirkt niedlich."); });
         },
       },
       /* 14 --------------------------------------------------------------- */
@@ -588,6 +612,23 @@
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
+      /* 14b --------------------------------------------------------------- */
+      {
+        title: "Dürers Zeichenmaschine",
+        say: "Dürer hat eine Maschine erfunden, mit der man eine Laute ganz genau in Perspektive zeichnen kann.",
+        build(s) {
+          const pic = s.photo("duerer-laute", { w: 620, h: 441, caption: "Dürer: Der Zeichner der Laute (1525)" });
+          const r1 = box(s, "ex", "1 · Der Faden", "Ein Faden führt von einem Punkt an der Wand zur Laute – wie ein Blick vom Auge.");
+          const r2 = box(s, "ex", "2 · Der Rahmen", "Wo der Faden durch den Rahmen geht, wird ein Punkt auf das Blatt übertragen.");
+          const r3 = box(s, "ex", "3 · Punkt für Punkt", "Viele Punkte ergeben die Laute in richtiger Perspektive.");
+          const m = merk(s, "Dieser Holzschnitt steht in Dürers Buch <b>„Underweysung der Messung“</b> (1525).");
+          s.add(cols(s, pic, stack(s, 10, r1, r2, r3, m), 620));
+          s.show(pic, "zoom"); s.sound("pencil-write", { vol: .4 });
+          s.step(async () => { s.sfx.pop(); await s.show(r1, "left"); });
+          s.step(async () => { s.sfx.pop(); await s.show(r2, "left"); });
+          s.step(async () => { s.sfx.tick(); await s.show(r3, "left"); s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
       /* 15 --------------------------------------------------------------- */
       {
         title: "Im Alltag: Perspektive überall",
@@ -627,7 +668,7 @@
             items.push([card("3D-Straßenmalerei", "Auf dem Boden ist das Bild lang gezogen. Vom richtigen Punkt aus wirkt es räumlich.", svg, btn), async () => { s.show(ch, "up"); await s.wait(500); s.show(btn, "up"); }]); }
           const m = merk(s, "Perspektive begegnet dir beim Fotografieren, Spielen und Zeichnen. Jetzt kannst du sie benutzen!");
           s.add(s.h("div", { class: "cols3", style: { gap: "14px", gridAutoRows: "min-content", alignItems: "stretch" } }, ...items.map(i => i[0]), m));
-          s.step(async () => { s.sfx.pop(); items.slice(0, 3).forEach(i => s.show(i[0], "up")); await Promise.all(items.slice(0, 3).map(i => i[1]())); });
+          s.step(async () => { s.sound("camera-shutter", { vol: .6 }); items.slice(0, 3).forEach(i => s.show(i[0], "up")); await Promise.all(items.slice(0, 3).map(i => i[1]())); });
           s.step(async () => { s.sfx.pop(); items.slice(3).forEach(i => s.show(i[0], "up")); await Promise.all(items.slice(3).map(i => i[1]())); });
           s.step(async () => { s.sfx.fanfare(); await s.show(m, "up"); });
         },

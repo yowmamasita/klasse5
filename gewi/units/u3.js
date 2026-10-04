@@ -39,41 +39,6 @@
     if (o.stone) gg.append(s.el("path", { d: `M${x - 44 * w} ${hip - 6} l10 -16 l10 16 l-10 8z`, fill: "#7d8291" }));
     return gg;
   }
-  function mammoth(s) {
-    const c = "#6b4226";
-    return g(s, {},
-      ...[48, 82, 150, 182].map(x => s.el("rect", { x, y: 108, width: 26, height: 52, rx: 8, fill: "#5a3620" })),
-      s.el("ellipse", { cx: 122, cy: 88, rx: 96, ry: 54, fill: c }),
-      s.el("ellipse", { cx: 196, cy: 62, rx: 44, ry: 42, fill: c }),
-      s.el("ellipse", { cx: 204, cy: 36, rx: 30, ry: 24, fill: c }),
-      s.el("path", { d: "M226 74 Q252 118 236 158 Q231 166 224 158 Q236 120 212 88 Z", fill: c }),
-      s.el("path", { d: "M216 94 Q236 142 266 120", stroke: "#f2e6c9", "stroke-width": 9, fill: "none", "stroke-linecap": "round" }),
-      s.el("circle", { cx: 214, cy: 54, r: 4, fill: "#1b1b1b" }),
-      ...[50, 80, 110, 140].map(x => s.el("path", { d: `M${x} 120 l-4 18`, stroke: "#4a2c18", "stroke-width": 4, "stroke-linecap": "round" })));
-  }
-  function reindeer(s) {
-    const c = "#8a6a4a";
-    return g(s, {},
-      ...[72, 94, 150, 172].map(x => s.el("rect", { x, y: 104, width: 10, height: 56, rx: 4, fill: "#6b5038" })),
-      s.el("ellipse", { cx: 122, cy: 92, rx: 72, ry: 32, fill: c }),
-      s.el("ellipse", { cx: 120, cy: 108, rx: 50, ry: 14, fill: "#e8dcc8" }),
-      s.el("path", { d: "M170 80 L196 46 L212 54 L192 96 Z", fill: c }),
-      s.el("ellipse", { cx: 214, cy: 52, rx: 24, ry: 12, fill: c, transform: "rotate(18 214 52)" }),
-      s.el("path", { d: "M198 42 L186 12 M190 22 L172 14 M186 12 L196 2 M206 40 L214 10 M212 18 L228 8 M214 10 L208 0", stroke: "#5a4632", "stroke-width": 5, fill: "none", "stroke-linecap": "round" }),
-      s.el("circle", { cx: 218, cy: 48, r: 3, fill: "#1b1b1b" }));
-  }
-  function horse(s) {
-    const c = "#a0622d";
-    return g(s, {},
-      ...[66, 90, 156, 178].map(x => s.el("rect", { x, y: 104, width: 12, height: 56, rx: 4, fill: "#7c4a22" })),
-      s.el("path", { d: "M48 86 Q20 100 26 140", stroke: "#3b2416", "stroke-width": 9, fill: "none", "stroke-linecap": "round" }),
-      s.el("ellipse", { cx: 122, cy: 90, rx: 76, ry: 34, fill: c }),
-      s.el("path", { d: "M168 74 L198 30 L216 40 L196 98 Z", fill: c }),
-      s.el("ellipse", { cx: 222, cy: 46, rx: 28, ry: 13, fill: c, transform: "rotate(32 222 46)" }),
-      s.el("path", { d: "M170 70 L196 28", stroke: "#3b2416", "stroke-width": 9, "stroke-linecap": "round" }),
-      s.el("circle", { cx: 214, cy: 38, r: 3, fill: "#1b1b1b" }));
-  }
-
   Deck.unit({
     id: "u3", num: 3, title: "Jäger und Sammlerinnen", color: C, soft: "#ece5fb",
     subtitle: "Leben in der Altsteinzeit",
@@ -138,15 +103,13 @@
         say: "In der Altsteinzeit lebten verschiedene Menschenarten: Homo erectus, der Neandertaler und Homo sapiens. Homo sapiens, das sind wir.",
         build(s) {
           const data = [
-            { n: "Homo erectus", c: "#ee7a1a", fig: { h: 150, w: 1.0, col: "#8a5a3c", brow: true, stone: true }, lines: ["vor ca. 2 Mio. bis gut 100.000 Jahren", "Gilt als erste Menschenart außerhalb Afrikas: Funde in Dmanisi (Georgien), 1,85 Mio. Jahre alt."] },
-            { n: "Neandertaler", c: "#138a5a", fig: { h: 140, w: 1.25, col: "#9a6a48", brow: true, spear: true }, lines: ["vor ca. 230.000 bis 40.000 Jahren", "Lebte in Europa und Westasien. Benannt nach dem Neandertal bei Düsseldorf."] },
-            { n: "Homo sapiens", c: "#1d5bd0", fig: { h: 156, w: 0.95, col: "#7a4b30", hair: "#2b1a10", spear: true }, lines: ["seit über 300.000 Jahren", "Älteste Funde: Marokko, 315.000 Jahre. Das sind wir – auch du!"] },
+            { n: "Homo erectus", c: "#ee7a1a", ph: () => s.photo("schaedel-erectus", { w: "100%", h: 190, pos: "50% 45%", caption: "Schädel (Abguss)" }), lines: ["vor ca. 2 Mio. bis gut 100.000 Jahren", "Gilt als erste Menschenart außerhalb Afrikas: Funde in Dmanisi (Georgien), 1,85 Mio. Jahre alt."] },
+            { n: "Neandertaler", c: "#138a5a", ph: () => s.photo("schaedel-neandertaler", { w: "100%", h: 190, fit: "contain", caption: "Schädel" }), lines: ["vor ca. 230.000 bis 40.000 Jahren", "Lebte in Europa und Westasien. Benannt nach dem Neandertal bei Düsseldorf."] },
+            { n: "Homo sapiens", c: "#1d5bd0", ph: () => s.photo("schaedel-sapiens", { w: "100%", h: 190, fit: "contain", caption: "Schädel aus Marokko" }), lines: ["seit über 300.000 Jahren", "Älteste Funde: Marokko, 315.000 Jahre. Das sind wir – auch du!"] },
           ];
           const cards = data.map(d => {
-            const svg = s.svg(300, 180);
-            svg.append(s.el("ellipse", { cx: 150, cy: 168, rx: 90, ry: 9, fill: d.c, opacity: .18 }), person(s, 140, 166, d.fig));
             return s.h("div", { class: "card later", style: { borderColor: d.c, display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "14px 18px" } },
-              svg, s.h("p", { class: "h2", style: { color: d.c } }, d.n),
+              d.ph(), s.h("p", { class: "h2", style: { color: d.c } }, d.n),
               s.h("p", { class: "small", style: { fontWeight: 700 } }, d.lines[0]),
               s.h("p", { class: "small", style: { textAlign: "center" } }, d.lines[1]));
           });
@@ -261,21 +224,21 @@
         say: "Die Jäger jagten große Tiere wie Mammuts, Rentiere und Wildpferde. Von den Tieren wurde fast alles genutzt.",
         build(s) {
           const data = [
-            { n: "Mammut", d: mammoth, t: "2,8 bis 3,75 m hoch – höher als ein Basketballkorb (3,05 m)! Gewicht: 5 bis 6 Tonnen." },
-            { n: "Rentier", d: reindeer, t: "In Stellmoor bei Hamburg fand man Reste von 650 Rentieren – aus der Zeit um 10.000 v. Chr." },
-            { n: "Wildpferd", d: horse, t: "Oft an Höhlenwände gemalt, zum Beispiel in den Höhlen Chauvet und Lascaux in Frankreich." },
+            { n: "Mammut", ph: () => s.photo("mammut-skelett", { w: "100%", h: 180, pos: "40% 50%", caption: "Mammut-Skelett im Museum" }), t: "2,8 bis 3,75 m hoch – höher als ein Basketballkorb (3,05 m)! Gewicht: 5 bis 6 Tonnen." },
+            { n: "Rentier", ph: () => s.photo("rentier", { w: "100%", h: 180, pos: "40% 50%", caption: "Rentier in der Tundra" }), t: "In Stellmoor bei Hamburg fand man Reste von 650 Rentieren – aus der Zeit um 10.000 v. Chr." },
+            { n: "Wildpferd", ph: () => s.photo("wildpferd", { w: "100%", h: 180, pos: "50% 45%", caption: "Przewalski-Pferde bei Berlin" }), t: "Oft an Höhlenwände gemalt, zum Beispiel in den Höhlen Chauvet und Lascaux in Frankreich." },
           ];
           const cards = data.map(d => {
-            const svg = s.svg(290, 170); const a = d.d(s); a.setAttribute("transform", "translate(14 4)"); svg.append(a);
-            return s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px 18px" } }, svg, s.h("p", { class: "h2", style: { color: C } }, d.n), s.h("p", { class: "small", style: { textAlign: "center" } }, d.t));
+            return s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px 18px" } }, d.ph(), s.h("p", { class: "h2", style: { color: C } }, d.n), s.h("p", { class: "small", style: { textAlign: "center" } }, d.t));
           });
           const uses = [["Fleisch", "Essen"], ["Fell", "Kleidung, Zelte"], ["Knochen", "Nadeln, Flöten"], ["Elfenbein", "Figuren"], ["Geweih", "Harpunen"]];
           const chips = uses.map(([a, b]) => s.h("span", { class: "chip later", style: { fontSize: "19px" } }, s.h("b", null, a), " → ", b));
           const merk = s.h("div", { class: "merk later", style: { padding: "12px 18px" } }, s.h("p", { class: "small", style: { fontSize: "22px", marginBottom: "8px" } }, "Nichts wurde verschwendet:"), s.h("div", { class: "row", style: { gap: "10px" } }, chips));
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3" }, cards), merk));
-          s.show(cards[0], "left"); s.sfx.drum();
+          s.show(cards[0], "left"); s.sound("elefant", { vol: .5 });
+          s.say("Hörst du das? Ein Elefant – ein Verwandter des Mammuts.");
           s.step(async () => { s.sfx.drum(); await s.show(cards[1], "left"); s.say("Bei Stellmoor in der Nähe von Hamburg fand man Reste von 650 Rentieren."); });
-          s.step(async () => { s.sfx.drum(); await s.show(cards[2], "left"); });
+          s.step(async () => { s.sound("pferd-wiehern", { vol: .6 }); await s.show(cards[2], "left"); s.say("Przewalski-Pferde leben heute wieder in der Döberitzer Heide bei Berlin."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); for (let i = 0; i < chips.length; i++) { s.sfx.count(i); s.show(chips[i], "pop"); await s.wait(160); } });
         },
       },
@@ -284,38 +247,19 @@
         title: "Sammeln: Beeren, Nüsse, Wurzeln",
         say: "Sammeln war genauso wichtig wie Jagen. Beeren, Nüsse, Pilze, Wurzeln und Eier lieferten Essen, das nicht weglaufen konnte.",
         build(s) {
-          const svg = s.svg(580, 500);
-          svg.append(s.el("rect", { x: 0, y: 0, width: 580, height: 300, rx: 18, fill: "#e6f2fb" }),
-            s.el("rect", { x: 0, y: 300, width: 580, height: 200, rx: 18, fill: "#b48a5a" }),
-            s.el("rect", { x: 0, y: 290, width: 580, height: 24, fill: "#7cb35a" }));
-          // Haselstrauch / Baum
-          svg.append(s.el("rect", { x: 400, y: 150, width: 22, height: 150, fill: "#7a5230" }), s.el("ellipse", { cx: 411, cy: 130, rx: 110, ry: 90, fill: "#5f9e45" }));
-          const nuts = g(s, { class: "later" }, ...[[370, 110], [430, 96], [455, 150], [390, 165], [345, 140]].map(([x, y]) => s.el("ellipse", { cx: x, cy: y, rx: 11, ry: 13, fill: "#b07a3c", stroke: "#6b4a22", "stroke-width": 3 })));
-          // Beerenstrauch
-          svg.append(s.el("ellipse", { cx: 130, cy: 262, rx: 105, ry: 60, fill: "#4f8a3a" }));
-          const berries = g(s, { class: "later" }, ...[[80, 240], [104, 228], [150, 236], [176, 258], [120, 270], [92, 284], [160, 290], [60, 270]].map(([x, y]) => s.el("circle", { cx: x, cy: y, r: 10, fill: "#4a2a7a", stroke: "#2b1650", "stroke-width": 2 })));
-          // Pilze
-          const shrooms = g(s, { class: "later" }, ...[[270, 292], [300, 296]].map(([x, y], i) => g(s, {}, s.el("rect", { x: x - 6, y: y - 26, width: 12, height: 28, fill: "#f5ecd8" }), s.el("path", { d: `M${x - 24 + i * 4} ${y - 24} Q${x} ${y - 58 + i * 8} ${x + 24 - i * 4} ${y - 24} Z`, fill: "#c0582f" }))));
-          // Wurzeln
-          const roots = g(s, { class: "later" },
-            s.el("path", { d: "M230 314 Q226 360 240 400 Q246 420 236 446", stroke: "#e8d1a8", "stroke-width": 8, fill: "none", "stroke-linecap": "round" }),
-            s.el("ellipse", { cx: 240, cy: 400, rx: 30, ry: 22, fill: "#d9a35c", stroke: "#8a5a2a", "stroke-width": 3 }),
-            s.el("path", { d: "M330 314 Q340 350 326 380", stroke: "#e8d1a8", "stroke-width": 7, fill: "none", "stroke-linecap": "round" }),
-            s.el("ellipse", { cx: 326, cy: 390, rx: 22, ry: 16, fill: "#d9a35c", stroke: "#8a5a2a", "stroke-width": 3 }));
-          // Nest
-          const nest = g(s, { class: "later" }, s.el("path", { d: "M470 92 Q500 124 530 92 Z", fill: "#8a6a3a" }), ...[488, 500, 512].map(x => s.el("ellipse", { cx: x, cy: 92, rx: 8, ry: 10, fill: "#cfe6f2", stroke: "#7aa0b8", "stroke-width": 2 })));
-          svg.append(berries, nuts, shrooms, roots, nest);
-          const lbl = (x, y, t) => { const L = tx(s, x, y, t, { fs: 22, fw: 800, fill: "#fff", cls: "later" }); L.setAttribute("stroke", "#1b2740"); L.setAttribute("stroke-width", 5); L.setAttribute("paint-order", "stroke"); svg.append(L); return L; };
-          const lB = lbl(130, 200, "Beeren"), lN = lbl(350, 30, "Haselnüsse"), lP = lbl(290, 240, "Pilze"), lW = lbl(400, 460, "Wurzeln & Knollen"), lE = lbl(505, 66, "Vogeleier");
+          const po = cap => ({ w: 284, h: 244, caption: cap, cls: "later" });
+          const pB = s.photo("brombeeren", Object.assign(po("Brombeeren"), { pos: "50% 40%" })), pN = s.photo("haselnuesse", po("Haselnüsse"));
+          const pP = s.photo("steinpilz", po("Pilze (Steinpilz)")), pE = s.photo("vogelnest", po("Vogeleier"));
+          const svg = s.h("div", { style: { display: "grid", gridTemplateColumns: "284px 284px", gap: "12px" } }, pB, pN, pP, pE);
           const right = s.h("div", { class: "stack" },
             P(s, "Sammeln war genauso wichtig wie Jagen. Und Pflanzen laufen nicht weg!", "t"),
             box(s, "ex later", "Warm oder kalt?", P(s, "In warmen Gegenden aßen Sammler etwa halb Pflanzen, halb Fleisch. In kalten Gegenden viel mehr Fleisch – dort wachsen weniger Pflanzen.")),
             box(s, "life later", "Im Alltag", P(s, "Brombeeren im Park, Haselnüsse im Herbst – das ist Sammeln wie früher. Aber: Nur essen, was du sicher kennst! Manche Beeren und Pilze sind giftig.")));
           const [, ex1, life] = right.children;
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "580px 1fr", height: "100%", alignItems: "center", gap: "26px" } }, svg, right));
-          s.show(svg, "fade"); s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); s.show(berries, "pop"); await s.show(lB, "fade"); s.sfx.pop(); s.show(nuts, "pop"); await s.show(lN, "fade"); });
-          s.step(async () => { s.sfx.pop(); s.show(shrooms, "pop"); await s.show(lP, "fade"); s.sfx.scribble(); s.show(roots, "up"); await s.show(lW, "fade"); s.sfx.pop(); s.show(nest, "pop"); await s.show(lE, "fade"); s.say("Auch Pilze, Wurzeln, Knollen und Vogeleier wurden gesammelt."); });
+          s.sound("birds", { vol: .35, dur: 4 });
+          s.step(async () => { s.sfx.pop(); await s.show(pB, "zoom"); s.sfx.pop(); await s.show(pN, "zoom"); });
+          s.step(async () => { s.sfx.pop(); await s.show(pP, "zoom"); s.sound("birds", { vol: .4, dur: 3 }); await s.show(pE, "zoom"); s.say("Auch Pilze, Wurzeln, Knollen und Vogeleier wurden gesammelt."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(ex1, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
@@ -377,7 +321,7 @@
             let nx = mx - cx, ny = my - cy; const nl = Math.hypot(nx, ny) || 1; nx /= nl; ny /= nl;
             hammer.setAttribute("opacity", 1);
             await s.tween({ from: 1, to: 0, dur: 260, ease: "in", update: v => { hammer.setAttribute("cx", mx + nx * (40 + 110 * v)); hammer.setAttribute("cy", my + ny * (40 + 110 * v)); } });
-            s.sfx.drum(); s.sfx.zap();
+            s.sound("stein-schlag", { vol: .9 }); s.sfx.snap();
             const flake = s.el("polygon", { points: `${mx - 14},${my - 8} ${mx + 16},${my - 4} ${mx + 6},${my + 12}`, fill: "#a7adbb", stroke: "#4e5566", "stroke-width": 2 });
             svg.append(flake);
             const start = idx.map(i => pts[i].slice());
@@ -498,6 +442,27 @@
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
       },
+      /* 9b --------------------------------------------------------------- */
+      {
+        title: "Echte Werkzeuge im Museum",
+        say: "Diese Werkzeuge sind echt. Archäologen haben sie gefunden, heute liegen sie im Museum.",
+        build(s) {
+          const row1 = [
+            s.photo("faustkeil", { w: 354, h: 250, fit: "contain", caption: "Faustkeil, ca. 250.000 Jahre alt" }),
+            s.photo("schoeninger-speer", { w: 354, h: 250, fit: "contain", caption: "Schöninger Speer bei der Grabung", cls: "later" }),
+            s.photo("knochennadeln", { w: 354, h: 250, caption: "Nähnadeln aus Knochen", cls: "later" }),
+          ];
+          const row2 = [
+            s.photo("speerschleuder", { w: 541, h: 250, caption: "Speerschleudern, 17.000 bis 12.000 Jahre alt", cls: "later" }),
+            s.photo("harpunen", { w: 541, h: 250, caption: "Harpunen mit Widerhaken (Frankreich)", cls: "later" }),
+          ];
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "18px" } },
+            s.h("div", { class: "row", style: { gap: "19px", flexWrap: "nowrap" } }, row1), s.h("div", { class: "row", style: { gap: "18px", flexWrap: "nowrap" } }, row2)));
+          s.sound("stein-schlag");
+          s.step(async () => { s.sfx.whoosh(); s.show(row1[1], "up"); await s.wait(250); s.sfx.pop(); await s.show(row1[2], "up"); s.say("Der Speer aus Schöningen ist etwa 300.000 Jahre alt."); });
+          s.step(async () => { s.sfx.swoosh(); s.show(row2[0], "left"); await s.wait(250); s.sound("splash", { vol: .5 }); await s.show(row2[1], "right"); });
+        },
+      },
       /* 10 --------------------------------------------------------------- */
       {
         title: "Feuer!",
@@ -537,7 +502,7 @@
           }
           s.loop((t, dt) => { if (strike > 0) { strike += dt * 4; if (strike > 1) strike = 0; } draw(t); });
           draw(0);
-          const burst = () => { for (let i = 0; i < 26; i++) sparks.push({ x: 262, y: 145, vx: (Math.random() - .3) * 4, vy: Math.random() * 2 - 1, life: 30 + Math.random() * 20 }); strike = .01; s.sfx.zap(); s.sfx.snap(); };
+          const burst = () => { for (let i = 0; i < 26; i++) sparks.push({ x: 262, y: 145, vx: (Math.random() - .3) * 4, vy: Math.random() * 2 - 1, life: 30 + Math.random() * 20 }); strike = .01; s.sound("feuerstein-funke"); };
           const uses = ["Wärme", "Licht", "Kochen", "Schutz vor Tieren"].map(u => s.h("span", { class: "chip later", style: { fontSize: "21px", padding: "10px 16px" } }, u));
           const right = s.h("div", { class: "stack" },
             box(s, "ex", "1 · Funken schlagen", P(s, "Feuerstein gegen Pyrit (ein Mineral) schlagen – nicht zwei Feuersteine! Die Funken fallen auf Zunderschwamm, einen getrockneten Pilz.")),
@@ -547,7 +512,7 @@
           const [, e2, , life] = right.children;
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "480px 1fr", height: "100%", alignItems: "center", gap: "30px" } }, canvas, right));
           s.step(async () => { for (let i = 0; i < 3; i++) { burst(); await s.wait(500); } phase = 1; s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 700, update: v => (glow = v) }); s.say("Ein Funke trifft den Zunder. Es glüht!"); });
-          s.step(async () => { phase = 2; s.show(e2, "left"); s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1200, ease: "out", update: v => (fire = v) }); for (let i = 0; i < uses.length; i++) { s.sfx.count(i + 2); s.show(uses[i], "pop"); await s.wait(180); } });
+          s.step(async () => { phase = 2; s.show(e2, "left"); s.sound("fire", { vol: .5, dur: 6 }); await s.tween({ from: 0, to: 1, dur: 1200, ease: "out", update: v => (fire = v) }); for (let i = 0; i < uses.length; i++) { s.sfx.count(i + 2); s.show(uses[i], "pop"); await s.wait(180); } });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
           if (s.fast) { phase = 2; glow = 1; fire = 1; }
         },
@@ -557,20 +522,16 @@
         title: "Wo wohnten sie?",
         say: "Die Menschen der Altsteinzeit wohnten in Zelten, in Hütten und manchmal in Höhlen.",
         build(s) {
-          const mk = (draw, name, text) => {
-            const svg = s.svg(300, 180); draw(svg);
-            return s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px 18px" } }, svg, s.h("p", { class: "h2", style: { color: C } }, name), P(s, text));
-          };
-          const ground = svg => svg.append(s.el("rect", { x: 0, y: 150, width: 300, height: 30, rx: 8, fill: "#c9b48a" }));
-          const c1 = mk(svg => { ground(svg); svg.append(s.el("path", { d: "M60 152 L150 22 L240 152 Z", fill: "#a0743f", stroke: "#6b4a22", "stroke-width": 4 }), s.el("path", { d: "M135 44 L150 4 M165 44 L150 4 M150 22 L140 2", stroke: "#6b4a22", "stroke-width": 5, "stroke-linecap": "round" }), s.el("path", { d: "M130 152 L150 96 L170 152 Z", fill: "#3b2416" })); }, "Zelt aus Fellen", "Holzstangen, darüber Tierfelle. Schnell auf- und abgebaut – perfekt für Nomaden.");
-          const c2 = mk(svg => { ground(svg); svg.append(s.el("path", { d: "M50 152 Q150 0 250 152 Z", fill: "#8a6a4a" })); for (let i = 0; i < 7; i++) { const a = Math.PI * (0.1 + i * 0.13); svg.append(s.el("path", { d: `M${150 - 100 * Math.cos(a)} ${152 - 4} Q${150 - 70 * Math.cos(a)} ${152 - 120 * Math.sin(a)} ${150 - 20 * Math.cos(a)} ${152 - 130 * Math.sin(a) + 20}`, stroke: "#f2e6c9", "stroke-width": 8, fill: "none", "stroke-linecap": "round" })); } svg.append(s.el("path", { d: "M128 152 Q150 104 172 152 Z", fill: "#3b2416" })); }, "Hütte aus Mammutknochen", "In Meschyritsch (Ukraine) baute man vor ca. 15.000 Jahren Hütten aus Mammutknochen.");
-          const c3 = mk(svg => { svg.append(s.el("rect", { x: 0, y: 0, width: 300, height: 180, rx: 12, fill: "#9c9282" }), s.el("path", { d: "M80 180 Q80 70 150 64 Q220 70 220 180 Z", fill: "#2a2420" }), s.el("rect", { x: 0, y: 160, width: 300, height: 20, fill: "#c9b48a" }), s.el("path", { d: "M135 160 l15 -26 l15 26 z", fill: "#f59a23" })); }, "Höhle", "Höhlen boten Schutz. Weil Funde dort gut erhalten bleiben, kennen wir viele Höhlen-Lagerplätze.");
+          const mk = (fig, name, text) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px 18px" } }, fig, s.h("p", { class: "h2", style: { color: C } }, name), P(s, text));
+          const c1 = mk(s.photo("steinzeit-zelt", { w: "100%", h: 190, pos: "50% 55%", caption: "Nachbau" }), "Zelt aus Fellen", "Holzstangen, darüber Tierfelle. Schnell auf- und abgebaut – perfekt für Nomaden.");
+          const c2 = mk(s.photo("mammutknochen-huette", { w: "100%", h: 190, caption: "Nachbau im Museum" }), "Hütte aus Mammutknochen", "In Meschyritsch (Ukraine) baute man vor ca. 15.000 Jahren Hütten aus Mammutknochen.");
+          const c3 = mk(s.photo("vogelherd-hoehle", { w: "100%", h: 190, caption: "Vogelherdhöhle, Schwäbische Alb" }), "Höhle", "Höhlen boten Schutz. Weil Funde dort gut erhalten bleiben, kennen wir viele Höhlen-Lagerplätze.");
           const merk = s.h("div", { class: "merk later" }, "Die Menschen waren keine reinen „Höhlenmenschen“: Sie wohnten auch draußen – in Zelten und Hütten.");
           const life = box(s, "life later", "Im Alltag", P(s, "Ein Zelt beim Camping oder ein Tipi auf dem Spielplatz – fast wie damals!"));
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3" }, c1, c2, c3), s.h("div", { class: "cols", style: { gridTemplateColumns: "1.5fr 1fr", gap: "18px" } }, merk, life)));
-          s.show(c1, "up"); s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); await s.show(c2, "up"); s.say("In der Ukraine fand man Hütten aus Mammutknochen."); });
-          s.step(async () => { s.sfx.pop(); await s.show(c3, "up"); });
+          s.show(c1, "up"); s.sound("wind", { vol: .35, dur: 3 });
+          s.step(async () => { s.sfx.drum(); await s.show(c2, "up"); s.say("In der Ukraine fand man Hütten aus Mammutknochen."); });
+          s.step(async () => { s.sound("hoehle-tropfen", { vol: .45, dur: 5 }); await s.show(c3, "up"); });
           s.step(async () => { s.sfx.ding(); s.show(merk, "up"); await s.show(life, "up", 200); });
         },
       },
@@ -630,10 +591,30 @@
           const cols = box(s, "card later", "Die Farben", P(s, "Rot und Gelb: Eisenoxid (Ocker). Schwarz: Holzkohle und Manganoxid."));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "600px 1fr", height: "100%", alignItems: "center", gap: "24px" } },
             s.h("div", { class: "stack", style: { gap: "8px" } }, hint, canvas), s.h("div", { class: "stack" }, b1, b2, cols)));
+          s.sound("hoehle-tropfen", { vol: .4 });
           s.step(async () => { s.sfx.pop(); await s.show(b1, "left"); s.say("Die Bilder in der Chauvet-Höhle sind etwa 36.000 Jahre alt."); });
           s.step(async () => { s.sfx.pop(); await s.show(b2, "left"); });
           s.step(async () => { s.sfx.scribble(); await s.show(cols, "up"); });
           s.step(async () => { auto = false; s.sfx.chord([0, 4, 7]); hint.textContent = "Licht an: die ganze Wand!"; await s.tween({ from: 0, to: 1, dur: 1200, update: v => { all = v; render(); } }); });
+        },
+      },
+      /* 12b -------------------------------------------------------------- */
+      {
+        title: "Höhlenbilder in echt",
+        say: "So sehen die echten Höhlenbilder aus. Sie sind viele Tausend Jahre alt.",
+        build(s) {
+          const col = (fig, t) => s.h("div", { class: "stack later", style: { gap: "10px" } }, fig, P(s, t));
+          const cols = [
+            col(s.photo("chauvet-loewen", { w: "100%", h: 340, pos: "50% 40%", caption: "Höhlenlöwen, Chauvet" }), "Ein Rudel Höhlenlöwen. Dieses Foto zeigt eine genaue Nachbildung im Museum."),
+            col(s.photo("chauvet-nashorn", { w: "100%", h: 340, pos: "40% 50%", caption: "Wollnashorn, Chauvet" }), "Mit Holzkohle gezeichnet – das große Horn ist gut zu erkennen."),
+            col(s.photo("lascaux", { w: "100%", h: 340, pos: "45% 50%", caption: "Auerochsen und Pferde, Lascaux" }), "Rot, Gelb und Schwarz: Farben aus Erde und Kohle, um 17.000 v. Chr."),
+          ];
+          const merk = s.h("div", { class: "merk later" }, "Die echten Höhlen sind ", s.h("b", null, "geschlossen"), ", damit die Bilder nicht kaputtgehen. Besucher sehen ", s.h("b", null, "Nachbauten"), ".");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "16px" } }, s.h("div", { class: "cols3" }, cols), merk));
+          s.show(cols[0], "zoom"); s.sound("hoehle-tropfen", { vol: .35, dur: 6 });
+          s.step(async () => { s.sfx.pop(); await s.show(cols[1], "zoom"); });
+          s.step(async () => { s.sfx.pop(); await s.show(cols[2], "zoom"); s.say("Die Bilder in Lascaux wurden um 17.000 vor Christus gemalt."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -665,10 +646,14 @@
           const b2 = box(s, "ex later", "Löwenmensch", P(s, "Gefunden 1939 im Hohlenstein-Stadel, aus über 200 Bruchstücken zusammengesetzt. Halb Mensch, halb Höhlenlöwe. Heute im Museum Ulm."));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Seit 2017 sind diese Höhlen der Schwäbischen Alb UNESCO-Welterbe.");
           const life = box(s, "life later", "Im Alltag", P(s, "Leg dein 30-cm-Lineal daneben: Der Löwenmensch ist sogar noch etwas größer!"));
-          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "470px 1fr", height: "100%", alignItems: "center", gap: "26px" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, b1, b2, merk, life)));
+          svg.style.width = "390px"; svg.style.height = "430px";
+          const pV = s.photo("venus-hohle-fels", { w: "100%", h: 240, fit: "contain", caption: "Venus, 6 cm", cls: "later" });
+          const pL = s.photo("loewenmensch", { w: "100%", h: 240, fit: "contain", caption: "Löwenmensch, 31,1 cm", cls: "later" });
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "390px 1fr", height: "100%", alignItems: "center", gap: "22px" } }, s.h("div", { class: "stack", style: { gap: "8px" } }, svg, life),
+            s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", alignItems: "start" } }, s.h("div", { class: "stack", style: { gap: "8px" } }, pV, b1), s.h("div", { class: "stack", style: { gap: "8px" } }, pL, b2)), merk)));
           s.show(ruler, "up"); s.sfx.pop();
-          s.step(async () => { s.sfx.boing(); s.show(b1, "left"); await s.tween({ from: 0.0001, to: 1, dur: 700, ease: "back", update: v => venus.setAttribute("transform", `translate(${vX} ${base}) scale(${v})`) }); s.show(vLine, "draw"); s.show(nV, "fade"); await s.show(vL, "pop"); });
-          s.step(async () => { s.sfx.whoosh(); s.show(b2, "left"); await s.tween({ from: 0.0001, to: 1, dur: 1100, ease: "out", update: v => lion.setAttribute("transform", `translate(${lX} ${base}) scale(1 ${v})`) }); s.show(lLine, "draw"); s.show(nL, "fade"); s.sfx.ding(); await s.show(lL, "pop"); s.say("Der Löwenmensch ist 31,1 Zentimeter groß und etwa 40.000 Jahre alt."); });
+          s.step(async () => { s.sfx.boing(); s.show(pV, "zoom"); s.show(b1, "left"); await s.tween({ from: 0.0001, to: 1, dur: 700, ease: "back", update: v => venus.setAttribute("transform", `translate(${vX} ${base}) scale(${v})`) }); s.show(vLine, "draw"); s.show(nV, "fade"); await s.show(vL, "pop"); });
+          s.step(async () => { s.sfx.whoosh(); s.show(pL, "zoom"); s.show(b2, "left"); await s.tween({ from: 0.0001, to: 1, dur: 1100, ease: "out", update: v => lion.setAttribute("transform", `translate(${lX} ${base}) scale(1 ${v})`) }); s.show(lLine, "draw"); s.show(nL, "fade"); s.sfx.ding(); await s.show(lL, "pop"); s.say("Der Löwenmensch ist 31,1 Zentimeter groß und etwa 40.000 Jahre alt."); });
           s.step(async () => { s.sfx.fanfare(); await s.show(merk, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
@@ -699,11 +684,13 @@
           const b1 = box(s, "ex later", "Geißenklösterle", P(s, "42.000 bis 43.000 Jahre alt! Flöten aus Schwanenknochen und aus Mammut-Elfenbein – die ältesten bekannten Musikinstrumente."));
           const b2 = box(s, "ex later", "Hohle Fels", P(s, "Eine Flöte aus dem Flügelknochen eines Gänsegeiers, mit 5 Grifflöchern – mindestens 35.000 Jahre alt."));
           const life = box(s, "life later", "Für die Instrumentalklasse", P(s, "Bald wählst du dein Instrument. Die Flöte hat die längste Geschichte von allen: über 40.000 Jahre!"));
-          const note = s.h("p", { class: "small pencil" }, "Die Töne hier sind ausgedacht – wie die echten Flöten klangen, weiß niemand genau.");
+          const note = s.h("p", { class: "small pencil" }, "Die Töne oben sind ausgedacht. Der Knopf spielt eine heutige Flöte aus Schafsknochen – so ähnlich könnte es geklungen haben.");
+          const pF = s.photo("floete-schwan", { w: 200, h: 330, pos: "50% 50%", caption: "Flöte aus Schwanenknochen", cls: "later" });
+          const real = s.soundBtn("knochenfloete", "Knochenflöte (Nachbau)");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, svg,
-            s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr", gap: "22px" } }, s.h("div", { class: "stack" }, b1, b2), s.h("div", { class: "stack" }, life, s.h("div", { class: "row" }, play), note))));
+            s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 200px 1fr", gap: "20px", alignItems: "start" } }, s.h("div", { class: "stack" }, b1, b2), pF, s.h("div", { class: "stack" }, life, s.h("div", { class: "row", style: { gap: "10px" } }, play, real), note))));
           s.show(svg, "left"); s.sfx.note(0, .4, "sine");
-          s.step(async () => { s.sfx.note(7, .4, "sine"); await s.show(b1, "up"); s.say("Die Flöten aus dem Geißenklösterle sind 42.000 bis 43.000 Jahre alt."); });
+          s.step(async () => { s.sfx.note(7, .4, "sine"); s.show(pF, "zoom"); await s.show(b1, "up"); s.say("Die Flöten aus dem Geißenklösterle sind 42.000 bis 43.000 Jahre alt."); });
           s.step(async () => { s.sfx.note(4, .4, "sine"); await s.show(b2, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
@@ -732,7 +719,7 @@
           const life = box(s, "life later", "Im Alltag", P(s, "Von Berlin zum Neandertal sind es ca. 465 km Luftlinie. Dort steht heute das Neanderthal Museum (Mettmann)."));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "440px 1fr", height: "100%", alignItems: "center", gap: "30px" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, b1, b2, b3, life)));
           s.show(svg, "fade"); s.sfx.whoosh();
-          s.step(async () => { s.sfx.drum(); s.show(nea, "bounce"); await s.show(b1, "left"); });
+          s.step(async () => { s.sound("kelle-graben"); s.show(nea, "bounce"); await s.show(b1, "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(b2, "left"); });
           s.step(async () => { s.sfx.fanfare(); await s.show(b3, "left"); });
           s.step(async () => { s.show(link, "draw"); s.sfx.whoosh(); await s.show(km, "pop"); s.sfx.ding(); await s.show(life, "up"); });
@@ -744,17 +731,17 @@
         say: "Die Steinzeit steckt auch in deinem Alltag: beim Lagerfeuer, beim Beerensammeln, im Museum und in deinem Taschenmesser.",
         build(s) {
           const items = [
-            ["🔥", "Lagerfeuer & Camping", "Holz, Funken, Glut – beim Camping machst du Feuer fast wie in der Steinzeit. Aber nur mit Erwachsenen und wo es erlaubt ist!"],
-            ["🫐", "Beeren sammeln", "Brombeeren am Wegrand, Haselnüsse im Herbst: Das ist Sammeln wie früher. Nur essen, was du sicher kennst!"],
-            ["🏛️", "Neues Museum Berlin", "Auf der Museumsinsel zeigt das Museum für Vor- und Frühgeschichte Steinzeit-Funde, z. B. Neandertaler-Funde aus Le Moustier und den Eiszeit-Elch vom Hansaplatz."],
-            ["🔧", "Faustkeil vs. Multitool", "Faustkeil: ein Stein für viele Aufgaben. Multitool: Messer, Säge, Schere aus Stahl. Die Idee ist dieselbe – ein Werkzeug für alles!"],
+            [() => s.photo("lagerfeuer", { w: 190, h: 190 }), "Lagerfeuer & Camping", "Holz, Funken, Glut – beim Camping machst du Feuer fast wie in der Steinzeit. Aber nur mit Erwachsenen und wo es erlaubt ist!"],
+            [() => s.photo("brombeeren", { w: 190, h: 190, pos: "50% 40%" }), "Beeren sammeln", "Brombeeren am Wegrand, Haselnüsse im Herbst: Das ist Sammeln wie früher. Nur essen, was du sicher kennst!"],
+            [() => s.photo("neues-museum", { w: 190, h: 190, pos: "60% 50%" }), "Neues Museum Berlin", "Auf der Museumsinsel zeigt das Museum für Vor- und Frühgeschichte Steinzeit-Funde, z. B. Neandertaler-Funde aus Le Moustier und den Eiszeit-Elch vom Hansaplatz."],
+            [() => s.photo("taschenmesser", { w: 190, h: 190 }), "Faustkeil vs. Multitool", "Faustkeil: ein Stein für viele Aufgaben. Multitool: Messer, Säge, Schere aus Stahl. Die Idee ist dieselbe – ein Werkzeug für alles!"],
           ];
-          const cards = items.map(([e, t, b]) => s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "64px 1fr", gap: "14px", alignItems: "start" } },
-            s.h("div", { style: { fontSize: "48px", lineHeight: "1" } }, e), s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("p", { class: "h2", style: { fontSize: "26px" } }, t), P(s, b))));
+          const cards = items.map(([e, t, b]) => s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "190px 1fr", gap: "14px", alignItems: "center" } },
+            e(), s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("p", { class: "h2", style: { fontSize: "26px" } }, t), P(s, b))));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", height: "100%", alignContent: "center" } }, cards));
-          s.show(cards[0], "pop"); s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); await s.show(cards[1], "pop"); });
-          s.step(async () => { s.sfx.pop(); await s.show(cards[2], "pop"); s.say("Im Neuen Museum auf der Museumsinsel kannst du echte Steinzeit-Funde sehen."); });
+          s.show(cards[0], "pop"); s.sound("fire", { vol: .45, dur: 4 });
+          s.step(async () => { s.sound("birds", { vol: .4, dur: 3 }); await s.show(cards[1], "pop"); });
+          s.step(async () => { s.sound("footsteps", { vol: .6 }); await s.show(cards[2], "pop"); s.say("Im Neuen Museum auf der Museumsinsel kannst du echte Steinzeit-Funde sehen."); });
           s.step(async () => { s.sfx.success(); await s.show(cards[3], "pop"); s.confetti(590, 400, 80); });
         },
       },

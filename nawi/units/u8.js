@@ -5,6 +5,7 @@
 
   /* ---------- helpers ---------- */
   const life = (s, label, ...kids) => s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, label), ...kids);
+  const P = (s, html, cls = "t", hidden = false) => s.h("p", { class: cls + (hidden ? " later" : ""), html });
   const exb = (s, label, ...kids) => s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, label), ...kids);
   const de = (n, d = 0) => Number(n).toLocaleString("de-DE", { minimumFractionDigits: 0, maximumFractionDigits: d });
   function fmtLen(m) {
@@ -277,6 +278,25 @@
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
+      /* 2b – real photos */
+      {
+        title: "Zoom hinein in echt",
+        say: "So sehen die Dinge aus dem Zoom wirklich aus: der Fernsehturm, eine Ameise, ein Haar und Bakterien.",
+        build(s) {
+          const figs = [
+            s.h("div", { class: "stack", style: { gap: "8px", width: "222px" } }, s.photo("fernsehturm", { w: 222, h: 280, pos: "50% 30%", caption: "Fernsehturm" }), P(s, "368 m hoch – mit bloßem Auge", "small")),
+            s.h("div", { class: "stack later", style: { gap: "8px", width: "222px" } }, s.photo("waldameise", { w: 222, h: 280, pos: "50% 50%", caption: "Waldameise" }), P(s, "etwa 4–9 mm – mit der Lupe", "small")),
+            s.h("div", { class: "stack later", style: { gap: "8px", width: "222px" } }, s.photo("haar-rem", { w: 222, h: 280, pos: "50% 50%", caption: "Haar" }), P(s, "etwa 70 µm dick – Elektronenmikroskop", "small")),
+            s.h("div", { class: "stack later", style: { gap: "8px", width: "222px" } }, s.photo("bakterien-ecoli", { w: 222, h: 280, pos: "50% 50%", caption: "Bakterien" }), P(s, "etwa 2 µm lang – Elektronenmikroskop", "small")),
+          ];
+          const arrows = figs.slice(1).map(() => s.h("span", { class: "big later", style: { color: "var(--unit)", flex: "none" } }, "→"));
+          const row = s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "8px", justifyContent: "center", alignItems: "flex-start" } });
+          figs.forEach((f, i) => { if (i) row.append(arrows[i - 1]); row.append(f); });
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, row));
+          s.show(figs[0], "zoom"); s.sfx.pop();
+          for (let i = 1; i < figs.length; i++) s.step(async () => { s.sfx.zap(); s.show(arrows[i - 1], "left"); await s.show(figs[i], "zoom"); });
+        },
+      },
       /* 3 ---------------------------------------------------------------- */
       {
         title: "Zoom hinaus: bis zu den Sternen",
@@ -299,6 +319,24 @@
           s.show(Z.canvas, "zoom"); s.sfx.pop();
           s.step(async () => { await play(); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 3b – real photos */
+      {
+        title: "Zoom hinaus in echt",
+        say: "Die Erde aus dem Weltall, unsere Sonne und eine Sternenwolke, fotografiert vom Weltraumteleskop James Webb.",
+        build(s) {
+          const figs = [
+            s.h("div", { class: "stack", style: { gap: "8px", width: "300px" } }, s.photo("blue-marble", { w: 300, h: 300, pos: "50% 50%", caption: "Erde" }), P(s, "12.742 km – Foto von Apollo 17 (1972)", "small")),
+            s.h("div", { class: "stack later", style: { gap: "8px", width: "300px" } }, s.photo("sonne-nasa", { w: 300, h: 300, pos: "50% 50%", caption: "Sonne" }), P(s, "etwa 109-mal so breit wie die Erde", "small")),
+            s.h("div", { class: "stack later", style: { gap: "8px", width: "300px" } }, s.photo("webb-nebel", { w: 300, h: 300, pos: "35% 50%", caption: "Sternenwolke" }), P(s, "Hier entstehen neue Sterne – Teleskop James Webb", "small")),
+          ];
+          const arrows = figs.slice(1).map(() => s.h("span", { class: "big later", style: { color: "var(--unit)", flex: "none" } }, "→"));
+          const row = s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "8px", justifyContent: "center", alignItems: "flex-start" } });
+          figs.forEach((f, i) => { if (i) row.append(arrows[i - 1]); row.append(f); });
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, row));
+          s.show(figs[0], "zoom"); s.sfx.whoosh();
+          for (let i = 1; i < figs.length; i++) s.step(async () => { s.sfx.chord([0, 4, 7]); s.show(arrows[i - 1], "left"); await s.show(figs[i], "zoom"); });
         },
       },
       /* 4 ---------------------------------------------------------------- */
@@ -339,15 +377,15 @@
           const cards = [
             exb(s, "Karten-App", s.h("p", { class: "small" }, "Zwei Finger auseinander: Aus der Stadt wird eine Straße, dann ein Haus.")),
             exb(s, "Handy-Kamera", s.h("p", { class: "small" }, "Mit Zoom holst du die Kugel vom Fernsehturm nah heran.")),
-            life(s, "Fernglas", s.h("p", { class: "small" }, "Ein Fernglas lässt Vögel im Park viel größer erscheinen.")),
+            life(s, "Fernglas", s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px", alignItems: "center" } }, s.photo("fernglas", { w: 130, h: 96, style: { flex: "none" } }), s.h("p", { class: "small" }, "Ein Fernglas lässt Vögel im Park viel größer erscheinen."))),
           ];
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", gap: "24px", alignItems: "center", height: "100%" } },
             s.h("div", { class: "stack", style: { gap: "10px" } }, sv, s.h("div", { class: "row" }, plus, minus)),
             s.h("div", { class: "stack", style: { gap: "12px" } }, lbl, ...cards)));
           s.show(sv, "zoom"); s.sfx.pop();
           s.step(async () => { await go(1); s.sfx.pop(); await s.show(cards[0], "up"); });
-          s.step(async () => { await go(2); await go(3); s.sfx.pop(); await s.show(cards[1], "up"); });
-          s.step(async () => { await go(0); s.sfx.pop(); await s.show(cards[2], "up"); });
+          s.step(async () => { await go(2); await go(3); s.sound("camera-shutter"); await s.show(cards[1], "up"); });
+          s.step(async () => { await go(0); s.sound("birds", { vol: 0.4, dur: 4 }); await s.show(cards[2], "up"); });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -399,7 +437,8 @@
           const tour = async () => { for (const [x, y] of [[392, 115], [160, 330], [400, 330], [110, 120]]) { s.sfx.swoosh(); const fx = lx, fy = ly; await s.tween({ from: 0, to: 1, dur: 800, update: t => { lx = fx + (x - fx) * t; ly = fy + (y - fy) * t; place(); } }); await s.wait(500); } };
           const info = s.h("p", { class: "t" }, "Die Lupe ist eine ", s.h("b", null, "gewölbte Glaslinse"), ". Ziehe sie mit dem Finger!");
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Leselupen vergrößern meist ", s.h("b", null, "2- bis 6-fach"), ", gute Lupen bis etwa ", s.h("b", null, "15-fach"), ".");
-          const lf = life(s, "Im Alltag", s.h("p", { class: "small" }, "Unter der Lupe sind Salzkörner kleine Würfel. Die Polizei sucht mit der Lupe Fingerabdrücke. Uhrmacher arbeiten mit einer Lupe im Auge."));
+          const lf = life(s, "Im Alltag", s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, s.photo("salzkristalle", { w: 190, h: 150, style: { flex: "none" } }),
+            s.h("p", { class: "small" }, "Ganz nah sind Salzkörner kleine Würfel. Die Polizei sucht mit der Lupe Fingerabdrücke. Uhrmacher arbeiten mit einer Lupe im Auge.")));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", gap: "24px", alignItems: "center", height: "100%" } }, sv,
             s.h("div", { class: "stack", style: { gap: "14px" } }, info, sl, merk, lf)));
           s.show(sv, "fade"); s.sfx.pop();
@@ -463,8 +502,9 @@
             sv.append(gg); lab[key] = { gg, t, line };
           });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Das Licht geht von unten durch das Präparat, dann durch ", s.h("b", null, "Objektiv"), " und ", s.h("b", null, "Okular"), " in dein Auge.");
+          const micro = s.photo("schulmikroskop", { w: 150, h: 220, pos: "50% 50%", caption: "Foto", style: { alignSelf: "center" } });
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "720px 1fr", gap: "20px", alignItems: "center", height: "100%" } }, sv,
-            s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "card soft stack", style: { gap: "8px", minHeight: "190px" } }, infoT, infoD), merk)));
+            s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "card soft stack", style: { gap: "8px", minHeight: "170px" } }, infoT, infoD), merk, micro)));
           s.show(sv, "fade"); s.sfx.pop();
           const group = keys => async () => { for (const k of keys) { s.sfx.pop(); s.show(lab[k].line, "draw"); await s.show(lab[k].gg, "fade"); } pick(keys[keys.length - 1]); };
           s.step(group(["okular", "tubus", "revolver", "objektiv"]));
@@ -551,7 +591,7 @@
             s.h("div", { class: "stack", style: { gap: "10px" } }, sv, s.h("div", { class: "row" }, again)), list));
           s.sfx.pop();
           s.step(async () => { s.sfx.pop(); s.show(items[0], "left"); await s.show(slide, "down"); s.show(l1, "fade"); });
-          s.step(async () => { s.show(items[1], "left"); await s.show(pip, "down"); s.sfx.boing(); await s.show(drop, "pop"); s.hide(pip); s.show([l2, lines[0]], "fade"); });
+          s.step(async () => { s.show(items[1], "left"); await s.show(pip, "down"); s.sound("tropfen", { vol: 0.6, dur: 1 }); await s.show(drop, "pop"); s.hide(pip); s.show([l2, lines[0]], "fade"); });
           s.step(async () => { s.show(items[2], "left"); await s.show(tweez, "down"); s.sfx.pop(); await s.show(skin, "fade"); s.hide(tweez); s.show([l3, lines[1]], "fade"); });
           s.step(async () => { s.show(items[3], "left"); await dropCover(); s.show([l4, lines[2]], "fade"); s.show(again, "pop"); });
           s.step(async () => { s.sfx.ding(); await s.show(items[4], "left"); });
@@ -588,10 +628,28 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", gap: "24px", alignItems: "center", height: "100%" } }, sv,
             s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("p", { class: "h2" }, "Regeln für die Zeichnung"), ...rules)));
           s.show(sv, "fade"); s.sfx.pop();
-          s.step(async () => { s.show(rules[0], "left"); s.sfx.scribble(); await s.show(cells.filter((_, i) => i % 2 === 0), "draw"); });
-          s.step(async () => { s.show(rules[1], "left"); s.show(rules[2], "left"); s.sfx.scribble(); await s.show(cells.filter((_, i) => i % 2 === 1), "draw"); });
+          s.step(async () => { s.show(rules[0], "left"); s.sound("pencil-write"); await s.show(cells.filter((_, i) => i % 2 === 0), "draw"); });
+          s.step(async () => { s.show(rules[1], "left"); s.show(rules[2], "left"); s.sound("pencil-write"); await s.show(cells.filter((_, i) => i % 2 === 1), "draw"); });
           s.step(async () => { s.show(rules[3], "left"); for (const [l, t] of lbls) { s.sfx.tick(); await s.show(l, "draw"); s.show(t, "fade"); } });
           s.step(async () => { s.show(rules[4], "left"); s.sfx.ding(); await s.show(title, "fade"); });
+        },
+      },
+      /* 9b – real photos ------------------------------------------------- */
+      {
+        title: "Zellen unter dem Mikroskop",
+        say: "So sehen echte Zellen unter dem Lichtmikroskop aus: Zwiebelhaut, ein Blatt der Wasserpest und Zellen aus der Mundschleimhaut.",
+        build(s) {
+          const items = [
+            ["zwiebelzellen", "Zwiebelhaut", "Lange Zellen wie Pflastersteine. Die dunklen Punkte sind die <b>Zellkerne</b>.", "50% 50%"],
+            ["wasserpest-zellen", "Wasserpest-Blatt", "Viele kleine grüne Körnchen: die <b>Chloroplasten</b>.", "50% 50%"],
+            ["wangenzellen", "Mundschleimhaut", "Rundliche, weiche Zellen ohne Zellwand, blau gefärbt.", "50% 40%"],
+          ];
+          const cols = items.map(([id, cap, txt, pos], i) => s.h("div", { class: "stack" + (i ? " later" : ""), style: { gap: "10px", width: "340px" } },
+            s.photo(id, { w: 340, h: 320, pos, caption: cap }), P(s, txt, "small")));
+          s.add(s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center", alignItems: "flex-start", height: "100%", alignContent: "center" } }, ...cols));
+          s.show(cols[0], "zoom"); s.sfx.pop();
+          s.step(async () => { s.sfx.note(4, .25); await s.show(cols[1], "zoom"); s.say("In den Zellen der Wasserpest siehst du die grünen Chloroplasten."); });
+          s.step(async () => { s.sfx.note(7, .25); await s.show(cols[2], "zoom"); s.say("Zellen aus deiner Wange haben keine Zellwand."); });
         },
       },
       /* 10 --------------------------------------------------------------- */
@@ -615,12 +673,14 @@
           const t2 = s.h("p", { class: "t later" }, "Er sieht kleine Kammern wie Bienenwaben und nennt sie ", s.h("span", { class: "hl" }, "„cells“"), " – nach dem lateinischen ", s.h("i", null, "cellula"), " = kleine Kammer.");
           const merk = s.h("div", { class: "merk later" }, "Alle Lebewesen bestehen aus ", s.h("b", null, "Zellen"), ". Die Zelle ist der ", s.h("b", null, "Baustein des Lebens"), ".");
           const lf = life(s, "Im Alltag", s.h("p", { class: "small" }, "Kork kennst du vom Flaschenkorken und von der Pinnwand. Hooke sah nur leere Zellwände: Korkzellen sind tot."));
+          const draw = s.h("div", { class: "row later", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, s.photo("hooke-kork", { w: 130, h: 170, pos: "50% 30%", style: { flex: "none" } }),
+            P(s, "Hookes eigene Zeichnung aus seinem Buch <i>Micrographia</i> (1665).", "small"));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", gap: "28px", alignItems: "center", height: "100%" } }, sv,
-            s.h("div", { class: "stack", style: { gap: "14px" } }, t1, t2, merk, lf)));
+            s.h("div", { class: "stack", style: { gap: "12px" } }, t1, t2, draw, merk, lf)));
           s.show(sv, "zoom"); s.sfx.pop(); s.show(t1, "up");
-          s.step(async () => { s.sfx.scribble(); for (let i = 0; i < hexes.length; i += 7) { s.show(hexes.slice(i, i + 7), "pop"); s.sfx.count(i / 7); await s.wait(120); } await s.wait(400); s.show(t2, "up"); });
+          s.step(async () => { s.sfx.scribble(); for (let i = 0; i < hexes.length; i += 7) { s.show(hexes.slice(i, i + 7), "pop"); s.sfx.count(i / 7); await s.wait(120); } await s.wait(400); s.show(t2, "up"); s.sfx.scribble(); await s.show(draw, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+          s.step(async () => { s.sound("cork-pop"); await s.show(lf, "up"); });
         },
       },
       /* 11 --------------------------------------------------------------- */
@@ -740,13 +800,14 @@
           };
           s.loop(t => draw(t)); draw(0);
           const facts = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Pantoffeltierchen – ein Einzeller"),
-            s.h("p", { class: "small" }, "Nur eine Zelle, 0,1 bis 0,3 mm lang. Lebt im Süßwasser, zum Beispiel im Teich oder in einer Pfütze. Es schwimmt mit Wimpern und frisst Bakterien."));
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, s.photo("pantoffeltierchen", { w: 170, h: 130, style: { flex: "none" } }),
+              s.h("p", { class: "small" }, "Nur eine Zelle, 0,1 bis 0,3 mm lang. Lebt im Süßwasser, zum Beispiel im Teich. Es schwimmt mit Wimpern und frisst Bakterien.")));
           const bac = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Bakterien – auch Einzeller"), s.h("p", { class: "small" }, "Viel kleiner: meist nur 0,5 bis 5 µm. Die grünen Stäbchen im Bild sind stark vergrößert."));
           const viel = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, s.h("b", null, "Vielzeller"), " bestehen aus sehr vielen Zellen, die zusammenarbeiten: du, ein Baum, eine Ameise, ein Hund.");
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", gap: "24px", alignItems: "center", height: "100%" } }, canvas,
             s.h("div", { class: "stack", style: { gap: "14px" } }, facts, bac, viel)));
-          s.show(canvas, "fade"); s.sfx.pop();
-          s.step(async () => { s.sfx.boing(); await s.show(facts, "up"); });
+          s.show(canvas, "fade"); s.sound("bubbles", { vol: 0.6 });
+          s.step(async () => { s.sfx.pop(); await s.show(facts, "up"); s.say("So sieht ein echtes Pantoffeltierchen unter dem Mikroskop aus."); });
           s.step(async () => { s.sfx.pop(); await s.show(bac, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(viel, "up"); });
         },
@@ -763,7 +824,7 @@
           const sec = s.el("text", { x: 110, y: 160, "text-anchor": "middle", class: "lbl", style: { fontSize: "19px" }, text: "Sekunden" });
           ring.append(arc, num, sec);
           const wash = async () => {
-            s.sfx.whoosh(); let last = -1;
+            s.sound("water-pour", { vol: 0.5 }); let last = -1;
             await s.tween({ from: 0, to: 20, dur: 20000, ease: "linear", update: v => { arc.setAttribute("stroke-dasharray", `${TAU * 92 * v / 20} ${TAU * 92}`); const n = Math.floor(v); if (n !== last) { last = n; num.textContent = String(n); s.sfx.tick(); } } });
             num.textContent = "20"; s.sfx.success(); s.confetti(300, 300, 60);
           };
@@ -772,15 +833,15 @@
             s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("span", { class: "exlabel" }, "Hände waschen"),
               s.h("p", { class: "small" }, "Bakterien (etwa 1–2 µm) siehst du nicht. Mit Seife 20 bis 30 Sekunden einseifen – so lange wie zweimal „Happy Birthday“."), btn));
           const cards = [
-            exb(s, "Salz unter der Lupe", s.h("p", { class: "small" }, "Jedes Salzkorn ist ein kleiner Würfel – ein Kristall.")),
-            exb(s, "Zwiebel und Blatt", s.h("p", { class: "small" }, "Unter dem Mikroskop siehst du die Zellen wie Pflastersteine.")),
-            exb(s, "Handy-Kamera", s.h("p", { class: "small" }, "Mit Zoom wird die Kugel vom Fernsehturm groß – das ist Vergrößern.")),
+            exb(s, "Salz unter der Lupe", s.photo("salzkristalle", { w: "100%", h: 110 }), s.h("p", { class: "small" }, "Jedes Salzkorn ist ein kleiner Würfel – ein Kristall.")),
+            exb(s, "Zwiebel und Blatt", s.photo("zwiebelzellen", { w: "100%", h: 110 }), s.h("p", { class: "small" }, "Unter dem Mikroskop siehst du die Zellen wie Pflastersteine.")),
+            exb(s, "Handy-Kamera", s.photo("fernsehturm", { w: "100%", h: 110, pos: "50% 35%" }), s.h("p", { class: "small" }, "Mit Zoom wird die Kugel vom Fernsehturm groß – das ist Vergrößern.")),
           ];
           s.add(s.h("div", { class: "stack", style: { gap: "16px", height: "100%", justifyContent: "center" } }, handCard, s.h("div", { class: "cols3", style: { gap: "16px" } }, ...cards)));
           s.show(handCard, "up"); s.sfx.pop();
           s.step(async () => { s.sfx.pop(); await s.show(cards[0], "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(cards[1], "up"); });
-          s.step(async () => { s.sfx.success(); await s.show(cards[2], "up"); });
+          s.step(async () => { s.sound("camera-shutter"); await s.show(cards[2], "up"); });
         },
       },
     ],

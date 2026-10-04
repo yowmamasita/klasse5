@@ -2,3 +2,5 @@ tools/shots/
 __pycache__/
 .DS_Store
 *.txt
+.lock
+tools/.cache/

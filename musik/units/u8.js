@@ -72,10 +72,11 @@
       return t;
     }
     const body = {
-      stamp(w = 0) { s.sfx.tone(85, 0.22, "sine", 0.55, w, 45); s.sfx.noise(0.08, 0.15, 400, 150, w, 1); },
-      patsch(w = 0) { s.sfx.noise(0.09, 0.32, 1400, 600, w, 1.2); s.sfx.tone(180, 0.08, "sine", 0.18, w, 120); },
-      clap(w = 0) { s.sfx.noise(0.11, 0.42, 2200, 1500, w, 1.5); },
-      snip(w = 0) { s.sfx.noise(0.04, 0.3, 4500, 5500, w, 4); s.sfx.tone(2200, 0.03, "sine", 0.08, w); },
+      // real recordings of body sounds
+      stamp(w = 0) { s.sound("stampfen", { when: w, dur: 0.7 }); },
+      patsch(w = 0) { s.sound("patschen", { when: w, dur: 0.4, vol: 1 }); },
+      clap(w = 0) { s.sound("clap", { when: w }); },
+      snip(w = 0) { s.sound("snap", { when: w }); },
       kick(w = 0) { s.sfx.tone(140, 0.2, "sine", 0.5, w, 45); },
       snare(w = 0) { s.sfx.noise(0.13, 0.28, 2500, 1200, w, 0.8); s.sfx.tone(220, 0.06, "triangle", 0.12, w); },
       hat(w = 0) { s.sfx.noise(0.035, 0.1, 7000, 8000, w, 3); },
@@ -139,12 +140,14 @@
           bS.onclick = () => { s.sfx.unlock(); mode = "singen"; if (!d) d = sy.drone("voice", f, 0.22); status.textContent = "Singen: Die Stimmlippen schließen sich und schwingen."; setRate(); };
           const sl = s.slider({ label: "Spannung der Stimmlippen", min: 110, max: 660, step: 10, value: 220, fmt: v => v < 200 ? "locker → tief" : v > 450 ? "gespannt → hoch" : "mittel", onInput: v => { f = v; if (d) d.set(v); if (mode === "singen") setRate(); } });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Die ", s.h("b", null, "Stimmlippen"), " im Kehlkopf schwingen wie eine Saite. ", s.h("b", null, "Gespannter"), " = schneller = ", s.h("b", null, "höher"), ".");
-          const fact = card(s, "Rekord", "Bei sehr hohen Tönen einer Opernsängerin gehen die Stimmlippen über 1000-mal pro Sekunde auf und zu.", "life");
+          const fact = s.h("div", { class: "life later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Rekord"),
+            s.h("p", { class: "small" }, "Bei sehr hohen Tönen einer Opernsängerin gehen die Stimmlippen über 1000-mal pro Sekunde auf und zu."),
+            s.h("div", { class: "row", style: { marginTop: "6px" } }, s.soundBtn("koenigin-der-nacht", "Echt: Sopran (Mozart, Königin der Nacht)")));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "440px 1fr", height: "100%", alignItems: "center" } }, svg,
             s.h("div", { class: "stack", style: { gap: "14px" } }, status, rate, s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, bA, bS), sl, merk, fact)));
           s.step(async () => { bS.onclick(); s.say("So schwingen die Stimmlippen beim Singen."); await s.wait(1600); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(fact, "up"); });
+          s.step(async () => { if (d) { d.stop(); d = null; } s.sound("koenigin-der-nacht", { dur: 6 }); await s.show(fact, "up"); });
         },
       },
       /* 2 ------------------------------------------------------------------ */
@@ -196,7 +199,7 @@
           };
           const ex = s.h("div", { class: "life later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Probier mal"),
             s.h("p", { class: "small" }, "Hand auf den Bauch, tief einatmen. Dann ganz langsam auf „sss“ ausatmen. Wie lange schaffst du es?"),
-            s.h("div", { class: "row", style: { marginTop: "8px", flexWrap: "nowrap" } }, ssBtn, s.h("span", { class: "h2" }, secs)));
+            s.h("div", { class: "row", style: { marginTop: "8px", flexWrap: "nowrap" } }, ssBtn, s.h("span", { class: "h2" }, secs), s.soundBtn("atmen", "Echtes Atmen")));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "420px 1fr", height: "100%", alignItems: "center" } }, svg,
             s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap", justifyContent: "space-between" } }, phase, btn), c1, c2, ex)));
           s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1500, update: x => { v = x; draw(); } }); await s.show(c1, "left"); });
@@ -242,7 +245,7 @@
               svg.append(s.el("text", { x: 140, y: 87, "text-anchor": "middle", "font-size": 34, "font-weight": 700, fill: "#0e7490", text: "mm" })); return { rings };
             },
             ({ rings }) => {
-              sy.seq("hum", [[-5, 2], [-3, 2], [-1, 2], [0, 4]], 0.35, 0.28);
+              s.sound("summen", { dur: 4, force: true });
               rings.forEach((r, i) => r.animate([{ opacity: 0.15, transform: "scale(1)" }, { opacity: 0.9, transform: "scale(1.15)" }, { opacity: 0.15, transform: "scale(1)" }], { duration: 600, delay: i * 120, iterations: 6 }));
             });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, s.h("b", null, "Einsingen"), " ist wie Dehnen vor dem Fußball: Die Stimme wird warm und locker – und klingt danach besser.");
@@ -283,11 +286,12 @@
             ["Tenor", "die hohen Männerstimmen"],
             ["Bass", "die tiefen Männerstimmen"],
           ].map(([k, v]) => card(s, k, v));
+          const realRow = s.h("div", { class: "row later", style: { gap: "10px" } }, s.soundBtn("koenigin-der-nacht", "Sopran"), s.soundBtn("maennerchor", "Tenor + Bass"), s.soundBtn("chor-tallis", "Alle vier"));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Ein gemischter Chor hat 4 Stimmen: ", s.h("b", null, "S A T B"), ". Dazwischen gibt es noch ", s.h("b", null, "Mezzosopran"), " und ", s.h("b", null, "Bariton"), ".");
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", height: "100%", alignItems: "center" } }, svg,
-            s.h("div", { class: "stack", style: { gap: "10px" } }, ...info, merk)));
+            s.h("div", { class: "stack", style: { gap: "10px" } }, ...info, merk, realRow)));
           voices.forEach((v, i) => s.step(async () => { s.show(bars[i], "pop"); s.sfx.unlock(); bars[i].dispatchEvent(new Event("click")); await s.show(info[i], "left"); }));
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(realRow, "up"); });
         },
       },
       /* 5 ------------------------------------------------------------------ */
@@ -341,7 +345,7 @@
           const cols = ["#e0569b", "#f59e0b", "#0e7490", "#1d4ed8"];
           const cells = [];
           const rows = [0, 1, 2, 3].map(r => {
-            const rc = words.map((w, i) => s.h("div", { class: "card", style: { padding: "6px 8px", minHeight: "78px", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", fontSize: "19px", lineHeight: "1.2", transition: "background .15s, transform .15s" } }, w));
+            const rc = words.map((w, i) => s.h("div", { class: "card", style: { padding: "4px 8px", minHeight: "58px", display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", fontSize: "19px", lineHeight: "1.2", transition: "background .15s, transform .15s" } }, w));
             cells.push(rc);
             return s.h("div", { style: { display: "grid", gridTemplateColumns: "118px repeat(8, 1fr)", gap: "8px", alignItems: "stretch" } },
               s.h("div", { class: "center", style: { fontWeight: "700", color: cols[r], fontSize: "21px" } }, "Stimme " + (r + 1)), ...rc);
@@ -365,12 +369,15 @@
           const bU = s.h("button", { class: "btn solid", onclick: () => run(0, "Unisono: alle gleichzeitig") }, "▶ Unisono");
           const bK = s.h("button", { class: "btn solid", onclick: () => run(2, "Kanon: 4 Stimmen nacheinander") }, "▶ Kanon");
           const bA = s.h("button", { class: "btn", onclick: () => { s.sfx.unlock(); [[7, "voice"], [4, "voice"], [-5, "ooh"], [-24, "ooh"]].forEach(([n, i]) => sy.play(i, n, 0, 1.6, 0.14)); mode.textContent = "Akkord: S, A, T, B"; } }, "▶ Akkord");
+          const choirPic = s.photo("thomanerchor", { w: 250, h: 150, pos: "50% 60%", caption: "Thomanerchor Leipzig", cls: "later" });
+          const realC = s.h("div", { class: "row later", style: { gap: "10px" } }, s.soundBtn("chor-tallis", "Echter Chor: mehrstimmig"), s.soundBtn("maennerchor", "Männerchor"));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, s.h("b", null, "Unisono"), " = alle singen dieselbe Melodie. ", s.h("b", null, "Mehrstimmig"), " = verschiedene Töne gleichzeitig – im Kanon oder als Akkord.");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "12px" } },
-            s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, mode, bU, bK, bA), ...rows, merk));
+            s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, mode, bU, bK, bA), ...rows,
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 250px", gap: "14px", alignItems: "center" } }, s.h("div", { class: "stack", style: { gap: "8px" } }, merk, realC), choirPic)));
           s.step(async () => { bU.click(); });
           s.step(async () => { bK.click(); s.say("Jetzt als Kanon: Jede Stimme beginnt zwei Takte später."); });
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { s.show(merk, "up"); s.show(realC, "up"); s.sound("chor-tallis", { dur: 7 }); await s.show(choirPic, "zoom"); });
         },
       },
       /* 7 ------------------------------------------------------------------ */
@@ -475,7 +482,7 @@
         build(s) {
           const sy = synth(s);
           const players = [["🎻", "strings", 7], ["🎺", "brass", 0], ["🎷", "clarinet", 12], ["🥁", "drum", 0]];
-          const icons = players.map(([e]) => s.h("div", { style: { fontSize: "80px", lineHeight: "1", textAlign: "center", transition: "transform .08s" } }, e));
+          const icons = players.map(([e]) => s.h("div", { style: { fontSize: "60px", lineHeight: "1", textAlign: "center", transition: "transform .08s" } }, e));
           const chords = [[0, 4, 7], [5, 9, 12], [7, 11, 14], [0, 4, 7]];
           let token = 0;
           const run = async together => {
@@ -494,8 +501,9 @@
             verdict.textContent = together ? "Zusammen: Alle Töne kommen genau gleichzeitig. Klingt wie EIN großes Instrument!" : "Durcheinander: Jeder fängt anders an und spielt sein eigenes Tempo. Das klingt wackelig.";
             bump(verdict);
           };
-          const verdict = s.h("p", { class: "t", style: { minHeight: "140px" } }, "Hör dir beides an: Erst spielen alle durcheinander, dann zusammen.");
-          const demo = s.h("div", { class: "card soft", style: { display: "flex", flexDirection: "column", gap: "18px", padding: "26px 22px" } },
+          const verdict = s.h("p", { class: "t", style: { minHeight: "110px" } }, "Hör dir beides an: Erst spielen alle durcheinander, dann zusammen.");
+          const demo = s.h("div", { class: "card soft", style: { display: "flex", flexDirection: "column", gap: "14px", padding: "18px 22px" } },
+            s.photo("jugendorchester", { w: "100%", h: 190, pos: "50% 55%", caption: "Ein Jugendorchester probt" }),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)" } }, ...icons), verdict,
             s.h("div", { class: "row", style: { flexWrap: "nowrap" } },
               s.h("button", { class: "btn", style: { flex: "1" }, onclick: () => run(false) }, "▶ Durcheinander"),
@@ -509,7 +517,7 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr", height: "100%", alignItems: "center" } }, demo,
             s.h("div", { class: "stack", style: { gap: "12px" } }, ...rules)));
           s.step(async () => { s.sfx.pop(); await s.show(rules.slice(0, 2), "left"); });
-          s.step(async () => { s.sfx.pop(); await s.show(rules.slice(2), "left"); });
+          s.step(async () => { s.sound("beethoven5-anfang", { dur: 4 }); await s.show(rules.slice(2), "left"); });
         },
       },
       /* 10 ----------------------------------------------------------------- */
@@ -561,7 +569,8 @@
             card(s, "Abschlag", "Ein kleiner Bogen, dann schließt sich die Hand. Alle hören genau gleichzeitig auf."),
             card(s, "Laut und leise", "Große Bewegungen heißen meist: laut. Kleine Bewegungen: leise."),
           ];
-          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "460px 1fr", height: "100%", alignItems: "center" } }, svg,
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "460px 1fr", height: "100%", alignItems: "center" } },
+            s.h("div", { class: "stack", style: { gap: "10px" } }, svg, s.photo("dirigent-taktstock", { w: 460, h: 150, pos: "50% 25%", caption: "Echt: Taktstock in der Hand" })),
             s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, bE, bA), ...cards)));
           s.step(async () => { await einsatz(); await s.show(cards[0], "left"); });
           s.step(async () => { await abschlag(); await s.show(cards[1], "left"); });
@@ -754,7 +763,7 @@
           const met = s.h("button", { class: "btn solid" }, "▶ Langsam → schneller");
           met.onclick = async () => {
             s.sfx.unlock();
-            for (const [bpm, reps] of [[60, 4], [80, 4], [100, 4]]) for (let i = 0; i < reps && s.alive; i++) { s.sfx.tone(i ? 1046 : 1568, 0.05, "square", 0.1); sy.play("clarinet", [0, 2, 4, 5][i], 0, 60 / bpm * 0.8, 0.15); await s.wait(60000 / bpm); }
+            for (const [bpm, reps] of [[60, 4], [80, 4], [100, 4]]) for (let i = 0; i < reps && s.alive; i++) { s.sound("metronome", { force: true, vol: i ? .6 : 1 }); sy.play("clarinet", [0, 2, 4, 5][i], 0, 60 / bpm * 0.8, 0.15); await s.wait(60000 / bpm); }
           };
           const tips = [
             card(s, "1 Kurz und jeden Tag", "Lieber 15 Minuten täglich als einmal 2 Stunden. Fester Zeitpunkt, z. B. nach den Hausaufgaben."),
@@ -762,7 +771,8 @@
             card(s, "3 Mit Plan", "Einspielen → schwere Stelle erst langsam, dann schneller (Metronom!) → zum Schluss etwas, das Spaß macht."),
           ];
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "460px 1fr", height: "100%", alignItems: "center" } }, box,
-            s.h("div", { class: "stack", style: { gap: "12px" } }, ...tips, met)));
+            s.h("div", { class: "stack", style: { gap: "12px" } }, ...tips,
+              s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px" } }, s.photo("metronome-photo", { w: 110, h: 120, fit: "contain" }), met))));
           s.step(async () => { await grow(A); await grow(Bc); await s.show(tips[0], "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(tips[1], "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(tips[2], "left"); });
@@ -803,13 +813,17 @@
           bM.onclick = () => { s.sfx.unlock(); if (mine) { mine.stop(); mine = null; bM.textContent = "▶ Dein Ton"; } else { mine = sy.drone("strings", f, 0.1); bM.textContent = "■ Dein Ton"; } };
           const facts = [
             card(s, "Kammerton", "a¹ = 440 Hz: Das wurde 1939 bei einer Konferenz in London international festgelegt. Viele deutsche Orchester stimmen etwas höher, oft auf 443 Hz."),
-            card(s, "Wie stimmt man?", "Mit Stimmgerät, Stimmgabel oder nach der Oboe im Orchester. Geige: an den Wirbeln drehen. Blasinstrumente: Mundstück oder Zug etwas verschieben.", "life"),
+            s.h("div", { class: "life later", style: { padding: "12px 18px", display: "grid", gridTemplateColumns: "1fr 120px", gap: "12px", alignItems: "center" } },
+              s.h("div", null, s.h("span", { class: "exlabel" }, "Wie stimmt man?"),
+                s.h("p", { class: "small" }, "Mit Stimmgerät, Stimmgabel oder nach der Oboe im Orchester. Geige: an den Wirbeln drehen. Blasinstrumente: Mundstück oder Zug etwas verschieben."),
+                s.h("div", { class: "row", style: { gap: "8px", marginTop: "6px" } }, s.soundBtn("tuning-fork", "Stimmgabel"), s.soundBtn("oboe-a", "Oboe"))),
+              s.photo("tuning-fork-resonator", { w: 120, h: 150, fit: "contain" })),
           ];
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "440px 1fr", height: "100%", alignItems: "center" } },
             s.h("div", { class: "stack", style: { gap: "12px" } }, svg, s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, bR, bM), sl),
             s.h("div", { class: "stack", style: { gap: "14px" } }, beat, ...facts)));
           s.step(async () => { bR.click(); bM.click(); await s.tween({ from: 434, to: 440, dur: 3000, update: v => { f = Math.round(v * 2) / 2; sl.input.value = f; upd(); } }); sl.set(440); await s.show(facts[0], "left"); });
-          s.step(async () => { if (ref) bR.click(); if (mine) bM.click(); s.sfx.pop(); await s.show(facts[1], "left"); });
+          s.step(async () => { if (ref) bR.click(); if (mine) bM.click(); s.sound("tuning-fork", { dur: 2.5 }); await s.show(facts[1], "left"); });
         },
       },
       /* 16 ----------------------------------------------------------------- */
@@ -839,13 +853,13 @@
             s.h("button", { class: "btn solid", onclick: sing }, "▶ Mitsingen"),
             s.h("p", { class: "small pencil" }, "Das Lied ist so alt, dass es heute allen gehört: In der EU ist es seit 2017 gemeinfrei. Es steht im 3/4-Takt."));
           const items = [
-            ["🏟️", "Stadion", "Zehntausende singen und rufen zusammen – unisono!", () => { for (let i = 0; i < 6; i++) sy.play("voice", [0, 0, 4, 4, 7, 0][i] - 12, i * 0.3, 0.28, 0.12); for (let i = 0; i < 3; i++) sy.body.clap(1.9 + i * 0.3); }],
-            ["🎤", "Schulchor", "Sopran, Alt und Männerstimmen singen mehrstimmig – mit Dirigent.", () => [[7, "voice"], [4, "voice"], [0, "ooh"], [-12, "ooh"]].forEach(([n, i]) => sy.play(i, n, 0, 1.4, 0.13))],
+            ["🏟️", "Stadion", "Zehntausende singen und rufen zusammen – unisono!", () => s.sound("crowd-cheer", { force: true }), "fankurve"],
+            ["🎤", "Schulchor", "Sopran, Alt und Männerstimmen singen mehrstimmig – mit Dirigent.", () => s.sound("chor-tallis", { force: true, dur: 7 }), "thomanerchor"],
             ["🎶", "Karaoke", "Text und Melodie laufen mit – wie hier links. Einfach mitsingen!", () => sy.seq("synth", [[0, 1], [4, 1], [7, 1], [12, 2]], 0.18, 0.1)],
-            ["🎻", "Instrumentalklasse", "Stimmen → Einspielen → Einsatz vom Dirigenten → zusammen spielen.", () => { const d = sy.drone("flute", 440, 0.12); s.wait(900).then(() => d.stop()); sy.seq("strings", [[-12, 1], [-5, 1], [0, 2]], 0.3, 0.14, 1.1); }],
-          ].map(([e, k, v, f]) => {
-            const em = s.h("span", { style: { fontSize: "40px", lineHeight: "1" } }, e);
-            return s.h("button", { class: "life later", style: { display: "grid", gridTemplateColumns: "50px 1fr", gap: "10px", alignItems: "center", textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer", padding: "10px 14px" }, onclick: () => { s.sfx.unlock(); f(); bump(em); } },
+            ["🎻", "Instrumentalklasse", "Stimmen → Einspielen → Einsatz vom Dirigenten → zusammen spielen.", () => { s.sound("oboe-a", { force: true, dur: 2 }); s.sound("orchester-stimmt", { force: true, when: 2, dur: 4 }); }, "jugendorchester"],
+          ].map(([e, k, v, f, pic]) => {
+            const em = pic ? s.photo(pic, { w: 110, h: 80 }) : s.h("span", { style: { fontSize: "40px", lineHeight: "1", textAlign: "center" } }, e);
+            return s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "110px 1fr", gap: "12px", alignItems: "center", textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer", padding: "10px 14px" }, onclick: () => { s.sfx.unlock(); f(); bump(em); } },
               em, s.h("div", null, s.h("p", { class: "h2", style: { fontSize: "23px" } }, k), s.h("p", { class: "small" }, v)));
           });
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr", height: "100%", alignItems: "center", gap: "22px" } }, karaoke,

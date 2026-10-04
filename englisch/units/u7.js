@@ -205,11 +205,31 @@
             s.h("p", { class: "small" }, "Warm, gebraten und groß! Die meisten Briten essen das nicht jeden Tag, sondern eher am Wochenende oder im Café."),
             ger, life);
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "620px 1fr", gap: "24px", alignItems: "center", height: "100%" } }, svg, right));
-          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.show(svg, "zoom"); s.sound("sizzle", { vol: .45, dur: 3, fade: .8 });
           s.step(async () => { await seq(s, parts.slice(0, 3), "pop", 350, () => s.sfx.pop()); s.say("Spiegeleier, Speck und Würstchen."); });
           s.step(async () => { await seq(s, parts.slice(3), "pop", 350, () => s.sfx.pop()); s.say("Dazu Bohnen in Tomatensoße, Tomate, Pilze und Toast."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(ger, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+        },
+      },
+      /* 2b --------------------------------------------------------------- */
+      {
+        title: "British food – in echt",
+        say: "So sieht typisch britisches Essen in echt aus: ein Full English Breakfast, Fish and Chips am Meer und ein Cream Tea mit Scones.",
+        build(s) {
+          const items = [
+            ["full-english", "a full English breakfast", "Eggs, bacon, sausages, beans …", "Eier, Speck, Würstchen, Bohnen …", "sizzle", "Brutzeln"],
+            ["fish-and-chips", "fish and chips", "Fish and chips at the seaside!", "Fisch mit Pommes am Meer!", "waves", "Am Meer"],
+            ["cream-tea", "a cream tea", "Tea with scones, jam and cream.", "Tee mit Scones, Marmelade und Sahne.", "water-pour", "Tee eingießen"],
+          ];
+          const cols = items.map(([img, cap, en, de, snd, lab]) => s.h("div", { class: "stack later", style: { gap: "10px", alignItems: "stretch" } },
+            s.photo(img, { w: 346, h: 300, caption: cap }), line(s, en, { size: 21 }), s.h("p", { class: "small pencil", style: { margin: "-4px 0 0 66px" } }, de), s.soundBtn(snd, lab, { vol: .6, dur: 4 })));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, B(s, "scones"), " = kleine süße Brötchen. ", B(s, "clotted cream"), " = sehr dicke Sahne. Ein ", B(s, "cream tea"), " ist Tee mit Scones, Marmelade und clotted cream.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, s.h("div", { class: "cols3", style: { gap: "20px" } }, cols), merk));
+          s.step(async () => { s.sound("sizzle", { vol: .5, dur: 3, fade: .8 }); await s.show(cols[0], "up"); s.speak("a full English breakfast", EN); });
+          s.step(async () => { s.sound("waves", { vol: .4, dur: 3, fade: .8 }); await s.show(cols[1], "up"); s.speak("fish and chips", EN); });
+          s.step(async () => { s.sound("water-pour", { vol: .6 }); await s.show(cols[2], "up"); s.speak("a cream tea", EN); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 3 ---------------------------------------------------------------- */
@@ -253,7 +273,7 @@
           s.step(async () => {
             s.sfx.boing();
             await s.tween({ from: 0, to: 1, dur: 600, ease: "back", update: v => { lid.setAttribute("transform", `translate(0 ${-48 * v})`); lid.setAttribute("opacity", 1 - .85 * v); } });
-            await seq(s, [sw, ap, crisps, bottle], "pop", 250, () => s.sfx.pop()); s.show(f2, "up");
+            await seq(s, [sw, ap, crisps, bottle], "pop", 250, i => (i === 2 ? s.sound("crisps", { vol: .7 }) : s.sfx.pop())); s.show(f2, "up");
           });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
@@ -314,11 +334,11 @@
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "16px" } }, s.h("div", { class: "cols3", style: { gap: "18px" } }, c1, c2, c3), merk, life5));
           s.sfx.whoosh(); s.show(c1, "up").then(() => seq(s, eggs, "bounce", 300));
           s.step(async () => {
-            await s.show(c2, "up"); s.sfx.whoosh();
+            await s.show(c2, "up"); s.sound("water-pour", { vol: .6 });
             await s.tween({ from: 0, to: 300, dur: 1200, update: v => { fill.setAttribute("height", v * .3); fill.setAttribute("y", 110 - v * .3); fill.setAttribute("fill", "#ffffff"); ml.textContent = Math.round(v) + " ml"; } });
             s.sfx.ding();
           });
-          s.step(async () => { await s.show(c3, "up"); s.sfx.coin(); await s.show(tag, "zoom"); });
+          s.step(async () => { await s.show(c3, "up"); s.sound("cash-register", { vol: .5 }); await s.show(tag, "zoom"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
           s.step(async () => { s.sfx.whoosh(); await s.show(life5, "up"); });
         },
@@ -350,7 +370,7 @@
               s.h("div", { class: "card", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "100 pennies = 1 pound"), cnt),
               s.h("div", { class: "card", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Preise sagen"), s.h("div", { class: "stack", style: { gap: "8px" } }, prices))),
             merk));
-          seq(s, coinEls, "pop", 140, () => s.sfx.coin());
+          s.sound("coins", { vol: .6 }); seq(s, coinEls, "pop", 140, () => {});
           s.step(async () => {
             let last = 0;
             await s.tween({ from: 0, to: 100, dur: 2200, ease: "linear", update: v => { const n = Math.round(v); for (let k = last; k < n; k++) minis[k].setAttribute("visibility", "visible"); if (n > last && n % 10 === 0) s.sfx.tick(); last = Math.max(last, n); num.textContent = n + "p"; } });
@@ -384,7 +404,7 @@
           const demo = async p => {
             total = 0; n = 0; tray.innerHTML = ""; tot.textContent = "0p"; let rest = p;
             for (const c of [...COINS].reverse()) while (rest >= c.v) { rest -= c.v; addCoin(c); await s.wait(350); if (!s.alive) return; }
-            s.speak(priceSay(p), EN);
+            s.sound("cash-register", { vol: .45 }); s.speak(priceSay(p), EN);
           };
           const demos = s.h("div", { class: "life later", style: { padding: "10px 18px", display: "flex", alignItems: "center", gap: "12px" } },
             s.h("p", { class: "small", style: { flex: 1 } }, "Wie bezahlt man genau? Tippe – das Portemonnaie zeigt die Münzen:"),
@@ -440,10 +460,10 @@
               s.h("div", { class: "row", style: { gap: "10px" } }, tagS, s.h("span", { class: "small pencil" }, "shop assistant (Verkäuferin)"), tagA, s.h("span", { class: "small pencil" }, "Ruby")),
               L)));
           void tagA;
-          s.show(svg, "zoom"); s.sfx.pop(); s.show(L[0], "right");
+          s.show(svg, "zoom"); s.sound("shop-bell", { vol: .6 }); s.show(L[0], "right");
           s.step(async () => { s.sfx.pop(); await s.show(L[1], "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(L[2], "right"); s.sfx.pop(); await s.show(L[3], "left"); });
-          s.step(async () => { s.sfx.pop(); await s.show(L[4], "right"); s.sfx.coin(); s.show(coins, "bounce"); await s.show(L[5], "left"); });
+          s.step(async () => { s.sfx.pop(); await s.show(L[4], "right"); s.sound("coins", { vol: .6 }); s.show(coins, "bounce"); await s.show(L[5], "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -471,7 +491,7 @@
           const pack = s.h("div", { class: "card later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Packungen – so zählt man Brot, Milch …"),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" } }, pk));
           s.add(s.h("div", { class: "cols", style: { gap: "22px", height: "100%", alignItems: "start" } }, paper, s.h("div", { class: "stack", style: { gap: "12px" } }, bask, pack)));
-          s.sfx.scribble();
+          s.sound("pencil-write", { vol: .7 });
           const put = async (a, b) => { for (let i = a; i < b; i++) { s.sfx.snap(); s.show(ticks[i], "pop"); await s.wait(200); s.sfx.pop(); await s.show(goods[i], "down"); } };
           s.step(async () => { await put(0, 3); s.say("Brot, Eier und Milch sind im Korb."); });
           s.step(async () => { await put(3, 6); s.sfx.success(); });
@@ -504,7 +524,8 @@
           const warn = s.h("div", { class: "life later", style: { padding: "10px 18px" } }, s.h("span", { class: "exlabel" }, "Vorsicht: mustn't = nicht dürfen!"),
             s.h("div", { class: "ek-line" }, s.h("div", { style: { flex: 1 } }, line(s, "You mustn't run at the pool!", { size: 22 })), s.h("p", { class: "small", style: { flex: 1 } }, "= Du darfst nicht rennen. Aber: You don't have to swim fast. = Du musst nicht schnell schwimmen.")));
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, s.h("div", { class: "cols3", style: { gap: "16px" } }, cards), merk, warn));
-          const go = async c => { s.sfx.whoosh(); await s.show(c, "up"); s.sfx.success(); await s.show(c.rows[0], "left"); s.sfx.error(); await s.show(c.rows[1], "left"); };
+          const snd = { home: "door-creak", school: "school-bell", pool: "splash" };
+          const go = async c => { const k = data[cards.indexOf(c)][1]; s.sound(snd[k], { vol: .5, dur: 2, fade: .5 }); await s.show(c, "up"); s.sfx.success(); await s.show(c.rows[0], "left"); s.sfx.error(); await s.show(c.rows[1], "left"); };
           go(cards[0]);
           s.step(async () => { await go(cards[1]); s.say("Ruby muss eine Schuluniform tragen."); });
           s.step(async () => { await go(cards[2]); });
@@ -604,7 +625,7 @@
             const fl = 1 + .15 * Math.sin(t * 12);
             g.fillStyle = "#ee7a1a"; g.beginPath(); g.moveTo(200, 146); g.quadraticCurveTo(230, 146 - 70 * fl, 260, 146); g.fill();
             g.fillStyle = "#ffd94a"; g.beginPath(); g.moveTo(215, 146); g.quadraticCurveTo(230, 146 - 40 * fl, 245, 146); g.fill();
-            if (running && Math.random() < .05) { const x = 60 + Math.random() * 340, y = 30 + Math.random() * 50, c = ["#ffd94a", "#dc3b2a", "#7b4fd6", "#3fd18a", "#ffffff"][Math.floor(Math.random() * 5)]; for (let k = 0; k < 28; k++) { const a = k / 28 * Math.PI * 2; parts.push({ x, y, vx: Math.cos(a) * 70, vy: Math.sin(a) * 70, l: 1, c }); } if (!s.fast) s.sfx.tone(160, .3, "sine", .15, 0, 60); }
+            if (running && Math.random() < .05) { const x = 60 + Math.random() * 340, y = 30 + Math.random() * 50, c = ["#ffd94a", "#dc3b2a", "#7b4fd6", "#3fd18a", "#ffffff"][Math.floor(Math.random() * 5)]; for (let k = 0; k < 28; k++) { const a = k / 28 * Math.PI * 2; parts.push({ x, y, vx: Math.cos(a) * 70, vy: Math.sin(a) * 70, l: 1, c }); } }
             for (const p of parts) { p.x += p.vx * .016; p.y += p.vy * .016; p.vy += 1.2; p.l -= .014; g.globalAlpha = Math.max(0, p.l); g.fillStyle = p.c; g.fillRect(p.x, p.y, 3, 3); }
             g.globalAlpha = 1; for (let i = parts.length - 1; i >= 0; i--) if (parts[i].l <= 0) parts.splice(i, 1);
           };
@@ -619,9 +640,28 @@
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "12px" } },
             s.h("div", { class: "cols", style: { gap: "18px" } }, card("31st October – Halloween", pk, h1, deH), card("5th November – Bonfire Night", canvas, b1, deB)), life));
           s.sfx.whoosh();
-          s.step(async () => { s.sfx.scribble(); for (const f of face) await s.show(f, "pop", 0); s.sfx.boing(); await seq(s, h1, "left", 300, () => s.sfx.pop()); s.show(turnip, "bounce"); await s.show(deH, "fade"); });
-          s.step(async () => { running = true; s.sfx.whoosh(); await seq(s, b1, "left", 300, () => s.sfx.pop()); await s.show(deB, "fade"); s.say("Remember, remember, the fifth of November."); });
+          s.step(async () => { s.sound("owl", { vol: .6 }); for (const f of face) await s.show(f, "pop", 0); await seq(s, h1, "left", 300, () => s.sfx.pop()); s.show(turnip, "bounce"); await s.show(deH, "fade"); });
+          s.step(async () => { running = true; s.sound("fireworks-snd", { vol: .5 }); await seq(s, b1, "left", 300, () => s.sfx.pop()); await s.show(deB, "fade"); s.say("Remember, remember, the fifth of November."); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+        },
+      },
+      /* 13b -------------------------------------------------------------- */
+      {
+        title: "Herbstfeste – in echt",
+        say: "So sehen Halloween und Bonfire Night in echt aus. Früher schnitzte man Laternen aus Rüben, heute aus Kürbissen. Und am fünften November brennen Lagerfeuer.",
+        build(s) {
+          const items = [
+            ["pumpkin-lantern", "a pumpkin lantern", "a pumpkin lantern"],
+            ["turnip-lantern", "a turnip lantern (Irland)", "a turnip lantern"],
+            ["bonfire", "a bonfire with a guy", "a bonfire"],
+            ["fireworks", "fireworks", "fireworks"],
+          ];
+          const figs = items.map(([img, cap, en]) => { const f = s.photo(img, { w: 255, h: 390, caption: cap, cls: "later", pos: img === "bonfire" ? "88% 40%" : "50% 50%" }); f.addEventListener("click", () => { s.sfx.click(); s.speak(en, EN); }); return f; });
+          const deH = s.h("div", { class: "card later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "31st October"), s.h("p", { class: "small" }, "Die alte Rübenlaterne steht heute im Museum in Irland. Kürbisse kamen später aus Amerika dazu."), s.soundBtn("owl", "Eule in der Nacht", { vol: .6 }));
+          const deB = s.h("div", { class: "card later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "5th November"), s.h("p", { class: "small" }, "Oben auf dem Feuer sitzt eine Puppe aus alten Kleidern: der ", B(s, "guy"), ". Er steht für Guy Fawkes."), s.h("div", { class: "row", style: { gap: "10px" } }, s.soundBtn("fire", "Feuer", { vol: .5, dur: 5 }), s.soundBtn("fireworks-snd", "Feuerwerk", { vol: .5 })));
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, s.h("div", { class: "cols4", style: { gap: "14px" } }, figs), s.h("div", { class: "cols", style: { gap: "16px" } }, deH, deB)));
+          s.step(async () => { s.sound("owl", { vol: .5 }); await s.show(figs[0], "zoom"); await s.show(figs[1], "zoom"); s.show(deH, "up"); s.speak("a pumpkin lantern and a turnip lantern", EN); });
+          s.step(async () => { s.sound("fire", { vol: .45, dur: 4, fade: 1 }); await s.show(figs[2], "zoom"); s.sound("fireworks-snd", { vol: .45, when: 1.5 }); await s.show(figs[3], "zoom"); s.show(deB, "up"); s.speak("a bonfire and fireworks", EN); });
         },
       },
       /* 14 --------------------------------------------------------------- */
@@ -640,9 +680,8 @@
             s.el("circle", { cx: 160, cy: 145, r: 14, fill: "#7b4fd6" }));
           svg.append(L, R, bang, prize);
           const pull = async () => {
-            s.sfx.snap(); s.sfx.drum();
             await s.tween({ from: 0, to: 1, dur: 500, ease: "back", update: v => { L.setAttribute("transform", `translate(${-40 * v} 0)`); R.setAttribute("transform", `translate(${40 * v} 0)`); } });
-            s.show(bang, "zoom"); s.sfx.success(); await s.show(prize, "bounce");
+            s.sound("cracker-bang"); s.show(bang, "zoom"); await s.show(prize, "bounce");
           };
           const btn = s.h("button", { class: "btn solid later", onclick: async () => { s.hide([bang, prize]); L.removeAttribute("transform"); R.removeAttribute("transform"); await s.wait(150); pull(); } }, "Pull again!");
           const deC = s.h("p", { class: "small later" }, "Tom Smith aus London hat den Christmas cracker 1847 erfunden. Drin: eine Papierkrone (paper crown), ein Witz (joke) und ein kleines Spielzeug.");
@@ -691,8 +730,9 @@
             await s.tween({ from: 0, to: 1, dur: 900, ease: "linear", update: v => { const y = -150 * 4 * v * (1 - v), k = Math.cos(v * Math.PI * 2); cake.setAttribute("transform", `translate(0 ${y}) translate(310 218) scale(1 ${k.toFixed(3)}) translate(-310 -218)`); cake.setAttribute("fill", v > .5 ? "#e0a54a" : "#f2c26b"); } });
             cake.removeAttribute("transform"); s.sfx.snap();
           };
-          const life = s.h("div", { class: "life", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Pancake Day = Shrove Tuesday"),
-            s.h("p", { class: "small" }, "Der Dienstag vor Aschermittwoch – 2027 ist es der 9. Februar. In Olney (England) gibt es ein Wettrennen: Man rennt mit der Pfanne und wirft den Pancake hoch."));
+          const life = s.h("div", { class: "life", style: { padding: "10px 16px", display: "grid", gridTemplateColumns: "1fr 190px", gap: "12px", alignItems: "center" } }, s.h("div", null, s.h("span", { class: "exlabel" }, "Pancake Day = Shrove Tuesday"),
+            s.h("p", { class: "small" }, "Der Dienstag vor Aschermittwoch – 2027 ist es der 9. Februar. In Olney (England) gibt es ein Wettrennen: Man rennt mit der Pfanne und wirft den Pancake hoch.")),
+            s.photo("pancake-race", { w: 190, h: 260, caption: "Olney", pos: "45% 50%" }));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Imperativ = Grundform: ", B(s, "Mix! Pour! Flip!"), " Verneint: ", B(s, "Don't"), " + Grundform: Don't burn the pancake!");
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "470px 1fr", gap: "22px", height: "100%" } },
             s.h("div", { class: "stack", style: { gap: "12px" } }, svg, life),
@@ -704,7 +744,7 @@
               merk)));
           s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); s.show(steps[0], "left"); s.sfx.scribble(); await s.tween({ from: 0, to: 1, dur: 1200, ease: "linear", update: v => whisk.setAttribute("transform", `translate(${Math.sin(v * Math.PI * 8) * 22} 0)`) }); });
-          s.step(async () => { s.sfx.pop(); s.show(steps[1], "left"); await s.show(heat, "up"); s.sfx.pop(); s.show(steps[2], "left"); await s.show(drop, "down"); s.sfx.zap(); s.hide(drop); await s.show(pan, "zoom"); });
+          s.step(async () => { s.sfx.pop(); s.show(steps[1], "left"); await s.show(heat, "up"); s.sfx.pop(); s.show(steps[2], "left"); await s.show(drop, "down"); s.sound("sizzle", { vol: .5, dur: 3, fade: .8 }); s.hide(drop); await s.show(pan, "zoom"); });
           s.step(async () => { s.sfx.pop(); s.show(steps[3], "left"); await flip(); s.show(flipAgain, "pop"); });
           s.step(async () => { s.sfx.pop(); s.show(steps[4], "left"); await s.show(lemon, "bounce"); s.sfx.success(); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
@@ -728,10 +768,10 @@
           const ph = [["Happy birthday, Ruby!"], ["Thank you for the invitation."], ["I'd love to come!"], ["Sorry, I can't come."], ["How old are you? – I'm twelve.", "How old are you? I'm twelve."]].map(([t, sp]) => line(s, t, { speak: sp, later: true, size: 21 }));
           const right = s.h("div", { class: "card soft", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Useful phrases – nützliche Sätze"), s.h("div", { class: "stack", style: { gap: "10px" } }, ph));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "22px", height: "100%", alignItems: "center" } }, inv, right));
-          s.sfx.fanfare(); s.show(inv, "zoom");
+          s.sound("cracker-bang", { vol: .7 }); s.sfx.fanfare(); s.show(inv, "zoom");
           s.step(async () => { await seq(s, rows.slice(0, 2), "left", 350, () => s.sfx.pop()); s.say("Wann und wo ist die Party?"); });
           s.step(async () => { await seq(s, rows.slice(2), "left", 350, () => s.sfx.pop()); });
-          s.step(async () => { await seq(s, ph, "up", 250, () => s.sfx.pop()); s.confetti(590, 300, 80); s.sfx.success(); });
+          s.step(async () => { await seq(s, ph, "up", 250, () => s.sfx.pop()); s.confetti(590, 300, 80); s.sound("kids-cheer", { vol: .5, dur: 3, fade: .6 }); });
         },
       },
     ],

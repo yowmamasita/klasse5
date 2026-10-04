@@ -493,7 +493,8 @@
             ...R.map(r => r.line), merk, wq));
           R.forEach((r, i) => { r.line.classList.add("a-left"); r.line.style.setProperty("--d", i * 120 + "ms"); });
           s.sfx.whoosh();
-          R.forEach(r => s.step(() => r.run()));
+          const SNc = [["splash", { vol: 0.6 }], ["horse", { vol: 0.6 }], ["dog-bark", { vol: 0.6 }]];
+          R.forEach((r, i) => s.step(() => { s.sound(SNc[i][0], SNc[i][1]); return r.run(); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sfx.pop(); await s.show(wq, "up"); });
         },
       },
@@ -613,7 +614,29 @@
             ...rows.map(r => r.line), fact));
           s.sfx.whoosh();
           rows.forEach(r => s.step(async () => { s.sfx.pop(); await s.show(r.qb, "left"); s.sfx.note(7, 0.15); await s.show(r.ab, "right"); }));
-          s.step(async () => { s.sfx.ding(); await s.show(fact, "up"); s.say("Schau auf die Etiketten links: Mal fragt Lukas mit be, mal mit do, can oder does."); });
+          s.step(async () => { s.sound("seaside", { vol: 0.45, dur: 4 }); await s.show(fact, "up"); s.say("Schau auf die Etiketten links: Mal fragt Lukas mit be, mal mit do, can oder does."); });
+        },
+      },
+      /* 12b -------------------------------------------------------------- */
+      {
+        title: "Brighton: by the sea",
+        say: "So sieht es bei Ellie zu Hause aus: Brighton am Meer. Hör mal, wie es am Strand klingt!",
+        build(s) {
+          const ph = s.photo("brighton-pier", { w: 560, h: 420, pos: "50% 50%", caption: "Brighton Palace Pier und Strand" });
+          const QA = [
+            ["Where does Ellie live?", "She lives in Brighton."],
+            ["Is Brighton by the sea?", "Yes, it is."],
+            ["Can you swim in the sea there?", "Yes, you can – in summer!"],
+          ];
+          const lines = QA.map(([q, a]) => s.h("div", { class: "stack later", style: { gap: "6px" } }, s.h("div", null, bub(s, q, "q")), s.h("div", { style: { textAlign: "right" } }, bub(s, a, "a"))));
+          const fact = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Fakt"),
+            s.h("p", { class: "small" }, "Der ", s.h("b", null, "Palace Pier"), " ist eine 525 m lange Seebrücke. Sie wurde 1899 eröffnet. Am Strand liegen Kiesel statt Sand."));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "560px 1fr", gap: "26px", alignItems: "center", height: "100%" } },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, ph, s.h("div", { class: "row" }, s.soundBtn("seaside", "Am Strand in Brighton"))),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, ...lines, fact)));
+          s.show(ph, "zoom"); s.sound("seaside", { vol: 0.4, dur: 5 });
+          lines.forEach(l => s.step(async () => { s.sfx.pop(); await s.show(l, "up"); }));
+          s.step(async () => { s.sfx.ding(); await s.show(fact, "up"); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -643,7 +666,7 @@
             const my = ++token; const [, pts, q, aa] = RT[k];
             btns.forEach((b, i) => b.classList.toggle("solid", i === k));
             out.innerHTML = "";
-            const qb = bub(s, q, "q"); out.append(qb); s.show(qb, "left"); if (speak) s.speak(q, EN);
+            const qb = bub(s, q, "q"); out.append(qb); s.show(qb, "left"); if (speak) s.speak(q, EN); else s.sound("footsteps", { vol: 0.5, dur: 2.5, when: 0.3 });
             dot.setAttribute("cx", pts[0][0]); dot.setAttribute("cy", pts[0][1]); trail.setAttribute("points", `${pts[0][0]},${pts[0][1]}`);
             let done = [pts[0]];
             for (let i = 1; i < pts.length; i++) {
@@ -698,9 +721,11 @@
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "470px 1fr", gap: "24px", alignItems: "start" } },
             board,
             s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, ruby(s, 44), s.h("p", { class: "t" }, s.h("b", null, "Ruby"), " bestellt:")), ...lines, merk)));
-          s.show(board, "left"); s.sfx.whoosh();
+          s.show(board, "left"); s.sound("shop-bell", { vol: 0.5 });
           for (let i = 0; i < DL.length; i += 2) s.step(async () => {
+            if (i === 4) s.sound("cash-register", { vol: 0.5 });
             for (const j of [i, i + 1]) { s.sfx.pop(); await s.show(lines[j].firstChild, DL[j][0] === "q" ? "left" : "right"); if (DL[j][2]) { s.sfx.coin(); setTotal(total + DL[j][2]); } }
+            if (i === 4) s.sound("coins", { vol: 0.6 });
           });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Achtung: crisps sind Kartoffelchips, chips sind Pommes."); });
         },
@@ -729,9 +754,10 @@
           s.add(s.h("div", { class: "stack", style: { gap: "12px" } },
             s.h("div", { class: "row", style: { gap: "14px" } }, s.h("span", { class: "e4-chip", style: { background: GREEN, color: "#fff" } }, "yes"), s.h("span", { class: "e4-chip", style: { background: RED, color: "#fff" } }, "no"), s.h("span", { class: "small pencil" }, "28 Kinder · jede Frage an alle")),
             ...rows.map(r => r.wrap), merk));
-          s.sfx.whoosh();
-          rows.forEach(r => s.step(async () => {
-            s.sfx.pop(); await s.show(r.wrap, "up");
+          s.sound("classroom", { vol: 0.35, dur: 4 });
+          const SNs = [["dog-bark", { vol: 0.5 }], ["splash", { vol: 0.6 }], ["piano", { vol: 0.5, dur: 2.5 }]];
+          rows.forEach((r, i) => s.step(async () => {
+            s.sound(SNs[i][0], SNs[i][1]); await s.show(r.wrap, "up");
             let last = -1;
             await s.tween({ dur: 1100, ease: "out", update: v => {
               const yy = Math.round(r.y * v), nn = Math.round((N - r.y) * v);

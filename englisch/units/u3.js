@@ -224,7 +224,7 @@
         title: "What's the time?",
         say: "So fragst du nach der Uhrzeit: What's the time? Wir lernen vier wichtige Uhrzeiten.",
         build(s) {
-          const ck = makeClock(s, 440); ck.set(12, 0);
+          const ck = makeClock(s, 440); ck.set(12, 0); s.sound("clock-tick", { vol: 0.5, dur: 2.5 });
           const rows = [[3, 0, "It's three o'clock."], [3, 30, "It's half past three."], [3, 15, "It's quarter past three."], [3, 45, "It's quarter to four."]];
           const rowEls = rows.map(([h, m, t]) => s.h("div", { class: "row later", style: { flexWrap: "nowrap", gap: "14px" } },
             s.h("span", { class: "e3-dig" }, `${h}:${pad(m)}`), hear(s, t, { onTap: () => ck.to(h, m, 700) })));
@@ -236,7 +236,7 @@
           s.show(ck.svg, "zoom"); s.sfx.pop();
           const say = ["Der große Zeiger steht oben auf der Zwölf: o'clock.", "Der große Zeiger steht unten: half past. Das ist halb vier!", "Viertel nach drei: quarter past three.", "Viertel vor vier: quarter to four."];
           rows.forEach(([h, m], i) => s.step(async () => {
-            s.sfx.whoosh(); await ck.to(h, m); s.sfx.ding(); s.show(rowEls[i], "left"); s.say(say[i]);
+            s.sfx.whoosh(); await ck.to(h, m); if (i === 0) s.sound("big-ben-chimes", { vol: 0.4, from: 0, dur: 4 }); else s.sfx.ding(); s.show(rowEls[i], "left"); s.say(say[i]);
           }));
           s.step(async () => { s.sfx.boing(); await s.show(merk, "up"); s.say("Achtung Falle: half past three ist halb vier!"); });
         },
@@ -377,7 +377,28 @@
           s.step(async () => { s.sfx.pop(); s.show(amL, "pop"); await s.wait(300); s.sfx.pop(); await s.show(pmL, "pop"); });
           s.step(async () => { for (const p of pins) { s.sfx.drum(); await s.show(p, "bounce"); } s.say("Sieben Uhr morgens ist 7 am, acht Uhr abends ist 8 pm."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sfx.pop(); await s.show(exb, "up"); });
-          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(lf, "up"); s.say("Schieb die Berliner Uhrzeit. In London ist es immer eine Stunde früher."); });
+          s.step(async () => { s.sound("big-ben-chimes", { vol: 0.45, dur: 5 }); await s.show(lf, "up"); s.say("Schieb die Berliner Uhrzeit. In London ist es immer eine Stunde früher."); });
+        },
+      },
+      /* 4b --------------------------------------------------------------- */
+      {
+        title: "What's the time, Big Ben?",
+        say: "Das ist die berühmteste Uhr von London. Lies die Uhrzeit ab – auf Englisch!",
+        build(s) {
+          const ph = s.photo("big-ben-clock", { w: 520, h: 520, pos: "26% 50%", caption: "Elizabeth Tower, London (2023)" });
+          const q = hear(s, "What's the time?"); q.classList.add("later");
+          const a = hear(s, "It's one o'clock."); a.classList.add("later");
+          const hint = s.h("p", { class: "small pencil later" }, "Großer Zeiger oben auf der 12, kleiner Zeiger auf der I (1).");
+          const facts = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "In real life · Fakten"),
+            s.h("p", { class: "small" }, s.h("b", null, "Big Ben"), " ist eigentlich der Name der großen Glocke (fast 14 Tonnen). Der Turm heißt seit 2012 ", s.h("b", null, "Elizabeth Tower"), " und ist 96 m hoch."),
+            s.h("p", { class: "small" }, "Jedes Zifferblatt ist fast 7 m breit, der Minutenzeiger 4,3 m lang."));
+          const btn = s.h("div", { class: "row later" }, s.soundBtn("big-ben-chimes", "Big Ben hören"));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "520px 1fr", gap: "30px", alignItems: "center", height: "100%" } }, ph,
+            s.h("div", { class: "stack", style: { gap: "14px" } }, q, a, hint, facts, btn)));
+          s.show(ph, "zoom"); s.sound("clock-tick", { vol: 0.5, dur: 2 });
+          s.step(async () => { s.sfx.pop(); await s.show(q, "left"); });
+          s.step(async () => { s.sound("big-ben-chimes", { vol: 0.45, dur: 5 }); await s.show(a, "left"); s.show(hint, "fade"); s.say("Es ist ein Uhr: It's one o'clock."); });
+          s.step(async () => { s.sfx.ding(); await s.show(facts, "up"); s.show(btn, "up"); });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -423,6 +444,7 @@
             ["📚", 16, 30, "do homework", "I do my homework at half past four."],
             ["🛏️", 20, 30, "go to bed", "I go to bed at half past eight."],
           ];
+          const SND = [["alarm-clock", { vol: 0.5, dur: 2 }], ["cereal-pour", { vol: 0.7, dur: 2.5 }], ["footsteps", { vol: 0.7, dur: 2.5 }], ["pencil-write", { vol: 0.7 }], ["owl", { vol: 0.5, dur: 3 }]];
           const SKY = ["#ffd3a1", "#cfe8ff", "#a9d8ff", "#ffd9a8", "#28305c"];
           const svg = s.svg(1100, 170);
           const sky = s.el("rect", { x: 0, y: 0, width: 1100, height: 130, rx: 18, fill: "#3a4378", class: "e3-cell" });
@@ -458,7 +480,7 @@
               if (i === 4) { stars.setAttribute("opacity", t); sun.setAttribute("fill", hexMix("#ffcf3a", "#f4f1d0", t)); }
             } });
             cur = { x: tx, y: ty, sky: toSky };
-            s.sfx.pop(); s.show(marks[i], "bounce"); await s.show(cards[i], "up"); s.sfx.count(i * 2);
+            s.sound(SND[i][0], SND[i][1]); s.show(marks[i], "bounce"); await s.show(cards[i], "up");
           }));
           s.step(async () => { s.sfx.boing(); await s.show(strip, "up"); });
         },
@@ -507,7 +529,8 @@
           items.forEach((it, i) => it.box.classList.add("a-up"));
           items.forEach(it => it.box.style.setProperty("--d", "0ms"));
           s.sfx.whoosh();
-          items.forEach(it => s.step(async () => { s.sfx.pop(); await s.show(it.b, "right"); await fly(s, it.sub, it.sp); }));
+          const SN8 = [["alarm-clock", { vol: 0.45, dur: 1.5 }], ["ball-kick", { vol: 0.7 }], ["cat-meow", { vol: 0.7 }]];
+          items.forEach((it, i) => s.step(async () => { s.sound(SN8[i][0], SN8[i][1]); await s.show(it.b, "right"); await fly(s, it.sub, it.sp); }));
           s.step(async () => { s.show(again, "pop"); s.sfx.ding(); await s.show(merk8, "up"); s.say("Mehrere Katzen sind they – ohne s. Eine Katze ist it – mit s."); });
         },
       },
@@ -615,7 +638,7 @@
           s.show(svg, "fade"); s.sfx.whoosh();
           s.step(async () => { for (let i = 0; i < ads.length; i++) { s.sfx.count(i * 2); await s.show(ads[i], "down"); } s.say("never ist nie, sometimes manchmal, often oft, usually meistens, always immer."); });
           s.step(async () => {
-            s.sfx.pop(); await s.show(left, "up");
+            s.sound("footsteps", { vol: 0.6, dur: 2.5 }); await s.show(left, "up");
             for (let v = 0; v <= 4; v++) { if (!s.alive) return; sl.set(v); s.sfx.tick(); await s.wait(420); }
           });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(lf, "up"); });
@@ -745,7 +768,7 @@
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "640px 1fr", gap: "24px", alignItems: "start" } },
             s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, ruby(s, 48), s.h("p", { class: "t" }, s.h("b", null, "Ruby, Year 7"), " (ausgedachter Plan)")), tb),
             s.h("div", { class: "stack", style: { gap: "10px" } }, ...sBtn, fact)));
-          s.show(tb, "up"); s.sfx.whoosh();
+          s.show(tb, "up"); s.sound("school-bell", { vol: 0.4, dur: 2.5 });
           sents.forEach(([, keys], i) => s.step(async () => { hot(keys); s.sfx.coin(); await s.show(sBtn[i], "left"); }));
           s.step(async () => { hot([]); s.sfx.ding(); await s.show(fact, "up"); });
         },
@@ -768,6 +791,24 @@
           s.show(a.card, "left"); s.show(b.card, "right"); s.sfx.whoosh();
           for (let i = 0; i < 4; i++) s.step(async () => { s.sfx.pop(); await s.show(a.its[i], "left"); s.sfx.pop(); await s.show(b.its[i], "right"); });
           s.step(async () => { s.sfx.ding(); await s.show(strip, "up"); });
+        },
+      },
+      /* 15b -------------------------------------------------------------- */
+      {
+        title: "Weekend: so sieht's aus",
+        say: "So sehen die Orte vom Wochenende in echt aus: der Hyde Park in London und das Tempelhofer Feld in Berlin.",
+        build(s) {
+          const A = s.h("div", { class: "stack later", style: { gap: "10px" } },
+            s.photo("hyde-park-football", { w: 530, h: 410, pos: "50% 70%", caption: "Hyde Park, London" }),
+            hear(s, "Ruby plays football in Hyde Park.", { cls: "sm plain" }),
+            s.h("p", { class: "small pencil" }, "Hyde Park ist einer der großen Parks mitten in London."));
+          const B = s.h("div", { class: "stack later", style: { gap: "10px" } },
+            s.photo("tempelhofer-feld", { w: 530, h: 410, pos: "50% 60%", caption: "Tempelhofer Feld, Berlin" }),
+            hear(s, "Lukas rides his bike to Tempelhofer Feld.", { cls: "sm plain" }),
+            s.h("p", { class: "small pencil" }, "Bis 2008 landeten hier Flugzeuge. Seit 2010 ist die alte Startbahn ein Park."));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "30px", alignItems: "start", alignContent: "center", height: "100%" } }, A, B));
+          s.show(A, "left"); s.sound("ball-kick", { vol: 0.7 });
+          s.step(async () => { s.sound("bike-bell", { vol: 0.6 }); await s.show(B, "right"); s.say("Auf der alten Startbahn fahren heute Fahrräder und Skater."); });
         },
       },
       /* 16 --------------------------------------------------------------- */

@@ -129,7 +129,7 @@
           const right = s.h("div", { class: "stack" }, P(s, "big", "12 Bonbons für …"),
             s.h("div", { class: "card stack", style: { gap: "8px" } }, who, res, note), merk, sl);
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "540px 1fr", alignItems: "center", height: "100%" } }, svg, right));
-          s.show(svg, "zoom"); s.sfx.pop();
+          s.show(svg, "zoom"); s.sound("bonbonpapier", { vol: .5 });
           s.step(async () => { sl.set(3); s.sfx.whoosh(); await s.wait(900); s.sfx.ding(); s.say("Drei Kinder bekommen je vier. Drei ist ein Teiler von zwölf."); });
           s.step(async () => { sl.set(5); s.sfx.whoosh(); await s.wait(900); s.sfx.error(); s.say("Bei fünf Kindern bleiben zwei übrig. Fünf ist kein Teiler von zwölf."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sfx.pop(); await s.show(sl, "up"); s.say("Probiere jetzt selbst mit dem Regler."); });
@@ -162,7 +162,7 @@
           svg.append(cap);
           const arrange = async (rows, txt, bad) => {
             const pts = gridPos(12, rows, 300, 160, 46);
-            s.sfx.whoosh();
+            s.sound("stuhl-ruecken", { vol: .6 });
             label.textContent = txt;
             await Promise.all(chs.map((c, k) => {
               const fx = c.x, fy = c.y, t = pts[k]; c.x = t.x; c.y = t.y;
@@ -177,7 +177,9 @@
             s.show([circ[a], circ[b]], "pop"); await s.show(arcs[a], "draw");
           };
           const merk = s.h("div", { class: "merk later" }, "Alle Teiler zusammen: ", s.h("b", null, "T(12) = {1, 2, 3, 4, 6, 12}"), ". Teiler kommen immer als ", s.h("b", null, "Paare"), ".");
-          const lf = life(s, P(s, "small", "Muffinblech: 3 · 4 = 12 Mulden. Eierkarton: 2 · 5 = 10 Eier. Klassenfoto: 24 Kinder in 3 Reihen zu je 8."));
+          const lf = life(s, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } },
+            s.photo("eierkarton-10", { w: 170, h: 128, style: { flex: "none" } }),
+            P(s, "small", "Eierkarton: 2 · 5 = 10 Eier. Muffinblech: 3 · 4 = 12 Mulden. Klassenfoto: 24 Kinder in 3 Reihen zu je 8.")));
           lf.classList.add("later");
           const right = s.h("div", { class: "stack" },
             P(s, "t", "Für das Konzert der Instrumentalklasse sollen 12 Stühle in gleich langen Reihen stehen."),
@@ -267,10 +269,11 @@
           svg.append(frog);
           const vtxt = L(T(s, 550, 216, "V(4) = {4, 8, 12, 16, 20, 24, 28, 32, 36, 40, …}", { size: 25, fill: UC, font: 1 }));
           svg.append(vtxt);
-          const egg = (() => { const e = s.svg(300, 64); for (let c = 0; c < 3; c++) { e.append(s.el("rect", { x: 4 + c * 100, y: 4, width: 92, height: 56, rx: 10, fill: "#cfd8dc" })); for (let i = 0; i < 6; i++) e.append(s.el("ellipse", { cx: 20 + c * 100 + (i % 3) * 30, cy: 19 + Math.floor(i / 3) * 26, rx: 11, ry: 12, fill: "#fff3e0", stroke: "#c9a27e", "stroke-width": 1.5 })); } return e; })();
-          const clock = (() => { const e = s.svg(300, 64); e.append(s.el("circle", { cx: 150, cy: 32, r: 29, fill: "#fff", stroke: INK, "stroke-width": 3 })); for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; e.append(s.el("line", { x1: 150 + 22 * Math.sin(a), y1: 32 - 22 * Math.cos(a), x2: 150 + 27 * Math.sin(a), y2: 32 - 27 * Math.cos(a), stroke: i % 3 ? PEN : UC, "stroke-width": i % 3 ? 2 : 4 })); } e.append(s.el("line", { x1: 150, y1: 32, x2: 150 + 19, y2: 32, stroke: UC, "stroke-width": 3.5, "stroke-linecap": "round" })); return e; })();
-          const team = (() => { const e = s.svg(300, 64); for (let t = 0; t < 2; t++) for (let i = 0; i < 11; i++) e.append(s.el("circle", { cx: 18 + i * 24.5, cy: 18 + t * 28, r: 9, fill: t ? BLUE : RED })); return e; })();
-          const card = (svgE, txt) => { const c = life(s, svgE, P(s, "small", txt)); c.classList.add("later"); c.style.display = "flex"; c.style.flexDirection = "column"; c.style.gap = "6px"; return c; };
+          const PC = { w: 140, h: 132, style: { flex: "none" } };
+          const egg = s.photo("eierkarton-6", Object.assign({ pos: "50% 55%" }, PC));
+          const clock = s.photo("uhr-rohrdamm", Object.assign({ pos: "50% 38%", }, PC));
+          const team = s.photo("fussballteam", Object.assign({ pos: "50% 45%" }, PC));
+          const card = (svgE, txt) => { const c = life(s, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px", alignItems: "center" } }, svgE, P(s, "small", txt))); c.classList.add("later"); c.style.minWidth = "0"; return c; };
           const cards = [card(egg, "6 Eier pro Karton: 6, 12, 18, 24, … – Vielfache von 6."),
             card(clock, "Der Minutenzeiger zeigt auf eine Zahl alle 5 Minuten: 5, 10, 15, … – V(5)."),
             card(team, "Ein Fußballteam hat 11 Spieler: 11, 22, 33, … Spieler – V(11).")];
@@ -282,13 +285,13 @@
               if (!s.alive) return;
               s.show(hops[k - 1], "draw");
               const x1 = X(4 * k - 4), x2 = X(4 * k);
-              s.sfx.boing();
+              if (k === 1 || k === 10) s.sound("frosch", { vol: .6 }); else s.sfx.boing();
               await s.tween({ dur: 330, ease: "linear", update: v => frog.setAttribute("transform", `translate(${lerp(x1, x2, v)} ${Y - 18 - Math.sin(Math.PI * v) * 92})`) });
               s.sfx.count(k - 1); s.show(labels[k - 1], "pop");
             }
           });
           s.step(async () => { s.sfx.ding(); await s.show(vtxt, "up"); s.say("Die Vielfachen von vier: vier, acht, zwölf und immer so weiter."); });
-          s.step(async () => { s.sfx.pop(); await s.show(cards, "up"); });
+          s.step(async () => { s.sound("clock-tick", { vol: .45, dur: 2 }); await s.show(cards, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -327,7 +330,7 @@
           s.step(async () => { s.sfx.count(7); await s.show(b10, "draw"); s.show(l10, "pop"); s.sfx.ding(); await s.show(sum, "up"); });
           s.step(async () => { s.sfx.whoosh(); await s.show(num, "up"); s.sfx.ding(); await s.show(verdict, "pop"); s.say("Bei 3475 entscheidet nur die 5 am Ende."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.coin(); await s.show(lf, "up"); });
+          s.step(async () => { s.sound("coins", { vol: .6 }); await s.show(lf, "up"); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -473,7 +476,7 @@
           s.step(async () => { await move(380); s.sfx.ding(); await s.show(c1, "up"); });
           s.step(async () => { await move(720); s.sfx.ding(); await s.show(c2, "up"); });
           s.step(async () => { await move(990); tokR.setAttribute("fill", GREEN); s.sfx.success(); await s.show(fin, "pop"); s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(cards, "up"); });
+          s.step(async () => { s.sound("kids-cheer", { vol: .4, dur: 2.5 }); await s.show(cards, "up"); });
         },
       },
       /* 9 ---------------------------------------------------------------- */
@@ -554,7 +557,9 @@
           };
           const A = panel(6), B = panel(7), C = panel(9);
           const merk = s.h("div", { class: "merk later" }, "Eine ", s.h("b", null, "Primzahl"), " hat genau zwei Teiler: 1 und sich selbst. Die ", s.h("b", null, "1"), " ist keine Primzahl.");
-          const lf = life(s, P(s, "small", "Zikaden in Nordamerika schlüpfen alle 13 oder 17 Jahre – beides Primzahlen! Und beim Online-Banking schützen riesige Primzahlen deine Daten."));
+          const lf = life(s, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } },
+            s.photo("zikade", { w: 150, h: 120, style: { flex: "none" } }),
+            P(s, "small", "Zikaden in Nordamerika schlüpfen alle 13 oder 17 Jahre – beides Primzahlen! Und beim Online-Banking schützen riesige Primzahlen deine Daten.")));
           lf.classList.add("later");
           const primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47];
           const chips = primes.map(p => s.h("span", { class: "u4chip later", style: { borderColor: UC, color: UC } }, String(p)));
@@ -595,7 +600,7 @@
           const items = [item(PEN, "1 streichen – sie ist keine Primzahl."), item(BLUE, "2 einkreisen, alle Vielfachen von 2 streichen."), item(GREEN, "3 einkreisen, Vielfache von 3 streichen."),
             item(VIOLET, "5 und 7 genauso."), item(UC, "Alles, was übrig bleibt, ist eine Primzahl!")];
           const merk = s.h("div", { class: "merk later" }, "Bis 100 gibt es ", s.h("b", null, "25 Primzahlen"), ". Nach der 7 ist schon alles gesiebt, denn 11 · 11 = 121 ist größer als 100.");
-          const right = s.h("div", { class: "stack", style: { gap: "12px" } }, P(s, "t", "Der Grieche Eratosthenes fand so vor über 2000 Jahren alle Primzahlen:"), items, merk);
+          const right = s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, s.photo("eratosthenes", { w: 104, h: 140, pos: "50% 35%", style: { flex: "none" } }), P(s, "t", "Der Grieche Eratosthenes fand so vor über 2000 Jahren alle Primzahlen:")), items, merk);
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "532px 1fr", alignItems: "center", height: "100%" } }, svg, right));
           s.show(svg, "zoom"); s.sfx.pop();
           const sieve = async (p, col, i0) => {
@@ -734,7 +739,7 @@
             s.h("div", { class: "cols", style: { gap: "20px" } }, lists, lf)));
           s.show(svg, "left"); s.sfx.whoosh();
           s.step(async () => { sl.set(4); s.say("Vier Meter: beim langen Band bleiben zwei Meter übrig."); });
-          s.step(async () => { sl.set(6); s.sfx.success(); s.say("Sechs Meter passen bei beiden genau. Das ist der größte gemeinsame Teiler."); });
+          s.step(async () => { sl.set(6); s.sound("scissors", { vol: .6 }); s.say("Sechs Meter passen bei beiden genau. Das ist der größte gemeinsame Teiler."); });
           s.step(async () => { s.sfx.pop(); await s.show(lists, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
         },
@@ -766,7 +771,7 @@
           busA.setAttribute("transform", `translate(${X(0)} ${Y - 42})`); busB.setAttribute("transform", `translate(${X(0)} ${Y + 44})`);
           svg.append(busA, busB);
           const drive = async (bb, list, yy, col) => {
-            let i = 0; s.sfx.whoosh();
+            let i = 0; s.sound("traffic", { vol: .35, dur: 3 });
             await s.tween({ dur: 3000, ease: "linear", update: v => {
               const m = v * 48; bb.setAttribute("transform", `translate(${X(m)} ${yy})`);
               while (i < list.length && list[i].m <= m + 1e-6) { s.show(list[i].g, "pop"); s.sfx.note(col === BLUE ? 0 + i : 7 + i, 0.15); i++; }
@@ -799,7 +804,7 @@
         say: "Eine Gruppe klatscht jeden dritten Schlag, die andere jeden vierten. Nach zwölf Schlägen treffen sie sich wieder.",
         build(s) {
           const svg = s.svg(1100, 262), CX = i => 160 + i * 70;
-          const rows = [{ y: 40, step: 3, col: UC, lbl: "3er-Takt" }, { y: 128, step: 4, col: BLUE, lbl: "4er-Takt" }];
+          const rows = [{ y: 40, step: 3, col: UC, lbl: "3er: klatschen" }, { y: 128, step: 4, col: BLUE, lbl: "4er: Holzblock" }];
           const hits = [[], []];
           const meetCols = [0, 12].map(i => L(s.el("rect", { x: CX(i) - 3, y: 30, width: 70, height: 184, rx: 12, fill: YEL, opacity: .55 })));
           svg.append(...meetCols);
@@ -820,9 +825,9 @@
               if (!s.alive || my !== tok) return;
               head.setAttribute("x", CX(i) - 4);
               const a = (mode !== "4") && i % 3 === 0, b = (mode !== "3") && i % 4 === 0;
-              if (a && b) { s.sfx.drum(); s.sfx.chord([0, 4, 7, 12]); }
-              else if (a) s.sfx.drum();
-              else if (b) s.sfx.note(12, 0.15, "square");
+              if (a && b) { s.sound("klatschen"); s.sound("holzblock"); s.sfx.chord([0, 4, 7, 12]); }
+              else if (a) s.sound("klatschen");
+              else if (b) s.sound("holzblock");
               else s.sfx.tick();
               await s.wait(340);
             }
@@ -835,8 +840,8 @@
           lf.classList.add("later");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "22px" } }, svg, btnRow, s.h("div", { class: "cols", style: { gap: "20px" } }, merk, lf)));
           s.sfx.pop();
-          s.step(async () => { for (const c of hits[0]) { s.sfx.drum(); await s.show(c, "pop"); } await play("3"); });
-          s.step(async () => { for (const c of hits[1]) { s.sfx.note(12, 0.12, "square"); await s.show(c, "pop"); } await play("4"); });
+          s.step(async () => { for (const c of hits[0]) { s.sound("klatschen"); await s.show(c, "pop"); } await play("3"); });
+          s.step(async () => { for (const c of hits[1]) { s.sound("holzblock"); await s.show(c, "pop"); } await play("4"); });
           s.step(async () => { await s.show(meetCols, "fade"); await play("b"); s.sfx.ding(); await s.show(merk, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); await s.show(btnRow, "up"); s.say("Drück auf die Knöpfe und hör genau hin."); });
         },

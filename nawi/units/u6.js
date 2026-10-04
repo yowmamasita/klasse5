@@ -111,6 +111,28 @@
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
       },
+      /* 1b – real photos ------------------------------------------------- */
+      {
+        title: "Sonnenenergie in echt",
+        say: "Der Weizen fängt Sonnenlicht ein. Der Feldhase frisst Pflanzen, und der Fuchs frisst den Hasen.",
+        build(s) {
+          const arrowEl = () => s.h("span", { class: "big later", style: { color: "#e8a400", flex: "none" } }, "→");
+          const figs = [
+            s.photo("weizenfeld", { w: 310, h: 300, pos: "40% 70%", caption: "Pflanzen: Weizen" }),
+            s.photo("feldhase", { w: 310, h: 300, pos: "50% 50%", caption: "Pflanzenfresser: Feldhase", cls: "later" }),
+            s.photo("rotfuchs", { w: 310, h: 300, pos: "55% 50%", caption: "Fleischfresser: Fuchs", cls: "later" }),
+          ];
+          const a1 = arrowEl(), a2 = arrowEl();
+          const life = box(s, "life", "Im Alltag", "Aus Weizen wird Mehl – und daraus dein Brot. Im Pausenbrot steckt also gespeicherte <b>Sonnenenergie</b>!");
+          s.add(s.h("div", { class: "stack", style: { gap: "20px", height: "100%", justifyContent: "center" } },
+            P(s, "Die Energie der Sonne wandert von Lebewesen zu Lebewesen – eine <b>Nahrungskette</b>:"),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px", justifyContent: "center", alignItems: "center" } }, figs[0], a1, figs[1], a2, figs[2]), life));
+          s.show(figs[0], "zoom"); s.sound("birds", { vol: 0.4, dur: 6 });
+          s.step(async () => { s.sfx.pop(); s.show(a1, "left"); await s.show(figs[1], "zoom"); s.say("Der Feldhase frisst Gras und Kräuter."); });
+          s.step(async () => { s.sfx.pop(); s.show(a2, "left"); await s.show(figs[2], "zoom"); s.say("Der Fuchs frisst den Hasen."); });
+          s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+        },
+      },
       /* 2 ---------------------------------------------------------------- */
       {
         title: "Temperatur und Wärme",
@@ -148,7 +170,7 @@
           const life = box(s, "life", "Im Alltag", "Eiswürfel im Saft schmelzen · Pommes kühlen auf dem Teller ab · Wasser gefriert bei 0 °C und kocht bei 100 °C");
           s.add(cols(s, canvas, stack(s, 12, P(s, "Die <b>Temperatur</b> sagt, wie warm etwas ist (in <b>°C</b>). Je wärmer, desto schneller zappeln die Teilchen."), sl, ex, m, life)));
           s.show(canvas, "zoom"); s.sfx.pop();
-          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 20, to: 90, dur: 1400, update: v => { T = Math.round(v); sl.input.value = T; } }); sl.set(90); s.say("Heißes Wasser: Die Teilchen flitzen schnell herum."); });
+          s.step(async () => { s.sound("kochen", { vol: 0.5 }); await s.tween({ from: 20, to: 90, dur: 1400, update: v => { T = Math.round(v); sl.input.value = T; } }); sl.set(90); s.say("Heißes Wasser: Die Teilchen flitzen schnell herum."); });
           s.step(async () => { s.sfx.pop(); await s.show(ex, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.say("Gleiche Temperatur, aber die Badewanne hat viel mehr Wärme."); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
@@ -198,7 +220,7 @@
           const life = box(s, "life", "Im Alltag", "Topfgriffe aus Kunststoff · Kochlöffel aus Holz · Eine Metallbank fühlt sich im Winter kälter an als eine Holzbank: Das Metall leitet die Wärme schnell aus deiner Hand.");
           s.add(cols(s, svg, stack(s, 14, P(s, "Bei der <b>Wärmeleitung</b> wandert die Wärme <b>durch</b> einen Stoff – vom heißen zum kalten Ende."),
             s.h("div", { class: "row", style: { gap: "10px" } }, mk("Metall", 1), mk("Holz", 0.05), mk("Kunststoff", 0.03)), card, ex1, ex2, life), 540));
-          s.show(svg, "zoom"); s.sfx.pop();
+          s.show(svg, "zoom"); s.sound("glass-clink", { vol: 0.6 });
           s.step(async () => { s.sfx.ding(); await s.show(ex1, "up"); s.say("Ein Metalllöffel wird schnell heiß."); });
           s.step(async () => { reset(0.05, "Holz"); await s.show(ex2, "up"); s.say("Ein Holzlöffel bleibt am Griff kalt."); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
@@ -244,7 +266,7 @@
           s.show(canvas, "zoom"); s.sfx.pop();
           s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 900, update: v => (heatOn = v) }); s.sfx.pop(); await s.show(ex, "up"); s.say("Die Heizung ist an. Die Luft fängt an zu kreisen."); });
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: 0, to: 1, dur: 600, update: v => (arrows = v) }); s.sfx.ding(); await s.show(m, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("bubbles", { vol: 0.6 }); await s.show(life, "up"); });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -287,9 +309,12 @@
           const meter = s.h("div", { class: "card soft" }, s.h("p", { class: "small" }, s.h("b", null, "Wärme im Gesicht"), " – ziehe das Kind!"),
             s.h("div", { style: { height: "22px", background: "#fff", borderRadius: "10px", border: "2px solid #c8d3de", marginTop: "8px" } }, bar));
           const ex = box(s, "ex", "Die Sonne", "Zwischen Sonne und Erde ist fast leerer Raum – keine Luft. Trotzdem wärmt uns die Sonne: durch <b>Wärmestrahlung</b>.");
-          const life = box(s, "life", "Im Alltag", "Lagerfeuer: vorne warm, hinten kalt · Sonne auf der Haut · Im Winter wärmt dich die Sonne, obwohl die Luft kalt ist");
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center", gap: "16px" } },
+              s.photo("lagerfeuer", { w: 220, h: 150, pos: "50% 60%", style: { flex: "none" } }),
+              s.h("p", { class: "small", html: "Lagerfeuer: vorne warm, hinten kalt · Sonne auf der Haut · Im Winter wärmt dich die Sonne, obwohl die Luft kalt ist" })));
           s.add(cols(s, canvas, stack(s, 16, P(s, "Wärme kann auch als <b>Wärmestrahlung</b> reisen – ganz ohne Stoff dazwischen."), meter, ex, life)));
-          s.show(canvas, "zoom"); s.sfx.whoosh();
+          s.show(canvas, "zoom"); s.sound("fire", { vol: 0.5, dur: 6 });
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: kx, to: 250, dur: 900, update: v => (kx = v) }); s.sfx.pop(); s.say("Nah am Feuer wird dir richtig warm."); await s.wait(300); await s.tween({ from: 250, to: 440, dur: 900, update: v => (kx = v) }); });
           s.step(async () => { s.sfx.ding(); await s.show(ex, "up"); s.say("Auch die Sonne wärmt uns durch Strahlung."); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
@@ -326,7 +351,10 @@
           const btn = s.h("button", { class: "btn solid", onclick: () => { run = !run; btn.textContent = run ? "Sonne aus" : "Sonne an"; s.sfx.pop(); } }, "Sonne an");
           const again = s.h("button", { class: "btn", onclick: () => { tb = tw = 0; s.hide(res); s.sfx.click(); } }, "Neu starten");
           const ex = box(s, "ex", "Versuch", "Zwei gleiche Dosen mit Wasser in die Sonne stellen – eine schwarz, eine weiß. Nach einiger Zeit ist das Wasser in der <b>schwarzen</b> Dose wärmer.");
-          const life = box(s, "life", "Im Alltag", "Schwarzes T-Shirt im Sommer: heiß! · Weiße Kleidung hält kühler · Eis auf schwarzem Papier schmilzt schneller");
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center", gap: "16px" } },
+              s.photo("weisse-haeuser", { w: 220, h: 150, pos: "50% 50%", style: { flex: "none" } }),
+              s.h("p", { class: "small", html: "<b>Weiße Häuser</b> in Griechenland bleiben in der Sonne kühler · Schwarzes T-Shirt im Sommer: heiß! · Weiße Kleidung hält kühler" })));
           s.add(cols(s, svg, stack(s, 16, P(s, "Dunkle Flächen <b>absorbieren</b> (schlucken) viel Licht und werden warm. Helle Flächen <b>reflektieren</b> viel Licht."),
             s.h("div", { class: "row" }, btn, again), ex, life), 540));
           s.show(svg, "zoom"); s.sfx.pop();
@@ -381,7 +409,7 @@
           const ex = box(s, "ex", "Haus", "Dämmplatten an Wänden und Dach halten im Winter die Wärme im Haus – und im Sommer die Hitze draußen.");
           const life = box(s, "life", "Im Alltag", "Winterjacke und Wollmütze: Luft zwischen den Fasern · Styroporbox hält Eis kalt · Zwei Paar Socken an kalten Tagen");
           s.add(cols(s, canvas, stack(s, 14, P(s, "<b>Wärmedämmung</b> bremst den Wärmetransport. Der Trick: eingeschlossene <b>Luft</b> leitet Wärme schlecht."), sl, card, ex, life)));
-          s.show(canvas, "zoom"); s.sfx.pop();
+          s.show(canvas, "zoom"); s.sound("wind", { vol: 0.4, dur: 5 });
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: 0, to: 10, dur: 1400, update: v => { ins = v / 10; sl.input.value = v; } }); sl.set(10); s.sfx.ding(); await s.show(ex, "up"); s.say("Mit dicker Dämmung bleibt die Wärme im Haus."); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
         },
@@ -409,13 +437,8 @@
               p.setAttribute("d", d);
             });
           });
-          const bear = s.svg(130, 90);
-          bear.append(s.el("ellipse", { cx: 60, cy: 55, rx: 46, ry: 26, fill: "#f4f1e8", stroke: "#9aa3b2", "stroke-width": 2 }), s.el("circle", { cx: 104, cy: 42, r: 18, fill: "#f4f1e8", stroke: "#9aa3b2", "stroke-width": 2 }),
-            s.el("circle", { cx: 98, cy: 26, r: 6, fill: "#f4f1e8", stroke: "#9aa3b2", "stroke-width": 2 }), s.el("circle", { cx: 120, cy: 46, r: 4, fill: "#111" }), s.el("circle", { cx: 106, cy: 38, r: 2.5, fill: "#111" }),
-            ...[30, 50, 74, 92].map(x => s.el("rect", { x: x - 6, y: 70, width: 12, height: 18, rx: 5, fill: "#f4f1e8", stroke: "#9aa3b2", "stroke-width": 2 })));
-          const seal = s.svg(130, 90);
-          seal.append(s.el("path", { d: "M10,70 Q30,30 80,36 Q110,38 118,58 Q100,74 60,74 Z", fill: "#7d8794" }), s.el("circle", { cx: 108, cy: 50, r: 3, fill: "#111" }),
-            s.el("path", { d: "M10,70 L2,58 M10,70 L0,78", stroke: "#7d8794", "stroke-width": 6, "stroke-linecap": "round" }), s.el("rect", { x: 0, y: 76, width: 130, height: 14, fill: "#7fb2e6" }));
+          const bear = s.photo("eisbaer", { w: 180, h: 125, pos: "50% 50%" });
+          const seal = s.photo("seehund", { w: 180, h: 125, pos: "50% 50%" });
           const card = (title, html, pic, hidden) => s.h("div", { class: "card" + (hidden ? " later" : ""), style: { display: "flex", gap: "14px", alignItems: "center" } }, pic ? noShrink(pic) : null,
             s.h("div", null, s.h("p", { class: "h2", style: { fontSize: "25px", marginBottom: "4px" } }, title), s.h("p", { class: "small", html })));
           const c1 = card("Thermoskanne", "Zwischen den zwei Wänden ist fast keine Luft: kaum Wärmeleitung. Die Spiegelschicht wirft die Wärmestrahlung zurück. Tee bleibt heiß – Limo bleibt kalt.", null, false);
@@ -464,7 +487,7 @@
             ball.setAttribute("r", br); ball.setAttribute("cy", -br - 2);
           };
           updB();
-          const pump = s.h("button", { class: "btn later", style: { flex: "none", whiteSpace: "nowrap" }, onclick: async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 900, update: v => { br = 24 + 6 * v; tilt = -6 * v; updB(); } }); s.sfx.drum(); } }, "Ball aufpumpen");
+          const pump = s.h("button", { class: "btn later", style: { flex: "none", whiteSpace: "nowrap" }, onclick: async () => { s.sound("luftpumpe", { vol: 0.8 }); await s.tween({ from: 0, to: 1, dur: 900, update: v => { br = 24 + 6 * v; tilt = -6 * v; updB(); } }); s.sfx.drum(); } }, "Ball aufpumpen");
           const tA = P(s, "<b>Luft braucht Platz.</b> Das Wasser kann nicht ins Glas, weil dort schon Luft ist.", "small");
           const tB = P(s, "<b>Luft hat Masse.</b> Der aufgepumpte Ball ist schwerer. 1 Liter Luft wiegt etwa <b>1,2 g</b>.", "small", true);
           const m = merk(s, "<b>Luftdruck</b>: Die Luft drückt von allen Seiten auf uns – auf Meereshöhe im Mittel mit <b>1013 hPa</b>.");
@@ -474,7 +497,7 @@
             s.h("div", { class: "cols", style: { gap: "20px" } }, m, life)));
           s.show(a, "zoom"); s.show(b, "zoom", 150); s.sfx.pop();
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: 0, to: 120, dur: 1300, update: v => { gy = v; updA(); } }); s.sfx.ding(); await s.show(dry, "pop"); s.say("Das Papier im Glas bleibt trocken. Die Luft braucht Platz."); });
-          s.step(async () => { s.show(pump, "pop"); await s.show(tB, "up"); s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 900, update: v => { br = 24 + 6 * v; tilt = -6 * v; updB(); } }); s.sfx.drum(); s.say("Der aufgepumpte Ball ist schwerer. Luft hat Masse."); });
+          s.step(async () => { s.show(pump, "pop"); await s.show(tB, "up"); s.sound("luftpumpe", { vol: 0.8 }); await s.tween({ from: 0, to: 1, dur: 900, update: v => { br = 24 + 6 * v; tilt = -6 * v; updB(); } }); s.sfx.drum(); s.say("Der aufgepumpte Ball ist schwerer. Luft hat Masse."); });
           s.step(async () => { s.sfx.pop(); await s.show(m, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
         },
@@ -517,11 +540,11 @@
           });
           const sl = s.slider({ label: "Brenner", min: 0, max: 10, value: 0, fmt: v => (v === 0 ? "aus" : v <= 5 ? "klein" : "volle Flamme"), onInput: v => (hb = v / 10) });
           const ex = box(s, "ex", "Heißluftballon", "Der Brenner heizt die Luft in der Hülle. Die Luft dehnt sich aus, ein Teil entweicht. Die Hülle wird leichter – der Ballon steigt.");
-          const life = box(s, "life", "Im Alltag", "Rauch über dem Lagerfeuer steigt auf · Unter der Zimmerdecke ist es wärmer als am Boden · Über der Heizung steigt warme Luft nach oben");
+          const life = s.photo("heissluftballon", { w: 512, h: 200, pos: "50% 40%", caption: "Ein echter Heißluftballon am Himmel", cls: "later" });
           s.add(cols(s, canvas, stack(s, 16, P(s, "Warme Luft <b>dehnt sich aus</b>. Sie ist leichter als gleich viel kalte Luft – darum steigt sie nach oben."), sl, ex, life)));
           s.show(canvas, "zoom"); s.sfx.pop();
-          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 10, dur: 1500, update: v => { hb = v / 10; sl.input.value = v; } }); sl.set(10); s.sfx.pop(); await s.show(ex, "up"); s.say("Volle Flamme: Der Ballon steigt!"); });
-          s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("ballonbrenner", { vol: 0.7 }); await s.tween({ from: 0, to: 10, dur: 1500, update: v => { hb = v / 10; sl.input.value = v; } }); sl.set(10); s.sfx.pop(); await s.show(ex, "up"); s.say("Volle Flamme: Der Ballon steigt!"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(life, "zoom"); s.say("So sieht ein echter Heißluftballon aus."); });
         },
       },
       /* 11 --------------------------------------------------------------- */
@@ -575,6 +598,27 @@
           s.step(async () => { s.sfx.pop(); s.show(cards[4], "pop"); await s.show(cards[5], "pop", 150); s.sfx.success(); s.say("Bewölkung und Luftfeuchte."); });
         },
       },
+      /* 11b – real photos ------------------------------------------------ */
+      {
+        title: "Wetter in echt",
+        say: "In einer Wetterhütte messen Geräte Temperatur und Luftfeuchte. Und am Himmel liest du das Wetter an den Wolken ab.",
+        build(s) {
+          const figs = [
+            s.photo("wetterhuette", { w: 340, h: 330, pos: "50% 45%", caption: "Wetterhütte" }),
+            s.photo("haufenwolken", { w: 340, h: 330, pos: "50% 50%", caption: "Schönwetterwolken", cls: "later" }),
+            s.photo("gewitterwolke", { w: 340, h: 330, pos: "35% 50%", caption: "Gewitterwolke", cls: "later" }),
+          ];
+          const t1 = P(s, "Weiß und mit Lamellen: So scheint die Sonne nicht auf die <b>Messgeräte</b>, aber Luft kommt herein. In Deutschland misst man die Lufttemperatur in <b>2 m</b> Höhe.", "small");
+          const btns = s.h("div", { class: "row later", style: { gap: "14px", justifyContent: "center" } },
+            s.soundBtn("rain", "Regen anhören", { dur: 7 }), s.soundBtn("wind", "Sturm anhören", { dur: 7 }), s.soundBtn("thunder", "Donner anhören", { dur: 6 }));
+          s.add(s.h("div", { class: "stack", style: { gap: "16px", height: "100%", justifyContent: "center" } },
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center" } }, ...figs), t1, btns));
+          s.show(figs[0], "zoom"); s.sfx.pop();
+          s.step(async () => { s.sound("birds", { vol: 0.4, dur: 4 }); await s.show(figs[1], "zoom"); s.say("Weiße Haufenwolken am blauen Himmel: schönes Wetter."); });
+          s.step(async () => { s.sound("thunder", { vol: 0.6, dur: 5 }); await s.show(figs[2], "zoom"); s.say("Eine riesige, dunkle Wolke: Gleich gibt es ein Gewitter!"); });
+          s.step(async () => { s.sfx.pop(); await s.show(btns, "up"); });
+        },
+      },
       /* 12 --------------------------------------------------------------- */
       {
         title: "Der Wasserkreislauf",
@@ -621,9 +665,9 @@
           s.show(svg, "zoom"); s.sfx.pop();
           on[0] = 1; s.show(labs[0], "fade");
           s.step(async () => { s.sfx.whoosh(); await s.show(cloud, "zoom"); on[1] = 1; s.show(labs[1], "fade"); await s.show(rows[1], "left"); s.say("Kondensation: Eine Wolke entsteht."); });
-          s.step(async () => { on[2] = 1; s.sfx.scribble(); s.show(labs[2], "fade"); await s.show(rows[2], "left"); s.say("Niederschlag: Es regnet."); });
+          s.step(async () => { on[2] = 1; s.sound("rain", { vol: 0.45, dur: 4 }); s.show(labs[2], "fade"); await s.show(rows[2], "left"); s.say("Niederschlag: Es regnet."); });
           s.step(async () => { on[3] = 1; s.sfx.pop(); s.show(gw, "fade"); s.show([labs[3], gwLbl], "fade"); await s.show(rows[3], "left"); s.say("Das Wasser versickert und wird zu Grundwasser."); });
-          s.step(async () => { s.sfx.swoosh(); await s.show(river, "draw"); on[4] = 1; s.show(labs[4], "fade"); await s.show(rows[4], "left"); s.sfx.success(); s.say("Über die Flüsse fließt das Wasser zurück ins Meer. Der Kreis ist geschlossen."); });
+          s.step(async () => { s.sound("water-pour", { vol: 0.5 }); await s.show(river, "draw"); on[4] = 1; s.show(labs[4], "fade"); await s.show(rows[4], "left"); s.sfx.success(); s.say("Über die Flüsse fließt das Wasser zurück ins Meer. Der Kreis ist geschlossen."); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -655,9 +699,13 @@
           const chain = [["Spree", "fließt durch Berlin"], ["Havel", "nimmt die Spree in <b>Spandau</b> auf"], ["Elbe", "nimmt die Havel bei <b>Havelberg</b> auf"], ["Nordsee", "Die Elbe mündet bei <b>Cuxhaven</b>"]]
             .map(([a, b], i) => s.h("div", { class: "row" + (i ? " later" : ""), style: { flexWrap: "nowrap", gap: "12px" } }, s.h("span", { class: "chip", style: { flex: "none", minWidth: "104px", justifyContent: "center" } }, a), s.h("p", { class: "small", html: b })));
           const life = box(s, "life", "Wasserkreislauf zu Hause", "Der Badspiegel beschlägt nach dem Duschen: Dampf <b>kondensiert</b> am kalten Glas · Pfützen trocknen in der Sonne: Wasser <b>verdunstet</b> · Nasse Wäsche trocknet auf der Leine");
-          s.add(cols(s, svg, stack(s, 14, P(s, "Ein Regentropfen in Berlin kann bis ins Meer reisen:"), ...chain, life), 540));
+          const pics = s.h("div", { class: "row later", style: { flexWrap: "nowrap", gap: "14px" } },
+            s.photo("spree-dom", { w: 248, h: 150, pos: "50% 55%", caption: "Spree in Berlin" }),
+            s.photo("elbe-cuxhaven", { w: 248, h: 150, pos: "60% 50%", caption: "Elbmündung" }));
+          s.add(cols(s, svg, stack(s, 12, P(s, "Ein Regentropfen in Berlin kann bis ins Meer reisen:"), ...chain, pics, life), 540));
           s.show(svg, "zoom"); s.sfx.pop();
           s.step(async () => { moving = true; s.show(drop, "pop"); s.sfx.whoosh(); for (let i = 1; i < 4; i++) { s.sfx.count(i); await s.show(chain[i], "left"); } s.say("Spree, Havel, Elbe, Nordsee."); });
+          s.step(async () => { s.sound("waves", { vol: 0.45, dur: 5 }); await s.show(pics, "up"); s.say("Bei Cuxhaven fließt die Elbe in die Nordsee."); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
       },
@@ -718,25 +766,17 @@
         title: "Was kannst du tun?",
         say: "Jeder kann etwas für das Klima tun. Hier sind sechs Ideen.",
         build(s) {
-          const ic = (draw) => { const v = s.svg(110, 70); v.style.width = "130px"; v.style.height = "83px"; draw(v); return v; };
-          const items = [
-            ["Rad, Füße, BVG", "Autos verbrennen Benzin oder Diesel, dabei entsteht CO₂. Fahrrad, zu Fuß oder U-Bahn sind besser.", v => v.append(
-              s.el("circle", { cx: 28, cy: 46, r: 18, fill: "none", stroke: "#1b2740", "stroke-width": 4 }), s.el("circle", { cx: 82, cy: 46, r: 18, fill: "none", stroke: "#1b2740", "stroke-width": 4 }),
-              s.el("path", { d: "M28,46 L48,22 L74,22 L82,46 M48,22 L56,46 L74,22", fill: "none", stroke: UC, "stroke-width": 4 }))],
-            ["Licht aus", "Strom wird oft noch in Kraftwerken mit Kohle oder Gas gemacht. Licht und Geräte aus, wenn du gehst!", v => v.append(
-              s.el("circle", { cx: 55, cy: 30, r: 20, fill: "#eee", stroke: "#1b2740", "stroke-width": 3 }), s.el("rect", { x: 46, y: 48, width: 18, height: 12, fill: "#8d8d8d" }), s.el("path", { d: "M20,66 L90,4", stroke: "#e0322b", "stroke-width": 5 }))],
-            ["Stoßlüften", "Im Winter das Fenster kurz ganz öffnen statt lange kippen. So geht weniger Heizwärme verloren.", v => v.append(
-              s.el("rect", { x: 25, y: 6, width: 60, height: 60, fill: "#bfe3ff", stroke: "#1b2740", "stroke-width": 4 }), s.el("line", { x1: 55, y1: 6, x2: 55, y2: 66, stroke: "#1b2740", "stroke-width": 4 }), s.el("path", { d: "M90,36 q8,-6 16,0", fill: "none", stroke: "#2f6dd6", "stroke-width": 3 }))],
-            ["Pulli statt Heizung", "Ist dir kalt, zieh erst einen Pulli an. Weniger heizen spart Energie.", v => v.append(
-              s.el("path", { d: "M30,10 L45,4 Q55,14 65,4 L80,10 L100,30 L88,40 L80,32 L80,66 L30,66 L30,32 L22,40 L10,30 Z", fill: UC }))],
-            ["Bäume und Grün", "Pflanzen nehmen bei der Fotosynthese CO₂ aus der Luft auf. Bäume in der Stadt kühlen auch.", v => v.append(
-              s.el("rect", { x: 50, y: 40, width: 12, height: 30, fill: "#7a4a22" }), s.el("circle", { cx: 56, cy: 30, r: 26, fill: "#3a9a3a" }))],
-            ["Reparieren", "Jedes neue Ding braucht Energie, bis es fertig ist. Reparieren, tauschen und weitergeben hilft.", v => v.append(
-              s.el("path", { d: "M20,60 L60,20 M60,20 q10,-14 24,-6 l-12,12 l4,8 l8,4 l12,-12 q8,14 -6,24 q-12,4 -20,-4", fill: "none", stroke: "#1b2740", "stroke-width": 5, "stroke-linecap": "round" }))],
+                    const items = [
+            ["Rad, Füße, BVG", "Autos verbrennen Benzin oder Diesel, dabei entsteht CO₂. Fahrrad, zu Fuß oder U-Bahn sind besser.", s.photo("radweg-berlin", { w: "100%", h: 130, pos: "50% 60%" })],
+            ["Licht aus", "Strom wird oft noch in Kraftwerken mit Kohle oder Gas gemacht. Licht und Geräte aus, wenn du gehst!", s.photo("lichtschalter-foto", { w: "100%", h: 130, pos: "50% 50%" })],
+            ["Stoßlüften", "Im Winter das Fenster kurz ganz öffnen statt lange kippen. So geht weniger Heizwärme verloren.", s.photo("offenes-fenster", { w: "100%", h: 130, pos: "50% 50%" })],
+            ["Pulli statt Heizung", "Ist dir kalt, zieh erst einen Pulli an. Weniger heizen spart Energie.", s.photo("pullover", { w: "100%", h: 130, pos: "50% 45%" })],
+            ["Bäume und Grün", "Pflanzen nehmen bei der Fotosynthese CO₂ aus der Luft auf. Bäume in der Stadt kühlen auch.", s.photo("strassenbaeume", { w: "100%", h: 130, pos: "50% 40%" })],
+            ["Reparieren", "Jedes neue Ding braucht Energie, bis es fertig ist. Reparieren, tauschen und weitergeben hilft.", s.photo("reparieren", { w: "100%", h: 130, pos: "50% 50%" })],
           ];
-          const cards = items.map(([t, txt, d]) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "6px" } }, ic(d), s.h("p", { class: "h2", style: { fontSize: "25px" } }, t), s.h("p", { class: "small", html: txt })));
+          const cards = items.map(([t, txt, fig]) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "6px", padding: "12px 14px" } }, fig, s.h("p", { class: "h2", style: { fontSize: "25px" } }, t), s.h("p", { class: "small", html: txt })));
           s.add(s.h("div", { class: "cols3", style: { gridTemplateRows: "1fr 1fr", height: "100%", gap: "18px 20px" } }, ...cards));
-          s.sfx.whoosh(); s.show(cards[0], "pop"); s.show(cards[1], "pop", 150);
+          s.sound("bike-bell", { vol: 0.6 }); s.show(cards[0], "pop"); s.sound("lichtschalter", { when: 0.5 }); s.show(cards[1], "pop", 150);
           s.step(async () => { s.sfx.pop(); s.show(cards[2], "pop"); await s.show(cards[3], "pop", 150); s.say("Richtig lüften und lieber einen Pulli anziehen."); });
           s.step(async () => { s.sfx.pop(); s.show(cards[4], "pop"); await s.show(cards[5], "pop", 150); s.sfx.success(); s.say("Grün in der Stadt und Dinge reparieren."); });
         },
@@ -746,30 +786,19 @@
         title: "Im Alltag: Wärme und Wetter",
         say: "Wärme und Wetter erlebst du jeden Tag – in der Stadt, im Bad und auf dem Handy.",
         build(s) {
-          const ic = (draw) => { const v = s.svg(110, 70); v.style.width = "130px"; v.style.height = "83px"; draw(v); return v; };
-          const items = [
-            ["Stadt und Umland", "In Berlin kann es im Sommer in der Innenstadt über 11 °C wärmer sein als im Umland – vor allem nachts. Parks kühlen.", v => v.append(
-              s.el("rect", { x: 6, y: 20, width: 22, height: 48, fill: "#8a94a6" }), s.el("rect", { x: 30, y: 8, width: 20, height: 60, fill: "#5d6678" }), s.el("rect", { x: 52, y: 28, width: 16, height: 40, fill: "#8a94a6" }),
-              s.el("circle", { cx: 92, cy: 40, r: 16, fill: "#3a9a3a" }), s.el("rect", { x: 89, y: 52, width: 6, height: 16, fill: "#7a4a22" }))],
-            ["Schwitzen kühlt", "Schweiß verdunstet auf der Haut und nimmt dabei Wärme mit: <b>Verdunstungskälte</b>. Wind hilft noch mehr.", v => v.append(
-              s.el("circle", { cx: 55, cy: 38, r: 28, fill: "#f2c9a0", stroke: "#1b2740", "stroke-width": 3 }), s.el("path", { d: "M80,20 q-6,10 0,14 q6,-4 0,-14 z M88,40 q-5,8 0,11 q5,-3 0,-11 z", fill: "#7fbfef" }),
-              s.el("circle", { cx: 46, cy: 34, r: 3, fill: "#111" }), s.el("circle", { cx: 64, cy: 34, r: 3, fill: "#111" }), s.el("path", { d: "M46,48 q9,6 18,0", fill: "none", stroke: "#111", "stroke-width": 3 }))],
-            ["Beschlagener Spiegel", "Nach dem Duschen kondensiert der warme Wasserdampf am kalten Spiegel zu winzigen Tröpfchen.", v => v.append(
-              s.el("rect", { x: 25, y: 4, width: 60, height: 62, rx: 8, fill: "#dfe8ef", stroke: "#1b2740", "stroke-width": 3 }), ...[[40, 20], [60, 30], [48, 46], [70, 52], [36, 56], [72, 14]].map(([x, y]) => s.el("circle", { cx: x, cy: y, r: 3, fill: "#9fb6c9" })))],
-            ["Wetter-App", "Sonne, Wolke, Regentropfen, Blitz – dazu die Temperatur in °C. Die App zeigt die Wetterelemente als Bilder.", v => v.append(
-              s.el("circle", { cx: 18, cy: 22, r: 11, fill: "#ffc928" }), cloudS(s, 70, 22, 0.42, "#e6ebf1"),
-              s.el("path", { d: "M14,50 q-5,8 0,11 q5,-3 0,-11 z M26,50 q-5,8 0,11 q5,-3 0,-11 z", fill: "#2f6dd6" }), s.el("path", { d: "M70,42 L60,58 L70,58 L62,70 L82,52 L72,52 L78,42 Z", fill: "#f2c400", stroke: "#1b2740", "stroke-width": 1.5 }))],
-            ["Pfützen verschwinden", "Nach dem Regen scheint die Sonne – das Wasser der Pfütze verdunstet und steigt als Dampf in die Luft.", v => v.append(
-              s.el("ellipse", { cx: 55, cy: 56, rx: 46, ry: 10, fill: "#7fbfef" }), s.el("path", { d: "M40,40 q-6,-8 0,-16 q6,-8 0,-16 M60,40 q-6,-8 0,-16 q6,-8 0,-16", fill: "none", stroke: "#9aa3b2", "stroke-width": 3 }))],
-            ["Kalte Hände", "Im Winter wärmt eine Tasse Tee die Hände: Wärme fließt vom heißen Tee in die kalten Finger.", v => v.append(
-              s.el("path", { d: "M30,20 L36,66 L74,66 L80,20 Z", fill: "#fff", stroke: "#1b2740", "stroke-width": 3 }), s.el("path", { d: "M80,30 q16,4 10,20 q-4,8 -14,8", fill: "none", stroke: "#1b2740", "stroke-width": 3 }),
-              s.el("path", { d: "M44,14 q-5,-6 0,-12 M58,14 q-5,-6 0,-12", fill: "none", stroke: "#e0322b", "stroke-width": 3 }))],
+                    const items = [
+            ["Stadt und Umland", "In Berlin kann es im Sommer in der Innenstadt über 11 °C wärmer sein als im Umland – vor allem nachts. Parks wie der Tiergarten kühlen.", s.photo("tiergarten-luft", { w: "100%", h: 130, pos: "50% 50%" })],
+            ["Schwitzen und Hecheln", "Schweiß verdunstet auf der Haut und nimmt dabei Wärme mit: <b>Verdunstungskälte</b>. Hunde hecheln – an ihrer Zunge verdunstet Wasser.", s.photo("hund-hechelt", { w: "100%", h: 130, pos: "50% 35%" })],
+            ["Beschlagene Scheiben", "Nach dem Duschen oder an kalten Tagen kondensiert warmer Wasserdampf an kalten Spiegeln und Fenstern zu Tröpfchen.", s.photo("fenster-beschlagen", { w: "100%", h: 130, pos: "50% 50%" })],
+            ["Wetter-App", "Sonne, Wolke, Regentropfen, Blitz – dazu die Temperatur in °C. Die App zeigt die Wetterelemente als Bilder und Zahlen.", s.photo("wetter-app", { w: "100%", h: 130, pos: "50% 40%" })],
+            ["Pfützen verschwinden", "Nach dem Regen scheint die Sonne – das Wasser der Pfütze verdunstet und steigt als Dampf in die Luft.", s.photo("pfuetze", { w: "100%", h: 130, pos: "50% 50%" })],
+            ["Kalte Hände", "Im Winter wärmt eine Tasse Tee die Hände: Wärme fließt vom heißen Tee in die kalten Finger.", s.photo("tee-dampf", { w: "100%", h: 130, pos: "40% 40%" })],
           ];
-          const cards = items.map(([t, txt, d]) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "6px" } }, ic(d), s.h("p", { class: "h2", style: { fontSize: "25px" } }, t), s.h("p", { class: "small", html: txt })));
+          const cards = items.map(([t, txt, fig]) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "6px", padding: "12px 14px" } }, fig, s.h("p", { class: "h2", style: { fontSize: "25px" } }, t), s.h("p", { class: "small", html: txt })));
           s.add(s.h("div", { class: "cols3", style: { gridTemplateRows: "1fr 1fr", height: "100%", gap: "18px 20px" } }, ...cards));
           s.sfx.whoosh(); s.show(cards[0], "pop"); s.show(cards[1], "pop", 150);
-          s.step(async () => { s.sfx.pop(); s.show(cards[2], "pop"); await s.show(cards[3], "pop", 150); s.say("Der Spiegel beschlägt, und die Wetter-App zeigt Bilder."); });
-          s.step(async () => { s.sfx.pop(); s.show(cards[4], "pop"); await s.show(cards[5], "pop", 150); s.sfx.fanfare(); s.say("Super! Jetzt kennst du Sonne, Wärme und Wetter."); });
+          s.step(async () => { s.sfx.pop(); s.show(cards[2], "pop"); await s.show(cards[3], "pop", 150); s.say("Scheiben beschlagen, und die Wetter-App zeigt Bilder."); });
+          s.step(async () => { s.sound("rain", { vol: 0.4, dur: 3 }); s.show(cards[4], "pop"); await s.show(cards[5], "pop", 150); s.sfx.fanfare(); s.say("Super! Jetzt kennst du Sonne, Wärme und Wetter."); });
         },
       },
     ],

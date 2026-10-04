@@ -104,7 +104,7 @@
           const run = async () => {
             if (busy) return; busy = true; wahr.textContent = "";
             const len = nerve.getTotalLength();
-            s.sfx.pop(); reizT.classList.remove("a-pop"); void reizT.getBoundingClientRect(); fb(reizT); reizT.classList.add("a-pop");
+            if (cur === 1) s.sound("trommel", { vol: .6 }); else s.sfx.pop(); reizT.classList.remove("a-pop"); void reizT.getBoundingClientRect(); fb(reizT); reizT.classList.add("a-pop");
             await s.wait(400); s.sfx.zap();
             pulses.forEach(c => c.setAttribute("opacity", 1));
             await s.tween({ from: 0, to: 1, dur: 1300, ease: "linear", update: v => pulses.forEach((c, i) => { const q = Math.max(0, Math.min(1, v * 1.3 - i * 0.15)); const pt = nerve.getPointAtLength(q * len); c.setAttribute("cx", pt.x); c.setAttribute("cy", pt.y); }) });
@@ -167,6 +167,27 @@
           s.step(async () => { s.show(mark, "pop"); await s.show(fsl, "up"); s.sfx.tone(1000, 0.3, "sine", 0.1); await s.show(earNote, "up"); });
         },
       },
+      /* 3b ----------------------------------------------------------- */
+      {
+        title: "Augen und Ohren der Tiere",
+        say: "Tiere haben ganz besondere Sinnesorgane. Jedes passt zu ihrem Leben.",
+        build(s) {
+          const card = (fig, txt) => later(s.h("div", { class: "stack", style: { gap: "6px", alignItems: "center" } }, fig, s.h("p", { class: "small", style: { textAlign: "center" } }, txt)));
+          const cards = [
+            card(s.photo("katzenauge", { w: 340, h: 190, pos: "45% 50%", caption: "Katze: Schlitzpupille" }), "ganz schmal im Hellen, ganz weit im Dunkeln"),
+            card(s.photo("ziegenauge", { w: 340, h: 190, pos: "50% 50%", caption: "Ziege: waagerechte Pupille" }), "Rundumblick – Feinde früh sehen"),
+            card(s.photo("eule", { w: 340, h: 190, pos: "50% 40%", caption: "Eule: riesige Augen" }), "Augen bewegen geht nicht – sie dreht den Kopf"),
+            card(s.photo("fennek", { w: 340, h: 190, pos: "50% 35%", caption: "Fennek: riesige Ohren" }), "hört Beute unter dem Sand, gibt Wärme ab"),
+            card(s.photo("fledermaus", { w: 340, h: 190, pos: "50% 45%", caption: "Fledermaus: Echo-Ohren" }), "ruft im Ultraschall und hört das Echo"),
+            card(s.photo("hundenase", { w: 340, h: 190, pos: "60% 30%", caption: "Hund: Super-Nase" }), "etwa 220 Millionen Riechzellen"),
+          ];
+          const btns = later(s.h("div", { class: "row", style: { justifyContent: "center", gap: "16px" } }, s.soundBtn("eule-ruft", "Eule ruft"), s.soundBtn("schnueffeln", "Hund schnüffelt", { vol: .8 })));
+          s.add(root(s, "stack", { justifyContent: "center", gap: "14px" }, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 340px)", gap: "12px 24px", justifyContent: "center" } }, ...cards), btns));
+          s.step(async () => { s.sfx.swoosh(); for (const i of [0, 1, 2]) { s.show(cards[i], "up"); await s.wait(220); } s.say("Augen: Die Katze hat Schlitze, die Ziege waagerechte Pupillen. Die Eule kann ihre Augen nicht bewegen und dreht dafür den Kopf."); });
+          s.step(async () => { s.sfx.swoosh(); for (const i of [3, 4, 5]) { s.show(cards[i], "up"); await s.wait(220); } s.say("Der Fennek hört Beute unter dem Sand. Die Fledermaus findet ihren Weg mit Echos. Und der Hund riecht viel besser als wir."); });
+          s.step(async () => { s.sound("eule-ruft", { vol: .7 }); await s.show(btns, "up"); });
+        },
+      },
       /* 4 ------------------------------------------------------------ */
       {
         title: "Nase, Zunge und Haut",
@@ -197,7 +218,7 @@
             s.h("p", { class: "small" }, "So viel Fläche hat die Haut eines Erwachsenen. Sie fühlt:"), s.h("div", { class: "row", style: { gap: "8px" } }, ...feel));
           s.add(root(s, "cols3", { alignItems: "center", gap: "18px" }, nose, tongue, skin));
           s.sfx.whoosh();
-          s.step(async () => { s.sfx.pop(); s.show([human, nH], "pop"); await s.wait(300); for (let i = 0; i < 44; i++) { s.show(dogDots[i], "pop"); if (i % 4 === 0) s.sfx.count(i / 4); await s.wait(30); } s.show(nD, "pop"); s.sfx.ding(); s.say("Mensch: etwa 5 Millionen Riechzellen. Hund: etwa 220 Millionen."); });
+          s.step(async () => { s.sound("schnueffeln", { vol: .7, dur: 3 }); s.show([human, nH], "pop"); await s.wait(300); for (let i = 0; i < 44; i++) { s.show(dogDots[i], "pop"); if (i % 4 === 0) s.sfx.count(i / 4); await s.wait(30); } s.show(nD, "pop"); s.sfx.ding(); s.say("Mensch: etwa 5 Millionen Riechzellen. Hund: etwa 220 Millionen."); });
           s.step(async () => { for (let i = 0; i < 5; i++) { s.sfx.note([0, 2, 4, 7, 9][i], 0.2); s.show(chips[i], "left"); await s.wait(180); } s.sfx.boing(); await s.show(myth, "up"); s.say("Süß, sauer, salzig, bitter und umami."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(sq, "zoom"); for (let i = 0; i < 5; i++) { s.sfx.pop(); s.show(feel[i], "pop"); await s.wait(150); } s.say("Die Haut fühlt Druck, Berührung, Wärme, Kälte und Schmerz."); });
         },
@@ -224,11 +245,14 @@
             if (sound) { const now = performance.now(); if (now - lastT > 150) { lastT = now; s.sfx.noise(0.25, 0.01 + 0.2 * Math.pow(d / 130, 2), 400, 2400, 0, 0.8); } } };
           setDb(60);
           const sl = s.slider({ label: "Lautstärke", min: 0, max: 130, step: 10, value: 60, fmt: v => v + " dB", onInput: v => setDb(v, true) });
-          const card = s.h("div", { class: "card stack", style: { gap: "4px" } }, out, outT);
-          const note = s.h("p", { class: "small pencil" }, "Der Ton hier ist nur ein Beispiel und bleibt leise.");
+          const card = s.h("div", { class: "card", style: { display: "flex", gap: "16px", alignItems: "baseline", padding: "8px 16px" } }, out, outT);
+          const note = s.h("p", { class: "small pencil" }, "Alle Töne hier bleiben leise – die Skala zeigt die echte Lautstärke.");
+          const sbs = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" } },
+            s.soundBtn("clock-tick", "Uhr: 20 dB", { vol: .8 }), s.soundBtn("gespraech", "Gespräch: 60 dB", { vol: .6 }),
+            s.soundBtn("traffic", "Verkehr: 90 dB", { vol: .5, dur: 5 }), s.soundBtn("duesenjet", "Düsenjet: 130 dB", { vol: .5 }));
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Lärm ab ", b(s, "85 dB"), " schadet den Ohren, wenn er lange dauert. Dann: Gehörschutz!"));
-          const lf = later(life(s, { style: { padding: "12px 18px" } }, p(s, "Sehr laute Musik, Konzert, Feuerwerk: ", null, b(s, "Ohrstöpsel"), " schützen dein Gehör.")));
-          s.add(root(s, "", { display: "grid", gridTemplateColumns: "560px 1fr", gap: "26px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "14px" } }, card, sl, note, merk, lf)));
+          const lf = later(life(s, { style: { padding: "12px 18px" } }, p(s, "Konzert, Feuerwerk: ", { fontSize: "21px" }, b(s, "Ohrstöpsel"), " schützen dein Gehör.")));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "560px 1fr", gap: "26px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, card, sl, sbs, note, merk, lf)));
           s.sfx.whoosh();
           s.step(async () => { for (let i = 0; i < items.length; i++) { s.sfx.count(i); s.show(its[i], "left"); await s.wait(170); } s.say("Flüstern ist leise, ein Düsentriebwerk extrem laut."); });
           s.step(async () => { await s.tween({ from: 0, to: 130, dur: 1800, update: v => setDb(Math.round(v / 10) * 10, true) }); await s.tween({ from: 130, to: 60, dur: 700, update: v => setDb(Math.round(v / 10) * 10) }); });
@@ -339,8 +363,8 @@
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Die Haut ", b(s, "vergleicht"), " nur mit vorher. Ein ", b(s, "Thermometer"), " misst die echte Temperatur. Darum messen Forscher! ", s.h("span", { class: "small" }, "(Nur warmes, nie heißes Wasser nehmen.)")));
           s.add(root(s, "stack", { gap: "10px", justifyContent: "center" }, svg, txt, merk));
           s.sfx.whoosh();
-          s.step(async () => { txt.textContent = "Links in warmes, rechts in kaltes Wasser. Eine Minute warten …"; s.sfx.swoosh(); await Promise.all([move("L", 220, 250), move("R", 880, 250)]); for (let i = 0; i < 4; i++) { s.sfx.tick(); await s.wait(300); } });
-          s.step(async () => { txt.textContent = "Jetzt beide Hände ins lauwarme Wasser!"; s.sfx.swoosh(); await Promise.all([move("L", 200, 90, 500), move("R", 900, 90, 500)]); await Promise.all([move("L", 505, 250), move("R", 595, 250)]); s.sfx.boing(); s.show(bubL, "pop"); await s.wait(250); s.sfx.boing(); await s.show(bubR, "pop"); s.say("Die linke Hand meldet kalt, die rechte warm. Dabei ist es dasselbe Wasser!"); });
+          s.step(async () => { txt.textContent = "Links in warmes, rechts in kaltes Wasser. Eine Minute warten …"; s.sound("splash", { vol: .5 }); await Promise.all([move("L", 220, 250), move("R", 880, 250)]); for (let i = 0; i < 4; i++) { s.sfx.tick(); await s.wait(300); } });
+          s.step(async () => { txt.textContent = "Jetzt beide Hände ins lauwarme Wasser!"; s.sfx.swoosh(); await Promise.all([move("L", 200, 90, 500), move("R", 900, 90, 500)]); s.sound("splash", { vol: .4 }); await Promise.all([move("L", 505, 250), move("R", 595, 250)]); s.sfx.boing(); s.show(bubL, "pop"); await s.wait(250); s.sfx.boing(); await s.show(bubR, "pop"); s.say("Die linke Hand meldet kalt, die rechte warm. Dabei ist es dasselbe Wasser!"); });
           s.step(async () => { txt.textContent = "Dasselbe Wasser – aber zwei verschiedene Gefühle."; s.sfx.zap(); await s.show(therm, "down"); s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -398,7 +422,7 @@
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "330px 1fr", gap: "28px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap", justifyContent: "space-between" } }, read), sl, how, fix, fun)));
           s.sfx.whoosh();
           s.step(async () => { s.say("Wir erwärmen. Die Säule steigt."); s.sfx.whoosh(); await s.tween({ from: 20, to: 95, dur: 2000, update: setT }); await s.tween({ from: 95, to: 0, dur: 1500, update: setT }); setT(0); sl.input.value = 0; sl.querySelector(".mono").textContent = "0 °C"; });
-          s.step(async () => { s.sfx.pop(); s.show(fp0, "left"); await s.wait(250); s.sfx.pop(); s.show(fp100, "left"); await s.show(fix, "up"); s.say("Null Grad: Eis schmilzt. Hundert Grad: Wasser siedet."); });
+          s.step(async () => { s.sfx.pop(); s.show(fp0, "left"); await s.wait(250); s.sound("kochen", { vol: .5, dur: 3 }); s.show(fp100, "left"); await s.show(fix, "up"); s.say("Null Grad: Eis schmilzt. Hundert Grad: Wasser siedet."); });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(fun, "up"); });
         },
       },
@@ -472,12 +496,14 @@
           const wbtns = later(s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } }, ...[100, 50, 20, 10].map(w => s.h("button", { class: "btn", onclick: () => add(w) }, "+" + w + " g")), s.h("button", { class: "btn", onclick: () => reset() }, "↺")));
           const info = s.h("div", { class: "card stack", style: { gap: "4px", padding: "12px 18px" } }, readout, state);
           const units = later(s.h("div", { class: "merk", style: { fontSize: "22px", padding: "10px 18px 12px" } }, b(s, "1 kg = 1000 g"), ". Die Einheit der Masse ist das Kilogramm."));
-          const lf = later(life(s, { style: { padding: "12px 18px" } }, p(s, "Die ", null, b(s, "Küchenwaage"), " hat eine ", b(s, "Tara-Taste"), ": Schüssel drauf, Taste drücken – die Anzeige springt auf 0. So wiegst du nur das Mehl.")));
+          const lf = later(life(s, { style: { padding: "12px 18px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 190px", gap: "14px", alignItems: "center" } },
+            p(s, "Die ", { fontSize: "21px" }, b(s, "Küchenwaage"), " hat eine ", b(s, "Tara-Taste"), ": Schüssel drauf, Taste drücken – die Anzeige springt auf 0. So wiegst du nur das Mehl."),
+            s.photo("kuechenwaage", { w: 190, h: 230, pos: "50% 55%" }))));
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "600px 1fr", gap: "24px", alignItems: "center" }, s.h("div", { class: "stack", style: { gap: "10px" } }, svg, wbtns), s.h("div", { class: "stack", style: { gap: "14px" } }, info, units, lf)));
           s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); await s.show(wbtns, "up"); s.say("Wir legen Gewichtsstücke auf."); for (const w of [100, 50, 20]) { await add(w); await s.wait(350); } });
           s.step(async () => { s.sfx.ding(); await s.show(units, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+          s.step(async () => { s.sfx.swoosh(); await s.show(lf, "up"); });
         },
       },
       /* 13 ----------------------------------------------------------- */
@@ -525,8 +551,28 @@
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Am ", b(s, "tiefsten Punkt"), " der Wölbung ablesen – Augen ", b(s, "auf gleicher Höhe"), ". Sonst gibt es einen ", b(s, "Ablesefehler"), "."));
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "620px 1fr", gap: "20px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, zcard, res, merk)));
           s.sfx.whoosh();
-          s.step(async () => { s.sfx.pop(); await s.show(zcard, "up"); s.sfx.snap(); await s.show(zl, "fade"); s.say("Wasser wölbt sich am Rand nach oben. Abgelesen wird unten in der Mitte."); });
+          s.step(async () => { s.sound("water-pour", { vol: .5 }); await s.show(zcard, "up"); s.sfx.snap(); await s.show(zl, "fade"); s.say("Wasser wölbt sich am Rand nach oben. Abgelesen wird unten in der Mitte."); });
           s.step(async () => { s.show(res, "pop"); s.say("Zieh das Auge hoch und runter."); await s.tween({ from: LY, to: 120, dur: 1200, update: setEye }); s.sfx.error(); await s.wait(500); await s.tween({ from: 120, to: 480, dur: 1500, update: setEye }); s.sfx.error(); await s.wait(500); await s.tween({ from: 480, to: LY, dur: 1000, update: setEye }); s.sfx.success(); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 13b ---------------------------------------------------------- */
+      {
+        title: "Messgeräte in echt",
+        say: "So sehen echte Messgeräte aus. Viele davon findest du im NaWi-Raum – und manche bei dir zu Hause.",
+        build(s) {
+          const cards = [
+            s.photo("thermometer", { w: 340, h: 240, pos: "50% 40%", caption: "Thermometer: links die °C-Skala", cls: "later" }),
+            s.photo("fieberthermometer", { w: 340, h: 240, pos: "50% 50%", caption: "Fieberthermometer: 35,8 °C", cls: "later" }),
+            s.photo("balkenwaage", { w: 340, h: 240, pos: "50% 55%", caption: "Balkenwaage mit Gewichtsstücken", cls: "later" }),
+            s.photo("meniskus", { w: 340, h: 240, pos: "50% 6%", caption: "Messzylinder: Wölbung (Meniskus)", cls: "later" }),
+            s.photo("stoppuhr", { w: 340, h: 240, pos: "50% 45%", caption: "Stoppuhr: Zeit in Sekunden", cls: "later" }),
+            s.photo("zollstock", { w: 340, h: 240, pos: "50% 50%", caption: "Zollstock: Länge in cm", cls: "later" }),
+          ];
+          const merk = later(s.h("div", { class: "merk", style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Jedes Messgerät hat eine ", b(s, "Skala"), " mit einer ", b(s, "Einheit"), ". Schau beim Ablesen genau hin!"));
+          s.add(root(s, "stack", { justifyContent: "center", gap: "18px" }, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 340px)", gap: "18px 24px", justifyContent: "center" } }, ...cards), merk));
+          s.step(async () => { s.sound("camera-shutter", { vol: .6 }); for (const i of [0, 1, 2]) { s.show(cards[i], "zoom"); await s.wait(200); } s.say("Thermometer, Fieberthermometer und Waage."); });
+          s.step(async () => { s.sound("stopwatch", { vol: .5, dur: 2 }); for (const i of [3, 4, 5]) { s.show(cards[i], "zoom"); await s.wait(200); } s.say("Messzylinder, Stoppuhr und Zollstock."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -650,8 +696,8 @@
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Forscher, Sportler, Köche und Ärzte: Alle ", b(s, "messen"), " – mit Zahl ", b(s, "und"), " Einheit."));
           s.add(root(s, "stack", { gap: "16px", justifyContent: "center" }, s.h("div", { class: "cols3", style: { gap: "16px", gridAutoRows: "1fr" } }, ...cards), merk));
           s.sfx.whoosh();
-          s.step(async () => { s.sfx.pop(); await s.show(cards[0], "pop"); let last = -1; await s.tween({ from: 0, to: 9.58, dur: 2200, ease: "linear", update: v => { sw.textContent = s.fmt(v, 2) + " s"; const k = Math.floor(v); if (k !== last) { last = k; s.sfx.tick(); } } }); sw.textContent = "9,58 s"; s.sfx.fanfare(); s.say("Neun Komma fünf acht Sekunden für hundert Meter!"); });
-          s.step(async () => { for (let i = 1; i < 3; i++) { s.sfx.pop(); s.show(cards[i], "pop"); await s.wait(250); } });
+          s.step(async () => { s.sfx.pop(); await s.show(cards[0], "pop"); s.sound("stopwatch", { vol: .6, dur: 2.2 }); await s.tween({ from: 0, to: 9.58, dur: 2200, ease: "linear", update: v => { sw.textContent = s.fmt(v, 2) + " s"; } }); sw.textContent = "9,58 s"; s.sound("crowd-cheer", { vol: .5, dur: 3 }); s.say("Neun Komma fünf acht Sekunden für hundert Meter!"); });
+          s.step(async () => { s.sound("rain", { vol: .4, dur: 3 }); for (let i = 1; i < 3; i++) { s.show(cards[i], "pop"); await s.wait(250); } });
           s.step(async () => { for (let i = 3; i < 6; i++) { s.sfx.pop(); s.show(cards[i], "pop"); await s.wait(250); } });
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); s.confetti(590, 420, 80); });
           if (s.fast) sw.textContent = "9,58 s";

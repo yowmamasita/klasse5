@@ -55,8 +55,10 @@
           const m = later(merk(s, { style: { fontSize: "21px", padding: "12px 20px 14px" } }, "Märchen wurden früher ", B(s, "mündlich erzählt"), ". Darum kommen dieselben Muster immer wieder."));
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px 18px", alignContent: "start" }, ...cards, m));
           s.sfx.pop();
+          const gSnd = [() => s.sound("page-turn-1"), () => s.sound("magic-chime", { vol: .6 }), () => s.sound("wolf-howl", { vol: .4, dur: 2.5 }), () => s.sound("harp-gliss", { vol: .5 })];
           [[0, 1], [2, 3], [4, 5], [6]].forEach((grp, k) => s.step(async () => {
-            for (const i of grp) { s.sfx.count(i); s.show(cards[i], "up"); await s.wait(260); }
+            gSnd[k]();
+            for (const i of grp) { s.show(cards[i], "up"); await s.wait(260); }
             s.say(grp.map(i => data[i][0].replace(/[„“…]/g, "")).join(". "));
           }));
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
@@ -67,45 +69,14 @@
         title: "Drei Märchen unter der Lupe",
         say: "Wir schauen uns drei Märchen der Brüder Grimm an und suchen die Merkmale.",
         build(s) {
-          const svg = s.svg(380, 380); svg.style.width = "420px"; svg.style.height = "420px";
-          const bg = s.el("rect", { x: 0, y: 0, width: 380, height: 380, rx: 18, fill: "#eaf4f6" });
-          const scene = s.el("g");
-          svg.append(bg, scene);
-          const scenes = {
-            hg: () => [
-              s.el("rect", { x: 0, y: 300, width: 380, height: 80, fill: "#9ed49a" }),
-              s.el("circle", { cx: 40, cy: 140, r: 46, fill: "#3f9c5c" }), s.el("circle", { cx: 340, cy: 120, r: 50, fill: "#3f9c5c" }),
-              s.el("rect", { x: 110, y: 170, width: 170, height: 140, fill: "#c9894b", stroke: "#8a5a2b", "stroke-width": 4 }),
-              s.el("path", { d: "M92 176 L195 90 L298 176 Z", fill: "#f4e1c6", stroke: "#b07a3c", "stroke-width": 4 }),
-              ...[[130, 160], [170, 140], [210, 130], [250, 150], [150, 120], [230, 110]].map(([x, y], i) => s.el("circle", { cx: x, cy: y + 10, r: 9, fill: [P.red, P.blue, P.yellow, P.green, P.orange, P.violet][i] })),
-              s.el("rect", { x: 130, y: 200, width: 46, height: 40, rx: 4, fill: "#e8f6ff", stroke: "#fff", "stroke-width": 4 }), s.el("rect", { x: 214, y: 200, width: 46, height: 40, rx: 4, fill: "#e8f6ff", stroke: "#fff", "stroke-width": 4 }),
-              s.el("rect", { x: 178, y: 250, width: 36, height: 60, rx: 6, fill: "#7a3e14" }),
-              s.el("path", { d: "M60 330 L60 300 M80 330 L80 300", stroke: P.ink, "stroke-width": 5, "stroke-linecap": "round" }), s.el("circle", { cx: 70, cy: 270, r: 14, fill: "#f3c9a0" }), s.el("rect", { x: 56, y: 282, width: 28, height: 26, rx: 8, fill: P.blue }),
-              s.el("path", { d: "M310 330 L310 300 M330 330 L330 300", stroke: P.ink, "stroke-width": 5, "stroke-linecap": "round" }), s.el("circle", { cx: 320, cy: 270, r: 14, fill: "#f3c9a0" }), s.el("path", { d: "M304 308 L320 280 L336 308 Z", fill: P.red }),
-            ],
-            rk: () => [
-              s.el("rect", { x: 0, y: 300, width: 380, height: 80, fill: "#9ed49a" }),
-              ...[[50, 120], [130, 90], [300, 100], [350, 160]].map(([x, y]) => s.el("g", null, s.el("rect", { x: x - 7, y: y + 30, width: 14, height: 160, fill: "#8a5a2b" }), s.el("circle", { cx: x, cy: y, r: 44, fill: "#2f7d4b" }))),
-              s.el("path", { d: "M100 340 L104 296 M120 340 L116 296", stroke: P.ink, "stroke-width": 6, "stroke-linecap": "round" }),
-              s.el("path", { d: "M84 300 L110 226 L136 300 Z", fill: P.red }), s.el("circle", { cx: 110, cy: 226, r: 18, fill: "#f3c9a0" }), s.el("path", { d: "M90 224 Q110 196 130 224 L128 236 Q110 214 92 236 Z", fill: P.red }),
-              s.el("path", { d: "M136 280 h30 l-4 24 h-22 Z", fill: "#b07a3c" }), s.el("path", { d: "M140 280 q11 -16 22 0", stroke: "#8a5a2b", "stroke-width": 3, fill: "none" }),
-              s.el("ellipse", { cx: 270, cy: 300, rx: 60, ry: 26, fill: "#7d8696" }), s.el("path", { d: "M222 320 v26 M244 324 v24 M296 324 v24 M318 320 v26", stroke: "#5f6878", "stroke-width": 8, "stroke-linecap": "round" }),
-              s.el("path", { d: "M214 290 L190 262 L206 250 L196 228 L216 242 L230 232 L236 262 Z", fill: "#7d8696" }), s.el("circle", { cx: 208, cy: 258, r: 3.5, fill: "#fff" }),
-              s.el("path", { d: "M330 290 Q370 270 362 240", stroke: "#7d8696", "stroke-width": 14, fill: "none", "stroke-linecap": "round" }),
-              s.el("rect", { x: 140, y: 170, width: 92, height: 42, rx: 14, fill: "#fff", stroke: P.pencil, "stroke-width": 2 }), T(s, 186, 199, "Hallo!", { "font-size": 20, fill: P.pencil }),
-            ],
-            rs: () => [
-              s.el("rect", { x: 0, y: 300, width: 380, height: 80, fill: "#c9a77c" }),
-              s.el("circle", { cx: 130, cy: 220, r: 70, fill: "none", stroke: "#8a5a2b", "stroke-width": 8 }),
-              ...[0, 45, 90, 135].map(a => s.el("line", { x1: 130 + 70 * Math.cos(a * Math.PI / 180), y1: 220 + 70 * Math.sin(a * Math.PI / 180), x2: 130 - 70 * Math.cos(a * Math.PI / 180), y2: 220 - 70 * Math.sin(a * Math.PI / 180), stroke: "#8a5a2b", "stroke-width": 4 })),
-              s.el("path", { d: "M130 220 L110 330 M130 220 L150 330", stroke: "#6b4420", "stroke-width": 7 }),
-              s.el("path", { d: "M20 330 Q40 300 70 330 Z", fill: "#e6c35c" }), s.el("path", { d: "M28 330 L40 296 M44 330 L52 300 M58 330 L60 302", stroke: "#c9a33c", "stroke-width": 3 }),
-              ...[[230, 320], [256, 316], [282, 322], [244, 300], [270, 298], [258, 280]].map(([x, y]) => s.el("ellipse", { cx: x, cy: y, rx: 16, ry: 8, fill: P.gold, stroke: "#a87a00", "stroke-width": 2 })),
-              s.el("path", { d: "M318 330 L326 294 M340 330 L332 294", stroke: P.ink, "stroke-width": 5, "stroke-linecap": "round" }), s.el("rect", { x: 316, y: 254, width: 26, height: 42, rx: 8, fill: "#6b2f7a" }),
-              s.el("circle", { cx: 329, cy: 238, r: 15, fill: "#e8b98e" }), s.el("path", { d: "M312 232 L329 196 L346 232 Z", fill: P.red }),
-              s.el("path", { d: "M316 266 L298 240 M342 266 L360 244", stroke: P.ink, "stroke-width": 4, "stroke-linecap": "round" }),
-            ],
+          const PS = { w: 420, h: 420, cls: "later", style: { position: "absolute", left: "0", top: "0" } };
+          const pics = {
+            hg: s.photo("haensel-gretel", Object.assign({ pos: "50% 45%", caption: "„Knusper, knusper, Knäuschen …“" }, PS)),
+            rk: s.photo("rotkaeppchen", Object.assign({ pos: "50% 40%", caption: "Rotkäppchen trifft den Wolf." }, PS)),
+            rs: s.photo("rumpelstilzchen", Object.assign({ pos: "50% 45%", caption: "Das Männlein am Spinnrad" }, PS)),
           };
+          const svg = s.h("div", { style: { position: "relative", width: "420px", height: "420px" } }, ...Object.values(pics));
+          const snd = { hg: () => s.sound("birds", { vol: .4, dur: 3 }), rk: () => s.sound("wolf-howl", { vol: .4, dur: 3 }), rs: () => s.sound("magic-chime", { vol: .6 }) };
           const tales = {
             hg: ["Hänsel und Gretel", "KHM 15", [["Ort", "Ein armer Holzhacker wohnt vor einem großen Wald."], ["Gut gegen Böse", "Die Geschwister gegen die Hexe."], ["Wunder", "Ein Haus aus Brot, mit Kuchen gedeckt, die Fenster aus Zucker."], ["Tiere helfen", "Eine weiße Ente trägt die Kinder übers Wasser."], ["Ende", "Die Kinder kommen glücklich nach Hause."]]],
             rk: ["Rotkäppchen", "KHM 26", [["Anfang", "„Es war einmal …“"], ["Tiere sprechen", "Der Wolf redet mit Rotkäppchen und lockt es vom Weg."], ["Gut gegen Böse", "Rotkäppchen und die Großmutter gegen den Wolf."], ["Wunder", "Beide kommen lebendig aus dem Bauch des Wolfes."], ["Ende", "Der Jäger rettet sie. Der Wolf ist besiegt."]]],
@@ -117,7 +88,7 @@
           const show = async k => {
             if (curT === k) return; curT = k; s.sfx.whoosh();
             Object.entries(btns).forEach(([kk, b]) => b.classList.toggle("solid", kk === k));
-            scene.replaceChildren(...scenes[k]()); s.show(scene, "zoom");
+            Object.entries(pics).forEach(([kk, ph]) => { if (kk !== k) s.hide(ph); }); s.show(pics[k], "zoom"); snd[k]();
             const [t, khm, rows] = tales[k];
             titleEl.replaceChildren(t + " ", s.h("span", { class: "small pencil" }, "(" + khm + ")"));
             list.replaceChildren(...rows.map(([a, b]) => s.h("div", { class: "a-left", style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: "12px", alignItems: "baseline" } },
@@ -189,17 +160,16 @@
             s.h("p", { class: "t", style: { fontSize: "23px" } }, t))));
           const line = s.h("div", { style: { position: "absolute", left: "143px", top: "10px", bottom: "10px", width: "4px", background: P.line, borderRadius: "2px", transformOrigin: "top", transform: "scaleY(0)" } });
           const tl = s.h("div", { class: "stack", style: { gap: "26px", position: "relative", paddingTop: "8px" } }, line, ...rows);
-          const book = s.svg(300, 170);
-          book.append(s.el("rect", { x: 40, y: 20, width: 220, height: 140, rx: 10, fill: "#7a2e2e" }), s.el("rect", { x: 52, y: 30, width: 196, height: 120, rx: 6, fill: "none", stroke: P.gold, "stroke-width": 3 }),
-            T(s, 150, 74, "Kinder- und", { fill: P.gold, "font-size": 22 }), T(s, 150, 102, "Hausmärchen", { fill: P.gold, "font-size": 22 }), T(s, 150, 132, "1812", { fill: "#f5e6c0", "font-size": 19 }));
-          const bookC = later(s.h("div", { class: "card", style: { display: "flex", justifyContent: "center", padding: "10px" } }, book));
+          const portrait = s.photo("brueder-grimm", { w: 190, h: 250, pos: "50% 30%", caption: "Wilhelm und Jacob" });
+          const book = s.photo("khm-1812", { w: 190, h: 250, fit: "contain", style: { background: "#fff" }, caption: "Band 1, 1812" });
+          const bookC = later(s.h("div", { style: { display: "grid", gridTemplateColumns: "190px 190px", gap: "12px", justifyContent: "center" } }, portrait, book));
           const lf = later(life(s, null, s.h("p", { class: "small", style: { fontSize: "20px" } }, "Die Gräber der Brüder Grimm liegen in Berlin-Schöneberg, auf dem Alten St.-Matthäus-Kirchhof. Ihre Märchen gibt es heute als Film, Hörspiel und Theater.")));
           const extra = later(s.h("div", { class: "card soft" }, s.h("p", { class: "small", style: { fontSize: "20px" } }, "Ab 1838 arbeiteten sie auch am ", B(s, "Deutschen Wörterbuch"), " – einem riesigen Wörterbuch der deutschen Sprache.")));
           s.add(root(s, "cols", { gridTemplateColumns: "1.25fr .75fr", gap: "24px", alignItems: "start" }, tl, s.h("div", { class: "stack", style: { gap: "14px" } }, bookC, extra, lf)));
           s.sfx.whoosh();
           s.tween({ from: 0, to: 1, dur: 900, update: v => (line.style.transform = `scaleY(${v})`) });
           s.step(async () => { for (const i of [0, 1]) { s.sfx.count(i); await s.show(rows[i], "left"); } s.say("Geboren in Hanau, Märchen gesammelt in Kassel."); });
-          s.step(async () => { for (const i of [2, 3]) { s.sfx.count(i); await s.show(rows[i], "left"); } s.sfx.fanfare(); await s.show(bookC, "zoom"); s.say("Achtzehnhundertzwölf erscheinen die Kinder- und Hausmärchen."); });
+          s.step(async () => { for (const i of [2, 3]) { s.sfx.count(i); await s.show(rows[i], "left"); } s.sound("page-turn-3"); s.sfx.fanfare(); await s.show(bookC, "zoom"); s.say("Achtzehnhundertzwölf erscheinen die Kinder- und Hausmärchen."); });
           s.step(async () => { for (const i of [4, 5, 6]) { s.sfx.count(i); await s.show(rows[i], "left"); } s.show(extra, "up"); s.say("Ab achtzehnhundertvierzig lebten die Brüder in Berlin."); });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
@@ -210,6 +180,7 @@
         say: "In Fabeln handeln und sprechen Tiere wie Menschen. Am Ende steht eine Lehre.",
         build(s) {
           const animals = [["🦊", "Fuchs", "schlau und listig"], ["🦁", "Löwe", "stark und stolz"], ["🐺", "Wolf", "gierig und gefährlich"], ["🐑", "Lamm", "schwach und unschuldig"], ["🐜", "Ameise", "fleißig"], ["🐦", "Rabe", "eitel"]];
+          const SND = { Fuchs: () => s.sound("fox-bark", { vol: .6 }), Löwe: () => s.sound("lion-roar", { vol: .5 }), Wolf: () => s.sound("wolf-howl", { vol: .5, dur: 3 }), Lamm: () => s.sound("sheep", { vol: .6 }), Rabe: () => s.sound("raven", { vol: .6, dur: 2 }) };
           const cards = animals.map(([e, n, t]) => {
             const front = s.h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" } }, s.h("span", { style: { fontSize: "44px", lineHeight: 1 } }, e), s.h("b", { style: { fontSize: "21px" } }, n));
             const back = s.h("div", { style: { display: "none", flexDirection: "column", alignItems: "center", gap: "4px", textAlign: "center" } }, s.h("b", { style: { fontSize: "21px", color: P.unit } }, n), s.h("span", { class: "small" }, t));
@@ -220,7 +191,7 @@
               c.st = 1 - c.st; front.style.display = c.st ? "none" : "flex"; back.style.display = c.st ? "flex" : "none"; c.style.background = c.st ? P.soft : "#fff"; s.sfx.snap();
               await s.tween({ from: 0, to: 1, dur: 180, update: v => (c.style.transform = `scaleX(${v})`) });
             };
-            c.addEventListener("click", () => c.flip());
+            c.addEventListener("click", () => { if (!c.st && SND[n]) SND[n](); c.flip(); });
             return c;
           });
           const parts = [["Ausgangslage", "Wer trifft wen, wo?"], ["Konflikt", "Rede und Gegenrede"], ["Lösung", "Einer ist schlauer"], ["Lehre", "Was lernen wir?"]];
@@ -230,7 +201,7 @@
           const m = later(merk(s, { style: { fontSize: "22px" } }, "Eine Fabel ist ", B(s, "kurz"), ". ", B(s, "Tiere"), " zeigen menschliche Eigenschaften. Am Ende steht eine ", B(s, "Lehre"), " (Moral)."));
           const lf5 = later(life(s, null, s.h("p", { class: "small", style: { fontSize: "20px" } }, "Wir sagen heute noch „schlau wie ein Fuchs“, „stark wie ein Löwe“ oder „fleißig wie eine Ameise“ – genau so zeigen die Tiere in Fabeln ihren Charakter.")));
           s.add(root(s, "stack", { gap: "16px" }, s.h("div", { class: "cols", style: { gridTemplateColumns: "1.05fr .95fr", gap: "24px" } },
-            s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("p", { class: "h2", style: { fontSize: "24px" } }, "Tiere wie Menschen – tippe!"), s.h("div", { class: "cols3", style: { gap: "12px" } }, ...cards)),
+            s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("p", { class: "h2", style: { fontSize: "24px" } }, "Tiere wie Menschen – tippe und hör!"), s.h("div", { class: "cols3", style: { gap: "12px" } }, ...cards)),
             s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("p", { class: "h2", style: { fontSize: "24px" } }, "So ist eine Fabel gebaut"), ...chain)), m, lf5));
           cards.forEach((c, i) => { c.classList.add("a-pop"); c.style.setProperty("--d", i * 80 + "ms"); });
           s.sfx.pop();
@@ -293,7 +264,7 @@
           s.step(async () => {
             s.show(ls[3], "left"); s.hide(bubble);
             await s.tween({ from: 0, to: 32, dur: 200, update: v => lowerBeak.setAttribute("transform", `rotate(${v} 40 -14)`) });
-            s.sfx.tone(380, 0.35, "sawtooth", 0.12, 0, 260); s.show(kraah, "pop");
+            s.sound("raven", { vol: .7, dur: 2 }); s.show(kraah, "pop");
             await s.tween({ from: 0, to: 1, dur: 900, ease: "in", update: t => cheese.setAttribute("transform", `translate(${-92 * t} ${118 * t}) rotate(${200 * t} 370 190)`) });
             s.sfx.snap(); s.sfx.coin();
           });
@@ -362,9 +333,9 @@
             s.h("div", { class: "stack", style: { gap: "8px" } }, svg, sl), s.h("div", { class: "stack", style: { gap: "12px" } }, l1, l2, l3, lehre, lf)));
           apply(0);
           s.sfx.pop();
-          const tune = [7, 9, 11, 12, 11, 9, 7, 4];
-          s.step(async () => { s.say("Im Sommer: Die Ameise arbeitet, die Grille spielt Geige."); for (const [i, n] of tune.entries()) { if (!s.alive) return; s.sfx.note(n, .22); await s.wait(200 + (i % 2) * 60); } });
-          s.step(async () => { sl.set(1); await s.wait(700); sl.set(2); s.sfx.whoosh(); await s.show(l2, "left"); s.say("Dann kam der Winter."); });
+          s.sound("cricket", { vol: .5 });
+          s.step(async () => { s.say("Im Sommer: Die Ameise arbeitet, die Grille spielt Geige."); s.sound("geige", { vol: .5 }); });
+          s.step(async () => { sl.set(1); await s.wait(700); sl.set(2); s.sound("wind", { vol: .45, dur: 3 }); await s.show(l2, "left"); s.say("Dann kam der Winter."); await s.wait(900); s.sound("knock", { vol: .6 }); });
           s.step(async () => { s.sfx.pop(); await s.show(l3, "up"); s.say("Was hast du im Sommer gemacht? Dann tanz doch jetzt!"); });
           s.step(async () => { s.sfx.ding(); await s.show(lehre, "up"); s.sfx.pop(); await s.show(lf, "up"); });
         },
@@ -384,8 +355,9 @@
           arrow.append(arrowLine, s.el("path", { d: "M1050 16 L1080 30 L1050 44 Z", fill: P.unit }));
           const dots = [183, 550, 917].map((x, i) => later(s.el("g", null, s.el("circle", { cx: x, cy: 30, r: 13, fill: poets[i][4], stroke: "#fff", "stroke-width": 4 }))));
           arrow.append(...dots);
-          const cards = poets.map(([n, land, when, what, c]) => later(s.h("div", { class: "card", style: { borderTop: `8px solid ${c}`, display: "flex", flexDirection: "column", gap: "8px" } },
-            s.h("p", { class: "h2", style: { fontSize: "27px", color: c } }, n), s.h("p", { class: "small", style: { fontWeight: 700, fontSize: "21px" } }, land), s.h("p", { class: "small pencil", style: { fontSize: "20px" } }, when),
+          const faces = [s.photo("aesop", { w: "100%", h: 170, pos: "50% 12%", caption: "gemalt von Velázquez" }), s.photo("la-fontaine", { w: "100%", h: 170, pos: "50% 20%" }), s.photo("lessing", { w: "100%", h: 170, pos: "50% 25%" })];
+          const cards = poets.map(([n, land, when, what, c], i) => later(s.h("div", { class: "card", style: { borderTop: `8px solid ${c}`, display: "flex", flexDirection: "column", gap: "8px" } },
+            faces[i], s.h("p", { class: "h2", style: { fontSize: "27px", color: c } }, n), s.h("p", { class: "small", style: { fontWeight: 700, fontSize: "21px" } }, land), s.h("p", { class: "small pencil", style: { fontSize: "20px" } }, when),
             s.h("p", { class: "small", style: { fontSize: "22px" } }, what))));
           const lf = later(life(s, null, s.h("div", { class: "cols3", style: { gap: "14px" } },
             s.h("p", { class: "small", style: { fontSize: "21px" } }, B(s, "Grille und Ameise: "), "Erst die Arbeit, dann das Vergnügen."),
@@ -393,7 +365,7 @@
             s.h("p", { class: "small", style: { fontSize: "21px" } }, B(s, "Löwe und Maus: "), "Auch Kleine können Großen helfen."))));
           s.add(root(s, "stack", { gap: "16px" }, arrow, s.h("div", { class: "cols3" }, ...cards), lf));
           s.sfx.pop();
-          poets.forEach((p, i) => s.step(async () => { s.sfx.count(i * 2); s.show(dots[i], "pop"); await s.show(cards[i], "up"); s.say(p[0] + ". " + p[3]); if (i === 2) s.sfx.error(); }));
+          poets.forEach((p, i) => s.step(async () => { s.sound("page-turn-2", { vol: .8 }); s.show(dots[i], "pop"); await s.show(cards[i], "up"); s.say(p[0] + ". " + p[3]); if (i === 2) s.sfx.error(); }));
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },
@@ -459,12 +431,17 @@
           const nameEl = s.h("p", { class: "big", style: { color: P.unit } }, "");
           const patEl = s.h("p", { class: "huge mono", style: { letterSpacing: ".1em" } }, "");
           const srcEl = s.h("p", { class: "small pencil" }, "");
+          const PR = { w: 250, h: 170, cls: "later", style: { position: "absolute", left: "0", top: "0" } };
+          const rpics = { paar: s.photo("max-moritz-1", Object.assign({ fit: "contain", style: Object.assign({ background: "#fff" }, PR.style) }, { w: 250, h: 170, cls: "later" })), kreuz: s.photo("eichendorff", Object.assign({ pos: "50% 25%" }, PR)), arm: s.photo("alexanderplatz-u2", Object.assign({ pos: "50% 50%" }, PR)) };
+          const rbox = s.h("div", { style: { position: "relative", width: "250px", height: "170px", marginTop: "6px" } }, ...Object.values(rpics));
+          const rsnd = { paar: () => {}, kreuz: () => s.sound("church-bells", { vol: .35, dur: 3 }), arm: () => s.sound("ubahn-train", { vol: .35, dur: 3 }) };
           let cur = null;
           const show = async k => {
             if (cur === k) return; cur = k; s.sfx.whoosh();
             Object.entries(btns).forEach(([kk, b]) => b.classList.toggle("solid", kk === k));
             const [name, pat, src, lines, pairs] = data[k];
             nameEl.textContent = name; srcEl.textContent = src;
+            Object.entries(rpics).forEach(([kk, ph]) => { if (kk !== k) s.hide(ph); }); s.show(rpics[k], "zoom"); rsnd[k]();
             patEl.replaceChildren(...pat.split("").map(ch => s.h("span", { style: { color: ch === "a" ? C[0] : C[1] } }, ch)));
             lineBox.replaceChildren(...lines.map(([a, e, r], i) => s.h("div", { class: "a-left", style: { "--d": i * 90 + "ms", height: "76px", display: "grid", gridTemplateColumns: "1fr 34px", alignItems: "center", gap: "10px" } },
               s.h("p", { style: { margin: 0, fontSize: "27px" } }, a, s.h("b", { style: { color: C[r], background: C[r] + "18", borderRadius: "6px", padding: "0 4px" } }, e), punct[k][i]),
@@ -485,7 +462,7 @@
           const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Abzählreime („Ene, mene, muh – und raus bist du!“), Kinderlieder, Rap-Songs und Geburtstagskarten reimen sich.")));
           s.add(root(s, "stack", { gap: "12px" }, s.h("div", { class: "row", style: { gap: "12px" } }, ...Object.values(btns)),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 150px 250px", gap: "14px", alignItems: "start" } },
-              s.h("div", { class: "card", style: { padding: "6px 18px" } }, lineBox), arcs, s.h("div", { class: "stack", style: { gap: "6px" } }, nameEl, patEl, srcEl)),
+              s.h("div", { class: "card", style: { padding: "6px 18px" } }, lineBox), arcs, s.h("div", { class: "stack", style: { gap: "6px" } }, nameEl, patEl, srcEl, rbox)),
             s.h("div", { class: "cols", style: { gridTemplateColumns: "1.1fr 1fr", gap: "16px" } }, m, lf)));
           show("paar");
           s.step(() => show("kreuz"));
@@ -506,7 +483,7 @@
             const play = async () => {
               for (let r = 0; r < 2 && s.alive; r++) for (const [i, b] of boxes.entries()) {
                 if (!s.alive) return;
-                if (syl[i][1]) s.sfx.drum(); else s.sfx.tick();
+                if (syl[i][1]) s.sound("clap", { vol: .8 }); else s.sfx.tick();
                 b.style.transform = "scale(1.15)"; await s.wait(300); b.style.transform = "none";
                 if (s.fast) break;
               }
@@ -558,7 +535,7 @@
           s.sfx.pop();
           s.step(async () => { for (const [i, x] of [v1, v2].entries()) { s.sfx.count(i); await s.show(x, "left"); } s.say("Stark wie ein Bär. Ich schlafe wie ein Murmeltier."); });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(v3, "left"); s.say("Es war, als hätt der Himmel die Erde still geküsst."); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(colP, "right"); s.sfx.boing(); await s.show(face, "pop"); for (const [i, x] of [p1, p2].entries()) { s.sfx.count(i + 2); await s.show(x, "left"); } s.say("Die Sonne lacht. Aber eine Sonne hat doch gar keinen Mund!"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(colP, "right"); s.sfx.boing(); await s.show(face, "pop"); for (const [i, x] of [p1, p2].entries()) { if (i === 0) s.sound("wind", { vol: .4, dur: 2.5 }); else s.sound("alarm-clock", { vol: .35, dur: 1.6 }); await s.show(x, "left"); await s.wait(600); } s.say("Die Sonne lacht. Aber eine Sonne hat doch gar keinen Mund!"); });
           s.step(async () => { s.sfx.fanfare(); await s.show(p3, "left"); s.say("Frühling will nun einmarschiern."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(lf12, "up"); });
@@ -583,11 +560,12 @@
           const vb = Object.entries(V).map(([k, [n, c]]) => later(s.h("button", { class: "btn", style: { borderColor: c, color: c, justifyContent: "flex-start" }, onclick: () => { s.sfx.click(); paint(k); read(s, rows.filter(r => r.w === k).map(r => r.textContent).join(" ")); } }, speaker(s), n)));
           const all = later(readBtn(s, "Strophe 1–3 vorlesen", () => text.map(([, t]) => t).join(" "), true));
           const gl = later(s.h("div", { class: "card soft", style: { padding: "12px 16px" } }, s.h("p", { class: "small" }, B(s, "Alte Wörter: "), "birgst = versteckst · bang = ängstlich · Schweif = lange Schleppe · gülden = golden")));
+          const schwind = later(s.photo("erlkoenig-schwind", { w: "100%", h: 150, pos: "35% 62%", caption: "So malte Moritz von Schwind den Erlkönig." }));
           const m = later(merk(s, { style: { fontSize: "21px" } }, "Ballade = ", B(s, "Gedicht"), " + spannende ", B(s, "Geschichte"), " + ", B(s, "Figuren"), ", die sprechen – wie ein kleines Theaterstück."));
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "1.2fr .8fr", gap: "20px", alignItems: "start" }, poem,
-            s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" } }, ...vb), all, gl, m)));
+            s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" } }, ...vb), all, schwind, gl, m)));
           s.sfx.pop();
-          s.step(async () => { paint("e"); s.show(vb[0], "pop"); s.sfx.tone(196, .6, "triangle", .2); s.say("Der Erzähler beginnt."); });
+          s.step(async () => { paint("e"); s.show(vb[0], "pop"); s.sound("horse-gallop", { vol: .5, dur: 3.5 }); s.show(schwind, "zoom"); s.say("Der Erzähler beginnt."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(strophes[1], "up"); paint("v"); s.show(vb[1], "pop"); s.sfx.note(-5, .3); await s.wait(500); paint("s"); s.show(vb[2], "pop"); s.sfx.note(7, .3); s.say("Vater und Sohn sprechen abwechselnd."); });
           s.step(async () => { s.sfx.zap(); await s.show(strophes[2], "up"); paint("k"); s.show(vb[3], "pop"); s.sfx.chord([0, 3, 6]); s.say("Und dann spricht der Erlkönig, ganz sanft und lockend."); });
           s.step(async () => { s.sfx.pop(); await s.show(gl, "up"); s.show(all, "pop"); });
@@ -627,14 +605,15 @@
           const sel = i => { qEl.textContent = st[i][1]; qEl.style.color = col(st[i][0]); eEl.textContent = "Strophe " + (i + 1) + ": " + st[i][2]; bars.forEach((b, j) => b.setAttribute("opacity", j === i ? 1 : .55)); s.sfx.pop(); };
           const gallop = async (n, speed) => { for (let k = 0; k < n && s.alive; k++) { s.sfx.drum(); await s.wait(speed); s.sfx.tick(); await s.wait(speed * .6); s.sfx.tick(); await s.wait(speed * 1.4); } };
           const gBtn = later(s.h("button", { class: "btn solid", style: { whiteSpace: "nowrap" }, onclick: async () => { for (const sp of [220, 170, 130, 100]) await gallop(2, sp); } }, "▶ Galopp hören"));
-          const lf = later(life(s, null, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr auto", gap: "16px", alignItems: "center" } }, s.h("p", { class: "small", style: { fontSize: "21px" } }, "Franz Schubert hat den Erlkönig 1815 vertont – sein Opus 1. Im Klavier hört man schnelle, wiederholte Töne, wie Hufschläge in der Nacht."), gBtn)));
+          const sBtn = later(s.soundBtn("schubert-erlkoenig", "Schubert anhören"));
+          const lf = later(life(s, null, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr auto", gap: "16px", alignItems: "center" } }, s.h("p", { class: "small", style: { fontSize: "21px" } }, "Franz Schubert hat den Erlkönig 1815 vertont – sein Opus 1. Im Klavier hört man schnelle, wiederholte Töne, wie Hufschläge in der Nacht."), s.h("div", { class: "stack", style: { gap: "8px" } }, gBtn, sBtn))));
           s.add(root(s, "stack", { gap: "14px" }, svg, cap, lf));
           sel(0); bars[0].setAttribute("y", 250 - 46); bars[0].setAttribute("height", 46);
           s.sfx.pop();
           s.step(async () => { for (const i of [1, 2, 3]) { await grow(i); sel(i); s.sfx.count(i); gallop(1, 220); await s.wait(350); } });
           s.step(async () => { for (const i of [4, 5, 6]) { await grow(i); sel(i); s.sfx.count(i + 2); gallop(1, 150); await s.wait(300); } s.say("Und bist du nicht willig, so brauch ich Gewalt."); });
           s.step(async () => { await gallop(3, 100); await grow(7); sel(7); s.sfx.chord([-12, -9, -5]); s.say("In seinen Armen das Kind war tot."); });
-          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); s.show(gBtn, "pop"); });
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); s.show(gBtn, "pop"); s.show(sBtn, "pop"); });
         },
       },
       /* 15 --------------------------------------------------------------- */

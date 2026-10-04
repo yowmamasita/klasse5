@@ -27,8 +27,11 @@ Files: `engine.js` (engine), `style.css` (classes), `units/uN.js` (one file per 
   wrapper `data-overlap-ok` if overlapping text is truly intended (rare).
 - Touch: use `s.drag`, `s.slider`, buttons (`.btn`, min 56 px tall). No hover-only things. No keyboard input.
 - Speak to a 10-year-old: short sentences, concrete, warm ("du"). Correct content, correct German (spelling and grammar must be flawless).
-- Self-contained: no external images/fonts/libraries. Draw with SVG/canvas. Emoji are OK sparingly as
-  real-world objects (🍕 ⚽ 🚇), never as decoration or bullet markers.
+- Self-contained at runtime: no hotlinked images/sounds, no libraries. Draw diagrams with SVG/canvas.
+  **Real photos and recorded sounds are welcome** wherever they explain better or give real-life context –
+  but only through `tools/media` (downloads a copy into the repo and records the licence, see "Real photos and
+  sounds" below). Emoji are OK sparingly as real-world objects (🍕 ⚽ 🚇), never as decoration or bullet markers;
+  prefer a real photo where the real thing matters.
 - Clean up is automatic: timers/tweens/loops created through `s.*` stop when the slide is left. Don't use raw
   `setInterval`; if you must use `setTimeout`, guard with `if (!s.alive) return`.
 
@@ -64,6 +67,11 @@ The engine adds the chapter title slide automatically. Aim for **12–16 slides 
 | `s.confetti(x,y,n)` | celebration (stage coordinates) |
 | `s.fmt(n, decimals)` | German number format (1.000.000 / 3,5) |
 | `s.alive`, `s.fast` | slide still shown / check-mode (animations are instant) |
+
+| `s.photo(id, {w,h,fit,pos,caption,kb,cls,style})` | real photo in a fixed w×h box (`figure.photo`). `fit:"cover"` (default, crops) or `"contain"`; `pos:"50% 30%"` = which part stays visible when cropping; `caption` = white text bar on the photo's bottom edge (≥19 px, keep it short); `kb:true` = slow Ken-Burns zoom; `cls:"later"` to reveal it in a step with `s.show(fig,'zoom')`. A small © button (top right) shows the credit. |
+| `s.sound(id, {vol,rate,loop,from,dur,when})` | play a recorded sound (respects the mute button); stops when the slide is left. Returns `{stop(), done}`. |
+| `s.soundBtn(id, label, opts)` | `.btn` with speaker icon: tap = play, tap again = stop (plays even if effects are muted). |
+| `s.preload(...ids)` | fetch sounds early – only needed when the id is not written literally as `s.sound("id")` in the slide. |
 
 Everything visible at the end of the last step must be fully laid out (the checker runs all steps instantly).
 Elements that appear in later steps start with class `later` (keeps their space, so layout doesn't jump).
@@ -101,3 +109,31 @@ If the dev server or Chrome is down, restart them (`python3 tools/serve.py 8766`
 - The engine uses German speech synthesis for `say`; write `say` texts so they sound natural read aloud.
 - **New:** `s.speak(text, {lang, rate})` speaks immediately (for tap-to-hear buttons), ignoring the Vorlesen
   toggle; `lang` e.g. "de-DE" or "en-GB". `s.say` only speaks when Vorlesen is on.
+
+
+## Real photos and sounds (tools/media)
+Files are copied into the repo with their licence: `<subject>/media/<id>.jpg|.mp3` plus `credits.json` /
+`credits.js` (generated – never edit by hand). Shared sounds live in `shared/media/` (`tools/media list shared`):
+page turns (played automatically on every slide change), `pencil-write chalk-write school-bell applause crowd-cheer
+kids-cheer kids-wow cash-register coins camera-shutter typewriter keyboard mouse-click clock-tick stopwatch whistle
+drumroll magic-chime harp-gliss cymbal gong splash water-pour bubbles thunder rain wind birds fire waves traffic
+classroom church-bells footsteps knock door-creak paper-crumple scissors zipper match-strike bike-bell tram-bell
+ubahn-train ubahn-announce glass-clink cork-pop sizzle ball-kick heartbeat`.
+
+```bash
+tools/media img-search "Brandenburg Gate" --n 12      # Wikimedia Commons, free licences only -> list + contact sheet PNG (Read it!)
+tools/media img-add gewi brandenburger-tor "File:Brandenburger Tor abends.jpg" --max 1000 [--crop 0.1,0,0.9,1] [--title "…"]
+tools/media snd-search "cow moo" --n 10 [--src fs|commons|all] [--maxdur 20]   # Freesound CC0/CC BY + Commons audio
+tools/media snd-add nawi cow 58277 --dur 3 [--start 1.2] [--fadeout .4] [--gain -3] [--title "Kuh muht"]
+tools/media lint nawi                                  # every id used exists; lists unused media
+```
+- **Pick with your eyes:** always Read the contact sheet before choosing; the photo must really show what the
+  slide/caption says (check the Commons title/description). Prefer clear, bright, uncluttered photos without
+  text/watermarks; no recognisable private people as the subject (crowds/ hands are fine).
+- **Sounds:** you cannot listen, so choose by title/description/tags/duration/downloads and look at the waveform
+  PNG the tool prints (start of the sound should be near 0 s; trim with `--start/--dur`). Keep sounds short (≤ 4 s
+  for effects, ≤ 10 s for ambience/music examples). Prefer high-download, clearly named recordings.
+- **Size:** `--max` ≈ 2× the longer side the photo is shown at (e.g. shown 420 px → `--max 840`), never above 1200.
+- Licences are enforced by the tool (public domain, CC0, CC BY, CC BY-SA). The © button + the "Quellen" page on
+  the deck's home screen give the attribution – nothing else is needed on the slide.
+- Never hotlink, never put media files in by hand.

@@ -46,6 +46,10 @@
     g.fillStyle = "#ffcf3f"; g.beginPath(); g.arc(x, y, r, 0, TAU); g.fill();
   }
   const life = (s, label, ...kids) => s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, label), ...kids);
+  const P = (s, html, cls = "t", hidden = false) => s.h("p", { class: cls + (hidden ? " later" : ""), html });
+  const box = (s, cls, label, html, hidden = true) =>
+    s.h("div", { class: cls + (hidden ? " later" : "") }, label ? s.h("span", { class: "exlabel" }, label) : null, s.h("p", { class: "small", html }));
+  const stack = (s, gap, ...kids) => s.h("div", { class: "stack", style: { gap: gap + "px" } }, ...kids);
   const ex = (s, label, ...kids) => s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, label), ...kids);
 
   Deck.unit({
@@ -113,7 +117,7 @@
             draw();
           };
           const sl = s.slider({ label: "Uhrzeit in Berlin", min: 0, max: 24, step: 0.5, value: 12, fmt: v => `${Math.floor(v)}:${v % 1 ? "30" : "00"} Uhr`, onInput: v => { hour = v; update(); } });
-          const spin = async () => { s.sfx.whoosh(); await s.tween({ from: hour, to: hour + 24, dur: 4200, ease: "inOut", update: v => { hour = v; update(); } }); hour = hour % 24; sl.set(hour); s.sfx.ding(); };
+          const spin = async () => { s.sound("clock-tick", { vol: 0.6 }); await s.tween({ from: hour, to: hour + 24, dur: 4200, ease: "inOut", update: v => { hour = v; update(); } }); hour = hour % 24; sl.set(hour); s.sfx.ding(); };
           const btn = s.h("button", { class: "btn solid later", onclick: spin }, "Erde einmal drehen");
           const merk = s.h("div", { class: "merk later" }, "Die Erde dreht sich in etwa ", s.h("b", null, "24 Stunden"), " einmal um sich selbst. Die Seite zur Sonne hat ", s.h("b", null, "Tag"), ", die andere ", s.h("b", null, "Nacht"), ".");
           const lf = life(s, "Im Alltag",
@@ -125,6 +129,20 @@
           s.step(async () => { s.show(btn, "pop"); await spin(); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
           s.step(async () => { showNY = true; draw(); s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* 1b – real photos ------------------------------------------------- */
+      {
+        title: "Tag und Nacht aus dem Weltall",
+        say: "Astronauten auf der Raumstation ISS sehen die Grenze zwischen Tag und Nacht. Und nachts leuchten unten die Städte.",
+        build(s) {
+          const a = s.photo("tag-nacht-grenze", { w: 530, h: 380, pos: "40% 50%", caption: "Hier endet der Tag: die Tag-Nacht-Grenze" });
+          const b = s.photo("stadt-nacht-iss", { w: 530, h: 380, pos: "50% 50%", caption: "Großstadt in Deutschland bei Nacht", cls: "later" });
+          const t = P(s, "Beide Fotos stammen von der Raumstation <b>ISS</b>. Sie fliegt etwa 400 km hoch und umrundet die Erde in rund 90 Minuten.", "t");
+          s.add(s.h("div", { class: "stack", style: { gap: "18px", height: "100%", justifyContent: "center" } },
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center" } }, a, b), t));
+          s.show(a, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.sfx.chord([0, 3, 7]); await s.show(b, "zoom"); s.say("Auf der Nachtseite leuchten die Lichter der Städte."); });
         },
       },
       /* 2 ---------------------------------------------------------------- */
@@ -164,7 +182,7 @@
           const timeLbl = s.h("p", { class: "h2" }, "Mittag: Sonne im Süden");
           const label = tt => tt < 0.12 ? "Sonnenaufgang im Osten" : tt < 0.4 ? "Vormittag: Sonne im Südosten" : tt <= 0.6 ? "Mittag: Sonne im Süden" : tt < 0.88 ? "Nachmittag: Sonne im Südwesten" : "Sonnenuntergang im Westen";
           const sl = s.slider({ label: "Tageslauf", min: 0, max: 100, value: 50, fmt: v => v < 34 ? "morgens" : v < 67 ? "mittags" : "abends", onInput: v => { t = v / 100; timeLbl.textContent = label(t); draw(); } });
-          const play = async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 4000, ease: "linear", update: v => { t = v; timeLbl.textContent = label(t); draw(); } }); sl.set(100); s.sfx.ding(); };
+          const play = async () => { s.sound("birds", { vol: 0.4, dur: 4 }); await s.tween({ from: 0, to: 1, dur: 4000, ease: "linear", update: v => { t = v; timeLbl.textContent = label(t); draw(); } }); sl.set(100); s.sfx.ding(); };
           const btn = s.h("button", { class: "btn solid" , onclick: play }, "Einen Tag abspielen");
           const merk = s.h("div", { class: "merk later" }, s.h("span", { class: "hand", style: { fontSize: "29px", display: "block", lineHeight: "1.15" } }, "Im Osten geht die Sonne auf, im Süden nimmt sie ihren Lauf, im Westen wird sie untergehn, im Norden ist sie nie zu sehn."));
           const lf = life(s, "Im Alltag", s.h("p", { class: "small" }, "Ein Fenster nach Osten bekommt Morgensonne. Mittags zeigt dein Schatten nach Norden. Die Sonne bewegt sich nicht wirklich – wir drehen uns mit der Erde."));
@@ -326,7 +344,7 @@
           s.sfx.pop();
           for (const c of [su, wi]) {
             s.step(async () => {
-              s.sfx.whoosh(); await s.show(c.day, "fade"); s.show(c.times, "fade");
+              s.sound(c === su ? "birds" : "wind", { vol: 0.4, dur: 4 }); await s.show(c.day, "fade"); s.show(c.times, "fade");
               s.sfx.ding(); await s.show(c.big, "pop");
             });
           }
@@ -375,7 +393,7 @@
           s.show(sv, "fade"); s.sfx.pop();
           s.step(async () => { s.sfx.pop(); await s.show(jul, "pop"); s.sfx.pop(); await s.show(jan, "pop"); s.show(cap, "fade"); s.say("Im Januar sind wir der Sonne am nächsten. Und trotzdem ist Winter!"); });
           s.step(async () => { s.sfx.zap(); await s.show(l1, "fade"); s.sfx.zap(); await s.show(l2, "fade"); s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+          s.step(async () => { s.sound("waves", { vol: 0.4, dur: 5 }); await s.show(lf, "up"); });
         },
       },
       /* 7 ---------------------------------------------------------------- */
@@ -418,6 +436,26 @@
             await s.show(stT, "fade"); s.say("Etwa 30 Erden passen zwischen Erde und Mond.");
           });
           s.step(async () => { s.sfx.pop(); await s.show(facts, "up"); });
+        },
+      },
+      /* 7b – real photos ------------------------------------------------- */
+      {
+        title: "Der Mond in echt",
+        say: "So sieht der Mond durch ein Teleskop aus. 1968 sahen Astronauten die Erde über dem Mond aufgehen, und 1969 betraten die ersten Menschen den Mond.",
+        build(s) {
+          const figs = [
+            s.photo("vollmond", { w: 340, h: 340, caption: "Vollmond mit Kratern" }),
+            s.photo("erdaufgang", { w: 340, h: 340, pos: "50% 45%", caption: "Erdaufgang (Apollo 8, 1968)", cls: "later" }),
+            s.photo("fussabdruck-mond", { w: 340, h: 340, caption: "Fußabdruck (Apollo 11, 1969)", cls: "later" }),
+          ];
+          const btn = s.soundBtn("armstrong", "Armstrong anhören");
+          const t = s.h("div", { class: "row later", style: { flexWrap: "nowrap", gap: "18px", alignItems: "center" } }, btn,
+            P(s, "Im <b>Juli 1969</b> betrat Neil Armstrong als erster Mensch den Mond. Seine Worte kamen per Funk zur Erde.", "small"));
+          s.add(s.h("div", { class: "stack", style: { gap: "18px", height: "100%", justifyContent: "center" } },
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center" } }, ...figs), t));
+          s.show(figs[0], "zoom"); s.sfx.pop();
+          s.step(async () => { s.sfx.whoosh(); await s.show(figs[1], "zoom"); s.say("Vom Mond aus sieht man die Erde aufgehen."); });
+          s.step(async () => { s.sound("footsteps", { vol: 0.5, dur: 2 }); await s.show(figs[2], "zoom"); s.show(t, "up"); s.say("Der Fußabdruck eines Astronauten im Mondstaub."); });
         },
       },
       /* 8 ---------------------------------------------------------------- */
@@ -477,11 +515,11 @@
         build(s) {
           const moonPic = (k, right) => { const c = s.canvas(110, 110); c.g.fillStyle = "#0e1633"; c.g.beginPath(); c.g.arc(55, 55, 55, 0, TAU); c.g.fill(); phase(c.g, 55, 55, 42, k, right); return c.canvas; };
           const cards = [
-            s.h("div", { class: "ex later row", style: { flexWrap: "nowrap", alignItems: "center" } }, moonPic(0.3, true),
+            s.h("div", { class: "ex later row", style: { flexWrap: "nowrap", alignItems: "center" } }, s.photo("mond-zunehmend", { w: 150, h: 150, pos: "50% 25%", style: { flex: "none" } }),
               s.h("div", null, s.h("span", { class: "exlabel" }, "Rechts hell"), s.h("p", { class: "t" }, "Der Mond ", s.h("b", null, "nimmt zu"), ". Du siehst ihn am Abend."))),
-            s.h("div", { class: "ex later row", style: { flexWrap: "nowrap", alignItems: "center" } }, moonPic(0.3, false),
+            s.h("div", { class: "ex later row", style: { flexWrap: "nowrap", alignItems: "center" } }, s.photo("mond-abnehmend", { w: 150, h: 150, pos: "50% 50%", style: { flex: "none" } }),
               s.h("div", null, s.h("span", { class: "exlabel" }, "Links hell"), s.h("p", { class: "t" }, "Der Mond ", s.h("b", null, "nimmt ab"), ". Er ist am Morgen gut zu sehen."))),
-            s.h("div", { class: "life later row", style: { flexWrap: "nowrap", alignItems: "center" } }, moonPic(1, true),
+            s.h("div", { class: "life later row", style: { flexWrap: "nowrap", alignItems: "center" } }, s.photo("vollmond", { w: 150, h: 150, style: { flex: "none" } }),
               s.h("div", null, s.h("span", { class: "exlabel" }, "Vollmond"), s.h("p", { class: "small" }, "Er steht der Sonne gegenüber: Er geht auf, wenn die Sonne untergeht."))),
             s.h("div", { class: "life later row", style: { flexWrap: "nowrap", alignItems: "center" } }, moonPic(0.5, true),
               s.h("div", null, s.h("span", { class: "exlabel" }, "Monat"), s.h("p", { class: "small" }, "Das Wort „Monat“ kommt von „Mond“. Ein Mond-Umlauf dauert ungefähr einen Monat."))),
@@ -490,7 +528,7 @@
           s.add(s.h("div", { class: "stack", style: { gap: "16px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols", style: { gap: "18px" } }, ...cards), note));
           s.sfx.pop(); s.show(cards[0], "up");
           s.step(async () => { s.sfx.pop(); await s.show(cards[1], "up"); });
-          s.step(async () => { s.sfx.ding(); await s.show(cards[2], "up"); });
+          s.step(async () => { s.sound("eule-ruft", { vol: 0.5 }); await s.show(cards[2], "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(cards[3], "up"); s.show(note, "fade"); });
         },
       },
@@ -538,6 +576,20 @@
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },
+      /* 10b – real photos ------------------------------------------------ */
+      {
+        title: "Finsternisse in echt",
+        say: "Bei einer totalen Sonnenfinsternis wird es mitten am Tag fast dunkel. Bei einer totalen Mondfinsternis färbt sich der Mond rot.",
+        build(s) {
+          const a = s.photo("sonnenfinsternis", { w: 530, h: 330, caption: "Totale Sonnenfinsternis" });
+          const b = s.photo("mondfinsternis", { w: 530, h: 330, pos: "50% 50%", caption: "Totale Mondfinsternis: „Blutmond“", cls: "later" });
+          const t1 = box(s, "ex", "Sonnenfinsternis", "Der Mond verdeckt die Sonne ganz. Nur der helle <b>Strahlenkranz</b> (Korona) leuchtet um ihn herum. Menschen jubeln oft vor Staunen!", false);
+          const t2 = box(s, "ex", "Mondfinsternis", "Der Mond steht im Erdschatten. Ein wenig rotes Licht wird durch die Lufthülle der Erde zu ihm gelenkt – darum wirkt er <b>rot</b>.");
+          s.add(s.h("div", { class: "cols", style: { gap: "20px", height: "100%", alignContent: "center" } }, stack(s, 14, a, t1), stack(s, 14, b, t2)));
+          s.show(a, "zoom"); s.sound("crowd-cheer", { vol: 0.5 });
+          s.step(async () => { s.sfx.chord([0, 3, 7]); await s.show(b, "zoom"); await s.show(t2, "up"); s.say("Bei einer Mondfinsternis wirkt der Mond rot."); });
+        },
+      },
       /* 11 --------------------------------------------------------------- */
       {
         title: "Die acht Planeten",
@@ -571,6 +623,23 @@
           s.sfx.whoosh(); s.show(cells[0], "pop");
         },
       },
+      /* 11b – real photos ------------------------------------------------ */
+      {
+        title: "Planeten in echt",
+        say: "So sehen Mars, Jupiter und Saturn wirklich aus. Die Fotos kommen vom Weltraumteleskop Hubble und von der Raumsonde Cassini.",
+        build(s) {
+          const items = [
+            [s.photo("mars", { w: 340, h: 340, caption: "Mars" }), "Der <b>rote Planet</b>: Sein Staub enthält viel Eisenrost. Oben siehst du die weiße Polkappe."],
+            [s.photo("jupiter", { w: 340, h: 340, caption: "Jupiter" }), "Der <b>größte</b> Planet – eine Kugel aus Gas mit Wolkenstreifen und dem Großen Roten Fleck, einem Riesensturm."],
+            [s.photo("saturn", { w: 340, h: 340, fit: "contain", style: { background: "#000" }, caption: "Saturn" }), "Seine <b>Ringe</b> bestehen aus unzähligen Brocken aus Eis und Gestein."],
+          ];
+          const cols = items.map(([fig, txt], i) => s.h("div", { class: "stack" + (i ? " later" : ""), style: { gap: "10px", width: "340px" } }, fig, P(s, txt, "small")));
+          s.add(s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center", alignItems: "center", height: "100%" } }, ...cols));
+          s.show(cols[0], "zoom"); s.sfx.note(0, .3);
+          s.step(async () => { s.sfx.note(4, .3); await s.show(cols[1], "zoom"); s.say("Jupiter ist der größte Planet."); });
+          s.step(async () => { s.sfx.note(7, .3); await s.show(cols[2], "zoom"); s.say("Saturn hat Ringe aus Eis und Gestein."); });
+        },
+      },
       /* 12 --------------------------------------------------------------- */
       {
         title: "Wie groß ist die Sonne?",
@@ -599,7 +668,7 @@
             let shown = 1;
             await s.tween({ from: 1, to: 109, dur: 2600, ease: "linear", update: v => { const n = Math.round(v); while (shown < n) { earths[shown].classList.remove("later"); shown++; if (shown % 10 === 0) s.sfx.count(shown / 10); } cnt.textContent = String(n); } });
             for (; shown < 109; shown++) earths[shown].classList.remove("later");
-            cnt.textContent = "109"; s.sfx.success(); s.show(right.lastChild, "fade");
+            cnt.textContent = "109"; s.sound("gong", { vol: 0.6, dur: 4 }); s.show(right.lastChild, "fade");
           });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
@@ -650,7 +719,7 @@
             s.h("p", { class: "small pencil" }, "Nah dran: die ersten 40 Meter"), a,
             s.h("p", { class: "small pencil" }, "Weit weg: bis 750 Meter (gelb = die 40 Meter von oben)"), b,
             s.h("div", { class: "cols", style: { gridTemplateColumns: "430px 1fr", gap: "20px", alignItems: "start" } }, s.h("div", { class: "stack", style: { gap: "4px" } }, sl, wl), lf)));
-          s.sfx.pop();
+          s.sound("ball-kick");
           s.step(async () => { for (const n of near) { s.sfx.pop(); await s.show(n, "pop"); } s.say("Die Erde ist nur 2 Millimeter groß, 24 Meter vom Ball entfernt."); });
           s.step(async () => { for (const n of far) { s.sfx.whoosh(); await s.show(n, "pop"); } s.say("Neptun liegt 710 Meter weit weg. Das ist fast doppelt so weit, wie der Fernsehturm hoch ist."); });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
@@ -696,10 +765,12 @@
             s.h("div", { class: "card later", style: { padding: "12px 16px" } }, s.h("span", { class: "exlabel" }, "Planet"), s.h("p", { class: "small" }, "leuchtet nicht selbst. Er wird von der Sonne angestrahlt, wie der Mond.")));
           const sb = s.h("p", { class: "t later" }, "Ein ", s.h("b", null, "Sternbild"), " ist eine Gruppe von Sternen, die wir in Gedanken verbinden.");
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Verlängere die hintere Wagenkante etwa ", s.h("b", null, "5-mal"), " – dort steht der ", s.h("b", null, "Polarstern"), ". Er zeigt nach Norden.");
-          const lf = life(s, "Im Alltag", s.h("p", { class: "small" }, "Den Großen Wagen siehst du in Berlin in jeder klaren Nacht des Jahres. Seefahrer fanden mit dem Polarstern den Weg."));
+          const lf = life(s, "Im Alltag", s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } },
+            s.photo("grosser-wagen", { w: 200, h: 140, pos: "50% 25%", style: { flex: "none" } }),
+            s.h("p", { class: "small" }, "Den Großen Wagen siehst du in Berlin in jeder klaren Nacht des Jahres. Seefahrer fanden mit dem Polarstern den Weg.")));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "540px 1fr", gap: "24px", alignItems: "center", height: "100%" } }, canvas,
             s.h("div", { class: "stack", style: { gap: "12px" } }, cmp, sb, merk, lf)));
-          s.show(canvas, "fade"); s.sfx.pop();
+          s.show(canvas, "fade"); s.sound("eule-ruft", { vol: 0.5 });
           s.step(async () => { s.show(cmp.children[0], "up"); s.sfx.pop(); await s.wait(300); s.sfx.pop(); await s.show(cmp.children[1], "up"); });
           s.step(async () => { s.sfx.scribble(); s.show(sb, "fade"); await s.tween({ from: 0, to: 1, dur: 1600, ease: "linear", update: v => { lines = v; } }); lines = 1; s.sfx.ding(); });
           s.step(async () => { s.sfx.zap(); await s.tween({ from: 0, to: 1, dur: 2000, update: v => { pointer = v; } }); pointer = 1; polShow = 1; s.sfx.success(); await s.show(merk, "up"); });
@@ -712,21 +783,18 @@
         say: "In Berlin kannst du in die Sterne schauen: in der Archenhold-Sternwarte und im Zeiss-Großplanetarium. Und unser Kalender kommt direkt vom Himmel.",
         build(s) {
           const ico = (draw) => { const sv = s.svg(84, 84, { style: "flex: 0 0 84px" }); draw(sv); return sv; };
-          const tele = ico(sv => sv.append(s.el("rect", { x: 10, y: 34, width: 62, height: 14, rx: 4, fill: "#1d5bd0", transform: "rotate(-30 42 41)" }), s.el("line", { x1: 40, y1: 46, x2: 26, y2: 80, stroke: "#1b2740", "stroke-width": 4 }), s.el("line", { x1: 40, y1: 46, x2: 56, y2: 80, stroke: "#1b2740", "stroke-width": 4 })));
-          const dome = ico(sv => sv.append(s.el("path", { d: "M8 70 A34 34 0 0 1 76 70 Z", fill: "#e4ecfb", stroke: "#1d5bd0", "stroke-width": 4 }), s.el("circle", { cx: 30, cy: 52, r: 3, fill: "#1d5bd0" }), s.el("circle", { cx: 48, cy: 42, r: 3, fill: "#1d5bd0" }), s.el("circle", { cx: 60, cy: 58, r: 3, fill: "#1d5bd0" }), s.el("rect", { x: 6, y: 70, width: 72, height: 8, fill: "#1d5bd0" })));
-          const clock = ico(sv => sv.append(s.el("circle", { cx: 42, cy: 42, r: 34, fill: "#fff", stroke: "#1b2740", "stroke-width": 4 }), s.el("line", { x1: 42, y1: 42, x2: 42, y2: 18, stroke: "#1b2740", "stroke-width": 4 }), s.el("line", { x1: 42, y1: 42, x2: 58, y2: 50, stroke: "#dc3b2a", "stroke-width": 4 }), s.el("path", { d: "M70 20 a34 34 0 0 1 6 18", fill: "none", stroke: "#dc3b2a", "stroke-width": 4 })));
           const cal = ico(sv => { sv.append(s.el("rect", { x: 10, y: 14, width: 64, height: 60, rx: 8, fill: "#fff", stroke: "#1b2740", "stroke-width": 4 }), s.el("rect", { x: 10, y: 14, width: 64, height: 16, rx: 6, fill: "#dc3b2a" }), s.el("text", { x: 42, y: 64, "text-anchor": "middle", "font-size": 26, "font-weight": 800, fill: "#1b2740", text: "29" })); });
           const card = (icon, label, txt, cls = "ex") => s.h("div", { class: cls + " later row", style: { flexWrap: "nowrap", alignItems: "center", gap: "18px", padding: "20px 22px" } }, icon, s.h("div", null, s.h("span", { class: "exlabel" }, label), s.h("p", { class: "t", style: { fontSize: "22px" } }, txt)));
           const cards = [
-            card(tele, "Archenhold-Sternwarte", "Im Treptower Park steht seit 1896 die „Himmelskanone“: ein 21 m langes Linsenfernrohr – das längste bewegliche der Welt."),
-            card(dome, "Zeiss-Großplanetarium", "An der Prenzlauer Allee (seit 1987) wird der Sternenhimmel an eine riesige Kuppel projiziert – auch am Tag."),
-            card(clock, "Sommerzeit", "Am 25. Oktober 2026 wird die Uhr von 3 auf 2 Uhr zurückgestellt. Die Erde dreht sich nicht anders – nur unsere Uhr.", "life"),
+            card(s.photo("riesenfernrohr", { w: 170, h: 130, style: { flex: "none" } }), "Archenhold-Sternwarte", "Im Treptower Park steht seit 1896 die „Himmelskanone“: ein 21 m langes Linsenfernrohr – das längste bewegliche der Welt."),
+            card(s.photo("planetarium", { w: 170, h: 130, style: { flex: "none" } }), "Zeiss-Großplanetarium", "An der Prenzlauer Allee (seit 1987) wird der Sternenhimmel an eine riesige Kuppel projiziert – auch am Tag."),
+            card(s.photo("weltzeituhr", { w: 170, h: 130, pos: "50% 35%", style: { flex: "none" } }), "Sommerzeit", "Am 25. Oktober 2026 wird die Uhr von 3 auf 2 Uhr zurückgestellt. Die Erde dreht sich nicht anders – nur unsere Uhr.", "life"),
             card(cal, "Kalender", "Tag = eine Erddrehung. Monat ≈ ein Mondumlauf. Jahr = ein Weg um die Sonne. 2028 hat wieder einen 29. Februar.", "life"),
           ];
           s.add(s.h("div", { class: "cols", style: { gap: "18px", height: "100%", alignContent: "center" } }, ...cards));
           s.sfx.pop(); s.show(cards[0], "up");
           s.step(async () => { s.sfx.pop(); await s.show(cards[1], "up"); });
-          s.step(async () => { s.sfx.tick(); await s.show(cards[2], "up"); });
+          s.step(async () => { s.sound("clock-tick", { vol: 0.6, dur: 2 }); await s.show(cards[2], "up"); });
           s.step(async () => { s.sfx.success(); await s.show(cards[3], "up"); s.confetti(590, 400, 70); });
         },
       },

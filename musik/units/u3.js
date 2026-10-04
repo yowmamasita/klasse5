@@ -4,22 +4,30 @@
   const C = "#7b4fd6", SOFT = "#ece5fb", RED = "#dc3b2a", ORANGE = "#ee7a1a", INK = "#1b2740", PENCIL = "#5d6678", GREEN = "#138a5a", BLUE = "#1d5bd0";
   const semiHz = n => 523.25 * Math.pow(2, n / 12);
 
-  /* ---------- synthesised instruments (all through the engine's Sfx -> mute + check mode respected) ---------- */
+  /* ---------- recorded instruments (drum kit, body percussion, metronome, piano) – s.sound respects mute + check mode ---------- */
+  const PS = [[36, "piano-c2"], [40, "piano-e2"], [45, "piano-a2"], [48, "piano-c3"], [52, "piano-e3"], [57, "piano-a3"], [60, "piano-c4"], [64, "piano-e4"], [69, "piano-a4"], [72, "piano-c5"], [76, "piano-e5"], [81, "piano-a5"], [84, "piano-c6"]];
+  const KIT_IDS = ["kick", "snare", "hihat", "clap", "snap", "stomp", "thigh", "metronome", "heartbeat", "footsteps"].concat(PS.map(p => p[1]));
   function kit(s) {
-    const f = s.sfx;
+    const f = s.sfx, snd = (id, w, o = {}) => { if (s.alive) s.sound(id, Object.assign({ when: w }, o)); };
+    s.preload(KIT_IDS);
     return {
-      kick: (w = 0, v = 0.7) => { f.tone(160, 0.32, "sine", v, w, 40); },
-      snare: (w = 0) => { f.noise(0.16, 0.32, 2600, 1500, w, 0.7); f.tone(210, 0.08, "triangle", 0.16, w, 150); },
-      hat: (w = 0) => { f.noise(0.045, 0.12, 7000, 9000, w, 1.5); },
-      click: (w = 0, acc = false) => { f.tone(acc ? 1900 : 1250, 0.045, "square", acc ? 0.13 : 0.06, w); },
-      clap: (w = 0, v = 0.28) => { [0, 0.011, 0.023].forEach(d => f.noise(0.07, v, 1500, 1100, w + d, 1.2)); },
-      stomp: (w = 0) => { f.tone(95, 0.26, "sine", 0.75, w, 38); f.noise(0.09, 0.14, 320, 160, w, 1); },
-      pat: (w = 0) => { f.noise(0.08, 0.3, 950, 520, w, 1); f.tone(190, 0.07, "sine", 0.22, w, 120); },
-      snap: (w = 0) => { f.noise(0.035, 0.35, 3800, 4200, w, 4); f.tone(2100, 0.03, "sine", 0.08, w); },
-      heart: (w = 0) => { f.tone(62, 0.13, "sine", 0.75, w, 42); f.tone(56, 0.11, "sine", 0.5, w + 0.17, 40); },
-      step: (w = 0) => { f.noise(0.09, 0.3, 500, 220, w, 0.9); f.tone(110, 0.08, "sine", 0.3, w, 70); },
+      kick: (w = 0, v = 0.7) => snd("kick", w, { vol: Math.min(1, v * 1.25) }),
+      snare: (w = 0) => snd("snare", w, { vol: .75 }),
+      hat: (w = 0) => snd("hihat", w, { vol: .5 }),
+      click: (w = 0, acc = false) => snd("metronome", w, acc ? { vol: 1, rate: 1.3 } : { vol: .6 }),
+      clap: (w = 0, v = 0.28) => snd("clap", w, { vol: Math.min(1, v * 2.6) }),
+      stomp: (w = 0) => snd("stomp", w, { dur: .45 }),
+      pat: (w = 0) => snd("thigh", w),
+      snap: (w = 0) => snd("snap", w),
+      heart: (w = 0) => snd("heartbeat", w, { dur: .6 }),
+      step: (w = 0) => snd("footsteps", w, { dur: .26 }),
       clock: (w = 0, hi = true) => { f.tone(hi ? 2300 : 1700, 0.035, "square", 0.08, w); },
-      note: (n, dur = 0.3, w = 0, v = 0.22, type = "triangle") => { f.tone(semiHz(n), dur, type, v, w); },
+      /** piano note, n = semitones relative to c″ (C5) */
+      note: (n, dur = 0.3, w = 0, v = 0.22) => {
+        const m = 72 + n; let best = PS[0];
+        for (const p of PS) if (Math.abs(p[0] - m) < Math.abs(best[0] - m)) best = p;
+        snd(best[1], w, { rate: Math.pow(2, (m - best[0]) / 12), vol: Math.min(1, v * 3.2), dur: Math.max(.25, dur + .35) });
+      },
     };
   }
 
@@ -239,6 +247,29 @@
           s.show(svg, "up"); s.sfx.whoosh();
           s.step(async () => { for (const [i, z] of zoneEls.entries()) { s.show(z, "fade"); s.sfx.count(i); await s.wait(260); } s.show(note2, "fade"); s.say("Largo ist sehr langsam, Presto sehr schnell."); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+        },
+      },
+      /* 2b ----------------------------------------------------------------- */
+      {
+        title: "Das Metronom",
+        say: "Ein Metronom tickt genau im Tempo, das du einstellst. Musiker üben damit, im Takt zu bleiben.",
+        build(s) {
+          const K = kit(s), P = Player(s);
+          const ph = s.photo("metronome-photo", { w: 330, h: 540, pos: "50% 40%", caption: "Metronom zum Aufziehen" });
+          const big = s.h("p", { class: "huge mono", style: { color: C } }, "–");
+          let on = 0;
+          const run = bpm => { on = bpm; big.textContent = "♩ = " + bpm; let i = 0; P.play([{ b: 0, d: 1, snd: w => K.click(w, i % 4 === 0), vis: () => { i++; wig(big); } }], { bpm, length: 1, loop: true }); };
+          const wig = el => { el.classList.remove("a-pop"); void el.offsetWidth; el.classList.add("a-pop"); };
+          const bs = [60, 100, 160].map(b => btn(s, "▶ " + b, () => run(b)));
+          const stop = btn(s, "■ Stopp", () => { P.stop(); big.textContent = "–"; });
+          const c1 = s.h("div", { class: "card later" }, s.h("span", { class: "exlabel" }, "Erfunden"), s.h("p", { class: "t" }, s.h("b", null, "Johann Nepomuk Mälzel"), " ließ das Metronom ", s.h("b", null, "1815"), " patentieren. Ein Pendel mit Gewicht schwingt hin und her."));
+          const c2 = s.h("div", { class: "card later" }, s.h("span", { class: "exlabel" }, "In den Noten"), s.h("p", { class: "t" }, "Über vielen Stücken steht zum Beispiel ", s.h("b", null, "♩ = 100"), ": 100 Viertel pro Minute. ", s.h("b", null, "Beethoven"), " hat solche Zahlen als einer der Ersten benutzt."));
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Für die Instrumentalklasse"), s.h("p", { class: "small" }, "Heute gibt es Metronome auch als App. Langsam mit Metronom üben – dann Schritt für Schritt schneller."));
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "330px 1fr", alignItems: "center", gap: "26px", height: "100%" } }, ph,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center" } }, big), s.h("div", { class: "row" }, ...bs, stop), c1, c2, life)));
+          s.step(async () => { run(100); await s.show(c1, "left"); });
+          s.step(async () => { await s.show(c2, "left"); });
+          s.step(async () => { P.stop(); big.textContent = "–"; s.sfx.ding(); await s.show(life, "up"); });
         },
       },
       /* 3 ------------------------------------------------------------------ */
@@ -598,8 +629,8 @@
           const pre = Object.keys(presets).map(n => btn(s, n, () => { load(n); s.sfx.pop(); }));
           const sl = s.slider({ label: "Tempo", min: 60, max: 160, step: 4, value: 100, fmt: v => v + " BPM", onInput: v => { bpm = v; P.setBpm(v); } });
           sl.style.width = "300px";
-          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
-            s.h("p", { class: "small" }, "So bauen Produzenten Beats: Der berühmte Drumcomputer Roland TR-808 (1980) hat 16 Tasten für die 16 Kästchen eines Taktes. Sein Bassdrum-Klang prägt Hip-Hop bis heute."));
+          const life = s.h("div", { class: "life later", style: { display: "flex", gap: "16px", alignItems: "center" } }, s.photo("tr-808", { w: 220, h: 118, pos: "50% 60%" }),
+            s.h("div", null, s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("p", { class: "small" }, "So bauen Produzenten Beats: Der berühmte Drumcomputer Roland TR-808 (1980) hat 16 Tasten für die 16 Kästchen eines Taktes. Sein Bassdrum-Klang prägt Hip-Hop bis heute.")));
           s.add(s.h("div", { class: "stack", style: { gap: "10px", height: "100%", justifyContent: "center" } }, head, ...lanes,
             s.h("div", { class: "row", style: { marginTop: "8px", flexWrap: "nowrap" } }, play, ...pre, sl), life));
           s.show(lanes, "left"); s.sfx.whoosh();
@@ -675,8 +706,8 @@
             s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: "6px" } }, counts),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(8, 1fr)", gap: "6px" } }, slots),
             s.h("div", { class: "row" }, play, s.h("span", { class: "small pencil" }, "Tippe ein Feld an, um es zu ändern.")));
-          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
-            s.h("p", { class: "small" }, "Beim Schuhplattler in den Alpen klopfen Tänzer auf Schenkel und Schuhe. Im Flamenco wird geklatscht und gestampft. Und im Stadion stampfen und klatschen Tausende Fans zusammen."));
+          const life = s.h("div", { class: "life later", style: { display: "flex", gap: "14px", alignItems: "center" } }, s.photo("schuhplattler", { w: 200, h: 150, pos: "50% 45%" }),
+            s.h("div", null, s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("p", { class: "small" }, "Beim Schuhplattler in den Alpen klopfen Tänzer auf Schenkel und Schuhe. Im Flamenco wird geklatscht und gestampft. Und im Stadion stampfen und klatschen Tausende Fans zusammen.")));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "360px 1fr", alignItems: "center", height: "100%" } }, svg,
             s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" } }, sbtn), lane, life)));
           s.show(svg, "up"); s.sfx.pop();
@@ -733,7 +764,7 @@
         say: "Rhythmus ist überall. Tippe auf die Karten und hör genau hin.",
         build(s) {
           const K = kit(s), P = Player(s);
-          const card = (emo, ttl, txt, bpm, events, len, n) => {
+          const card = (ph, ttl, txt, bpm, events, len, n) => {
             const dots = s.svg(220, 40), ds = [];
             for (let i = 0; i < n; i++) { const c = s.el("circle", { cx: 110 + (i - (n - 1) / 2) * 40, cy: 20, r: i === 0 ? 14 : 10, fill: i === 0 ? RED : C, opacity: .3 }); dots.append(c); ds.push(c); }
             const b = btn(s, "▶ anhören", () => {
@@ -741,14 +772,14 @@
               P.play(ev, { bpm, length: len, loop: false, end: () => ds.forEach(d => d.setAttribute("opacity", .3)) });
             }, true);
             return s.h("div", { class: "life later", style: { display: "flex", flexDirection: "column", gap: "8px" } },
-              s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px" } }, s.h("span", { style: { fontSize: "40px" } }, emo), s.h("p", { class: "h2" }, ttl)),
-              s.h("p", { class: "small" }, txt), s.h("div", { class: "row", style: { justifyContent: "space-between", flexWrap: "nowrap" } }, dots, b));
+              s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "flex-start" } }, s.photo(ph, { w: 230, h: 165, pos: "50% 50%" }),
+                s.h("div", { style: { flex: 1 } }, s.h("p", { class: "h2" }, ttl), s.h("p", { class: "small" }, txt))), s.h("div", { class: "row", style: { justifyContent: "space-between", flexWrap: "nowrap" } }, dots, b));
           };
           const rep = (k, f) => Array.from({ length: k }, (_, i) => f(i)).flat();
-          const c1 = card("❤️", "Herzschlag", "„Ba-dumm, ba-dumm“: dein eigener Puls. Nach dem Sport wird er schneller.", 75, K => rep(8, i => ({ b: i, d: 1, snd: w => K.heart(w) })), 8, 4);
-          const c2 = card("⚽", "Fans im Stadion", "Tausende klatschen genau zusammen – weil alle denselben Puls fühlen.", 120, K => rep(4, i => [{ b: i * 4, d: 1, snd: w => K.clap(w) }, { b: i * 4 + 1, d: 1, snd: w => K.clap(w) }, { b: i * 4 + 2, d: 0.5, snd: w => K.clap(w) }, { b: i * 4 + 2.5, d: 0.5, snd: w => K.clap(w) }, { b: i * 4 + 3, d: 1, snd: w => K.clap(w) }, { b: i * 4, d: 1, snd: w => K.stomp(w) }, { b: i * 4 + 2, d: 1, snd: w => K.stomp(w) }]), 16, 4);
-          const c3 = card("💃", "Walzer auf dem Ball", "Paare drehen sich im 3/4-Takt: Um – pa – pa, Um – pa – pa.", 168, K => rep(6, i => [{ b: i * 3, d: 1, snd: w => K.note(-24, 0.45, w, 0.28) }, { b: i * 3 + 1, d: 1, snd: w => { K.note(-5, 0.14, w, 0.1); K.note(0, 0.14, w, 0.1); } }, { b: i * 3 + 2, d: 1, snd: w => { K.note(-5, 0.14, w, 0.1); K.note(0, 0.14, w, 0.1); } }]), 18, 3);
-          const c4 = card("🎧", "Deine Lieblingslieder", "Pop, Rap und Rock: fast immer 4/4-Takt. Nick mit dem Kopf – das ist der Puls!", 96, K => rep(4, i => [{ b: i * 4, d: 1, snd: w => K.kick(w) }, { b: i * 4 + 1, d: 1, snd: w => K.snare(w) }, { b: i * 4 + 2, d: 1, snd: w => K.kick(w) }, { b: i * 4 + 2.5, d: 1, snd: w => K.kick(w, 0.5) }, { b: i * 4 + 3, d: 1, snd: w => K.snare(w) }, ...[0, 1, 2, 3, 4, 5, 6, 7].map(h => ({ b: i * 4 + h / 2, d: 0.5, snd: w => K.hat(w) }))]), 16, 4);
+          const c1 = card("stethoscope", "Herzschlag", "„Ba-dumm, ba-dumm“: dein eigener Puls. Nach dem Sport wird er schneller.", 75, K => rep(8, i => ({ b: i, d: 1, snd: w => K.heart(w) })), 8, 4);
+          const c2 = card("stadium-fans", "Fans im Stadion", "Tausende klatschen genau zusammen – weil alle denselben Puls fühlen.", 120, K => rep(4, i => [{ b: i * 4, d: 1, snd: w => K.clap(w) }, { b: i * 4 + 1, d: 1, snd: w => K.clap(w) }, { b: i * 4 + 2, d: 0.5, snd: w => K.clap(w) }, { b: i * 4 + 2.5, d: 0.5, snd: w => K.clap(w) }, { b: i * 4 + 3, d: 1, snd: w => K.clap(w) }, { b: i * 4, d: 1, snd: w => K.stomp(w) }, { b: i * 4 + 2, d: 1, snd: w => K.stomp(w) }]), 16, 4);
+          const c3 = card("opera-ball", "Walzer auf dem Ball", "Paare drehen sich im 3/4-Takt: Um – pa – pa, Um – pa – pa.", 168, K => rep(6, i => [{ b: i * 3, d: 1, snd: w => K.note(-24, 0.45, w, 0.28) }, { b: i * 3 + 1, d: 1, snd: w => { K.note(-5, 0.14, w, 0.1); K.note(0, 0.14, w, 0.1); } }, { b: i * 3 + 2, d: 1, snd: w => { K.note(-5, 0.14, w, 0.1); K.note(0, 0.14, w, 0.1); } }]), 18, 3);
+          const c4 = card("headphones", "Deine Lieblingslieder", "Pop, Rap und Rock: fast immer 4/4-Takt. Nick mit dem Kopf – das ist der Puls!", 96, K => rep(4, i => [{ b: i * 4, d: 1, snd: w => K.kick(w) }, { b: i * 4 + 1, d: 1, snd: w => K.snare(w) }, { b: i * 4 + 2, d: 1, snd: w => K.kick(w) }, { b: i * 4 + 2.5, d: 1, snd: w => K.kick(w, 0.5) }, { b: i * 4 + 3, d: 1, snd: w => K.snare(w) }, ...[0, 1, 2, 3, 4, 5, 6, 7].map(h => ({ b: i * 4 + h / 2, d: 0.5, snd: w => K.hat(w) }))]), 16, 4);
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px", height: "100%", alignContent: "center" } }, c1, c2, c3, c4));
           [c1, c2, c3, c4].forEach((c, i) => s.step(async () => { s.sfx.count(i); await s.show(c, "pop"); }));
         },

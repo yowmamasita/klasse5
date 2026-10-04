@@ -150,8 +150,27 @@
           const merk = s.h("div", { class: "merk later" }, "Eine Karte zeigt die Welt ", b(s, "von oben"), ", ", b(s, "verkleinert"), " und ", b(s, "vereinfacht"), ".");
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "640px 1fr", gap: "24px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, ...ph, merk)));
           s.show(svg, "fade"); s.sfx.whoosh();
-          s.step(async () => { s.sfx.whoosh(); s.show(ph[1], "left"); await s.tween({ from: 0, to: 1, dur: 2000, ease: "inOut", update: v => sc.set(v) }); s.sfx.pop(); s.say("Von oben werden Tische und Stühle zu Rechtecken."); });
+          s.step(async () => { s.sound("wind", { vol: .3, dur: 2.5 }); s.show(ph[1], "left"); await s.tween({ from: 0, to: 1, dur: 2000, ease: "inOut", update: v => sc.set(v) }); s.sfx.pop(); s.say("Von oben werden Tische und Stühle zu Rechtecken."); });
           s.step(async () => { s.sfx.scribble(); s.show(labels, "fade"); s.show(door, "draw"); await s.show(ph[2], "left"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 1b --------------------------------------------------------------- */
+      {
+        title: "Das Tempelhofer Feld – dreimal",
+        say: "Das Tempelhofer Feld liegt direkt neben Neukölln. Wir schauen es uns dreimal an: vom Boden, schräg von oben und senkrecht von oben.",
+        build(s) {
+          const col = (fig, t) => s.h("div", { class: "stack later", style: { gap: "10px" } }, fig, s.h("p", { class: "small" }, t));
+          const cols = [
+            col(s.photo("tempelhof-boden", { w: "100%", h: 290, caption: "1. Vom Boden aus" }), "Du stehst mitten im Gras. Wie groß das Feld ist, siehst du nicht."),
+            col(s.photo("tempelhof-schraeg", { w: "100%", h: 290, caption: "2. Schräg von oben" }), "Aus dem Flugzeug: Häuser, Straßen und die alten Landebahnen."),
+            col(s.photo("tempelhof-oben", { w: "100%", h: 290, pos: "50% 50%", caption: "3. Senkrecht von oben" }), "Fast wie eine Karte: Jetzt erkennst du die Form des ganzen Feldes."),
+          ];
+          const merk = s.h("div", { class: "merk later" }, "Bis ", b(s, "2008"), " war hier ein Flughafen, seit ", b(s, "2010"), " ist es ein Park. Eine Karte zeigt es wie Bild 3 – nur ", b(s, "vereinfacht"), " und mit Namen.");
+          s.add(root(s, "stack", { gap: "18px", justifyContent: "center" }, s.h("div", { class: "cols3" }, cols), merk));
+          s.show(cols[0], "up"); s.sound("birds", { vol: .4, dur: 4 });
+          s.step(async () => { s.sound("wind", { vol: .35, dur: 3 }); await s.show(cols[1], "up"); s.say("Schräg von oben sieht man schon mehr."); });
+          s.step(async () => { s.sound("camera-shutter"); await s.show(cols[2], "zoom"); s.say("Senkrecht von oben sieht es fast aus wie eine Karte."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -280,6 +299,25 @@
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(colored, "fade"); s.show(legend, "up"); s.show(lbl, "fade"); s.say("Jede Höhe bekommt eine eigene Farbe."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(zones, "fade"); s.show(mlbl, "pop"); s.sfx.pop(); s.say("Von oben sieht man die Farben auf der Karte: im Norden grün, im Süden braun."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 4b --------------------------------------------------------------- */
+      {
+        title: "Die Höhenfarben in echt",
+        say: "So sehen die Höhenfarben in echt aus: flaches Land in Brandenburg, der Harz und die Zugspitze.",
+        build(s) {
+          const col = (color, fig, head, t) => s.h("div", { class: "stack later", style: { gap: "10px" } },
+            s.h("div", { style: { height: "22px", borderRadius: "8px", background: color, border: "2px solid #8a8a8a" } }), fig,
+            s.h("p", { class: "h2", style: { fontSize: "25px", color: "var(--unit)" } }, head), s.h("p", { class: "small" }, t));
+          const cols = [
+            col("#79b960", s.photo("brandenburg-flach", { w: "100%", h: 330, caption: "Nauener Platte, Brandenburg" }), "Grün: Tiefland", "Flach und weit – rund um Berlin gibt es kaum Berge."),
+            col("#d8ad66", s.photo("harz-brocken", { w: "100%", h: 330, caption: "Der Harz mit dem Brocken" }), "Hellbraun: Mittelgebirge", "Runde, bewaldete Berge. Der Brocken ist 1.141 m hoch."),
+            col("#ffffff", s.photo("zugspitze", { w: "100%", h: 330, caption: "Gipfel der Zugspitze" }), "Weiß: Hochgebirge", "Die Alpen: steiler Fels, oft Schnee. Die Zugspitze ist 2.962 m hoch."),
+          ];
+          s.add(root(s, "stack", { gap: "18px", justifyContent: "center" }, s.h("div", { class: "cols3" }, cols)));
+          s.show(cols[0], "up"); s.sound("birds", { vol: .35, dur: 3 });
+          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(cols[1], "up"); s.say("Im Harz liegt der Brocken."); });
+          s.step(async () => { s.sound("wind", { vol: .4, dur: 3.5 }); await s.show(cols[2], "up"); s.say("Die Zugspitze ist der höchste Berg Deutschlands."); });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -457,7 +495,7 @@
           s.show(svg, "zoom"); s.sfx.whoosh();
           s.step(async () => { s.sfx.zap(); await s.show(main, "pop"); s.show(L1, "pop"); s.sfx.pop(); await s.show(merk, "up"); s.say("Nie ohne Seife waschen: Norden, Osten, Süden, Westen."); });
           s.step(async () => { s.sfx.pop(); await s.show(sub, "pop"); s.show(L2, "pop"); s.say("Dazwischen liegen Nordosten, Südosten, Südwesten und Nordwesten."); });
-          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 0.94, dur: 3200, ease: "inOut", update: v => { sunP = v; draw(); } }); s.sfx.ding(); await s.show(rhyme, "up"); s.say("Mittags steht die Sonne bei uns im Süden."); });
+          s.step(async () => { s.sound("birds", { vol: .4, dur: 3.5 }); await s.tween({ from: 0, to: 0.94, dur: 3200, ease: "inOut", update: v => { sunP = v; draw(); } }); s.sfx.ding(); await s.show(rhyme, "up"); s.say("Mittags steht die Sonne bei uns im Süden."); });
           s.step(async () => { s.sfx.pop(); await s.show(exs, "up"); });
         },
       },
@@ -486,7 +524,7 @@
           mg.append(s.el("rect", { x: 40, y: 20, width: 200, height: 160, rx: 8, fill: "#f4f1ea", stroke: P.ink, "stroke-width": 2 }), s.el("path", { d: "M40 120 Q120 90 240 130", stroke: P.water, "stroke-width": 12, fill: "none" }), s.el("rect", { x: 160, y: 40, width: 60, height: 44, fill: P.grass }));
           mg.append(s.el("path", { d: "M70 36 L80 66 L70 60 L60 66 Z", fill: P.red }), T(s, 70, 86, "N", { "font-size": 20, fill: P.red }));
           let mapA = 70; const setMap = () => mg.setAttribute("transform", `rotate(${mapA} 140 100)`); setMap();
-          const c1 = s.h("div", { class: "card" }, s.h("p", { class: "h2", style: { color: "var(--unit)", fontSize: "26px" } }, "Die Nadel zeigt nach Norden"), s.h("p", { class: "small" }, "Sie ist ein kleiner Magnet. Die Erde wirkt wie ein riesiger Magnet und dreht die rote Spitze nach Norden."));
+          const c1 = s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "190px 1fr", gap: "14px", alignItems: "center" } }, s.photo("kompass", { w: 190, h: 190, pos: "55% 50%" }), s.h("div", null, s.h("p", { class: "h2", style: { color: "var(--unit)", fontSize: "26px" } }, "Die Nadel zeigt nach Norden"), s.h("p", { class: "small" }, "Sie ist ein kleiner Magnet. Die Erde wirkt wie ein riesiger Magnet und dreht die rote Spitze nach Norden.")));
           const c2 = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "280px 1fr", gap: "12px", alignItems: "center" } }, map, s.h("div", null, s.h("p", { class: "h2", style: { color: "var(--unit)", fontSize: "26px" } }, "Karte einnorden"), s.h("p", { class: "small" }, "Dreh die Karte, bis ihr Nordpfeil in dieselbe Richtung zeigt wie die Nadel.")));
           const lf = life(s, { class: "life later" }, s.h("p", { class: "small" }, "Kompass braucht man beim ", b(s, "Wandern"), ", auf dem ", b(s, "Schiff"), " – und auch dein ", b(s, "Handy"), " hat einen eingebauten Kompass."));
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "420px 1fr", gap: "26px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "14px" } }, c1, c2, lf)));
@@ -602,7 +640,7 @@
           s.step(async () => { await color(["North America", "South America"]); s.say("Nordamerika und Südamerika."); });
           s.step(async () => { await color(["Europe", "Africa", "Asia"]); s.say("Europa, Afrika und Asien."); });
           s.step(async () => { await color(["Oceania", "Antarctica"]); s.say("Australien und die Antarktis am Südpol."); });
-          s.step(async () => { s.sfx.whoosh(); s.show(ocean, "fade"); await s.show(c2, "left"); s.say("Pazifik, Atlantik und Indischer Ozean."); });
+          s.step(async () => { s.sound("waves", { vol: .4, dur: 4 }); s.show(ocean, "fade"); await s.show(c2, "left"); s.say("Pazifik, Atlantik und Indischer Ozean."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -712,7 +750,8 @@
             ["3", "Rechts nach ", b(s, "Süden"), " – schon bist du am ", b(s, "Bahnhof Neukölln"), "."],
           ].map(([n, ...t]) => s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "44px 1fr", gap: "10px", alignItems: "center" } }, s.h("span", { class: "chip", style: { justifyContent: "center", fontSize: "22px", background: "var(--unit)", color: "#fff" } }, n), s.h("p", { class: "t", style: { fontSize: "22px" } }, ...t)));
           const fact = ex(s, "Gut zu wissen", { class: "ex later" }, s.h("p", { class: "small" }, "Nur etwa ", b(s, "250 m"), " zu Fuß. Hier hält die ", b(s, "U7"), " (Rathaus Spandau – Rudow) und die ", b(s, "Ringbahn"), ". Der U-Bahnhof Karl-Marx-Straße ist weiter weg: rund 750\u00a0m Luftlinie."));
-          s.add(root(s, "", { display: "grid", gridTemplateColumns: "600px 1fr", gap: "24px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, ...steps, fact)));
+          const station = s.photo("ubhf-neukoelln", { w: "100%", h: 210, pos: "50% 55%", caption: "Eingang zum Bahnhof Neukölln", cls: "later" });
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "600px 1fr", gap: "24px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, ...steps, station, fact)));
           s.show(svg, "fade"); s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); s.show(L, "fade"); await s.show(U, "pop"); s.say("Das U ist der Bahnhof Neukölln."); });
           s.step(async () => {
@@ -721,7 +760,7 @@
             const seg = async (a, c, i) => { s.show(steps[i], "left"); s.sfx.count(i + 2); await s.tween({ from: 0, to: 1, dur: 1100, ease: "linear", update: v => { walker.setAttribute("cx", a[0] + (c[0] - a[0]) * v); walker.setAttribute("cy", a[1] + (c[1] - a[1]) * v); } }); };
             walker.setAttribute("cx", pts[0][0]); walker.setAttribute("cy", pts[0][1]);
             await seg(pts[0], pts[0], 0); await seg(pts[0], pts[1], 1); await seg(pts[1], pts[2], 2);
-            s.sfx.success();
+            s.sound("ubahn-train", { vol: .5, dur: 5 }); s.show(station, "zoom");
           });
           s.step(async () => { s.sfx.ding(); await s.show(fact, "up"); });
         },
@@ -758,7 +797,7 @@
             s.sfx.whoosh(); s.hide(realL);
             await s.tween({ from: 0, to: 1, dur: 1800, ease: "inOut", update: v => set(v) });
             for (let i = 0; i < names.length; i++) { s.show(names[i], "left"); if (i % 2 === 0) s.sfx.tick(); await s.wait(40); }
-            cap.textContent = "So zeigt sie der BVG-Plan."; s.show(cap, "pop"); s.sfx.ding(); await s.show(c1, "left");
+            cap.textContent = "So zeigt sie der BVG-Plan."; s.show(cap, "pop"); s.sound("ubahn-announce", { vol: .6, dur: 5 }); await s.show(c1, "left");
           });
           s.step(async () => { s.sfx.pop(); await s.show(c2, "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(c3, "left"); });

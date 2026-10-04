@@ -96,7 +96,7 @@
         title: "Dein Malkasten",
         say: "Im Malkasten liegen viele Farben nebeneinander. Drei davon sind besonders wichtig.",
         build(s) {
-          const svg = s.svg(580, 560);
+          const svg = s.svg(580, 266);
           svg.append(s.el("rect", { x: 10, y: 8, width: 560, height: 250, rx: 20, fill: "#cfd4de", stroke: "#6b7385", "stroke-width": 4 }));
           const pc = [["#fafafa", "Weiß"], ["#222222", "Schwarz"], [Y, "Gelb"], ["#ff8a1a", "Orange"], [R, "Rot"], ["#f08ab0", "Rosa"],
             ["#7a3a9a", "Violett"], [B, "Blau"], ["#7fc4f0", "Hellblau"], ["#2fa84a", "Grün"], ["#9dd45a", "Hellgrün"], ["#8a5a34", "Braun"]];
@@ -109,28 +109,32 @@
           const rings = [[2, "#ffffff"], [4, "#ffffff"], [7, "#ffffff"]].map(([i]) => s.el("rect", { x: px(i) - 5, y: py(i) - 5, width: 82, height: 94, rx: 16, fill: "none", stroke: "#1b2740", "stroke-width": 5, "stroke-dasharray": "9 7", class: "later" }));
           const rings2 = [0, 1].map(i => s.el("rect", { x: px(i) - 5, y: py(i) - 5, width: 82, height: 94, rx: 16, fill: "none", stroke: "#dc3b2a", "stroke-width": 5, "stroke-dasharray": "9 7", class: "later" }));
           svg.append(...rings, ...rings2);
-          /* tools */
-          const glass = s.el("g", { class: "later" },
-            s.el("path", { d: "M50,300 L150,300 L140,420 Q138,430 128,430 L72,430 Q62,430 60,420 Z", fill: "#eaf6ff", stroke: "#4b6a8a", "stroke-width": 4 }),
-            s.el("path", { d: "M56,340 L144,340 L140,420 Q138,430 128,430 L72,430 Q62,430 60,420 Z", fill: "#a9d6f5", opacity: .9 }));
-          const brush = s.el("g", { class: "later", transform: "rotate(-35 300 365)" },
-            s.el("rect", { x: 200, y: 355, width: 150, height: 14, rx: 7, fill: "#c98a3e" }),
-            s.el("rect", { x: 345, y: 352, width: 30, height: 20, fill: "#9aa3b2" }),
-            s.el("path", { d: "M375,352 Q410,358 425,362 Q410,368 375,372 Z", fill: "#e0262f" }));
-          const pal = s.el("g", { class: "later" },
-            s.el("path", { d: "M420,330 C420,290 520,285 555,320 C585,350 560,420 500,425 C470,428 480,400 455,398 C420,396 420,360 420,330 Z", fill: "#f1e3c6", stroke: "#a58a5a", "stroke-width": 4 }),
-            s.el("circle", { cx: 470, cy: 335, r: 17, fill: Y }), s.el("circle", { cx: 520, cy: 340, r: 17, fill: B }), s.el("circle", { cx: 500, cy: 385, r: 17, fill: "#2fa84a" }));
-          const tl = [[100, "Wasserglas"], [300, "Pinsel"], [490, "Mischpalette"]].map(([x, t]) => s.el("text", { x, y: 470, "text-anchor": "middle", class: "lbl later", text: t }));
-          svg.append(glass, brush, pal, ...tl);
+          const foto = s.photo("malkasten", { w: 580, h: 330, pos: "50% 60%", caption: "Ein echter Deckfarbkasten: Farbnäpfchen in Reihen", cls: "later" });
           const intro = P(s, "In deinem Malkasten liegen viele <b>Deckfarben</b> in Näpfchen.");
           const ex1 = box(s, "ex", "Wichtig 1: die Grundfarben", "<b>Gelb, Rot, Blau</b> – aus ihnen mischst du fast alles andere.");
           const ex2 = box(s, "ex", "Wichtig 2: Hell und dunkel", "Damit machst du Farben <b>heller</b> oder <b>dunkler</b>.");
           const ex3 = box(s, "life", "Werkzeug", "<b>Pinsel</b>, <b>Wasserglas</b> und <b>Mischpalette</b>. Gemischt wird auf der Palette, nicht im Näpfchen.");
-          s.add(cols(s, svg, stack(s, 16, intro, ex1, ex2, ex3), 580));
+          s.add(cols(s, stack(s, 12, svg, foto), stack(s, 16, intro, ex1, ex2, ex3), 580));
           s.show(svg, "zoom"); s.sfx.whoosh();
-          s.step(async () => { for (let i = 0; i < pans.length; i++) { s.sfx.note(i * 2, .12); s.show(pans[i], "pop"); await s.wait(90); } s.say("Zwölf Farben im Kasten. Welche sind die wichtigsten?"); });
+          s.step(async () => { for (let i = 0; i < pans.length; i++) { s.sfx.note(i * 2, .12); s.show(pans[i], "pop"); await s.wait(90); } s.show(foto, "up"); s.say("Zwölf Farben im Kasten. Welche sind die wichtigsten?"); });
           s.step(async () => { s.sfx.ding(); s.show(rings, "pop"); await s.show(ex1, "up"); s.sfx.pop(); s.show(rings2, "pop"); await s.show(ex2, "up"); s.say("Gelb, Rot und Blau sind die Grundfarben. Weiß und Schwarz brauchst du zum Abtönen."); });
-          s.step(async () => { s.sfx.whoosh(); s.show([glass, brush, pal, ...tl], "up"); await s.show(ex3, "up"); s.say("Dazu kommen Pinsel, Wasserglas und Mischpalette."); });
+          s.step(async () => { s.sound("pinsel-wasser", { vol: .7 }); await s.show(ex3, "up"); s.say("Dazu kommen Pinsel, Wasserglas und Mischpalette."); });
+        },
+      },
+      /* 1b --------------------------------------------------------------- */
+      {
+        title: "Was steckt in der Farbe?",
+        say: "In jedem Farbnäpfchen stecken Pigmente. Das sind winzige, farbige Körnchen.",
+        build(s) {
+          const pf = s.photo("pigmente", { w: 540, h: 405, caption: "Pigmente als Pulver auf einem Markt in Indien", kb: true });
+          const e1 = box(s, "ex", "Pigmente", "Jede Malfarbe enthält <b>Pigmente</b>: ganz feines, farbiges Pulver. Ein <b>Bindemittel</b> hält das Pulver zusammen und klebt es aufs Papier.");
+          const wave = s.photo("hokusai-welle", { w: 500, h: 250, pos: "50% 50%", caption: "Hokusai: Die große Welle (um 1831)", cls: "later" });
+          const e2 = box(s, "life", "Eine Farbe aus Berlin", "<b>Berliner Blau</b> wurde um 1706 in Berlin erfunden – eine der ersten künstlichen Farben. Der Japaner Hokusai druckte damit seine berühmte Welle.");
+          s.add(cols(s, pf, stack(s, 14, e1, wave, e2), 540));
+          s.show(pf, "zoom");
+          s.step(async () => { s.sfx.pop(); await s.show(e1, "up"); s.say("Pigmente und Bindemittel ergeben zusammen die Farbe."); });
+          s.step(async () => { s.sound("waves", { vol: .4, dur: 4 }); await s.show(wave, "zoom"); s.say("Das Blau in dieser Welle wurde in Berlin erfunden."); });
+          s.step(async () => { s.sfx.ding(); await s.show(e2, "up"); });
         },
       },
       /* 2 ---------------------------------------------------------------- */
@@ -147,14 +151,14 @@
           });
           const tag = s.el("text", { x: 270, y: 495, "text-anchor": "middle", class: "hlbl later", text: "Primärfarben" });
           svg.append(tag);
-          const line = (e, t, c, txt) => s.h("div", { class: "ex later", style: { display: "flex", gap: "16px", alignItems: "center" } }, dot(s, c, 44), s.h("div", { html: `<b>${t}</b> ${txt}`, class: "small" }), s.h("span", { style: { marginLeft: "auto", fontSize: "34px" } }, e));
-          const l1 = line("🍋", "Gelb:", Y, "Zitrone, Sonnenblume"), l2 = line("🚒", "Rot:", R, "Feuerwehrauto, Erdbeere"), l3 = line("🌊", "Blau:", B, "Meer, Jeans, Himmel");
+          const l1 = s.photo("zitronen", { w: 204, h: 190, caption: "Gelb: Zitrone", cls: "later" }), l2 = s.photo("feuerwehr", { w: 204, h: 190, pos: "60% 55%", caption: "Rot: Feuerwehr", cls: "later" }), l3 = s.photo("ostsee", { w: 204, h: 190, caption: "Blau: Meer", cls: "later" });
+          svg.style.width = "420px"; svg.style.height = "420px";
           const m = merk(s, "<b>Grundfarben</b> (Primärfarben) kann man nicht mischen. Aus ihnen mischt man fast alle anderen Farben.");
           const pro = box(s, "ex", "Profi-Wissen", "Beim Drucken heißen sie genauer <b>Gelb, Magenta</b> (pinkes Rot) und <b>Cyan</b> (Türkisblau).");
-          s.add(cols(s, svg, stack(s, 12, l1, l2, l3, m, pro), 540));
+          s.add(cols(s, svg, stack(s, 16, s.h("div", { class: "row", style: { gap: "14px", flexWrap: "nowrap" } }, l1, l2, l3), m, pro), 420));
           s.show(svg, "fade");
           s.step(async () => { for (let i = 0; i < 3; i++) { s.sfx.note([0, 4, 7][i], .25); s.show(gs[i], "bounce"); await s.wait(250); } s.show(tag, "fade"); s.say("Gelb, Rot und Blau."); });
-          s.step(async () => { s.sfx.pop(); s.show(l1, "left"); await s.wait(200); s.sfx.pop(); s.show(l2, "left", 100); await s.wait(200); s.sfx.pop(); await s.show(l3, "left", 100); s.say("Gelb sehen wir an der Zitrone, Rot am Feuerwehrauto und Blau im Meer."); });
+          s.step(async () => { s.sfx.pop(); s.show(l1, "zoom"); await s.wait(300); s.sound("tatuetata", { vol: .45, dur: 2.5 }); s.show(l2, "zoom"); await s.wait(300); s.sound("waves", { vol: .4, dur: 4 }); await s.show(l3, "zoom"); s.say("Gelb sehen wir an der Zitrone, Rot am Feuerwehrauto und Blau im Meer."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(pro, "up"); s.say("Im Drucker heißen sie Gelb, Magenta und Cyan."); });
         },
@@ -243,7 +247,7 @@
           const ord = s.h("p", { class: "t pencil" }, " ");
           const rec = s.h("div", { class: "row", style: { minHeight: "70px" } });
           const info = s.h("div", { class: "card", style: { minHeight: "230px" } }, name, ord, rec);
-          const life = box(s, "life", "Im Alltag", "Sortiere deine Buntstifte nach dem Farbkreis: Nachbarfarben passen gut zusammen und du findest jede Mischfarbe sofort.");
+          const life = s.photo("buntstifte-kreis", { w: 430, h: 220, pos: "50% 45%", caption: "Im Alltag: Buntstifte im Farbkreis sortiert", cls: "later" });
           function pick(i) {
             sel = i; const w = WHEEL[i]; s.sfx.note(i, .2);
             wedges.forEach((e, j) => { e.setAttribute("stroke", j === i ? "#1b2740" : "#fff"); e.setAttribute("stroke-width", j === i ? 7 : 4); });
@@ -258,7 +262,22 @@
           s.add(cols(s, svg, stack(s, 16, P(s, "Probiere alle 12 Farben aus!"), info, life), 640));
           s.show(svg, "fade");
           s.step(async () => { s.sfx.whoosh(); for (let i = 0; i < 12; i++) { s.show([wedges[i], labels[i]], "pop"); await s.wait(60); } s.say("Tippe auf ein Stück vom Farbkreis."); });
-          s.step(async () => { pick(9); s.sfx.pop(); await s.show(life, "up"); s.say("Blaugrün ist eine Mischung aus Blau und Grün."); });
+          s.step(async () => { pick(9); s.sfx.pop(); await s.show(life, "zoom"); s.say("Blaugrün ist eine Mischung aus Blau und Grün."); });
+        },
+      },
+      /* 6b --------------------------------------------------------------- */
+      {
+        title: "Farbkreise aus der Geschichte",
+        say: "Schon vor über zweihundert Jahren haben Dichter und Maler Farbkreise gemalt.",
+        build(s) {
+          const goe = s.photo("goethe-farbkreis", { w: 300, h: 456, pos: "50% 50%", caption: "Goethe, 1809" });
+          const mac = s.photo("macke-farbkreis", { w: 520, h: 346, caption: "August Macke: Farbkreis", cls: "later" });
+          const e1 = box(s, "ex", "Johann Wolfgang von Goethe", "Der Dichter malte 1809 diesen Farbkreis mit <b>sechs Farben</b>. An jede schrieb er ein Wort, zum Beispiel „schön“ an Rot.");
+          const e2 = box(s, "ex", "August Macke (1887–1914)", "Auch der Maler Macke malte sich einen Farbkreis: die Farben laufen als <b>Ringe</b> um die Mitte.");
+          s.add(cols(s, goe, stack(s, 14, e1, mac, e2), 300));
+          s.show(goe, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.sfx.pop(); await s.show(e1, "up"); s.say("Goethe ordnete sechs Farben im Kreis an."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(mac, "zoom"); s.sfx.pop(); await s.show(e2, "up"); s.say("Und Macke malte die Farben in Ringen."); });
         },
       },
       /* 7 ---------------------------------------------------------------- */
@@ -283,7 +302,7 @@
             drops.push({ i, t0: performance.now(), col: pots[i][2], k, x0: px(i) });
           }
           function land(d) {
-            n[d.k]++; s.sfx.tick();
+            n[d.k]++; s.sound("wassertropfen", { vol: .5 });
             from = shown.slice(); to = mixModel(n); tmix = 0;
             blobs.push({ t0: performance.now(), col: d.col, a: Math.random() * 6.28 });
             const nm = mixName(n);
@@ -331,11 +350,11 @@
           s.drag(canvas, { space: canvas, onStart: p => { pots.forEach((_, i) => { if (Math.hypot(p.x - px(i), p.y - 82) < 52) addDrop(i); }); } });
           const reset = s.h("button", { class: "btn later", onclick: () => { for (const k in n) n[k] = 0; from = shown.slice(); to = [240, 236, 226]; tmix = 0; nameEl.textContent = "Noch leer"; cnt.textContent = "0 Tropfen in der Schale"; lastName = ""; s.sfx.swoosh(); } }, "Schale leeren");
           const tip = P(s, "Probiere: <b>Gelb + Blau</b>, <b>Rot + Gelb</b>, <b>Blau + Rot</b>. Dann mit Weiß oder Schwarz!", "small", true);
-          const lifeBox = box(s, "life", "Im Alltag", "Für ein Plakat mischst du dir den Himmel selbst: etwas Blau, viel Weiß – und schon passt der Farbton.");
+          const lifeBox = s.photo("palette-mischung", { w: 450, h: 220, caption: "So sieht Mischen in echt aus: eine Palette", cls: "later" });
           s.add(cols(s, canvas, stack(s, 14, P(s, "Das sagt die Schale:", "t pencil"), nameEl, cnt, s.h("div", { class: "row" }, reset), tip, lifeBox), 620));
           s.show(canvas, "zoom"); s.sfx.pop();
           s.step(async () => { s.show(reset, "pop"); s.sfx.whoosh(); await s.show(tip, "up"); s.say("Tippe auf die Farbtöpfe und schau, was passiert."); });
-          s.step(async () => { s.sfx.pop(); await s.show(lifeBox, "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(lifeBox, "zoom"); });
         },
       },
       /* 8 ---------------------------------------------------------------- */
@@ -357,12 +376,12 @@
             return { row, sl };
           });
           const m = merk(s, "<b>Weiß</b> macht heller, <b>Schwarz</b> macht dunkler. Nimm Schwarz nur in kleinen Tupfern – es ist sehr kräftig!");
-          const life = box(s, "life", "Im Alltag", "Himmel auf dem Plakat: Blau mit viel Weiß. Tannenwald: Grün mit einem Hauch Schwarz.");
-          s.add(stack(s, 10, P(s, "Schiebe die Regler und schau, wie sich die Farbe verändert:", "small"), ...els.map(e => e.row), s.h("div", { class: "cols", style: { gap: "16px", gridTemplateColumns: "1.3fr 1fr" } }, m, life)));
+          const life = s.photo("farbfaecher", { w: 420, h: 140, pos: "50% 80%", caption: "Farbfächer: jede Farbe von hell bis dunkel", cls: "later" });
+          s.add(stack(s, 10, P(s, "Schiebe die Regler und schau, wie sich die Farbe verändert:", "small"), ...els.map(e => e.row), s.h("div", { class: "cols", style: { gap: "16px", gridTemplateColumns: "1fr 420px", alignItems: "center" } }, m, life)));
           s.step(async () => { s.sfx.pop(); await s.show(els[0].row, "up"); els[0].sl.set(0); s.say("Schiebe den Regler: Blau wird heller."); await s.tween({ from: 0, to: 70, dur: 1400, update: v => els[0].sl.set(Math.round(v)) }); await s.tween({ from: 70, to: 0, dur: 600, update: v => els[0].sl.set(Math.round(v)) }); });
           s.step(async () => { s.sfx.pop(); await s.show(els[1].row, "up"); s.say("Rot mit Weiß ergibt Rosa."); await s.tween({ from: 0, to: 60, dur: 1200, update: v => els[1].sl.set(Math.round(v)) }); });
           s.step(async () => { s.sfx.pop(); await s.show(els[2].row, "up"); s.say("Und Grün mit Schwarz wird ein dunkles Tannengrün."); await s.tween({ from: 0, to: 45, dur: 1200, update: v => els[2].sl.set(Math.round(v)) }); });
-          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.wait(150); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.wait(150); s.sfx.whoosh(); await s.show(life, "zoom"); });
         },
       },
       /* 9 ---------------------------------------------------------------- */
@@ -401,6 +420,21 @@
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: 0, to: 1, dur: 1100, update: v => (p1 = v) }); s.sfx.pop(); await s.show(e1, "up"); s.say("Die Deckfarbe deckt den blauen Streifen komplett zu."); });
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: 0, to: 1, dur: 1100, update: v => (p2 = v) }); s.sfx.pop(); await s.show(e2, "up"); s.say("Die Wasserfarbe ist durchsichtig. Du siehst den Streifen noch."); });
           s.step(async () => { s.show(sl, "pop"); s.sfx.ding(); await s.show(m, "up"); await s.wait(150); s.show(life, "up"); });
+        },
+      },
+      /* 9b --------------------------------------------------------------- */
+      {
+        title: "Dürer malt mit Wasserfarben",
+        say: "Albrecht Dürer, nach dem deine Schule heißt, hat schon vor über fünfhundert Jahren mit Wasserfarben gemalt.",
+        build(s) {
+          const ras = s.photo("duerer-rasenstueck", { w: 400, h: 514, pos: "50% 60%", caption: "Das große Rasenstück, 1503" });
+          const inn = s.photo("duerer-innsbruck", { w: 560, h: 380, caption: "Innsbruck von Norden, um 1495", cls: "later" });
+          const e1 = box(s, "ex", "Albrecht Dürer (1471–1528)", "Er malte Gräser und Städte mit <b>Wasserfarben</b> und setzte helle Stellen mit <b>Deckfarbe</b> darauf.");
+          const e2 = box(s, "life", "Beide Bilder", "hängen heute in der Albertina in Wien.");
+          s.add(cols(s, ras, stack(s, 14, inn, e1, e2), 400));
+          s.show(ras, "zoom"); s.sound("pinsel-strich", { vol: .5 });
+          s.step(async () => { s.sfx.whoosh(); await s.show(inn, "zoom"); s.say("Auf seiner Reise nach Venedig malte er die Stadt Innsbruck."); });
+          s.step(async () => { s.sfx.pop(); await s.show(e1, "up"); await s.wait(150); s.show(e2, "up"); });
         },
       },
       /* 10 --------------------------------------------------------------- */
@@ -445,11 +479,11 @@
             s.h("span", { class: "chip", style: { background: UC, color: "#fff", fontSize: "22px", minWidth: "40px", justifyContent: "center" } }, String(i + 1)), s.h("p", { class: "small", html: d })));
           s.add(cols(s, svg, stack(s, 10, ...rows), 600));
           s.show(svg, "fade");
-          s.step(async () => { s.show(rows[0], "left"); s.say("Erst den Pinsel ins Wasser."); await go(92, 130); s.sfx.swoosh(); await s.wait(300); });
+          s.step(async () => { s.show(rows[0], "left"); s.say("Erst den Pinsel ins Wasser."); await go(92, 130); s.sound("pinsel-wasser", { vol: .7 }); await s.wait(300); });
           s.step(async () => { s.show(rows[1], "left"); s.say("Dann Farbe aus dem Näpfchen holen."); await go(215, 88); s.sfx.click(); tip.setAttribute("fill", Y); await s.wait(300); });
           s.step(async () => { s.show(rows[2], "left"); s.say("Auf der Palette mischst du die Farben."); await go(500, 118); s.sfx.pop(); s.show(mixDot, "pop"); await go(315, 88, 600); await go(500, 118, 600); s.sfx.pop(); tip.setAttribute("fill", "#2fa84a"); mixDot.setAttribute("fill", "#2fa84a"); });
-          s.step(async () => { s.show(rows[3], "left"); s.say("Und jetzt wird gemalt."); await go(92, 405); s.sfx.scribble(); s.show(stroke, "draw"); await go(500, 405, 1000); });
-          s.step(async () => { s.show(rows[4], "left"); s.say("Zum Schluss den Pinsel auswaschen."); await go(92, 150); s.sfx.swoosh(); water.setAttribute("fill", "#a8c98a"); tip.setAttribute("fill", "#ddd"); await s.wait(300); });
+          s.step(async () => { s.show(rows[3], "left"); s.say("Und jetzt wird gemalt."); await go(92, 405); s.sound("pinsel-strich", { vol: .7 }); s.show(stroke, "draw"); await go(500, 405, 1000); });
+          s.step(async () => { s.show(rows[4], "left"); s.say("Zum Schluss den Pinsel auswaschen."); await go(92, 150); s.sound("splash", { vol: .4 }); water.setAttribute("fill", "#a8c98a"); tip.setAttribute("fill", "#ddd"); await s.wait(300); });
         },
       },
       /* 11 --------------------------------------------------------------- */
@@ -478,12 +512,12 @@
           const r3 = row(["#0000ff", "#ff0000", "#ff00ff"], "Blau + Rot = <b>Magenta</b>");
           const r4 = row(["#ff0000", "#00ff00", "#0000ff", "#ffffff"], "Alle drei = <b>Weiß</b>");
           const m = merk(s, "<b>Licht</b> mischt sich zu <b>heller</b>. <b>Farbe</b> mischt sich zu <b>dunkler</b>.");
-          const life = box(s, "life", "Im Alltag", "Dein iPad-Bildschirm besteht aus winzigen Punkten in <b>Rot, Grün und Blau</b>. Auch Fernseher und Handy mischen so.");
+          const life = s.photo("pixel-lcd", { w: 470, h: 140, caption: "Ein Bildschirm unterm Mikroskop", cls: "later" });
                     s.add(cols(s, canvas, stack(s, 10, P(s, "Am Bildschirm mischt sich <b>Licht</b>. Zieh die Kreise!"), r1, r2, r3, r4, m, life), 560));
           s.show(canvas, "zoom");
           s.step(async () => { s.sfx.pop(); await s.tween({ from: 0, to: 1, dur: 500, update: v => (cs[0].a = v) }); s.sfx.pop(); await s.tween({ from: 0, to: 1, dur: 500, update: v => (cs[1].a = v) }); s.sfx.ding(); await s.show(r1, "left"); s.say("Rotes und grünes Licht ergeben Gelb."); });
           s.step(async () => { s.sfx.pop(); await s.tween({ from: 0, to: 1, dur: 500, update: v => (cs[2].a = v) }); s.show(r2, "left"); await s.wait(200); s.show(r3, "left"); await s.wait(200); s.sfx.ding(); await s.show(r4, "left"); s.say("Mit Blau kommen Cyan, Magenta und in der Mitte Weiß dazu."); });
-          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.wait(150); s.show(life, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.wait(150); s.sfx.zap(); s.show(life, "zoom"); });
         },
       },
       /* 12 --------------------------------------------------------------- */
@@ -533,12 +567,12 @@
           });
           const m = merk(s, "Drucker mischen mit <b>Cyan, Magenta, Gelb</b> und Schwarz (<b>CMYK</b>). Das Bild besteht aus winzigen Punkten.");
           const e1 = box(s, "ex", "Beispiel: Zeitung", "Schau mit der Lupe auf ein Zeitungsfoto: lauter kleine bunte Punkte.");
-          const e2 = box(s, "life", "Im Alltag", "Wenn bei deinem Drucker eine Farbpatrone leer ist, fehlt im Ausdruck genau diese Farbe – und die Mischfarben sehen komisch aus.");
+          const e2 = s.photo("druckerpatronen", { w: 470, h: 210, caption: "Im Drucker: Schwarz, Cyan, Magenta, Gelb", cls: "later" });
           s.add(cols(s, canvas, stack(s, 14, P(s, "Im Drucker ist die Mischung <b>wie beim Malen</b>: Farben liegen übereinander und werden dunkler."), e1, m, e2), 600));
           s.show(canvas, "fade");
           s.step(async () => { for (let i = 0; i < 4; i++) { s.sfx.pop(); await s.tween({ from: 0, to: 1, dur: 260, update: v => (aCart[i] = v) }); } s.say("Vier Farbpatronen: Cyan, Magenta, Gelb und Schwarz."); });
-          s.step(async () => { for (let i = 0; i < 3; i++) { s.sfx.snap(); await s.tween({ from: 0, to: 1, dur: 400, update: v => (aV[i] = v) }); } s.sfx.ding(); await s.show(m, "up"); s.say("Übereinander gedruckt entstehen Blau, Grün, Rot und in der Mitte ein dunkler Ton."); });
-          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 700, ease: "back", update: v => (aLoupe = v) }); await s.show(e1, "up"); await s.wait(150); s.show(e2, "up"); s.say("Unter der Lupe siehst du die Punkte."); });
+          s.step(async () => { s.sound("tintendrucker", { vol: .6 }); for (let i = 0; i < 3; i++) { await s.tween({ from: 0, to: 1, dur: 400, update: v => (aV[i] = v) }); } s.sfx.ding(); await s.show(m, "up"); s.say("Übereinander gedruckt entstehen Blau, Grün, Rot und in der Mitte ein dunkler Ton."); });
+          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 700, ease: "back", update: v => (aLoupe = v) }); await s.show(e1, "up"); await s.wait(150); s.show(e2, "zoom"); s.say("Unter der Lupe siehst du die Punkte."); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -582,7 +616,7 @@
             if (busy) return; busy = true; const [nm, col, ti] = wall[wi % 3]; wi++;
             const tb = tubes[ti]; drop.setAttribute("fill", tb.c); drop.setAttribute("opacity", 1);
             for (let k = 0; k < 2; k++) { s.sfx.pop(); await s.tween({ from: 0, to: 1, dur: 350, ease: "in", update: v => { drop.setAttribute("cx", tb.x + (250 - tb.x) * v); drop.setAttribute("cy", 60 + 20 * v + (1 - Math.abs(2 * v - 1)) * -20); } }); }
-            drop.setAttribute("opacity", 0); s.sfx.swoosh();
+            drop.setAttribute("opacity", 0); s.sound("farbschuettler", { vol: .5, dur: 1.2 });
             const p0 = cur, p1 = [parseInt(col.slice(1, 3), 16), parseInt(col.slice(3, 5), 16), parseInt(col.slice(5, 7), 16)];
             await s.tween({ from: 0, to: 1, dur: 900, update: v => { cur = p0.map((x, i) => x + (p1[i] - x) * v); const c = rgb(cur.map(Math.round)); paint.setAttribute("fill", c); surf.setAttribute("fill", c); Rr.style.transform = `rotate(${Math.sin(v * 30) * 2}deg)`; } });
             Rr.style.transform = ""; wname.textContent = nm; wname.className = "h2 a-pop"; s.sfx.ding(); busy = false;

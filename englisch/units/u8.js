@@ -136,7 +136,7 @@
             table, s.h("div", { class: "stack", style: { gap: "12px" } }, ex, merk)));
           s.sfx.whoosh();
           s.step(async () => { await seq(s, pasts, "zoom", 220, i => s.sfx.note([0, 4, 0, 4, 4, 4][i] + 7, .15)); s.say("Was bei I, he, she und it. Were bei you, we und they."); });
-          s.step(async () => { await seq(s, ex, "left", 300, () => s.sfx.pop()); });
+          s.step(async () => { await seq(s, ex, "left", 300, i => (i === 2 ? s.sound("wind", { vol: .35, dur: 3, fade: .8 }) : s.sfx.pop())); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -200,7 +200,7 @@
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, top, ex, merk));
           s.sfx.pop();
           s.step(async () => { s.sfx.zap(); await s.show(ed, "right"); s.sfx.ding(); await seq(s, pers, "pop", 120); s.show(sameRow.lastChild, "left"); });
-          s.step(async () => { await seq(s, ex, "left", 350, () => s.sfx.pop()); s.say("Walked, watched, listened."); });
+          s.step(async () => { await seq(s, ex, "left", 450, i => (i === 0 ? s.sound("footsteps", { vol: .4, dur: 1.5 }) : i === 2 ? s.sound("piano", { vol: .4, dur: 1.5, fade: .4 }) : s.sfx.pop())); s.say("Walked, watched, listened."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -423,9 +423,11 @@
           const panels = caps.map(([a, v, c], i) => s.h("div", { class: "card later", style: { padding: "8px", display: "flex", flexDirection: "column", gap: "6px", border: "3px solid var(--ink)", borderRadius: "10px" } },
             pic(i), line(s, a + v + c, { size: 20, show: [a, s.h("span", { style: { color: "var(--unit)" } }, v), c] })));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "14px", height: "100%", alignContent: "start" } }, panels));
-          const pop = async i => { s.sfx.scribble(); await s.show(panels[i], "zoom"); };
+          const snd = [["london-bus-sound", { vol: .45, dur: 2.5, fade: .6 }], ["mind-the-gap", { vol: .7 }], ["big-ben-chimes", { vol: .5, dur: 3.5, fade: .8 }], ["wind", { vol: .3, dur: 2.5, fade: .8 }], ["birds", { vol: .4, dur: 3, fade: .8 }], ["cash-register", { vol: .5 }]];
+          s.preload(snd.map(x => x[0]));
+          const pop = async i => { s.sound(snd[i][0], snd[i][1]); await s.show(panels[i], "zoom"); };
           pop(0);
-          for (let i = 1; i < 6; i++) s.step(async () => { await pop(i); if (i === 5) s.sfx.success(); });
+          for (let i = 1; i < 6; i++) s.step(async () => { await pop(i); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -454,7 +456,7 @@
           const more = s.h("div", { class: "life later", style: { padding: "10px 18px" } }, s.h("span", { class: "exlabel" }, "Noch mehr Wörter für die Reihenfolge"),
             s.h("div", { class: "row", style: { gap: "8px" } }, ["First", "Then", "After that", "In the end"].map(w => s.h("button", { class: "btn", style: { fontSize: "20px", padding: "0 14px" }, onclick: () => { s.sfx.click(); s.speak(w, EN); } }, w))));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: "22px", height: "100%", alignItems: "start" } }, diary, s.h("div", { class: "stack", style: { gap: "14px" } }, tips, more)));
-          const write = async (a, b) => { for (let i = a; i < b; i++) { s.sfx.scribble(); await s.show(lines[i], "left"); } };
+          const write = async (a, b) => { s.sound("pencil-write", { vol: .6 }); for (let i = a; i < b; i++) { await s.show(lines[i], "left"); } };
           write(0, 3);
           s.step(async () => { await write(3, 5); s.say("Am Morgen Fußball, am Nachmittag bei Oma."); });
           s.step(async () => { await write(5, 7); });
@@ -486,12 +488,13 @@
             s.h("div", { class: "stack", style: { gap: "10px" } }, stampWrap, s.h("div", { class: "stack", style: { gap: "10px", marginTop: "10px" } }, addr)));
           const ph = s.h("div", { class: "life later", style: { padding: "10px 18px" } }, s.h("span", { class: "exlabel" }, "Postkarten-Sätze"),
             s.h("div", { class: "row", style: { gap: "10px" } }, hear(s, text, "Ganze Karte"), ...["Greetings from …!", "Yesterday we …", "It was amazing!", "See you soon,"].map(w => s.h("button", { class: "btn", style: { fontSize: "20px", padding: "0 14px" }, onclick: () => { s.sfx.click(); s.speak(w.replace("…", ""), EN); } }, w))));
-          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "16px" } }, card, ph));
+          const front = s.photo("ruegen-cliffs", { w: 360, h: 240, caption: "Kreidefelsen auf Rügen", cls: "later" });
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, card, s.h("div", { style: { display: "grid", gridTemplateColumns: "360px 1fr", gap: "16px", alignItems: "center" } }, front, ph)));
           s.sfx.whoosh(); s.show(card, "zoom");
-          const write = async (a, b) => { for (let i = a; i < b; i++) { s.sfx.scribble(); await s.show(msg[i], "left"); } };
+          const write = async (a, b) => { s.sound("pencil-write", { vol: .6 }); for (let i = a; i < b; i++) { await s.show(msg[i], "left"); } };
           write(0, 2);
-          s.step(async () => { await write(2, 4); s.say("Gestern war Lukas am Strand und bei den weißen Kreidefelsen."); });
-          s.step(async () => { await write(4, 6); s.sfx.snap(); await s.show(stampWrap, "zoom"); await seq(s, addr, "left", 200, () => s.sfx.scribble()); });
+          s.step(async () => { s.sound("waves", { vol: .4, dur: 4, fade: 1 }); s.show(front, "zoom"); await write(2, 4); s.say("Gestern war Lukas am Strand und bei den weißen Kreidefelsen."); });
+          s.step(async () => { await write(4, 6); s.sfx.snap(); await s.show(stampWrap, "zoom"); s.sound("pencil-write", { vol: .5 }); await seq(s, addr, "left", 200, () => {}); });
           s.step(async () => { s.sfx.ding(); await s.show(ph, "up"); });
         },
       },
@@ -532,14 +535,16 @@
         title: "Im Alltag: news for kids",
         say: "Nachrichten und Geschichtsberichte stehen fast immer im simple past. Hier sind drei echte Nachrichten aus der Geschichte Londons.",
         build(s) {
-          const pic = n => {
+          const PH = [["big-ben", "Elizabeth Tower heute", "50% 30%"], ["tower-bridge-1892", "Baustelle 1892", "50% 50%"], ["london-eye", "London Eye heute", "40% 50%"]];
+          const pic = n => s.photo(PH[n][0], { w: "100%", h: 170, caption: PH[n][1], pos: PH[n][2] });
+          void (n => {
             const v = s.svg(300, 110);
             v.append(s.el("rect", { x: 0, y: 0, width: 300, height: 110, rx: 8, fill: "#e9f6fb" }));
             if (n === 0) { v.append(s.el("rect", { x: 130, y: 20, width: 40, height: 90, fill: "#d9b46a", stroke: "#8a6a2a", "stroke-width": 3 }), s.el("path", { d: "M130 20 l20 -18 l20 18z", fill: "#5d6678" }), s.el("circle", { cx: 150, cy: 42, r: 13, fill: "#fff", stroke: "#1b2740", "stroke-width": 3 })); [60, 240].forEach(x => v.append(s.el("path", { d: `M${x} 40 q${x < 150 ? -14 : 14} 15 0 30`, stroke: "#0e7490", "stroke-width": 4, fill: "none" }))); }
             if (n === 1) { v.append(s.el("path", { d: "M0 95 h300 v15 h-300z", fill: "#7cc4f0" })); [70, 230].forEach(x => v.append(s.el("rect", { x: x - 18, y: 20, width: 36, height: 80, fill: "#cfd6df", stroke: "#5d6678", "stroke-width": 3 }), s.el("path", { d: `M${x - 18} 20 l18 -14 l18 14z`, fill: "#5d6678" }))); v.append(s.el("rect", { x: 52, y: 32, width: 196, height: 8, fill: "#1d5bd0" }), s.el("rect", { x: 0, y: 70, width: 300, height: 10, fill: "#5d6678" })); }
             if (n === 2) { v.append(s.el("circle", { cx: 150, cy: 52, r: 44, fill: "none", stroke: "#5d6678", "stroke-width": 4 })); for (let i = 0; i < 16; i++) { const a = i * Math.PI / 8; v.append(s.el("circle", { cx: 150 + 44 * Math.cos(a), cy: 52 + 44 * Math.sin(a), r: 5, fill: "#0e7490" })); } v.append(s.el("path", { d: "M134 110 l16 -58 l16 58", stroke: "#5d6678", "stroke-width": 4, fill: "none" })); }
             return v;
-          };
+          });
           const A = [
             ["London's big clock", "The Great Clock in London chimed for the first time on 11th July 1859.", "The Great Clock in London chimed for the first time on the eleventh of July, eighteen fifty-nine."],
             ["A new bridge for London", "Tower Bridge opened on 30th June 1894. The Prince and Princess of Wales opened it.", "Tower Bridge opened on the thirtieth of June, eighteen ninety-four. The Prince and Princess of Wales opened it."],
@@ -551,7 +556,7 @@
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Nachrichten und Geschichten erzählen, was schon passiert ist – deshalb ", B(s, "simple past"), ": opened, chimed, was. Aber: Was heute noch stimmt, steht im Präsens: It ", B(s, "is"), " 135 metres tall.");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "12px" } }, mast, s.h("div", { class: "cols3", style: { gap: "16px" } }, arts), merk));
           s.sfx.whoosh();
-          s.step(async () => { await seq(s, arts, "up", 450, () => s.sfx.scribble()); s.say("Die Glocke, die Brücke, das Riesenrad."); });
+          s.step(async () => { s.sound("big-ben-chimes", { vol: .5, dur: 5, fade: 1 }); await seq(s, arts, "up", 450, () => {}); s.say("Die Glocke, die Brücke, das Riesenrad."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.confetti(590, 300, 60); });
         },
       },

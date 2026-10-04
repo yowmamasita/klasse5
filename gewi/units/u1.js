@@ -13,23 +13,6 @@
   const fb = el => { el.style.transformBox = "fill-box"; el.style.transformOrigin = "center"; return el; };
 
   /* ---------- small drawings used several times ---------- */
-  function nofretete(s, g) {
-    // stylised profile bust facing right, 300 x 420 box
-    const k = (tag, a) => { const e = s.el(tag, a); g.append(e); return e; };
-    k("path", { d: "M40 410 Q60 330 150 320 Q240 330 262 410 Z", fill: "#2f7f6f" });
-    [0, 1, 2].forEach(i => k("path", { d: `M${52 + i * 9} ${405 - i * 18} Q150 ${332 - i * 16} ${250 - i * 9} ${405 - i * 18}`, fill: "none", stroke: ["#d9a520", "#c0392b", "#2b6cb0"][i], "stroke-width": 7 }));
-    k("path", { d: "M128 330 L136 250 L190 246 L198 322 Q160 338 128 330 Z", fill: P.skin });
-    k("path", { d: "M128 252 Q118 205 128 160 L200 150 Q214 168 216 190 L230 200 Q224 208 222 212 Q228 220 222 226 Q224 236 214 240 Q204 252 190 250 Z", fill: P.skin });
-    k("path", { d: "M118 172 L106 40 Q160 6 250 30 L214 166 Z", fill: "#2c5aa0" });
-    k("path", { d: "M116 162 L216 154", stroke: P.gold, "stroke-width": 9, "stroke-linecap": "round" });
-    k("path", { d: "M110 110 Q170 92 236 92", stroke: P.gold, "stroke-width": 6, fill: "none" });
-    k("path", { d: "M112 120 Q170 102 234 102", stroke: "#c0392b", "stroke-width": 4, fill: "none" });
-    k("ellipse", { cx: 196, cy: 190, rx: 9, ry: 5, fill: "#fff" });
-    k("circle", { cx: 199, cy: 190, r: 3.5, fill: "#222" });
-    k("path", { d: "M184 182 Q196 176 210 182", stroke: "#222", "stroke-width": 3, fill: "none" });
-    k("path", { d: "M210 230 Q218 232 222 228", stroke: "#9c3d2e", "stroke-width": 4, fill: "none", "stroke-linecap": "round" });
-  }
-
   function clockFace(s, cx, cy, R) {
     const g = s.el("g");
     g.append(s.el("circle", { cx, cy, r: R + 10, fill: P.unit, opacity: .12 }));
@@ -113,12 +96,16 @@
           const right = s.h("div", { class: "stack", style: { gap: "14px" } },
             s.h("p", { class: "big a-up" }, "Geschichte = alles, was früher war"),
             ...cards, merk);
-          s.add(root(s, "", { display: "grid", gridTemplateColumns: "440px 1fr", gap: "30px", alignItems: "center" }, svg, right));
-          s.show(svg, "zoom"); s.sfx.whoosh();
-          const jump = async (txt, i) => { speed = -900; s.sfx.whoosh(); year.textContent = txt; s.show(year, "pop"); s.sfx.pop(); await s.show(cards[i], "left"); };
-          s.step(async () => { await jump("gestern", 0); s.say("Schon gestern ist Vergangenheit."); });
-          s.step(async () => { await jump("1989", 1); s.say("1989 wurde in Berlin die Mauer geöffnet."); });
-          s.step(async () => { await jump("vor 5.000 J.", 2); s.say("Ötzi lebte vor über fünftausend Jahren."); });
+          const abs = { position: "absolute", left: 0, top: 0 };
+          const ph1 = s.photo("mauerfall-1989", { w: 440, h: 520, pos: "50% 35%", caption: "Auf der Mauer am Brandenburger Tor, November 1989", cls: "later", style: abs });
+          const ph2 = s.photo("oetzi-fundstelle", { w: 440, h: 520, pos: "50% 50%", caption: "Denkmal an Ötzis Fundstelle in den Alpen", cls: "later", style: abs });
+          const stage = s.h("div", { style: { position: "relative", width: "440px", height: "520px" } }, svg, ph1, ph2);
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "440px 1fr", gap: "30px", alignItems: "center" }, stage, right));
+          s.show(svg, "zoom"); s.sound("clock-tick", { vol: .5, dur: 2.5 });
+          const jump = async (txt, i) => { speed = -900; s.sfx.whoosh(); year.textContent = txt; s.show(year, "pop"); await s.show(cards[i], "left"); };
+          s.step(async () => { await jump("gestern", 0); s.sfx.pop(); s.say("Schon gestern ist Vergangenheit."); });
+          s.step(async () => { svg.style.display = "none"; s.show(ph1, "zoom"); s.sound("crowd-cheer", { vol: .5 }); await jump("1989", 1); s.say("1989 wurde in Berlin die Mauer geöffnet."); });
+          s.step(async () => { ph1.style.display = "none"; s.show(ph2, "zoom"); s.sound("wind", { vol: .4, dur: 4 }); await jump("vor 5.000 J.", 2); s.say("Ötzi lebte vor über fünftausend Jahren."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -160,10 +147,10 @@
           const c2 = s.h("div", { class: "card later" }, s.h("p", { class: "h2 blue" }, "Gleiche Abstände"), s.h("p", { class: "small" }, "Jeder Strich ist ein Jahr – wie die Zentimeter auf dem Lineal."));
           const c3 = life(s, { class: "life later" }, s.h("p", { class: "small" }, "Dein ", b(s, "Stundenplan"), " ist auch ein Zeitstrahl: 1. Stunde, 2. Stunde, große Pause …"));
           s.add(root(s, "stack", { gap: "18px", justifyContent: "center" }, svg, s.h("div", { class: "cols3" }, c1, c2, c3)));
-          s.show(axis, "draw"); s.show(head, "fade", 700); s.sfx.whoosh();
+          s.show(axis, "draw"); s.show(head, "fade", 700); s.sound("pencil-write");
           (async () => { for (let i = 0; i < ticks.length; i++) { if (!s.alive) return; s.show(ticks[i], "pop"); s.sfx.count(i); await s.wait(70); } })();
           s.step(async () => { s.sfx.pop(); await s.show(f1, "down"); s.say("Ungefähr 2016 wirst du geboren."); });
-          s.step(async () => { s.sfx.pop(); await s.show(f2, "down"); s.say("2022 kommst du in die erste Klasse."); });
+          s.step(async () => { s.sound("school-bell", { vol: .4, dur: 2.2 }); await s.show(f2, "down"); s.say("2022 kommst du in die erste Klasse."); });
           s.step(async () => { s.sfx.pop(); await s.show(f3, "down"); s.sfx.ding(); s.show(now, "bounce"); s.say("Und 2026 beginnst du am Albrecht-Dürer-Gymnasium."); });
           s.step(async () => { s.sfx.whoosh(); await s.show([c1, c2, c3], "up"); });
         },
@@ -377,7 +364,7 @@
             sil.append(T(s, cx, 194, "31.12. → 1.1.", { fill: P.orange, "font-size": 21 }));
             s.show(sil, "pop"); s.sfx.fanfare(); s.confetti(590, 200, 60);
           });
-          s.step(async () => { s.sfx.pop(); await s.show(exA, "up"); });
+          s.step(async () => { s.sound("applause", { vol: .4, dur: 3 }); await s.show(exA, "up"); });
           s.step(async () => { s.show(exB, "up"); await s.wait(300); for (let i = 1; i <= 9; i++) { cnt.textContent = i; s.sfx.count(i); await s.wait(170); } s.say("Es wird neun Jahre alt, nicht zehn."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
@@ -447,13 +434,17 @@
             ["schrift", "Schriftquellen", "alles Geschriebene", ["die Urkunde von 1237 über Cölln", "ein Tagebuch", "ein altes Zeugnis"]],
             ["muend", "Mündliche Quellen", "Erzähltes", ["Oma erzählt von früher", "Interview mit Zeitzeugen", "Lieder, die man weitersingt"]],
           ];
+          const po = (pos, caption) => ({ w: "100%", h: 170, pos, caption });
+          const pics = { sach: () => s.photo("muenze-roemisch", po("50% 50%", "Römische Münze")), bild: () => s.photo("mauerfall-tor", po("50% 40%", "Foto vom Mauerfall")), schrift: () => s.photo("urkunde-siegel", po("50% 80%", "Urkunde mit Siegel")) };
           const cards = data.map(([k, t, sub, list]) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "14px 14px 16px" } },
-            srcIcon(s, k), s.h("p", { class: "h2", style: { color: "var(--unit)", fontSize: "26px", textAlign: "center" } }, t), s.h("p", { class: "small pencil", style: { textAlign: "center" } }, sub),
+            pics[k] ? pics[k]() : s.h("div", { style: { height: "170px", display: "flex", alignItems: "center" } }, srcIcon(s, k)), s.h("p", { class: "h2", style: { color: "var(--unit)", fontSize: "26px", textAlign: "center" } }, t), s.h("p", { class: "small pencil", style: { textAlign: "center" } }, sub),
             s.h("ul", { class: "small", style: { margin: "4px 0 0", paddingLeft: "22px", alignSelf: "stretch" } }, list.map(x => s.h("li", null, x)))));
           const merk = s.h("div", { class: "merk later" }, "Eine ", b(s, "Quelle"), " stammt aus der Zeit, um die es geht. Sie ist eine Spur, die Menschen hinterlassen haben.");
           s.add(root(s, "stack", { gap: "18px", justifyContent: "center" }, s.h("div", { class: "cols4" }, cards), merk));
-          s.show(cards[0], "up"); s.sfx.pop();
-          [1, 2, 3].forEach(i => s.step(async () => { s.sfx.pop(); await s.show(cards[i], "up"); }));
+          s.show(cards[0], "up"); s.sound("coins", { vol: .6 });
+          s.step(async () => { s.sound("camera-shutter"); await s.show(cards[1], "up"); });
+          s.step(async () => { s.sound("pencil-write"); await s.show(cards[2], "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(cards[3], "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -493,8 +484,7 @@
         title: "Fragen an eine Quelle",
         say: "Mit W-Fragen bringst du eine Quelle zum Sprechen. Wir fragen die Büste der Nofretete.",
         build(s) {
-          const svg = s.svg(300, 430);
-          const gN = s.el("g", { transform: "translate(0 10)" }); nofretete(s, gN); svg.append(gN);
+          const svg = s.photo("nofretete", { w: 360, h: 530, pos: "50% 45%", caption: "Neues Museum, Berlin" });
           const qs = [
             ["Was?", "Eine Büste der Königin Nofretete aus Kalkstein, bemalt, etwa 50\u00a0cm hoch."],
             ["Wann?", "Zwischen 1353 und 1336 v. Chr. gemacht – über 3.300 Jahre alt."],
@@ -505,7 +495,7 @@
           const cols = [P.unit, P.green, P.orange, P.violet, P.red];
           const rows = qs.map(([q, a], i) => s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "120px 1fr", gap: "14px", alignItems: "center" } },
             s.h("span", { style: { font: "800 30px var(--f-display)", color: cols[i] } }, q), s.h("p", { class: "t", style: { fontSize: "22px" } }, a)));
-          s.add(root(s, "", { display: "grid", gridTemplateColumns: "300px 1fr", gap: "36px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "14px" } }, ...rows)));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "360px 1fr", gap: "32px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "14px" } }, ...rows)));
           s.show(svg, "zoom"); s.sfx.whoosh();
           rows.forEach((r, i) => s.step(async () => { s.sfx.count(i + 2); await s.show(r, "left"); s.say(qs[i][1]); }));
         },
@@ -572,9 +562,28 @@
             top.style.opacity = 1; s.sfx.pop();
             s.say("Jede Zeit legt eine neue Schicht oben drauf.");
           });
-          s.step(async () => { s.sfx.scribble(); await s.show(pit, "draw"); s.show(steps, "up"); });
+          s.step(async () => { s.sound("kelle-graben"); await s.show(pit, "draw"); s.show(steps, "up"); });
           s.step(async () => { for (const f of finds) { s.sfx.coin(); s.show(f, "pop"); await s.wait(350); } s.show(arrow, "fade"); s.show(lf, "up"); s.say("Oben ein Kronkorken, ganz unten ein Steinwerkzeug."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 11b -------------------------------------------------------------- */
+      {
+        title: "So sieht eine Grabung aus",
+        say: "Auch mitten in Berlin wird gegraben. Hier siehst du echte Ausgrabungen und ein Lager für Funde.",
+        build(s) {
+          const items = [
+            [s.photo("grabung-petriplatz", { w: "100%", h: 300, caption: "Petriplatz, Berlin-Mitte" }), "Hier lag das alte Cölln. Man fand Mauern einer Kirche und einer Schule – und über 3.000 Gräber."],
+            [s.photo("grabung-molkenmarkt", { w: "100%", h: 300, caption: "Molkenmarkt, Berlin-Mitte" }), "2,5 m unter der Straße lag ein Weg aus Holzbohlen. Die Jahresringe verraten: Das Holz wurde um 1238 gefällt."],
+            [s.photo("fund-depot", { w: "100%", h: 300, caption: "Im Depot des Museums" }), "Jeder Fund bekommt eine Nummer und eine Kiste. Auf dem Zettel steht, wo er gefunden wurde."],
+          ];
+          const cols = items.map(([fig, txt]) => s.h("div", { class: "stack later", style: { gap: "12px" } }, fig, s.h("p", { class: "small" }, txt)));
+          const lf = life(s, { class: "life later" }, s.h("p", { class: "small" }, "Siehst du in Berlin einen Bauzaun mit Zelten und Sandhaufen? Vielleicht graben dort gerade Archäologen!"));
+          s.add(root(s, "stack", { gap: "18px", justifyContent: "center" }, s.h("div", { class: "cols3" }, cols), lf));
+          s.show(cols[0], "up"); s.sound("kelle-graben");
+          s.step(async () => { s.sound("kelle-graben", { rate: .9 }); await s.show(cols[1], "up"); s.say("Dieser Holzweg ist vielleicht die älteste Straße Berlins."); });
+          s.step(async () => { s.sfx.snap(); await s.show(cols[2], "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },
       /* 12 --------------------------------------------------------------- */
@@ -670,42 +679,42 @@
           s.step(async () => { s.sfx.success(); await s.show(c3, "up"); });
         },
       },
+      /* 13b -------------------------------------------------------------- */
+      {
+        title: "Die Museumsinsel in echt",
+        say: "So sieht die Museumsinsel in echt aus. Mit der U5 fährst du bis zum Bahnhof Museumsinsel.",
+        build(s) {
+          const figs = [
+            s.photo("bode-museum", { w: 1100, h: 300, pos: "50% 60%", caption: "Bode-Museum an der Spitze der Insel", cls: "later" }),
+            s.photo("neues-museum", { w: 541, h: 300, caption: "Neues Museum", cls: "later" }),
+            s.photo("nofretete-saal", { w: 541, h: 300, caption: "Der Saal der Nofretete", cls: "later" }),
+          ];
+          s.add(root(s, "stack", { gap: "18px", justifyContent: "center" }, figs[0], s.h("div", { class: "row", style: { gap: "18px", flexWrap: "nowrap" } }, figs[1], figs[2])));
+          s.show(figs[0], "zoom"); s.sound("waves", { vol: .3, dur: 4 });
+          s.step(async () => { s.sfx.pop(); await s.show(figs[1], "left"); s.say("Im Neuen Museum stehen Nofretete und die Funde aus der Steinzeit."); });
+          s.step(async () => { s.sound("footsteps", { vol: .6 }); await s.show(figs[2], "right"); });
+        },
+      },
       /* 14 --------------------------------------------------------------- */
       {
         title: "Im Alltag: Berlin erzählt",
         say: "Auch Straßen, Namen und Steine im Gehweg sind Quellen. Du läufst jeden Tag an Geschichte vorbei.",
         build(s) {
-          const art = (kind) => {
-            const svg = s.svg(230, 126);
-            if (kind === "schild") {
-              svg.append(s.el("rect", { x: 10, y: 24, width: 210, height: 56, rx: 6, fill: "#fff", stroke: P.ink, "stroke-width": 4 }));
-              svg.append(T(s, 115, 60, "Karl-Marx-Str.", { "font-size": 22, "font-weight": 800 }));
-              svg.append(s.el("rect", { x: 108, y: 80, width: 14, height: 40, fill: "#888" }));
-            } else if (kind === "rix") {
-              svg.append(s.el("rect", { x: 10, y: 20, width: 210, height: 80, rx: 10, fill: "#fff6c9", stroke: P.orange, "stroke-width": 4 }));
-              svg.append(T(s, 115, 54, "Rixdorf", { "font-size": 24, "font-weight": 800, fill: P.pencil, "text-decoration": "line-through" }));
-              svg.append(T(s, 115, 86, "Neukölln", { "font-size": 24, "font-weight": 800, fill: P.unit }));
-            } else if (kind === "mauer") {
-              for (let i = 0; i < 9; i++) for (let j = 0; j < 4; j++) { const dbl = j === 1 || j === 2; svg.append(s.el("rect", { x: 8 + i * 24, y: 2 + j * 24, width: 21, height: 21, rx: 3, fill: dbl ? "#8b8f96" : "#c9ccd1" })); }
-              svg.append(T(s, 115, 120, "hier stand die Mauer", { "font-size": 19, "font-weight": 600, fill: P.ink }));
-            } else {
-              for (let i = 0; i < 5; i++) svg.append(s.el("rect", { x: 10 + i * 44, y: 30, width: 40, height: 40, rx: 3, fill: "#c9ccd1" }));
-              svg.append(s.el("rect", { x: 98, y: 30, width: 40, height: 40, rx: 3, fill: "#d4a537", stroke: "#8a6a14", "stroke-width": 2 }));
-              for (let k = 0; k < 4; k++) svg.append(s.el("line", { x1: 104, y1: 40 + k * 7, x2: 132, y2: 40 + k * 7, stroke: "#7a5a10", "stroke-width": 2 }));
-            }
-            return svg;
-          };
+          const po = { w: 230, h: 230 };
+          const pics = { schild: () => s.photo("karl-marx-str-1910", Object.assign({ pos: "50% 60%" }, po)), rix: () => s.photo("rixdorf-1857", Object.assign({ pos: "45% 45%" }, po)), mauer: () => s.photo("mauer-markierung", po), stolper: () => s.photo("stolpersteine", po) };
           const card = (kind, title, ...txt) => s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "230px 1fr", gap: "16px", alignItems: "center", padding: "12px 16px" } },
-            art(kind), s.h("div", null, s.h("p", { class: "h2", style: { fontSize: "24px", color: "var(--unit)" } }, title), s.h("p", { class: "small" }, ...txt)));
+            pics[kind](), s.h("div", null, s.h("p", { class: "h2", style: { fontSize: "24px", color: "var(--unit)" } }, title), s.h("p", { class: "small" }, ...txt)));
           const cards = [
-            card("schild", "Straßennamen", "Die Karl-Marx-Straße heißt erst seit ", b(s, "1947"), " so. Vorher hatten ihre Teile andere Namen, z. B. Berliner Straße."),
-            card("rix", "Ortsnamen", "Neukölln hieß bis ", b(s, "1912"), " Rixdorf. Den Namen findest du noch heute rund um den Richardplatz."),
+            card("schild", "Straßennamen", "Die Karl-Marx-Straße heißt erst seit ", b(s, "1947"), " so. Das Foto von 1910 zeigt sie noch als Berliner Straße."),
+            card("rix", "Ortsnamen", "Neukölln hieß bis ", b(s, "1912"), " Rixdorf – so steht es auf dieser Karte von 1857. Den Namen findest du noch am Richardplatz."),
             card("mauer", "Pflastersteine", "Eine doppelte Steinreihe im Boden zeigt, wo von ", b(s, "1961 bis 1989"), " die Berliner Mauer stand."),
             card("stolper", "Stolpersteine", "Kleine Messingtafeln im Gehweg erinnern an Menschen, die in der NS-Zeit verfolgt wurden. Das Projekt begann ", b(s, "1992"), "."),
           ];
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px", alignContent: "center" }, ...cards));
-          s.show(cards[0], "up"); s.sfx.pop();
-          [1, 2, 3].forEach(i => s.step(async () => { s.sfx.pop(); await s.show(cards[i], "up"); }));
+          s.show(cards[0], "up"); s.sound("tram-bell", { vol: .4, dur: 2.5 });
+          s.step(async () => { s.sfx.swoosh(); await s.show(cards[1], "up"); });
+          s.step(async () => { s.sound("footsteps", { vol: .6 }); await s.show(cards[2], "up"); });
+          s.step(async () => { s.sfx.chord([0, 3, 7]); await s.show(cards[3], "up"); });
         },
       },
       /* 15 --------------------------------------------------------------- */
@@ -744,7 +753,11 @@
           const merk = s.h("div", { class: "merk later" }, "Deine Familie ist ein Stück ", b(s, "Geschichte"), ". Die Erinnerungen deiner Großeltern sind echte Quellen!");
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "560px 1fr", gap: "28px", alignItems: "center" }, svg, s.h("div", { class: "stack" }, qs, merk)));
           s.show(album, "zoom"); s.sfx.whoosh();
-          s.step(async () => { for (const g of items) { s.sfx.pop(); s.show(g, "pop"); await s.wait(300); } s.say("Foto, Erzählung, Brief und Uhr: vier Arten von Quellen."); });
+          s.step(async () => {
+            const fx = [() => s.sound("camera-shutter"), () => s.sfx.pop(), () => s.sound("pencil-write", { dur: .8 }), () => s.sound("clock-tick", { dur: 1.2, vol: .6 })];
+            for (let i = 0; i < items.length; i++) { fx[i](); s.show(items[i], "pop"); await s.wait(650); }
+            s.say("Foto, Erzählung, Brief und Uhr: vier Arten von Quellen.");
+          });
           s.step(async () => { s.sfx.pop(); await s.show(qs, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
@@ -774,9 +787,9 @@
           const head = s.h("p", { class: "h2 later" }, "Eine Archäologin im Jahr 2526 denkt:");
           const lf = life(s, { class: "life later" }, s.h("p", { class: "small" }, "Auch dein ", b(s, "Geburtstag"), " ist ein Datum auf dem Zeitstrahl. In 100 Jahren ist dein Leben schon Geschichte für andere Kinder!"));
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "520px 1fr", gap: "28px", alignItems: "center" }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, head, ...rows, lf)));
-          s.show(bag, "bounce"); s.sfx.boing();
+          s.show(bag, "bounce"); s.sound("zipper");
           s.step(async () => {
-            s.sfx.whoosh();
+            s.sound("kelle-graben", { rate: .8 });
             await s.tween({ from: 0, to: 1, dur: 2200, ease: "inOut", update: v => {
               yr.textContent = String(Math.round(2026 + v * 500));
               bag.setAttribute("transform", `translate(0 ${v * 150})`);

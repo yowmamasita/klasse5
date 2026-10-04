@@ -169,7 +169,7 @@
             s.show(k2.card, "up"); s.sfx.boing();
             await s.tween({ from: 0, to: 1, dur: 500, ease: "out", update: t => { band.setAttribute("x", 100 - 60 * t); band.setAttribute("width", 80 + 120 * t); band.setAttribute("height", 22 - 8 * t); band.setAttribute("y", 40 + 4 * t); } });
             await s.tween({ from: 1, to: 0, dur: 900, ease: "elastic", update: t => { band.setAttribute("x", 100 - 60 * t); band.setAttribute("width", Math.max(20, 80 + 120 * t)); band.setAttribute("height", 22 - 8 * t); band.setAttribute("y", 40 + 4 * t); } });
-            s.show(k3.card, "up"); await s.wait(300); s.sfx.snap(); s.sfx.zap();
+            s.show(k3.card, "up"); await s.wait(300); s.sound("glas-bricht", { vol: .6 });
             await s.tween({ from: 0, to: 1, dur: 600, ease: "out", update: t => shards.forEach((p, i) => p.setAttribute("transform", `translate(${p.dir * 14 * t},${(i === 2 ? 8 : -2) * t}) rotate(${p.dir * 8 * t} 140 50)`)) });
           });
         },
@@ -315,7 +315,7 @@
             const x0 = o.x, y0 = o.y;
             if (o.mag) {
               await s.tween({ from: 0, to: 1, dur: 450, ease: "in", update: t => place(o, x0 + (270 - x0) * t, y0 + (222 - y0) * t) });
-              s.sfx.snap(); s.sfx.coin(); stuck = o; lines.setAttribute("opacity", 1);
+              s.sound("magnet-klick"); stuck = o; lines.setAttribute("opacity", 1);
               verdict.textContent = "wird angezogen!"; verdict.setAttribute("fill", "#138a5a");
             } else {
               await s.tween({ from: 0, to: 1, dur: 300, ease: "out", update: t => place(o, x0 + (270 - x0) * t * .25, y0 - 40 * t) });
@@ -362,7 +362,7 @@
             s.hide([vL, vR]); sugar.forEach(a => a.setAttribute("opacity", 1));
             s.sfx.whoosh();
             await s.tween({ from: 0, to: 1, dur: 800, ease: "bounce", update: t => { sugar.forEach(a => a.setAttribute("y", -20 + (a.ty + 20) * t)); sand.forEach(b => b.setAttribute("cy", -20 + (b.ty + 20) * t)); } });
-            s.sfx.scribble();
+            s.sound("umruehren", { vol: .6 });
             await s.tween({ from: 1, to: 0, dur: 1500, update: t => sugar.forEach((a, i) => { a.setAttribute("opacity", Math.max(0, Math.min(1, t * 1.6 - (i % 5) * .12))); a.setAttribute("x", 85 + (i % 6) * 15 + Math.sin((1 - t) * 12 + i) * 8); }) });
             s.sfx.ding(); s.show(vL, "pop"); await s.show(vR, "pop", 150);
           };
@@ -386,7 +386,7 @@
           s.sfx.pop();
           s.step(async () => { await dissolve(); s.say("Der Zucker verteilt sich unsichtbar im Wasser."); });
           s.step(async () => { s.sfx.pop(); const ps = left.querySelectorAll("p"); await s.show(ps[0], "up"); await s.show(ps[1], "up"); });
-          s.step(async () => { for (let i = 0; i < tiles.length; i++) { burnItems[i][1] ? s.sfx.whoosh() : s.sfx.click(); await s.show(tiles[i], "pop"); } await s.show(right.querySelector("p"), "up"); });
+          s.step(async () => { s.sound("fire", { vol: .4, dur: 3 }); for (let i = 0; i < tiles.length; i++) { await s.show(tiles[i], "pop"); } await s.show(right.querySelector("p"), "up"); });
         },
       },
       /* 8 ---------------------------------------------------------------- */
@@ -418,16 +418,18 @@
           ch.append(T(s, 0, 336, "grün: schwimmt   ·   rot: sinkt", { anchor: "start", fill: "#5d6678", size: 19, weight: 600 }));
           const merk = s.h("div", { class: "merk later" }, B(s, "Dichte"), " = Masse von 1 cm³ eines Stoffes. Kleiner als Wasser (1 g/cm³) → ", B(s, "schwimmt"), ". Größer → ", B(s, "sinkt"), ".");
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
-            P(s, "small", "Eisberge schwimmen – aber fast 9 von 10 Teilen sind unter Wasser. Schwimmkerzen treiben im Wasser. Baumstämme schwimmen auf dem Fluss."));
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 250px", gap: "14px", alignItems: "center" } },
+              P(s, "small", "Eisberge schwimmen – aber fast 9 von 10 Teilen sind unter Wasser. Schwimmkerzen treiben im Wasser. Baumstämme schwimmen auf dem Fluss."),
+              s.photo("eisberg", { w: 250, h: 160, pos: "50% 60%" })));
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "24px", justifyContent: "center" } },
             s.h("div", { class: "cols", style: { gridTemplateColumns: "500px 1fr", gap: "24px" } }, tank, ch),
-            s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr", gap: "20px" } }, merk, life)));
+            s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1.5fr", gap: "20px", alignItems: "center" } }, merk, life)));
           s.sfx.pop();
           s.step(async () => {
             for (const o of objs) {
-              s.show(o.g, "fade"); s.sfx.whoosh();
+              s.show(o.g, "fade"); s.sound("splash", { vol: .35, dur: 1.2 });
               await s.tween({ from: 50, to: o.target, dur: o.d > 1 ? 900 : 1100, ease: o.d > 1 ? "in" : "elastic", update: v => o.g.setAttribute("transform", `translate(0,${v})`) });
-              o.d > 1 ? s.sfx.drum() : s.sfx.pop();
+              if (o.d > 1) s.sfx.drum();
             }
             s.say("Holz, Wachs und Eis schwimmen. Eisen sinkt.");
           });
@@ -459,21 +461,22 @@
             return { tr: s.h("tr", { style: { borderTop: "2px solid var(--line)" } }, k, v), k, v };
           });
           const table = s.h("table", { style: { borderCollapse: "collapse", width: "100%" } }, rowEls.map(r => r.tr));
-          const sample = s.svg(300, 130, { class: "later" });
-          const pics = {
-            "Eisen": () => [s.el("polygon", { points: "40,62 230,58 262,65 230,72 40,68", fill: "#6b7280" }), s.el("rect", { x: 30, y: 44, width: 12, height: 42, rx: 3, fill: "#4b5563" })],
-            "Kupfer": () => [s.el("path", { d: "M30,65 c15,-50 30,-50 45,0 s30,50 45,0 s30,-50 45,0 s30,50 45,0 s30,-50 45,0", fill: "none", stroke: "#c26a3a", "stroke-width": 8, "stroke-linecap": "round" })],
-            "Holz": () => [s.el("rect", { x: 50, y: 30, width: 200, height: 70, rx: 6, fill: "#d9a066", stroke: "#8a5a2b", "stroke-width": 3 }), ...[0, 1, 2].map(k => s.el("path", { d: `M60,${48 + k * 17} q90,-12 180,0`, fill: "none", stroke: "#8a5a2b", "stroke-width": 2, opacity: .6 }))],
-            "Glas": () => [s.el("rect", { x: 40, y: 52, width: 220, height: 26, rx: 13, fill: "#bfe3f0", stroke: "#5aa0bf", "stroke-width": 3 }), s.el("rect", { x: 60, y: 57, width: 150, height: 5, rx: 2.5, fill: "#fff" })],
-            "Kochsalz": () => [[90, 70], [120, 52], [150, 74], [180, 56], [210, 72], [135, 92], [170, 94]].map(([x, y]) => s.el("rect", { x: x - 12, y: y - 12, width: 24, height: 24, fill: "#f8fafc", stroke: "#94a3b8", "stroke-width": 2.5, transform: `rotate(${(x * 7) % 40 - 20} ${x} ${y})` })),
-            "Kerzenwachs": () => [s.el("rect", { x: 120, y: 44, width: 60, height: 80, fill: "#fef3c7", stroke: "#b8a77f", "stroke-width": 3 }), s.el("line", { x1: 150, y1: 44, x2: 150, y2: 30, stroke: "#1b2740", "stroke-width": 3 }), s.el("path", { d: "M150,2 C160,14 160,24 150,30 C140,24 140,14 150,2 Z", fill: "#ee7a1a" })],
+          const photos = {
+            "Eisen": s.photo("naegel", { w: 360, h: 190, pos: "50% 50%", caption: "Nägel aus Eisen (Stahl)" }),
+            "Kupfer": s.photo("kupferdraht", { w: 360, h: 190, pos: "50% 55%", caption: "Kupferdraht" }),
+            "Holz": s.photo("holzstapel", { w: 360, h: 190, pos: "50% 60%", caption: "Holz" }),
+            "Glas": s.photo("glasstab", { w: 360, h: 190, pos: "50% 50%", caption: "Glasstäbe" }),
+            "Kochsalz": s.photo("salzkristalle", { w: 360, h: 190, pos: "50% 50%", caption: "Salzkristalle" }),
+            "Kerzenwachs": s.photo("kerze-wachs", { w: 360, h: 190, pos: "50% 12%", caption: "Kerze aus Wachs" }),
           };
+          Object.values(photos).forEach(f => (f.style.display = "none"));
+          const sample = s.h("div", { class: "later", style: { height: "190px" } }, ...Object.values(photos));
           let busy = false, runId = 0;
           const run = async (name, btn) => {
             const id = ++runId; busy = true;
             btns.forEach(b => b.classList.toggle("solid", b === btn));
             head.textContent = "Steckbrief: " + name; s.sfx.whoosh();
-            sample.innerHTML = ""; sample.append(...pics[name]()); s.show(sample, "pop");
+            Object.entries(photos).forEach(([k, f]) => (f.style.display = k === name ? "" : "none")); s.show(sample, "pop");
             rowEls.forEach(r => { r.k.textContent = ""; r.v.textContent = ""; });
             for (let i = 0; i < rowEls.length; i++) {
               if (id !== runId) return;
@@ -557,51 +560,18 @@
         title: "Übergänge im Alltag",
         say: "Aggregatzustände ändern sich überall: in der Küche, im Bad und draußen.",
         build(s) {
-          const mk = (title, chip, txt) => { const v = s.svg(300, 140, { width: "100%", height: 172 }); const c = s.h("div", { class: "card later", style: { padding: "8px 12px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" } }, v, s.h("div", { class: "row", style: { gap: "8px", justifyContent: "center" } }, s.h("b", { style: { fontSize: "21px" } }, title), s.h("span", { class: "chip" }, chip)), P(s, "small", txt)); c.style.textAlign = "center"; return { v, c }; };
-          const anims = [];
-          // 1 ice cube
-          const a = mk("Eiswürfel", "Schmelzen", "Im warmen Saft wird Eis flüssig.");
-          a.v.append(s.el("path", { d: beakerPath(100, 20, 100, 115), fill: "none", stroke: "#1b2740", "stroke-width": 3 }));
-          const juice = s.el("rect", { x: 102, y: 70, width: 96, height: 63, fill: "#fdba74" }); const cube = s.el("rect", { x: 125, y: 56, width: 44, height: 40, rx: 5, fill: "#e0f2fe", stroke: "#60a5fa", "stroke-width": 2 });
-          a.v.append(juice, cube);
-          anims.push(() => s.tween({ from: 0, to: 1, dur: 1800, update: t => { cube.setAttribute("width", 44 - 30 * t); cube.setAttribute("height", 40 - 28 * t); cube.setAttribute("x", 125 + 15 * t); cube.setAttribute("y", 56 + 14 * t); juice.setAttribute("y", 70 - 6 * t); juice.setAttribute("height", 63 + 6 * t); } }));
-          // 2 pasta water
-          const b = mk("Nudelwasser", "Sieden", "Bei 100 °C steigen Dampfblasen auf.");
-          b.v.append(s.el("rect", { x: 70, y: 60, width: 160, height: 70, rx: 8, fill: "#9ca3af" }), s.el("rect", { x: 78, y: 66, width: 144, height: 22, fill: "#bfdbfe" }), s.el("rect", { x: 50, y: 66, width: 22, height: 8, fill: "#4b5563" }), s.el("rect", { x: 228, y: 66, width: 22, height: 8, fill: "#4b5563" }));
-          const bub = [0, 1, 2, 3, 4].map(i => { const c = s.el("path", { d: "", fill: "none", stroke: "#94a3b8", "stroke-width": 3, "stroke-linecap": "round" }); b.v.append(c); return c; });
-          s.loop(t => bub.forEach((c, i) => { const x = 100 + i * 25, y = 55 - ((t * 30 + i * 9) % 45); c.setAttribute("d", `M${x},${y + 10} q-6,-6 0,-12`); c.setAttribute("opacity", Math.max(0, (y - 10) / 45)); }));
-          // 3 mirror
-          const c3 = mk("Badspiegel", "Kondensieren", "Warmer Dampf trifft das kalte Glas.");
-          c3.v.append(s.el("rect", { x: 90, y: 10, width: 120, height: 120, rx: 10, fill: "#e0f2fe", stroke: "#5d6678", "stroke-width": 4 }));
-          const fog = s.el("g", { opacity: 0 }); for (let i = 0; i < 40; i++) fog.append(s.el("circle", { cx: 100 + ((i * 37) % 100), cy: 20 + ((i * 53) % 100), r: 3 + (i % 3), fill: "#fff", opacity: .9 }));
-          c3.v.append(fog);
-          anims.push(() => s.tween({ from: 0, to: 1, dur: 1600, update: t => fog.setAttribute("opacity", t) }));
-          // 4 frost on car
-          const d = mk("Raureif am Auto", "Resublimieren", "Wasserdampf wird direkt zu Eiskristallen.");
-          d.v.append(s.el("path", { d: "M40,120 L60,70 Q70,50 100,48 H200 Q228,50 240,70 L260,120 Z", fill: "#1d5bd0" }), s.el("path", { d: "M75,72 Q82,58 102,58 H198 Q218,58 225,72 Z", fill: "#bfdbfe" }), s.el("circle", { cx: 85, cy: 124, r: 14, fill: "#1b2740" }), s.el("circle", { cx: 215, cy: 124, r: 14, fill: "#1b2740" }));
-          const frost = s.el("g", { opacity: 0 }); for (let i = 0; i < 9; i++) { const x = 92 + i * 15, y = 64 + (i % 2) * 4; frost.append(s.el("path", { d: `M${x - 5},${y} h10 M${x},${y - 5} v10 M${x - 4},${y - 4} l8,8 M${x + 4},${y - 4} l-8,8`, stroke: "#fff", "stroke-width": 2 })); }
-          d.v.append(frost);
-          anims.push(() => s.tween({ from: 0, to: 1, dur: 1400, update: t => frost.setAttribute("opacity", t) }));
-          // 5 candle
-          const e = mk("Kerze", "Schmelzen · Erstarren", "Wachs schmilzt am Docht, am Rand erstarrt es.");
-          e.v.append(s.el("rect", { x: 120, y: 60, width: 60, height: 76, fill: "#fef3c7", stroke: "#b8a77f", "stroke-width": 3 }), s.el("line", { x1: 150, y1: 60, x2: 150, y2: 46, stroke: "#1b2740", "stroke-width": 3 }));
-          const fl = s.el("path", { d: "M150,8 C160,22 162,34 150,44 C138,34 140,22 150,8 Z", fill: "#ee7a1a" });
-          const drip = s.el("path", { d: "M180,62 q6,0 6,10 v0 q0,6 -6,6 z", fill: "#fde68a", stroke: "#b8a77f", "stroke-width": 2 });
-          e.v.append(fl, drip, s.el("ellipse", { cx: 150, cy: 62, rx: 22, ry: 5, fill: "#fde68a" }));
-          s.loop(t => fl.setAttribute("transform", `translate(150 44) scale(${1 + Math.sin(t * 8) * .05},${1 + Math.sin(t * 6) * .08}) translate(-150 -44)`));
-          anims.push(() => s.tween({ from: 0, to: 1, dur: 1500, update: t => drip.setAttribute("d", `M180,62 q6,0 6,10 v${30 * t} q0,6 -6,6 z`) }));
-          // 6 puddle
-          const f = mk("Pfütze", "Verdunsten", "Trocknet auch ohne 100 °C.");
-          f.v.append(s.el("circle", { cx: 245, cy: 34, r: 22, fill: "#ffd94a" }));
-          const pud = s.el("ellipse", { cx: 140, cy: 110, rx: 100, ry: 18, fill: "#93c5fd" });
-          f.v.append(s.el("line", { x1: 20, y1: 112, x2: 280, y2: 112, stroke: "#a3a3a3", "stroke-width": 4 }), pud);
-          anims.push(() => s.tween({ from: 0, to: 1, dur: 2000, update: t => { pud.setAttribute("rx", 100 - 70 * t); pud.setAttribute("ry", 18 - 10 * t); } }));
+          const mk = (id, pos, title, chip, txt) => { const c = s.h("div", { class: "card later", style: { padding: "8px 12px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", textAlign: "center" } }, s.photo(id, { w: "100%", h: 172, pos }), s.h("div", { class: "row", style: { gap: "8px", justifyContent: "center" } }, s.h("b", { style: { fontSize: "21px" } }, title), s.h("span", { class: "chip" }, chip)), P(s, "small", txt)); return { c }; };
+          const a = mk("eis-saft", "50% 40%", "Eiswürfel", "Schmelzen", "Im Saft wird das Eis flüssig.");
+          const b = mk("nudelwasser", "50% 50%", "Nudelwasser", "Sieden", "Bei 100 °C steigen Dampfblasen auf.");
+          const c3 = mk("beschlagen", "50% 40%", "Beschlagene Scheibe", "Kondensieren", "Warmer Dampf trifft das kalte Glas.");
+          const d = mk("raureif-auto", "50% 50%", "Raureif am Auto", "Resublimieren", "Wasserdampf wird direkt zu Eiskristallen.");
+          const e = mk("kerze-flamme", "40% 60%", "Kerze", "Schmelzen · Erstarren", "Wachs schmilzt am Docht, am Rand erstarrt es.");
+          const f = mk("pfuetzen", "50% 60%", "Pfütze", "Verdunsten", "Trocknet auch ohne 100 °C.");
           const cards = [a, b, c3, d, e, f];
           s.add(s.h("div", { class: "cols3", style: { gap: "16px", height: "100%", gridTemplateRows: "1fr 1fr", gridTemplateColumns: "repeat(3, minmax(0, 1fr))" } }, cards.map(x => x.c)));
           s.sfx.pop();
-          const order = [[0, 0], [1, null], [2, 1], [3, 2], [4, 3], [5, 4]];
-          s.step(async () => { for (const i of [0, 1, 2]) { s.sfx.count(i * 2); await s.show(cards[i].c, "pop"); const an = order[i][1]; if (an != null) anims[an](); } });
-          s.step(async () => { for (const i of [3, 4, 5]) { s.sfx.count(i * 2); await s.show(cards[i].c, "pop"); anims[order[i][1]](); } s.say("Verdunsten geht langsam und schon unter hundert Grad."); });
+          s.step(async () => { s.sound("eiswuerfel", { vol: .7 }); for (const i of [0, 1, 2]) { await s.show(cards[i].c, "pop"); } s.say("Eis schmilzt, Wasser siedet, Dampf kondensiert an der kalten Scheibe."); });
+          s.step(async () => { s.sound("wind", { vol: .35, dur: 3 }); for (const i of [3, 4, 5]) { await s.show(cards[i].c, "pop"); } s.say("Verdunsten geht langsam und schon unter hundert Grad."); });
         },
       },
       /* 12 --------------------------------------------------------------- */
@@ -656,8 +626,8 @@
           setProg(0);
           let running = false;
           const heat = async () => {
-            if (running) return; running = true; s.sfx.whoosh(); let last = -1;
-            await s.tween({ from: 0, to: 1, dur: 9000, ease: "linear", update: p => { setProg(p); const k = Math.floor(p * 20); if (k !== last) { last = k; s.sfx.tick(); } } });
+            if (running) return; running = true; s.sfx.whoosh(); let last = -1, boiled = false;
+            await s.tween({ from: 0, to: 1, dur: 9000, ease: "linear", update: p => { setProg(p); const k = Math.floor(p * 20); if (k !== last) { last = k; s.sfx.tick(); } if (!boiled && p * total >= 6) { boiled = true; s.sound("kochen", { vol: .45, dur: 3 }); } } });
             s.sfx.ding(); running = false;
           };
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Beim ", B(s, "Schmelzen"), " und beim ", B(s, "Sieden"), " bleibt die Temperatur gleich, obwohl du weiter heizt. Die Wärme wird für die Umwandlung gebraucht.");
@@ -691,8 +661,9 @@
             P(s, "small", "• Löten: Zinn schmilzt am heißen Lötkolben und verbindet Drähte."),
             P(s, "small", "• Ethanol erstarrt erst bei −114 °C – darum steckt es in Thermometern für große Kälte."),
             P(s, "small", "• Im Stahlwerk wird Eisen bei über 1.500 °C flüssig und in Formen gegossen."));
+          const foundry = s.photo("eisen-giessen", { w: "100%", h: 220, pos: "50% 45%", caption: "Gießerei: flüssiges Eisen fließt in eine Form", cls: "later" });
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "640px 1fr", gap: "24px", alignItems: "center", height: "100%" } },
-            s.h("div", { class: "stack" }, card, wax), life));
+            s.h("div", { class: "stack" }, card, wax), s.h("div", { class: "stack", style: { gap: "14px" } }, foundry, life)));
           s.sfx.pop();
           s.step(async () => {
             for (let i = 0; i < trs.length; i++) {
@@ -702,7 +673,7 @@
             s.say("Wasser schmilzt bei null Grad und siedet bei hundert Grad.");
           });
           s.step(async () => { s.sfx.pop(); await s.show(wax, "up"); });
-          s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("fire", { vol: .4, dur: 2.5 }); s.show(foundry, "zoom"); await s.show(life, "up"); });
         },
       },
       /* 14 --------------------------------------------------------------- */
@@ -846,12 +817,12 @@
             P(s, "small", "• Ein Teebeutel färbt heißes Wasser schnell – kaltes viel langsamer."),
             P(s, "small", "• Pizzaduft aus der Küche riechst du bald im ganzen Flur."),
             P(s, "small", "• Ein Tropfen Sirup im Glas verteilt sich auch ohne Rühren."));
-          const btn = s.h("button", { class: "btn solid", onclick: () => { drop(); started = true; s.sfx.drum(); s.sfx.swoosh(); } }, "Tinte hineintropfen");
+          const btn = s.h("button", { class: "btn solid", onclick: () => { drop(); started = true; s.sound("tropfen-einzeln"); } }, "Tinte hineintropfen");
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "620px 1fr", gap: "24px", alignItems: "center", height: "100%" } },
             s.h("div", { class: "stack", style: { alignItems: "center" } }, canvas, btn),
-            s.h("div", { class: "stack" }, merk, life)));
+            s.h("div", { class: "stack", style: { gap: "14px" } }, merk, life)));
           s.sfx.pop();
-          s.step(async () => { drop(); started = true; s.sfx.drum(); s.sfx.swoosh(); await s.wait(1500); s.say("Im heißen Wasser verteilt sich die Tinte viel schneller."); });
+          s.step(async () => { drop(); started = true; s.sound("tropfen-einzeln"); await s.wait(1500); s.say("Im heißen Wasser verteilt sich die Tinte viel schneller."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
         },

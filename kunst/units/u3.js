@@ -77,6 +77,24 @@
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
+      /* 1b --------------------------------------------------------------- */
+      {
+        title: "Kandinsky: Komposition VIII",
+        say: "So sieht ein Bild von Kandinsky aus. Es besteht fast nur aus Punkten, Linien und Flächen.",
+        build(s) {
+          const pic = s.photo("kandinsky-komposition8", { w: 640, h: 448, caption: "Wassily Kandinsky: Komposition VIII (1923)" });
+          const r1 = box(s, "ex", "Punkte", "Kreise in allen Größen – groß, klein, mit Ring.");
+          const r2 = box(s, "ex", "Linien", "Gerade, gebogene und gekreuzte Linien, dünn und dick.");
+          const r3 = box(s, "ex", "Flächen", "Dreiecke, Halbkreise und bunte Felder.");
+          const m = merk(s, "Kandinsky malte keine Dinge ab. Sein Bild ist aus <b>Punkt, Linie und Fläche</b> gebaut – wie Musik aus Tönen.");
+          s.add(cols(s, pic, stack(s, 12, r1, r2, r3, m), 640));
+          s.show(pic, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.sfx.count(1); await s.show(r1, "left"); s.say("Findest du die Kreise?"); });
+          s.step(async () => { s.sfx.scribble(); await s.show(r2, "left"); s.say("Und die Linien?"); });
+          s.step(async () => { s.sfx.pop(); await s.show(r3, "left"); s.say("Dazu viele Flächen."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
       /* 2 ---------------------------------------------------------------- */
       {
         title: "Linien-Sorten",
@@ -135,13 +153,13 @@
           const sl1 = s.slider({ label: "Druck (Strichdicke)", min: 1, max: 24, value: 6, onInput: v => { w = v; upd(); draw(); } });
           const sl2 = s.slider({ label: "Tempo (Wildheit)", min: 0, max: 10, value: 1, onInput: v => { wild = v; upd(); draw(); } });
           sl1.classList.add("later"); sl2.classList.add("later");
-          const ex = box(s, "life", "Im Alltag", "Comics: Tempo-Striche für schnelle Action. Zarte Haarlinien in Zeichnungen. Dicke Konturen im Malbuch.");
+          const ex = s.photo("vangogh-sternennacht", { w: 510, h: 230, pos: "50% 30%", caption: "Van Gogh, Sternennacht (1889): wilde Linien", cls: "later" });
           s.add(cols(s, s.h("div", { class: "card", style: { padding: "10px" } }, canvas), stack(s, 14, s.h("p", { class: "t" }, "Die Linie wirkt:"), word, sl1, sl2, ex), 560));
           s.tween({ from: 0, to: 1, dur: 1400, ease: "inOut", update: v => { prog = v; draw(); } });
           s.sfx.scribble();
           s.step(async () => { s.sfx.pop(); await s.show(sl1, "up"); s.say("Drücke mehr oder weniger fest auf."); });
           s.step(async () => { s.sfx.pop(); await s.show(sl2, "up"); s.say("Zeichne ruhig oder wild."); });
-          s.step(async () => { s.sfx.ding(); await s.show(ex, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(ex, "zoom"); s.say("Vincent van Gogh malte den Himmel mit wilden, wirbelnden Linien. Man spürt den Wind."); });
         },
       },
       /* 4 ---------------------------------------------------------------- */
@@ -179,20 +197,16 @@
           const grassP = s.el("path", { d: gd, fill: "none", stroke: "#2f8a3a", "stroke-width": 2.4, "stroke-linecap": "round", class: "later" });
           const grassL = s.el("path", { d: gl, fill: "none", stroke: "#74c05a", "stroke-width": 2.4, "stroke-linecap": "round", class: "later" });
           grass.append(grassL, grassP);
-          const cardOf = (svg, t) => s.h("div", { class: "card", style: { padding: "8px 8px 10px", textAlign: "center" } }, svg, s.h("p", { class: "t", style: { marginTop: "6px", fontWeight: 700 } }, t));
-          const grid = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" } }, cardOf(wood, "Holz"), cardOf(fur, "Fell"), cardOf(brick, "Ziegel"), cardOf(grass, "Gras"));
-          const rows = [
-            box(s, "ex", "Holz", "Lange, wellige Linien, die um einen Ast kreisen."),
-            box(s, "ex", "Fell", "Viele kurze Striche, immer in Wuchsrichtung."),
-            box(s, "ex", "Ziegel", "Rechtecke, Reihe für Reihe versetzt."),
-            box(s, "ex", "Gras", "Striche von unten nach oben, mal hell, mal dunkel."),
-          ];
+          const cardOf = (svg, t, d) => s.h("div", { class: "card", style: { padding: "8px 8px 10px", textAlign: "center" } }, svg, s.h("p", { class: "small", style: { marginTop: "6px" }, html: `<b>${t}:</b> ${d}` }));
+          const grid = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" } }, cardOf(wood, "Holz", "wellige Linien um den Ast"), cardOf(fur, "Fell", "kurze Striche in Wuchsrichtung"), cardOf(brick, "Ziegel", "Rechtecke, Reihe für Reihe versetzt"), cardOf(grass, "Gras", "Striche von unten nach oben"));
+          const ph = (id, cap, pos) => s.photo(id, { w: 258, h: 200, pos: pos || "50% 50%", caption: cap, cls: "later" });
+          const rows = [ph("holz-maserung", "Echtes Holz"), ph("katzenfell", "Echtes Fell", "35% 60%"), ph("ziegelwand", "Echte Ziegel"), ph("grashalme", "Echtes Gras")];
           const m = merk(s, "<b>Struktur</b> heißt: So sieht eine Oberfläche aus und so fühlt sie sich an.");
-          s.add(cols(s, grid, stack(s, 10, ...rows, m), 540));
-          s.step(async () => { s.sfx.scribble(); s.show(rows[0], "left"); s.show(woodP, "draw"); s.show(knot, "pop", 700); await s.wait(1100); });
-          s.step(async () => { s.sfx.scribble(); s.show(rows[1], "left"); s.show(furP, "draw"); await s.wait(900); s.sfx.scribble(); await s.show(furL, "draw"); });
-          s.step(async () => { s.sfx.snap(); s.show(rows[2], "left"); await s.show(brickP, "draw"); });
-          s.step(async () => { s.sfx.scribble(); s.show(rows[3], "left"); s.show(grassL, "draw"); await s.wait(800); await s.show(grassP, "draw"); });
+          s.add(cols(s, grid, stack(s, 14, s.h("div", { style: { display: "grid", gridTemplateColumns: "258px 258px", gap: "14px" } }, ...rows), m), 540));
+          s.step(async () => { s.sfx.scribble(); s.show(rows[0], "zoom"); s.show(woodP, "draw"); s.show(knot, "pop", 700); await s.wait(1100); });
+          s.step(async () => { s.sfx.scribble(); s.show(rows[1], "zoom"); s.show(furP, "draw"); await s.wait(900); s.sfx.scribble(); await s.show(furL, "draw"); });
+          s.step(async () => { s.sfx.snap(); s.show(rows[2], "zoom"); await s.show(brickP, "draw"); });
+          s.step(async () => { s.sfx.scribble(); s.show(rows[3], "zoom"); s.show(grassL, "draw"); await s.wait(800); await s.show(grassP, "draw"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -213,12 +227,12 @@
           const card = (svg, t, sub) => s.h("div", { class: "card", style: { padding: "10px 10px 14px", textAlign: "center" } }, svg, s.h("p", { class: "h2" }, t), s.h("p", { class: "small pencil", style: { marginTop: "4px" } }, sub));
           const grid = s.h("div", { class: "cols", style: { gap: "20px" } }, card(A, "Parallele Schraffur", "Viele gleiche Striche in eine Richtung."), card(B, "Kreuzschraffur", "Eine zweite Schicht quer darüber."));
           const m = merk(s, "Je <b>enger</b> die Striche und je <b>mehr Schichten</b>, desto dunkler wirkt die Fläche.");
-          const life = box(s, "life", "Im Alltag", "Comics, Kupferstiche wie die von Albrecht Dürer und Schatten im Schulheft: alles aus feinen Strichen.");
+          const life = s.h("div", { class: "life later", style: { display: "flex", gap: "16px", alignItems: "center", padding: "10px 16px" } }, s.photo("duerer-melencolia", { w: 300, h: 150, pos: "60% 40%" }), s.h("div", {}, s.h("span", { class: "exlabel" }, "Albrecht Dürer"), s.h("p", { class: "small", html: "Sein Kupferstich <b>„Melencolia I“</b> (1514) besteht nur aus Linien: Alle Schatten sind Schraffur. Auch Comics und Schatten im Schulheft entstehen so." })));
           s.add(stack(s, 14, grid, m, life));
           s.step(async () => { s.sfx.scribble(); s.say("Erst die parallele Schraffur."); await s.show(pA, "draw"); });
           s.step(async () => { s.sfx.scribble(); s.say("Dann eine zweite Schicht quer darüber."); await s.show(pB1, "draw"); s.sfx.scribble(); await s.show(pB2, "draw"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(life, "up"); s.say("Albrecht Dürer hat ganze Bilder nur mit Strichen gemacht."); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -416,7 +430,7 @@
             for (let i = 1; i < pts.length; i++) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); segs.push([tot, l, pts[i - 1], pts[i]]); tot += l; }
             const at = d => { for (const [st, l, a, b] of segs) if (d <= st + l) { const t = (d - st) / l; return { x: a[0] + (b[0] - a[0]) * t, y: a[1] + (b[1] - a[1]) * t }; } return { x: pts[pts.length - 1][0], y: pts[pts.length - 1][1] }; };
             let prev = at(0), k = 0;
-            s.sfx.scribble();
+            s.sound("papier-reiben", { vol: .6 });
             await s.tween({ from: 0, to: tot, dur: 3200, ease: "linear", update: d => { const p = at(d); rub(prev.x, prev.y, p.x, p.y); prev = p; pen = p; if (++k % 10 === 0) s.sfx.tick(); draw(); } });
             pen = null; draw();
           });
@@ -455,10 +469,12 @@
             [sk, "Kohle", "Tiefschwarz und weich. Mit dem Finger kann man sie verwischen.", () => s.show(kg, "fade")],
             [st, "Tusche", "Flüssige Farbe, mit Feder oder Pinsel. Mal dünn, mal dick.", () => s.show(tus, "left")],
           ];
-          const cards = defs.map(([svg, t, txt]) => s.h("div", { class: "card", style: { padding: "12px 12px 16px" } }, svg, s.h("p", { class: "h2", style: { margin: "6px 0 6px" } }, t), s.h("p", { class: "small", html: txt })));
+          const pics = ["bleistift", "fineliner", "kohlestifte", "tusche-feder"];
+          const cards = defs.map(([svg, t, txt], i) => s.h("div", { class: "card", style: { padding: "12px 12px 16px" } }, s.photo(pics[i], { w: "100%", h: 140, pos: i === 3 ? "50% 40%" : "50% 50%" }), svg, s.h("p", { class: "h2", style: { margin: "6px 0 6px" } }, t), s.h("p", { class: "small", html: txt })));
           const life = box(s, "life", "Im Alltag", "Bleistift in der Schule, Fineliner für Hefte und Comics, Kohle im Kunststudio, Tusche für Kalligrafie.");
           s.add(stack(s, 16, s.h("div", { class: "cols4" }, ...cards), life));
-          defs.forEach(([, , , run], i) => s.step(async () => { s.sfx.scribble(); s.say(["Der Bleistift.", "Der Fineliner.", "Kohle.", "Und Tusche."][i]); await run(); if (i === 3) { s.sfx.ding(); await s.show(life, "up"); } }));
+          const snd = ["pencil-write", "stift-papier", "kohle-papier", null];
+          defs.forEach(([, , , run], i) => s.step(async () => { if (snd[i]) s.sound(snd[i], { vol: .6, dur: 2.5 }); else s.sfx.scribble(); s.say(["Der Bleistift.", "Der Fineliner.", "Kohle.", "Und Tusche."][i]); await run(); if (i === 3) { s.sfx.ding(); await s.show(life, "up"); } }));
         },
       },
       /* 11 --------------------------------------------------------------- */
@@ -503,7 +519,7 @@
           s.add(stack(s, 14, svg, s.h("div", { class: "cols", style: { alignItems: "center" } }, left, m)));
           s.step(async () => { s.sfx.scribble(); s.say("Neun Bleistifte, von hart bis weich."); await s.show(strokes, "draw"); });
           s.step(async () => { s.sfx.whoosh(); await s.show(axis, "fade"); });
-          s.step(async () => { s.sfx.pop(); s.show(sel, "pop"); s.show([big, desc], "up"); await s.show(sl, "up"); });
+          s.step(async () => { s.sound("anspitzer", { vol: .6, dur: 2 }); s.show(sel, "pop"); s.show([big, desc], "up"); await s.show(sl, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
         },
@@ -511,43 +527,21 @@
       /* 12 --------------------------------------------------------------- */
       {
         title: "Dürers Feldhase",
-        say: "Albrecht Dürer hat 1502 einen Feldhasen gemalt. Wir zeichnen ihn vereinfacht nach, Schicht für Schicht.",
+        say: "Albrecht Dürer hat 1502 einen Feldhasen gemalt. Schau genau hin: Man sieht fast jedes Haar.",
         build(s) {
-          const R = rng(21);
-          const svg = s.svg(560, 540);
-          const inside = (x, y) => ((x - 270) / 170) ** 2 + ((y - 330) / 120) ** 2 < 1 || ((x - 340) / 120) ** 2 + ((y - 365) / 110) ** 2 < 1 || ((x - 150) / 78) ** 2 + ((y - 270) / 62) ** 2 < 1 || ((x - 150) / 45) ** 2 + ((y - 400) / 75) ** 2 < 1;
-          let dark = "", light = "";
-          for (let n = 0; n < 260;) { const x = 70 + R() * 400, y = 210 + R() * 270; if (!inside(x, y)) continue; const a = 0.3 + (R() - .5) * 0.9, l = 11 + R() * 9; dark += `M${x.toFixed(0)},${y.toFixed(0)}l${(l * Math.cos(a)).toFixed(0)},${(l * Math.sin(a)).toFixed(0)}`; n++; }
-          for (let n = 0; n < 170;) { const x = 70 + R() * 400, y = 210 + R() * 270; if (!inside(x, y)) continue; const a = 0.3 + (R() - .5) * 0.9, l = 9 + R() * 8; light += `M${x.toFixed(0)},${y.toFixed(0)}l${(l * Math.cos(a)).toFixed(0)},${(l * Math.sin(a)).toFixed(0)}`; n++; }
-          const ol = { stroke: "#6b4a2a", "stroke-width": 3 };
-          const shapes = [
-            s.el("ellipse", Object.assign({ cx: 210, cy: 155, rx: 26, ry: 84, fill: "#b98a56", transform: "rotate(18 210 155)", class: "later" }, ol)),
-            s.el("ellipse", Object.assign({ cx: 168, cy: 160, rx: 24, ry: 82, fill: "#c29363", transform: "rotate(4 168 160)", class: "later" }, ol)),
-            s.el("ellipse", Object.assign({ cx: 270, cy: 330, rx: 170, ry: 120, fill: "#c79a63", class: "later" }, ol)),
-            s.el("ellipse", Object.assign({ cx: 340, cy: 365, rx: 120, ry: 110, fill: "#b98a56", class: "later" }, ol)),
-            s.el("ellipse", Object.assign({ cx: 150, cy: 400, rx: 45, ry: 75, fill: "#d2a874", class: "later" }, ol)),
-            s.el("ellipse", Object.assign({ cx: 150, cy: 270, rx: 78, ry: 62, fill: "#c79a63", class: "later" }, ol)),
-            s.el("ellipse", Object.assign({ cx: 100, cy: 287, rx: 30, ry: 22, fill: "#d9b37f", class: "later" }, ol)),
-          ];
-          const shade = s.el("ellipse", { cx: 290, cy: 482, rx: 210, ry: 20, fill: "rgba(60,40,20,.25)" });
-          const furD = s.el("path", { d: dark, fill: "none", stroke: "#5a3a1c", "stroke-width": 2.2, "stroke-linecap": "round", class: "later" });
-          const furL = s.el("path", { d: light, fill: "none", stroke: "#f3dcae", "stroke-width": 2.2, "stroke-linecap": "round", class: "later" });
-          const eye = s.el("g", { class: "later" }, s.el("circle", { cx: 128, cy: 252, r: 15, fill: "#2b1a10" }),
-            s.el("rect", { x: 121, y: 245, width: 8, height: 8, fill: "#fff" }), s.el("path", { d: "M125,245V253M121,249H129", stroke: "#2b1a10", "stroke-width": 1.2 }),
-            s.el("circle", { cx: 100, cy: 282, r: 5, fill: "#6b3a22" }));
-          const wh = s.el("path", { d: "M80,290 L10,274 M80,296 L8,300 M82,302 L16,326", fill: "none", stroke: "#5a3a1c", "stroke-width": 2, "stroke-linecap": "round", class: "later" });
-          svg.append(shade, ...shapes, furD, furL, eye, wh);
+          const pic = s.photo("duerer-feldhase", { w: 500, h: 552, pos: "50% 50%", caption: "Feldhase, 1502 – das Original" });
+          const eye = s.photo("duerer-feldhase-auge", { w: 170, h: 170, cls: "later" });
           const mkRow = (label, html) => box(s, "ex", label, html);
           const r1 = mkRow("Albrecht Dürer", "1471 in Nürnberg geboren, 1528 gestorben. Nach ihm heißt dein Gymnasium.");
           const r2 = mkRow("Der Feldhase, 1502", "Aquarell- und Deckfarben, heute in der Albertina in Wien. Das Bild ist etwa 25 mal 23 Zentimeter klein.");
           const r3 = mkRow("Haar für Haar", "Dürer malte viele Schichten übereinander: erst braune Töne, dann lauter feine Haare.");
-          const r4 = mkRow("Der Fensterblitz", "Im Auge des Hasen spiegelt sich ein Fenster.");
-          const note = s.h("p", { class: "small pencil later", html: "Unser Hase ist selbst gezeichnet, vereinfacht und im Stil von Dürer." });
-          s.add(cols(s, svg, stack(s, 10, r1, r2, r3, r4, note), 560));
-          s.step(async () => { s.sfx.pop(); s.show(r1, "left"); s.show(shapes, "pop"); await s.wait(1000); });
-          s.step(async () => { s.sfx.scribble(); s.show(r2, "left"); await s.show(furD, "draw"); });
-          s.step(async () => { s.sfx.scribble(); s.show(r3, "left"); await s.show(furL, "draw"); });
-          s.step(async () => { s.sfx.ding(); s.show(r4, "left"); s.show(wh, "draw"); await s.show(eye, "bounce"); s.show(note, "fade"); });
+          const r4 = s.h("div", { class: "ex later", style: { display: "flex", gap: "14px", alignItems: "center", padding: "10px 14px" } }, eye, s.h("div", {}, s.h("span", { class: "exlabel" }, "Der Fensterblitz"), s.h("p", { class: "small", html: "Im Auge des Hasen spiegelt sich ein <b>Fenster</b>. Siehst du es?" })));
+          s.add(cols(s, pic, stack(s, 10, r1, r2, r3, r4), 500));
+          s.show(pic, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.sfx.pop(); await s.show(r1, "left"); });
+          s.step(async () => { s.sfx.pop(); await s.show(r2, "left"); });
+          s.step(async () => { s.sound("pinsel-strich", { vol: .5 }); await s.show(r3, "left"); s.say("Dürer malte jedes Haar einzeln mit einem ganz feinen Pinsel."); });
+          s.step(async () => { s.sfx.ding(); s.show(r4, "left"); await s.show(eye, "zoom"); s.say("Im Auge spiegelt sich ein Fenster."); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -555,22 +549,7 @@
         title: "Dürer mit 13 Jahren",
         say: "Schon als Kind konnte Dürer toll zeichnen. Mit dreizehn zeichnete er sich selbst, mit einem Silberstift.",
         build(s) {
-          const svg = s.svg(360, 540);
-          const st = { fill: "none", stroke: "#7c8296", "stroke-width": 2.4, "stroke-linecap": "round", "stroke-linejoin": "round", class: "later" };
-          const ds = [
-            "M100,200 C100,110 260,110 260,200 C264,280 230,340 180,345 C130,340 96,280 100,200Z",
-            "M96,205 C90,120 150,80 200,88 C250,90 275,140 262,205 C250,160 230,140 190,138 C150,140 118,160 96,205",
-            "M120,150 C140,120 170,112 190,116 M150,98 C170,110 190,106 215,104 M232,120 C248,140 252,160 256,185 M110,176 C116,150 124,140 134,130",
-            "M128,215 q18,-14 36,0 q-18,10 -36,0 M198,215 q18,-14 36,0 q-18,10 -36,0",
-            "M124,196 q22,-12 42,-2 M196,194 q22,-10 42,2",
-            "M181,224 q-12,40 -6,56 q8,6 20,0",
-            "M152,302 q28,14 56,0 M160,297 q20,-8 40,0",
-            "M100,225 q-24,10 -8,42 q6,8 14,0 M260,225 q24,10 8,42 q-6,8 -14,0",
-            "M150,338 L146,395 M214,338 L218,395 M146,395 C90,410 50,430 30,486 M218,395 C270,410 310,430 330,486 M146,395 q34,40 72,0",
-          ].map(d => s.el("path", Object.assign({ d }, st)));
-          const pup = s.el("g", { class: "later" }, s.el("circle", { cx: 146, cy: 214, r: 4.5, fill: "#7c8296" }), s.el("circle", { cx: 216, cy: 214, r: 4.5, fill: "#7c8296" }));
-          svg.append(s.el("rect", { x: 10, y: 10, width: 340, height: 488, rx: 14, fill: "#f0f1f5", stroke: "#c8d3de", "stroke-width": 3 }), ...ds, pup,
-            s.el("text", { x: 180, y: 522, "text-anchor": "middle", "font-size": 20, fill: "#5d6678", text: "Silberstift-Stil, selbst gezeichnet" }));
+          const svg = s.photo("duerer-selbst13", { w: 360, h: 514, pos: "50% 40%", caption: "Selbstbildnis, 1484" });
           const rows = [
             ["1471", "Dürer wird in Nürnberg geboren."],
             ["1484", "Mit 13 zeichnet er sich selbst, mit einem Silberstift. Das Bild ist heute in der Albertina in Wien."],
@@ -580,7 +559,8 @@
           ].map(([y, t]) => s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "96px 1fr", gap: "14px", alignItems: "baseline" } }, s.h("p", { class: "h2 violet" }, y), s.h("p", { class: "t", html: t })));
           const m = merk(s, "Das Selbstbildnis von 1484 ist eine der frühesten erhaltenen Kinderzeichnungen überhaupt. Später schrieb Dürer dazu: Da war ich noch ein Kind.");
           s.add(cols(s, svg, stack(s, 12, ...rows, m), 360));
-          s.step(async () => { s.sfx.scribble(); s.show(rows[0], "left"); s.show(ds.slice(0, 3), "draw"); await s.wait(1700); s.show(ds.slice(3, 9), "draw"); s.show(pup, "pop", 500); await s.wait(1400); });
+          s.show(svg, "zoom"); s.sound("pencil-write", { vol: .5 });
+          s.step(async () => { s.sfx.pop(); await s.show(rows[0], "left"); });
           s.step(async () => { s.sfx.pop(); s.say("Mit dreizehn Jahren hat Dürer sich selbst gezeichnet."); await s.show(rows[1], "left"); });
           s.step(async () => { s.sfx.pop(); s.show(rows[2], "left"); await s.show(rows[3], "left", 250); await s.show(rows[4], "left", 100); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
@@ -620,7 +600,7 @@
           { const svg = s.svg(300, 130); svg.append(s.el("rect", { x: 8, y: 8, width: 140, height: 114, rx: 6, fill: "#fff", stroke: INK, "stroke-width": 3 }), s.el("rect", { x: 152, y: 8, width: 140, height: 114, rx: 6, fill: "#fff", stroke: INK, "stroke-width": 3 }));
             const ap = S("M222,40 C190,32 176,66 192,94 C202,112 214,104 222,100 C230,104 242,112 252,94 C268,66 254,32 222,40Z", { "stroke-width": 3 }), st2 = S("M222,40 L226,22", { "stroke-width": 3 }), hs = S(hatchD(40, 40, 8, 1), { "stroke-width": 1.8, transform: "translate(212 60)", "clip-path": "none" });
             const lines = S("M24,34 L130,34 M24,56 L110,56 M24,78 L124,78 M24,100 L96,100", { "stroke-width": 2.5, stroke: "#7c8296" });
-            svg.append(lines, ap, st2); const c = card("Skizzenbuch", "Jeden Tag eine kleine Zeichnung.", svg); items.push([c, async () => { s.show(lines, "draw"); await s.wait(500); s.show(ap, "draw"); await s.wait(500); s.show(st2, "draw"); }]); }
+            svg.append(lines, ap, st2); const c = card("Skizzenbuch", "Auch Leonardo da Vinci skizzierte ständig.", s.photo("leonardo-skizzen", { w: "100%", h: 130, pos: "50% 40%" })); items.push([c, async () => { s.show(lines, "draw"); await s.wait(500); s.show(ap, "draw"); await s.wait(500); s.show(st2, "draw"); }]); }
           // 6 sign
           { const svg = s.svg(300, 130); svg.append(s.el("rect", { x: 70, y: 8, width: 160, height: 114, rx: 12, fill: "#1f9d55" }));
             const fg = S("M118,78 L132,58 L146,70 L162,50 M132,58 L128,100 M146,70 L150,100 M118,78 L104,92 M162,50 L176,62", { stroke: "#fff", "stroke-width": 5 });

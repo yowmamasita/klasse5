@@ -127,7 +127,9 @@
           })();
           s.step(async () => { s.sfx.swoosh(); s.show(tl.p.past, "fade"); s.show(tl.p.lblPast, "left"); for (let i = 2; i >= 0; i--) { s.sfx.count(2 - i); await s.show(pw[i], "right", 0); } });
           s.step(async () => { s.sfx.swoosh(); s.show(tl.p.fut, "fade"); s.show(tl.p.lblFut, "right"); for (let i = 0; i < 3; i++) { s.sfx.count(i + 3); await s.show(fw[i], "left", 0); } });
-          s.step(async () => { for (let i = 0; i < 3; i++) { s.sfx.pop(); await s.show(cards[i], "up"); marksOn(s, cards[i]); } s.say("Das Verb zeigt die Zeit. Spielte, liest, wird schwimmen."); });
+          s.preload("ball-kick"); s.preload("page-turn-1"); s.preload("splash");
+          const CS = [["ball-kick", { vol: 0.7 }], ["page-turn-1", { vol: 0.8 }], ["splash", { vol: 0.5 }]];
+          s.step(async () => { for (let i = 0; i < 3; i++) { s.sound(...CS[i]); await s.show(cards[i], "up"); marksOn(s, cards[i]); await s.wait(250); } s.say("Das Verb zeigt die Zeit. Spielte, liest, wird schwimmen."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -146,23 +148,23 @@
           const morgen = T(s, 850, 168, "morgen", { class: "hlbl later", "font-weight": 600, "font-size": 30, fill: ORANGE });
           tl.svg.append(pulse, ...habit, habitLbl, arc, arcDot, morgen);
           const cards = [
-            ex(s, "1 · Jetzt gerade", s.h("p", { class: "t" }, rt(s, "Julian [übt] gerade Geige. 🎻", ORANGE))),
-            ex(s, "2 · Immer wieder", s.h("p", { class: "t" }, rt(s, "Jeden Morgen [fährt] Julian mit der U-Bahn. 🚇", ORANGE))),
-            ex(s, "3 · Zukunft + Zeitwort", s.h("p", { class: "t" }, rt(s, "Morgen [fahren] wir zu Oma. 🚗", ORANGE))),
+            ex(s, "1 · Jetzt gerade", s.photo("geige-foto", { w: "100%", h: 130 }), s.h("p", { class: "t", style: { marginTop: "8px" } }, rt(s, "Julian [übt] gerade Geige.", ORANGE))),
+            ex(s, "2 · Immer wieder", s.photo("u8", { w: "100%", h: 130, pos: "50% 45%" }), s.h("p", { class: "t", style: { marginTop: "8px" } }, rt(s, "Jeden Morgen [fährt] Julian mit der U-Bahn.", ORANGE))),
+            ex(s, "3 · Zukunft + Zeitwort", s.photo("auto", { w: "100%", h: 130, pos: "50% 60%" }), s.h("p", { class: "t", style: { marginTop: "8px" } }, rt(s, "Morgen [fahren] wir zu Oma.", ORANGE))),
           ];
           cards.forEach(c => c.classList.add("later"));
           const m = merk(s, s.h("b", null, "Präsens: "), "ich spiel", s.h("b", { class: "red" }, "e"), ", du spiel", s.h("b", { class: "red" }, "st"), ", er/sie/es spiel", s.h("b", { class: "red" }, "t"), ", wir spiel", s.h("b", { class: "red" }, "en"), ", ihr spiel", s.h("b", { class: "red" }, "t"), ", sie spiel", s.h("b", { class: "red" }, "en"));
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "20px" } }, tl.svg, s.h("div", { class: "cols3" }, cards), m));
           s.sfx.pop();
           s.step(async () => {
-            s.sfx.ding(); s.show(pulse, "zoom"); await s.show(cards[0], "up"); marksOn(s, cards[0]);
+            s.sound("geige", { vol: 0.5, dur: 2.5, fade: 0.6 }); s.show(pulse, "zoom"); await s.show(cards[0], "up"); marksOn(s, cards[0]);
             s.tween({ from: 0, to: 6, dur: 3000, ease: "linear", update: v => pulse.setAttribute("r", 22 + 6 * Math.abs(Math.sin(v * Math.PI))) });
           });
           s.step(async () => {
-            for (let i = 0; i < habit.length; i++) { s.sfx.count(i); s.show(habit[i], "pop"); await s.wait(110); }
-            s.show(habitLbl, "fade"); await s.show(cards[1], "up"); marksOn(s, cards[1]);
+            for (let i = 0; i < habit.length; i++) { s.sfx.tick(); s.show(habit[i], "pop"); await s.wait(110); }
+            s.sound("ubahn-train", { vol: 0.45, dur: 2.5, fade: 0.6 }); s.show(habitLbl, "fade"); await s.show(cards[1], "up"); marksOn(s, cards[1]);
           });
-          s.step(async () => { s.sfx.whoosh(); await s.show(arc, "draw"); s.sfx.pop(); s.show(arcDot, "pop"); s.show(morgen, "fade"); await s.show(cards[2], "up"); marksOn(s, cards[2]); s.say("Mit einem Zeitwort wie morgen zeigt das Präsens sogar die Zukunft."); });
+          s.step(async () => { s.sound("autohupe", { vol: 0.5 }); await s.show(arc, "draw"); s.show(arcDot, "pop"); s.show(morgen, "fade"); await s.show(cards[2], "up"); marksOn(s, cards[2]); s.say("Mit einem Zeitwort wie morgen zeigt das Präsens sogar die Zukunft."); });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(m, "up"); });
         },
       },
@@ -197,24 +199,24 @@
             "Mia [schießt] … Tor! Alle [jubeln]!",
           ].map((t, i) => s.h("p", { class: "t" + (i ? " later" : "") }, rt(s, t, ORANGE)));
           const card = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "10px" } }, s.h("p", { class: "hand", style: { margin: 0, color: RED } }, "🎙 Der Reporter sagt:"), ...lines);
-          const lf = life(s, s.h("p", { class: "small" }, "Live-Reporter, Liveticker im Handy, Spielberichte im Radio: Sie erzählen im Präsens. So bist du mittendrin."));
+          const lf = life(s, s.photo("olympiastadion", { w: "100%", h: 150, caption: "Live im Stadion" }), s.h("p", { class: "small", style: { marginTop: "8px" } }, "Live-Reporter, Liveticker im Handy, Spielberichte im Radio: Sie erzählen im Präsens. So bist du mittendrin."));
           lf.classList.add("later");
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "540px 1fr", alignItems: "center", height: "100%" } }, svg, s.h("div", { class: "stack" }, card, lf)));
-          s.show(svg, "zoom"); s.sfx.zap(); marksOn(s, lines[0]);
+          s.show(svg, "zoom"); s.sound("whistle", { vol: 0.6 }); marksOn(s, lines[0]);
           s.step(async () => {
             s.show(lines[1], "left"); marksOn(s, lines[1]); s.sfx.whoosh();
             await s.tween({ from: 0, to: 1, dur: 1200, update: v => { const x = 150 + 180 * v, y = 210 - 20 * Math.sin(v * Math.PI * 2); ten.put(x, y); setBall(x + 25, y + 12); } });
           });
           s.step(async () => {
-            s.show(lines[2], "left"); marksOn(s, lines[2]); s.sfx.pop();
+            s.show(lines[2], "left"); marksOn(s, lines[2]); s.sound("ball-kick", { vol: 0.6 });
             const x0 = 355, y0 = 222; await s.tween({ dur: 650, update: v => setBall(x0 + (400 - x0) * v, y0 + (100 - y0) * v) });
             s.sfx.snap();
           });
           s.step(async () => {
-            s.show(lines[3], "left"); marksOn(s, lines[3]); s.sfx.drum();
+            s.show(lines[3], "left"); marksOn(s, lines[3]); s.sound("ball-kick", { vol: 0.8 });
             await s.tween({ dur: 500, ease: "in", update: v => setBall(400 + (528 - 400) * v, 100 + (175 - 100) * v) });
             s.tween({ dur: 400, update: v => net.setAttribute("x", 520 + 6 * Math.sin(v * Math.PI * 4)) });
-            s.sfx.fanfare(); s.show(tor, "zoom"); s.confetti(330, 280, 90);
+            s.sound("crowd-cheer", { vol: 0.55, dur: 3, fade: 0.8 }); s.show(tor, "zoom"); s.confetti(330, 280, 90);
           });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
@@ -300,22 +302,24 @@
           const mk = (label, icon, txt, foot) => {
             const c = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "10px" } },
               s.h("span", { class: "exlabel" }, label),
-              s.h("div", { style: { fontSize: "40px", lineHeight: 1 } }, icon),
+              icon,
               s.h("p", { class: "small", style: { fontSize: "21px" } }, rt(s, txt, BLUE, RED)),
               foot ? s.h("p", { class: "small pencil", style: { marginTop: "auto" } }, foot) : null);
             return c;
           };
           const cards = [
-            mk("Tagebuch", "📔", "Liebes Tagebuch! Heute {war} ein super Tag. In der Musikstunde [spielten] wir zum ersten Mal zusammen. Danach {aß} ich mit Ole Pizza."),
-            mk("Feriengeschichte", "🏖", "Im Sommer {fuhren} wir an die Ostsee. Wir [bauten] eine riesige Sandburg. Abends {sahen} wir, wie die Sonne im Meer [versank]."),
-            mk("Märchen", "🌲", "„Vor einem großen Walde [wohnte] ein armer Holzhacker mit seiner Frau und seinen zwei Kindern; das Bübchen {hieß} Hänsel und das Mädchen Gretel.“", "Brüder Grimm, „Hänsel und Gretel“"),
+            mk("Tagebuch", s.photo("tagebuch", { w: "100%", h: 130 }), "Liebes Tagebuch! Heute {war} ein super Tag. In der Musikstunde [spielten] wir zum ersten Mal zusammen. Danach {aß} ich mit Ole Pizza."),
+            mk("Feriengeschichte", s.photo("ostsee-strand", { w: "100%", h: 130, caption: "Ostsee" }), "Im Sommer {fuhren} wir an die Ostsee. Wir [bauten] eine riesige Sandburg. Abends {sahen} wir, wie die Sonne im Meer [versank]."),
+            mk("Märchen", s.photo("haensel-gretel", { w: "100%", h: 130, pos: "50% 30%" }), "„Vor einem großen Walde [wohnte] ein armer Holzhacker mit seiner Frau und seinen zwei Kindern; das Bübchen {hieß} Hänsel und das Mädchen Gretel.“", "Brüder Grimm, „Hänsel und Gretel“"),
           ];
           // versank is strong – fix colour of that mark
           const vs = [...cards[1].querySelectorAll(".z3-mark")].find(x => x.textContent === "versank"); if (vs) vs.style.color = RED;
           const m = merk(s, "Geschichten, Berichte und Märchen schreibt man meist im ", s.h("b", { class: "blue" }, "Präteritum"), ".");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, legend, s.h("div", { class: "cols3", style: { alignItems: "stretch" } }, cards), m));
           s.show(legend, "down"); s.sfx.pop();
-          cards.forEach((c, i) => s.step(async () => { s.sfx.whoosh(); await s.show(c, "up"); await marksOn(s, c, 220); }));
+          s.preload("pencil-write"); s.preload("waves"); s.preload("birds");
+          const CS = [["pencil-write", { vol: 0.8 }], ["waves", { vol: 0.4, dur: 3, fade: 0.8 }], ["birds", { vol: 0.4, dur: 3, fade: 0.8 }]];
+          cards.forEach((c, i) => s.step(async () => { s.sound(...CS[i]); await s.show(c, "up"); await marksOn(s, c, 220); }));
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -379,15 +383,17 @@
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols" }, L.card, R.card), m));
           s.show([L.card, R.card], "up"); s.sfx.pop();
           s.step(async () => {
-            s.sfx.whoosh(); s.tween({ dur: 1400, update: v => walker.setAttribute("x", 50 + 370 * v) });
+            s.sound("footsteps", { vol: 0.6, dur: 1.6, fade: 0.3 }); s.tween({ dur: 1400, update: v => walker.setAttribute("x", 50 + 370 * v) });
             for (let i = 0; i < 3; i++) { L.rows[i].classList.remove("later"); s.sfx.count(i); await s.show(L.rows[i], "left"); }
           });
           s.step(async () => {
+            s.sound("alarm-clock", { vol: 0.45, dur: 2, fade: 0.4 });
             s.tween({ dur: 1200, update: v => walker.textContent = v < 0.5 ? "😴" : "🙂" });
             for (let i = 3; i < 6; i++) { L.rows[i].classList.remove("later"); s.sfx.count(i); await s.show(L.rows[i], "left"); }
             walker.textContent = "🚶"; walker.setAttribute("x", 420);
           });
           s.step(async () => {
+            s.sound("geige", { vol: 0.45, dur: 2.5, fade: 0.6 });
             s.tween({ dur: 1200, ease: "linear", update: v => vio.setAttribute("transform", `rotate(${8 * Math.sin(v * Math.PI * 6)} 235 44)`) });
             for (let i = 0; i < 6; i++) { R.rows[i].classList.remove("later"); s.sfx.count(i); await s.show(R.rows[i], "right"); }
             s.say("Achtung. Ich habe geschlafen, aber ich bin eingeschlafen.");
@@ -414,20 +420,21 @@
           const phone = s.h("div", { style: { width: "430px", height: "600px", borderRadius: "40px", background: INK, padding: "14px", display: "flex", flexDirection: "column", margin: "0 auto" } },
             s.h("div", { style: { flex: 1, borderRadius: "28px", background: "#ece5dd", display: "flex", flexDirection: "column", overflow: "hidden" } },
               s.h("div", { style: { background: "#075e54", color: "#fff", padding: "14px 18px", font: "700 22px/1 var(--f-display)" } }, "Ole ⚽"), chat));
-          const found = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "8px" } },
-            s.h("span", { class: "exlabel" }, "Perfekt im Chat"),
-            ...["hast … gemacht", "bin … geradelt", "haben … gegessen", "habe … gespielt"].map(t => s.h("span", { class: "chip later", style: { color: TEAL, fontSize: "21px", alignSelf: "flex-start" } }, t)));
+          const found = s.h("div", { class: "card", style: { display: "flex", flexWrap: "wrap", gap: "8px" } },
+            s.h("span", { class: "exlabel", style: { width: "100%" } }, "Perfekt im Chat"),
+            ...["hast … gemacht", "bin … geradelt", "haben … gegessen", "habe … gespielt"].map(t => s.h("span", { class: "chip later", style: { color: TEAL, fontSize: "21px" } }, t)));
           const tip = s.h("div", { class: "card later" }, s.h("span", { class: "exlabel" }, "Aber"), s.h("p", { class: "small" }, rt(s, "Bei sein und haben sagt man meist {war} und {hatte}: „Es {war} super!“", TEAL, BLUE)));
           const lf = life(s, s.h("p", { class: "small" }, "Im Gespräch, am Telefon und im Chat erzählen wir meist im Perfekt."));
           lf.classList.add("later");
-          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "460px 1fr", alignItems: "center", height: "100%" } }, phone, s.h("div", { class: "stack", style: { gap: "14px" } }, found, tip, lf)));
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "460px 1fr", alignItems: "center", height: "100%" } }, phone, s.h("div", { class: "stack", style: { gap: "14px" } }, s.photo("tempelhofer-feld", { w: "100%", h: 170, caption: "Tempelhofer Feld in Berlin" }), found, tip, lf)));
           s.show(phone, "up"); s.sfx.whoosh();
           const chips = [...found.querySelectorAll(".chip")];
           const post = async (i, chipIdx) => {
             dots.classList.remove("later"); bubs[i].after(dots); dots.style.justifyContent = msgs[i][0] === "l" ? "flex-start" : "flex-end";
             chat.insertBefore(dots, bubs[i]);
             await s.wait(700); dots.classList.add("later"); chat.append(dots);
-            s.sfx.pop(); await s.show(bubs[i], msgs[i][0] === "l" ? "left" : "right"); marksOn(s, bubs[i]);
+            if (i === 1) s.sound("bike-bell", { vol: 0.6 }); else s.sfx.pop();
+            await s.show(bubs[i], msgs[i][0] === "l" ? "left" : "right"); marksOn(s, bubs[i]);
             if (chipIdx != null) { s.sfx.coin(); s.show(chips[chipIdx], "pop"); }
           };
           s.step(async () => { await post(0, 0); });
@@ -465,10 +472,10 @@
           const c2 = card("In der Pause", "① Lena [hatte] ihr Pausenbrot [vergessen].", "② Deshalb {kaufte} sie eine Brezel. 🥨");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, svg, m, s.h("div", { class: "cols" }, c1, c2)));
           s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); await s.show(e2, "pop"); s.show(fam, "bounce"); s.say("Wir kamen am Bahnhof an."); });
+          s.step(async () => { s.sound("footsteps", { vol: 0.6, dur: 1.5, fade: 0.3 }); await s.show(e2, "pop"); s.show(fam, "bounce"); s.say("Wir kamen am Bahnhof an."); });
           s.step(async () => {
             s.sfx.pop(); await s.show(e1, "pop"); s.show(train, "pop"); await s.wait(300);
-            s.sfx.whoosh(); await s.tween({ from: 250, to: 60, dur: 1100, ease: "in", update: v => train.setAttribute("x", v) });
+            s.sound("ubahn-train", { vol: 0.5, dur: 2.5, fade: 0.7 }); await s.tween({ from: 250, to: 60, dur: 1100, ease: "in", update: v => train.setAttribute("x", v) });
             s.say("Aber der Zug war schon abgefahren. Das war noch früher.");
           });
           s.step(async () => { s.sfx.swoosh(); await s.show(arc, "draw"); s.show(arcHead, "pop"); s.sfx.ding(); await s.show(m, "up"); });
@@ -494,9 +501,11 @@
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "12px" } }, mini.svg, sent,
             s.h("div", { class: "cols", style: { gridTemplateColumns: "260px 1fr", gap: "18px" } }, conj, s.h("div", { class: "stack", style: { gap: "8px" } }, exs)), m));
           mini.run();
-          s.step(async () => { s.sfx.snap(); kl.classList.add("on"); await s.show([werde, spielen], "bounce"); s.say("werde und spielen bilden eine Klammer."); });
+          s.step(async () => { s.sound("geige", { vol: 0.45, dur: 2.5, fade: 0.6 }); kl.classList.add("on"); await s.show([werde, spielen], "bounce"); s.say("werde und spielen bilden eine Klammer."); });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(conj, "left"); });
-          s.step(async () => { for (const e of exs) { s.sfx.pop(); await s.show(e, "right"); marksOn(s, e); } });
+          s.preload("flugzeug"); s.preload("rain");
+          const ES = [() => s.sound("flugzeug", { vol: 0.5, dur: 2.5, fade: 0.8 }), () => s.sound("rain", { vol: 0.4, dur: 2.5, fade: 0.8 }), () => s.sfx.pop()];
+          s.step(async () => { for (let i = 0; i < exs.length; i++) { ES[i](); await s.show(exs[i], "right"); marksOn(s, exs[i]); await s.wait(500); } });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -536,7 +545,9 @@
           lf.classList.add("later");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, hdr, s.h("div", { class: "cols3" }, days), lf));
           s.show(hdr, "down"); s.sfx.whoosh();
-          days.forEach((d, i) => s.step(async () => { started = true; [s.sfx.chord, s.sfx.drum, s.sfx.whoosh][i]([0, 4, 7]); await s.show(d, "up"); marksOn(s, d); }));
+          s.preload("birds"); s.preload("rain"); s.preload("wind");
+          const DS = ["birds", "rain", "wind"];
+          days.forEach((d, i) => s.step(async () => { started = true; s.sound(DS[i], { vol: 0.45, dur: 3, fade: 0.8 }); await s.show(d, "up"); marksOn(s, d); }));
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },

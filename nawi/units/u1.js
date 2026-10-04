@@ -140,25 +140,9 @@
             s.h("span", { class: "chip", style: { fontSize: "21px" } }, "Biologie"), s.h("span", { class: "t" }, "+"),
             s.h("span", { class: "chip", style: { fontSize: "21px" } }, "Chemie"), s.h("span", { class: "t" }, "+"),
             s.h("span", { class: "chip", style: { fontSize: "21px" } }, "Physik"));
-          // scene 1: laundry
-          const sv1 = s.svg(300, 180);
-          sv1.append(s.el("line", { x1: 10, y1: 30, x2: 290, y2: 30, stroke: P.pencil, "stroke-width": 3 }));
-          sv1.append(s.el("path", { d: "M90 30 L70 50 L84 58 L84 130 L156 130 L156 58 L170 50 L150 30 L136 38 C130 46 110 46 104 38 Z", fill: "#7fb7e6", stroke: P.blue, "stroke-width": 3 }));
-          sv1.append(s.el("path", { d: "M190 30 L190 120 L250 120 L250 30", fill: "#f6a9a0", stroke: P.red, "stroke-width": 3 }));
-          const drops1 = [100, 128, 150, 205, 235].map((x, i) => { const d = s.el("path", { d: "M0 0 C3 5 5 8 5 11 C5 14 3 16 0 16 C-3 16 -5 14 -5 11 C-5 8 -3 5 0 0 Z", fill: P.blue, opacity: .8 }); d.x0 = x; d.ph = i * 0.37; sv1.append(d); return d; });
-          // scene 2: ice cube
-          const sv2 = s.svg(300, 180);
-          sv2.append(s.el("ellipse", { cx: 150, cy: 150, rx: 120, ry: 20, fill: "#eef2f6", stroke: P.line, "stroke-width": 3 }));
-          const puddle = s.el("ellipse", { cx: 150, cy: 148, rx: 20, ry: 6, fill: "#9cc8f0", opacity: .8 });
-          const cube = s.el("rect", { x: 115, y: 75, width: 70, height: 70, rx: 12, fill: "#d9eefc", stroke: "#7fb7e6", "stroke-width": 3 });
-          sv2.append(puddle, cube, sun(s, 255, 40, 18));
-          // scene 3: plant to window
-          const sv3 = s.svg(300, 180);
-          sv3.append(s.el("rect", { x: 10, y: 10, width: 80, height: 150, fill: "#d9f0fb", stroke: P.pencil, "stroke-width": 3 }), s.el("line", { x1: 50, y1: 10, x2: 50, y2: 160, stroke: P.pencil, "stroke-width": 3 }), s.el("line", { x1: 10, y1: 85, x2: 90, y2: 85, stroke: P.pencil, "stroke-width": 3 }));
-          sv3.append(s.el("path", { d: "M170 128 L230 128 L222 168 L178 168 Z", fill: "#c8743c" }));
-          const stem = s.el("path", { d: "M200 128 Q200 80 200 40", fill: "none", stroke: P.leaf, "stroke-width": 5, "stroke-linecap": "round" });
-          const leafA = s.el("ellipse", { cx: 186, cy: 70, rx: 14, ry: 7, fill: "#2f9a48" }), leafB = s.el("ellipse", { cx: 214, cy: 90, rx: 14, ry: 7, fill: "#2f9a48" }), leafC = s.el("ellipse", { cx: 200, cy: 40, rx: 12, ry: 7, fill: "#2f9a48" });
-          sv3.append(stem, leafA, leafB, leafC);
+          const sv1 = s.photo("waesche-leine", { w: 300, h: 210, pos: "50% 45%" });
+          const sv2 = s.photo("eis-schmilzt", { w: 300, h: 210, pos: "60% 50%" });
+          const sv3 = s.photo("pflanze-fenster", { w: 300, h: 210, pos: "45% 40%" });
           const card = (svg, q, kind) => s.h("div", { class: "card later stack", style: { gap: "8px", alignItems: "center", padding: "14px 18px" } },
             s.h("span", { class: "exlabel", style: { alignSelf: "flex-start", marginBottom: 0 } }, kind), svg, s.h("p", { class: "t", style: { fontSize: "22px", textAlign: "center" } }, q));
           const c1 = card(sv1, "Warum wird nasse Wäsche trocken?", "Beobachtung 1");
@@ -167,22 +151,10 @@
           const merk = s.h("div", { class: "merk later" }, "Forscher ", b(s, "beobachten"), " genau, stellen ", b(s, "Fragen"), " und prüfen ihre Ideen mit ", b(s, "Experimenten"), ".");
           s.add(root(s, "stack", { justifyContent: "center", gap: "34px" }, chips, s.h("div", { class: "cols3" }, c1, c2, c3), merk));
           s.sfx.whoosh();
-          let bendT = 0, iceT = 0;
-          s.loop(t => {
-            drops1.forEach(d => { const p = ((t * 0.8 + d.ph) % 1); d.setAttribute("transform", `translate(${d.x0} ${130 + p * 30})`); d.setAttribute("opacity", 0.9 * (1 - p)); });
-            const m = (Math.sin(t * 0.8) + 1) / 2 * iceT;
-            cube.setAttribute("height", 70 - m * 36); cube.setAttribute("y", 75 + m * 36); cube.setAttribute("x", 115 + m * 6); cube.setAttribute("width", 70 - m * 12);
-            puddle.setAttribute("rx", 20 + m * 70); puddle.setAttribute("ry", 6 + m * 6);
-            const k = bendT;
-            stem.setAttribute("d", `M200 128 Q${200 - 10 * k} 80 ${200 - 70 * k} ${40 + 10 * k}`);
-            leafC.setAttribute("cx", 200 - 70 * k); leafC.setAttribute("cy", 40 + 10 * k);
-            leafA.setAttribute("cx", 186 - 30 * k); leafB.setAttribute("cx", 214 - 34 * k);
-          });
-          s.step(async () => { s.sfx.pop(); await s.show(c1, "up"); s.say("Nasse Wäsche wird trocken. Wohin verschwindet das Wasser?"); });
-          s.step(async () => { s.sfx.pop(); s.show(c2, "up"); s.tween({ from: 0, to: 1, dur: 1200, update: v => (iceT = v) }); s.say("Eis in der Sonne schmilzt schneller als im Schatten."); });
-          s.step(async () => { s.sfx.pop(); s.show(c3, "up"); s.tween({ from: 0, to: 1, dur: 1800, update: v => (bendT = v) }); s.say("Die Pflanze biegt sich zum Licht."); });
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "zoom"); });
-          if (s.fast) { iceT = 1; bendT = 1; }
+          s.step(async () => { s.sound("wind", { vol: .45, dur: 3 }); await s.show(c1, "up"); s.say("Nasse Wäsche wird trocken. Wohin verschwindet das Wasser?"); });
+          s.step(async () => { s.sound("tropfen", { vol: .7 }); await s.show(c2, "up"); s.say("Eis in der Sonne schmilzt schneller als im Schatten."); });
+          s.step(async () => { s.sfx.swoosh(); await s.show(c3, "up"); s.say("Die Pflanze wächst zum Licht."); });
+          s.step(async () => { s.sound("magic-chime", { vol: .6 }); await s.show(merk, "zoom"); });
         },
       },
       /* 2 ------------------------------------------------------------ */
@@ -277,7 +249,7 @@
           s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); await s.show(col2, "up"); s.say("Die Frage: Wo trocknet nasse Wäsche am schnellsten?"); });
           s.step(async () => { s.sfx.pop(); await s.show(col3, "up"); for (let i = 0; i < 3; i++) { s.sfx.count(i); s.show(chips[i], "pop"); await s.wait(200); } });
-          s.step(async () => { s.sfx.scribble(); await s.show(hyp, "fade"); s.say("Ich vermute: an der Heizung, weil Wärme das Wasser schneller verdunsten lässt."); });
+          s.step(async () => { s.sound("pencil-write", { vol: .8 }); await s.show(hyp, "fade"); s.say("Ich vermute: an der Heizung, weil Wärme das Wasser schneller verdunsten lässt."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -339,7 +311,7 @@
           let finished = false;
           const run = async () => {
             if (running) return;
-            wet.fill(1); parts = []; badges.forEach(x => s.hide(x)); running = true; s.sfx.whoosh();
+            wet.fill(1); parts = []; badges.forEach(x => s.hide(x)); running = true; s.sound("wind", { vol: .4, dur: 6 });
             const done = [false, false, false];
             await new Promise(res => { const stop = s.loop(() => { for (let i = 0; i < 3; i++) if (!done[i] && wet[i] <= 0) { done[i] = true; s.sfx.count([2, 0, 1][i] * 2 + 2); } if (!running) { res(); return false; } }); s.onLeave(res); });
             if (!s.alive) return;
@@ -382,10 +354,10 @@
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "21px" } }, "Wasser ", b(s, "verdunstet"), " schneller, wenn es warm ist und Wind die feuchte Luft wegbläst."));
           s.add(root(s, "cols", { alignItems: "center" }, s.h("div", { class: "stack", style: { gap: "22px" } }, vcard, res, newq), s.h("div", { class: "stack", style: { gap: "22px" } }, lifeBox, merk)));
           s.sfx.pop();
-          s.step(async () => { s.sfx.drum(); await s.show(stamp, "zoom"); s.sfx.success(); });
+          s.step(async () => { s.sound("stempel"); await s.show(stamp, "zoom"); });
           s.step(async () => { s.sfx.pop(); await s.show(res, "up"); s.say("Wärme und Wind machen das Trocknen schneller."); });
           s.step(async () => { s.sfx.whoosh(); s.show(newq, "left"); s.tween({ from: 0, to: 360, dur: 1400, ease: "out", update: v => spin.setAttribute("transform", `rotate(${v} 60 60)`) }); s.say("Neue Frage: Was hilft mehr, Wärme oder Wind?"); });
-          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(lifeBox, "right"); });
+          s.step(async () => { s.sound("foehn", { vol: .5 }); await s.show(lifeBox, "right"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -421,6 +393,19 @@
             sl.input.value = 7; sl.querySelector(".mono").textContent = "Tag 7";
           });
           s.step(async () => { s.sfx.ding(); await s.show(obs, "up"); s.say("Im Dunkeln wird die Kresse lang, dünn und gelb."); });
+        },
+      },
+      /* 6b ----------------------------------------------------------- */
+      {
+        title: "Hell oder dunkel – in echt",
+        say: "So sieht das in echt aus. Im Hellen wird Kresse grün und kräftig. Keimlinge im Dunkeln werden lang, dünn und blass.",
+        build(s) {
+          const p1 = s.photo("kresse", { w: 520, h: 380, pos: "50% 60%", caption: "Kresse im Hellen: kräftig und grün" });
+          const p2 = s.photo("keimlinge-dunkel", { w: 520, h: 380, pos: "50% 55%", caption: "Samen im Dunkeln gekeimt: lang, dünn, gelb", cls: "later" });
+          const merk = later(s.h("div", { class: "merk", style: { fontSize: "22px" } }, "Im Dunkeln wachsen Keimlinge schnell in die Höhe – sie ", b(s, "suchen das Licht"), ". Grün werden sie erst, wenn Licht auf sie fällt."));
+          s.add(root(s, "stack", { justifyContent: "center", gap: "26px" }, s.h("div", { class: "row", style: { justifyContent: "center", gap: "30px", flexWrap: "nowrap" } }, p1, p2), merk));
+          s.step(async () => { s.sound("camera-shutter", { vol: .7 }); await s.show(p2, "zoom"); s.say("Diese Samen sind im Dunkeln gekeimt: lang, dünn und gelb."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 7 ------------------------------------------------------------ */
@@ -483,7 +468,7 @@
           s.add(sheet);
           s.sfx.whoosh();
           const says = ["Die Frage steht ganz oben.", "Dann die Vermutung, mit Begründung.", "Was brauchst du? Das Material.", "Die Durchführung, mit einer Skizze.", "Was hast du gesehen? Das ist die Beobachtung.", "Und zum Schluss das Ergebnis."];
-          f.forEach((x, i) => s.step(async () => { s.sfx.scribble(); x.style.borderColor = P.unit; f.forEach(y => y !== x && (y.style.borderColor = "var(--line)")); s.say(says[i]); await s.show(x.content, "fade"); }));
+          f.forEach((x, i) => s.step(async () => { s.sound("pencil-write", { vol: .7 }); x.style.borderColor = P.unit; f.forEach(y => y !== x && (y.style.borderColor = "var(--line)")); s.say(says[i]); await s.show(x.content, "fade"); }));
         },
       },
       /* 9 ------------------------------------------------------------ */
@@ -513,6 +498,25 @@
           const sayT = ["Schutzbrille, Haare zusammenbinden, nicht essen und nicht trinken, nie etwas probieren.", "Gerüche nur zufächeln. Anleitung lesen. Ordnung halten. Unfälle sofort melden."];
           [[0, 1, 2, 3], [4, 5, 6, 7]].forEach((grp, gi) => s.step(async () => { s.say(sayT[gi]); for (const i of grp) { s.sfx.count(i); s.show(cards[i], "pop"); await s.wait(260); } if (gi === 1) {
             s.tween({ from: 0, to: 6 * Math.PI, dur: 2400, ease: "linear", update: v => fanHand.setAttribute("transform", `translate(${-Math.abs(Math.sin(v)) * 14} ${Math.sin(v) * 6})`) }); } }));
+        },
+      },
+      /* 9b ----------------------------------------------------------- */
+      {
+        title: "Sicherheit im Fachraum",
+        say: "So sehen die Sicherheits-Sachen im Fachraum in echt aus. Schau nach, wo sie in deinem NaWi-Raum hängen!",
+        build(s) {
+          const card = (fig, txt) => later(s.h("div", { class: "stack", style: { gap: "10px", alignItems: "center" } }, fig, s.h("p", { class: "t", style: { fontSize: "21px", textAlign: "center" } }, txt)));
+          const cards = [
+            card(s.photo("schutzbrille", { w: 255, h: 330, caption: "Schutzbrille" }), "schützt die Augen vor Spritzern"),
+            card(s.photo("augendusche", { w: 255, h: 330, caption: "Augendusche" }), "spült Spritzer sofort aus dem Auge"),
+            card(s.photo("loeschdecke", { w: 255, h: 330, pos: "50% 45%", caption: "Feuerlöscher und Löschdecke" }), "löschen kleine Brände"),
+            card(s.photo("rg-halter", { w: 255, h: 330, pos: "50% 40%", caption: "Reagenzglashalter" }), "hält das heiße Glas – nicht deine Finger"),
+          ];
+          const merk = later(s.h("div", { class: "merk", style: { fontSize: "22px" } }, "Wo hängen in deinem NaWi-Raum ", b(s, "Augendusche"), ", ", b(s, "Feuerlöscher"), " und ", b(s, "Löschdecke"), "? Schau beim nächsten Mal nach!"));
+          s.add(root(s, "stack", { justifyContent: "center", gap: "26px" }, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 255px)", gap: "26px", justifyContent: "center", alignItems: "start" } }, ...cards), merk));
+          s.step(async () => { s.sound("splash", { vol: .5 }); s.show(cards[0], "up"); await s.wait(250); await s.show(cards[1], "up"); s.say("Schutzbrille und Augendusche schützen deine Augen."); });
+          s.step(async () => { s.sound("fire", { vol: .4, dur: 2.5 }); s.show(cards[2], "up"); await s.wait(250); await s.show(cards[3], "up"); s.say("Feuerlöscher und Löschdecke helfen bei Feuer. Der Halter schützt deine Finger."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 10 ----------------------------------------------------------- */
@@ -597,7 +601,7 @@
           s.sfx.whoosh();
           s.step(async () => { for (let i = 1; i < 4; i++) { select(i); await s.wait(700); } s.say("Spiritus, Abflussreiniger, Lampenöl, Campinggas: Alle tragen Warnzeichen."); });
           s.step(async () => { s.sfx.ding(); await s.show(rules, "up"); s.say("Gefährliche Mittel bleiben in der Originalflasche und gehören nie in eine Trinkflasche."); });
-          s.step(async () => { s.sfx.zap(); await s.show(notruf, "pop"); s.say("Im Notfall hilft der Giftnotruf Berlin."); });
+          s.step(async () => { s.sound("telefon", { vol: .5, dur: 2.5 }); await s.show(notruf, "pop"); s.say("Im Notfall hilft der Giftnotruf Berlin."); });
         },
       },
       /* 12 ----------------------------------------------------------- */
@@ -678,8 +682,8 @@
           setAir(0);
           s.sfx.pop();
           s.step(async () => { s.sfx.pop(); await s.show(how[0], "left"); });
-          s.step(async () => { s.sfx.pop(); s.show(how[1], "left"); await s.wait(500); s.sfx.whoosh(); s.show(readout, "pop"); await s.tween({ from: 0, to: 1, dur: 600, update: v => (lit = v) }); s.say("Die leuchtende Flamme ist gelb und flackert."); });
-          s.step(async () => { s.sfx.pop(); s.show(how[2], "left"); s.show(sl, "up"); await s.tween({ from: 0, to: 1, dur: 2200, update: v => { setAir(v); sl.input.value = Math.round(v * 20) * 5; sl.querySelector(".mono").textContent = Math.round(v * 20) * 5 + " %"; } }); s.say("Mit Luft wird die Flamme blau und rauscht. Probier den Regler aus!"); });
+          s.step(async () => { s.sfx.pop(); s.show(how[1], "left"); await s.wait(500); s.sound("match-strike"); s.show(readout, "pop"); await s.tween({ from: 0, to: 1, dur: 600, update: v => (lit = v) }); s.say("Die leuchtende Flamme ist gelb und flackert."); });
+          s.step(async () => { s.sound("gasflamme", { vol: .5 }); s.show(how[2], "left"); s.show(sl, "up"); await s.tween({ from: 0, to: 1, dur: 2200, update: v => { setAir(v); sl.input.value = Math.round(v * 20) * 5; sl.querySelector(".mono").textContent = Math.round(v * 20) * 5 + " %"; } }); s.say("Mit Luft wird die Flamme blau und rauscht. Probier den Regler aus!"); });
           s.step(async () => { s.sfx.ding(); await s.show(how[3], "left"); });
         },
       },
@@ -745,6 +749,26 @@
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(lifeBox, "up"); s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
+      /* 13b ---------------------------------------------------------- */
+      {
+        title: "Flammen in echt",
+        say: "So sehen die Flammen in echt aus. Mit mehr Luft wird aus der gelben, leuchtenden Flamme eine blaue, rauschende.",
+        build(s) {
+          const burner = s.h("div", { class: "stack", style: { gap: "10px", alignItems: "center" } },
+            s.photo("gasbrenner", { w: 240, h: 400, pos: "62% 50%" }), s.h("p", { class: "t", style: { fontSize: "21px", textAlign: "center" } }, "ein echter Gasbrenner"));
+          const types = later(s.h("div", { class: "stack", style: { gap: "10px", alignItems: "center" } },
+            s.photo("flammen-typen", { w: 420, h: 400 }),
+            s.h("p", { class: "t", style: { fontSize: "21px", textAlign: "center" } }, b(s, "1"), " Luft zu: gelb, leuchtend · ", b(s, "4"), " Luft offen: blau, rauschend")));
+          const kerze = later(s.photo("kerze-flamme", { w: 340, h: 215, pos: "40% 45%", caption: "Kerze: gelb wie die leuchtende Flamme" }));
+          const herd = later(s.photo("gasherd-flamme", { w: 340, h: 215, pos: "50% 50%", caption: "Gasherd: blau wie die rauschende Flamme" }));
+          const btn = s.soundBtn("gasflamme", "Rauschende Flamme anhören");
+          s.add(root(s, "stack", { justifyContent: "center", gap: "18px" },
+            s.h("div", { class: "row", style: { justifyContent: "center", gap: "24px", flexWrap: "nowrap", alignItems: "start" } }, burner, types, s.h("div", { class: "stack", style: { gap: "20px" } }, kerze, herd)),
+            s.h("div", { class: "row", style: { justifyContent: "center" } }, btn)));
+          s.step(async () => { s.sound("match-strike"); await s.show(types, "zoom"); s.say("Von eins bis vier wird die Luftzufuhr geöffnet."); });
+          s.step(async () => { s.sfx.swoosh(); s.show(kerze, "left"); await s.wait(250); await s.show(herd, "left"); s.say("Die Kerze leuchtet gelb. Der Gasherd brennt blau."); });
+        },
+      },
       /* 14 ----------------------------------------------------------- */
       {
         title: "Sicher erhitzen",
@@ -798,8 +822,8 @@
           });
           s.step(async () => {
             s.show(steps[4], "left"); s.say("Leicht schwenken, dann kocht es gleichmäßig.");
-            bubbles.forEach(c => c.setAttribute("opacity", .9));
-            await s.tween({ from: 0, to: 8 * Math.PI, dur: s.fast ? 0 : 2600, ease: "linear", update: v => { place(40, Math.sin(v) * 6); bubbles.forEach((c, i) => c.setAttribute("cy", 22 - ((v * 3 + i * 9) % 28))); if (Math.random() < .08) s.sfx.tick(); } });
+            bubbles.forEach(c => c.setAttribute("opacity", .9)); s.sound("bubbles", { vol: .6 });
+            await s.tween({ from: 0, to: 8 * Math.PI, dur: s.fast ? 0 : 2600, ease: "linear", update: v => { place(40, Math.sin(v) * 6); bubbles.forEach((c, i) => c.setAttribute("cy", 22 - ((v * 3 + i * 9) % 28))); } });
             place(40);
           });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(lifeBox, "up"); });
@@ -831,8 +855,12 @@
           });
           s.add(root(s, "stack", { gap: "10px", justifyContent: "center" }, headRow, ...els.map(x => x.row)));
           s.sfx.whoosh();
-          [[0, 1], [2, 3], [4, 5]].forEach(grp => s.step(async () => {
-            for (const i of grp) { const r = els[i]; s.sfx.pop(); await s.show(r.row, "left"); s.sfx.snap(); await s.show(r.ln, "draw"); s.sfx.coin(); s.show([r.right, r.why], "pop"); await s.wait(200); }
+          const grpSnd = [["sizzle", .5], ["water-pour", .6], null];
+          s.preload("sizzle", "water-pour");
+          [[0, 1], [2, 3], [4, 5]].forEach((grp, gi) => s.step(async () => {
+            if (grpSnd[gi]) s.sound(grpSnd[gi][0], { vol: grpSnd[gi][1], dur: 2.5 });
+            for (const i of grp) { const r = els[i]; await s.show(r.row, "left"); s.sfx.snap(); await s.show(r.ln, "draw"); s.show([r.right, r.why], "pop"); await s.wait(200); }
+            if (gi === 2) s.sfx.chord([0, 4, 7]);
           }));
         },
       },
@@ -861,7 +889,7 @@
           s.sfx.whoosh();
           s.step(async () => { for (let i = 0; i < 4; i++) { s.sfx.count(i * 2); s.show(marks[i], "up"); await s.wait(300); } s.say("Nach ein bis zwei Tagen keimen die Samen. Nach etwa einer Woche kannst du vergleichen."); });
           s.step(async () => { for (let i = 0; i < 3; i++) { s.sfx.pop(); s.show(steps[i], "up"); await s.wait(220); } });
-          s.step(async () => { s.sfx.fanfare(); await s.show(bonus, "zoom"); s.confetti(590, 500, 80); });
+          s.step(async () => { s.sound("kids-cheer", { vol: .5 }); await s.show(bonus, "zoom"); s.confetti(590, 500, 80); });
         },
       },
     ],

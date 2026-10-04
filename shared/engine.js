@@ -47,6 +47,7 @@
     const semi = n => 523.25 * Math.pow(2, n / 12); // n semitones above C5
     return {
       unlock: audio,
+      get master() { audio(); return master; },
       get on() { return on; }, set on(v) { on = !!v; },
       tone, noise,
       pop() { tone(500, 0.09, "sine", 0.3, 0, 1100); },
@@ -68,6 +69,53 @@
       chord(ns = [0, 4, 7]) { ns.forEach(n => tone(semi(n), 0.6, "sine", 0.12)); },
       scribble() { for (let i = 0; i < 4; i++) noise(0.06, 0.1, 3000, 4500, i * 0.07, 4); },
     };
+  })();
+
+  /* ---------------- media: real photos + recorded sounds ----------------
+     Files live in <deck>/media/ and shared/media/; each folder has a credits.js (written by tools/media.py)
+     that calls Deck.media(base, {id: {file, kind, w, h, title, author, license, license_url, source}}). */
+  const Media = (() => {
+    const reg = {}, bufs = {};
+    function add(base, map) { for (const [id, m] of Object.entries(map)) reg[id] = Object.assign({ id, src: base + m.file }, m); }
+    function get(id) { const m = reg[id]; if (!m) console.error("media: unknown id \"" + id + "\" (add it with tools/media.py)"); return m; }
+    function load(id) {
+      if (bufs[id]) return bufs[id];
+      const m = get(id); if (!m || m.kind !== "snd") return Promise.resolve(null);
+      const a = Sfx.unlock(); if (!a) return Promise.resolve(null);
+      bufs[id] = fetch(m.src).then(r => { if (!r.ok) throw new Error("media: " + r.status + " " + m.src); return r.arrayBuffer(); })
+        .then(ab => new Promise((res, rej) => a.decodeAudioData(ab, res, rej)))
+        .catch(err => { console.error(String(err)); delete bufs[id]; return null; });
+      return bufs[id];
+    }
+    const dummy = () => ({ stop() {}, done: Promise.resolve(), playing: false });
+    /** play a recorded sound. opts: {vol=1, rate=1, loop=false, when=0 (s), from=0 (s), dur (s), fade=0.15 (s fade-out on stop), force} */
+    function play(id, { vol = 1, rate = 1, loop = false, when = 0, from = 0, dur, fade = 0.15, force = false } = {}) {
+      if (!get(id) || Deck.fast || (!Sfx.on && !force)) return dummy();
+      const a = Sfx.unlock(); if (!a) return dummy();
+      let src = null, g = null, stopped = false, resolve;
+      const handle = { playing: true, done: new Promise(r => (resolve = r)) };
+      const end = () => { handle.playing = false; resolve(); };
+      handle.stop = (f = fade) => {
+        if (stopped) return; stopped = true;
+        if (src && g) { const t = a.currentTime; g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(g.gain.value, t); g.gain.linearRampToValueAtTime(0, t + f); try { src.stop(t + f + 0.02); } catch (e) {} }
+        else end();
+      };
+      load(id).then(buf => {
+        if (!buf || stopped) return end();
+        src = a.createBufferSource(); src.buffer = buf; src.loop = loop; src.playbackRate.value = rate;
+        g = a.createGain(); g.gain.value = vol;
+        src.connect(g); g.connect(Sfx.master);
+        src.onended = end;
+        const t = a.currentTime + when;
+        if (dur != null && !loop) src.start(t, from, dur); else src.start(t, from);
+      });
+      return handle;
+    }
+    function credit(m) {
+      if (!m) return "";
+      return [m.title, m.author && (m.kind === "snd" ? "Ton: " : "Foto: ") + m.author, m.license, m.source && m.source.replace(/^https?:\/\/(www\.)?/, "").split("/")[0]].filter(Boolean).join(" · ");
+    }
+    return { add, get, load, play, credit, all: () => Object.values(reg) };
   })();
 
   /* ---------------- voice: German speech synthesis ---------------- */
@@ -206,6 +254,8 @@
     voice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 013 3v6a3 3 0 01-6 0V6a3 3 0 013-3z"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>',
     replay: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5"/></svg>',
     full: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+    play: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 010 6M18.5 6.5a8 8 0 010 11"/></svg>',
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg>',
     left: '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>',
     right: '<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>',
   };
@@ -221,6 +271,8 @@
   const Deck = (window.Deck = {
     units: [], meta: {}, fast: false, Sfx, Voice, ease, lerp, fmt, h, svgEl, toStage, localPoint, confetti, W, H,
     unit(def) { this.units.push(def); this.units.sort((a, b) => a.num - b.num); },
+    media(base, map) { Media.add(base, map); },
+    Media,
   });
 
   let cur = null; // { u, s, ctx }
@@ -316,6 +368,40 @@
         el.addEventListener("pointerdown", down); el.addEventListener("pointermove", move);
         el.addEventListener("pointerup", up); el.addEventListener("pointercancel", up);
       },
+      /** real photo (id from media/credits.js) in a fixed w×h box. opts: {w, h, fit:"cover"|"contain",
+          pos:"50% 30%" (object-position), caption, kb (slow Ken-Burns zoom), cls, style, credit:true} */
+      photo(id, { w = 420, h: ph = 300, fit = "cover", pos = "50% 50%", caption, kb = false, cls = "", style = {}, credit = true, attrs = {} } = {}) {
+        const m = Media.get(id) || { title: id };
+        const px = v => (typeof v === "number" ? v + "px" : v);
+        const img = h("img", { src: m.src, alt: m.title || id, draggable: "false", decoding: "async", style: { objectFit: fit, objectPosition: pos } });
+        const fig = h("figure", Object.assign({ class: "photo" + (kb ? " kb" : "") + (fit === "contain" ? " contain" : "") + (cls ? " " + cls : ""), style: Object.assign({ width: px(w), height: px(ph) }, style) }, attrs), img);
+        if (caption) fig.append(h("figcaption", null, caption));
+        if (credit) fig.append(h("button", { class: "credit", "aria-label": "Bildquelle", onclick: e => { e.stopPropagation(); Sfx.click(); toast(Media.credit(m)); } }, "©"));
+        return fig;
+      },
+      /** play a recorded sound (id from media/credits.js); stops automatically when the slide is left.
+          opts: {vol, rate, loop, when, from, dur, fade}. Returns {stop(), done, playing}. */
+      sound(id, opts = {}) {
+        const hnd = Media.play(id, opts);
+        if (hnd.playing) cleanups.push(() => hnd.stop(0.08));
+        return hnd;
+      },
+      /** button that plays/stops a recorded sound (plays even when effects are muted – the child asked for it) */
+      soundBtn(id, label = "Anhören", opts = {}) {
+        const b = h("button", { class: "btn sndbtn" + (opts.solid ? " solid" : ""), "aria-label": label });
+        b.innerHTML = ICON.play;
+        b.append(h("span", null, label));
+        let cur = null;
+        b.addEventListener("click", () => {
+          if (cur) { cur.stop(); return; }
+          b.classList.add("playing"); opts.onPlay && opts.onPlay();
+          cur = ctx.sound(id, Object.assign({ force: true }, opts));
+          cur.done.then(() => { cur = null; b.classList.remove("playing"); opts.onEnd && opts.onEnd(); });
+        });
+        return b;
+      },
+      /** start fetching/decoding sounds early (sounds named literally in build() are preloaded automatically) */
+      preload(...ids) { ids.flat().forEach(id => Media.load(id)); },
       /** big touch slider */
       slider({ label = "", min = 0, max = 10, step = 1, value = 0, fmt: f = v => fmt(v), onInput, id }) {
         const val = h("span", { class: "mono" }, f(value));
@@ -361,6 +447,40 @@
     };
   }
   const slidesOf = unit => [titleSlide(unit), ...unit.slides];
+
+  /* ---------- toast (photo credits) + Quellen panel ---------- */
+  let toastEl = null, toastTimer = 0;
+  function toast(text) {
+    if (!toastEl || !toastEl.isConnected) { toastEl = h("div", { class: "toast" }); stage.appendChild(toastEl); }
+    toastEl.textContent = text; toastEl.classList.add("on");
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => toastEl && toastEl.classList.remove("on"), 4500);
+  }
+  function showCredits() {
+    const items = Media.all().sort((a, b) => (a.kind + a.id).localeCompare(b.kind + b.id));
+    const row = m => h("li", null, h("b", null, (m.kind === "snd" ? "♪ " : "") + (m.title || m.id)), " – ", [m.author, m.license].filter(Boolean).join(", "), " ",
+      m.source ? h("a", { href: m.source, target: "_blank", rel: "noopener" }, "Quelle") : null,
+      m.license_url ? [" · ", h("a", { href: m.license_url, target: "_blank", rel: "noopener" }, "Lizenz")] : null);
+    const panel = h("div", { class: "credits" },
+      h("div", { class: "cr-top" }, h("h2", null, "Bild- und Tonquellen"), h("button", { class: "btn", onclick: () => { Sfx.click(); panel.remove(); } }, "Schließen")),
+      h("p", null, "Fotos und Tonaufnahmen von Wikimedia Commons, Freesound u. a. unter freien Lizenzen (gemeinfrei, CC0, CC BY, CC BY-SA). Danke an alle Urheberinnen und Urheber!"),
+      h("ul", null, items.filter(m => m.kind !== "snd").map(row)),
+      h("h3", null, "Töne"),
+      h("ul", null, items.filter(m => m.kind === "snd").map(row)));
+    stage.appendChild(panel);
+  }
+  /** sounds named literally in a slide's build() source – fetched as soon as the slide (or its neighbour) opens */
+  function preloadSlide(def) {
+    if (!def || !def.build || Deck.fast) return;
+    const re = /\b(?:sound|soundBtn|preload)\(\s*["'`]([\w.-]+)["'`]/g; let m;
+    const src = def.build.toString();
+    while ((m = re.exec(src))) if (Media.get(m[1])) Media.load(m[1]);
+  }
+  const PAGE_TURNS = ["page-turn-1", "page-turn-2", "page-turn-3"];
+  function pageTurn() {
+    const have = PAGE_TURNS.filter(id => Media.all().some(m => m.id === id));
+    if (!have.length) return Sfx.swoosh();
+    Media.play(have[Math.floor(Math.random() * have.length)], { vol: 0.55 });
+  }
 
   /* ---------- render ---------- */
   function buildChrome() {
@@ -419,6 +539,7 @@
     try { def.build(ctx); } catch (err) { console.error("slide build failed", unit.id, si, err); contentEl.appendChild(h("p", { class: "t red" }, "Fehler auf dieser Folie: " + err.message)); }
     Voice.say(def.say || "");
     updateFooter();
+    preloadSlide(def); setTimeout(() => preloadSlide(slides[si + 1]), 400);
     const seen = store.get("seen", {}); seen[unit.id] = Math.max(seen[unit.id] || 0, si + 1); store.set("seen", seen);
     try { history.replaceState(null, "", `#${unit.id}-${si}`); } catch (e) {}
   }
@@ -439,14 +560,14 @@
     const ctx = cur.ctx;
     if (ctx.stepIndex < ctx.steps.length) { Sfx.click(); ctx._next(); updateFooter(); return; }
     const slides = slidesOf(Deck.units[cur.u]);
-    Sfx.swoosh();
+    pageTurn();
     if (cur.s < slides.length - 1) go(cur.u, cur.s + 1, 1);
     else if (cur.u < Deck.units.length - 1) go(cur.u + 1, 0, 1);
     else { Sfx.fanfare(); confetti(W / 2, H / 2, 160); showHome(); }
   }
   function back() {
     Sfx.unlock(); if (!cur) return;
-    Sfx.swoosh();
+    pageTurn();
     if (cur.s > 0) go(cur.u, cur.s - 1, -1);
     else if (cur.u > 0) go(cur.u - 1, slidesOf(Deck.units[cur.u - 1]).length - 1, -1);
     else showHome();
@@ -469,7 +590,8 @@
       hub.innerHTML = ICON.left + "<span>Alle Fächer</span>";
       tools.appendChild(hub);
     }
-    append(tools, [headerEls.voice, headerEls.sound, fs]);
+    const cr = iconBtn("info", "Bild- und Tonquellen", () => { Sfx.click(); showCredits(); });
+    append(tools, Media.all().length ? [cr, headerEls.voice, headerEls.sound, fs] : [headerEls.voice, headerEls.sound, fs]);
     home.appendChild(h("div", { class: "top" },
       h("div", null, h("h1", { class: "title a-left" }, (Deck.meta.subject || "Mathe") + " ", h("em", null, "Klasse 5")), h("p", { class: "sub a-left", style: { "--d": "120ms" } }, Deck.meta.sub || "")),
       tools));
@@ -522,6 +644,7 @@
     },
     async step(ui, si, n) { go(ui, si, 0, "none"); for (let i = 0; i < n && cur.ctx.stepIndex < cur.ctx.steps.length; i++) cur.ctx._next(); await cur.ctx._chain(); updateFooter(); },
     home: () => showHome(),
+    media: () => Media.all().map(m => ({ id: m.id, kind: m.kind, src: m.src })),
   };
 
   /* ---------- boot ---------- */

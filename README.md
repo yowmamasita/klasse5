@@ -5,9 +5,9 @@ Interactive, animated slide decks covering a whole Berlin Gymnasium Klasse 5 yea
 **Mathe, Deutsch, Englisch, NaWi, GeWi, Musik, Kunst** — 7 subjects × 8 chapters, about 900 slides.
 
 - Plain HTML, CSS, JavaScript, SVG and canvas. No build step, no framework, no dependencies
-  (fonts load from Google Fonts).
-- Every idea is built up step by step ("Weiter"), animated, with synthesized sound (Web Audio)
-  and optional German/English read-aloud (Web Speech). Several real-life examples per concept.
+  (fonts load from Google Fonts). Real photos and recorded sounds are stored in the repo (`*/media/`).
+- Every idea is built up step by step ("Weiter"), animated, with real photos, recorded and synthesized
+  sound (Web Audio) and optional German/English read-aloud (Web Speech). Several real-life examples per concept.
 - Explore, don't test: sliders, dragging, drawing, mixing, playing — no quizzes.
 - Progress is remembered per device (localStorage).
 
@@ -42,6 +42,8 @@ shared/style.css        shared look (squared exercise-book paper, ink colours)
 docs/AUTHORING.md       slide API and content rules for writing a chapter
 tools/check.py          layout check with jev (DOM overlap / bounds / clipping + screenshots)
 tools/realtime.py       steps through every slide at real speed and reports JS errors
+tools/media             find + fetch freely licensed photos/sounds, records credits (see docs/AUTHORING.md)
+<subject>/media/        photos + sounds of a deck with credits.json / credits.js; shared/media/ for common sounds
 ```
 
 ## Checks
@@ -61,5 +63,7 @@ DECK_SUBJECT=mathe CDP_URL=http://127.0.0.1:9333 JEV_VIEWPORT=1180x820 \
 
 Curriculum order follows published Berlin school plans (the school's own plans are not public).
 Facts were checked against Wikipedia and official sources; example data such as class surveys,
-prices and timetables is invented. Artworks are the authors' own simplified drawings
-("im Stil von"); only public-domain music (traditional songs, short classical motifs) is quoted.
+prices and timetables is invented. Photos and sound recordings come from Wikimedia
+Commons and Freesound under free licences (public domain, CC0, CC BY, CC BY-SA); every file's author, licence and
+source is listed in its `media/credits.json` and on the "Quellen" (ⓘ) screen of each deck. Artworks shown are
+public domain; only public-domain music is quoted.

@@ -368,6 +368,23 @@
   }
   const txt = (s, x, y, t, o = {}) => s.el("text", Object.assign({ x, y, "text-anchor": "middle", "font-size": 20, "font-weight": 700, fill: "#1b2740", text: t }, o));
 
+  /* ---------------- real recordings + photos (tools/media) ---------------- */
+  const REAL = { geige: "geige-melodie", bratsche: "bratsche-melodie", cello: "cello-melodie", kontrabass: "kontrabass-jazz",
+    floete: "flute-a-scale", oboe: "oboe-melodie", klarinette: "klarinette-tonleiter", fagott: "fagott-melodie", altsax: "altsax-melodie", tenorsax: "tenorsax-melodie",
+    trompete: "trompete-tonleiter", horn: "horn-melodie", posaune: "posaune-melodie", euphonium: "euphonium-fanfare", tuba: "tuba-melodie",
+    pauke: "timpani-roll", xylofon: "xylophone-sweep", trommel: "kleine-trommel-ton", grosse: "grosse-trommel-ton", becken: "cymbal", triangel: "triangel-ton" };
+  const PIC = { geige: "geige", bratsche: "bratsche", cello: "cello", kontrabass: "kontrabass", floete: "querfloete", oboe: "oboe", klarinette: "klarinette", fagott: "fagott",
+    altsax: "altsaxophon", trompete: "trompete", horn: "horn", posaune: "posaune", euphonium: "euphonium", tuba: "tuba",
+    pauke: "pauken", xylofon: "xylofon", trommel: "kleine-trommel", grosse: "grosse-trommel", becken: "becken", triangel: "triangel" };
+  let REC = null;
+  /** play the real recording of instrument k (stops the previous one). tap = true: plays even when effects are muted */
+  function real(s, k, opts = {}, tap = false) {
+    if (REC) REC.stop();
+    REC = s.sound(REAL[k] || k, Object.assign({ force: tap }, opts));
+    return REC;
+  }
+  const preReal = (s, ks) => s.preload(ks.map(k => REAL[k] || k));
+
   /* ================================================================== */
   Deck.unit({
     id: "u5", num: 5, title: "Instrumente des Orchesters", color: "#dc2626", soft: "#fde6e3",
@@ -386,24 +403,17 @@
         say: "Im Orchester gibt es vier große Familien. Wichtig ist, wie der Ton entsteht. Tippe auf eine Familie und hör hin.",
         build(s) {
           const fams = [
-            { k: "str", n: "Streichinstrumente", how: "Saiten werden gestrichen oder gezupft.", ex: "Geige, Bratsche, Cello, Kontrabass",
-              draw: () => place(s, gStr(s, false), 100, 14, 1.4),
-              snd: () => { play(s, "cello", 48, 1.4); play(s, "bratsche", 55, 1.4, 0.15); play(s, "geige", 64, 1.3, 0.3); play(s, "geige", 72, 1.1, 0.45); } },
-            { k: "holz", n: "Holzblasinstrumente", how: "Luft an einer Kante oder an einem Rohrblatt.", ex: "Flöte, Oboe, Klarinette, Fagott, Saxophon",
-              draw: () => { const g = s.el("g"); g.append(place(s, gKlarinette(s), 78, 12, 1.42), place(s, gFloete(s), 112, 40, 0.55), place(s, gOboe(s), 130, 54, 0.9)); return g; },
-              snd: () => { seq(s, "floete", [[79, 1], [81, 1], [83, 1], [84, 2]], 200); seq(s, "klarinette", [[60, 2], [64, 3]], 200, 0.2); } },
-            { k: "blech", n: "Blechblasinstrumente", how: "Die Lippen summen in ein Mundstück.", ex: "Trompete, Horn, Posaune, Euphonium, Tuba",
-              draw: () => { const g = s.el("g"); g.append(place(s, gTrompete(s), 30, 18, 1.15), place(s, gHorn(s), 52, 72, 1.05)); return g; },
-              snd: () => { seq(s, "trompete", [[67, 0.5], [67, 0.5], [72, 1], [76, 1], [79, 2]], 180); seq(s, "posaune", [[48, 1], [55, 1], [52, 1], [48, 2]], 180); } },
-            { k: "schlag", n: "Schlaginstrumente", how: "Man schlägt, schüttelt oder reibt sie.", ex: "Pauke, Trommeln, Becken, Xylofon, Triangel",
-              draw: () => { const g = s.el("g"); g.append(place(s, gPauke(s), 70, 70, 1.05), place(s, gTrommel(s), 150, 96, 1.05), place(s, gTriangel(s), 158, 40, 0.9)); return g; },
-              snd: () => { play(s, "pauke", 43, 1); play(s, "pauke", 38, 1, 0.45); [0.9, 1.0, 1.1, 1.2].forEach(w => play(s, "trommel", 0, 0, w)); play(s, "becken", 0, 0, 1.35); } },
+            { k: "str", n: "Streichinstrumente", how: "Saiten werden gestrichen oder gezupft.", ex: "Geige, Bratsche, Cello, Kontrabass", pic: "violin", pos: "50% 60%", rec: "geige-melodie" },
+            { k: "holz", n: "Holzblasinstrumente", how: "Luft an einer Kante oder an einem Rohrblatt.", ex: "Flöte, Oboe, Klarinette, Fagott, Saxophon", pic: "querfloete", pos: "50% 50%", rec: "flute-a-scale" },
+            { k: "blech", n: "Blechblasinstrumente", how: "Die Lippen summen in ein Mundstück.", ex: "Trompete, Horn, Posaune, Euphonium, Tuba", pic: "trompete", pos: "50% 50%", rec: "trompete-fanfare" },
+            { k: "schlag", n: "Schlaginstrumente", how: "Man schlägt, schüttelt oder reibt sie.", ex: "Pauke, Trommeln, Becken, Xylofon, Triangel", pic: "pauken", pos: "50% 70%", rec: "timpani-roll" },
           ];
+          preReal(s, fams.map(f => f.rec));
           const cards = fams.map(f => {
-            const svg = s.svg(200, 150); svg.append(f.draw());
+            const fig = s.photo(f.pic, { w: "100%", h: 170, pos: f.pos });
             const card = s.h("div", { class: "card later nosw", style: { display: "flex", flexDirection: "column", gap: "8px", cursor: "pointer", borderColor: FAM[f.k], borderWidth: "3px", padding: "14px 16px" },
-              onclick: () => { s.sfx.pop(); f.snd(); bounce(s, svg); } },
-              s.h("div", { class: "center" }, svg),
+              onclick: () => { real(s, f.rec, { dur: 6 }, true); bounce(s, fig); } },
+              fig,
               s.h("p", { class: "h2", style: { fontSize: "21px", color: FAM[f.k] } }, f.n),
               s.h("p", { class: "small" }, s.h("b", null, f.how)),
               s.h("p", { class: "small pencil" }, f.ex));
@@ -411,16 +421,16 @@
           });
           const merk = s.h("div", { class: "merk later" }, "Die Familie hängt davon ab, ", s.h("b", null, "wie der Ton entsteht"), " – nicht davon, woraus das Instrument gebaut ist.");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } },
-            s.h("p", { class: "t a-up" }, "Tippe auf eine Familie, dann hörst du sie. ", s.h("span", { class: "pencil" }, "(Alle Klänge sind am Computer nachgebaut – echte Instrumente klingen viel voller.)")),
+            s.h("p", { class: "t a-up" }, "Tippe auf eine Familie, dann hörst du sie. ", s.h("span", { class: "pencil" }, "(Echte Aufnahmen!)")),
             s.h("div", { class: "cols4", style: { gridTemplateColumns: "repeat(4, minmax(0, 1fr))" } }, cards), merk));
-          cards.forEach(c => s.step(async () => { s.show(c, "up"); c.f.snd(); s.say(c.f.n + ": " + c.f.how); }));
+          cards.forEach(c => s.step(async () => { s.show(c, "up"); real(s, c.f.rec, { dur: 4.5 }); s.say(c.f.n + ": " + c.f.how); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* ---------- 2 ---------- */
       {
         title: "Streicher: groß klingt tief",
-        say: "Vier Streichinstrumente, vom kleinsten bis zum größten. Je größer das Instrument, desto tiefer klingt es.",
+        say: "Vier Streichinstrumente, vom kleinsten bis zum größten. Je größer das Instrument, desto tiefer klingt es. Tippe eins an, dann hörst du seine vier leeren Saiten.",
         build(s) {
           const svg = s.svg(720, 380);
           const kb = keyboard(s, 1100);
@@ -430,7 +440,7 @@
             { k: "cello", size: "ca. 1,20 m hoch", hz: "65 Hz", note: "großes C", held: "im Sitzen, zwischen den Knien", strings: [36, 43, 50, 57], sc: 120 * 1.55 / 112, x: 445, ep: true },
             { k: "kontrabass", size: "ca. 1,80 m hoch", hz: "41 Hz", note: "Kontra-E", held: "im Stehen oder auf einem hohen Hocker", strings: [28, 33, 38, 43], sc: 180 * 1.55 / 112, x: 620, ep: true },
           ];
-          const nameEl = s.h("p", { class: "h2", style: { color: FAM.str } }, "");
+          const nameEl = s.h("p", { class: "h2", style: { color: FAM.str, fontSize: "26px" } }, "");
           const lowEl = s.h("p", { class: "t" }, "");
           const heldEl = s.h("p", { class: "small" }, "");
           const hzEl = s.h("p", { class: "small" }, "");
@@ -444,8 +454,13 @@
             g.onclick = () => pick(i);
             svg.append(g); return g;
           });
+          const figs = D.map((d, j) => s.photo(PIC[d.k], { w: 356, h: 150, fit: "contain", caption: INST[d.k].n, style: { display: j ? "none" : "" } }));
+          let cur = 0;
+          preReal(s, D.map(d => d.k));
+          const realBtn = s.h("button", { class: "btn solid", style: { whiteSpace: "nowrap", padding: "0 12px", flex: "none" }, onclick: () => real(s, D[cur].k, { dur: 8 }, true) }, "Echt hören");
           function pick(i) {
-            const d = D[i];
+            const d = D[i]; cur = i;
+            figs.forEach((f, j) => { f.style.display = j === i ? "" : "none"; });
             nameEl.textContent = INST[d.k].n;
             lowEl.replaceChildren("Tiefste Saite: ", s.h("b", null, d.note)); hzEl.replaceChildren("Sie schwingt ", s.h("b", null, d.hz.replace(" Hz", "-mal")), " pro Sekunde (" + d.hz + ").");
             heldEl.textContent = "Gehalten: " + d.held;
@@ -458,8 +473,9 @@
           s.add(s.h("div", { class: "stack", style: { gap: "12px" } },
             s.h("div", { style: { display: "grid", gridTemplateColumns: "720px 1fr", gap: "24px", alignItems: "center" } }, svg,
               s.h("div", { class: "stack" },
-                s.h("div", { class: "card", style: { minHeight: "190px" } }, s.h("span", { class: "exlabel" }, "Angetippt"), nameEl, lowEl, hzEl, heldEl),
-                s.h("p", { class: "small pencil" }, "Tippe auf ein Instrument: Du hörst seine vier leeren Saiten. Unten siehst du, wie tief und hoch es spielen kann."))),
+                s.h("div", null, figs),
+                s.h("div", { class: "card", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Tippe ein Instrument an"),
+                  s.h("div", { class: "row", style: { justifyContent: "space-between", flexWrap: "nowrap" } }, nameEl, realBtn), lowEl, hzEl, heldEl))),
             kb.svg, merk));
           s.wait(10).then(() => { if (s.alive) { pick(0); } });
           [1, 2, 3].forEach(i => s.step(async () => { s.show(groups[i], "up"); pick(i); s.say(INST[D[i].k].n + ", " + D[i].size + "."); }));
@@ -497,6 +513,9 @@
           s.loop(t => draw(t));
           const arco = () => { mode = "arco"; t0 = tNow; until = tNow + 1.6; play(s, "cello", 50 + n, 1.4); };
           const pizz = () => { mode = "pizz"; t0 = tNow; amp = 26; play(s, "pizz", 50 + n, 0.6); };
+          // the same two ways of playing, as real cello recordings
+          const arcoReal = () => { mode = "arco"; t0 = tNow; until = tNow + 3.4; s.sound("cello-arco", { dur: 3.6 }); };
+          const pizzReal = () => { mode = "pizz"; t0 = tNow; amp = 26; s.sound("cello-pizz", { dur: 2.5 }); };
           const sl = s.slider({ label: "Finger rutscht: Saite wird kürzer", min: 0, max: 12, value: 0, fmt: v => Math.round(100 * Math.pow(2, -v / 12)) + " % lang", onInput: v => { n = v; } });
           const b1 = s.h("button", { class: "btn solid", onclick: arco }, "Streichen (arco)");
           const b2 = s.h("button", { class: "btn", onclick: pizz }, "Zupfen (pizzicato)");
@@ -504,26 +523,27 @@
           const ex2 = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Mit dem Finger – pizzicato"), s.h("p", { class: "small" }, "Du zupfst die Saite. Der Ton ist kurz und tupfig und klingt schnell aus."));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Kürzere Saite → höherer Ton. ", s.h("b", null, "Halbe Saite = eine Oktave höher."));
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
-            s.h("p", { class: "small" }, "Jazz: Der Kontrabass wird fast immer gezupft. Gitarre: auch Saiten, nur gezupft. Klavier: kleine Hämmer schlagen Saiten an."));
+            s.h("p", { class: "small" }, "Jazz: Der Kontrabass wird fast immer gezupft. Gitarre: auch gezupft. Klavier: Hämmer schlagen die Saiten an."),
+            );
+          const bowPic = s.photo("cello-bogen", { w: 600, h: 124, pos: "50% 55%", caption: "Echt: Der Bogen streicht über die Saiten.", cls: "later" });
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "600px 1fr", gap: "26px", height: "100%" } },
             s.h("div", { class: "stack" }, canvas, s.h("div", { class: "row" }, b1, b2), sl,
-              s.h("p", { class: "small pencil" }, "Probier beides aus. Schieb dann den Finger und streiche noch mal.")),
+              s.h("p", { class: "small pencil" }, "Probier beides aus. Schieb dann den Finger und streiche noch mal."), bowPic),
             s.h("div", { class: "stack", style: { gap: "12px" } }, ex1, ex2, merk, life)));
-          s.step(async () => { s.show(ex1, "left"); arco(); s.say("Mit dem Bogen klingt die Saite, solange du streichst."); });
-          s.step(async () => { s.show(ex2, "left"); pizz(); s.say("Gezupft klingt der Ton kurz."); });
+          s.step(async () => { s.show(ex1, "left"); s.show(bowPic, "zoom"); arcoReal(); s.say("Mit dem Bogen klingt die Saite, solange du streichst."); });
+          s.step(async () => { s.show(ex2, "left"); pizzReal(); s.say("Gezupft klingt der Ton kurz."); });
           s.step(async () => {
             s.show(merk, "up"); s.sfx.ding();
             for (const v of [0, 4, 7, 12]) { if (!s.alive) return; sl.set(v); pizz(); await s.wait(500); }
           });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("kontrabass-jazz", { dur: 4, vol: .8 }); await s.show(life, "up"); });
         },
       },
       /* ---------- 4 ---------- */
       {
         title: "Holzblasinstrumente",
-        say: "Bei den Holzbläsern schwingt die Luft an einer Kante oder an einem Rohrblatt. Tippe auf ein Instrument.",
+        say: "Bei den Holzbläsern schwingt die Luft an einer Kante oder an einem Rohrblatt. Tippe auf ein Instrument, dann hörst du eine echte Aufnahme.",
         build(s) {
-          const svg = s.svg(1100, 300);
           const kb = keyboard(s, 1100);
           const D = {
             floete: { type: "Kante", t: "Du bläst über eine Kante – wie über eine Flaschenöffnung. Kein Rohrblatt! Meist aus Metall, und trotzdem ein Holzblasinstrument." },
@@ -531,17 +551,15 @@
             klarinette: { type: "Rohrblatt", t: "Ein Rohrblatt schwingt am Mundstück. Meist aus Grenadill-Holz, etwa 66 cm lang. Klingt weich und rund." },
             fagott: { type: "Doppelrohrblatt", t: "Doppelrohrblatt wie bei der Oboe. Sein Rohr ist etwa 2,5 m lang und gefaltet – so ist das Fagott nur etwa 1,34 m hoch." },
           };
-          const pos = { floete: [40, 200, 175], oboe: [470, 20, 290], klarinette: [650, 20, 290], fagott: [860, 20, 290] };
+          // real photos in a row; tap one = real recording + range on the keyboard
           const gs = {};
-          const mk = (k, draw, x, y, sc, lx, ly, hit) => {
-            const g = s.el("g", { style: { cursor: "pointer" } });
-            g.append(s.el("rect", Object.assign({ fill: "transparent" }, hit)), place(s, draw(s), x, y, sc), txt(s, lx, ly, INST[k].n, { "font-size": 22 }));
-            g.onclick = () => pick(k); svg.append(g); gs[k] = g;
-          };
-          mk("floete", gFloete, 30, 130, 1.5, 180, 190, { x: 20, y: 80, width: 320, height: 130 });
-          mk("oboe", gOboe, 470, 20, 2.3, 470, 292, { x: 410, y: 10, width: 120, height: 290 });
-          mk("klarinette", gKlarinette, 650, 12, 2.45, 650, 292, { x: 590, y: 10, width: 120, height: 290 });
-          mk("fagott", gFagott, 870, 4, 2.55, 860, 292, { x: 780, y: 0, width: 160, height: 300 });
+          const W4 = { floete: 330, oboe: 250, klarinette: 180, fagott: 250 };
+          const row4 = s.h("div", { class: "row", style: { gap: "30px", flexWrap: "nowrap", justifyContent: "center" } },
+            ["floete", "oboe", "klarinette", "fagott"].map(k => {
+              const f = s.photo(PIC[k], { w: W4[k], h: 290, fit: "contain", caption: INST[k].n, style: { cursor: "pointer", outline: "4px solid transparent", outlineOffset: "-4px" } });
+              f.onclick = () => pick(k, true); gs[k] = f; return f;
+            }));
+          preReal(s, Object.keys(W4));
           // sound-maker mini diagram
           const mini = s.svg(150, 150);
           const edge = s.el("g"), reed = s.el("g"), dbl = s.el("g");
@@ -567,22 +585,23 @@
             edge.lastChild.setAttribute("stroke-dashoffset", on ? -t * 60 : 0);
             mini.tNow = t;
           });
-          function pick(k) {
+          function pick(k, tap = false) {
             cur = k; nameEl.textContent = INST[k].n; typeEl.textContent = D[k].type; tEl.textContent = D[k].t;
-            kb.set(k); demo(s, k); bounce(s, gs[k]); playT = (mini.tNow || 0) + 2.6;
+            Object.entries(gs).forEach(([j, f]) => { f.style.outlineColor = j === k ? FAM.holz : "transparent"; });
+            kb.set(k); real(s, k, { dur: 6 }, tap); bounce(s, gs[k]); playT = (mini.tNow || 0) + 4;
           }
           const info = s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "16px", alignItems: "center", padding: "12px 18px" } }, mini,
             s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("div", { class: "row", style: { gap: "12px" } }, nameEl, typeEl), tEl,
               s.h("p", { class: "small pencil" }, "Klappen öffnen Löcher: kürzere Luftsäule = höherer Ton.")));
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
             s.h("p", { class: "small" }, "Über eine Flasche pusten: Kante wie bei der Flöte. Grashalm zwischen den Daumen: schwingt wie ein Rohrblatt. Blockflöte in der Grundschule: auch ein Holzbläser."));
-          s.add(s.h("div", { class: "stack", style: { gap: "10px" } }, svg,
+          s.add(s.h("div", { class: "stack", style: { gap: "10px" } }, row4,
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1.55fr 1fr", gap: "18px" } }, info, life), kb.svg));
           s.wait(10).then(() => s.alive && pick("floete"));
           s.step(async () => { pick("klarinette"); s.say("Bei der Klarinette schwingt ein Rohrblatt."); });
           s.step(async () => { pick("oboe"); s.say("Bei der Oboe schwingen zwei Rohrblätter gegeneinander."); });
           s.step(async () => { pick("fagott"); s.say("Das Fagott ist der Bass der Holzbläser."); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(life, "up"); });
         },
       },
       /* ---------- 5 ---------- */
@@ -590,55 +609,52 @@
         title: "Saxophon: Metall, aber Holz?",
         say: "Das Saxophon ist aus Metall. Trotzdem gehört es zu den Holzbläsern, denn sein Ton entsteht an einem Rohrblatt.",
         build(s) {
-          const svg = s.svg(400, 400);
-          const sax = s.el("g"); sax.append(place(s, gSax(s), 300, 24, 3.5));
+          // real photo of an alto saxophone + a drawn zoom on the mouthpiece (reed)
+          const sax = s.photo("altsaxophon", { w: 400, h: 400, fit: "contain", caption: "Altsaxophon aus Messing" });
+          const svg = s.svg(400, 400, { style: "position:absolute;left:0;top:0;pointer-events:none" });
           const zoom = s.el("g", { class: "later" });
-          const reed = s.el("line", { x1: 36, y1: 162, x2: 160, y2: 150, stroke: "#d9a441", "stroke-width": 9, "stroke-linecap": "round" });
-          zoom.append(s.el("line", { x1: 166, y1: 89, x2: 222, y2: 40, stroke: "#dc2626", "stroke-width": 2, "stroke-dasharray": "6 5" }),
-            s.el("circle", { cx: 100, cy: 150, r: 90, fill: "#fff", stroke: "#dc2626", "stroke-width": 3 }),
-            s.el("path", { d: "M26,124 L176,112 L176,140 L26,152 Z", fill: "#111" }), reed,
-            txt(s, 100, 212, "Rohrblatt", { fill: "#a26a0a" }));
-          svg.append(sax, zoom);
+          const reed = s.el("line", { x1: 30, y1: 196, x2: 150, y2: 184, stroke: "#d9a441", "stroke-width": 9, "stroke-linecap": "round" });
+          zoom.append(s.el("line", { x1: 156, y1: 22, x2: 120, y2: 104, stroke: "#dc2626", "stroke-width": 2.5, "stroke-dasharray": "6 5" }),
+            s.el("circle", { cx: 92, cy: 180, r: 78, fill: "#fff", stroke: "#dc2626", "stroke-width": 3 }),
+            s.el("path", { d: "M24,160 L160,150 L160,174 L24,186 Z", fill: "#111" }), reed,
+            txt(s, 92, 236, "Rohrblatt", { fill: "#a26a0a" }));
+          svg.append(zoom);
+          const saxBox = s.h("div", { style: { position: "relative", width: "400px", height: "400px" } }, sax, svg);
           let playT = 0, tNow = 0;
-          s.loop(t => { tNow = t; const w = t < playT ? Math.sin(t * 45) * 6 : 0; reed.setAttribute("y1", 162 + w); });
+          s.loop(t => { tNow = t; const w = t < playT ? Math.sin(t * 45) * 6 : 0; reed.setAttribute("y1", 196 + w); });
           const kb = keyboard(s, 676);
-          const go = (k, notes, bpm) => { playT = tNow + 2.4; kb.set(k); bounce(s, sax); return seq(s, "saxophon", notes, bpm); };
-          const alt = () => go("altsax", [[49, 1], [56, 1], [61, 1], [65, 1], [68, 2]], 200);
-          const ten = () => go("tenorsax", [[44, 1], [51, 1], [56, 1], [60, 1], [63, 2]], 200);
-          const jazz = () => { go("altsax", [[65, 0.66], [68, 0.34], [69, 0.66], [72, 0.34], [75, 1], [72, 0.5], [70, 0.5], [68, 0.66], [65, 1.34]], 150); seq(s, "pizz", [[41, 1], [45, 1], [48, 1], [50, 1], [53, 1], [50, 1]], 150); };
+          const go = (k, tap) => { playT = tNow + 5; kb.set(k); bounce(s, sax); real(s, k, { dur: 8 }, tap); };
+          const alt = (tap = false) => go("altsax", tap);
+          const ten = (tap = false) => go("tenorsax", tap);
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Der Ton entsteht an einem ", s.h("b", null, "Rohrblatt"), " – wie bei der Klarinette. Darum ist das Saxophon ein Holzbläser, obwohl es aus Messing ist. Die Querflöte ist auch aus Metall – und auch ein Holzbläser.");
           const who = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Erfinder"), s.h("p", { class: "small" }, "Adolphe Sax aus Belgien erfand es um 1840. 1846 bekam er in Frankreich das Patent."));
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("p", { class: "small" }, "Jazz-Clubs, Bigbands, Blasorchester – und viele Pop-Songs haben ein Saxophon-Solo."));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "400px 1fr", gap: "24px", height: "100%" } },
-            s.h("div", { class: "stack", style: { gap: "10px" } }, svg, who),
+            s.h("div", { class: "stack", style: { gap: "10px" } }, saxBox, who),
             s.h("div", { class: "stack", style: { gap: "12px" } },
               s.h("p", { class: "big a-up", style: { fontSize: "36px" } }, "Aus Metall – und trotzdem ein Holzblasinstrument!"),
-              s.h("div", { class: "row" }, s.h("button", { class: "btn solid", onclick: alt }, "Altsaxophon"), s.h("button", { class: "btn", onclick: ten }, "Tenorsaxophon"), s.h("button", { class: "btn", onclick: jazz }, "Jazz-Melodie")),
+              s.h("div", { class: "row" }, s.h("button", { class: "btn solid", onclick: () => alt(true) }, "Altsaxophon (Jazz)"), s.h("button", { class: "btn", onclick: () => ten(true) }, "Tenorsaxophon")),
               kb.svg, merk, life)));
           s.show(sax, "zoom"); s.sfx.whoosh();
           s.step(async () => { s.show(zoom, "pop"); alt(); await s.wait(300); s.show(merk, "up"); s.say("Am Mundstück schwingt ein Rohrblatt."); });
           s.step(async () => { s.sfx.pop(); await s.show(who, "up"); });
-          s.step(async () => { s.show(life, "up"); jazz(); });
+          s.step(async () => { s.show(life, "up"); ten(); });
         },
       },
       /* ---------- 6 ---------- */
       {
         title: "Blechblasinstrumente",
-        say: "Bei den Blechbläsern summen die Lippen ins Mundstück. Je länger das Rohr, desto tiefer der Ton.",
+        say: "Bei den Blechbläsern summen die Lippen ins Mundstück. Je länger das Rohr, desto tiefer der Ton. Tippe auf ein Foto, dann hörst du das Instrument.",
         build(s) {
-          const svg = s.svg(1100, 206);
           const kb = keyboard(s, 1100);
-          const gs = {};
-          const mk = (k, draw, x, y, sc, lx, hit) => {
-            const g = s.el("g", { style: { cursor: "pointer" } });
-            g.append(s.el("rect", Object.assign({ fill: "transparent" }, hit)), place(s, draw(), x, y, sc), txt(s, lx, 200, INST[k].n, { "font-size": 21 }));
-            g.onclick = () => { kb.set(k); demo(s, k); bounce(s, g); }; svg.append(g); gs[k] = g;
-          };
-          mk("trompete", () => gTrompete(s), 20, 70, 1.5, 110, { x: 10, y: 30, width: 200, height: 176 });
-          mk("horn", () => gHorn(s), 258, 38, 1.75, 326, { x: 240, y: 20, width: 170, height: 186 });
-          mk("posaune", () => gPosaune(s).g, 425, 74, 1.35, 545, { x: 420, y: 30, width: 240, height: 176 });
-          mk("euphonium", () => gTuba(s, true), 770, 40, 1.3, 770, { x: 700, y: 20, width: 140, height: 186 });
-          mk("tuba", () => gTuba(s, false), 990, 8, 1.65, 990, { x: 900, y: 0, width: 190, height: 206 });
+          // real photos; tap one = real recording + range on the keyboard
+          const W5 = { trompete: 240, horn: 200, posaune: 300, euphonium: 150, tuba: 150 };
+          preReal(s, Object.keys(W5));
+          const svg = s.h("div", { class: "row", style: { gap: "15px", flexWrap: "nowrap", justifyContent: "center" } }, Object.keys(W5).map(k => {
+            const f = s.photo(PIC[k], { w: W5[k], h: 196, fit: "contain", caption: INST[k].n, style: { cursor: "pointer" } });
+            f.onclick = () => { kb.set(k); real(s, k, { dur: 7 }, true); bounce(s, f); };
+            return f;
+          }));
           // lips
           const lips = s.svg(170, 120);
           const up = s.el("path", { d: "M20,62 Q60,30 100,62 Z", fill: "#e07a7a" }), lo = s.el("path", { d: "M20,66 Q60,98 100,66 Z", fill: "#d96262" });
@@ -646,12 +662,12 @@
           let buzzT = 0, tNow = 0;
           s.loop(t => { tNow = t; const w = t < buzzT ? Math.abs(Math.sin(t * 50)) * 6 : 0; up.setAttribute("transform", `translate(0,${-w})`); lo.setAttribute("transform", `translate(0,${w})`); });
           const buzz = () => { buzzT = tNow + 1.2; seq(s, "lippen", [[58, 1], [62, 1], [65, 2]], 160); };
-          const trp = () => { buzzT = tNow + 1.2; seq(s, "trompete", [[58, 1], [62, 1], [65, 2]], 160); kb.set("trompete"); };
+          const trp = (tap = false) => { buzzT = tNow + 2.5; real(s, "trompete", { dur: 3 }, tap); kb.set("trompete"); };
           const lipCard = s.h("div", { class: "card later", style: { padding: "12px 16px" } }, s.h("span", { class: "exlabel" }, "So entsteht der Ton"),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: "12px", alignItems: "center" } }, lips,
               s.h("div", { class: "stack", style: { gap: "8px" } },
                 s.h("p", { class: "small" }, "Lippen fest aufeinander, Luft durchpressen: Sie ", s.h("b", null, "summen"), ". Mundstück und Rohr machen daraus einen vollen Ton."),
-                s.h("div", { class: "row", style: { gap: "10px" } }, s.h("button", { class: "btn", onclick: buzz }, "Nur Lippen"), s.h("button", { class: "btn solid", onclick: trp }, "Mit Trompete")))));
+                s.h("div", { class: "row", style: { gap: "10px" } }, s.h("button", { class: "btn", onclick: buzz }, "Nur Lippen"), s.h("button", { class: "btn solid", onclick: () => trp(true) }, "Trompete")))));
           // tube lengths
           const TL = [["trompete", "Trompete", 1.3, "ca. 1,30 m", 58], ["euphonium", "Euphonium", 2.75, "ca. 2,75 m", 46], ["horn", "Horn (F)", 3.7, "ca. 3,70 m", 41], ["tuba", "Tuba (F)", 3.98, "ca. 4 m", 29]];
           const tsvg = s.svg(460, 134);
@@ -678,7 +694,7 @@
               B.v.setAttribute("x", 140 + B.w); s.show(B.v, "fade");
             }
           });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("trompete-fanfare", { dur: 4 }); await s.show(life, "up"); });
         },
       },
       /* ---------- 7 ---------- */
@@ -705,8 +721,8 @@
           };
           const left = s.h("div", { class: "card", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Posaune: der Zug"), psvg,
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 120px", gap: "16px", alignItems: "center" } }, sl, s.h("div", { class: "center" }, big)),
-            s.h("div", { class: "row", style: { marginTop: "6px" } }, s.h("button", { class: "btn solid", onclick: gliss }, "Glissando"),
-              s.h("p", { class: "small", style: { flex: "1" } }, "7 Positionen, jede einen Halbton tiefer. Der Zug kann auch gleiten.")));
+            s.h("p", { class: "small", style: { marginTop: "6px" } }, "7 Positionen, jede einen Halbton tiefer. Der Zug kann auch gleiten:"),
+            s.h("div", { class: "row", style: { marginTop: "6px", flexWrap: "nowrap" } }, s.h("button", { class: "btn solid", onclick: gliss }, "Glissando"), s.soundBtn("posaune-glissando", "Echte Posaune")));
           // valves
           const vsvg = s.svg(400, 230);
           const LOOP = { 1: 34, 2: 18, 3: 52 }, X = { 1: 140, 2: 200, 3: 260 }, DROP = { 1: 2, 2: 1, 3: 3 };
@@ -739,22 +755,23 @@
       /* ---------- 8 ---------- */
       {
         title: "Schlaginstrumente",
-        say: "Schlaginstrumente schlägt man an. Manche haben feste Töne, wie Pauke und Xylofon. Andere machen Rhythmus und Geräusche.",
+        say: "Schlaginstrumente schlägt man an. Manche haben feste Töne, wie Pauke und Xylofon. Andere machen Rhythmus und Geräusche. Tippe auf ein Foto, dann hörst du es.",
         build(s) {
-          const svg = s.svg(1100, 262);
           const NOTE = ["C", "Cis", "D", "Dis", "E", "F", "Fis", "G", "Gis", "A", "B", "H"];
           let pm = 43;
-          const hit = (g, fn) => { g.style.cursor = "pointer"; g.onclick = e => { fn(e); bounce(s, g); }; return g; };
-          const grp = (x, y, w, h) => s.el("rect", { x, y, width: w, height: h, fill: "transparent" });
-          const pk = s.el("g"); pk.append(grp(10, 40, 180, 200), place(s, gPauke(s), 100, 82, 2.1), txt(s, 100, 254, "Pauke"));
-          svg.append(hit(pk, () => play(s, "pauke", pm, 1)));
-          const X = gXylofon(s), xg = s.el("g");
-          xg.append(place(s, X.g, 214, 78, 2.2), txt(s, 346, 254, "Xylofon"));
+          // real photos (tap = real recording); the drawn xylophone keeps its playable bars
+          const pic = (k, n, w, opts = {}) => { const f = s.photo(PIC[k], Object.assign({ w, h: 222, caption: n, style: { cursor: "pointer" } }, opts)); f.onclick = () => { real(s, k, { dur: 4 }, true); bounce(s, f); }; return f; };
+          preReal(s, ["pauke", "trommel", "grosse", "becken", "triangel", "xylofon"]);
+          const xsvg = s.svg(270, 222);
+          const X = gXylofon(s);
+          xsvg.append(s.el("rect", { x: 0, y: 0, width: 270, height: 222, rx: 16, fill: "#fff", stroke: "#c8d3de", "stroke-width": 2 }), place(s, X.g, 6, 40, 2.15), txt(s, 135, 206, "Xylofon – tippe die Platten an", { "font-size": 19 }));
           X.bars.forEach(b => { b.el.style.cursor = "pointer"; b.el.onclick = () => { play(s, "xylofon", b.m, 0.3); b.el.setAttribute("fill", "#d2783f"); s.wait(180).then(() => b.el.setAttribute("fill", "#a0522d")); }; });
-          svg.append(xg, s.el("line", { x1: 505, y1: 20, x2: 505, y2: 250, stroke: "#c8d3de", "stroke-width": 3, "stroke-dasharray": "8 8" }),
-            txt(s, 250, 24, "mit Tonhöhe", { fill: "#7b4fd6" }), txt(s, 810, 24, "ohne feste Tonhöhe", { fill: "#7b4fd6" }));
-          const others = [["Kleine Trommel", gTrommel, 600, 126, "trommel"], ["Große Trommel", gGrosse, 760, 116, "grosse"], ["Becken", gBecken, 905, 128, "becken"], ["Triangel", gTriangel, 1035, 140, "triangel"]];
-          others.forEach(([n, f, x, y, snd]) => { const g = s.el("g"); g.append(grp(x - 70, 40, 140, 200), place(s, f(s), x, y, 1.8), txt(s, x, 254, n, { "font-size": 19 })); svg.append(hit(g, () => play(s, snd, 0))); });
+          const head = t => s.h("p", { class: "t", style: { color: "#7b4fd6", fontWeight: 700, textAlign: "center" } }, t);
+          const svg = s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px", alignItems: "stretch" } },
+            s.h("div", { class: "stack", style: { gap: "4px" } }, head("mit Tonhöhe"), s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } }, pic("pauke", "Pauken", 200, { pos: "50% 75%" }), xsvg)),
+            s.h("div", { style: { borderLeft: "3px dashed #c8d3de" } }),
+            s.h("div", { class: "stack", style: { gap: "4px" } }, head("ohne feste Tonhöhe"), s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } },
+              pic("trommel", "Kleine Trommel", 136), pic("grosse", "Große Trommel", 136), pic("becken", "Becken", 136), pic("triangel", "Triangel", 136))));
           const sl = s.slider({ label: "Pauken-Pedal", min: 38, max: 57, value: 43, fmt: v => "Ton " + NOTE[v % 12], onInput: v => { pm = v; play(s, "pauke", v, 0.8); } });
           const c1 = s.h("div", { class: "card later" }, s.h("span", { class: "exlabel" }, "Mit Tonhöhe"),
             s.h("p", { class: "small" }, "Die Pauke ist ein Kupferkessel mit Fell. Ein Pedal spannt das Fell: straffer = höher."), sl,
@@ -765,8 +782,8 @@
             s.h("p", { class: "small" }, "Große Trommel im Fanfarenzug, Schlagzeug in der Band (Trommeln und Becken), Triangel und Xylofon im Kindergarten."));
           s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, svg, s.h("div", { class: "cols3", style: { gridTemplateColumns: "1.15fr 1fr 1fr", gap: "16px" } }, c1, c2, life)));
           s.step(async () => { s.show(c1, "up"); for (const m of [38, 45, 50]) { if (!s.alive) return; sl.set(m); await s.wait(450); } X.bars.forEach((b, i) => play(s, "xylofon", b.m, 0.3, i * 0.12)); });
-          s.step(async () => { s.show(c2, "up"); [0, 0.12, 0.24, 0.36, 0.48].forEach(w => play(s, "trommel", 0, 0, w)); play(s, "grosse", 0, 0, 0.62); play(s, "becken", 0, 0, 0.62); play(s, "triangel", 0, 0, 1.5); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.show(c2, "up"); s.sound("kleine-trommel-ton", { dur: 1.2 }); s.sound("grosse-trommel-ton", { when: 1.2, dur: 1.2 }); s.sound("cymbal", { when: 2.2, dur: 1.6 }); s.sound("triangel-ton", { when: 3.6, dur: 2 }); });
+          s.step(async () => { s.sound("drum-groove", { dur: 3.5, vol: .8 }); await s.show(life, "up"); });
         },
       },
       /* ---------- 9 ---------- */
@@ -876,16 +893,17 @@
           info.textContent = INFO.AM;
           const switchCard = s.h("div", { class: "card later", style: { padding: "12px 16px" } }, s.h("span", { class: "exlabel" }, "Zwei Sitzpläne"),
             s.h("div", { class: "stack", style: { gap: "8px" } }, bAM, bDE), s.h("div", { style: { marginTop: "10px" } }, info));
-          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("p", { class: "small" }, "Wie der Sitzplan in deiner Klasse: Im Schulorchester und im Blasorchester hat auch jeder seinen festen Platz."));
           const merk = s.h("p", { class: "t" }, "Leise Instrumente sitzen ", s.h("b", null, "vorne"), ", laute ", s.h("b", null, "hinten"), ".");
+          const real1 = s.photo("orchester-von-oben", { w: 320, h: 200, pos: "50% 70%", caption: "Im Alltag: ein echtes Orchester von oben", cls: "later" });
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "760px 1fr", gap: "20px", height: "100%" } }, svg,
-            s.h("div", { class: "stack", style: { gap: "12px" } }, merk, switchCard, life)));
+            s.h("div", { class: "stack", style: { gap: "12px" } }, real1, merk, switchCard)));
+          s.sound("orchester-stimmt", { vol: .45, dur: 6 });
           s.step(async () => { await seat("str", () => { play(s, "cello", 36, 1.2); play(s, "bratsche", 55, 1.2); play(s, "geige", 64, 1.1); play(s, "geige", 72, 1.1); }); });
           s.step(async () => { await seat("holz", () => seq(s, "floete", [[76, 1], [79, 1], [84, 2]], 200)); });
           s.step(async () => { await seat("blech", () => { seq(s, "trompete", [[67, 1], [72, 1], [76, 2]], 200); play(s, "tuba", 36, 1); }); });
           s.step(async () => { await seat("schlag", () => { play(s, "pauke", 43, 1); play(s, "pauke", 38, 1, 0.4); play(s, "becken", 0, 0, 0.8); }); });
           s.step(async () => { s.show(switchCard, "left"); await s.wait(400); setMode("DE"); s.say("In der deutschen Aufstellung sitzen sich die beiden Geigen-Gruppen gegenüber."); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("dvorak9-finale", { vol: .8, dur: 5 }); await s.show(real1, "zoom"); });
         },
       },
       /* ---------- 11 ---------- */
@@ -893,7 +911,7 @@
         title: "Der Dirigent",
         say: "Der Dirigent zeigt mit dem Taktstock das Tempo, gibt Einsätze und zeigt, wie laut oder leise gespielt wird.",
         build(s) {
-          const svg = s.svg(500, 520);
+          const svg = s.svg(500, 520, { width: 400, height: 416 });
           const P = [[250, 420], [130, 330], [380, 330], [260, 170]]; // beats 1..4
           const ctrl = (a, b) => [(a[0] + b[0]) / 2, Math.max(a[1], b[1]) + 50];
           const pathD = [3, 0, 1, 2].map((from, i) => { const a = P[from], b = P[(from + 1) % 4], c = ctrl(a, b); return (i ? "" : `M${a[0]},${a[1]} `) + `Q${c[0]},${c[1]} ${b[0]},${b[1]}`; }).join(" ");
@@ -943,7 +961,9 @@
           const e2 = mk("Einsätze und laut/leise", "Er zeigt, wer wann einsetzt. Große Bewegung heißt laut, kleine heißt leise.");
           const e3 = mk("Partitur", "Er liest die Partitur: Alle Stimmen des Orchesters stehen darin untereinander.");
           const life = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("p", { class: "small" }, "Chorleiterin, Musiklehrer vor dem Schulorchester, Kapellmeister der Blaskapelle."));
-          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "500px 1fr", gap: "24px", height: "100%" } }, svg,
+          const cond = s.photo("dirigent-taktstock", { w: 440, h: 200, pos: "50% 22%", caption: "Echt: ein Dirigent mit Taktstock" });
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "440px 1fr", gap: "24px", height: "100%" } },
+            s.h("div", { class: "stack", style: { gap: "10px", alignItems: "center" } }, cond, svg),
             s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("div", { class: "row" }, btn), s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" } }, tempo, vol), e1, e2, e3, life)));
           s.step(async () => { s.show(patG, "fade"); s.show(e1, "left"); toggle(true); s.say("Eins, zwei, drei, vier. So sieht ein Vierertakt aus."); });
           s.step(async () => { s.show(e2, "left"); vol.set(4); await s.wait(2600); if (s.alive) vol.set(10); });
@@ -951,32 +971,40 @@
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
         },
       },
+      /* ---------- 11b (new) ---------- */
+      {
+        title: "Vor dem Konzert",
+        say: "Kurz vor dem Konzert passiert immer das Gleiche: Die Oboe spielt ein a, alle stimmen, der Dirigent kommt, alle klatschen. Dann wird es still – und die Musik beginnt.",
+        build(s) {
+          const S = [
+            { pic: "oboe", fit: "contain", h: "1. Die Oboe gibt das a", t: "Die Oboe klingt klar und durchdringend. Alle hören ihren Ton gut.", snd: "oboe-a", o: { dur: 3.4 } },
+            { pic: "orchester-von-oben", pos: "50% 75%", h: "2. Alle stimmen", t: "Jede und jeder spielt das a mit und stellt das Instrument genau darauf ein.", snd: "orchester-stimmt", o: { dur: 6, vol: .8 } },
+            { pic: "dirigent-taktstock", pos: "50% 30%", h: "3. Der Dirigent kommt", t: "Das Publikum klatscht. Der Dirigent verbeugt sich und hebt den Taktstock.", snd: "applause", o: { dur: 4, vol: .7 } },
+            { pic: "philharmonie-saal", pos: "50% 55%", h: "4. Stille … und los!", t: "Hier: der Anfang von Beethovens 5. Sinfonie. Kurz – kurz – kurz – lang!", snd: "beethoven5-anfang", o: { dur: 10 } },
+          ];
+          const cards = S.map(d => {
+            const f = s.photo(d.pic, { w: "100%", h: 220, fit: d.fit || "cover", pos: d.pos || "50% 50%" });
+            const c = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "12px 14px" } }, f,
+              s.h("p", { class: "h2", style: { fontSize: "22px" } }, d.h), s.h("p", { class: "small" }, d.t),
+              s.h("div", { class: "row", style: { marginTop: "auto" } }, s.soundBtn(d.snd, "Anhören", d.o)));
+            c.d = d; return c;
+          });
+          const merk = s.h("div", { class: "merk later" }, "Das Orchester stimmt nach der ", s.h("b", null, "Oboe"), ". Vorher stellt sich die Konzertmeisterin oder der Konzertmeister – die erste Geige – auf und sorgt für Ruhe.");
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } },
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: "14px" } }, cards), merk));
+          cards.forEach(c => s.step(async () => { s.show(c, "up"); s.sound(c.d.snd, c.d.o); s.say(c.d.h.slice(3)); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
       /* ---------- 12 ---------- */
       {
         title: "Berliner Philharmoniker",
         say: "Die Berliner Philharmoniker sind eines der berühmtesten Orchester der Welt. Sie spielen in der Philharmonie am Kulturforum.",
         build(s) {
-          const svg = s.svg(500, 560);
-          const house = s.el("g");
-          house.append(s.el("path", { d: "M20,215 L20,180 L90,112 L170,150 L262,44 L360,128 L430,96 L480,180 L480,215 Z", fill: "#f0c419", stroke: "#b8900a", "stroke-width": 3 }),
-            s.el("path", { d: "M262,44 L262,215 M90,112 L110,215 M430,96 L410,215", stroke: "#d9ab0d", "stroke-width": 2, fill: "none" }),
-            s.el("rect", { x: 10, y: 215, width: 480, height: 10, fill: "#b8b8b8" }));
-          for (let i = 0; i < 10; i++) house.append(s.el("rect", { x: 40 + i * 44, y: 190, width: 20, height: 25, fill: "#fff8d6", opacity: 0.8 }));
-          const plan = s.el("g", { class: "later" }), terr = [];
-          const cx = 250, cy = 400;
-          plan.append(s.el("ellipse", { cx, cy, rx: 200, ry: 140, fill: "#f6efe6", stroke: "#d9c9b0", "stroke-width": 2 }));
-          for (let i = 0; i < 12; i++) {
-            const a = (i / 12) * Math.PI * 2 + 0.2, r = i % 2 ? 150 : 115, w = i % 2 ? 46 : 54;
-            const x = cx + Math.cos(a) * r * 1.2, y = cy + Math.sin(a) * r * 0.8;
-            const g = s.el("g", { class: "later" });
-            g.append(s.el("rect", { x: x - w / 2, y: y - 16, width: w, height: 32, rx: 6, fill: i % 3 ? "#e9a070" : "#c46a32", transform: `rotate(${a * 180 / Math.PI + 90} ${x} ${y})` }));
-            terr.push(g); plan.append(g);
-          }
-          const pod = s.el("ellipse", { cx, cy, rx: 62, ry: 40, fill: "#dc2626" });
-          plan.append(pod, txt(s, cx, cy + 7, "Orchester", { fill: "#fff", "font-size": 19 }));
-          svg.append(house, txt(s, 250, 256, "Die Philharmonie (von außen)", { "font-size": 19, fill: "#5d6678" }), plan);
-          const capPlan = txt(s, 250, 556, "von oben: Zuhörer ringsum – wie auf einem Weinberg", { "font-size": 19, fill: "#5d6678", class: "later" });
-          svg.append(capPlan);
+          // real photos: the building from outside, the hall from inside
+          const house = s.photo("philharmonie-aussen", { w: 500, h: 268, pos: "50% 60%", caption: "Die Philharmonie in Berlin" });
+          const plan = s.photo("philharmonie-saal", { w: 500, h: 300, pos: "50% 50%", caption: "Im Großen Saal: Zuhörer ringsum – wie auf einem Weinberg", cls: "later" });
+          const svg = s.h("div", { class: "stack", style: { gap: "14px" } }, house, plan);
           const year = s.h("span", { class: "big mono", style: { color: "var(--unit)" } }, "1882");
           const seats = s.h("b", { class: "mono" }, "2.250");
           const f1 = s.h("div", { class: "card", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Das Orchester"),
@@ -989,13 +1017,10 @@
             s.h("p", { class: "small" }, "Am Kulturforum beim Potsdamer Platz. Weil das Orchester in der Mitte sitzt wie in einer Manege, sagten Berliner scherzhaft „Zirkus Karajani“ – nach dem Dirigenten Herbert von Karajan."));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "500px 1fr", gap: "24px", height: "100%" } }, svg,
             s.h("div", { class: "stack", style: { gap: "12px" } }, f1, f2, f3, life)));
-          s.show(house, "up"); s.sfx.whoosh();
-          play(s, "cello", 48, 1.6); play(s, "bratsche", 55, 1.6, 0.1); play(s, "geige", 64, 1.5, 0.2); play(s, "horn", 60, 1.4, 0.3);
+          s.show(house, "up"); s.sound("orchestra-tuning", { vol: .6, dur: 4 });
           s.tween({ from: 1800, to: 1882, dur: 1200, ease: "out", update: v => { year.textContent = String(Math.round(v)); } });
           s.step(async () => {
-            s.show(plan, "fade"); s.show(f2, "left"); await s.show(pod, "pop");
-            for (let i = 0; i < terr.length; i++) { if (!s.alive) return; s.show(terr[i], "pop"); s.sfx.count(i); await s.wait(90); }
-            s.show(capPlan, "fade");
+            s.show(plan, "zoom"); s.show(f2, "left"); s.sound("applause", { vol: .5, dur: 4 });
             s.tween({ from: 0, to: 2250, dur: 1200, ease: "out", update: v => { seats.textContent = s.fmt(Math.round(v)); } });
           });
           s.step(async () => { s.show(f3, "left"); s.sfx.ding(); });
@@ -1005,7 +1030,7 @@
       /* ---------- 13 ---------- */
       {
         title: "Welches Instrument passt zu mir?",
-        say: "Am Ende der fünften Klasse wählst du ein Instrument. Hier sind alle zehn. Tippe sie an, hör sie dir an und vergleiche.",
+        say: "Am Ende der fünften Klasse wählst du ein Instrument. Hier sind alle zehn – mit Foto und echter Aufnahme. Tippe sie an, hör sie dir an und vergleiche.",
         build(s) {
           const L = [
             { k: "geige", fam: "str", icon: () => place(s, gStr(s, false), 32, 2, 0.6), size: "klein: Korpus ca. 36 cm, liegt unter dem Kinn", how: "Bogen streichen oder zupfen, Finger greifen auf den Saiten", klang: "hell und singend", rolle: "spielt oft die Melodie" },
@@ -1022,24 +1047,27 @@
           const FN = { str: "Streichinstrument", holz: "Holzblasinstrument", blech: "Blechblasinstrument" };
           const btns = L.map(d => {
             const ic = s.svg(64, 64, { width: 88, height: 88 }); ic.append(d.icon());
-            const b = s.h("button", { class: "btn later", style: { flexDirection: "column", height: "136px", gap: "4px", padding: "6px 4px", borderColor: FAM[d.fam], color: "var(--ink)" }, onclick: () => pick(d) },
+            const b = s.h("button", { class: "btn later", style: { flexDirection: "column", height: "136px", gap: "4px", padding: "6px 4px", borderColor: FAM[d.fam], color: "var(--ink)" }, onclick: () => pick(d, true) },
               ic, s.h("span", { style: { fontSize: "19px" } }, d.k === "altsax" ? "Saxophon" : INST[d.k].n));
             d.b = b; return b;
           });
           const nameEl = s.h("p", { class: "h2" }, ""), famEl = s.h("span", { class: "chip" }, "");
           const rows = {};
-          const tbl = s.h("div", { style: { display: "grid", gridTemplateColumns: "210px 1fr", rowGap: "8px", columnGap: "14px", alignItems: "baseline" } },
+          const tbl = s.h("div", { style: { display: "grid", gridTemplateColumns: "190px 1fr", rowGap: "8px", columnGap: "14px", alignItems: "baseline" } },
             [["size", "Größe"], ["how", "So machst du den Ton"], ["klang", "Klang"], ["rolle", "Typische Rolle"]].map(([k, h]) => { rows[k] = s.h("p", { class: "t", style: { fontSize: "22px" } }, ""); return [s.h("p", { class: "small pencil" }, h), rows[k]]; }));
           let cur = null;
-          const again = s.h("button", { class: "btn solid", onclick: () => cur && demo(s, cur.k) }, "Nochmal hören");
-          function pick(d) {
+          const again = s.h("button", { class: "btn solid", onclick: () => cur && real(s, cur.k, { dur: 8 }, true) }, "Nochmal hören");
+          preReal(s, L.map(d => d.k));
+          const figs = L.map((d, j) => s.photo(PIC[d.k], { w: 230, h: 260, fit: "contain", style: { display: j ? "none" : "" } }));
+          function pick(d, tap = false) {
+            figs.forEach((f, j) => { f.style.display = L[j] === d ? "" : "none"; });
             cur = d; L.forEach(x => x.b.classList.toggle("solid", x === d)); L.forEach(x => { x.b.style.color = x === d ? "#fff" : "var(--ink)"; x.b.style.background = x === d ? FAM[x.fam] : ""; });
             nameEl.textContent = d.k === "altsax" ? "Saxophon" : INST[d.k].n; nameEl.style.color = FAM[d.fam]; famEl.textContent = FN[d.fam];
             rows.size.textContent = d.size; rows.how.textContent = d.how; rows.klang.textContent = d.klang; rows.rolle.textContent = d.rolle;
-            demo(s, d.k);
+            real(s, d.k, { dur: 8 }, tap);
           }
-          const card = s.h("div", { class: "card", style: { padding: "14px 20px" } },
-            s.h("div", { class: "row", style: { justifyContent: "space-between", marginBottom: "10px" } }, s.h("div", { class: "row", style: { gap: "14px" } }, nameEl, famEl), again), tbl);
+          const card = s.h("div", { class: "card", style: { padding: "14px 20px", display: "grid", gridTemplateColumns: "230px 1fr", gap: "20px", alignItems: "center" } }, s.h("div", null, figs),
+            s.h("div", null, s.h("div", { class: "row", style: { justifyContent: "space-between", marginBottom: "10px" } }, s.h("div", { class: "row", style: { gap: "14px" } }, nameEl, famEl), again), tbl));
           const note = s.h("p", { class: "small pencil later" }, "Kein Instrument ist besser als ein anderes. Hör genau hin, probier in der Schule aus – und nimm das, was dir Spaß macht.");
           s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: "10px" } }, btns), card, note));
           const groups = [["str", "Drei Streicher: Geige, Bratsche, Cello."], ["holz", "Zwei Holzbläser: Klarinette und Saxophon."], ["blech", "Fünf Blechbläser: Trompete, Horn, Posaune, Euphonium und Tuba."]];
@@ -1054,48 +1082,28 @@
         title: "Im Alltag: Orchester-Klänge",
         say: "Instrumente des Orchesters hörst du überall: im Stadion, im Jazz-Club, im Kino und auf der Straße.",
         build(s) {
-          const scene = k => {
-            const v = s.svg(170, 120);
-            if (k === "stadion") {
-              v.append(s.el("ellipse", { cx: 85, cy: 70, rx: 80, ry: 46, fill: "#9aa6b2" }), s.el("ellipse", { cx: 85, cy: 72, rx: 60, ry: 30, fill: "#3a9a4a" }),
-                s.el("line", { x1: 85, y1: 42, x2: 85, y2: 102, stroke: "#fff", "stroke-width": 2 }), s.el("circle", { cx: 85, cy: 72, r: 10, fill: "none", stroke: "#fff", "stroke-width": 2 }),
-                place(s, gTrompete(s), 20, -2, 0.55));
-            } else if (k === "jazz") {
-              v.append(s.el("rect", { x: 0, y: 0, width: 170, height: 120, rx: 10, fill: "#2a2440" }), s.el("circle", { cx: 130, cy: 24, r: 14, fill: "#ffd94a", opacity: 0.7 }),
-                place(s, gSax(s), 70, 8, 1.0), place(s, gStr(s, true, "#8a4a20"), 130, 40, 0.68));
-            } else if (k === "film") {
-              v.append(s.el("rect", { x: 5, y: 8, width: 160, height: 90, rx: 6, fill: "#1b2740" }), s.el("rect", { x: 15, y: 18, width: 140, height: 70, fill: "#5aa0e0" }),
-                s.el("path", { d: "M15,88 L60,50 L90,72 L120,40 L155,88 Z", fill: "#2f7d32" }), s.el("circle", { cx: 130, cy: 34, r: 8, fill: "#ffd94a" }));
-              for (let i = 0; i < 9; i++) v.append(s.el("rect", { x: 10 + i * 18, y: 104, width: 10, height: 10, fill: "#1b2740" }));
-            } else {
-              v.append(s.el("line", { x1: 120, y1: 116, x2: 120, y2: 8, stroke: "#9aa6b2", "stroke-width": 6 }), s.el("circle", { cx: 120, cy: 40, r: 13, fill: "#9aa6b2" }),
-                s.el("line", { x1: 120, y1: 26, x2: 120, y2: 2, stroke: "#dc2626", "stroke-width": 2 }),
-                s.el("circle", { cx: 40, cy: 50, r: 9, fill: "#1b2740" }), s.el("path", { d: "M32,60 L48,60 L52,100 L28,100 Z", fill: "#1d5bd0" }),
-                place(s, gStr(s, false), 60, 46, 0.32), s.el("rect", { x: 0, y: 108, width: 170, height: 12, fill: "#c8d3de" }));
-            }
-            return v;
-          };
           const T = [
-            { k: "stadion", h: "Fußballstadion", t: "Eine Blaskapelle mit Trompeten, Posaunen und großer Trommel heizt die Fans an. Blech ist laut genug für ein ganzes Stadion.",
-              snd: () => { seq(s, "trompete", [[67, 0.5], [67, 0.5], [67, 0.5], [72, 1.5], [67, 0.5], [72, 0.5], [76, 2]], 150); seq(s, "posaune", [[48, 2], [55, 2], [48, 2]], 150); [0, 0.8, 1.6, 2.4].forEach(w => play(s, "grosse", 0, 0, w)); } },
-            { k: "jazz", h: "Jazz", t: "Ein Saxophon spielt ein Solo, darunter zupft der Kontrabass. Becken geben den Swing.",
-              snd: () => { seq(s, "saxophon", [[65, 0.66], [68, 0.34], [69, 0.66], [72, 0.34], [75, 1], [72, 0.5], [70, 0.5], [68, 0.66], [65, 1.34]], 150); seq(s, "pizz", [[41, 1], [45, 1], [48, 1], [50, 1], [53, 1], [50, 1]], 150); [0, 0.8, 1.6].forEach(w => play(s, "triangel", 0, 0, w + 9)); [0.4, 1.2, 2.0].forEach(w => play(s, "trommel", 0, 0, w)); } },
-            { k: "film", h: "Filmmusik", t: "Zu vielen Kinofilmen spielt ein großes Orchester. Streicher für Gefühle, Hörner und Pauken für Heldenmomente.",
-              snd: () => { play(s, "cello", 36, 2.2); play(s, "bratsche", 55, 2.2); play(s, "geige", 64, 2.2); seq(s, "horn", [[55, 1], [62, 1], [60, 0.5], [59, 0.5], [57, 0.5], [67, 2]], 110, 0.3); [0, 0.1, 0.2, 0.3, 0.4, 0.5].forEach(w => play(s, "pauke", 43, 0.3, 2 + w, {})); } },
-            { k: "alex", h: "Straßenmusik am Alexanderplatz", t: "Zwischen U-Bahn und Fernsehturm spielen oft Straßenmusiker – mit Geige, Saxophon oder Trompete.",
-              snd: () => { seq(s, "geige", [[69, 1], [71, 0.5], [72, 0.5], [74, 1], [72, 1], [71, 0.5], [69, 0.5], [68, 1], [69, 2]], 160); seq(s, "pizz", [[45, 2], [52, 2], [40, 2], [45, 2]], 160); } },
+            { k: "stadion", h: "Fußballstadion", pic: "blaskapelle-stadion", pos: "40% 80%", cap: "Vor dem Stadion in Burnley", t: "Eine Blaskapelle mit Trompeten, Posaunen und großer Trommel heizt die Fans an. Blech ist laut genug für ein ganzes Stadion.",
+              snd: tap => { s.sound("trompete-fanfare", { force: tap, dur: 6 }); s.sound("crowd-cheer", { force: tap, vol: .35, when: .3 }); } },
+            { k: "jazz", h: "Jazz", pic: "jazzband", pos: "50% 45%", cap: "Jazz-Bigband", t: "Ein Saxophon spielt ein Solo, darunter zupft der Kontrabass. Becken geben den Swing.",
+              snd: tap => real(s, "altsax", { dur: 7 }, tap) },
+            { k: "film", h: "Filmmusik", pic: "filmmusik-aufnahme", pos: "50% 50%", cap: "Orchester im Tonstudio", t: "Zu vielen Kinofilmen spielt ein großes Orchester. Streicher für Gefühle, Hörner und Pauken für Heldenmomente.",
+              snd: tap => real(s, "dvorak9-finale", { dur: 8 }, tap) },
+            { k: "alex", h: "Straßenmusik am Alexanderplatz", pic: "alexanderplatz", pos: "50% 75%", cap: "Alexanderplatz", t: "Zwischen U-Bahn und Fernsehturm spielen oft Straßenmusiker – mit Geige, Saxophon oder Trompete.",
+              snd: tap => { real(s, "geige", { dur: 7 }, tap); s.sound("traffic", { force: tap, vol: .25, dur: 7 }); } },
           ];
+          s.preload("trompete-fanfare", "crowd-cheer", "altsax-melodie", "dvorak9-finale", "geige-melodie", "traffic");
           const tiles = T.map(d => {
-            const v = scene(d.k);
-            const tile = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: "16px", alignItems: "center", padding: "14px 18px" } }, v,
+            const v = s.photo(d.pic, { w: 220, h: 262, pos: d.pos, caption: d.cap });
+            const tile = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "220px 1fr", gap: "16px", alignItems: "center", padding: "12px 16px" } }, v,
               s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("p", { class: "h2", style: { fontSize: "24px" } }, d.h), s.h("p", { class: "small" }, d.t),
-                s.h("button", { class: "btn", style: { alignSelf: "flex-start" }, onclick: () => { d.snd(); bounce(s, v); } }, "Anhören")));
+                s.h("button", { class: "btn", style: { alignSelf: "flex-start" }, onclick: () => { d.snd(true); bounce(s, v); } }, "Anhören")));
             d.tile = tile; return tile;
           });
           s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } },
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", flex: "1" } }, tiles),
-            s.h("p", { class: "small pencil" }, "Alle Melodien hier sind selbst ausgedacht und am Computer nachgebaut.")));
-          T.forEach((d, i) => { if (i === 0) { s.show(d.tile, "up"); d.snd(); } else s.step(async () => { s.show(d.tile, "up"); d.snd(); s.say(d.h); }); });
+            s.h("p", { class: "small pencil" }, "Echte Fotos und Aufnahmen. Bei „Filmmusik“ hörst du ein großes Orchester: Dvořák, 9. Sinfonie.")));
+          T.forEach((d, i) => { if (i === 0) { s.show(d.tile, "up"); d.snd(false); } else s.step(async () => { s.show(d.tile, "up"); d.snd(false); s.say(d.h); }); });
         },
       },
     ],

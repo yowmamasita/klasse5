@@ -103,14 +103,13 @@
           const b_ = s.h("span", { class: "chip" }, "1 Farbe");
           const sl = s.slider({ label: "Wie viele reine Farben?", min: 1, max: 6, step: 1, value: 1, onInput: v => { paint(v); } });
           sl.classList.add("later");
-          const e = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "10px" } }, s.h("span", { class: "exlabel" }, "Beispiele"),
-            exline(s, "🎈", "Luftballons am Kindergeburtstag"), exline(s, "🎪", "Zirkus und Jahrmarkt"), exline(s, "🍬", "Bunte Süßigkeiten im Regal"));
+          const e = s.photo("mondrian-komposition", { w: 500, h: 270, fit: "contain", caption: "Mondrian, 1930", cls: "later" });
           const m = merk(s, "<b>Farbe-an-sich-Kontrast:</b> reine, leuchtende Farben, möglichst verschieden. Je mehr, desto bunter.");
           s.add(cols(s, svg, stack(s, 14, P(s, "Alle Ballons haben dieselbe Farbe. Das wirkt ruhig und ein bisschen langweilig."), sl, e, m), 560));
           s.show(svg, "fade");
           s.step(async () => { for (const b of balls) { s.sfx.pop(); s.show(b.g, "bounce"); await s.wait(130); } await s.show(sl, "pop"); s.say("Schiebe den Regler und gib den Ballons neue Farben."); });
           s.step(async () => { await s.tween({ from: 1, to: 6, dur: 1800, update: v => { const k = Math.round(v); if (k !== n) { s.sfx.note(k * 2, .12); sl.set(k); } } }); s.sfx.success(); });
-          s.step(async () => { s.sfx.pop(); await s.show(e, "up"); await s.wait(200); s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(e, "zoom"); s.say("Der Maler Piet Mondrian malte nur mit reinen Farben, Schwarz und Weiß."); await s.wait(200); s.sfx.ding(); await s.show(m, "up"); });
         },
       },
       /* 3 ---------------------------------------------------------------- */
@@ -128,13 +127,12 @@
           const sl = s.slider({ label: "Hintergrund: hell bis dunkel", min: 0, max: 100, step: 1, value: 0, fmt: v => v + " %", onInput: set });
           let gray = false;
           const btn = s.h("button", { class: "btn later", onclick: () => { gray = !gray; svg.style.filter = gray ? "grayscale(1)" : "none"; btn.textContent = gray ? "Wieder in Farbe" : "Schwarz-Weiß-Blick"; s.sfx.click(); s.say(gray ? "In Grau siehst du: Gelb verschwindet auf Weiß." : "Wieder in Farbe."); } }, "Schwarz-Weiß-Blick");
-          const e = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "exlabel" }, "Beispiele"),
-            exline(s, "🏫", "Schultafel: weiße Kreide auf dunklem Grund"), exline(s, "♟️", "Schach: schwarz gegen weiß"), exline(s, "🦓", "Zebra: schwarz-weiße Streifen"));
+          const e = s.photo("zebra", { w: 500, h: 260, pos: "40% 50%", caption: "Zebra: Schwarz direkt neben Weiß", cls: "later" });
           const m = merk(s, "<b>Hell-Dunkel-Kontrast:</b> Zwei Farben mit sehr verschiedener Helligkeit. Gelb auf Weiß siehst du kaum!");
           s.add(cols(s, svg, stack(s, 12, sl, s.h("div", { class: "row" }, btn), e, m), 560));
           s.show(svg, "fade");
           s.step(async () => { s.show(sl, "pop"); s.show(btn, "pop"); s.sfx.pop(); s.say("Gelbe Schrift auf weißem Papier ist schwer zu lesen."); await s.tween({ from: 0, to: 100, dur: 2200, update: v => sl.set(Math.round(v)) }); });
-          s.step(async () => { s.sfx.pop(); await s.show(e, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(e, "zoom"); s.say("Auch an der Schultafel und beim Schach: hell gegen dunkel."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
           /* sliders are visible from start */
         },
@@ -160,14 +158,13 @@
           set(0);
           const sl = s.slider({ label: "kalt ← → warm", min: 0, max: 100, step: 1, value: 0, fmt: v => v + " %", onInput: v => set(v / 100) });
           const row = s.h("div", { class: "row later", style: { gap: "10px" } }, ...["#e0262f", "#ff8a1a", "#ffd21a"].map(c => dot(s, c, 40)), s.h("b", { class: "t" }, "warm"), ...["#1f5fd1", "#1a9aa0", "#7a3a9a"].map(c => dot(s, c, 40)), s.h("b", { class: "t" }, "kalt"));
-          const e = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "exlabel" }, "Beispiele"),
-            exline(s, "🔥", "Feuer und Sonnenuntergang: warm"), exline(s, "🧊", "Eis und Mondlicht: kalt"), exline(s, "🌊", "Meer im Winter: kalt"));
+          const e = s.photo("vangogh-cafe", { w: 500, h: 290, pos: "50% 35%", caption: "Van Gogh (1888): warmes Café, kalte Nacht", cls: "later" });
           const m = merk(s, "<b>Kalt-Warm-Kontrast:</b> Warme Farben wirken <b>näher</b> und gemütlich, kalte wirken <b>weiter weg</b> und kühl.");
           s.add(cols(s, svg, stack(s, 12, sl, row, e, m), 560));
           s.show(svg, "fade");
           s.step(async () => { s.sfx.pop(); s.say("Es ist eine kalte Nacht."); await s.show(row, "up"); });
           s.step(async () => { s.sfx.whoosh(); s.say("Jetzt wird es warm: Sonnenuntergang."); await s.tween({ from: 0, to: 100, dur: 1800, update: v => sl.set(Math.round(v)) }); s.sfx.ding(); });
-          s.step(async () => { s.sfx.pop(); await s.show(e, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(e, "zoom"); s.say("Vincent van Gogh malte ein Café in Arles: warmes gelbes Licht unter dem kalten blauen Nachthimmel."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -203,12 +200,11 @@
             pair.className = "card a-pop"; void pair.offsetWidth;
           }
           const m = merk(s, "<b>Komplementär</b> = gegenüber im Farbkreis, z. B. Gelb–Violett, Orange–Blau, Rot–Grün.");
-          const ex = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "6px", padding: "12px 18px" } }, s.h("span", { class: "exlabel", style: { marginBottom: "2px" } }, "Beispiele"),
-            exline(s, "🐞", "Roter Marienkäfer auf grünem Blatt"), exline(s, "🍊", "Orangen vor blauem Himmel"), exline(s, "🎄", "Rote Schleife am grünen Tannenzweig"));
+          const ex = s.photo("marienkaefer", { w: 430, h: 210, caption: "Roter Marienkäfer auf grünem Blatt", cls: "later" });
           s.add(cols(s, svg, stack(s, 12, P(s, "Tippe ein Stück an. Sein <b>Gegenüber</b> leuchtet mit:", "t"), pair, ex, m), 640));
           s.show(svg, "fade");
           s.step(async () => { s.sfx.whoosh(); for (let i = 0; i < 12; i++) { s.show([wedges[i], labels[i]], "pop"); await s.wait(60); } pick(0); s.say("Gelb und Violett liegen sich gegenüber."); });
-          s.step(async () => { pick(4); s.sfx.pop(); await s.show(ex, "up"); s.say("Rot und Grün. Probiere die anderen Farben aus!"); });
+          s.step(async () => { pick(4); s.sfx.pop(); await s.show(ex, "zoom"); s.say("Rot und Grün. Probiere die anderen Farben aus!"); });
           s.step(async () => { pick(8); s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -239,7 +235,7 @@
           sl.classList.add("later");
           const btn = s.h("button", { class: "btn later", onclick: () => { pi = (pi + 1) % 3; s.sfx.swoosh(); } }, "Andere Farben");
           const m = merk(s, "<b>Simultankontrast:</b> Eine Farbe sieht neben einer anderen anders aus. Grau auf Rot wirkt <b>grünlich</b>, auf Grün <b>rötlich</b>.");
-          const e = box(s, "ex", "Entdeckt von Chevreul", "Der Franzose Michel Eugène Chevreul beschrieb das 1839.");
+          const e = s.h("div", { class: "ex later", style: { display: "flex", gap: "14px", alignItems: "center", padding: "10px 14px" } }, s.photo("chevreul-farbkreis", { w: 140, h: 136, pos: "50% 45%" }), s.h("div", {}, s.h("span", { class: "exlabel" }, "Entdeckt von Chevreul"), s.h("p", { class: "small", html: "Der Franzose Michel Eugène Chevreul beschrieb das 1839. Hier sein Farbkreis." })));
           const life = box(s, "life", "Im Alltag", "Grauer Pulli neben roter Jacke: wirkt grünlich.");
           s.add(cols(s, canvas, stack(s, 10, P(s, "Beide Quadrate sind <b>genau gleich grau</b>.", "small"), s.h("div", { class: "row" }, btn), sl, m, e, life), 560));
           s.show(canvas, "zoom");
@@ -301,14 +297,13 @@
           const word = s.h("p", { class: "h2", style: { minHeight: "36px" } }, "Wenig Orange: ein Blickfang");
           const sl = s.slider({ label: "Orange-Anteil", min: 2, max: 50, step: 1, value: 4, fmt: v => v + " %", onInput: v => { share = v; word.textContent = v < 15 ? "Wenig Orange: ein Blickfang" : v < 40 ? "Mehr Orange: es wird laut" : "Gleich viel: ruhig, aber spannungsvoll"; } });
           sl.classList.add("later");
-          const e = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "exlabel" }, "Beispiele"),
-            exline(s, "⛵", "Orangefarbenes Rettungsboot auf blauem Meer"), exline(s, "🏠", "Rotes Dach in grüner Landschaft"), exline(s, "⚽", "Ball und Spieler auf grünem Rasen"));
+          const e = s.photo("monet-impression", { w: 500, h: 280, pos: "50% 50%", caption: "Monet (1872): kleine orange Sonne, viel Blau", cls: "later" });
           const m = merk(s, "<b>Quantitätskontrast:</b> viel gegen wenig Fläche. Die kleine Farbfläche wird zum <b>Blickfang</b>.");
           s.add(cols(s, canvas, stack(s, 12, word, sl, e, m), 560));
           s.show(canvas, "zoom");
           s.step(async () => { s.show(sl, "pop"); s.sfx.pop(); s.say("Ein kleiner orangefarbener Streifen leuchtet auf dem großen Blau."); });
           s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 4, to: 50, dur: 2000, update: v => sl.set(Math.round(v)) }); s.say("Je mehr Orange, desto ausgeglichener wird das Bild."); });
-          s.step(async () => { s.sfx.pop(); await s.show(e, "up"); await s.wait(150); s.sfx.ding(); s.show(m, "up"); });
+          s.step(async () => { s.sound("moewen", { vol: .45 }); await s.show(e, "zoom"); s.say("Claude Monet malte den Hafen von Le Havre. Die kleine orange Sonne leuchtet im vielen Blau."); await s.wait(150); s.sfx.ding(); s.show(m, "up"); });
         },
       },
       /* 9 ---------------------------------------------------------------- */
@@ -332,15 +327,14 @@
           sl.classList.add("later");
           const chips = s.h("div", { class: "row later" }, ...["heller", "bläulicher", "blasser", "kleiner"].map(t => s.h("span", { class: "chip" }, t)));
           const m = merk(s, "<b>Luftperspektive:</b> Je weiter weg, desto <b>heller, bläulicher und blasser</b>. Auch kalte Farben wirken weiter weg als warme.");
-          const e = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "exlabel" }, "Beispiele"),
-            exline(s, "🏔️", "Berge am Horizont sind hellblau"), exline(s, "🏙️", "Ferne Hochhäuser verschwimmen im Dunst"), exline(s, "🌲", "Ferner Wald: grau-blau, nah: kräftig grün"));
+          const e = s.photo("berge-dunst", { w: 490, h: 220, pos: "50% 55%", caption: "Echte Berge: hinten immer heller und blasser", cls: "later" });
           s.add(cols(s, svg, stack(s, 10, chips, sl, m, e), 580));
           s.show(svg, "fade");
           s.step(async () => { s.sfx.swoosh(); await s.show(L1, "up"); s.say("Ganz hinten die fernen Berge: hell und bläulich."); });
           s.step(async () => { s.sfx.swoosh(); await s.show(L2, "up"); s.say("Davor die mittleren Berge. Schon etwas dunkler."); });
           s.step(async () => { s.sfx.swoosh(); await s.show(L3, "up"); s.show(tree, "pop"); s.sfx.pop(); s.show(chips, "up"); s.say("Vorne der Hügel mit dem Baum: kräftig und dunkel."); });
           s.step(async () => { s.show(sl, "pop"); s.sfx.whoosh(); await s.tween({ from: 0, to: 100, dur: 2000, update: v => sl.set(Math.round(v)) }); s.say("Der Baum wird kleiner, heller und blauer, je weiter er geht."); });
-          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.wait(150); s.show(e, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); await s.wait(150); s.sound("wind", { vol: .35, dur: 4 }); s.show(e, "zoom"); });
         },
       },
       /* 10 --------------------------------------------------------------- */
@@ -411,12 +405,12 @@
           setLight(0);
           const btn = s.h("button", { class: "btn later", onclick: () => { li = (li + 1) % 3; setLight(li); s.sfx.click(); s.say(["Rot: Halt!", "Gelb: Achtung!", "Grün: Du darfst gehen."][li]); } }, "Ampel schalten");
           const m = merk(s, "<b>Signalfarben</b> (Rot, Gelb, Orange) fallen auf. Sie <b>warnen</b> oder geben Befehle.");
-          const e = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "exlabel" }, "Beispiele"),
-            exline(s, "🐝", "Wespe: Gelb-Schwarz warnt Fressfeinde"), exline(s, "🛑", "Stoppschild: Rot heißt „Halt!“"), exline(s, "🚦", "Ampel: Rot, Gelb, Grün regeln den Verkehr"));
-          s.add(cols(s, svg, stack(s, 12, P(s, "Welche Farben <b>warnen</b> dich?"), s.h("div", { class: "row" }, btn), e, m), 580));
+          const e = s.photo("wespe", { w: 490, h: 250, caption: "Echte Wespe: Gelb-Schwarz warnt Fressfeinde", cls: "later" });
+          const buzz = s.soundBtn("wespe-summen", "Wespe hören"); buzz.classList.add("later");
+          s.add(cols(s, svg, stack(s, 12, P(s, "Welche Farben <b>warnen</b> dich?"), s.h("div", { class: "row" }, btn, buzz), e, m), 580));
           s.show(svg, "fade");
           s.step(async () => { s.sfx.zap(); await s.show(wasp, "pop"); s.sfx.zap(); await s.show(stop, "pop"); s.sfx.zap(); await s.show(amp, "pop"); s.show(btn, "pop"); s.say("Wespe, Stoppschild und Ampel."); });
-          s.step(async () => { for (let k = 0; k < 3; k++) { setLight(k); s.sfx.note(k * 4, .2); await s.wait(500); } li = 0; setLight(0); s.sfx.pop(); await s.show(e, "up"); });
+          s.step(async () => { for (let k = 0; k < 3; k++) { setLight(k); s.sfx.note(k * 4, .2); await s.wait(500); } li = 0; setLight(0); s.sound("wespe-summen", { vol: .5, dur: 2 }); s.show(buzz, "pop"); await s.show(e, "zoom"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -458,10 +452,41 @@
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
-      /* 13 --------------------------------------------------------------- */
+      /* 12b --------------------------------------------------------------- */
+      {
+        title: "Tarnung in echt",
+        say: "Findest du die Tiere? Der Laubfrosch versteckt sich zwischen grünen Blättern, der Schneehase im Schnee.",
+        build(s) {
+          const f = s.photo("laubfrosch", { w: 530, h: 430, caption: "Laubfrosch zwischen grünen Blättern", cls: "later" });
+          const h = s.photo("schneehase", { w: 530, h: 430, pos: "50% 55%", caption: "Schneehase im weißen Winterfell", cls: "later" });
+          const frog = s.soundBtn("laubfrosch-ruf", "Laubfrosch hören"); frog.classList.add("later");
+          const m = merk(s, "Grün auf Grün, Weiß auf Weiß: Wenn Tier und Untergrund <b>dieselbe Farbe</b> haben, gibt es fast keinen Kontrast – das Tier verschwindet.");
+          s.add(stack(s, 16, s.h("div", { class: "cols", style: { gridTemplateColumns: "530px 530px", gap: "20px" } }, f, h), s.h("div", { style: { display: "grid", gridTemplateColumns: "auto 1fr", gap: "20px", alignItems: "center" } }, frog, m)));
+          s.step(async () => { s.sound("laubfrosch-ruf", { vol: .5, dur: 3 }); await s.show(f, "zoom"); s.show(frog, "pop"); s.say("Hörst du ihn? Sehen kann man ihn kaum."); });
+          s.step(async () => { s.sound("wind", { vol: .35, dur: 3 }); await s.show(h, "zoom"); s.say("Im Winter ist der Schneehase weiß wie der Schnee."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 13a --------------------------------------------------------------- */
       {
         title: "Franz Marc: Das Blaue Pferd",
-        say: "Franz Marc malte Tiere in Farben, die für Gefühle stehen. Hier siehst du meine eigene Zeichnung im Stil von Marc.",
+        say: "Franz Marc malte Tiere in Farben, die für Gefühle stehen. Das ist sein berühmtes Bild Blaues Pferd eins.",
+        build(s) {
+          const pic = s.photo("marc-blaues-pferd", { w: 410, h: 548, pos: "50% 50%", caption: "Blaues Pferd I, 1911" });
+          const info = box(s, "ex", "Franz Marc (1880–1916)", "Maler in München. 1911 gründete er mit Wassily Kandinsky <b>Der Blaue Reiter</b>. Sein Gemälde <b>„Blaues Pferd I“</b> (1911) hängt im Lenbachhaus in München.");
+          const look = box(s, "ex", "Schau genau", "Das Pferd ist <b>blau</b> – kein echtes Pferd hat diese Farbe. Dahinter leuchten Gelb, Rot und Grün.");
+          const m = merk(s, "Marc malte Tiere nicht so, wie sie aussehen, sondern in Farben, die ihr <b>Wesen</b> zeigen.");
+          s.add(cols(s, pic, stack(s, 14, info, look, m), 410));
+          s.show(pic, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.sfx.pop(); await s.show(info, "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(look, "up"); s.say("Ein blaues Pferd! Für Marc war Blau eine Farbe für das Geistige."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 13 --------------------------------------------------------------- */
+      {
+        title: "Marcs Farben ausprobieren",
+        say: "Hier siehst du meine eigene Zeichnung im Stil von Marc. Gib dem Pferd andere Farben.",
         build(s) {
           const svg = s.svg(560, 430);
           svg.append(s.el("rect", { x: 0, y: 0, width: 560, height: 430, rx: 22, fill: "#f3ead8" }));
@@ -488,9 +513,9 @@
           const card = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Marcs Farbsprache"), title, desc);
           const setCol = n => { const [a, b, c] = col[n]; body.forEach(p => { p.setAttribute("fill", a); p.setAttribute("stroke", b); }); shade.forEach(p => p.setAttribute("fill", c)); mane.setAttribute("fill", b); title.textContent = txt[n][0]; desc.textContent = txt[n][1]; card.className = "ex a-pop"; void card.offsetWidth; s.sfx.pop(); };
           const btns = s.h("div", { class: "row later" }, ...["Blau", "Gelb", "Rot"].map(n => s.h("button", { class: "btn", style: { minWidth: "110px" }, onclick: () => setCol(n) }, n)));
-          const info = box(s, "ex", "Franz Marc (1880–1916)", "Maler in München. 1911 gründete er mit Wassily Kandinsky <b>Der Blaue Reiter</b>. Sein Gemälde <b>„Blaues Pferd I“</b> (1911) hängt im Lenbachhaus.", false);
+          const info = box(s, "ex", "Jetzt du", "Das Pferd ist nachgezeichnet, die Farbflächen sind wie bei Marc: Gegenfarben rund um das Blau. Welche Farbe passt zum Pferd?", false);
           const credit = P(s, "Meine Zeichnung im Stil von Franz Marc – kein Original!", "small pencil");
-          const m = merk(s, "Marc malte Tiere nicht so, wie sie aussehen, sondern in Farben, die ihr <b>Wesen</b> zeigen.");
+          const m = merk(s, "Für Marc hatte jede Farbe eine <b>Bedeutung</b>: Blau geistig, Gelb heiter, Rot schwer.");
           s.add(cols(s, stack(s, 6, svg, credit), stack(s, 12, info, btns, card, m), 560));
           s.show(svg, "fade"); s.sfx.whoosh();
           s.step(async () => { for (let i = 0; i < facets.length; i++) { s.sfx.note(i * 2, .15); s.show(facets[i], "pop"); await s.wait(170); } s.say("Erst die Farbflächen: Gelb, Grün, Rot, Violett und Orange. Das sind lauter Gegenfarben."); });
@@ -525,8 +550,8 @@
           const sw = cs.map(c => s.h("button", { style: { width: "50px", height: "50px", borderRadius: "50%", background: c, border: "4px solid rgba(27,39,64,.3)", cursor: "pointer", padding: 0 }, "aria-label": "Farbe", onclick: () => { paint = c; sw.forEach(b => (b.style.borderColor = "rgba(27,39,64,.3)")); sw[cs.indexOf(c)].style.borderColor = "#1b2740"; s.sfx.pop(); } }));
           sw[1].style.borderColor = "#1b2740";
           const palette = s.h("div", { class: "row later", style: { gap: "8px", flexWrap: "nowrap" } }, ...sw);
-          const info = box(s, "ex", "August Macke (1887–1914)", "Im April 1914 reiste er mit Paul Klee und Louis Moilliet etwa zwei Wochen nach Tunesien (Hammamet, Kairouan …). Das helle Licht dort machte seine Farben noch leuchtender.", false);
-          const m = merk(s, "Macke malte flache, <b>leuchtende Farbflächen</b>. Er starb im September 1914, mit nur 27 Jahren.");
+          const info = s.photo("macke-kairouan", { w: 490, h: 290, caption: "Das Original: Macke, Kairouan III (1914)" });
+          const m = merk(s, "Im April 1914 reiste Macke mit Paul Klee nach Tunesien und malte flache, <b>leuchtende Farbflächen</b>. Er starb im September 1914, mit nur 27 Jahren.");
           const credit = P(s, "Meine Zeichnung im Stil von August Macke – kein Original!", "small pencil");
           const tip = P(s, "Wähle eine Farbe, tippe ein Haus an – und male die Stadt neu!", "small", true);
           s.add(cols(s, stack(s, 6, svg, credit), stack(s, 12, info, tip, palette, m), 580));
@@ -574,8 +599,8 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px minmax(0,1fr)", alignItems: "center", height: "100%" } }, roomCard, stack(s, 14, c1, c2, c3)));
           s.step(async () => { s.sfx.whoosh(); await s.show(roomCard, "left"); await s.tween({ from: 0, to: 100, dur: 1800, update: v => sl.set(Math.round(v)) }); s.say("Ein warm gestrichenes Zimmer wirkt gemütlich, ein kalt gestrichenes kühl und weit."); });
           s.step(async () => { s.sfx.pop(); await s.show(c1, "right"); s.say("Die Ampel nutzt Signalfarben."); });
-          s.step(async () => { s.sfx.pop(); await s.show(c2, "right"); s.say("Beim Fußball hilft der Kontrast der Trikots."); });
-          s.step(async () => { s.sfx.pop(); await s.show(c3, "right"); s.say("Und im Supermarkt zeigt die Farbe, was drin ist."); });
+          s.step(async () => { s.sound("whistle", { vol: .5 }); await s.show(c2, "right"); s.say("Beim Fußball hilft der Kontrast der Trikots."); });
+          s.step(async () => { s.sound("cash-register", { vol: .5 }); await s.show(c3, "right"); s.say("Und im Supermarkt zeigt die Farbe, was drin ist."); });
         },
       },
       /* 16 --------------------------------------------------------------- */

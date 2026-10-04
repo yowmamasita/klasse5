@@ -43,7 +43,7 @@
         const x0 = Number(hl.getAttribute("x")), x1 = cx(st.c) - C / 2 + 3;
         hl.setAttribute("opacity", 1);
         await s.tween({ from: x0, to: x1, dur: 300, update: v => hl.setAttribute("x", v) });
-        expl.textContent = st.t; s.sfx.pop();
+        expl.textContent = st.t; s.sound("pencil-write", { vol: .45, dur: .7 });
         await s.wait(500);
         s.show(res[st.c], "pop"); s.sfx.count(cfg.steps.indexOf(st) + 2);
         if (carries[st.c]) { await s.wait(250); s.show(carries[st.c], "down"); s.sfx.tick(); }
@@ -101,8 +101,11 @@
             s.sfx.note(i, 0.25); tapOut.classList.remove("a-pop"); void tapOut.offsetWidth; tapOut.classList.add("a-pop");
             cells.forEach(x => (x.style.background = "#fff")); c.style.background = "#fff6c9";
           }));
-          s.add(root(s, "stack", { justifyContent: "space-between" }, q, grid, bigNum, words, s.h("div", { class: "cols", style: { alignItems: "stretch" } }, merk, tap)));
-          s.sfx.whoosh();
+          const city = s.photo("berlin-mitte-luft", { w: 284, h: 262, caption: "Berlin von oben", cls: "a-zoom" });
+          s.add(root(s, "stack", { justifyContent: "space-between" }, q,
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", alignItems: "center" } }, s.h("div", { class: "stack", style: { gap: "8px", width: "792px" } }, grid, bigNum), city),
+            words, s.h("div", { class: "cols", style: { alignItems: "stretch" } }, merk, tap)));
+          s.sound("traffic", { vol: .4, dur: 5 });
           s.step(async () => {
             s.say("Drei Millionen achthundertsiebenundneunzigtausend einhundertfünfundvierzig.");
             for (let i = 0; i < 7; i++) { s.show(cells[i].dg, "bounce"); s.sfx.count(i); await s.wait(230); }
@@ -117,25 +120,27 @@
         title: "Große Zahlen im Alltag",
         say: "Große Zahlen findest du überall. Wir lesen sie immer in Dreierpäckchen.",
         build(s) {
+          const PH = { w: 150, h: 200, style: { flex: "none" } }, SV = { vol: .6, dur: 3.5 };
           const data = [
-            { e: "🏟️", t: "Plätze im Olympiastadion Berlin", n: "73.877", w: [["dreiundsiebzigtausend", P.blue], ["achthundertsiebenundsiebzig", P.green]] },
-            { e: "❤️", t: "So oft schlägt ein Erwachsenen-Herz an einem Tag – ungefähr", n: "100.000", w: [["hunderttausend", P.blue]] },
-            { e: "⏱️", t: "Sekunden in einem Jahr mit 365 Tagen", n: "31.536.000", w: [["einunddreißig Millionen ", P.violet], ["fünfhundertsechsunddreißigtausend", P.blue]] },
-            { e: "🚇", t: "Fahrgäste der BVG in einem Jahr – rund", n: "1.000.000.000", w: [["eine Milliarde", P.red]] },
+            { e: () => s.photo("olympiastadion", PH), snd: () => s.sound("crowd-cheer", SV), t: "Plätze im Olympiastadion Berlin", n: "73.877", w: [["dreiundsiebzigtausend", P.blue], ["achthundert\u00ADsiebenundsiebzig", P.green]] },
+            { e: () => s.photo("herzmodell", PH), snd: () => s.sound("heartbeat", SV), t: "So oft schlägt ein Erwachsenen-Herz an einem Tag – ungefähr", n: "100.000", w: [["hunderttausend", P.blue]] },
+            { e: () => s.photo("stoppuhr", PH), snd: () => s.sound("clock-tick", SV), t: "Sekunden in einem Jahr mit 365 Tagen", n: "31.536.000", w: [["einunddreißig Millionen ", P.violet], ["fünfhundertsechs\u00ADunddreißigtausend", P.blue]] },
+            { e: () => s.photo("ubahn-u5", PH), snd: () => s.sound("ubahn-train", SV), t: "Fahrgäste der BVG in einem Jahr – rund", n: "1.000.000.000", w: [["eine Milliarde", P.red]] },
           ];
           const cards = data.map((d, i) => {
-            const words = s.h("p", { class: "t", style: { fontSize: "22px" } });
+            const words = s.h("p", { class: "t", style: { fontSize: "21px", lineHeight: 1.25 } });
             d.w.forEach(([w, c], k) => { if (k) words.append(s.h("wbr")); words.append(sp(s, w, c)); });
-            return ex(s, "Beispiel " + (i + 1), { class: "ex" + (i ? " later" : " a-up"), style: { display: "flex", flexDirection: "column", gap: "10px", justifyContent: "center" } },
-              s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px" } }, s.h("span", { style: { fontSize: "38px", lineHeight: 1 } }, d.e), s.h("p", { class: "small" }, d.t)),
-              colorNum(s, d.n, "big mono"), words, s.h("p", { class: "small pencil" }, `${d.n.replace(/\./g, "").length} Stellen · ${d.n.split(".").length} Päckchen`));
+            return ex(s, "Beispiel " + (i + 1), { class: "ex" + (i ? " later" : " a-up"), style: { display: "flex", flexDirection: "column", gap: "6px", justifyContent: "center", minWidth: 0, padding: "12px 16px" } },
+              s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "16px", alignItems: "center" } }, d.e(),
+                s.h("div", { style: { display: "flex", flexDirection: "column", gap: "6px", minWidth: 0, flex: 1 } },
+                  s.h("p", { class: "small" }, d.t), colorNum(s, d.n, "big mono"), words, s.h("p", { class: "small pencil" }, `${d.n.replace(/\./g, "").length} Stellen · ${d.n.split(".").length} Päckchen`))));
           });
           const chip = (n, w) => s.h("div", { class: "chip", style: { fontSize: "21px", padding: "8px 16px" } }, s.h("b", null, n), " " + w);
           const arrow = () => s.h("span", { class: "hand red", style: { fontSize: "30px" } }, "· 1.000 →");
           const ladder = s.h("div", { class: "row later", style: { justifyContent: "center", flexWrap: "nowrap", gap: "12px" } }, chip("1.000", "Tausend"), arrow(), chip("1.000.000", "Million"), arrow(), chip("1.000.000.000", "Milliarde"));
-          s.add(root(s, "stack", { justifyContent: "space-between" }, s.h("div", { class: "cols", style: { gridTemplateRows: "1fr 1fr", gap: "16px 22px", flex: 1 } }, ...cards), ladder));
-          s.sfx.pop();
-          [1, 2, 3].forEach(i => s.step(async () => { s.sfx.pop(); await s.show(cards[i], i % 2 ? "right" : "left"); s.sfx.count(i + 2); }));
+          s.add(root(s, "stack", { justifyContent: "space-between" }, s.h("div", { class: "cols", style: { gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gridTemplateRows: "1fr 1fr", gap: "14px 22px", flex: 1 } }, ...cards), ladder));
+          data[0].snd();
+          [1, 2, 3].forEach(i => s.step(async () => { data[i].snd(); await s.show(cards[i], i % 2 ? "right" : "left"); }));
           s.step(async () => { s.sfx.whoosh(); await s.show(ladder, "up"); s.sfx.success(); s.say("Tausend mal tausend ist eine Million. Tausend Millionen sind eine Milliarde."); });
         },
       },
@@ -259,7 +264,7 @@
           s.sfx.pop();
           s.step(async () => { await zoomTo(1); s.sfx.ding(); s.say("Von null bis hunderttausend. Jetzt sieht man drei Stadien."); });
           s.step(async () => { await zoomTo(3); s.sfx.ding(); s.say("Von dreiundsiebzigtausend bis vierundsiebzigtausend. Ein Strich ist hundert."); });
-          s.step(async () => { await zoomTo(4); s.sfx.ding(); s.show(merk, "up"); await s.show(lf, "up", 150); });
+          s.step(async () => { await zoomTo(4); s.sound("crowd-cheer", { vol: .45, dur: 3 }); s.show(merk, "up"); await s.show(lf, "up", 150); });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -313,8 +318,32 @@
             const sorted = [...towers].sort((a, b) => a.h - b.h);
             s.sfx.whoosh();
             await Promise.all(sorted.map((t, ni) => { const x0 = slot(t.pos), x1 = slot(ni); t.pos = ni; return s.tween({ from: 0, to: 1, dur: 900, update: k => t.g.setAttribute("transform", `translate(${x0 + (x1 - x0) * k},${-40 * Math.sin(Math.PI * k)})`) }); }));
-            s.sfx.success(); await s.show(order, "up"); s.say("Der Größe nach geordnet: hundertsechzehn, hundertsiebenundfünfzig, dreihundertdreißig, dreihundertachtundsechzig Meter.");
+            s.sfx.success(); await s.show(order, "up"); s.say("Der Größe nach geordnet: achtundneunzig, hundertsiebenundfünfzig, dreihundertdreißig, dreihundertachtundsechzig Meter.");
           });
+        },
+      },
+      /* 5b --------------------------------------------------------------- */
+      {
+        title: "Die Türme in echt",
+        say: "So sehen die vier Bauwerke in echt aus. Auf den Fotos wirken sie gleich groß – die Zahlen verraten, wie hoch sie wirklich sind.",
+        build(s) {
+          const T4 = [
+            { p: o => s.photo("berliner-dom", o), n: "Berliner Dom", h: 98, c: P.violet, pos: "50% 60%" },
+            { p: o => s.photo("koelner-dom", o), n: "Kölner Dom", h: 157, c: P.green, pos: "50% 40%", snd: () => s.sound("church-bells", { vol: .45, from: 3, dur: 3 }) },
+            { p: o => s.photo("eiffelturm", o), n: "Eiffelturm", h: 330, c: P.orange, pos: "50% 40%", snd: () => s.sound("wind", { vol: .4, dur: 3 }) },
+            { p: o => s.photo("fernsehturm", o), n: "Fernsehturm", h: 368, c: P.red, pos: "50% 35%", snd: () => s.sound("wind", { vol: .45, from: 3, dur: 3 }) },
+          ];
+          const figs = T4.map((t, i) => {
+            const bar = s.h("div", { style: { height: "14px", borderRadius: "7px", background: t.c, width: Math.round(250 * t.h / 368) + "px" } });
+            return s.h("div", { class: "stack" + (i ? " later" : " a-up"), style: { gap: "8px", alignItems: "flex-start" } },
+              t.p({ w: 250, h: 466, pos: t.pos, caption: t.n }),
+              s.h("p", { class: "h2 mono", style: { color: t.c } }, t.h + " m"), bar);
+          });
+          const note = s.h("p", { class: "t later", style: { textAlign: "center" } }, "Fotos täuschen: Erst die ", s.h("b", null, "Zahlen"), " zeigen, wer wirklich der Größte ist. Die Balken sind maßstabsgetreu.");
+          s.add(root(s, "stack", { justifyContent: "space-between", gap: "12px" }, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center", alignItems: "flex-start" } }, ...figs), note));
+          s.sound("church-bells", { vol: .4, dur: 3 });
+          [1, 2, 3].forEach(i => s.step(async () => { T4[i].snd(); await s.show(figs[i], "up"); s.say(T4[i].n + ": " + T4[i].h + " Meter."); }));
+          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(note, "up"); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -427,7 +456,7 @@
             await s.tween({ from: 0, to: 74, dur: 2600, ease: "inOut", update: x => { lit = Math.round(x); if (lit !== last) { last = lit; cnt.textContent = lit; draw(); if (lit % 2 === 0) s.sfx.tick(); } } });
             lit = 74; cnt.textContent = "74"; draw(); s.sfx.ding();
           });
-          s.step(async () => { s.sfx.success(); await s.show(c3, "zoom"); s.say("Vierundsiebzig mal tausend ist vierundsiebzigtausend. Fast genau richtig!"); });
+          s.step(async () => { s.sound("crowd-cheer", { vol: .5, dur: 3.5 }); await s.show(c3, "zoom"); s.say("Vierundsiebzig mal tausend ist vierundsiebzigtausend. Fast genau richtig!"); });
           s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
         },
       },
@@ -467,7 +496,7 @@
           s.add(root(s, "cols", { gridTemplateRows: "1fr 1fr", gap: "16px 22px" }, ...cards));
           s.sfx.pop();
           cards.forEach((c, i) => s.step(async () => {
-            if (i) { s.sfx.pop(); await s.show(c, i % 2 ? "right" : "left"); }
+            if (i) { s.sfx.pop(); await s.show(c, i % 2 ? "right" : "left"); } else s.sound("coins", { vol: .6 });
             for (let k = 0; k < c.labs.length; k++) { s.show(c.labs[k], "up"); s.sfx.count(k * 2 + i); await s.wait(260); }
             s.say(["Summand plus Summand gleich Summe.", "Minuend minus Subtrahend gleich Differenz.", "Faktor mal Faktor gleich Produkt.", "Dividend geteilt durch Divisor gleich Quotient."][i]);
           }));
@@ -500,8 +529,8 @@
           const lf = life(s, { class: "life later" }, s.h("p", { class: "small" }, "Kassenzettel zusammenzählen · Kilometer der Klassenfahrt: 1.250 km − 487 km · Punkte im Spiel addieren. Wichtig: Stellen genau untereinander!"));
           s.add(root(s, "stack", { justifyContent: "space-between" }, s.h("div", { class: "cols", style: { gap: "22px" } }, cA, cS), lf));
           s.sfx.pop();
-          s.step(async () => { s.say("Wir addieren von rechts nach links."); await add.run(cA.expl); });
-          s.step(async () => { s.say("Beim Minus ergänzen wir von unten nach oben."); await sub.run(cS.expl); });
+          s.step(async () => { s.sound("crowd-cheer", { vol: .4, dur: 2.5 }); s.say("Wir addieren von rechts nach links."); await add.run(cA.expl); });
+          s.step(async () => { s.sound("footsteps", { vol: .5, dur: 2.5 }); s.say("Beim Minus ergänzen wir von unten nach oben."); await sub.run(cS.expl); });
           s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
         },
       },
@@ -530,8 +559,9 @@
           const e4 = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, s.h("b", null, "Überschlag:"), " 1.000 · 12 = 12.000. Unser Ergebnis 11.832 liegt nah dran – passt!");
           const lf = life(s, { class: "life later" }, s.h("p", { class: "small" }, "Klassenfahrt: 28 Kinder · 245 € = 6.860 €. Ein Jahr: 365 Tage · 24 Stunden = 8.760 Stunden."));
           const left = ex(s, "Beispiel: Fernsehturm-Treppe", { class: "ex a-left", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" } }, s.h("p", { class: "small" }, "986 Stufen, 12-mal hoch"), svg);
-          s.add(root(s, "", { display: "grid", gridTemplateColumns: "400px 1fr", gap: "26px", alignItems: "center" }, left, s.h("div", { class: "stack", style: { gap: "14px" } }, e1, e2, e3, e4, lf)));
-          s.sfx.pop();
+          const tower = s.photo("fernsehturm", { w: 196, h: 600, pos: "50% 30%", caption: "986 Stufen", cls: "a-zoom" });
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "196px 400px 1fr", gap: "20px", alignItems: "center" }, tower, left, s.h("div", { class: "stack", style: { gap: "12px" } }, e1, e2, e3, e4, lf)));
+          s.sound("footsteps", { vol: .5, dur: 3 });
           const hlTo = async i => { hl.setAttribute("opacity", 1); await s.tween({ from: Number(hl.getAttribute("x")), to: cx(i) - C / 2 + 3, dur: 300, update: v => hl.setAttribute("x", v) }); };
           s.step(async () => { await hlTo(4); s.show(e1, "left"); for (const d of p1) { await s.wait(400); s.show(d, "pop"); s.sfx.count(2); } s.say("Erst mal eins, das ist ein Zehner. Das Ergebnis endet unter der Eins."); });
           s.step(async () => { await hlTo(5); s.show(e2, "left"); for (let i = 0; i < p2.length; i++) { await s.wait(420); s.show(p2[i], "pop"); s.sfx.count(i + 3); } s.say("Dann mal zwei. Das Ergebnis endet unter der Zwei."); });
@@ -552,7 +582,7 @@
             s.h("span", { style: { width: "46px", height: "46px", flex: "none", borderRadius: "50%", background: c, color: "#fff", display: "grid", placeItems: "center", font: "800 26px/1 var(--f-display)" } }, n),
             s.h("span", { style: { font: "800 34px/1 var(--f-display)", color: c } }, sym), s.h("span", { class: "t" }, txt));
           const rules = s.h("div", { class: "cols3", style: { gap: "18px" } }, rule("1", "( )", "Klammern", P.violet, 0), rule("2", "· :", "Punkt", P.red, 150), rule("3", "+ −", "Strich", P.blue, 300));
-          const mk = (label, ctx, parts, l1, l2) => {
+          const mk = (label, ctx, parts, l1, l2, snd) => { // snd: () => s.sound(…)
             const first = s.h("span", { style: { borderRadius: "6px", padding: "0 3px" } }, parts[1]);
             const L0 = s.h("p", { class: "h2 mono" }, parts[0], first, parts[2]);
             const L1 = s.h("p", { class: "h2 mono later" }, ...l1);
@@ -562,14 +592,14 @@
               await s.show(c, "up"); s.sfx.pop(); await s.wait(300);
               first.style.background = "var(--yellow)"; s.sfx.scribble(); await s.wait(500);
               await s.show(L1, "left"); s.sfx.count(3); await s.wait(300);
-              await s.show(L2, "pop"); s.sfx.ding();
+              await s.show(L2, "pop"); snd();
             };
             return c;
           };
           const cards = [
-            mk("Beispiel 1: Kino", "Eine Erwachsenen-Karte 7 € und 4 Kinder-Karten zu je 5 €.", ["7 + ", "4 · 5", ""], ["= 7 + ", s.h("b", null, "20")], "= 27 €"),
-            mk("Beispiel 2: Schulweg", "3 Tage lang: hin 12 min und zurück 8 min.", ["", "(12 + 8)", " · 3"], ["= ", s.h("b", null, "20"), " · 3"], "= 60 min"),
-            mk("Beispiel 3: Taschengeld", "Du hast 20 € und kaufst 2 Hefte zu je 3 €.", ["20 − ", "2 · 3", ""], ["= 20 − ", s.h("b", null, "6")], "= 14 €"),
+            mk("Beispiel 1: Kino", "Eine Erwachsenen-Karte 7 € und 4 Kinder-Karten zu je 5 €.", ["7 + ", "4 · 5", ""], ["= 7 + ", s.h("b", null, "20")], "= 27 €", () => s.sound("cash-register", { vol: .6 })),
+            mk("Beispiel 2: Schulweg", "3 Tage lang: hin 12 min und zurück 8 min.", ["", "(12 + 8)", " · 3"], ["= ", s.h("b", null, "20"), " · 3"], "= 60 min", () => s.sound("footsteps", { vol: .5, dur: 2.5 })),
+            mk("Beispiel 3: Taschengeld", "Du hast 20 € und kaufst 2 Hefte zu je 3 €.", ["20 − ", "2 · 3", ""], ["= 20 − ", s.h("b", null, "6")], "= 14 €", () => s.sound("coins", { vol: .6 })),
           ];
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Ohne Klammern wäre 12 + 8 · 3 = 12 + 24 = 36 – das passt nicht zur Geschichte! Klammern sagen: ", s.h("b", null, "Das zuerst!"));
           s.add(root(s, "stack", { justifyContent: "center", gap: "26px" }, rules, s.h("div", { class: "cols3", style: { gap: "18px" } }, ...cards), merk));
@@ -670,7 +700,7 @@
           s.step(async () => { split = true; update(); s.sfx.snap(); await s.show(splitG, "fade"); s.show(eq1, "up"); await s.show(eq2, "up", 200); s.show(sl, "up"); s.sfx.success(); s.say("Sieben mal zwanzig plus sieben mal drei. Hundertvierzig plus einundzwanzig ist hunderteinundsechzig."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(e2, "right"); s.say("Achtundneunzig ist fast hundert. Sechs mal hundert minus sechs mal zwei."); });
-          s.step(async () => { s.sfx.pop(); await s.show(e3, "right"); s.show(lf13, "up"); s.say("Andersherum geht es auch: vier Kisten plus sechs Kisten sind zehn Kisten."); });
+          s.step(async () => { s.sound("glass-clink", { vol: .6 }); await s.show(e3, "right"); s.show(lf13, "up"); s.say("Andersherum geht es auch: vier Kisten plus sechs Kisten sind zehn Kisten."); });
         },
       },
       /* 14 --------------------------------------------------------------- */
@@ -737,8 +767,8 @@
           s.add(root(s, "stack", { justifyContent: "space-between", gap: "12px" }, s.h("div", { class: "row", style: { gap: "12px" } }, ...tabs, s.h("span", { class: "small pencil", style: { marginLeft: "8px" } }, "Tippe auf eine Größe")), svg, chips, merk));
           select("Länge", false);
           s.step(async () => { await select("Länge", true); s.say("Dreihundertachtundsechzig Meter sind sechsunddreißigtausendachthundert Zentimeter."); });
-          s.step(async () => { await select("Masse", true); s.say("Fünf Tonnen sind fünftausend Kilogramm, das sind fünf Millionen Gramm!"); });
-          s.step(async () => { await select("Zeit", true); s.say("Ein Tag hat vierundzwanzig Stunden, tausendvierhundertvierzig Minuten, sechsundachtzigtausendvierhundert Sekunden."); });
+          s.step(async () => { s.sound("elefant", { vol: .6 }); await select("Masse", true); s.say("Fünf Tonnen sind fünftausend Kilogramm, das sind fünf Millionen Gramm!"); });
+          s.step(async () => { s.sound("clock-tick", { vol: .5, dur: 3 }); await select("Zeit", true); s.say("Ein Tag hat vierundzwanzig Stunden, tausendvierhundertvierzig Minuten, sechsundachtzigtausendvierhundert Sekunden."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -787,7 +817,8 @@
           ];
           s.sfx.pop();
           anims[0]();
-          [1, 2, 3].forEach(i => s.step(async () => { s.sfx.pop(); await s.show(cards[i], i % 2 ? "right" : "left"); await anims[i](); }));
+          const snd15 = [null, () => s.sound("zipper"), () => s.sound("school-bell", { vol: .45, dur: 3 }), () => s.sound("ubahn-train", { vol: .45, dur: 5 })];
+          [1, 2, 3].forEach(i => s.step(async () => { snd15[i](); await s.show(cards[i], i % 2 ? "right" : "left"); await anims[i](); }));
         },
       },
       /* 16 --------------------------------------------------------------- */

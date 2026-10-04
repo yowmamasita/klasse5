@@ -68,11 +68,11 @@
           const stampTo = async i => {
             await s.tween({ from: cx, to: XS[i], dur: 380, update: v => setT(stamp, v, HY) }); cx = XS[i];
             await s.tween({ from: HY, to: PY, dur: 240, ease: "in", update: v => setT(stamp, cx, v) });
-            s.sfx.drum(); s.show(prints[i], "pop"); count.textContent = String(++n);
+            s.sound("stempel"); s.show(prints[i], "pop"); count.textContent = String(++n);
             await s.tween({ from: PY, to: HY, dur: 300, update: v => setT(stamp, cx, v) });
           };
           const m = merk(s, "Der <b>Druckstock</b> trägt das Bild. Einmal gemacht, druckst du damit <b>so oft du willst</b>.");
-          const life = box(s, "life", "Im Alltag", "Briefmarken, Zeitungen, Bücher: Alles wird mit Druckstöcken oder Druckplatten tausendfach gedruckt – und jedes Stück sieht gleich aus.");
+          const life = s.photo("kartoffeldruck", { w: 520, h: 270, pos: "50% 50%", caption: "Kartoffeldruck: ein Stempel, viele gleiche Katzen", cls: "later" });
           s.add(cols(s, svg, stack(s, 14,
             P(s, "Ein <b>Stempel</b> ist der einfachste <b>Druckstock</b>."),
             s.h("div", { class: "row" }, count, s.h("span", { class: "t" }, "gleiche Abdrücke")),
@@ -81,7 +81,7 @@
           s.step(async () => { s.sfx.whoosh(); await stampTo(0); s.say("Der erste Abdruck."); });
           s.step(async () => { await stampTo(1); s.say("Der zweite Abdruck – genau gleich."); });
           s.step(async () => { await stampTo(2); s.sfx.ding(); await s.show(m, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.swoosh(); await s.show(life, "zoom"); s.say("So sieht ein echter Kartoffeldruck aus."); });
         },
       },
       /* 2 ---------------------------------------------------------------- */
@@ -120,7 +120,7 @@
           s.step(async () => {
             s.show(r3, "up"); s.show(paper, "fade");
             await s.tween({ from: 90, to: 286, dur: 700, ease: "in", update: v => setT(paper, 0, v) });
-            s.sfx.drum(); await s.wait(500);
+            s.sound("papier-reiben", { dur: 1.2, vol: .7 }); await s.wait(1000);
             s.sfx.swoosh();
             await s.tween({ from: 286, to: 100, dur: 800, update: v => setT(paper, 0, v) });
           });
@@ -146,7 +146,7 @@
           const printed = s.el("polygon", { points: star(CX, 420, 62, 26), fill: UC, class: "later" });
           const arrow = s.el("g", { class: "later" }, s.el("path", { d: "M270,292 L270,326", stroke: "#475569", "stroke-width": 6, "stroke-linecap": "round", fill: "none" }), arrowHead(s, 270, 336, Math.PI / 2, "#475569", 20));
           svg.append(cut, outline, inked, knife, paperRect, printed, arrow);
-          const e1 = box(s, "ex", "Material", "Ein <b>Radiergummi</b>, eine <b>Kartoffel</b> oder <b>Moosgummi</b> – alles, was sich gut schneiden lässt.", false);
+          const e1 = s.photo("kartoffelstempel", { w: 520, h: 260, pos: "50% 45%", caption: "Kartoffelstempel – Radiergummi geht auch" });
           const safe = s.h("div", { class: "ex later", style: { borderColor: UC, borderWidth: "3px" } }, s.h("span", { class: "exlabel", style: { color: UC } }, "Sicherheit"),
             s.h("p", { class: "small", html: "Schneide <b>immer von deiner Hand weg</b>. Die Hand, die den Stempel hält, bleibt nie vor dem Messer." }));
           const m = merk(s, "Alles, was <b>nicht</b> drucken soll, schneidest du <b>weg</b>. Der Stern bleibt <b>hoch</b> stehen.");
@@ -158,16 +158,17 @@
             const pts = star(CX, CY, 95, 40).split(" ").map(p => p.split(",").map(Number));
             const total = pts.length;
             cut.classList.remove("later"); cut.style.opacity = 0;
+            const snd = s.sound("schnitzen", { vol: .7 });
             await s.tween({ from: 0, to: total, dur: 2200, ease: "linear", update: v => {
               const i = Math.min(total - 1, Math.floor(v)), f = v - i, a = pts[i], b = pts[(i + 1) % total];
               setT(knife, a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f + 6);
               cut.style.opacity = Math.min(1, v / total);
-              if (Math.floor(v * 4) % 2 === 0) s.sfx.tick();
             } });
+            snd.stop();
             s.hide(knife); outline.classList.add("later");
           });
           s.step(async () => { s.sfx.pop(); await s.show(inked, "pop"); s.say("Jetzt färbst du den Stern mit dem Stempelkissen ein."); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(arrow, "down"); s.sfx.drum(); await s.show(printed, "pop"); s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(arrow, "down"); s.sound("stempel"); await s.show(printed, "pop"); s.sfx.ding(); await s.show(m, "up"); });
         },
       },
       /* 4 ---------------------------------------------------------------- */
@@ -227,12 +228,12 @@
             s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap" } }, colBtns),
             s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } }, rotBtn, fillBtn, clearBtn), tag);
           const m = merk(s, "Ein Muster, das sich <b>immer wieder</b> wiederholt, heißt <b>Rapport</b>.");
-          const life = box(s, "life", "Im Alltag", "Tapete, Stoff, Geschenkpapier: Ein Stempel oder eine Walze druckt das Muster endlos weiter.");
-          s.add(cols(s, svg, stack(s, 12, P(s, "Wähle Form, Farbe und Drehung. Dann tippe!"), ctr, m, life), CW));
+          const life = s.photo("stoffdruck-rapport", { w: 260, h: 260, pos: "50% 60%", caption: "Stoffdruck, Indien", cls: "later" });
+          s.add(cols(s, svg, stack(s, 12, P(s, "Wähle Form, Farbe und Drehung. Dann tippe!"), ctr, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, m, life)), CW));
           s.show(svg, "zoom"); s.sfx.pop();
           s.step(async () => { s.sfx.whoosh(); await s.show(ctr, "up"); s.say("Wähle einen Stempel und tippe aufs Papier."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("stempel"); await s.show(life, "zoom"); s.say("In Indien werden Stoffe bis heute so bedruckt: Stempel für Stempel."); });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -273,21 +274,23 @@
             draw(plate, INK, "#e8edf3"); s.sfx.snap();
             await s.tween({ from: 480, to: 60, dur: 700, ease: "linear", update: v => setT(roller, v, 125) });
             s.hide(roller);
-            await s.show(sheet, "fade"); s.sfx.scribble(); await s.wait(500); s.sfx.scribble();
+            await s.show(sheet, "fade"); s.sound("papier-reiben", { dur: 1.2, vol: .7 }); await s.wait(1000);
             await s.tween({ from: .93, to: 0, dur: 500, update: v => sheet.setAttribute("opacity", v) });
             s.hide(sheet); draw(printG, INK, "#fff"); s.sfx.swoosh();
             await s.show(printG, "fade"); s.sfx.ding(); busy = false;
           };
           const btns = Object.keys(mats).map(k => s.h("button", { class: "btn" + (k === kind ? " solid" : ""), onclick: () => { if (busy) return; kind = k; btns.forEach(b => b.classList.toggle("solid", b.textContent === k)); s.sfx.click(); demo(); } }, k));
           const ctr = s.h("div", { class: "row later", style: { gap: "10px" } }, btns);
-          const e1 = box(s, "ex", "Was du nehmen kannst", "<b>Blätter</b> mit Rippen, ausgeschnittene <b>Pappe</b>, aufgeklebte <b>Schnur</b> – auch Kordel, Draht oder Netze.", false);
+          const e1 = box(s, "ex", "Was du nehmen kannst", "<b>Blätter</b> mit Rippen, <b>Pappe</b>, <b>Schnur</b>, Kordel oder Netze.", false);
+          const gyo = s.photo("gyotaku", { w: 320, h: 260, pos: "40% 55%", caption: "Gyotaku: Fischdruck", cls: "later" });
           const e2 = box(s, "ex", "Und so geht's", "Material auf eine Platte kleben, mit der <b>Walze</b> einfärben, Papier drauf und mit der Hand <b>andrücken</b>.");
           const m = merk(s, "Beim <b>Materialdruck</b> druckt die <b>Struktur</b> des Materials mit: Rippen, Rillen, Kanten.");
-          s.add(cols(s, svg, stack(s, 12, e1, e2, ctr, m)));
+          s.add(cols(s, svg, stack(s, 10, e1, e2, ctr, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, m, gyo)), 470));
           s.show(svg, "zoom"); s.sfx.pop();
           s.step(async () => { await s.show(e2, "up"); s.say("Wir drucken ein Blatt. Erst einfärben, dann andrücken."); await demo(); });
           s.step(async () => { s.sfx.pop(); await s.show(ctr, "pop"); s.say("Probiere die anderen Materialien aus."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(gyo, "zoom"); s.say("In Japan druckt man sogar Fische ab. Das heißt Gyotaku."); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -324,7 +327,8 @@
           s.step(async () => { for (const st of strokes) { s.sfx.scribble(); await s.show(st, "draw"); } s.say("Zuerst malst du mit nasser Farbe auf das Glas."); });
           s.step(async () => {
             s.show(b, "up"); s.show(paper, "fade"); await s.wait(300); s.show(spoon, "pop");
-            await s.tween({ from: 0, to: 1, dur: 1400, ease: "linear", update: v => { setT(spoon, 120 + 280 * (0.5 - 0.5 * Math.cos(v * Math.PI * 4)), 120 + 30 * Math.sin(v * Math.PI * 8)); if (Math.floor(v * 12) % 2 === 0) s.sfx.tick(); } });
+            s.sound("papier-reiben", { dur: 1.5, vol: .7 });
+            await s.tween({ from: 0, to: 1, dur: 1400, ease: "linear", update: v => { setT(spoon, 120 + 280 * (0.5 - 0.5 * Math.cos(v * Math.PI * 4)), 120 + 30 * Math.sin(v * Math.PI * 8)); } });
             s.hide(spoon);
           });
           s.step(async () => {
@@ -377,6 +381,24 @@
           s.step(async () => { s.sfx.success(); });
         },
       },
+      /* 7b --------------------------------------------------------------- */
+      {
+        title: "Linolschnitt in echt",
+        say: "So sieht ein Linolschnitt in echt aus: schneiden, einfärben, abziehen – und fertig ist das Bild.",
+        build(s) {
+          const ph = [
+            s.photo("linol-schneiden", { w: 540, h: 300, pos: "50% 50%", caption: "Schneiden mit dem Hohleisen" }),
+            s.photo("walze-farbe", { w: 540, h: 300, pos: "50% 55%", caption: "Farbe mit der Walze ausrollen", cls: "later" }),
+            s.photo("linol-abziehen", { w: 540, h: 300, pos: "50% 40%", caption: "Das Papier abziehen", cls: "later" }),
+            s.photo("linol-biber", { w: 540, h: 300, fit: "contain", caption: "Fertig: ein Linolschnitt in Farbe", cls: "later", style: { background: "#fff" } }),
+          ];
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "540px 540px", gap: "16px 20px", justifyContent: "center", alignContent: "center", height: "100%" } }, ...ph));
+          s.sound("schnitzen", { vol: .6 });
+          s.step(async () => { s.sfx.swoosh(); await s.show(ph[1], "zoom"); s.say("Die Walze verteilt die Farbe ganz dünn."); });
+          s.step(async () => { s.sound("papier-reiben", { dur: 1.5, vol: .7 }); await s.show(ph[2], "zoom"); s.say("Papier drauf, reiben, abziehen."); });
+          s.step(async () => { s.sfx.success(); await s.show(ph[3], "zoom"); s.say("Für jede Farbe braucht man einen eigenen Druckgang."); });
+        },
+      },
       /* 8 ---------------------------------------------------------------- */
       {
         title: "Schneiden – aber sicher!",
@@ -403,12 +425,13 @@
           const cutAnim = async (p, y, ok) => {
             s.show(p.knife, "fade"); s.show(p.groove, "fade"); s.show(p.dir, "fade");
             const L = 600; p.groove.style.strokeDashoffset = L; p.groove.style.animation = "none";
+            const snd = s.sound("schnitzen", { vol: .6 });
             await s.tween({ from: 0, to: 1, dur: 2000, ease: "linear", update: v => {
               const x = ok ? 180 + 310 * v : 490 - 310 * v;
               setT(p.knife, x + (ok ? 0 : 0), y + 95 + (ok ? 0 : 0), ok ? 1 : -1);
               p.groove.style.strokeDashoffset = L * (1 - v) * (ok ? 1 : -1) + (ok ? 0 : 0);
-              if (Math.floor(v * 16) % 2 === 0) s.sfx.tick();
             } });
+            snd.stop();
           };
           // U / V profiles
           const prof = (type) => { const sv = s.svg(120, 64); sv.append(s.el("rect", { x: 4, y: 8, width: 112, height: 50, rx: 5, fill: LI }),
@@ -459,14 +482,15 @@
           const b1 = s.h("button", { class: "btn", onclick: () => run(false) }, "Normal schneiden");
           const b2 = s.h("button", { class: "btn solid", onclick: () => run(true) }, "Spiegelverkehrt schneiden");
           const m = merk(s, "Beim Drucken wird alles <b>umgedreht</b>. Darum schneidest du Schrift immer <b>spiegelverkehrt</b>.");
-          const life = box(s, "life", "Im Alltag", "Auf Stempeln steht Schrift verkehrt herum. Vorn auf Krankenwagen auch: Im Rückspiegel liest man sie richtig.");
-          s.add(cols(s, svg, stack(s, 6, wrongBox, rightBox, s.h("div", { class: "row later", style: { gap: "10px" } }), m, life)));
+          const life = s.photo("krankenwagen-spiegel", { w: 600, h: 244, pos: "50% 62%", caption: "Krankenwagen: vorn in Spiegelschrift", cls: "later" });
+          s.add(cols(s, svg, stack(s, 6, wrongBox, rightBox, s.h("div", { class: "row later", style: { gap: "10px", flexWrap: "nowrap" } }), m, life), 460));
           const btnRow = svg.parentNode.parentNode.querySelector(".row.later");
           btnRow.append(b1, b2);
           s.show(svg, "zoom"); s.sfx.pop();
           s.step(async () => { s.say("Wir schneiden KUNST ganz normal. Dann drucken wir."); await flip(); s.show(wrongBox, "up"); s.sfx.error(); });
           s.step(async () => { s.say("Jetzt schneiden wir das Wort spiegelverkehrt."); ghost.classList.add("later"); await s.tween({ from: 1, to: -1, dur: 800, update: v => setSx(v) }); await flip(); s.show(rightBox, "up"); s.sfx.success(); });
-          s.step(async () => { s.sfx.ding(); s.show(btnRow, "pop"); await s.show(m, "up"); s.show(life, "up", 200); });
+          s.step(async () => { s.sfx.ding(); s.show(btnRow, "pop"); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(life, "zoom"); s.say("Vorn auf Krankenwagen steht die Schrift spiegelverkehrt. Im Rückspiegel des Autos davor liest man sie richtig."); });
         },
       },
       /* 10 --------------------------------------------------------------- */
@@ -562,7 +586,7 @@
           };
           const printIt = async () => {
             blocks.forEach(b => b.g.lastChild.setAttribute("fill", UC)); s.sfx.snap(); await s.wait(300);
-            printT.textContent = words[wi]; await s.show(printT, "pop"); s.sfx.drum();
+            printT.textContent = words[wi]; s.sound("stempel"); await s.show(printT, "pop");
           };
           const btn = s.h("button", { class: "btn later", onclick: async () => { if (busy) return; busy = true; wi = (wi + 1) % words.length; await setWord(); await printIt(); busy = false; } }, "Anderes Wort");
           const f1 = box(s, "ex", "Das Neue", "Jeder Buchstabe ist ein <b>einzelnes Stück Metall</b>. Man setzt Wörter zusammen und nimmt sie danach wieder auseinander. Die Gutenberg-Bibel entstand <b>1452 bis 1454</b>.", false);
@@ -575,37 +599,69 @@
           s.step(async () => { s.sfx.pop(); s.show(btn, "pop"); await s.show(m, "up"); s.show(life, "up", 200); });
         },
       },
+      /* 12b -------------------------------------------------------------- */
+      {
+        title: "Gutenbergs Werkstatt",
+        say: "So sah Gutenbergs Werkstatt aus: Bleilettern, eine schwere Holzpresse – und am Ende die berühmte Bibel.",
+        build(s) {
+          const a = s.photo("bleilettern", { w: 360, h: 300, pos: "40% 50%", caption: "Bleilettern" });
+          const b = s.photo("gutenberg-presse", { w: 340, h: 300, fit: "contain", caption: "Die Presse (Nachbau)", cls: "later", style: { background: "#fff" } });
+          const c = s.photo("gutenberg-bibel", { w: 360, h: 300, pos: "50% 50%", caption: "Die Gutenberg-Bibel", cls: "later" });
+          const t1 = box(s, "ex", "1 · Setzen", "Die Lettern werden Buchstabe für Buchstabe in eine Zeile gesetzt – <b>spiegelverkehrt</b>.", false);
+          const t2 = box(s, "ex", "2 · Pressen", "Einfärben, Papier drauf, und die <b>Presse</b> drückt alles fest zusammen.");
+          const t3 = box(s, "ex", "3 · Die Bibel", "Etwa <b>180 Stück</b> wurden gedruckt. <b>49</b> gibt es heute noch, einige nur in Teilen.");
+          const row = (...k) => s.h("div", { style: { display: "grid", gridTemplateColumns: "360px 340px 360px", gap: "20px", justifyContent: "center" } }, ...k);
+          s.add(s.h("div", { style: { display: "flex", flexDirection: "column", gap: "18px", height: "100%", justifyContent: "center" } }, row(a, b, c), row(t1, t2, t3)));
+          s.step(async () => { s.sound("druckpresse", { vol: .5, dur: 3 }); s.show(t2, "up"); await s.show(b, "zoom"); s.say("Die Presse drückt das Papier auf die Lettern."); });
+          s.step(async () => { s.sfx.success(); s.show(t3, "up"); await s.show(c, "zoom"); s.say("Die Gutenberg-Bibel entstand in Mainz, zwischen 1452 und 1454."); });
+        },
+      },
       /* 13 --------------------------------------------------------------- */
       {
         title: "Dürers Nashorn (1515)",
         say: "Albrecht Dürer machte 1515 einen Holzschnitt von einem Nashorn. Er hat das Tier nie selbst gesehen.",
         build(s) {
-          const svg = s.svg(540, 440);
-          const INK = "#1b2740";
-          const body = s.el("path", { d: "M72,225 C60,200 80,172 118,168 C140,128 205,102 275,106 C365,102 455,125 482,195 C496,245 484,290 474,332 L440,332 L432,292 C410,302 380,306 350,304 L342,332 L308,332 L300,300 C270,308 250,304 235,296 L228,336 L192,336 L184,298 C165,300 150,292 140,272 C122,280 95,272 80,252 C72,246 72,236 72,225 Z", fill: "#f6efe3", stroke: INK, "stroke-width": 5, "stroke-linejoin": "round", class: "later" });
-          const horn = s.el("path", { d: "M80,208 C62,198 52,172 40,150 C64,166 92,182 104,194 Z", fill: INK, class: "later" });
-          const ear = s.el("path", { d: "M138,152 C134,128 150,120 162,134 C160,142 152,148 138,152 Z", fill: "#f6efe3", stroke: INK, "stroke-width": 4, class: "later" });
-          const eye = s.el("circle", { cx: 112, cy: 200, r: 5, fill: INK, class: "later" });
-          const plates = ["M150,160 C172,190 176,226 160,264", "M215,118 C252,150 260,240 232,292", "M360,108 C396,150 400,232 372,302", "M440,128 C466,170 472,240 456,306", "M92,226 C104,232 120,236 134,232"]
-            .map(d => s.el("path", { d, fill: "none", stroke: INK, "stroke-width": 5, "stroke-linecap": "round", class: "later" }));
-          const hatch = [];
-          for (let i = 0; i < 9; i++) hatch.push(`M${188 + i * 14},${262 + (i % 2) * 6} l-10,28`);
-          for (let i = 0; i < 7; i++) hatch.push(`M${316 + i * 14},${262 + (i % 2) * 6} l-10,28`);
-          for (let i = 0; i < 4; i++) hatch.push(`M${196 + i * 9},${306} l-4,24`, `M${444 + i * 8},${306} l-4,22`);
-          const hatchEl = s.el("path", { d: hatch.join(" "), stroke: INK, "stroke-width": 3, "stroke-linecap": "round", fill: "none", class: "later" });
-          const ground = s.el("path", { d: "M30,344 H510 M60,360 H200 M300,360 H470", stroke: INK, "stroke-width": 4, "stroke-linecap": "round", fill: "none", class: "later" });
-          svg.append(s.el("rect", { x: 10, y: 20, width: 520, height: 410, rx: 10, fill: "#fff", stroke: "#c8d3de", "stroke-width": 3 }), body, horn, ear, eye, ...plates, hatchEl, ground, lbl(s, 270, 408, "Eigene Zeichnung im Holzschnitt-Stil"));
+          const pic = s.photo("duerer-nashorn", { w: 540, h: 430, fit: "contain", kb: true, style: { background: "#fff" } });
           const f1 = box(s, "ex", "Wer?", "<b>Albrecht Dürer</b> (1471–1528) aus Nürnberg. Er verkaufte seine Drucke über Händler auf Märkten.", false);
           const f2 = box(s, "ex", "Das Nashorn", "Ein indisches Nashorn kam im Mai 1515 nach Lissabon. Dürer kannte nur eine Beschreibung und machte daraus den Holzschnitt <b>Rhinocerus</b>.");
-          const f3 = box(s, "ex", "Panzer?", "Die „Rüstungsplatten“ sind Dürers Idee von den Hautfalten. Jahrhunderte lang galt sein Bild als so ein Nashorn aussieht.");
+          const f3 = box(s, "ex", "Panzer?", "Die „Rüstung“ ist Dürers Idee von den Hautfalten. Sein Bild prägte lange, wie man sich Nashörner vorstellte.");
           const life = box(s, "life", "Im Alltag", "Dein <b>Albrecht-Dürer-Gymnasium</b> trägt seinen Namen.");
-          f3.querySelector("p").innerHTML = "Die „Rüstung“ ist Dürers Idee von den Hautfalten. Sein Bild prägte lange, wie man sich Nashörner vorstellte.";
-          s.add(cols(s, svg, stack(s, 10, f1, f2, f3, life), 540));
-          s.show(svg, "zoom"); s.sfx.pop();
-          s.step(async () => { s.sfx.scribble(); await s.show([body], "fade"); await s.show([horn, ear, eye], "pop"); s.say("Zuerst die Umrisse."); });
-          s.step(async () => { for (const p of plates) { s.sfx.snap(); await s.show(p, "draw"); } s.show(f2, "up"); });
-          s.step(async () => { s.sfx.scribble(); s.show(ground, "fade"); await s.show(hatchEl, "draw"); s.sfx.ding(); s.show(f3, "up"); s.say("Beim Holzschnitt bleiben die schwarzen Linien stehen. Alles andere wird weggeschnitten."); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.add(cols(s, pic, stack(s, 10, f1, f2, f3, life), 540));
+          s.show(pic, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sfx.swoosh(); await s.show(f2, "up"); s.say("Das ist der echte Holzschnitt. Oben steht, was Dürer über das Tier gehört hatte."); });
+          s.step(async () => { s.sound("schnitzen", { vol: .6, dur: 2 }); await s.show(f3, "up"); s.say("Beim Holzschnitt bleiben die schwarzen Linien stehen. Alles andere wird weggeschnitten."); });
+          s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+        },
+      },
+      /* 13b -------------------------------------------------------------- */
+      {
+        title: "Holzschnitt oder Kupferstich?",
+        say: "Dürer konnte beides: Holzschnitt und Kupferstich. Beim Holzschnitt druckt, was hoch steht. Beim Kupferstich druckt, was tief eingeritzt ist.",
+        build(s) {
+          const a = s.photo("duerer-reiter", { w: 300, h: 420, fit: "contain", caption: "Holzschnitt, 1498", style: { background: "#fff" } });
+          const b = s.photo("duerer-melencolia", { w: 300, h: 420, fit: "contain", caption: "Kupferstich, 1514", cls: "later", style: { background: "#fff" } });
+          const e1 = box(s, "ex", "Holzschnitt = Hochdruck", "<b>Die vier apokalyptischen Reiter</b>: Dürer zeichnete aufs Holz, dann wurde alles Weiße weggeschnitten.", false);
+          const e2 = box(s, "ex", "Kupferstich = Tiefdruck", "<b>Melencolia I</b>: Linien werden in Kupfer <b>eingeritzt</b>. Die Farbe sitzt in den Rillen – das ergibt feinste Linien.");
+          const m = merk(s, "<b>Hochdruck:</b> Was hoch steht, druckt. <b>Tiefdruck:</b> Was tief liegt, druckt.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "300px 300px 1fr", gap: "22px", alignItems: "center", height: "100%" } }, a, b, stack(s, 12, e1, e2, m)));
+          s.show(a, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sfx.scribble(); s.show(e2, "up"); await s.show(b, "zoom"); s.say("Beim Kupferstich ritzt man die Linien mit einem spitzen Stichel in die Platte."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 13c -------------------------------------------------------------- */
+      {
+        title: "Hokusai: Die große Welle",
+        say: "Die große Welle von Katsushika Hokusai ist einer der berühmtesten Drucke der Welt. Es ist ein Farbholzschnitt aus Japan.",
+        build(s) {
+          const pic = s.photo("hokusai-welle", { w: 640, h: 430, pos: "50% 50%", kb: true });
+          const e1 = box(s, "ex", "Wer und wann?", "<b>Katsushika Hokusai</b> (1760–1849), Japan. Das Blatt erschien <b>um 1831</b> in der Reihe „36 Ansichten des Berges Fuji“.", false);
+          const e2 = box(s, "ex", "Wie gedruckt?", "Ein <b>Farbholzschnitt</b>: Für jede Farbe gibt es einen eigenen Holzstock. Alle werden genau übereinander gedruckt.");
+          const e3 = box(s, "ex", "Schau genau!", "Hinten, ganz klein, steht der <b>Berg Fuji</b>. Vorn kämpfen drei Boote mit der Welle.");
+          s.add(cols(s, pic, stack(s, 12, e1, e2, e3), 640));
+          s.show(pic, "zoom"); s.sound("waves", { vol: .45, dur: 6 });
+          s.step(async () => { s.sfx.swoosh(); await s.show(e2, "up"); s.say("Für jede Farbe schnitzt man einen eigenen Holzstock."); });
+          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(e3, "up"); s.say("Findest du den Berg Fuji? Er sieht fast aus wie eine kleine Welle."); });
         },
       },
       /* 14 --------------------------------------------------------------- */
@@ -626,14 +682,14 @@
             const mark = s.el("g", {}, s.el("rect", { x: 14, y: 18, width: 96, height: 100, fill: "#fff", stroke: GR, "stroke-width": 5, "stroke-dasharray": "6 5" }), s.el("polygon", { points: star(62, 66, 28, 12), fill: UC }));
             const pm = s.el("g", { class: "later" }, s.el("g", {}, s.el("circle", { cx: 100, cy: 80, r: 30, fill: "none", stroke: "#1d5bd0", "stroke-width": 4 }), s.el("path", { d: "M118,50 L168,44 M122,66 L168,60 M126,82 L168,76", stroke: "#1d5bd0", "stroke-width": 4, "stroke-linecap": "round" })));
             svg.append(mark, pm);
-            return { reset() { pm.classList.add("later"); }, async play() { s.sfx.drum(); await s.show(pm, "zoom"); } };
+            return { reset() { pm.classList.add("later"); }, async play() { s.sound("stempel"); await s.show(pm, "zoom"); } };
           });
           // b) Reisepass
           mk("Stempel im Reisepass", "An der Grenze drückt ein Stempel ein Zeichen in deinen Pass.", svg => {
             const page = s.el("rect", { x: 10, y: 14, width: 150, height: 104, rx: 8, fill: "#e8eefc", stroke: GR, "stroke-width": 4 });
             const st = s.el("g", { class: "later" }, s.el("g", { transform: "translate(85 66) rotate(-12)" }, s.el("rect", { x: -66, y: -24, width: 132, height: 48, rx: 8, fill: "none", stroke: UC, "stroke-width": 5 }), s.el("text", { x: 0, y: 7, "text-anchor": "middle", "font-size": 21, "font-weight": 800, fill: UC, text: "EINREISE" })));
             svg.append(page, st);
-            return { reset() { st.classList.add("later"); }, async play() { s.sfx.drum(); await s.show(st, "zoom"); } };
+            return { reset() { st.classList.add("later"); }, async play() { s.sound("stempel"); await s.show(st, "zoom"); } };
           });
           // c) T-Shirt
           mk("Bedrucktes T-Shirt", "Siebdruck: Farbe wird mit einer Rakel durch ein feines Sieb gedrückt.", svg => {

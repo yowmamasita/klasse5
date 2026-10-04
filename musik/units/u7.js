@@ -100,36 +100,28 @@
         say: "Manche Musik erzählt eine Geschichte. Das nennt man Programmmusik. Andere Musik ist einfach nur Musik: absolute Musik.",
         build(s) {
           const sy = synth(s);
-          const storm = () => {
-            s.sfx.unlock();
-            for (let i = 0; i < 24; i++) sy.play("strings", -17 + (i % 2), i * 0.07, 0.07, 0.12 + i * 0.006);
-            [-12, -9, -5].forEach(n => sy.play("horn", n, 0.8, 1.0, 0.16));
-            s.sfx.noise(1.6, 0.35, 160, 60, 1.0, 0.7);
-            bump(cloud);
-          };
-          const pure = () => {
-            s.sfx.unlock();
-            sy.seq("piano", [[0, 1], [4, 1], [7, 1], [12, 1], [11, 1], [7, 1], [2, 1], [5, 1], [4, 2]], 0.2);
-            bump(notes);
-          };
-          const cloud = s.h("span", { style: { fontSize: "54px", display: "inline-block" } }, "⛈️");
-          const notes = s.h("span", { style: { fontSize: "54px", display: "inline-block" } }, "🎼");
+          // real recordings: Vivaldi's summer storm vs. Mozart's variations (no story)
+          let cur = null;
+          const storm = () => { if (cur) cur.stop(); cur = s.sound("vivaldi-gewitter", { force: true }); bump(cloud); };
+          const pure = () => { if (cur) cur.stop(); cur = s.sound("mozart-thema", { force: true, dur: 8 }); bump(notes); };
+          const cloud = s.photo("vivaldi", { w: 110, h: 130, pos: "50% 20%", style: { display: "inline-block" } });
+          const notes = s.photo("mozart", { w: 110, h: 130, pos: "50% 25%", style: { display: "inline-block" } });
           const card = (head, cls, emo, lines, btn) => s.h("div", { class: "card " + cls, style: { display: "flex", flexDirection: "column", gap: "12px" } },
             s.h("div", { class: "row", style: { justifyContent: "space-between", flexWrap: "nowrap" } }, s.h("p", { class: "h2" }, head), emo),
             ...lines, btn);
           const left = card("Programmmusik", "soft later", cloud, [
             s.h("p", { class: "t" }, "Die Musik erzählt eine ", s.h("b", null, "Geschichte"), " oder malt ein ", s.h("b", null, "Bild"), ". Ein Titel oder Text verrät das „Programm“."),
             s.h("p", { class: "small" }, "Vivaldi: „Die vier Jahreszeiten“ · Smetana: „Die Moldau“ · Prokofjew: „Peter und der Wolf“"),
-          ], s.h("button", { class: "btn solid", onclick: storm }, "▶ Ein Gewitter hören"));
+          ], s.h("button", { class: "btn solid", onclick: storm }, "▶ Vivaldi: Sommer-Gewitter"));
           const right = card("Absolute Musik", "later", notes, [
             s.h("p", { class: "t" }, "Nur Töne, Rhythmus und Klang – ", s.h("b", null, "ohne"), " Geschichte. Die Musik ist ihr eigenes Thema."),
             s.h("p", { class: "small" }, "Mozart: Sinfonie Nr. 40 · Bach: Fugen · Haydn: Sinfonie Nr. 82 – „Der Bär“ ist nur ein Spitzname vom Publikum!"),
-          ], s.h("button", { class: "btn", onclick: pure }, "▶ Reine Musik hören"));
+          ], s.h("button", { class: "btn", onclick: pure }, "▶ Mozart: reine Musik"));
           const merk = s.h("div", { class: "merk later" }, "Dieselben Instrumente – aber bei Programmmusik hast du beim Hören eine ", s.h("b", null, "Geschichte im Kopf"), ".");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "22px" } },
             s.h("div", { class: "cols", style: { alignItems: "stretch" } }, left, right), merk));
-          s.step(async () => { s.sfx.whoosh(); await s.show(left, "left"); s.say("Programmmusik: ein Gewitter, ein Fluss, ein Wolf."); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(right, "right"); s.say("Absolute Musik hat keine Geschichte."); });
+          s.step(async () => { cur = s.sound("vivaldi-gewitter"); await s.show(left, "left"); s.say("Programmmusik: ein Gewitter, ein Fluss, ein Wolf."); });
+          s.step(async () => { if (cur) cur.stop(); cur = s.sound("mozart-thema", { dur: 6 }); await s.show(right, "right"); s.say("Absolute Musik hat keine Geschichte."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -191,7 +183,9 @@
             ["Jahr", "1936 – Uraufführung in Moskau"],
             ["Auftrag", "für ein Kindertheater in Moskau"],
             ["Idee", "Kinder lernen die Instrumente des Orchesters kennen"],
-          ].map(([k, v]) => s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "t" }, v)));
+          ].map(([k, v], i) => i ? s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "t" }, v))
+            : s.h("div", { class: "card later", style: { padding: "10px 18px", display: "grid", gridTemplateColumns: "100px 1fr", gap: "14px", alignItems: "center" } },
+              s.photo("prokofjew", { w: 100, h: 120, pos: "50% 25%" }), s.h("div", null, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "t" }, v))));
           const merk = s.h("div", { class: "merk later" }, "Ein ", s.h("b", null, "Erzähler"), " liest die Geschichte. Jede Figur hat ihr ", s.h("b", null, "eigenes Instrument"), ".");
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "470px 1fr", height: "100%", alignItems: "center" } }, svg,
             s.h("div", { class: "stack", style: { gap: "12px" } }, ...facts, merk)));
@@ -213,23 +207,23 @@
         build(s) {
           const sy = synth(s);
           const cast = [
-            ["👦", "Peter", "Streicher", () => sy.seq("strings", [[0, 1], [2, 1], [4, 1], [7, 2], [4, 1], [0, 2]], 0.17, 0.18)],
-            ["🐦", "Vogel", "Querflöte", () => sy.seq("flute", [[24, 1], [28, 1], [26, 1], [31, 1], [28, 1], [33, 1], [31, 2]], 0.08, 0.2)],
-            ["🦆", "Ente", "Oboe", () => sy.seq("oboe", [[7, 2], [5, 1], [4, 2], [2, 1], [0, 3]], 0.2, 0.24)],
-            ["🐈", "Katze", "Klarinette", () => sy.seq("clarinet", [[-5, 1], [null, 1], [-2, 1], [null, 1], [0, 1], [3, 1], [-2, 2]], 0.13, 0.2)],
-            ["👴", "Großvater", "Fagott", () => sy.seq("bassoon", [[-17, 2], [-15, 1], [-13, 1], [-17, 2], [-20, 3]], 0.2, 0.32)],
-            ["🐺", "Wolf", "3 Hörner", () => { [-12, -9, -5].forEach(n => sy.play("horn", n, 0, 1.2, 0.17)); [-11, -8, -4].forEach(n => sy.play("horn", n, 1.2, 1.0, 0.15)); }],
-            ["🤠", "Jäger", "Holzbläser, Trompete, Pauken", () => { sy.seq("brass", [[0, 1], [0, 1], [7, 2]], 0.15, 0.14); sy.timp(-24, 0.7, 0.55); sy.timp(-24, 1.0, 0.55); s.sfx.noise(0.3, 0.3, 300, 80, 1.0, 0.8); }],
+            ["👦", "Peter", "Streicher", "violin", () => sy.seq("strings", [[0, 1], [2, 1], [4, 1], [7, 2], [4, 1], [0, 2]], 0.17, 0.18)],
+            ["🐦", "Vogel", "Querflöte", "querfloete", () => sy.seq("flute", [[24, 1], [28, 1], [26, 1], [31, 1], [28, 1], [33, 1], [31, 2]], 0.08, 0.2)],
+            ["🦆", "Ente", "Oboe", "oboe", () => sy.seq("oboe", [[7, 2], [5, 1], [4, 2], [2, 1], [0, 3]], 0.2, 0.24)],
+            ["🐈", "Katze", "Klarinette", "klarinette", () => sy.seq("clarinet", [[-5, 1], [null, 1], [-2, 1], [null, 1], [0, 1], [3, 1], [-2, 2]], 0.13, 0.2)],
+            ["👴", "Großvater", "Fagott", "fagott", () => sy.seq("bassoon", [[-17, 2], [-15, 1], [-13, 1], [-17, 2], [-20, 3]], 0.2, 0.32)],
+            ["🐺", "Wolf", "3 Hörner", "horn", () => { [-12, -9, -5].forEach(n => sy.play("horn", n, 0, 1.2, 0.17)); [-11, -8, -4].forEach(n => sy.play("horn", n, 1.2, 1.0, 0.15)); }],
+            ["🤠", "Jäger", "Holzbläser, Trompete, Pauken", "pauken", () => { sy.seq("brass", [[0, 1], [0, 1], [7, 2]], 0.15, 0.14); sy.timp(-24, 0.7, 0.55); sy.timp(-24, 1.0, 0.55); s.sfx.noise(0.3, 0.3, 300, 80, 1.0, 0.8); }],
           ];
-          const tiles = cast.map(([e, n, inst, f]) => {
-            const emo = s.h("div", { style: { fontSize: "76px", lineHeight: "1.05" } }, e);
-            const t = s.h("button", {
+          const tiles = cast.map(([e, n, inst, pic, f]) => {
+            const emo = s.h("div", { style: { fontSize: "52px", lineHeight: "1.05" } }, e);
+            const t = s.h("div", {
               class: "card later", style: { display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "4px", cursor: "pointer", font: "inherit", color: "inherit", minHeight: "56px", padding: "12px 10px" },
               onclick: () => { s.sfx.unlock(); f(); bump(emo); t.style.borderColor = "var(--unit)"; },
-            }, emo, s.h("span", { class: "h2", style: { fontSize: "26px" } }, n), s.h("span", { class: "small pencil", style: { textAlign: "center" } }, inst));
+            }, emo, s.h("span", { class: "h2", style: { fontSize: "26px" } }, n), s.photo(pic, { w: "100%", h: 110, fit: "contain" }), s.h("span", { class: "small pencil", style: { textAlign: "center" } }, inst));
             return t;
           });
-          const note = s.h("p", { class: "small pencil" }, "Die Klänge hier sind nachgebaut – kleine Motive im Stil der Figuren, nicht die Original-Melodien.");
+          const note = s.h("p", { class: "small pencil" }, "Fotos: die echten Instrumente. Die Klänge sind nachgebaut – kleine Motive im Stil der Figuren, nicht die Original-Melodien.");
           const merk = s.h("div", { class: "merk later", style: { gridColumn: "4 / 5", fontSize: "24px", padding: "14px 18px" } }, "Klein und flink → ", s.h("b", null, "hoch"), ". Gefährlich → ", s.h("b", null, "tief und laut"), ".");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } },
             s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gridTemplateRows: "1fr 1fr", gap: "16px", flex: "1" } }, ...tiles, merk), note));
@@ -283,11 +277,14 @@
             ["Jahr", "1886 – als Spaß für Freunde"],
             ["Aufbau", "14 kurze Sätze: Löwe, Hühner, Schildkröten, Elefant, Aquarium, Kuckuck, Schwan …"],
             ["Witz", "Sogar „Pianisten“ und „Fossilien“ sind als Tiere dabei!"],
-          ].map(([k, v]) => s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "t" }, v)));
+          ].map(([k, v], i) => i ? s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "t" }, v))
+            : s.h("div", { class: "card later", style: { padding: "10px 18px", display: "grid", gridTemplateColumns: "90px 1fr", gap: "14px", alignItems: "center" } },
+              s.photo("saint-saens", { w: 90, h: 110, pos: "50% 15%" }), s.h("div", null, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "t" }, v))));
           const merk = s.h("div", { class: "merk later" }, "Saint-Saëns wollte das Werk ", s.h("b", null, "nicht veröffentlichen"), " – es war ihm zu albern. Gedruckt wurde es erst ", s.h("b", null, "nach seinem Tod"), " (1921).");
-          const march = () => { s.sfx.unlock(); sy.seq("piano", [[-12, 1], [-5, 1], [-12, 1], [-5, 1], [0, 2], [-5, 2]], 0.2, 0.25); sy.seq("brass", [[0, 1], [4, 1], [7, 2], [12, 4]], 0.2, 0.12, 0.4); };
+          let cur = null;
+          const march = (tap = false) => { if (cur) cur.stop(); cur = s.sound("karneval-loewe", { force: tap }); };
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "20px", justifyContent: "center" } },
-            s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, lane, s.h("button", { class: "btn solid", style: { flex: "1" }, onclick: march }, "▶ Einmarsch")),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, lane, s.h("button", { class: "btn solid", style: { flex: "1" }, onclick: () => march(true) }, "▶ Löwen-Marsch")),
             s.h("div", { class: "cols", style: { gap: "16px" } }, ...facts), merk));
           march();
           s.step(async () => { s.sfx.pop(); await s.show(facts.slice(0, 2), "up"); });
@@ -298,20 +295,24 @@
       /* 7 ------------------------------------------------------------------ */
       {
         title: "So klingen die Tiere",
-        say: "Tippe auf ein Tier. Der Elefant ist ein Kontrabass, der Schwan ein Cello, und die Fossilien klappern auf dem Xylophon.",
+        say: "Tippe auf ein Tier, dann hörst du die echte Musik von Saint-Saëns. Der Elefant ist ein Kontrabass, der Schwan ein Cello, und die Fossilien klappern auf dem Xylophon.",
         build(s) {
           const sy = synth(s);
+          const REC = { Elefant: "karneval-elefant", Schwan: "karneval-schwan", Aquarium: "karneval-aquarium", Schildkröten: "karneval-schildkroeten", Fossilien: "karneval-fossilien" };
+          const PIC = { Elefant: "elefant", Schwan: "schwan", Aquarium: "aquarium", Kuckuck: "kuckuck-vogel", Schildkröten: "schildkroete", Fossilien: "fossil" };
+          let cur = null;
           const tiles = [
             ["🐘", "Elefant", "Kontrabass, tief und schwer. Er tanzt einen Tanz, der eigentlich für Elfen gedacht war!", () => sy.seq("bass", [[-24, 2], [-17, 1], [-17, 1], [-22, 2], [-17, 1], [-17, 1], [-24, 3]], 0.2, 0.38)],
             ["🦢", "Schwan", "Cello singt ruhig. Das Klavier plätschert wie Wasser.", () => { sy.seq("cello", [[-5, 3], [-3, 1], [-1, 2], [0, 4]], 0.28, 0.2); for (let i = 0; i < 16; i++) sy.play("piano", [7, 12, 16, 12][i % 4], i * 0.14, 0.13, 0.06); }],
             ["🐠", "Aquarium", "Glitzernde Läufe wie Licht im Wasser.", () => { for (let i = 0; i < 10; i++) sy.play("celesta", 31 - i * 2, i * 0.09, 0.4, 0.12); sy.seq("strings", [[0, 4]], 0.4, 0.08); }],
-            ["🐦", "Kuckuck", "Die Klarinette ruft immer nur zwei Töne: c und as.", () => { sy.seq("clarinet", [[0, 1], [-4, 2], [null, 2], [0, 1], [-4, 2]], 0.25, 0.22); }],
+            ["🐦", "Kuckuck", "Die Klarinette ruft immer nur zwei Töne: c und as. Danach: ein echter Kuckuck!", () => { sy.seq("clarinet", [[0, 1], [-4, 2], [null, 2], [0, 1], [-4, 2]], 0.25, 0.22); cur = s.sound("kuckuck", { when: 2.4, dur: 4, force: true }); }],
             ["🐢", "Schildkröten", "Ein superschneller Tanz (Cancan) – ganz langsam gespielt. Hör: erst schnell, dann langsam!", () => { const f = [[0, 1], [4, 1], [7, 1], [4, 1], [9, 1], [7, 1], [5, 1], [2, 1], [0, 2]]; const t = sy.seq("piano", f, 0.09, 0.2); sy.seq("strings", f, 0.42, 0.16, t + 0.4); }],
             ["🦴", "Fossilien", "Das Xylophon klappert wie Knochen. Dazu „Morgen kommt der Weihnachtsmann“.", () => sy.seq("xylo", [[0, 1], [0, 1], [7, 1], [7, 1], [9, 1], [9, 1], [7, 2]], 0.16, 0.35)],
           ].map(([e, n, txt, f]) => {
-            const em = s.h("div", { style: { fontSize: "50px", lineHeight: "1" } }, e);
-            const b = s.h("button", { class: "card later", style: { display: "grid", gridTemplateColumns: "62px 1fr", gap: "4px 12px", alignItems: "center", textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer", padding: "12px 16px" },
-              onclick: () => { s.sfx.unlock(); f(); bump(em); b.style.borderColor = "var(--unit)"; } },
+            const em = s.photo(PIC[n], { w: 130, h: 96, pos: "50% 50%" });
+            const go = () => { if (cur) cur.stop(); cur = null; if (REC[n]) cur = s.sound(REC[n], { force: true }); else f(); };
+            const b = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "130px 1fr", gap: "4px 14px", alignItems: "center", textAlign: "left", cursor: "pointer", padding: "10px 14px" },
+              onclick: () => { s.sfx.unlock(); go(); bump(em); b.style.borderColor = "var(--unit)"; } },
               em, s.h("div", null, s.h("p", { class: "h2", style: { fontSize: "26px" } }, n), s.h("p", { class: "small" }, txt)));
             return b;
           });
@@ -423,12 +424,17 @@
           const ttl = s.h("p", { class: "h2", style: { color: "var(--unit)" } }, "Folge dem Fluss!");
           const big = s.h("div", { style: { fontSize: "90px", lineHeight: "1.1", textAlign: "center" } }, "🏞️");
           const txt = s.h("p", { class: "t" }, "Drücke „Weiter“: Die Musik wächst wie der Fluss – von zwei kleinen Quellen bis zum breiten Strom.");
-          const side = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "16px", height: "100%", justifyContent: "center" } }, big, ttl, txt);
+          const pics = { quelle: s.photo("moldau-quelle", { w: "100%", h: 220, caption: "Die Warme Moldau bei Kvilda", style: { display: "none" } }),
+            vys: s.photo("vysehrad", { w: "100%", h: 220, caption: "Vyšehrad in Prag", style: { display: "none" } }),
+            prag: s.photo("moldau-prag", { w: "100%", h: 220, caption: "Die Moldau in Prag", style: { display: "none" } }) };
+          const showPic = k => { Object.entries(pics).forEach(([j, f]) => { f.style.display = j === k ? "" : "none"; }); big.style.display = k ? "none" : ""; };
+          const side = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "16px", height: "100%", justifyContent: "center" } }, big, ...Object.values(pics), ttl, txt);
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "660px 1fr", height: "100%", gap: "24px", alignItems: "stretch" } }, svg, side));
+          let cur = null;
           const sounds = [
-            () => { for (let i = 0; i < 12; i++) sy.play("flute", [28, 31, 26, 29][i % 4], i * 0.1, 0.1, 0.13); },
+            () => { cur = s.sound("moldau-quellen", { dur: 8 }); },
             () => { for (let i = 0; i < 12; i++) sy.play("clarinet", [16, 19, 14, 17][i % 4], i * 0.1, 0.1, 0.12); },
-            () => sy.seq("strings", [[4, 1], [6, 1], [7, 1], [9, 1], [11, 2], [11, 2]], 0.3, 0.2),
+            () => { cur = s.sound("moldau-teil1", { dur: 10 }); },
             () => { sy.seq("horn", [[0, 1], [7, 1], [12, 2], [7, 1], [12, 3]], 0.15, 0.2); sy.seq("brass", [[12, 1], [19, 1], [24, 3]], 0.15, 0.1, 0.3); },
             () => { for (let i = 0; i < 8; i++) { sy.play("pluck", i % 2 ? -5 : -12, i * 0.22, 0.15, 0.25); sy.play("strings", [12, 14, 16, 14, 12, 11, 12, 7][i], i * 0.22, 0.18, 0.12); } },
             () => { sy.seq("strings", [[7, 4], [9, 4]], 0.3, 0.06); for (let i = 0; i < 8; i++) sy.play("celesta", [7, 11, 14, 19][i % 4], i * 0.15, 0.4, 0.08); },
@@ -438,7 +444,8 @@
           ];
           stations.forEach((g, i) => s.step(async () => {
             ttl.textContent = info[i][0]; txt.textContent = info[i][1]; big.textContent = ["💧", "💧", "〰️", "📯", "💃", "🌙", "🌊", "🏰", "➡️"][i]; bump(big);
-            s.sfx.unlock(); sounds[i]();
+            s.sfx.unlock(); if (cur) { cur.stop(); cur = null; } sounds[i]();
+            showPic(i < 3 ? "quelle" : i === 7 ? "vys" : i === 8 ? "prag" : null);
             if (i < paths.length) s.show(paths[i], "draw");
             await s.show(g, "pop");
           }));
@@ -473,7 +480,10 @@
             ["Komponist", "Bedřich Smetana (1824–1884), Böhmen (heute Tschechien)"],
             ["Werk", "„Die Moldau“ ist Teil 2 von „Mein Vaterland“ (Má vlast), 6 Teile"],
             ["1874", "Beim Komponieren war Smetana schon völlig taub – er hörte die Musik nur im Kopf."],
-          ].map(([k, v]) => s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "small" }, v)));
+          ].map(([k, v], i) => i ? s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "small" }, v))
+            : s.h("div", { class: "card later", style: { padding: "10px 18px", display: "grid", gridTemplateColumns: "110px 1fr", gap: "14px", alignItems: "center" } },
+              s.photo("smetana", { w: 110, h: 140, pos: "50% 30%" }), s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("span", { class: "exlabel" }, k), s.h("p", { class: "small" }, v),
+                s.h("div", { class: "row" }, s.soundBtn("moldau-teil1", "Echte Aufnahme")))));
           const left = s.h("div", { class: "stack", style: { gap: "12px", alignItems: "stretch" } },
             s.h("div", { class: "card soft", style: { padding: "12px" } }, svg),
             s.h("div", { class: "row" }, s.h("button", { class: "btn solid", onclick: play }, "▶ Die ersten 6 Töne"),
@@ -481,7 +491,7 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "590px 1fr", height: "100%", alignItems: "center" } }, left,
             s.h("div", { class: "stack", style: { gap: "14px" } }, ...facts)));
           s.step(async () => { s.show(line, "draw"); await play(); });
-          s.step(async () => { s.sfx.pop(); await s.show(facts, "left"); });
+          s.step(async () => { s.sound("moldau-teil1", { dur: 8 }); await s.show(facts, "left"); });
         },
       },
       /* 11 ----------------------------------------------------------------- */
@@ -536,8 +546,11 @@
           };
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } },
             s.h("b", null, "accelerando"), " = immer schneller.  ", s.h("b", null, "crescendo"), " = immer lauter.");
-          const facts = s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Das Stück"),
-            s.h("p", { class: "small" }, "Edvard Grieg (1843–1907), Norwegen. Musik zum Theaterstück „Peer Gynt“ von Henrik Ibsen, uraufgeführt 1876 in Christiania (heute Oslo). Peer schleicht in die Halle der Trolle …"));
+          const facts = s.h("div", { class: "card later", style: { padding: "10px 18px", display: "grid", gridTemplateColumns: "100px 1fr", gap: "14px", alignItems: "center" } },
+            s.photo("grieg", { w: 100, h: 130, pos: "50% 25%" }),
+            s.h("div", null, s.h("span", { class: "exlabel" }, "Das Stück"),
+              s.h("p", { class: "small" }, "Edvard Grieg (1843–1907), Norwegen. Musik zum Theaterstück „Peer Gynt“ von Henrik Ibsen, uraufgeführt 1876 in Christiania (heute Oslo). Peer schleicht in die Halle der Trolle …")));
+          const realRow = s.h("div", { class: "row later", style: { gap: "10px" } }, s.h("span", { class: "small", style: { fontWeight: "700" } }, "Echt:"), s.soundBtn("bergkoenig-anfang", "Anfang – leise"), s.soundBtn("bergkoenig-schluss", "Schluss – laut"));
           const life = s.h("div", { class: "life later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Im Alltag"),
             s.h("p", { class: "small" }, "Im Film „M“ (1931) pfeift der Täter diese Melodie. Ein englischer Freizeitpark nutzt sie seit 1992 als Erkennungsmusik."));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", height: "100%", alignItems: "center", gap: "26px" } },
@@ -547,10 +560,10 @@
                   s.h("div", { class: "row", style: { justifyContent: "space-between", flexWrap: "nowrap" } }, s.h("span", { class: "small" }, "Tempo:"), tVal), s.h("div", { style: { height: "14px", background: "var(--unit-soft)", borderRadius: "7px" } }, tBar))),
               s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, s.h("div", { style: { flex: "1" } },
                 s.h("div", { class: "row", style: { justifyContent: "space-between", flexWrap: "nowrap" } }, s.h("span", { class: "small" }, "Lautstärke:"), vVal), s.h("div", { style: { height: "14px", background: "var(--unit-soft)", borderRadius: "7px" } }, vBar)))),
-            s.h("div", { class: "stack", style: { gap: "14px" } }, facts, merk, life)));
+            s.h("div", { class: "stack", style: { gap: "14px" } }, facts, realRow, merk, life)));
           s.step(async () => { s.sfx.pop(); await s.show(facts, "left"); });
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.show(realRow, "up"); s.sound("bergkoenig-anfang", { dur: 5 }); await s.show(merk, "up"); });
+          s.step(async () => { s.sound("bergkoenig-schluss", { dur: 5 }); await s.show(life, "up"); });
         },
       },
       /* 12 ----------------------------------------------------------------- */
@@ -668,11 +681,12 @@
           const cards = [
             ["📺", "Zeichentrick", "Jede Bewegung hat einen Ton: Hüpfen, Rutschen, Plumps.", () => { s.sfx.boing(); sy.play("xylo", 12, 0.4, 0.1, 0.3); sy.play("flute", 24, 0.6, 0.5, 0.15, 12); }],
             ["🎮", "Videospiele", "Jede Welt hat ihre Musik. Wird die Zeit knapp, wird sie oft schneller.", () => { let t = 0; for (let i = 0; i < 16; i++) { sy.play("clarinet", [0, 4, 7, 12][i % 4] + 12, t, 0.08, 0.12); t += i < 8 ? 0.16 : 0.09; } }],
-            ["🎬", "Kino-Trailer", "Die Musik wird lauter und schneller bis zum großen Knall – dann Stille.", () => { for (let i = 0; i < 10; i++) sy.timp(-28, i * (0.4 - i * 0.03), 0.15 + i * 0.04); [-24, -12].forEach(n => sy.play("brass", n, 2.6, 1.4, 0.35)); }],
-            ["🎧", "Hörspiel", "Kein Bild – nur Stimmen, Geräusche und Musik erzählen die Geschichte.", () => { [0, 0.45, 0.9, 1.35].forEach(w => { s.sfx.tone(90, 0.12, "sine", 0.4, w, 60); s.sfx.noise(0.06, 0.12, 900, 400, w, 2); }); s.sfx.tone(300, 0.7, "sawtooth", 0.04, 1.9, 520); }],
+            ["🎬", "Kino-Trailer", "Die Musik wird lauter und schneller bis zum großen Knall – dann Stille.", () => { s.sound("timpani-roll", { dur: 2.6, force: true }); s.sound("cymbal", { when: 2.6, dur: 2, force: true }); [-24, -12].forEach(n => sy.play("brass", n, 2.6, 1.4, 0.35)); }],
+            ["🎧", "Hörspiel", "Kein Bild – nur Stimmen, Geräusche und Musik erzählen die Geschichte.", () => { s.sound("footsteps", { dur: 2, force: true }); s.sound("knock", { when: 2.1, dur: 1.4, force: true }); s.sound("door-creak", { when: 3.6, force: true }); }],
           ].map(([e, n, d, f]) => {
-            const em = s.h("div", { style: { fontSize: "54px", lineHeight: "1" } }, e);
-            return s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "70px 1fr", gap: "8px 14px", alignItems: "center" } },
+            const PIC = { Videospiele: "gameboy", "Kino-Trailer": "kino", Hörspiel: "kopfhoerer" };
+            const em = PIC[n] ? s.photo(PIC[n], { w: 150, h: 100, fit: n === "Videospiele" ? "contain" : "cover" }) : s.h("div", { style: { fontSize: "64px", lineHeight: "1", textAlign: "center" } }, e);
+            return s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "8px 14px", alignItems: "center" } },
               em, s.h("div", null, s.h("span", { class: "exlabel", style: { color: "var(--green)" } }, "Im Alltag"), s.h("p", { class: "h2", style: { fontSize: "28px" } }, n)),
               s.h("p", { class: "t", style: { gridColumn: "1 / 3", fontSize: "21px" } }, d),
               s.h("button", { class: "btn", style: { gridColumn: "1 / 3" }, onclick: () => { s.sfx.unlock(); f(); bump(em); } }, "▶ So klingt das"));
@@ -687,15 +701,17 @@
         say: "Jetzt bist du dran! Tippe auf Geräusche, sie kommen in deine Geschichte. Dann drück auf Abspielen.",
         build(s) {
           const sy = synth(s);
+          // real recorded sounds (shared library + owl)
+          const R = (id, dur, o = {}) => () => s.sound(id, Object.assign({ dur, force: true }, o));
           const fx = {
-            Wind: ["🌬️", 1.4, () => { s.sfx.noise(1.4, 0.2, 300, 1200, 0, 3); s.sfx.noise(1.4, 0.12, 900, 400, 0.2, 4); }],
-            Regen: ["🌧️", 1.4, () => { s.sfx.noise(1.4, 0.12, 5000, 4000, 0, 0.6); for (let i = 0; i < 18; i++) s.sfx.noise(0.03, 0.08, 3000, 3500, Math.random() * 1.3, 3); }],
-            Donner: ["⚡", 1.8, () => { s.sfx.noise(0.15, 0.4, 2000, 800, 0, 1); s.sfx.noise(1.8, 0.5, 200, 50, 0.05, 0.6); s.sfx.tone(55, 1.5, "sine", 0.4, 0.05, 35); }],
-            Schritte: ["👣", 1.6, () => { for (let i = 0; i < 4; i++) { s.sfx.tone(95, 0.12, "sine", 0.45, i * 0.4, 55); s.sfx.noise(0.07, 0.15, 900, 300, i * 0.4, 2); } }],
-            Tür: ["🚪", 1.6, () => { s.sfx.tone(260, 0.9, "sawtooth", 0.05, 0, 430); s.sfx.tone(390, 0.9, "square", 0.02, 0.05, 300); s.sfx.tone(110, 0.25, "sine", 0.5, 1.05, 50); s.sfx.noise(0.12, 0.35, 700, 200, 1.05, 1.5); }],
-            Klopfen: ["✊", 1.2, () => { [0, 0.25, 0.5].forEach(w => { s.sfx.tone(180, 0.08, "sine", 0.45, w, 120); s.sfx.noise(0.04, 0.2, 2000, 1200, w, 3); }); }],
-            Eule: ["🦉", 1.4, () => { sy.play("flute", -5, 0, 0.35, 0.2); sy.play("flute", -9, 0.45, 0.7, 0.2); }],
-            Herzschlag: ["❤️", 1.6, () => { [0, 0.18, 0.8, 0.98].forEach((w, i) => s.sfx.tone(60, 0.15, "sine", i % 2 ? 0.35 : 0.5, w, 40)); }],
+            Wind: ["🌬️", 1.8, R("wind", 1.8, { vol: .8 })],
+            Regen: ["🌧️", 1.8, R("rain", 1.8)],
+            Donner: ["⚡", 2.4, R("thunder", 2.4)],
+            Schritte: ["👣", 1.8, R("footsteps", 1.8)],
+            Tür: ["🚪", 2.0, R("door-creak", 2.0)],
+            Klopfen: ["✊", 1.4, R("knock", 1.4)],
+            Eule: ["🦉", 2.0, R("eule", 2.0)],
+            Herzschlag: ["❤️", 2.0, R("heartbeat", 2.0)],
           };
           const MAX = 8;
           const story = [];
@@ -720,7 +736,7 @@
           const example = () => { story.splice(0, story.length, "Wind", "Regen", "Donner", "Schritte", "Klopfen", "Tür", "Herzschlag"); render(); s.sfx.pop(); };
           const clear = () => { story.length = 0; render(); s.sfx.swoosh(); };
           const tip = s.h("div", { class: "life later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Wie im Hörspiel"),
-            s.h("p", { class: "small" }, "Geräusche-Macher im Studio nennt man „Foley“-Künstler: Sie machen Schritte, Türen und Regen von Hand nach."));
+            s.h("p", { class: "small" }, "Alle Geräusche hier sind echte Aufnahmen. Geräusche-Macher im Studio nennt man „Foley“-Künstler: Sie machen Schritte, Türen und Regen von Hand nach."));
           const ideas = s.h("div", { class: "cols3 later", style: { gap: "14px" } },
             ...[["Gewitternacht", "Wind → Regen → Donner → Schritte → Klopfen → Tür"], ["Gespenster-Haus", "Eule → Schritte → Tür → Herzschlag → Donner"], ["Ein Spaziergang", "Schritte → Wind → Eule → Regen → Schritte → Tür"]]
               .map(([k, v]) => s.h("div", { class: "ex", style: { padding: "10px 14px" } }, s.h("span", { class: "exlabel" }, "Idee: " + k), s.h("p", { class: "small" }, v))));

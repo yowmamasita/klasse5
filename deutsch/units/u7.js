@@ -97,17 +97,18 @@
           svg.append(peakLbl);
           const e5 = ev(7, "Nur ein Igel!", P.green, 895, 207, "start");
           const e6 = ev(8, "Alle lachen.", P.green, 990, 372, "middle");
+          const igel = s.photo("igel", { w: 250, h: 165, pos: "50% 55%", caption: "Nur ein Igel!", cls: "later", style: { position: "absolute", left: "0", top: "52px" } });
           const m = later(merk(s, null, B(s, "Einleitung", P.blue), " führt hin (Wer? Wo? Wann?). Im ", B(s, "Hauptteil", P.orange), " steigt die Spannung bis zum ", B(s, "Höhepunkt", P.red), ". Der ", B(s, "Schluss", P.green), " löst alles auf."));
-          s.add(root(s, "stack", { gap: "14px" }, svg, m));
+          s.add(root(s, "stack", { gap: "14px" }, s.h("div", { style: { position: "relative", width: "1100px", height: "440px" } }, svg, igel), m));
           s.sfx.pop();
           s.step(async () => { s.sfx.whoosh(); await s.show(curve, "draw"); s.say("Die Spannung steigt und fällt wie ein Bogen."); });
           s.step(async () => { s.sfx.pop(); s.show(bands[0], "up"); await s.wait(250); s.sfx.count(0); await s.show(e1, "pop"); s.say("Die Einleitung. Wir kommen an der Jugendherberge an."); });
           s.step(async () => {
-            s.sfx.pop(); s.show(bands[1], "up"); s.say("Im Hauptteil wird es immer spannender.");
-            for (const [i, e] of [e2, e3, e4].entries()) { await s.wait(300); s.sfx.count(i + 2); await s.show(e, "pop"); }
+            s.sfx.pop(); s.show(bands[1], "up"); s.say("Im Hauptteil wird es immer spannender."); s.sound("owl", { vol: .5 });
+            for (const [i, e] of [e2, e3, e4].entries()) { await s.wait(300); if (i === 2) s.sound("twig-snap", { vol: .8 }); else s.sfx.count(i + 2); await s.show(e, "pop"); }
           });
           s.step(async () => { s.sfx.drum(); await s.wait(160); s.sfx.drum(); await s.show(peakLbl, "zoom"); s.sfx.zap(); s.say("Der Höhepunkt. Zwei Augen leuchten im Dunkeln!"); });
-          s.step(async () => { s.sfx.pop(); s.show(bands[2], "up"); await s.wait(250); s.sfx.boing(); await s.show(e5, "pop"); s.sfx.success(); await s.show(e6, "pop"); s.say("Der Schluss. Es war nur ein Igel, und alle lachen."); });
+          s.step(async () => { s.sfx.pop(); s.show(bands[2], "up"); await s.wait(250); s.sfx.boing(); s.show(igel, "zoom"); await s.show(e5, "pop"); s.sound("kids-laugh", { vol: .5 }); await s.show(e6, "pop"); s.say("Der Schluss. Es war nur ein Igel, und alle lachen."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -134,7 +135,8 @@
           const lf = later(life(s, null, s.h("p", { class: "t", style: { fontSize: "22px" } }, "Auch Filme, Comics, Hörspiele und sogar ein Fußballspiel haben einen Spannungsbogen. Achte beim nächsten Film darauf: Wann ist der Höhepunkt?")));
           s.add(root(s, "stack", { gap: "16px" }, s.h("div", { class: "cols3" }, ...cards), lf));
           s.sfx.pop();
-          cards.forEach((c, i) => s.step(async () => { s.sfx.whoosh(); await s.show(c, "up"); s.sfx.count(i); s.say(data[i][0]); }));
+          const snd = [() => s.sound("crowd-cheer", { vol: .4, dur: 2.5 }), () => s.sound("applause", { vol: .4, dur: 2.5 }), () => s.sound("knock", { vol: .6 })];
+          cards.forEach((c, i) => s.step(async () => { s.sfx.whoosh(); await s.show(c, "up"); snd[i](); s.say(data[i][0]); }));
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },
@@ -152,7 +154,8 @@
             if (typeof p === "string") return p;
             const el = s.h("span", null, p[1]); spans[p[0]].push(el); return el;
           }));
-          const ex1 = ex(s, "Beispiel 1 · Klassenfahrt", null, sent([["wann", "Am letzten Montag"], " fuhr ", ["wer", "unsere Klasse 5a"], " ", ["wo", "an die Ostsee"], ". ", ["was", "Fünf Tage mit Strand, Wald und einer Nachtwanderung lagen vor uns!"]], 27));
+          const ex1 = ex(s, "Beispiel 1 · Klassenfahrt", null, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 250px", gap: "18px", alignItems: "center" } }, sent([["wann", "Am letzten Montag"], " fuhr ", ["wer", "unsere Klasse 5a"], " ", ["wo", "an die Ostsee"], ". ", ["was", "Fünf Tage mit Strand, Wald und einer Nachtwanderung lagen vor uns!"]], 27),
+            s.photo("ostsee", { w: 250, h: 130, caption: "die Ostsee", pos: "50% 60%" })));
           const ex2 = later(ex(s, "Beispiel 2 · Bolzplatz", null, sent([["wann", "Gestern Nachmittag"], " spielten ", ["wer", "Jonas und ich"], " ", ["wo", "auf dem Bolzplatz"], " ", ["was", "Fußball, bis der Ball über den Zaun flog"], "."], 21)));
           const ex3 = later(ex(s, "Beispiel 3 · Zoo", null, sent([["wann", "In den Herbstferien"], " besuchte ", ["wer", "meine Familie"], " ", ["wo", "den Berliner Zoo"], ". ", ["was", "Dort erlebten wir etwas Lustiges mit einem Affen."]], 21)));
           const m = later(merk(s, null, "Die Einleitung ist ", B(s, "kurz"), " und beantwortet die ", B(s, "W-Fragen"), ". Das Spannende kommt erst im Hauptteil!"));
@@ -164,7 +167,7 @@
           };
           s.step(() => light("wann", "Wann? Am letzten Montag."));
           s.step(() => light("wer", "Wer? Unsere Klasse fünf a."));
-          s.step(() => light("wo", "Wo? An der Ostsee."));
+          s.step(() => { s.sound("waves", { vol: .4, dur: 4 }); return light("wo", "Wo? An der Ostsee."); });
           s.step(() => light("was", "Was? Eine Klassenfahrt mit Abenteuern."));
           s.step(async () => {
             s.sfx.whoosh(); s.show([ex2, ex3], "up");
@@ -252,7 +255,7 @@
           s.step(async () => { s.sfx.boing(); s.show(l1, "left"); s.show(shakeLines, "fade"); legs.classList.add("a-shake"); legs.style.transformBox = "fill-box"; legs.style.animationIterationCount = "4"; });
           s.step(async () => {
             s.show(l2, "left"); await s.show(heart, "pop"); heart.classList.add("a-pulse");
-            for (let i = 0; i < 3 && s.alive; i++) { s.sfx.drum(); await s.wait(180); s.sfx.drum(); await s.wait(520); }
+            s.sound("heartbeat", { vol: .7, dur: 3.5 });
           });
           s.step(async () => { s.sfx.pop(); s.show(l3, "left"); await s.show(bubble, "zoom"); s.say("Hoffentlich lacht keiner, dachte ich."); });
           s.step(async () => { for (const [i, c] of cards.entries()) { s.sfx.count(i); await s.show(c, "up"); } });
@@ -286,7 +289,7 @@
           s.step(go(r1, "Flitzen statt gehen. Jetzt sehe ich, wie schnell er ist."));
           s.step(go(r2, "Adjektive zeigen, wie der Hund aussieht."));
           s.step(go(r3, "Einzelheiten machen das Bild genau."));
-          s.step(go(r4, "Geräusche machen die Szene lebendig."));
+          s.step(async () => { s.sound("brakes", { vol: .5 }); await s.show(r4, "left"); await s.wait(700); s.sound("dog-bark", { vol: .5 }); s.say("Geräusche machen die Szene lebendig."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(play, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(m6, "up"); s.sfx.pop(); await s.show(lf6, "up"); });
         },
@@ -360,10 +363,10 @@
           const m = later(merk(s, { style: { fontSize: "22px" } }, "Am ", B(s, "Höhepunkt"), " erzählst du ganz langsam – wie in Zeitlupe. Das heißt ", B(s, "Zeitdehnung"), "."));
           s.add(root(s, "stack", { gap: "14px" }, s.h("div", { class: "cols", style: { gridTemplateColumns: ".85fr 1.15fr", gap: "20px" } }, left, right), m));
           s.sfx.pop();
-          s.step(async () => { for (const [i, a] of aEls.entries()) { s.sfx.tone(220 - i * 30, 0.5, "triangle", 0.18); await s.show(a, "left"); } });
+          s.step(async () => { const fx = [() => s.sound("footsteps", { vol: .5, dur: 1.4 }), () => s.sfx.tone(190, 0.5, "triangle", 0.18), () => s.sound("door-creak", { vol: .6 })]; for (const [i, a] of aEls.entries()) { fx[i](); await s.show(a, "left"); await s.wait(500); } });
           s.step(async () => {
-            s.sfx.whoosh(); await s.show(right, "right");
-            for (let v = 2; v <= 4 && s.alive; v++) { await s.wait(900); sl.set(v); s.sfx.tick(); }
+            s.sfx.whoosh(); await s.show(right, "right"); s.sound("clock-tick", { vol: .5 });
+            for (let v = 2; v <= 4 && s.alive; v++) { await s.wait(900); sl.set(v); }
             s.say("Eine Sekunde, aber viele Wörter. So wird es spannend.");
           });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
@@ -404,9 +407,30 @@
           const lf = later(life(s, null, s.h("p", { class: "small" }, "Comics und Bauanleitungen sind auch Bildergeschichten. Wilhelm Busch zeichnete schon 1865 „Max und Moritz“.")));
           s.add(root(s, "stack", { gap: "12px" }, head, s.h("div", { class: "cols4" }, ...cols), s.h("div", { class: "cols", style: { gridTemplateColumns: "1.15fr 1fr", gap: "18px" } }, m, lf)));
           s.sfx.pop();
-          cols.forEach((c, i) => s.step(async () => { s.sfx.whoosh(); await s.show(c.svg, "zoom"); s.sfx.scribble(); await s.show(c.t, "up"); s.say(texts[i]); }));
+          cols.forEach((c, i) => s.step(async () => { if (i === 1) s.sound("wind", { vol: .5, dur: 3 }); else s.sfx.whoosh(); await s.show(c.svg, "zoom"); s.sound("pencil-write", { vol: .5 }); await s.show(c.t, "up"); s.say(texts[i]); }));
           s.step(async () => { titleEl.textContent = "Der Drachen im Baum"; titleEl.style.color = P.unit; s.sfx.fanfare(); await s.show(titleEl, "pop"); s.show(m, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+        },
+      },
+      /* 9b -------------------------------------------------------------- */
+      {
+        title: "Echte Bildergeschichten",
+        say: "Bildergeschichten gibt es schon lange. Wilhelm Busch hat 1865 Max und Moritz gezeichnet und gedichtet. Und Drachen steigen lassen kann man in Berlin auf dem Tempelhofer Feld.",
+        build(s) {
+          const b1 = s.photo("max-moritz-1", { w: 520, h: 200, fit: "contain", style: { background: "#fff" }, cls: "later" });
+          const b2 = s.photo("max-moritz-2", { w: 520, h: 200, fit: "contain", style: { background: "#fff" }, cls: "later" });
+          const t1 = later(s.h("p", { class: "small", style: { fontSize: "21px" } }, B(s, "1", P.unit), " Die Hühner von Witwe Bolte finden Brot an Schnüren …"));
+          const t2 = later(s.h("p", { class: "small", style: { fontSize: "21px" } }, B(s, "2", P.unit), " … fressen es und verheddern sich. Das war der erste Streich!"));
+          const left = ex(s, "Wilhelm Busch: „Max und Moritz“ (1865)", { style: { display: "flex", flexDirection: "column", gap: "8px" } }, b1, t1, b2, t2);
+          const kites = s.photo("tempelhof-drachen", { w: 520, h: 280, pos: "50% 40%", caption: "Drachenfest auf dem Tempelhofer Feld", cls: "later" });
+          const lf = later(life(s, null, s.h("p", { class: "small" }, "Hier spielt unsere Bildergeschichte: Auf dem alten Flughafen-Feld lassen viele Berliner ihre Drachen steigen.")));
+          const m = later(merk(s, { style: { fontSize: "20px" } }, "Busch erzählt in ", B(s, "sieben Streichen"), ": zu jedem Bild ein paar Reime. Genau so gehst du bei der Bildergeschichte vor – Bild für Bild."));
+          s.add(root(s, "cols", { gridTemplateColumns: "560px 1fr", gap: "20px", alignItems: "start" }, left, s.h("div", { class: "stack", style: { gap: "12px" } }, kites, lf, m)));
+          s.sfx.pop();
+          s.step(async () => { s.sound("page-turn-1"); await s.show(b1, "zoom"); s.show(t1, "up"); });
+          s.step(async () => { s.sound("page-turn-2"); await s.show(b2, "zoom"); s.show(t2, "up"); });
+          s.step(async () => { s.sound("wind", { vol: .5, dur: 3 }); await s.show(kites, "zoom"); s.show(lf, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
       /* 10 --------------------------------------------------------------- */
@@ -428,8 +452,8 @@
             s.h("div", { class: "cols", style: { gridTemplateColumns: "1.15fr 1fr", gap: "20px" } }, story,
               s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("p", { class: "h2", style: { fontSize: "24px" } }, "Stichpunkte in der richtigen Reihenfolge"), ...items, own)), m));
           s.sfx.pop();
-          s.step(async () => { s.say("Zuerst markierst du das Wichtigste."); for (const k of keys) { mark(k, P.yellow); k.style.boxShadow = "none"; k.style.backgroundColor = "#ffe979"; s.sfx.scribble(); await s.wait(320); } });
-          s.step(async () => { s.say("Dann schreibst du Stichpunkte, in der richtigen Reihenfolge."); for (const [i, it] of items.entries()) { s.sfx.count(i); await s.show(it, "left"); } });
+          s.step(async () => { s.say("Zuerst markierst du das Wichtigste."); s.sound("pencil-write", { vol: .5 }); for (const k of keys) { mark(k, P.yellow); k.style.boxShadow = "none"; k.style.backgroundColor = "#ffe979"; await s.wait(320); } });
+          s.step(async () => { s.say("Dann schreibst du Stichpunkte, in der richtigen Reihenfolge."); for (const [i, it] of items.entries()) { if (i === 3) s.sound("lion-roar", { vol: .5 }); else s.sfx.count(i); await s.show(it, "left"); } });
           s.step(async () => { s.sfx.scribble(); await s.show(own, "up"); s.say("Und dann erzählst du alles mit eigenen Worten."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
@@ -452,7 +476,7 @@
           s.add(root(s, "stack", { gap: "14px" }, s.h("div", { class: "cols", style: { gap: "20px" } },
             s.h("div", { class: "stack", style: { gap: "10px" } }, eBox, chipsE), s.h("div", { class: "stack", style: { gap: "10px" } }, bBox, chipsB)), both));
           s.sfx.pop();
-          s.step(async () => { s.say("In der Erzählung: Gefühle, wörtliche Rede, Geräusche."); for (const p of eParts.filter(x => typeof x !== "string")) { mark(p, p.c); s.sfx.tick(); await s.wait(260); } s.show(chipsE, "up"); s.sfx.pop(); });
+          s.step(async () => { s.say("In der Erzählung: Gefühle, wörtliche Rede, Geräusche."); for (const p of eParts.filter(x => typeof x !== "string")) { mark(p, p.c); if (p.textContent === "Rums!") s.sound("bike-crash", { vol: .6 }); else s.sfx.tick(); await s.wait(260); } s.show(chipsE, "up"); s.sfx.pop(); });
           s.step(async () => { s.sfx.whoosh(); await s.show(bBox, "right"); s.say("Der Bericht. Kurz, sachlich und genau."); });
           s.step(async () => { for (const p of bParts.filter(x => typeof x !== "string")) { mark(p, p.c); s.sfx.tick(); await s.wait(260); } s.show(chipsB, "up"); s.sfx.pop(); });
           s.step(async () => { s.sfx.ding(); await s.show(both, "up"); });
@@ -531,7 +555,7 @@
           right.append(m, lf);
           s.add(root(s, "", { display: "grid", gridTemplateColumns: "380px 1fr", gap: "24px", alignItems: "center" }, svg, right));
           s.sfx.pop();
-          items.forEach((it, i) => s.step(async () => { s.sfx.count(i); s.show(marks[i], "pop"); await s.show(it, "left"); s.say(lines[i][1]); }));
+          items.forEach((it, i) => s.step(async () => { if (i === 1) s.sound("zipper", { vol: .6 }); else s.sfx.count(i); s.show(marks[i], "pop"); await s.show(it, "left"); s.say(lines[i][1]); }));
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lf, "up"); });
         },
       },
@@ -575,12 +599,13 @@
           ];
           const items = ins.map(([a, b]) => later(s.h("p", { class: "small", style: { fontSize: "21px" } }, s.h("span", { class: "hl" }, a), b)));
           const m = later(merk(s, { style: { fontSize: "20px", lineHeight: 1.35 } }, "Reihenfolge: ", B(s, "zuerst, dann, danach, zum Schluss"), ". Richtung: ", B(s, "links, rechts, geradeaus"), ". Orientierungspunkte nennen! Zeitform: ", B(s, "Präsens"), "."));
-          s.add(root(s, "cols", { gridTemplateColumns: "540px 1fr", gap: "24px", alignItems: "start" }, svg, s.h("div", { class: "stack", style: { gap: "14px" } }, ...items, m)));
+          const uPhoto = s.photo("ubahn-schild", { w: "100%", h: 190, pos: "50% 30%", caption: "So sieht das U-Schild in Berlin aus.", cls: "later" });
+          s.add(root(s, "cols", { gridTemplateColumns: "540px 1fr", gap: "24px", alignItems: "start" }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, ...items, uPhoto, m)));
           s.sfx.pop();
           s.step(async () => { s.show(items[0], "left"); await walk(route[1]); s.sfx.pop(); });
-          s.step(async () => { s.show(items[1], "left"); await walk(route[2]); s.sfx.ding(); });
+          s.step(async () => { s.show(items[1], "left"); s.sound("traffic", { vol: .4, dur: 2.5 }); await walk(route[2]); });
           s.step(async () => { s.show(items[2], "left"); await walk(route[3]); s.sfx.pop(); });
-          s.step(async () => { s.show(items[3], "left"); s.sfx.success(); await s.show(uSign, "pop"); });
+          s.step(async () => { s.show(items[3], "left"); s.sound("ubahn-train", { vol: .4, dur: 3 }); s.show(uPhoto, "zoom"); await s.show(uSign, "pop"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -619,7 +644,7 @@
           s.add(root(s, "cols", { gridTemplateColumns: "1.25fr .75fr", gap: "22px", alignItems: "start" }, s.h("div", { class: "stack", style: { gap: "16px" } }, mail, lf15),
             s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("p", { class: "h2", style: { fontSize: "25px" } }, "Schreibe …"), s.h("div", { class: "row", style: { gap: "10px" } }, bF, bI), cmp, rules)));
           s.sfx.pop();
-          s.step(async () => { for (const k of Object.keys(rows)) { s.sfx.pop(); await s.show(rows[k], "left"); } s.say("Betreff, Anrede, Text, Gruß und Name."); });
+          s.step(async () => { s.sound("keyboard", { vol: .5, dur: 2.5 }); for (const k of Object.keys(rows)) { await s.show(rows[k], "left"); } s.say("Betreff, Anrede, Text, Gruß und Name."); });
           s.step(async () => { await setMode("i"); s.say("An Oma schreibst du freundlich und locker, mit du."); });
           s.step(async () => { s.sfx.pop(); await s.show(cmp, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(rules, "up"); });
@@ -649,7 +674,7 @@
           s.add(root(s, "stack", { gap: "14px" }, s.h("div", { style: { display: "grid", gridTemplateColumns: "440px 1fr", gap: "22px", alignItems: "start" } }, s.h("div", { class: "stack", style: { gap: "10px" } }, svg, plan), conf), lf));
           s.sfx.pop();
           s.step(async () => { for (let i = 0; i < 4; i++) { s.sfx.count(i); await s.show(nodes[i], "pop"); if (arcs[i]) { s.show(heads[i], "fade", 600); await s.show(arcs[i], "draw"); } } s.say("Planen, schreiben, überarbeiten, Reinschrift."); });
-          s.step(async () => { s.sfx.scribble(); await s.show(plan, "up"); });
+          s.step(async () => { s.sound("pencil-write", { vol: .6 }); await s.show(plan, "up"); });
           s.step(async () => { s.sfx.whoosh(); await s.show(conf, "right"); for (const b of boxes) { await s.wait(260); b.textContent = "✓"; s.sfx.tick(); } s.sfx.success(); });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); s.say("Welche Textsorte passt? Das hängt davon ab, was du willst."); });
         },

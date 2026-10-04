@@ -90,24 +90,15 @@
         title: "Kunst am Nil",
         say: "Die Künstler im alten Ägypten hielten sich über dreitausend Jahre an fast dieselben Regeln. Wir entdecken sie.",
         build(s) {
-          const svg = s.svg(480, 420);
-          const sky = s.el("rect", { x: 0, y: 0, width: 480, height: 420, rx: 20, fill: "#fdf0cf" });
-          const sun = s.el("circle", { cx: 360, cy: 90, r: 46, fill: "#f6a623", class: "later" });
-          const pyr1 = s.el("path", { d: "M70,300 L190,110 L310,300 Z", fill: "#e3b873", stroke: "#9a6a2a", "stroke-width": 5, "stroke-linejoin": "round", class: "later" });
-          const pyr2 = s.el("path", { d: "M250,300 L340,170 L430,300 Z", fill: "#d9a85e", stroke: "#9a6a2a", "stroke-width": 5, "stroke-linejoin": "round", class: "later" });
-          const sand = s.el("rect", { x: 0, y: 300, width: 480, height: 40, fill: "#efd49a", class: "later" });
-          const nile = s.el("path", { d: "M0,372 Q40,350 80,372 T160,372 T240,372 T320,372 T400,372 T480,372", fill: "none", stroke: BLUE, "stroke-width": 9, "stroke-linecap": "round", class: "later" });
-          const nile2 = s.el("path", { d: "M0,400 Q40,380 80,400 T160,400 T240,400 T320,400 T400,400 T480,400", fill: "none", stroke: "#6fa3dc", "stroke-width": 7, "stroke-linecap": "round", class: "later" });
-          svg.append(sky, sun, sand, pyr1, pyr2, nile, nile2);
+          const pic = s.photo("pyramiden-gizeh", { w: 480, h: 420, pos: "40% 60%", caption: "Die Pyramiden von Gizeh", kb: true });
           const cards = [["Figuren", "Kopf von der Seite, Brust von vorn"], ["Farben", "aus Steinen und Pulver"], ["Relief", "Bilder in Stein"], ["Hieroglyphen", "Schrift aus Bildern"]].map(([a, b], i) =>
             s.h("div", { class: "card later", style: { padding: "12px 16px", borderLeft: `8px solid ${UC}` } }, s.h("p", { class: "t", html: `<b>${a}</b>` }), s.h("p", { class: "small", html: b })));
           const head = P(s, "Ägypten: Kunst mit <span class='hl'>festen Regeln</span>", "big");
           const sub = P(s, "Über 3000 Jahre malten und bauten die Künstler Figuren nach fast demselben Schema.", "t", true);
           const grid = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" } }, ...cards);
           const note = box(s, "life", "Im Alltag", "In GeWi lernst du das Land am Nil kennen. Hier lernst du, wie seine Bilder gemacht wurden.");
-          s.add(cols2(s, svg, stack(s, 16, head, sub, grid, note), 480));
-          s.show(svg, "zoom"); fx(s, "whoosh");
-          s.step(async () => { await reveal(s, sun, "zoom", "pop"); await reveal(s, [sand, pyr1, pyr2], "up", "whoosh"); await reveal(s, [nile, nile2], "draw", "swoosh"); });
+          s.add(cols2(s, pic, stack(s, 16, head, sub, grid, note), 480));
+          s.show(pic, "zoom"); s.sound("wind", { vol: .3, dur: 4 });
           s.step(async () => { await reveal(s, sub, "up", "ding"); s.say("Dreitausend Jahre, fast dieselben Regeln."); });
           s.step(async () => { for (const c of cards) { await reveal(s, c, "pop", "pop", 0); } });
           s.step(async () => { await reveal(s, note, "up", "ding"); });
@@ -186,6 +177,21 @@
           s.step(async () => { await reveal(s, ex, "up", "ding"); });
         },
       },
+      /* 4b ---- Nebamun */
+      {
+        title: "Echte Grabmalerei: Nebamun",
+        say: "Dieses Bild ist über dreitausend Jahre alt. Es zeigt Nebamun bei der Vogeljagd. Findest du die Regeln wieder?",
+        build(s) {
+          const pic = s.photo("nebamun-jagd", { w: 520, h: 443, fit: "contain", kb: true, style: { background: "#e9eef7" } });
+          const e1 = box(s, "ex", "Aspektive", "Nebamuns <b>Kopf</b> ist im Profil, das <b>Auge</b> und die <b>Schultern</b> sind von vorn gemalt.", false);
+          const e2 = box(s, "ex", "Bedeutungsgröße", "Nebamun ist <b>groß</b>. Seine Frau steht kleiner hinter ihm, die Tochter sitzt ganz klein zu seinen Füßen.");
+          const e3 = box(s, "ex", "Woher?", "Aus seinem Grab bei Theben, <b>um 1350 v. Chr.</b> Heute im British Museum in London.");
+          s.add(cols2(s, pic, stack(s, 12, e1, e2, e3), 520));
+          s.show(pic, "zoom"); s.sound("birds", { vol: .35, dur: 6 });
+          s.step(async () => { await reveal(s, e2, "up", "pop"); s.say("Wer ist am wichtigsten? Der Größte."); });
+          s.step(async () => { await reveal(s, e3, "up", "ding"); });
+        },
+      },
       /* 5 ---- Raster */
       {
         title: "Das Raster aus 18 Quadraten",
@@ -244,8 +250,8 @@
           svg.append(r1, r2, r3, ptr);
           const items = [["1", "oben: Menschen bringen Gaben"], ["2", "Mitte: Ernte auf dem Feld"], ["3", "unten: Boot auf dem Fluss"]].map(([n, t]) => s.h("div", { class: "card later", style: { padding: "8px 16px", display: "flex", gap: "14px", alignItems: "baseline", borderLeft: `10px solid ${UC}` } }, s.h("b", { class: "h2", style: { color: UC } }, n), s.h("span", { class: "t" }, t)));
           const m = merk(s, "Ein Bildstreifen heißt auch <b>Register</b>. Man liest ihn Streifen für Streifen von oben nach unten.");
-          const life = box(s, "life", "Im Alltag", "<b>Comic-Seite:</b> Panels in Reihen.<br><b>Stundenplan:</b> Zeile für Zeile.<br><b>Videoschnitt:</b> Spuren liegen übereinander.");
-          s.add(cols2(s, svg, stack(s, 12, P(s, "Eine Wand, <span class='hl'>drei Streifen</span>", "big"), ...items, m, life), 580));
+          const life = s.photo("menna-ernte", { w: 490, h: 205, pos: "50% 50%", caption: "Grab des Menna: Ernte in zwei Streifen", cls: "later" });
+          s.add(cols2(s, svg, stack(s, 8, P(s, "Eine Wand, <span class='hl'>drei Streifen</span>", "big"), ...items, m, life), 580));
           s.step(async () => { await reveal(s, [d1, d2], "draw", "swoosh"); });
           const rr = [[r1, 90], [r2, 260], [r3, 430]];
           rr.forEach(([r, y], i) => s.step(async () => {
@@ -253,7 +259,8 @@
             await s.tween({ from: parseFloat(ptr.getAttribute("cy")), to: y, dur: 600, update: v => ptr.setAttribute("cy", v) });
             await s.wait(300);
           }));
-          s.step(async () => { await reveal(s, m, "up", "ding"); await reveal(s, life, "up", "pop"); });
+          s.step(async () => { await reveal(s, m, "up", "ding"); });
+          s.step(async () => { await reveal(s, life, "zoom", "whoosh"); s.say("So sieht das in einem echten Grab aus: Oben wird Getreide geerntet, unten gedroschen und gemessen."); });
         },
       },
       /* 7 ---- Mineralfarben */
@@ -274,7 +281,7 @@
             const fill = s.h("div", { style: { width: "100%", height: "100%", background: col, transform: "scaleX(0)", transformOrigin: "0 50%" } }); bar.append(fill);
             const card = s.h("div", { class: "card later", style: { padding: "12px", display: "flex", flexDirection: "column", gap: "8px" } }, svg, bar, P(s, `<b>${name}</b>`, "h2"), P(s, txt, "small"));
             const run = async () => {
-              s.sfx.scribble();
+              s.sound("moerser", { vol: .8 });
               await s.tween({ from: 0, to: 1, dur: 1700, ease: "linear", update: t => {
                 srcG.forEach((g, i) => { const o = src[i]; const sc = 1 - .75 * t; g.setAttribute("transform", `translate(${o.x} ${o.y}) rotate(${Math.sin(t * 40) * 6 * (1 - t)}) scale(${sc}) translate(${-o.x} ${-o.y})`); });
                 heapG.setAttribute("transform", `translate(215 152) scale(1 ${Math.max(.02, t)}) translate(-215 -152)`);
@@ -291,11 +298,11 @@
             mk({ name: "Ägyptisch Blau", txt: "Künstlich gemischt aus Kupfer, Calcium und Silizium.", col: BLUE, src: [{ x: 50, y: 70, r: 26, color: "#c76b3b" }, { x: 105, y: 115, r: 26, color: "#f1f1ec" }, { x: 55, y: 125, r: 24, color: "#d8c48a" }] }),
           ];
           const m = merk(s, "<b>Mineralfarbe</b> = Stein zu Pulver gemahlen. Ägyptisch Blau ist eines der <b>ältesten künstlich</b> hergestellten Farbpigmente, seit über 4500 Jahren belegt.");
-          const life = box(s, "life", "Im Alltag", "In deinem Malkasten gibt es vielleicht auch ein <b>Ocker</b>. Schau nach! Und Lidschatten gibt es noch heute.");
+          const life = s.photo("blaue-pigmente", { w: 340, h: 200, pos: "50% 55%", caption: "Echte blaue Farbbrocken", cls: "later" });
           s.add(stack(s, 14, s.h("div", { class: "cols3", style: { gap: "20px" } }, ...cards.map(c => c.card)), s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "stretch", gap: "16px" } }, m, life)));
-          m.style.flex = "1.5"; life.style.flex = "1";
+          m.style.flex = "1";
           cards.forEach(c => s.step(async () => { await reveal(s, c.card, "up", "pop"); await c.run(); }));
-          s.step(async () => { await reveal(s, m, "up", "success"); await reveal(s, life, "up", "pop"); });
+          s.step(async () => { await reveal(s, m, "up", "success"); await reveal(s, life, "zoom", "pop"); s.say("Solche blauen Farbbrocken aus dem alten Ägypten liegen heute im Museum in Turin."); });
         },
       },
       /* 8 ---- Farbsymbolik */
@@ -313,12 +320,12 @@
             b("Grün", "#3a9a5a", () => { fg.setSkin("#3a9a5a"); say("<b>Grün</b> bedeutet: Erneuerung, Pflanzen und Fruchtbarkeit. Osiris wurde oft mit grüner Haut gemalt.", "#3a9a5a"); }),
             b("Schwarz", "#25252e", () => { fg.setSkin("#25252e"); say("<b>Schwarz</b> steht für die Unterwelt und den fruchtbaren Boden am Nil. Auch Osiris wurde so gemalt.", "#25252e"); }),
             b("Hautton", SKIN, () => { fg.setSkin(SKIN); say("So malen wir einen Menschen. Götter durften ihre <b>Bedeutungs-Farbe</b> tragen.", SKIN); }));
-          const life = box(s, "life", "Im Alltag", "<b>Ampel:</b> Rot heißt Stopp, Grün heißt Los.<br><b>Notausgang:</b> Das Schild ist grün.<br><b>U-Bahn-Plan:</b> Jede Linie hat ihre eigene Farbe.");
+          const life = s.photo("osiris-gruen", { w: 520, h: 250, pos: "78% 45%", caption: "Echt: Osiris mit grüner Haut, Totenbuch des Hunefer", cls: "later" });
           s.add(cols2(s, s.h("div", { class: "stack", style: { alignItems: "center", gap: "6px" } }, svg, P(s, "Eigene Zeichnung", "small")), stack(s, 16, P(s, "Farben sagen <span class='hl'>etwas</span>", "big"), btns, info, life), 270));
           s.step(async () => { await reveal(s, btns, "up", "ding"); });
           s.step(async () => { fg.setSkin("#3a9a5a"); s.sfx.boing(); say("<b>Grün</b> bedeutet: Erneuerung, Pflanzen und Fruchtbarkeit. Osiris wurde oft mit grüner Haut gemalt.", "#3a9a5a"); await s.wait(600); });
           s.step(async () => { fg.setSkin("#25252e"); s.sfx.boing(); say("<b>Schwarz</b> steht für die Unterwelt und den fruchtbaren Boden am Nil. Auch Osiris wurde so gemalt.", "#25252e"); await s.wait(600); });
-          s.step(async () => { await reveal(s, life, "up", "pop"); });
+          s.step(async () => { await reveal(s, life, "zoom", "whoosh"); s.say("Hier siehst du Osiris in einem echten Totenbuch. Er sitzt rechts auf dem Thron, mit grüner Haut."); });
         },
       },
       /* 9 ---- Relief */
@@ -358,23 +365,22 @@
           const k1 = mkCard("Erhaben", c1, true, "Der Hintergrund wird weggenommen. Die Figur steht heraus."), k2 = mkCard("Versenkt", c2, false, "Die Figur wird in die Wand hineingearbeitet.");
           const sl = s.slider({ label: "Licht dreht sich", min: 0, max: 360, step: 5, value: 135, fmt: v => v + "°", onInput: v => { ang = v; redraw(); } });
           const slw = s.h("div", { class: "later" }, sl);
-          const life = box(s, "life", "Im Alltag", "<b>Euro-Münze:</b> Das Bild steht heraus.<br><b>Gravur auf einem Pokal:</b> Der Name ist eingeritzt.<br><b>Schokotafel:</b> Das Muster steht heraus.");
+          const life = s.photo("relief-amarna", { w: 330, h: 264, pos: "50% 45%", caption: "Versenktes Relief, Amarna", cls: "later" });
           const m = merk(s, "Die alten Ägypter arbeiteten Figuren und Linien auch als <b>Hohlform</b> in die Fläche hinein. Das ist ein <b>versenktes</b> Relief.");
-          s.add(stack(s, 12, s.h("div", { class: "cols", style: { gap: "20px" } }, k1, k2), s.h("div", { class: "cols", style: { gap: "20px", alignItems: "center" } }, stack(s, 10, slw, life), m)));
+          s.add(stack(s, 12, s.h("div", { class: "cols", style: { gap: "20px" } }, k1, k2), s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 330px", gap: "20px", alignItems: "center" } }, stack(s, 10, slw, m), life)));
           s.step(async () => { await reveal(s, k1, "up", "pop"); });
           s.step(async () => { await reveal(s, k2, "up", "pop"); });
           s.step(async () => { await reveal(s, slw, "up", "ding"); s.say("Drehe das Licht und schau, wo die Schatten wandern."); s.sfx.whoosh(); await s.tween({ from: 135, to: 315, dur: 2200, ease: "inOut", update: v => { ang = v; sl.set(Math.round(v / 5) * 5); } }); });
-          s.step(async () => { await reveal(s, life, "up", "pop"); await reveal(s, m, "up", "success"); });
+          s.step(async () => { await reveal(s, m, "up", "success"); });
+          s.step(async () => { s.sound("meissel", { vol: .6, dur: 2 }); await s.show(life, "zoom"); s.say("Ein echtes versenktes Relief aus Amarna: König Echnaton, Nofretete und ihre Tochter."); });
         },
       },
       /* 10 ---- Nofretete */
       {
         title: "Nofretete in Berlin",
-        say: "Die berühmte Büste der Nofretete steht in Berlin. Hier siehst du meine einfache Zeichnung davon.",
+        say: "Die berühmte Büste der Nofretete steht in Berlin, im Neuen Museum. So sieht sie in echt aus.",
         build(s) {
-          const b = bust(s); const svg = s.svg(420, 540); svg.setAttribute("viewBox", "0 20 420 520"); svg.append(b.g);
-          const all = [b.order.neck, b.order.collar, b.order.face, b.order.crown, b.order.band, b.order.eyes];
-          all.flat().forEach(e => e.classList.add("later"));
+          const pic = s.photo("nofretete", { w: 420, h: 600, fit: "contain", kb: true, style: { background: "#000" } });
           const fact = (big, t, later = true) => s.h("div", { class: "card" + (later ? " later" : ""), style: { padding: "8px 16px", display: "flex", gap: "14px", alignItems: "baseline", borderLeft: `10px solid ${UC}` } }, s.h("b", { class: "h2", style: { color: UC, minWidth: "118px" }, html: big }), s.h("span", { class: "t", html: t }));
           const num = s.h("span", { class: "mono" }, "0");
           const f1 = fact("", "", true); f1.querySelector("b").innerHTML = ""; f1.querySelector("b").append(num, " cm"); f1.lastChild.innerHTML = "hoch";
@@ -383,14 +389,9 @@
           const f4 = fact("Kalkstein", "mit einer bemalten Stuck-Schicht");
           const f5 = fact("1 Auge", "ist leer. Warum, wissen die Forscher nicht genau.");
           const f6 = fact("Neues Museum", "auf der Museumsinsel Berlin (dort seit 2009)");
-          const note = P(s, "Meine einfache Zeichnung, nicht das Original.", "small");
-          s.add(cols2(s, s.h("div", { class: "stack", style: { alignItems: "center", gap: "4px" } }, svg, note), stack(s, 9, f1, f2, f3, f4, f5, f6), 440));
-          svg.style.height = "540px";
-          s.step(async () => { s.say("Zuerst Hals und Kragen."); await reveal(s, b.order.neck, "up", "whoosh"); await reveal(s, b.order.collar, "up", "pop"); });
-          s.step(async () => { await reveal(s, b.order.face, "zoom", "pop"); });
-          s.step(async () => { await reveal(s, [b.order.crown[0], b.order.band[0]], "down", "swoosh"); });
-          s.step(async () => { await reveal(s, b.order.eyes, "fade", "ding"); });
-          s.step(async () => { await reveal(s, f1, "left", "pop"); await s.tween({ from: 0, to: 50, dur: 900, update: v => { num.textContent = String(Math.round(v)); } }); await reveal(s, [f2, f3], "left", "pop"); });
+          s.add(cols2(s, pic, stack(s, 9, f1, f2, f3, f4, f5, f6), 440));
+          s.show(pic, "zoom"); fx(s, "whoosh");
+          s.step(async () => { await reveal(s, f1, "left", "pop"); await s.tween({ from: 0, to: 49, dur: 900, update: v => { num.textContent = String(Math.round(v)); } }); await reveal(s, [f2, f3], "left", "pop"); });
           s.step(async () => { await reveal(s, [f4, f5, f6], "left", "pop"); });
         },
       },
@@ -476,7 +477,7 @@
           s.add(cols2(s, svg, stack(s, 8, ...rows, m), 420, 24));
           s.step(async () => { s.show(rows[0], "left"); s.sfx.whoosh(); await s.show(vs, "down", 0); });
           s.step(async () => { s.show(rows[1], "left"); s.sfx.whoosh(); await s.show(hs, "left", 0); });
-          s.step(async () => { s.show(rows[2], "left"); for (let i = 0; i < 3; i++) { s.sfx.drum(); await s.tween({ from: 0, to: 1, dur: 260, update: t => sheet.setAttribute("transform", `translate(210 210) scale(1 ${1 - .06 * Math.sin(t * Math.PI)}) translate(-210 -210)`) }); } });
+          s.step(async () => { s.show(rows[2], "left"); s.sound("knock", { vol: .7 }); for (let i = 0; i < 3; i++) { await s.tween({ from: 0, to: 1, dur: 260, update: t => sheet.setAttribute("transform", `translate(210 210) scale(1 ${1 - .06 * Math.sin(t * Math.PI)}) translate(-210 -210)`) }); } });
           s.step(async () => {
             s.show(rows[3], "left"); s.sfx.swoosh();
             const col = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
@@ -485,6 +486,21 @@
           });
           s.step(async () => { s.show(rows[4], "left"); s.show(ink, "fade"); s.sfx.scribble(); await s.show(marks, "draw", 0); });
           s.step(async () => { await reveal(s, m, "up", "success"); });
+        },
+      },
+      /* 13b ---- Totenbuch und Rosette */
+      {
+        title: "Echte Schrift: Papyrus und Stein",
+        say: "Hier siehst du echte Hieroglyphen: auf einem Totenbuch aus Papyrus und auf dem Stein von Rosette.",
+        build(s) {
+          const a = s.photo("totenbuch-hunefer", { w: 640, h: 291, fit: "cover", pos: "50% 50%", caption: "Totenbuch des Hunefer" });
+          const b = s.photo("stein-rosette", { w: 400, h: 400, pos: "50% 40%", caption: "Stein von Rosette", cls: "later" });
+          const e1 = box(s, "ex", "Das Totenbuch", "Eine Papyrus-Rolle mit Sprüchen und Bildern für die Reise ins Jenseits. Diese ist <b>über 3000 Jahre</b> alt. Oben: Hieroglyphen. Rechts: Osiris auf dem Thron.", false);
+          const e2 = box(s, "ex", "Der Stein von Rosette", "Derselbe Text <b>dreimal</b>: in Hieroglyphen, in einer ägyptischen Schreibschrift und auf Griechisch. Gefunden 1799.");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "640px 400px", gap: "24px", alignItems: "center", height: "100%" } },
+            stack(s, 12, a, e1), stack(s, 12, b, e2)));
+          s.show(a, "zoom"); fx(s, "whoosh");
+          s.step(async () => { s.sound("meissel", { vol: .6, dur: 2 }); s.show(e2, "up"); await s.show(b, "zoom"); s.say("Weil man Griechisch lesen konnte, konnte Champollion die Hieroglyphen entziffern."); });
         },
       },
       /* 14 ---- Skarabäus */

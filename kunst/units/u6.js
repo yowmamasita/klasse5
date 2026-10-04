@@ -244,6 +244,23 @@
           s.step(async () => { s.sfx.ding(); s.show(slWrap, "pop"); await s.show(life, "up"); s.say("Schiebe den Regler und sieh, wie sich die Ebenen unterschiedlich schnell bewegen."); });
         },
       },
+      /* 5b --------------------------------------------------------------- */
+      {
+        title: "Tiefe im Gemälde: Bruegel",
+        say: "Pieter Bruegel malte 1565 die Jäger im Schnee. Das Bild hat einen Vordergrund, einen Mittelgrund und einen Hintergrund.",
+        build(s) {
+          const pic = s.photo("bruegel-jaeger", { w: 600, h: 427, pos: "50% 50%" });
+          const e1 = box(s, "ex", "Vordergrund", "Links vorn: die <b>Jäger</b> mit ihren Hunden. Groß, dunkel, mit vielen Einzelheiten.", false);
+          const e2 = box(s, "ex", "Mittelgrund", "Das <b>Dorf</b> und die zugefrorenen Teiche. Darauf laufen winzige Menschen Schlittschuh.");
+          const e3 = box(s, "ex", "Hintergrund", "Die <b>Berge</b> ganz hinten: klein, hell und blass, fast im Himmel verschwunden.");
+          const info = P(s, "<b>Pieter Bruegel der Ältere</b>, 1565. Heute im Kunsthistorischen Museum in Wien.", "small", true);
+          s.add(cols(s, pic, stack(s, 10, e1, e2, e3, info), 600));
+          s.show(pic, "zoom"); s.sound("wind", { vol: .35, dur: 5 });
+          s.step(async () => { s.sfx.pop(); await s.show(e2, "up"); s.say("In der Mitte das Dorf und das Eis mit den Schlittschuhläufern."); });
+          s.step(async () => { s.sfx.pop(); await s.show(e3, "up"); s.say("Ganz hinten die Berge, blass wie im Nebel."); });
+          s.step(async () => { s.sfx.ding(); await s.show(info, "fade"); });
+        },
+      },
       /* 6 ---------------------------------------------------------------- */
       {
         title: "Symmetrie",
@@ -264,12 +281,13 @@
           const slW = s.h("div", { class: "later" }, sl);
           const e1 = box(s, "ex", "Symmetrisch", "Beide Hälften sind <b>Spiegelbilder</b>. Das Bild wirkt ruhig, stabil und festlich.", false);
           const m = merk(s, "<b>Symmetrie:</b> Links und rechts von der Spiegelachse sieht es <b>gleich</b> aus.");
-          const life = box(s, "life", "Im Alltag", "Dein Gesicht (fast), Schmetterlingsflügel, Blätter. Schlösser und Kirchen werden oft symmetrisch gebaut.");
-          s.add(cols(s, svg, stack(s, 12, P(s, "Falte ein Blatt in der Mitte: Beide Seiten passen genau aufeinander."), slW, e1, m, life)));
+          const life = s.photo("brandenburger-tor", { w: 280, h: 250, pos: "50% 45%", caption: "Brandenburger Tor", cls: "later" });
+          s.add(cols(s, svg, stack(s, 12, P(s, "Falte ein Blatt in der Mitte: Beide Seiten passen genau aufeinander."), slW, e1, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, m, life))));
           s.show(svg, "zoom"); s.sfx.pop();
           s.step(async () => { s.sfx.pop(); await s.show([half, body], "pop"); s.say("Hier ist die linke Hälfte eines Schmetterlings."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(axis, "draw"); s.show(slW, "pop"); await s.tween({ from: 0, to: 100, dur: 1400, ease: "inOut", update: v => sl.set(Math.round(v)) }); s.sfx.ding(); s.say("Die rechte Hälfte ist das Spiegelbild. Das ist Symmetrie."); });
-          s.step(async () => { s.sfx.pop(); await s.show(m, "up"); s.show(life, "up", 200); });
+          s.step(async () => { s.sfx.pop(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(life, "zoom"); s.say("Auch Gebäude sind oft symmetrisch, zum Beispiel das Brandenburger Tor in Berlin."); });
         },
       },
       /* 7 ---------------------------------------------------------------- */
@@ -423,7 +441,7 @@
             const [, x, y, r] = FIN[i]; g.classList.remove("later"); s.sfx.swoosh();
             await s.tween({ from: 1, to: 0, dur: 650, ease: "out", update: t => setT(g, x + 420 * t, y - 120 * t, 1, 1, r + 60 * t) }); s.sfx.snap();
           };
-          s.step(async () => { s.say("Zuerst klebt man die Tapete als Hintergrund."); await fly(wall, 0); await fly(glass, 3); });
+          s.step(async () => { s.say("Zuerst klebt man die Tapete als Hintergrund."); s.sound("scissors"); await s.wait(500); await fly(wall, 0); await fly(glass, 3); });
           s.step(async () => { await fly(news, 1); await fly(bottle, 2); await fly(apple, 4); s.show(f2, "up"); });
           s.step(async () => { s.sfx.scribble(); await s.show(coal, "fade"); s.sfx.ding(); s.show(f3, "up"); s.show(note, "fade", 200); });
         },
@@ -433,28 +451,16 @@
         title: "Kurt Schwitters und Merz",
         say: "Kurt Schwitters klebte Fundstücke und Papierschnipsel zu Bildern. Er nannte das Merz.",
         build(s) {
-          const svg = s.svg(540, 440);
-          svg.append(s.el("rect", { x: 6, y: 6, width: 528, height: 428, rx: 10, fill: "#d9d2c4", stroke: "#a39b88", "stroke-width": 4 }));
-          const pc = ch => { const g = s.el("g", { class: "later" }); g.append(...ch); return g; };
-          const card = pc([s.el("rect", { x: -80, y: -60, width: 160, height: 120, fill: "#b88a5a", stroke: "#7a5634", "stroke-width": 3 }), s.el("path", { d: "M-80,-36 H80 M-80,-12 H80 M-80,12 H80 M-80,36 H80", stroke: "#9a6f42", "stroke-width": 4 })]);
-          const red = pc([s.el("rect", { x: -50, y: -75, width: 100, height: 150, fill: "#c0392b" }), s.el("circle", { cx: 10, cy: 10, r: 22, fill: "#f4d35e" })]);
-          const ticket = pc([s.el("rect", { x: -60, y: -30, width: 120, height: 60, fill: "#ffd94a", stroke: "#b08a2a", "stroke-width": 2 }), s.el("circle", { cx: -60, cy: 0, r: 9, fill: "#d9d2c4" }), s.el("circle", { cx: 60, cy: 0, r: 9, fill: "#d9d2c4" }), s.el("path", { d: "M-40,-12 H40 M-40,2 H40 M-40,16 H10", stroke: "#8c6d1a", "stroke-width": 4 })]);
-          const wheel = pc([s.el("circle", { r: 50, fill: "none", stroke: "#3b3b3b", "stroke-width": 12 }), s.el("path", { d: "M-50,0 H50 M0,-50 V50 M-35,-35 L35,35 M35,-35 L-35,35", stroke: "#3b3b3b", "stroke-width": 5 })]);
-          const tri = pc([s.el("polygon", { points: "-70,50 70,50 -10,-60", fill: "#ece6d8", stroke: "#a39b88", "stroke-width": 2 }), s.el("path", { d: "M-40,34 H40 M-28,16 H12 M-18,-2 H-2", stroke: "#8c8574", "stroke-width": 4 })]);
-          const tiles = "MERZ".split("").map(ch => pc([s.el("rect", { x: -26, y: -32, width: 52, height: 64, fill: "#fff", stroke: "#a39b88", "stroke-width": 2 }), s.el("text", { x: 0, y: 14, "text-anchor": "middle", "font-size": 40, "font-weight": 800, fill: INK, text: ch })]));
-          const FIN = [[card, 150, 250, -5], [red, 395, 210, 7], [ticket, 280, 270, 12], [wheel, 380, 345, 0], [tri, 150, 365, -12],
-            [tiles[0], 130, 68, -6], [tiles[1], 200, 76, 4], [tiles[2], 270, 66, -3], [tiles[3], 340, 76, 7]];
-          FIN.forEach(([g, x, y, r]) => setT(g, x, y, 1, 1, r));
-          svg.append(card, red, ticket, wheel, tri, ...tiles);
+          const pic = s.photo("schwitters-billet", { w: 400, h: 532, fit: "contain", style: { background: "#fff" } });
           const f1 = box(s, "ex", "Wer?", "<b>Kurt Schwitters</b>: geboren 1887 in Hannover, gestorben 1948 in Kendal (England).", false);
           const f2 = box(s, "ex", "Merz", "Das Wort stammt aus einem Schnipsel mit „Kommerz- und Privatbank“. Er klebte <b>Fundstücke</b> zu Kunst.");
-          const f3 = box(s, "ex", "Merzbau", "Ein ganzer Raum in seinem Elternhaus in Hannover wurde zur Collage. 1943 zerstörte ihn ein Bombenangriff.");
-          const note = P(s, "Das Bild links ist nur unsere Hommage im eigenen Stil.", "small pencil", true);
-          s.add(cols(s, svg, stack(s, 10, f1, f2, f3, note)));
-          s.show(svg, "zoom"); s.sfx.pop();
-          const fly = async i => { const [g, x, y, r] = FIN[i]; g.classList.remove("later"); s.sfx.swoosh(); await s.tween({ from: 1, to: 0, dur: 450, ease: "out", update: t => setT(g, x - 400 * t, y + 200 * t, 1, 1, r - 90 * t) }); s.sfx.snap(); };
-          s.step(async () => { s.say("Pappe, Fahrkarten, Zeitungspapier, ein altes Rad: alles Fundstücke."); for (const i of [0, 1, 2, 3, 4]) await fly(i); s.show(f2, "up"); });
-          s.step(async () => { s.say("Und das Wort Merz kam aus einem Schnipsel."); for (const i of [5, 6, 7, 8]) await fly(i); s.sfx.ding(); s.show(f3, "up"); s.show(note, "fade", 200); });
+          const f3 = box(s, "ex", "Schau genau!", "In dieser echten Collage klebt ein <b>Straßenbahn-Fahrschein</b>. Daneben: Zeitungspapier und bunte Papierreste.");
+          const f4 = box(s, "ex", "Merzbau", "Ein ganzer Raum in seinem Elternhaus in Hannover wurde zur Collage. 1943 zerstörte ihn ein Bombenangriff.");
+          s.add(cols(s, pic, stack(s, 10, f1, f2, f3, f4), 420));
+          s.show(pic, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sound("paper-crumple", { dur: 1.5 }); await s.show(f2, "up"); s.say("Pappe, Fahrkarten, Zeitungspapier: alles Fundstücke."); });
+          s.step(async () => { s.sound("tram-bell", { vol: .5, dur: 2.5 }); await s.show(f3, "up"); s.say("Findest du den Fahrschein der Straßenbahn?"); });
+          s.step(async () => { s.sfx.ding(); await s.show(f4, "up"); });
         },
       },
       /* 12 --------------------------------------------------------------- */
@@ -541,14 +547,30 @@
           s.step(async () => { s.say("Beim Modellieren kommt Ton dazu: erst der Körper, dann der Kopf, dann die Arme."); for (let i = 0; i < 4; i++) { blobs[i].classList.remove("later"); s.sfx.note(i * 3, .15); await s.tween({ from: -300, to: 0, dur: 500, ease: "bounce", update: v => setT(blobs[i], 0, v) }); } });
           s.step(async () => { s.sfx.pop(); await s.show([stone, frameDash], "pop"); s.say("Der Steinblock ist erst einmal ein Klotz."); });
           s.step(async () => {
-            s.say("Jetzt wird weggemeißelt, bis die Figur übrig bleibt.");
+            s.say("Jetzt wird weggemeißelt, bis die Figur übrig bleibt."); s.sound("meissel", { vol: .7 });
             const N = chips.length; let launched = 0;
-            const fall = async (c, i) => { const x0 = i % 2 ? 650 + Math.random() * 70 : 940 + Math.random() * 70, y0 = 80 + Math.random() * 150; c.classList.remove("later"); const xe = x0 + (i % 2 ? -16 : 16); await s.tween({ from: 0, to: 1, dur: 500, ease: "in", update: t => setT(c, x0 + (xe - x0) * t, y0 + (GY - 10 - y0) * t, 1, 1, t * 200) }); s.sfx.tick(); };
+            const fall = async (c, i) => { const x0 = i % 2 ? 650 + Math.random() * 70 : 940 + Math.random() * 70, y0 = 80 + Math.random() * 150; c.classList.remove("later"); const xe = x0 + (i % 2 ? -16 : 16); await s.tween({ from: 0, to: 1, dur: 500, ease: "in", update: t => setT(c, x0 + (xe - x0) * t, y0 + (GY - 10 - y0) * t, 1, 1, t * 200) }); };
             const run = []; for (let i = 0; i < N; i++) { run.push(fall(chips[i], i)); await s.wait(110); }
             s.tween({ from: 0, to: 1, dur: N * 110, ease: "linear", update: v => (cover.setAttribute("opacity", v)) });
             await Promise.all(run); cover.setAttribute("opacity", 1); s.sfx.ding();
           });
           s.step(async () => { s.sfx.pop(); await s.show(e2, "up"); await s.show(m, "up"); });
+        },
+      },
+      /* 13b -------------------------------------------------------------- */
+      {
+        title: "Aufbauen oder abtragen?",
+        say: "Rodin hat seinen Denker modelliert, also aufgebaut. Michelangelo hat seine Figur aus dem Marmor herausgeschlagen.",
+        build(s) {
+          const a = s.photo("rodin-denker", { w: 300, h: 400, pos: "50% 40%", caption: "Rodin: Der Denker" });
+          const b = s.photo("michelangelo-sklave", { w: 300, h: 400, pos: "50% 0%", caption: "Michelangelo", cls: "later" });
+          const e1 = box(s, "ex", "Additiv: Auguste Rodin", "Rodin <b>modellierte</b> das erste Modell vom <b>Denker</b> um 1881. Danach wurde er in <b>Bronze</b> gegossen.", false);
+          const e2 = box(s, "ex", "Subtraktiv: Michelangelo", "Der <b>„Erwachende Sklave“</b> ist unfertig. Man sieht, wie die Figur aus dem <b>Marmorblock</b> herauswächst.");
+          const m = merk(s, "Modellieren: <b>dazugeben</b>. Meißeln und Schnitzen: <b>wegnehmen</b>.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "300px 300px 1fr", gap: "22px", alignItems: "center", height: "100%" } }, a, b, stack(s, 12, e1, e2, m)));
+          s.show(a, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sound("meissel", { vol: .7 }); s.show(e2, "up"); await s.show(b, "zoom"); s.say("Bei Michelangelo steckt die Figur noch halb im Stein."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
       /* 14 --------------------------------------------------------------- */
@@ -585,12 +607,13 @@
           const slW = s.h("div", { class: "later" }, sl);
           const e1 = box(s, "ex", "Nur von vorn", "Ein Relief ist <b>nicht von allen Seiten</b> zu sehen. Es wächst aus einem Hintergrund heraus.", false);
           const e2 = box(s, "ex", "Selber machen", "Klebe Pappe in <b>Schichten</b> übereinander: Je mehr Schichten, desto höher das Relief. Das ist additiv.");
-          const life = box(s, "life", "Im Alltag", "Münzen, Schokoladentafeln mit Muster, Verzierungen an alten Hauswänden und Wappen.");
+          const life = s.photo("pergamon-relief", { w: 500, h: 260, pos: "50% 45%", caption: "Pergamonaltar, Berlin: Relief aus Marmor", cls: "later" });
           s.add(cols(s, svg, stack(s, 10, e1, slW, e2, life), 560));
           s.show(svg, "zoom"); s.sfx.pop();
           s.step(async () => { s.sfx.whoosh(); await s.show(light, "fade"); s.say("Das Licht kommt von der Seite. So wirft das Relief Schatten."); });
           s.step(async () => { s.sfx.pop(); s.show(slW, "pop"); await s.tween({ from: 100, to: 40, dur: 800, update: v => sl.set(Math.round(v)) }); await s.tween({ from: 40, to: 100, dur: 800, update: v => sl.set(Math.round(v)) }); });
-          s.step(async () => { s.sfx.pop(); await s.show(e2, "up"); s.show(life, "up", 200); });
+          s.step(async () => { s.sfx.pop(); await s.show(e2, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(life, "zoom"); s.say("Ein berühmtes Relief steht in Berlin: der Pergamonaltar. Die Figuren wachsen aus der Wand heraus."); });
         },
       },
       /* 15 --------------------------------------------------------------- */
@@ -634,7 +657,7 @@
           s.add(cols(s, svg, stack(s, 10, stage, slW, tip, life), 500));
           s.show(svg, "zoom"); s.sfx.pop();
           s.step(async () => { for (const f of faceEls) { s.sfx.pop(); await s.show(f, "pop"); } s.say("Das ist das Netz eines Würfels: sechs Flächen."); });
-          s.step(async () => { s.sfx.scribble(); await s.show(cut, "draw"); s.say("Die rote Linie schneidest du aus."); });
+          s.step(async () => { s.sound("scissors"); await s.show(cut, "draw"); s.say("Die rote Linie schneidest du aus."); });
           s.step(async () => { s.sfx.snap(); await s.show(fold, "fade"); s.show(leg, "up"); s.say("An den gestrichelten blauen Linien faltest du."); });
           s.step(async () => { s.sfx.pop(); await s.show(tabs, "pop"); s.say("Die gelben Laschen bekommen Kleber."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(stage, "up"); s.show([slW, tip], "pop"); await s.tween({ from: 0, to: 100, dur: 2600, ease: "inOut", update: v => sl.set(Math.round(v)) }); s.sfx.success(); });

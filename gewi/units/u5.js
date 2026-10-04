@@ -124,9 +124,9 @@
           const c2 = exc(s, "Ostsee", "later", p(s, "small", "Fast ganz von Land umgeben. ", B(s, "Kaum Ebbe und Flut."), " Steilküsten, Sandstrände und Bodden."));
           const lf = lifeBox(s, "later", p(s, "small", "Sylt liegt in der Nordsee, Rügen in der Ostsee. Von Hamburg, Kiel und Rostock fahren Schiffe in die ganze Welt."));
           s.add(grid(s, "540px 1fr", m.svg, s.h("div", { class: "stack" }, p(s, "h2 a-up", "Zwei Küsten, zwei Meere"), p(s, "t a-up", "Berlin liegt im Binnenland. Im Norden aber hat Deutschland Küste!"), c1, c2, lf)));
-          s.show(m.svg, "zoom"); s.sfx.whoosh();
-          s.step(async () => { s.sfx.whoosh(); s.show(m.nord, "pop"); s.show(m.watt, "fade"); await s.show(c1, "left"); s.say("Links die Nordsee, mit Ebbe und Flut und dem Wattenmeer."); });
-          s.step(async () => { s.sfx.whoosh(); s.show(m.ost, "pop"); await s.show(c2, "left"); s.say("Rechts die Ostsee. Sie ist fast ganz von Land umgeben."); });
+          s.show(m.svg, "zoom"); s.sound("strand-moewen", { vol: .45 });
+          s.step(async () => { s.sfx.swoosh(); s.show(m.nord, "pop"); s.show(m.watt, "fade"); await s.show(c1, "left"); s.say("Links die Nordsee, mit Ebbe und Flut und dem Wattenmeer."); });
+          s.step(async () => { s.sfx.swoosh(); s.show(m.ost, "pop"); await s.show(c2, "left"); s.say("Rechts die Ostsee. Sie ist fast ganz von Land umgeben."); });
           s.step(async () => { for (let i = 0; i < m.cities.length; i++) { s.sfx.count(i); s.show(m.cities[i], "pop"); await s.wait(260); } s.sfx.pop(); await s.show(m.isl, "pop"); });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
@@ -201,7 +201,7 @@
           sl.classList.add("later");
           let playing = false;
           const play = () => {
-            if (playing) return; playing = true; s.sfx.whoosh();
+            if (playing) return; playing = true; s.sound("waves", { vol: .4 });
             let last = -1;
             s.loop(tt => {
               const v = Math.min(PER - 0.02, tt * 1.15);
@@ -218,6 +218,21 @@
           s.show(canvas, "fade"); s.show(clock, "pop"); s.sfx.pop();
           s.loop(tt => { if (!playing) { wave = tt * 3; draw(); } });
           s.step(async () => { s.show(sl, "up"); await s.show(btn, "pop"); s.say("Schau zu, wie das Wasser in zwölf Stunden fällt und wieder steigt."); play(); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 2b --------------------------------------------------------------- */
+      {
+        title: "Ebbe und Flut in echt",
+        say: "So sieht das in echt aus: der Hafen von Husum an der Nordsee. Einmal bei Flut, einmal bei Ebbe.",
+        build(s) {
+          const f1 = s.photo("husum-flut", { w: 530, h: 410, caption: "Husum: Hafen bei Flut", pos: "50% 60%" });
+          const f2 = s.photo("husum-ebbe", { w: 530, h: 410, caption: "Husum: Hafen bei Ebbe", cls: "later", pos: "50% 55%" });
+          const merk = s.h("div", { class: "merk later" }, "Bei Ebbe fällt der Husumer Binnenhafen fast ", B(s, "trocken"), ". Dann fließt dort nur noch ein kleines Rinnsal, und die Boote sitzen auf dem Schlick.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "20px" } },
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "28px", justifyContent: "center" } }, f1, f2), merk));
+          s.show(f1, "zoom"); s.sound("waves", { vol: .4, dur: 5 });
+          s.step(async () => { s.sound("moewen", { vol: .5 }); await s.show(f2, "zoom"); s.say("Bei Ebbe ist das Wasser fast ganz weg!"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -275,12 +290,11 @@
         title: "Im Alltag: Gezeiten am Strand",
         say: "Ebbe und Flut merkst du im Urlaub an vielen Stellen: beim Strandkorb, bei der Sandburg und bei der Fähre.",
         build(s) {
-          const icon = (draw) => { const v = svgBox(s, 170, 144, 130, 110); draw(v); return v; };
-          const mk = (svg, title, text) => { const c = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: "16px", alignItems: "center" } }, svg, s.h("div", null, s.h("span", { class: "exlabel" }, title), p(s, "small", ...text))); return c; };
-          let w1, w2;
-          const i1 = icon(v => { w1 = s.el("path", { d: "M0,101 L12,101 L0,104 Z", fill: "#6fb6e3" }); v.append(s.el("rect", { x: 0, y: 0, width: 130, height: 110, fill: "#eef7fd" }), s.el("path", { d: "M0,104 L130,72 L130,110 L0,110 Z", fill: SAND }), w1, strandkorb(s, 102, 78, 0.8)); });
-          const i2 = icon(v => { w2 = s.el("rect", { x: 0, y: 96, width: 0, height: 14, fill: "#6fb6e3", opacity: .8 }); v.append(s.el("rect", { x: 0, y: 94, width: 130, height: 16, fill: SAND }), castle(s, 65, 94, 1.1), w2); });
-          const i3 = icon(v => { v.append(s.el("rect", { x: 0, y: 78, width: 130, height: 32, fill: "#6fb6e3" })); const sh = s.el("g"); sh.append(s.el("path", { d: "M10,78 L80,78 L72,92 L18,92 Z", fill: "#fff", stroke: "#27324d", "stroke-width": 3 }), s.el("rect", { x: 26, y: 58, width: 36, height: 20, fill: "#fff", stroke: "#27324d", "stroke-width": 3 }), s.el("rect", { x: 34, y: 40, width: 10, height: 18, fill: C })); v.append(sh); v._ship = sh; });
+          const icon = (draw) => { const v = svgBox(s, 220, 180, 130, 110); draw(v); return v; };
+          const mk = (svg, title, text) => { const c = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "220px 1fr", gap: "16px", alignItems: "center" } }, svg, s.h("div", null, s.h("span", { class: "exlabel" }, title), p(s, "small", ...text))); return c; };
+          const i1 = s.photo("strandkorb-spo", { w: 220, h: 190, pos: "35% 50%" });
+          const i2 = s.photo("sandburg", { w: 220, h: 190 });
+          const i3 = s.photo("faehre-dageboell", { w: 220, h: 190, pos: "60% 50%" });
           const i4 = icon(v => { v.append(s.el("circle", { cx: 65, cy: 55, r: 46, fill: "#fff", stroke: "#1b2740", "stroke-width": 4 }), s.el("line", { x1: 65, y1: 55, x2: 65, y2: 22, stroke: "#1b2740", "stroke-width": 5, "stroke-linecap": "round" })); const hnd = s.el("line", { x1: 65, y1: 55, x2: 92, y2: 55, stroke: C, "stroke-width": 5, "stroke-linecap": "round" }); v.append(hnd); v._h = hnd; });
           const chips = ["Mo 10:00", "Di 10:50", "Mi 11:40"].map(t => s.h("span", { class: "chip later" }, t));
           const c1 = mk(i1, "Strandkorb", ["An der Nordsee steht der Strandkorb weit oben am Strand. Sonst kommt die Flut bis an deine Füße!"]);
@@ -290,10 +304,10 @@
           s.add(s.h("div", { class: "stack", style: { height: "100%" } }, p(s, "h2 a-up", "Wo merkst du Ebbe und Flut?"),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: "20px", flex: 1 } }, c1, c2, c3, c4)));
           s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); await s.show(c1, "left"); s.sfx.whoosh(); await s.tween({ from: 101, to: 86, dur: 1100, update: L => w1.setAttribute("d", `M0,${L} L${(104 - L) * 130 / 32},${L} L0,104 Z`) }); });
-          s.step(async () => { s.sfx.pop(); await s.show(c2, "right"); s.sfx.whoosh(); await s.tween({ from: 0, to: 130, dur: 1100, update: v => w2.setAttribute("width", v) }); s.sfx.boing(); });
-          s.step(async () => { s.sfx.pop(); await s.show(c3, "left"); s.sfx.whoosh(); await s.tween({ from: -30, to: 30, dur: 1200, update: v => i3._ship.setAttribute("transform", `translate(${v},0)`) }); });
-          s.step(async () => { s.sfx.pop(); await s.show(c4, "right"); for (let i = 0; i < 3; i++) { s.sfx.count(i * 2); s.show(chips[i], "pop"); await s.tween({ from: i * 100, to: i * 100 + 100, dur: 380, update: v => { const a = v / 600 * 2 * Math.PI + Math.PI / 2; i4._h.setAttribute("x2", 65 + 27 * Math.sin(a)); i4._h.setAttribute("y2", 55 - 27 * Math.cos(a)); } }); } });
+          s.step(async () => { s.sound("waves", { vol: .45, dur: 4 }); await s.show(c1, "left"); });
+          s.step(async () => { s.sfx.pop(); await s.show(c2, "right"); s.sound("splash", { vol: .5 }); });
+          s.step(async () => { s.sound("schiffshorn", { vol: .5 }); await s.show(c3, "left"); });
+          s.step(async () => { s.sound("clock-tick", { vol: .5, dur: 2.5 }); await s.show(c4, "right"); for (let i = 0; i < 3; i++) { s.sfx.count(i * 2); s.show(chips[i], "pop"); await s.tween({ from: i * 100, to: i * 100 + 100, dur: 380, update: v => { const a = v / 600 * 2 * Math.PI + Math.PI / 2; i4._h.setAttribute("x2", 65 + 27 * Math.sin(a)); i4._h.setAttribute("y2", 55 - 27 * Math.cos(a)); } }); } });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -328,9 +342,25 @@
           s.add(grid(s, "600px 1fr", svg, s.h("div", { class: "stack" }, s1.el, s2.el, s3.el, merk)));
           s.show(svg, "fade"); s.sfx.whoosh(); s.show(L[0], "pop");
           s.step(async () => { s.sfx.whoosh(); await s.show(priele, "draw"); s.sfx.pop(); s.show(L[1], "pop"); s.show(heaps, "fade"); await s.show(L[3], "pop"); });
-          s.step(async () => { s.sfx.pop(); s.show(bank, "zoom"); s.show(seals, "up"); s.show(birds, "fade"); s.show(L[2], "pop"); await s.show(L[4], "pop"); });
+          s.step(async () => { s.sound("moewen", { vol: .45 }); s.show(bank, "zoom"); s.show(seals, "up"); s.show(birds, "fade"); s.show(L[2], "pop"); await s.show(L[4], "pop"); });
           s.step(async () => { s.show(s1.el, "left"); await countUp(s, s1.big, 2009, { from: 1900, dur: 900, raw: true }); s.sfx.ding(); s.show(s2.el, "left"); await countUp(s, s2.big, 10000, { dur: 900, post: "+" }); s.show(s3.el, "left"); await countUp(s, s3.big, 500, { dur: 800 }); s.sfx.coin(); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5b --------------------------------------------------------------- */
+      {
+        title: "Das Watt in echt",
+        say: "So sieht das Wattenmeer in echt aus. Von oben siehst du die Priele wie Äste eines Baumes.",
+        build(s) {
+          const big = s.photo("watt-neuwerk", { w: 560, h: 470, caption: "Priele vor der Insel Neuwerk, von oben", pos: "40% 50%", kb: true });
+          const f2 = s.photo("wattwurm-haeufchen", { w: 500, h: 215, caption: "Sand-Häufchen vom Wattwurm", cls: "later" });
+          const f3 = s.photo("wattwanderung", { w: 500, h: 215, caption: "Wattwanderung bei Ebbe", cls: "later", pos: "50% 60%" });
+          const btn = s.soundBtn("moewen", "Möwen am Watt");
+          s.add(grid(s, "560px 1fr", s.h("div", { class: "stack", style: { gap: "14px" } }, big, p(s, "small", "Die Priele sehen von oben aus wie Äste eines Baumes.")),
+            s.h("div", { class: "stack", style: { gap: "16px" } }, f2, f3, btn)));
+          s.show(big, "fade"); s.sound("wind", { vol: .35, dur: 5 });
+          s.step(async () => { s.sound("bubbles", { vol: .5 }); await s.show(f2, "zoom"); s.say("Jedes Häufchen hat ein Wattwurm nach oben gedrückt."); });
+          s.step(async () => { s.sound("watt-schritte", { vol: .6 }); await s.show(f3, "zoom"); s.say("Bei einer Wattwanderung läufst du auf dem Meeresboden."); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -345,18 +375,9 @@
           const heap = s.el("path", { d: "M195,60 q8,-14 15,-6 q8,-10 15,0 q-4,9 -15,7 q-8,4 -15,-1", fill: "#7a6440", transform: "translate(0,0)" });
           const worm = s.el("path", { d: "M100,90 L100,160 Q100,175 130,175", fill: "none", stroke: "#c0504d", "stroke-width": 10, "stroke-linecap": "round" });
           v1.append(heap, worm, txt(s, 60, 46, "Trichter", { "font-size": 19 }), txt(s, 245, 40, "Häufchen", { "font-size": 19 }));
-          // Seehund
-          const v2 = svgBox(s, 300, 200);
-          const wat = s.el("rect", { x: 0, y: 150, width: 300, height: 50, fill: "#6fb6e3" });
-          const sl = seal(s, 150, 128, 1.1);
-          v2.append(s.el("rect", { x: 0, y: 0, width: 300, height: 200, fill: "#dff1fb" }), s.el("ellipse", { cx: 150, cy: 150, rx: 110, ry: 22, fill: SAND }), wat, sl);
-          // Priel
-          const v3 = svgBox(s, 300, 200);
-          v3.append(s.el("rect", { x: 0, y: 0, width: 300, height: 200, fill: WATT }));
-          const priel = s.el("path", { d: "M20,0 C60,60 0,100 90,130 S170,180 300,170", fill: "none", stroke: "#6fb6e3", "stroke-width": 10, "stroke-linecap": "round" });
-          v3.append(priel);
-          const walker = s.el("g"); walker.append(s.el("circle", { cx: 0, cy: -38, r: 8, fill: "#1b2740" }), s.el("path", { d: "M0,-30 L0,-8 M0,-8 L-8,8 M0,-8 L8,8 M-10,-22 L10,-22", stroke: "#1b2740", "stroke-width": 4, "stroke-linecap": "round" }));
-          walker.setAttribute("transform", "translate(200,95)"); v3.append(walker);
+          // Seehund + Priel: echte Fotos
+          const v2 = s.photo("seehunde-sandbank", { w: "100%", h: 190, pos: "50% 60%" });
+          const v3 = s.photo("priel-hooge", { w: "100%", h: 190 });
           const card = (svg, name, text) => s.h("div", { class: "ex later stack", style: { gap: "14px", justifyContent: "center" } }, s.h("span", { class: "exlabel" }, name), svg, p(s, "t", ...text));
           const k1 = card(v1, "Wattwurm", ["20 bis 40 cm lang. Frisst Sand und verdaut das Kleine, das darin lebt. Alle 30 bis 40 Minuten drückt er ein ", B(s, "Sand-Häufchen"), " nach oben."]);
           const k2 = card(v2, "Seehund", ["Liegt bei Ebbe gern auf Sandbänken und ruht sich aus. Frisst Fische. Männchen werden etwa 1,70 m lang."]);
@@ -364,8 +385,8 @@
           s.add(s.h("div", { class: "cols3", style: { alignItems: "stretch", height: "100%" } }, k1, k2, k3));
           s.sfx.pop();
           s.step(async () => { s.sfx.pop(); await s.show(k1, "up"); s.sfx.scribble(); await s.tween({ from: 0, to: 1, dur: 1400, update: v => { worm.setAttribute("transform", `translate(${v * 60},0)`); heap.setAttribute("transform", `translate(${210 * (1 - (0.6 + .4 * v))},${60 * (1 - (0.6 + .4 * v))}) scale(${0.6 + .4 * v})`); } }); });
-          s.step(async () => { s.sfx.pop(); await s.show(k2, "up"); s.sfx.whoosh(); await s.tween({ from: 150, to: 118, dur: 1200, update: v => { wat.setAttribute("y", v); wat.setAttribute("height", 200 - v); } }); s.sfx.boing(); await s.tween({ from: 0, to: 1, dur: 700, update: v => sl.setAttribute("transform", `translate(${150 + v * 40},${128 + v * 30}) scale(1.1)`) }); });
-          s.step(async () => { s.sfx.pop(); await s.show(k3, "up"); s.sfx.whoosh(); await s.tween({ from: 10, to: 34, dur: 1300, update: v => priel.setAttribute("stroke-width", v) }); s.sfx.error(); });
+          s.step(async () => { s.sound("splash", { vol: .45 }); await s.show(k2, "up"); });
+          s.step(async () => { s.sound("water-pour", { vol: .5 }); await s.show(k3, "up"); });
         },
       },
       /* 7 ---------------------------------------------------------------- */
@@ -393,7 +414,7 @@
           const items = rules.map(([k, t], i) => s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "44px 1fr", gap: "12px", alignItems: "center" } }, s.h("span", { class: "chip", style: { justifyContent: "center", background: C, color: "#fff" } }, String(i + 1)), p(s, "small", B(s, k + ": "), t)));
           const btn = s.h("button", { class: "btn solid", onclick: () => run() }, "▶ Flut kommt – zurück!");
           let busy = false;
-          const run = async () => { if (busy) return; busy = true; fill = 0; wx = 360; wy = 120; draw(); s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 2600, ease: "linear", update: v => { fill = v; wx = 360 - v * 200; wy = 120 + Math.min(1, v * 1.35) * 230; if (wy > 310) wy = 310; draw(); } }); s.sfx.success(); busy = false; };
+          const run = async () => { if (busy) return; busy = true; fill = 0; wx = 360; wy = 120; draw(); s.sound("waves", { vol: .4, dur: 3 }); s.sound("watt-schritte", { vol: .5, dur: 2.6 }); await s.tween({ from: 0, to: 1, dur: 2600, ease: "linear", update: v => { fill = v; wx = 360 - v * 200; wy = 120 + Math.min(1, v * 1.35) * 230; if (wy > 310) wy = 310; draw(); } }); s.sfx.success(); busy = false; };
           s.add(grid(s, "500px 1fr", s.h("div", { class: "stack", style: { alignItems: "center" } }, canvas, btn), s.h("div", { class: "stack", style: { gap: "14px" } }, p(s, "h2 a-up", "Fünf Watt-Regeln"), ...items)));
           s.show(canvas, "fade"); s.sfx.pop();
           rules.forEach((_, i) => s.step(async () => { s.sfx.count(i); await s.show(items[i], "left"); if (i === 1) run(); }));
@@ -426,13 +447,14 @@
           s.loop(tt => { ph = tt * (2 + storm * 4); draw(); });
           const sl = s.slider({ label: "Sturm vom Meer", min: 0, max: 10, value: 0, fmt: v => (v === 0 ? "kein Wind" : v < 5 ? "Wind" : v < 9 ? "Sturm" : "Orkan"), onInput: v => { storm = v / 10; if (v >= 9) s.sfx.whoosh(); } });
           const expl = p(s, "t", B(s, "Flut + Sturm vom Meer"), " = das Wasser steigt viel höher als sonst.");
-          const big = s.h("span", { class: "huge", style: { color: C } }, "0");
+          const big = s.h("span", { class: "big", style: { color: C } }, "0");
           const c62 = exc(s, "Hamburg, 16./17. Februar 1962", "later",
-            s.h("div", { style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "14px", alignItems: "center" } }, big, p(s, "small", "Menschen starben. In der Nacht brachen viele Deiche. Fast ein Sechstel von Hamburg stand unter Wasser, am schlimmsten in Wilhelmsburg.")));
+            s.photo("sturmflut-1962", { w: 480, h: 190, caption: "Wilhelmsburg unter Wasser, 1962" }),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "120px 1fr", gap: "12px", alignItems: "center" } }, big, p(s, "small", "Menschen starben. In der Nacht brachen viele Deiche. Fast ein Sechstel von Hamburg stand unter Wasser.")));
           const merk = s.h("div", { class: "merk later" }, "Nach 1962 wurden die Deiche ", B(s, "höher und stärker"), " gebaut.");
           s.add(grid(s, "540px 1fr", s.h("div", { class: "stack" }, canvas, sl), s.h("div", { class: "stack" }, expl, c62, merk)));
           s.show(canvas, "fade"); s.sfx.whoosh();
-          s.step(async () => { s.say("Schieb den Regler: Je stärker der Sturm, desto höher das Wasser."); s.sfx.whoosh(); await s.tween({ from: 0, to: 9, dur: 1600, update: v => sl.set(Math.round(v)) }); });
+          s.step(async () => { s.say("Schieb den Regler: Je stärker der Sturm, desto höher das Wasser."); s.sound("wind", { vol: .5 }); await s.tween({ from: 0, to: 9, dur: 1600, update: v => sl.set(Math.round(v)) }); });
           s.step(async () => { s.sfx.drum(); await s.show(c62, "up"); await countUp(s, big, 315, { dur: 1100 }); s.say("Bei der Sturmflut 1962 starben in Hamburg 315 Menschen."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
@@ -463,12 +485,15 @@
           let up = false;
           const btn = s.h("button", { class: "btn solid later", onclick: async () => { up = !up; s.sfx.whoosh(); btn.textContent = up ? "Wasser sinkt" : "Sturmflut!"; await s.tween({ from: up ? 230 : 130, to: up ? 130 : 230, dur: 1500, update: v => sea.setAttribute("d", `M0,${v} L${330 + (230 - v) * 1.5},${v} L${330 + (230 - v) * 1.5},360 L0,360 Z`) }); if (up) s.sfx.drum(); } }, "Sturmflut!");
           const merk = s.h("div", { class: "merk later" }, "Die ", B(s, "flache Seeseite"), " lässt die Wellen sanft auslaufen. So bricht der Deich nicht.");
-          s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, svg, s.h("div", { class: "row", style: { justifyContent: "space-between" } }, ...legend, btn), merk));
+          const sheep = s.photo("deich-schafe", { w: 400, h: 172, caption: "Schafe halten das Deichgras kurz", cls: "later", pos: "50% 70%" });
+          s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, svg, s.h("div", { class: "row", style: { justifyContent: "space-between" } }, ...legend, btn),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 400px", gap: "20px", alignItems: "center" } }, merk, sheep)));
           s.show(svg, "fade"); s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); s.show(core, "fade"); await s.show(legend[0], "pop"); s.sfx.pop(); s.show(klei, "fade"); await s.show(legend[1], "pop"); s.sfx.scribble(); s.show(grass, "draw"); await s.show(legend[2], "pop"); });
           s.step(async () => { s.sfx.pop(); await s.show([lbls[1], lbls[2], lbls[3]], "pop"); s.sfx.count(4); s.show(arrow, "zoom"); await s.show(house, "bounce"); });
           s.step(async () => { s.show(sfLine, "draw"); s.show(sfT, "fade"); await s.show(btn, "pop"); if (!s.fast) btn.click(); s.say("Bei einer Sturmflut steigt das Wasser hoch. Der Deich hält es auf."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { s.sound("schaf", { vol: .6 }); await s.show(sheep, "zoom"); s.say("Schafe fressen das Gras auf dem Deich kurz und treten den Boden fest. So bleibt der Deich stark."); });
         },
       },
       /* 10 --------------------------------------------------------------- */
@@ -489,12 +514,12 @@
           svg.append(l1, l2, l3);
           const lv = v => water.setAttribute("d", `M0,${v} L580,${v} L580,380 L0,380 Z`);
           const items = [["10", "Halligen gibt es heute in Deutschland, im Wattenmeer von Nordfriesland."], ["1 m", "So hoch ragen sie nur über das normale Hochwasser."], ["mehrmals", "im Jahr werden die meisten Halligen überflutet: Land unter!"]].map(([n, t]) => s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "12px", alignItems: "center" } }, s.h("span", { class: "h2", style: { color: C } }, n), p(s, "small", t)));
-          const lf = lifeBox(s, "later", p(s, "small", "Bei Land unter schauen nur noch die Warften mit den Häusern aus dem Meer – wie kleine Inseln."));
+          const lf = lifeBox(s, "later", s.photo("warft-hooge", { w: 440, h: 190, caption: "Backenswarft auf Hallig Hooge" }), p(s, "small", "Bei Land unter schauen nur die Warften aus dem Meer."));
           s.add(grid(s, "580px 1fr", svg, s.h("div", { class: "stack" }, ...items, lf)));
           s.show(svg, "fade"); s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); s.show(houses, "bounce"); s.show(l1, "pop"); await s.show(items[0], "left"); });
           s.step(async () => { s.sfx.pop(); s.show(l2, "pop"); await s.show(items[1], "left"); });
-          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 300, to: 238, dur: 1600, update: lv }); s.sfx.boing(); s.show(l3, "pop"); await s.show(items[2], "left"); s.say("Land unter! Nur die Warften bleiben trocken."); });
+          s.step(async () => { s.sound("waves", { vol: .45, dur: 5 }); await s.tween({ from: 300, to: 238, dur: 1600, update: lv }); s.sfx.boing(); s.show(l3, "pop"); await s.show(items[2], "left"); s.say("Land unter! Nur die Warften bleiben trocken."); });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },
@@ -525,9 +550,9 @@
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "520px minmax(0,1fr)", gap: "26px", height: "100%", alignItems: "center" } },
             s.h("div", { class: "stack", style: { gap: "10px" } }, a, b),
             s.h("div", { class: "stack" }, capA, capB, kBox)));
-          s.show(a, "fade"); s.sfx.whoosh();
+          s.show(a, "fade"); s.sound("waves", { vol: .4, dur: 4 });
           const waves = s.loop(tt => { wa.setAttribute("transform", `translate(${(tt * 60) % 80},0)`); wb.setAttribute("transform", `translate(${(tt * 40) % 70},0)`); });
-          s.step(async () => { s.sfx.whoosh(); await s.wait(300); s.sfx.drum(); await s.tween({ from: 0, to: 1, dur: 900, ease: "in", update: v => chunk.setAttribute("transform", `translate(${-v * 18},${v * 70}) rotate(${v * 40} 255 135)`) }); s.sfx.boing(); s.say("Plumps! Das Kliff wird jedes Jahr ein bisschen kleiner."); });
+          s.step(async () => { s.sound("steine-fallen", { vol: .6 }); await s.tween({ from: 0, to: 1, dur: 900, ease: "in", update: v => chunk.setAttribute("transform", `translate(${-v * 18},${v * 70}) rotate(${v * 40} 255 135)`) }); s.sound("splash", { vol: .4 }); s.say("Plumps! Das Kliff wird jedes Jahr ein bisschen kleiner."); });
           s.step(async () => { s.sfx.pop(); s.show(b, "fade"); s.show(capB, "left"); await s.show(sk, "bounce"); });
           s.step(async () => { s.sfx.pop(); await s.show(kBox, "up"); s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1200, update: v => { barK.setAttribute("width", 118 * 0.9 * v); barF.setAttribute("width", 368 * 0.9 * v); tK.setAttribute("x", 178 + 118 * 0.9 * v); tK.textContent = Math.round(118 * v) + " m"; tF.textContent = Math.round(368 * v) + " m"; } }); s.sfx.coin(); });
           void waves;
@@ -555,9 +580,24 @@
           s.add(grid(s, "520px 1fr", svg, s.h("div", { class: "stack" }, c1, c2, c3)));
           s.show(svg, "fade"); s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); s.show(pen, "zoom"); await s.show(l2, "pop"); });
-          s.step(async () => { s.sfx.whoosh(); s.show(bodden, "fade"); s.show(l3, "pop"); s.show(l4, "pop"); await s.show(c1, "left"); });
+          s.step(async () => { s.sound("birds", { vol: .4, dur: 5 }); s.show(bodden, "fade"); s.show(l3, "pop"); s.show(l4, "pop"); await s.show(c1, "left"); });
           s.step(async () => { s.sfx.coin(); await s.show(c2, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(c3, "up"); });
+        },
+      },
+      /* 12b -------------------------------------------------------------- */
+      {
+        title: "Die Ostseeküste in echt",
+        say: "So sieht die Ostseeküste in echt aus: weiße Kreidefelsen, Strandkörbe und stille Bodden.",
+        build(s) {
+          const f1 = s.photo("koenigsstuhl", { w: 600, h: 470, caption: "Kreidefelsen auf Rügen: rechts der Königsstuhl", pos: "70% 50%", kb: true });
+          const f2 = s.photo("strandkoerbe-warnemuende", { w: 474, h: 222, caption: "Strandkörbe in Warnemünde", cls: "later", pos: "50% 65%" });
+          const f3 = s.photo("bodden", { w: 474, h: 222, caption: "Bodden auf dem Darß: Schilf, flaches Wasser", cls: "later" });
+          s.add(grid(s, "600px 1fr", s.h("div", { class: "stack", style: { gap: "12px" } }, f1, p(s, "small", "Steilküste: Die Brandung nagt an der weißen Kreide.")),
+            s.h("div", { class: "stack", style: { gap: "18px" } }, f2, f3)));
+          s.show(f1, "fade"); s.sound("waves", { vol: .4, dur: 6 });
+          s.step(async () => { s.sound("strand-moewen", { vol: .45, dur: 5 }); await s.show(f2, "zoom"); s.say("Flachküste mit feinem Sand – und Strandkörben."); });
+          s.step(async () => { s.sound("birds", { vol: .4, dur: 5 }); await s.show(f3, "zoom"); s.say("Im Bodden ist das Wasser flach und ruhig."); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -579,10 +619,11 @@
           const big = s.h("span", { class: "big", style: { color: C } }, "0");
           const facts = exc(s, "Hamburger Hafen", "later", s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap" } }, big, p(s, "small", "Millionen Standard-Container im Jahr 2024")),
             p(s, "small", "Größter Seehafen Deutschlands. In Europa liegen nur Rotterdam und Antwerpen vorn."));
-          const lf = lifeBox(s, "later", p(s, "small", "Bananen, Turnschuhe, Spielkonsolen: Vieles in Berliner Läden kam im Container über einen Hafen."));
+          const lf = lifeBox(s, "later", s.h("div", { style: { display: "grid", gridTemplateColumns: "250px 1fr", gap: "14px", alignItems: "center" } },
+            s.photo("containerschiff-hamburg", { w: 250, h: 170 }), p(s, "small", "Bananen, Turnschuhe, Spielkonsolen: Vieles in Berliner Läden kam im Container über einen Hafen.")));
           s.add(s.h("div", { class: "stack", style: { gap: "16px" } }, svg, s.h("div", { style: { display: "grid", gridTemplateColumns: "540px 1fr", gap: "22px" } }, cmpBox, s.h("div", { class: "stack" }, facts, lf))));
           s.show(svg, "fade"); s.sfx.whoosh();
-          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 2200, update: v => { const x = 170 + v * 790, y = 112 + v * 8; sh.setAttribute("transform", `translate(${x},${y}) scale(0.55)`); } }); s.sfx.ding(); });
+          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 2200, update: v => { const x = 170 + v * 790, y = 112 + v * 8; sh.setAttribute("transform", `translate(${x},${y}) scale(0.55)`); } }); s.sound("schiffshorn", { vol: .5 }); });
           s.step(async () => { s.sfx.pop(); await s.show(cmpBox, "up"); s.show([sT, tT], "fade"); s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1200, update: v => { sBar.setAttribute("width", 480 * v); tBar.setAttribute("width", 480 * 368 / 400 * v); } }); s.sfx.coin(); s.say("Ein Containerschiff ist länger, als der Fernsehturm hoch ist!"); });
           s.step(async () => { s.sfx.pop(); await s.show(facts, "left"); await countUp(s, big, 7.8, { dec: 1, dur: 1000 }); });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
@@ -593,32 +634,18 @@
         title: "Fischbrötchen und Windräder",
         say: "Vom Meer kommen Fisch und Strom. Wir verfolgen ein Fischbrötchen und besuchen einen Windpark im Meer.",
         build(s) {
-          const chain = [["⚓", "Fischkutter", "fängt Hering im Meer"], ["🏭", "Hafen", "Fisch wird an Land gebracht und verarbeitet"], ["🫙", "Einlegen", "zum Beispiel als Bismarckhering oder Matjes"], ["🥖", "Imbiss", "Fisch ins Brötchen, dazu Zwiebeln"]];
-          const nodes = chain.map(([e, t, d]) => s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "56px 1fr", gap: "12px", alignItems: "center", padding: "10px 16px" } }, s.h("span", { style: { fontSize: "36px", lineHeight: "1" } }, e), s.h("div", null, s.h("b", { class: "t" }, t), p(s, "small", d))));
-          const left = s.h("div", { class: "stack", style: { gap: "12px" } }, p(s, "h2 a-up", "Weg eines Fischbrötchens"), ...nodes);
-          const W = 470, Hh = 300;
-          const { canvas, g } = s.canvas(W, Hh);
-          let spin = 0, n = 0;
-          const draw = () => {
-            g.clearRect(0, 0, W, Hh);
-            g.fillStyle = "#dff1fb"; g.fillRect(0, 0, W, Hh); g.fillStyle = "#3b8fc9"; g.fillRect(0, 230, W, 70);
-            for (let i = 0; i < n; i++) {
-              const x = 60 + i * 70 + (i % 2) * 10, base = 240 - (i % 2) * 20, top = base - 150 + (i % 2) * 30, r = 52 - (i % 2) * 10;
-              g.strokeStyle = "#fff"; g.lineWidth = 6; g.beginPath(); g.moveTo(x, base); g.lineTo(x, top); g.stroke();
-              g.strokeStyle = "#5d6678"; g.lineWidth = 2; g.beginPath(); g.moveTo(x + 3, base); g.lineTo(x + 3, top); g.stroke();
-              g.fillStyle = "#fff"; g.strokeStyle = "#5d6678"; g.lineWidth = 2;
-              for (let k = 0; k < 3; k++) { const a = spin + i + k * 2.094; g.beginPath(); g.moveTo(x, top); g.lineTo(x + r * Math.cos(a) - 4 * Math.sin(a), top + r * Math.sin(a) + 4 * Math.cos(a)); g.lineTo(x + r * Math.cos(a), top + r * Math.sin(a)); g.closePath(); g.fill(); g.stroke(); }
-              g.fillStyle = C; g.beginPath(); g.arc(x, top, 5, 0, 7); g.fill();
-            }
-          };
-          draw();
-          s.loop((tt, dt) => { spin += (dt || 0) * 2.2; draw(); });
+          const chain = [["Fischkutter", "fängt Hering im Meer"], ["Hafen", "Fisch wird an Land gebracht und verarbeitet"], ["Einlegen", "zum Beispiel als Bismarckhering oder Matjes"], ["Imbiss", "Fisch ins Brötchen, dazu Zwiebeln"]];
+          const nodes = chain.map(([t, d], i) => s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "44px 1fr", gap: "12px", alignItems: "center", padding: "6px 14px" } }, s.h("span", { class: "chip", style: { justifyContent: "center", background: C, color: "#fff" } }, String(i + 1)), s.h("div", null, s.h("b", { class: "t" }, t + " "), s.h("span", { class: "small" }, d))));
+          const ph1 = s.photo("fischkutter", { w: 290, h: 215, caption: "Fischkutter in Wismar", cls: "later" });
+          const ph2 = s.photo("fischbroetchen", { w: 290, h: 215, caption: "Fischbrötchen", cls: "later" });
+          const left = s.h("div", { class: "stack", style: { gap: "10px" } }, p(s, "h2 a-up", "Weg eines Fischbrötchens"), ...nodes, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "16px" } }, ph1, ph2));
+          const park = s.photo("windpark-alpha-ventus", { w: 470, h: 300, caption: "Windpark alpha ventus", kb: true });
           const wind = exc(s, "Windpark im Meer", "later", p(s, "small", "„Alpha ventus“ war 2010 der erste deutsche Windpark auf hoher See: 12 Windräder, etwa 45 km vor Borkum. Draußen weht der Wind stark und oft."));
-          const right = s.h("div", { class: "stack", style: { alignItems: "center" } }, canvas, wind);
+          const right = s.h("div", { class: "stack", style: { alignItems: "center" } }, park, wind);
           s.add(grid(s, "1fr 470px", left, right));
-          s.show(canvas, "fade"); s.sfx.pop();
-          s.step(async () => { for (let i = 0; i < nodes.length; i++) { s.sfx.count(i * 2); await s.show(nodes[i], "left"); } s.sfx.success(); });
-          s.step(async () => { s.sfx.whoosh(); s.show(wind, "up"); for (let i = 1; i <= 6; i++) { n = i; s.sfx.pop(); await s.wait(150); } });
+          s.show(park, "fade"); s.sfx.pop();
+          s.step(async () => { s.sound("moewen", { vol: .45 }); for (let i = 0; i < nodes.length; i++) { s.sfx.count(i * 2); await s.show(nodes[i], "left"); if (i === 0) s.show(ph1, "zoom"); } await s.show(ph2, "zoom"); s.sfx.success(); });
+          s.step(async () => { s.sound("wind", { vol: .45, dur: 5 }); await s.show(wind, "up"); });
         },
       },
       /* 15 --------------------------------------------------------------- */
@@ -626,16 +653,17 @@
         title: "Im Alltag: Urlaub an der Küste",
         say: "Was du im Urlaub an der Küste erleben kannst. Vier Beispiele.",
         build(s) {
-          const card = (lbl, emoji, text) => s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "64px 1fr", gap: "14px", alignItems: "center" } }, s.h("span", { style: { fontSize: "46px", lineHeight: "1" } }, emoji), s.h("div", null, s.h("span", { class: "exlabel" }, lbl), p(s, "t", text)));
-          const cs = [card("Fähre auf eine Insel", "⛴️", "Von Dagebüll nach Föhr: rund 50 Minuten. Eine Fähre nimmt etwa 75 Autos mit."),
-            card("Wattwanderung", "👣", "Nur mit Wattführer und mit Blick auf die Gezeiten. Bei Ebbe los, vor der Flut zurück!"),
-            card("Strandkorb", (() => { const v = svgBox(s, 64, 64, 80, 80); v.append(strandkorb(s, 40, 74, 1)); return v; })(), "Nordsee: weit oben aufstellen. Ostsee: Das Wasser steigt kaum, du kannst nah ran."),
-            card("Kreidefelsen", "🪨", "Seit 2023 führt ein Rundweg über dem Königsstuhl auf Rügen – 118 m über der Ostsee.")];
+          const card = (lbl, id, text) => s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "200px 1fr", gap: "14px", alignItems: "center" } }, s.photo(id, { w: 200, h: 150 }), s.h("div", null, s.h("span", { class: "exlabel" }, lbl), p(s, "small", text)));
+          const cs = [card("Fähre auf eine Insel", "faehre-dageboell", "Von Dagebüll nach Föhr: rund 50 Minuten. Eine Fähre nimmt etwa 75 Autos mit."),
+            card("Wattwanderung", "wattwanderung", "Nur mit Wattführer und mit Blick auf die Gezeiten. Bei Ebbe los, vor der Flut zurück!"),
+            card("Strandkorb", "strandkoerbe-warnemuende", "Nordsee: weit oben aufstellen. Ostsee: Das Wasser steigt kaum, du kannst nah ran."),
+            card("Kreidefelsen", "skywalk-koenigsstuhl", "Seit 2023 führt ein Rundweg über dem Königsstuhl auf Rügen – 118 m über der Ostsee.")];
+          const snd = ["schiffshorn", "watt-schritte", "strand-moewen", "wind"]; s.preload(...snd);
           const merk = s.h("div", { class: "merk later" }, "Nordsee: Ebbe und Flut, Watt, Deiche. Ostsee: kaum Gezeiten, Kliffs, Bodden. Beide: Häfen, Fischerei, Urlaub.");
           s.add(s.h("div", { class: "stack", style: { height: "100%" } }, p(s, "h2 a-up", "Ab an die Küste!"),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px", flex: 1 } }, ...cs), merk));
           s.sfx.whoosh();
-          cs.forEach((c, i) => s.step(async () => { s.sfx.count(i * 2); await s.show(c, i % 2 ? "right" : "left"); }));
+          cs.forEach((c, i) => s.step(async () => { s.sound(snd[i], { vol: .45, dur: 4 }); await s.show(c, i % 2 ? "right" : "left"); }));
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); s.confetti(590, 400, 80); });
         },
       },

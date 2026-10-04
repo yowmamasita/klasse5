@@ -39,10 +39,10 @@
           const merk = later(s.h("div", { class: "merk" }, "Gemeinschaft heißt: ", s.h("b", null, "Jeder gehört dazu."), " Alle haben Rechte – und Pflichten."));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "480px 1fr", gap: "30px", height: "100%", alignItems: "center" } }, svg,
             s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("p", { class: "big a-up" }, "Wir sind eine Klasse"), s.h("p", { class: "t a-up", style: { "--d": "150ms" } }, "Viele verschiedene Kinder – ein Team. Damit das klappt, braucht es Regeln und Mitbestimmung."), s.h("div", { class: "cols3", style: { gap: "12px" } }, ...ex), merk)));
-          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.show(svg, "zoom"); s.sound("classroom", { vol: .4, dur: 6 });
           s.step(async () => { for (let i = 0; i < N; i++) { s.sfx.count(i % 14); s.show(kids[i], "pop"); await s.wait(60); } s.sfx.ding(); s.say("Jedes Kind ist anders – zusammen seid ihr die Klasse."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(net, "fade"); for (let i = 0; i < 3; i++) { s.sfx.pop(); await s.show(ex[i], "up"); } });
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { s.sound("kids-cheer", { vol: .45 }); await s.show(merk, "up"); });
         },
       },
       /* 2 ---------------------------------------------------------------- */
@@ -68,9 +68,9 @@
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "590px 1fr", gap: "28px", height: "100%", alignItems: "center" } }, poster,
             s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("p", { class: "h2" }, "Wozu Regeln?"), ...ex, merk)));
           s.show(poster, "zoom"); s.sfx.pop();
-          s.step(async () => { for (const it of items) { s.sfx.scribble(); await s.show(it, "left"); s.sfx.tick(); s.show(it.check, "draw"); await s.wait(250); } });
-          s.step(async () => { for (const p of sigs) { s.sfx.scribble(); await s.show(p, "draw"); } s.sfx.ding(); s.say("Alle unterschreiben. Jetzt gelten die Regeln für alle."); });
-          s.step(async () => { for (const e of ex) { s.sfx.pop(); await s.show(e, "left"); } });
+          s.step(async () => { s.sound("chalk-write", { vol: .45, dur: 3.5 }); for (const it of items) { await s.show(it, "left"); s.sfx.tick(); s.show(it.check, "draw"); await s.wait(250); } });
+          s.step(async () => { s.sound("pencil-write", { vol: .6 }); for (const p of sigs) { await s.show(p, "draw"); } s.sfx.ding(); s.say("Alle unterschreiben. Jetzt gelten die Regeln für alle."); });
+          s.step(async () => { const snd = ["whistle", "traffic", "kids-cheer"]; for (let i = 0; i < ex.length; i++) { s.sound(snd[i], { vol: .4, dur: 2.5 }); await s.show(ex[i], "left"); await s.wait(500); } });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -98,7 +98,7 @@
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "520px 1fr", gap: "28px", height: "100%", alignItems: "center" } }, svg, s.h("div", { class: "stack", style: { gap: "14px" } }, ...roles, merk)));
           s.show(svg, "fade"); s.sfx.pop();
           s.loop(t => hand.setAttribute("transform", `rotate(${t * 60} 200 248)`));
-          roles.forEach((r, i) => s.step(async () => { s.sfx.count(i * 2); s.show(badges[i], "bounce"); if (i === 1) s.show(paper, "pop"); if (i === 2) s.show(clock, "pop"); await s.show(r, "left"); }));
+          roles.forEach((r, i) => s.step(async () => { s.sfx.count(i * 2); s.show(badges[i], "bounce"); if (i === 1) { s.show(paper, "pop"); s.sound("pencil-write", { vol: .5 }); } if (i === 2) { s.show(clock, "pop"); s.sound("clock-tick", { vol: .5, dur: 2.5 }); } await s.show(r, "left"); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -132,7 +132,7 @@
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 640px", gap: "24px", height: "100%", alignItems: "center" } }, board, svg));
           s.show(svg, "fade"); s.sfx.pop();
           s.step(async () => { mark(0); say("Was war diese Woche gut?"); s.sfx.pop(); await s.show(bubble, "pop"); s.show(hands.slice(0, 5), "up"); s.say("Wir starten mit einer Runde: Was war gut?"); });
-          s.step(async () => { mark(1); s.hide(hands); say("Letztes Mal haben wir beschlossen: …"); s.sfx.scribble(); await s.show(proto, "pop"); });
+          s.step(async () => { mark(1); s.hide(hands); say("Letztes Mal haben wir beschlossen: …"); s.sound("papier-rascheln", { vol: .5 }); await s.show(proto, "pop"); });
           s.step(async () => { mark(2); s.sfx.pop(); say("Der Ball ist immer bei denselben Kindern!"); s.show(bubble, "pop"); s.say("Ein Anliegen aus der Anliegen-Box."); });
           s.step(async () => { mark(3); say("Welche Ideen habt ihr?"); for (const n of notes) { s.sfx.pop(); await s.show(n, "bounce"); } });
           s.step(async () => {
@@ -144,7 +144,7 @@
             }
             s.hide(hands);
           });
-          s.step(async () => { mark(5); say("„Abwechseln“ hat die meisten Stimmen."); s.sfx.drum(); await s.show(stamp, "zoom"); s.sfx.success(); s.show(proto, "pop"); });
+          s.step(async () => { mark(5); say("„Abwechseln“ hat die meisten Stimmen."); s.sfx.drum(); await s.show(stamp, "zoom"); s.sound("applause", { vol: .4, dur: 3 }); s.show(proto, "pop"); });
         },
       },
       /* 5 ---------------------------------------------------------------- */
@@ -155,11 +155,13 @@
           const cands = [["Mia", 0, "#dc3b2a"], ["Emil", 2, "#1d5bd0"], ["Leyla", 3, "#138a5a"]];
           const cc = cands.map(([n, i, c]) => { const v = s.svg(110, 90); v.append(kid(s, 55, 50, i, 1.5, c)); return s.h("div", { class: "card", style: { padding: "8px", display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" } }, v, s.h("p", { class: "h2", style: { fontSize: "24px" } }, n)); });
           const box = s.svg(460, 250);
+          box.setAttribute("height", 190); box.setAttribute("viewBox", "0 50 460 200");
           box.append(s.el("rect", { x: 130, y: 90, width: 200, height: 150, rx: 10, fill: TEAL }), s.el("rect", { x: 190, y: 82, width: 80, height: 14, rx: 4, fill: INK }), T(s, 230, 180, "Wahlurne", { fs: 22, fill: "#fff" }));
           const ballots = [];
           for (let i = 0; i < 6; i++) { const b = s.el("g", { class: "later" }, s.el("rect", { x: -18, y: -12, width: 36, height: 24, rx: 3, fill: "#fff", stroke: INK, "stroke-width": 2 }), s.el("path", { d: "M-8 0 L-2 6 L8 -6", stroke: "#dc3b2a", "stroke-width": 3, fill: "none" })); ballots.push(b); box.append(b); b.setAttribute("transform", `translate(${40 + i * 76} 30)`); }
           const screen = later(s.el("g", null, s.el("path", { d: "M10 240 L10 120 L80 100 L80 240 Z", fill: "#c8d3de", stroke: INK, "stroke-width": 2 }), s.el("path", { d: "M450 240 L450 120 L380 100 L380 240 Z", fill: "#c8d3de", stroke: INK, "stroke-width": 2 })));
           box.append(screen);
+          const urnePh = s.photo("wahlurne", { w: 460, h: 150, caption: "Bei einer echten Wahl: Zettel in die Urne", cls: "later", pos: "40% 45%" });
           const bars = s.svg(560, 330);
           const BX = 110, maxW = 400;
           const counts = [0, 0, 0];
@@ -182,15 +184,16 @@
           const again = later(s.h("button", { class: "btn", style: { alignSelf: "flex-start" }, onclick: async () => { s.sfx.click(); const a = 5 + Math.floor(Math.random() * 10), b = 3 + Math.floor(Math.random() * (24 - a - 3)); makeVotes(a, b, 27 - a - b); await count(); } }, "Neue Wahl auszählen"));
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "22px" } }, s.h("b", null, "Geheime Wahl:"), " Niemand sieht, was du ankreuzt. So kannst du frei entscheiden."));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "460px 1fr", gap: "26px", height: "100%", alignItems: "center" } },
-            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "cols3", style: { gap: "12px" } }, ...cc), box),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "cols3", style: { gap: "12px" } }, ...cc), box, urnePh),
             s.h("div", { class: "stack", style: { gap: "10px" } }, bars, result, again, merk)));
           makeVotes(12, 9, 6);
           cc.forEach((c, i) => s.show(c, "pop", i * 120)); s.sfx.pop();
           s.step(async () => {
             s.show(screen, "fade"); s.say("Jedes Kind kreuzt hinter der Wand an. Dann kommt der Zettel in die Urne.");
             for (let i = 0; i < ballots.length; i++) { const b = ballots[i], x0 = 40 + i * 76; s.show(b, "pop"); s.sfx.swoosh(); await s.tween({ dur: 420, ease: "in", update: v => b.setAttribute("transform", `translate(${s.lerp(x0, 230, v)} ${s.lerp(30, 92, v)}) scale(${1 - .5 * v})`) }); s.hide(b); s.sfx.tick(); }
+            s.sound("papier-rascheln", { vol: .45 }); await s.show(urnePh, "zoom");
           });
-          s.step(async () => { s.sfx.drum(); await count(); s.show(again, "pop"); s.say("Die meisten Stimmen gewinnen: Das ist die Mehrheit."); });
+          s.step(async () => { s.sound("drumroll", { vol: .45 }); await count(); s.sound("kids-cheer", { vol: .4 }); s.show(again, "pop"); s.say("Die meisten Stimmen gewinnen: Das ist die Mehrheit."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -214,9 +217,9 @@
           const life = later(lifeBox(s, "Im Alltag", s.h("p", { class: "small" }, "Ideen der Klasse wandern so nach oben: Wünsche für den Schulhof, ein Schulfest oder neue Regeln für die Pause.")));
           s.add(s.h("div", { class: "stack", style: { gap: "6px", height: "100%", justifyContent: "center" } }, blocks[0], arrows[0], blocks[1], arrows[1], blocks[2], s.h("div", { style: { height: "10px" } }), life));
           s.sfx.whoosh();
-          s.step(async () => { s.sfx.count(0); await s.show(blocks[0], "up"); });
+          s.step(async () => { s.sound("classroom", { vol: .35, dur: 3 }); await s.show(blocks[0], "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(arrows[0], "down"); s.sfx.count(4); await s.show(blocks[1], "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(arrows[1], "down"); s.sfx.count(7); await s.show(blocks[2], "up"); s.say("In der Schulkonferenz sitzen Lehrkräfte, Eltern und Schüler zusammen."); });
+          s.step(async () => { s.sfx.pop(); await s.show(arrows[1], "down"); s.sound("knock", { vol: .45 }); await s.show(blocks[2], "up"); s.say("In der Schulkonferenz sitzen Lehrkräfte, Eltern und Schüler zusammen."); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
       },
@@ -283,7 +286,7 @@
             s.sfx.whoosh();
             await s.tween({ dur: 1300, ease: "inOut", update: v => kids.forEach((_, i) => { const a = home(i), b = target(i); const w = Math.max(0, Math.min(1, v * 1.6 - i * .02)); place(i, [s.lerp(a[0], b[0], w), s.lerp(a[1], b[1], w)]); }) });
             kids.forEach((_, i) => place(i, target(i)));
-            s.sfx.ding(); s.show([cA, cB], "pop"); await s.show(pts[0], "left");
+            s.sound("waves", { vol: .4, dur: 3 }); s.show([cA, cB], "pop"); await s.show(pts[0], "left");
           });
           s.step(async () => { s.sfx.pop(); await s.show(pts[1], "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(pts[2], "left"); s.sfx.ding(); s.show(merk, "up"); });
@@ -311,7 +314,7 @@
           s.step(async () => {
             s.sfx.whoosh();
             await s.tween({ dur: 900, ease: "out", update: v => { A.setAttribute("transform", `translate(${110 + 150 * v} 160)`); B.setAttribute("transform", `translate(${990 - 150 * v} 160)`); } });
-            s.sfx.success(); await s.show(mid, "zoom"); s.say("Montag bis Mittwoch Fußball, Donnerstag und Freitag Basketball.");
+            s.sound("ball-kick", { vol: .5 }); await s.show(mid, "zoom"); s.say("Montag bis Mittwoch Fußball, Donnerstag und Freitag Basketball.");
           });
           s.step(async () => { for (const e of ex) { s.sfx.pop(); await s.show(e, "up"); } });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
@@ -409,7 +412,7 @@
           ];
           const facts = later(s.h("div", { class: "card soft", style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Athen hatte etwa 200.000–300.000 Einwohner – aber nur 30.000–50.000 Bürger mit vollen Rechten.")));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "560px 1fr", gap: "26px", height: "100%", alignItems: "center" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, ...pts, facts)));
-          s.show(svg, "fade"); s.sfx.whoosh();
+          s.show(svg, "fade"); s.sound("stimmengewirr", { vol: .35, dur: 4 });
           s.step(async () => { s.sfx.pop(); await s.show(pts[1], "left"); });
           s.step(async () => {
             await s.show(pts[2], "left"); s.show(gl, "pop");
@@ -417,6 +420,20 @@
             s.sfx.ding(); s.show(cap, "fade"); await s.show(facts, "up"); s.say("Frauen, Sklaven und Zugezogene durften nicht abstimmen.");
           });
           s.step(async () => { s.sfx.drum(); await s.show(pts[3], "left"); s.sfx.pop(); await s.show(handsUp, "up"); s.sfx.snap(); s.show(shard, "bounce"); s.show(shardL, "fade"); });
+        },
+      },
+      /* 12b -------------------------------------------------------------- */
+      {
+        title: "Athen in echt",
+        say: "Die Pnyx gibt es noch heute. Und im Museum liegen echte Tonscherben, mit denen die Athener abgestimmt haben.",
+        build(s) {
+          const f1 = s.photo("pnyx", { w: 620, h: 470, caption: "Die Pnyx heute – hinten die Akropolis", kb: true, pos: "50% 60%" });
+          const f2 = s.photo("scherben-athen", { w: 460, h: 300, caption: "Scherben mit dem Namen „Themistokles“", cls: "later" });
+          const t2 = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Scherbengericht"), s.h("p", { class: "small" }, "Jeder ritzte einen Namen auf eine Scherbe. Themistokles bekam so viele Stimmen, dass er um 471 v. Chr. Athen verlassen musste."));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "620px 1fr", gap: "20px", height: "100%", alignItems: "center" } }, f1, s.h("div", { class: "stack", style: { gap: "14px" } }, f2, t2)));
+          s.show(f1, "fade"); s.sound("wind", { vol: .3, dur: 5 });
+          s.step(async () => { s.sound("meissel", { vol: .4, dur: 1.5 }); await s.show(f2, "zoom"); s.say("Auf jede Scherbe ritzte jemand einen Namen."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(t2, "up"); });
         },
       },
       /* 13 --------------------------------------------------------------- */
@@ -440,7 +457,7 @@
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "22px" } }, "Athen erfand die Idee: ", s.h("b", null, "Das Volk herrscht."), " Heute dürfen viel mehr Menschen mitbestimmen – und die Wahl ist geheim."));
           s.add(s.h("div", { class: "stack", style: { gap: "10px", height: "100%", justifyContent: "center" } }, head, ...rs, merk));
           s.sfx.pop();
-          rs.forEach((r, i) => s.step(async () => { s.sfx.swoosh(); await s.show(r.ca, "right"); s.sfx.pop(); await s.show(r.cb, "left"); }));
+          rs.forEach((r, i) => s.step(async () => { s.sfx.swoosh(); await s.show(r.ca, "right"); if (i === 3) s.sound("papier-rascheln", { vol: .45 }); else s.sfx.pop(); await s.show(r.cb, "left"); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -449,28 +466,19 @@
         title: "Parlamente in Berlin",
         say: "In Berlin gibt es zwei wichtige Parlamente: den Bundestag für ganz Deutschland und das Abgeordnetenhaus für Berlin.",
         build(s) {
-          const rt = s.svg(470, 230);
-          rt.append(s.el("rect", { x: 0, y: 0, width: 470, height: 230, rx: 16, fill: "#e4f2fb" }), s.el("rect", { x: 40, y: 110, width: 390, height: 100, fill: "#d9cfb8", stroke: INK, "stroke-width": 2 }));
-          [40, 380].forEach(x => rt.append(s.el("rect", { x: x - 10, y: 84, width: 70, height: 126, fill: "#cfc3a8", stroke: INK, "stroke-width": 2 })));
-          [170, 200, 230, 260, 290].forEach(x => rt.append(s.el("rect", { x, y: 136, width: 12, height: 74, fill: "#bfb194" })));
-          rt.append(s.el("path", { d: "M160 110 L235 84 L310 110 Z", fill: "#cfc3a8", stroke: INK, "stroke-width": 2 }));
-          const dome = later(s.el("path", { d: "M180 84 C180 22 290 22 290 84 Z M200 84 C200 40 270 40 270 84 M235 30 L235 84 M190 60 L280 60", stroke: "#3a8fd0", "stroke-width": 3, fill: "#bfe0f5", "fill-opacity": .6 }));
-          const flag = s.el("g", null, s.el("rect", { x: 30, y: 54, width: 30, height: 7, fill: "#1b1b1b" }), s.el("rect", { x: 30, y: 61, width: 30, height: 7, fill: "#dc3b2a" }), s.el("rect", { x: 30, y: 68, width: 30, height: 7, fill: "#ffd94a" }), s.el("path", { d: "M30 54 L30 84", stroke: INK, "stroke-width": 2 }));
-          rt.append(dome, flag);
-          const ah = s.svg(470, 230);
-          ah.append(s.el("rect", { x: 0, y: 0, width: 470, height: 230, rx: 16, fill: "#e4f2fb" }), s.el("rect", { x: 50, y: 90, width: 370, height: 120, fill: "#e8e2d4", stroke: INK, "stroke-width": 2 }), s.el("path", { d: "M150 90 L235 46 L320 90 Z", fill: "#ddd5c2", stroke: INK, "stroke-width": 2 }));
-          const cols = [170, 200, 230, 260, 290].map(x => later(s.el("rect", { x, y: 96, width: 14, height: 114, fill: "#f6f2e8", stroke: INK, "stroke-width": 1.5 })));
-          ah.append(...cols, s.el("g", null, s.el("rect", { x: 222, y: 20, width: 26, height: 18, fill: "#fff", stroke: INK, "stroke-width": 1.5 }), s.el("rect", { x: 222, y: 26, width: 26, height: 6, fill: "#dc3b2a" }), s.el("path", { d: "M222 20 L222 46", stroke: INK, "stroke-width": 2 })));
+          const rt = s.photo("reichstag", { w: "100%", h: 230, caption: "Reichstagsgebäude", pos: "50% 45%" });
+          const dome = s.photo("reichstag-kuppel", { w: "100%", h: 230, caption: "Die Glaskuppel von innen", cls: "later" });
+          const ah = s.photo("abgeordnetenhaus", { w: "100%", h: 230, caption: "Abgeordnetenhaus von Berlin" });
           const n130 = s.h("b", { class: "mono" }, "0");
-          const c1 = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 18px" } }, rt, s.h("p", { class: "h2" }, "Bundestag"),
+          const c1 = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 18px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" } }, rt, dome), s.h("p", { class: "h2" }, "Bundestag"),
             later(s.h("p", { class: "small" }, "Das Parlament für ganz Deutschland. Seit 1999 im ", s.h("b", null, "Reichstagsgebäude"), ". Über dem Eingang steht: „Dem deutschen Volke“. In die Glaskuppel darfst du hinaufgehen!")));
-          const c2 = later(s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 18px" } }, ah, s.h("p", { class: "h2" }, "Abgeordnetenhaus"),
+          const c2 = later(s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 18px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" } }, ah, s.photo("plenarsaal-agh", { w: "100%", h: 230, caption: "Der Plenarsaal" })), s.h("p", { class: "h2" }, "Abgeordnetenhaus"),
             s.h("p", { class: "small" }, "Das Parlament für Berlin – im früheren Preußischen Landtag. Mindestens ", n130, " Abgeordnete, alle 5 Jahre gewählt.")));
           const merk = later(s.h("div", { class: "merk", style: { gridColumn: "1 / 3", fontSize: "22px" } }, "Der ", s.h("b", null, "Bundestag"), " macht Gesetze für ganz Deutschland. Das ", s.h("b", null, "Abgeordnetenhaus"), " macht Gesetze für Berlin – zum Beispiel das Berliner Schulgesetz."));
           s.add(s.h("div", { class: "cols", style: { gap: "20px 24px", height: "100%", alignContent: "center", alignItems: "stretch" } }, c1, c2, merk));
-          s.show(c1, "left"); s.sfx.whoosh();
-          s.step(async () => { s.sfx.ding(); await s.show(dome, "draw"); s.sfx.pop(); await s.show(c1.lastChild, "up"); s.say("Der Bundestag sitzt im Reichstagsgebäude. Oben ist eine Glaskuppel."); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(c2, "right"); for (const c of cols) { s.sfx.tick(); await s.show(c, "up"); } await s.tween({ dur: 1000, ease: "out", update: v => { n130.textContent = Math.round(v * 130); } }); s.sfx.coin(); });
+          s.show(c1, "left"); s.sound("traffic", { vol: .3, dur: 3 });
+          s.step(async () => { s.sound("footsteps", { vol: .45, dur: 2.5 }); await s.show(dome, "zoom"); s.sfx.pop(); await s.show(c1.lastChild, "up"); s.say("Der Bundestag sitzt im Reichstagsgebäude. Oben ist eine Glaskuppel."); });
+          s.step(async () => { s.sound("stimmengewirr", { vol: .35, dur: 3 }); await s.show(c2, "right"); await s.tween({ dur: 1000, ease: "out", update: v => { n130.textContent = Math.round(v * 130); } }); s.sfx.coin(); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -500,7 +508,7 @@
             let n = 0;
             cards.forEach(c => { const ok = a >= c.age; if (ok) n++; c.style.background = ok ? "#e6f6ee" : "#fff"; c.style.borderColor = ok ? "#9fd8bd" : "var(--line)"; c.style.opacity = ok ? 1 : .55; });
             status.textContent = n ? `Mit ${a} darfst du bei ${n} von 4 Wahlen wählen.` : `Mit ${a}: Noch nicht wählen – aber schon mitmachen!`;
-            if (n !== lastN && lastN >= 0) n > lastN ? s.sfx.success() : s.sfx.boing();
+            if (n !== lastN && lastN >= 0) n > lastN ? s.sound("papier-rascheln", { vol: .45 }) : s.sfx.boing();
             lastN = n;
           };
           const sl = s.slider({ label: "Dein Alter", min: 10, max: 20, value: 10, fmt: v => v + " Jahre", onInput: upd });
@@ -527,7 +535,7 @@
           const life = later(lifeBox(s, "Im Alltag", s.h("p", { class: "small" }, "Zeitung, Kindernachrichten, Schülerzeitung, Videos im Netz: Überall gibt es Fakten und Meinungen. Du hast ein Recht auf gute Informationen (Kinderrechte, Art. 17).")));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 330px", gap: "18px", height: "100%", alignItems: "center" } }, binF, binM, s.h("div", { class: "stack", style: { gap: "12px" } }, ...tips, life)));
           s.sfx.pop();
-          items.forEach((it, i) => s.step(async () => { s.sfx.whoosh(); await s.show(notes[i], it[1] ? "right" : "left"); it[1] ? s.sfx.boing() : s.sfx.ding(); }));
+          items.forEach((it, i) => s.step(async () => { if (i === 0) s.sound("page-turn-2", { vol: .5 }); else s.sfx.whoosh(); await s.show(notes[i], it[1] ? "right" : "left"); it[1] ? s.sfx.boing() : s.sfx.ding(); }));
           s.step(async () => { for (const t of tips) { s.sfx.pop(); await s.show(t, "up"); } s.sfx.ding(); s.show(life, "up"); s.say("Demokratie braucht Menschen, die gut informiert sind und ihre Meinung sagen."); });
         },
       },

@@ -78,9 +78,23 @@
           const c3 = exc(s, "Grün und Gelb", "later", p(s, "small", "Nur am Fluss und im ", B(s, "Delta"), " ist das Land grün. Rechts und links: Wüste."));
           s.add(grid(s, "500px 1fr", m.svg, s.h("div", { class: "stack" }, c1, c2, c3)));
           s.show(m.svg, "zoom"); s.sfx.whoosh();
-          s.step(async () => { s.sfx.whoosh(); await s.show(m.nile, "draw"); s.sfx.pop(); await s.show(m.arms, "draw"); s.show(c1, "left"); await countUp(s, big, 6650, { dur: 1100 }); });
+          s.step(async () => { s.sound("fluss", { vol: .4, dur: 5 }); await s.show(m.nile, "draw"); s.sfx.pop(); await s.show(m.arms, "draw"); s.show(c1, "left"); await countUp(s, big, 6650, { dur: 1100 }); });
           s.step(async () => { s.sfx.pop(); s.show(m.north, "down"); await s.show(c2, "left"); for (let i = 2; i >= 0; i--) { s.sfx.count(2 - i); await s.show(m.cities[i], "pop"); } });
           s.step(async () => { s.sfx.whoosh(); s.show(m.green, "draw"); s.show(m.delta, "fade"); s.show([m.lbl.delta, m.lbl.wueste, m.lbl.wueste2], "pop"); await s.show(c3, "left"); s.say("Grün ist nur das Land am Fluss. Alles andere ist Wüste."); });
+        },
+      },
+      /* 1b --------------------------------------------------------------- */
+      {
+        title: "Der Nil in echt",
+        say: "So sieht der Nil in echt aus. Vom Weltall aus siehst du ein grünes Band mitten durch die gelbe Wüste.",
+        build(s) {
+          const sat = s.photo("nil-satellit", { w: 500, h: 470, caption: "Satellitenbild: Nil und Nildelta", pos: "40% 50%" });
+          const ass = s.photo("nil-assuan", { w: 540, h: 330, caption: "Der Nil bei Assuan", cls: "later" });
+          const merk = s.h("div", { class: "merk later" }, "Nur am Fluss ist Ägypten ", B(s, "grün"), ". Gleich hinter dem Ufer beginnt der ", B(s, "Wüstensand"), ".");
+          s.add(grid(s, "500px 1fr", sat, s.h("div", { class: "stack", style: { gap: "18px" } }, ass, merk)));
+          s.show(sat, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.sound("fluss", { vol: .45, dur: 6 }); await s.show(ass, "zoom"); s.say("Am Ufer wachsen Palmen und Felder. Dahinter: Sand."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 2 ---------------------------------------------------------------- */
@@ -108,7 +122,7 @@
           s.show(svg, "fade"); s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); await s.show([L1, L1b, L3, L3b], "pop"); });
           s.step(async () => { s.sfx.whoosh(); s.show(black, "fade"); s.show(fields, "up"); s.show(palms, "bounce"); s.sfx.pop(); await s.show([L2, L2b], "pop"); });
-          s.step(async () => { s.sfx.scribble(); await s.show(quote, "left"); });
+          s.step(async () => { s.sound("pencil-write", { vol: .6 }); await s.show(quote, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -146,7 +160,7 @@
           draw();
           let busy = false;
           const play = async () => {
-            if (busy) return; busy = true; s.sfx.whoosh(); mud = 0;
+            if (busy) return; busy = true; s.sound("fluss", { vol: .45, dur: 6 }); mud = 0;
             let last = -1;
             await s.tween({ from: 4, to: 11.99, dur: 6000, ease: "linear", update: v => { m = v; if (v > 9) mud = Math.min(1, (v - 9) / 1.5); if (Math.floor(v) !== last) { last = Math.floor(v); s.sfx.count(last - 4); } draw(); } });
             s.sfx.ding(); busy = false;
@@ -155,9 +169,23 @@
           const cards = [["1. Regen in Äthiopien", "Im Sommer regnet es im Hochland von Äthiopien sehr stark. Der Blaue Nil schwillt an."], ["2. Der Nil tritt über", "Von etwa Juni bis Oktober stand das Wasser auf den Feldern – knapp 100 Tage lang."], ["3. Schwarzer Schlamm", "Das Wasser brachte Schlamm mit. Er blieb liegen und düngte die Felder."]].map(([a, b]) => exc(s, a, "later", p(s, "small", b)));
           s.add(s.h("div", { class: "stack", style: { gap: "16px", alignItems: "center" } }, canvas, s.h("div", { class: "cols3", style: { width: "100%" } }, ...cards), btn));
           s.show(canvas, "fade"); s.sfx.whoosh();
-          s.step(async () => { s.sfx.pop(); await s.show(cards[0], "up"); });
+          s.step(async () => { s.sound("rain", { vol: .45, dur: 4 }); await s.show(cards[0], "up"); });
           s.step(async () => { s.sfx.pop(); s.show(cards[1], "up"); s.show(btn, "pop"); await play(); });
           s.step(async () => { s.sfx.ding(); await s.show(cards[2], "up"); s.say("Der Schlamm war das Geschenk: Er machte die Felder fruchtbar."); });
+        },
+      },
+      /* 3b --------------------------------------------------------------- */
+      {
+        title: "Die Nilschwemme in echt",
+        say: "Dieses alte Foto zeigt die Nilschwemme um 1890. Das Wasser steht bis kurz vor den Pyramiden von Gizeh.",
+        build(s) {
+          const ph = s.photo("nilschwemme-giza", { w: 640, h: 500, caption: "Nilschwemme bei Gizeh, Foto um 1890", pos: "50% 55%", kb: true });
+          const t1 = exc(s, "Was siehst du?", "later", p(s, "small", "Männer mit Kamelen waten durch das flache Wasser. Hinten stehen die Pyramiden von Gizeh."));
+          const t2 = exc(s, "Damals und heute", "later", p(s, "small", "Bis vor gut 50 Jahren kam die Flut jedes Jahr. Heute gibt es sie nicht mehr – warum, erfährst du am Ende des Kapitels."));
+          s.add(grid(s, "640px 1fr", ph, s.h("div", { class: "stack" }, t1, t2)));
+          s.show(ph, "fade"); s.sound("fluss", { vol: .4, dur: 6 });
+          s.step(async () => { s.sound("splash", { vol: .45 }); await s.show(t1, "left"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(t2, "left"); });
         },
       },
       /* 4 ---------------------------------------------------------------- */
@@ -206,8 +234,9 @@
           const eq = p(s, "t", "12 Monate × 30 Tage");
           const merk = s.h("div", { class: "merk later" }, "12 × 30 = 360. Dazu 5 Extratage: Das Jahr hatte ", B(s, "365 Tage"), " – fast wie unser Kalender!");
           const star = exc(s, "Neujahr", "later", p(s, "small", "Das neue Jahr begann, wenn der helle Stern ", B(s, "Sirius"), " im Morgengrauen wieder auftauchte. Das war etwa zur Zeit, wenn die Nilschwemme kam."));
-          const lf = lifeBox(s, "later", p(s, "small", "Unser Jahr hat auch 365 Tage – im Schaltjahr 366. Die alten Ägypter kamen ohne Schaltjahr aus."));
-          s.add(grid(s, "600px 1fr", svg, s.h("div", { class: "stack" }, eq, big, merk, star, lf)));
+          const lf = exc(s, "In Stein gemeißelt", "later", s.h("div", { style: { display: "grid", gridTemplateColumns: "210px 1fr", gap: "14px", alignItems: "center" } },
+            s.photo("kalender-kom-ombo", { w: 210, h: 140 }), p(s, "small", "Im Tempel von Kom Ombo: Zeichen für Tage und Monate an der Wand.")));
+          s.add(grid(s, "600px 1fr", svg, s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "18px", alignItems: "center" } }, big, eq), merk, star, lf)));
           s.show(svg, "fade"); s.sfx.pop();
           s.step(async () => {
             s.sfx.whoosh();
@@ -216,8 +245,8 @@
             await s.tween({ from: 0, to: 360, dur: 2400, ease: "linear", update: v => { while (n < Math.floor(v)) { cells[n].setAttribute("opacity", 1); n++; if (n % 30 === 0) s.sfx.count(n / 30 - 1); } big.textContent = String(n); } });
           });
           s.step(async () => { for (let i = 0; i < 5; i++) { s.sfx.coin(); await s.show(extra[i], "bounce"); } s.show(plusT, "pop"); await countUp(s, big, 365, { from: 360, dur: 600, raw: true }); s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.zap(); await s.show(star, "left"); });
-          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+          s.step(async () => { s.sound("magic-chime", { vol: .5 }); await s.show(star, "left"); });
+          s.step(async () => { s.sound("chalk-write", { vol: .5, dur: 2.5 }); await s.show(lf, "up"); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -262,15 +291,16 @@
             s.sfx.whoosh(); await s.tween({ from: 25, to: 48, dur: 700, update: v => { ang = v; place(); } }); s.sfx.boing();
             await s.tween({ from: 48, to: -18, dur: 1000, update: v => { ang = v; place(); } }); s.sfx.click();
             await s.tween({ from: 0, to: 180, dur: 900, update: v => { swing = v; place(); } });
-            s.sfx.whoosh(); await s.tween({ from: 0, to: 160, dur: 700, update: v => canalW.setAttribute("width", v) }); s.sfx.ding();
+            s.sound("water-pour", { vol: .5 }); await s.tween({ from: 0, to: 160, dur: 700, update: v => canalW.setAttribute("width", v) });
             await s.tween({ from: 180, to: 0, dur: 700, update: v => { swing = v; place(); } }); ang = 25; place(); busy = false;
           };
           const btn = s.h("button", { class: "btn solid later", onclick: scoop }, "▶ Wasser schöpfen");
-          s.add(grid(s, "540px 1fr", svg, s.h("div", { class: "stack" }, ...tags, btn, merk)));
+          const real = s.photo("schaduf-ipuy", { w: 500, h: 200, caption: "Schaduf im Grab des Ipui (Nachzeichnung)", pos: "80% 40%" });
+          s.add(grid(s, "540px 1fr", svg, s.h("div", { class: "stack", style: { gap: "12px" } }, real, ...tags, btn, merk)));
           s.show(svg, "fade"); s.sfx.pop();
-          s.step(async () => { s.sfx.count(0); await s.show(tags[0], "left"); s.sfx.whoosh(); await s.tween({ from: 25, to: 48, dur: 800, update: v => { ang = v; place(); } }); s.sfx.boing(); });
+          s.step(async () => { s.sfx.count(0); await s.show(tags[0], "left"); s.sfx.whoosh(); await s.tween({ from: 25, to: 48, dur: 800, update: v => { ang = v; place(); } }); s.sound("splash", { vol: .45 }); });
           s.step(async () => { s.sfx.count(2); await s.show(tags[1], "left"); await s.tween({ from: 48, to: -18, dur: 1000, update: v => { ang = v; place(); } }); s.sfx.click(); });
-          s.step(async () => { s.sfx.count(4); await s.show(tags[2], "left"); await s.tween({ from: 0, to: 180, dur: 900, update: v => { swing = v; place(); } }); s.sfx.whoosh(); await s.tween({ from: 0, to: 160, dur: 700, update: v => canalW.setAttribute("width", v) }); s.sfx.ding(); await s.tween({ from: 180, to: 0, dur: 600, update: v => { swing = v; place(); } }); ang = 25; place(); s.show(btn, "pop"); });
+          s.step(async () => { s.sfx.count(4); await s.show(tags[2], "left"); await s.tween({ from: 0, to: 180, dur: 900, update: v => { swing = v; place(); } }); s.sound("water-pour", { vol: .5 }); await s.tween({ from: 0, to: 160, dur: 700, update: v => canalW.setAttribute("width", v) }); await s.tween({ from: 180, to: 0, dur: 600, update: v => { swing = v; place(); } }); ang = 25; place(); s.show(btn, "pop"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -298,10 +328,11 @@
           } });
           sl.classList.add("later");
           const c1 = exc(s, "Wozu?", "later", p(s, "small", "Aus der Höhe der Flut schätzten Priester und Beamte die Ernte. Danach richteten sich auch die ", B(s, "Steuern"), " für die Felder."));
-          const c2 = exc(s, "Wo?", "later", p(s, "small", "Einer der ältesten liegt auf der Insel Elephantine bei Assuan. Ein berühmter steht in Kairo auf der Insel Roda."));
+          const c2 = exc(s, "Wo?", "later", s.h("div", { style: { display: "grid", gridTemplateColumns: "210px 1fr", gap: "14px", alignItems: "center" } },
+            s.photo("nilometer-elephantine", { w: 210, h: 160, caption: "Elephantine" }), p(s, "small", "Einer der ältesten liegt auf der Insel Elephantine bei Assuan. Ein berühmter steht in Kairo auf der Insel Roda.")));
           s.add(grid(s, "440px 1fr", svg, s.h("div", { class: "stack" }, status, harvest, sl, c1, c2)));
           s.show(svg, "fade"); s.sfx.pop();
-          s.step(async () => { await s.show(sl, "up"); s.sfx.whoosh(); for (let v = 2; v <= 4; v++) { sl.set(v); await s.wait(450); } });
+          s.step(async () => { await s.show(sl, "up"); s.sound("water-pour", { vol: .45 }); for (let v = 2; v <= 4; v++) { sl.set(v); await s.wait(450); } });
           s.step(async () => { s.sfx.pop(); await s.show(c1, "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(c2, "left"); });
         },
@@ -311,36 +342,17 @@
         title: "Säen, ernten, speichern",
         say: "Die Bauern bauten vor allem Emmer und Gerste an. Ein Teil der Ernte ging als Steuer in die Kornspeicher.",
         build(s) {
-          const svg = svgBox(s, 1060, 250);
-          svg.append(s.el("rect", { x: 0, y: 0, width: 1060, height: 250, fill: "#fdf3df", rx: 14 }), s.el("rect", { x: 0, y: 200, width: 1060, height: 50, fill: "#c79a5a" }));
-          // field
-          const stalks = s.el("g");
-          for (let x = 30; x < 240; x += 18) stalks.append(s.el("path", { d: `M${x},200 L${x},150 M${x},160 l-8,-10 M${x},160 l8,-10 M${x},150 l0,-10`, stroke: "#c9a227", "stroke-width": 3, fill: "none" }));
-          svg.append(stalks, txt(s, 135, 232, "Feld", { fill: "#fff" }));
-          // granary
-          const silo = s.el("g", { class: "later" });
-          silo.append(s.el("path", { d: "M800,200 L800,90 Q850,40 900,90 L900,200 Z", fill: "#e8d9b8", stroke: "#9b7a48", "stroke-width": 4 }), s.el("path", { d: "M930,200 L930,90 Q980,40 1030,90 L1030,200 Z", fill: "#e8d9b8", stroke: "#9b7a48", "stroke-width": 4 }));
-          const fillR = [s.el("rect", { x: 804, y: 196, width: 92, height: 0, fill: "#d9b44a" }), s.el("rect", { x: 934, y: 196, width: 92, height: 0, fill: "#d9b44a" })];
-          silo.append(...fillR, txt(s, 915, 232, "Kornspeicher", { fill: "#fff" }));
-          svg.append(silo);
-          // scribe
-          const scribe = person(s, 640, 200, C, 1.2); scribe.classList.add("later");
-          const tab = s.el("rect", { x: 655, y: 150, width: 30, height: 22, fill: "#f5ecd0", stroke: "#9b7a48", "stroke-width": 2 }); scribe.append();
-          svg.append(scribe, tab); tab.classList.add("later");
-          const sackG = s.el("g", { class: "later" });
-          const sack = (x) => s.el("path", { d: `M${x - 18},200 Q${x - 22},170 ${x - 8},162 L${x - 10},154 L${x + 10},154 L${x + 8},162 Q${x + 22},170 ${x + 18},200 Z`, fill: "#d9c08a", stroke: "#8a6a3a", "stroke-width": 2 });
-          const sacks = [sack(0), sack(0), sack(0)]; sacks.forEach(sk => sackG.append(sk));
-          svg.append(sackG);
-          const placeSacks = v => sacks.forEach((sk, i) => sk.setAttribute("transform", `translate(${300 + i * 50 + v * (480 - i * 20)},0)`));
-          placeSacks(0);
+          const ph1 = s.photo("ernte-sennedjem", { w: 520, h: 260, caption: "Ernte – Wandbild im Grab des Sennedjem", pos: "50% 45%" });
+          const ph2 = s.photo("kornspeicher-modell", { w: 520, h: 260, caption: "Modell eines Kornspeichers mit Schreiber", cls: "later", pos: "50% 55%" });
+          const svg = s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px", justifyContent: "center" } }, ph1, ph2);
           const steps = [["Säen", "In der Zeit Peret: pflügen und säen, vor allem Emmer (alter Weizen) und Gerste."], ["Ernten", "In der Zeit Schemu wird das Getreide geerntet und in Säcke gefüllt."], ["Abgeben", "Ein Teil der Ernte ist Steuer. Ein Schreiber zählt die Säcke und schreibt alles auf."], ["Speichern", "Das Korn kommt in große Speicher. Daraus macht man Brot und Bier."]];
           const cards = steps.map(([a, b], i) => exc(s, (i + 1) + ". " + a, "later", p(s, "t", b)));
           s.add(s.h("div", { class: "stack", style: { gap: "18px" } }, svg, s.h("div", { class: "cols4" }, ...cards)));
           s.show(svg, "fade"); s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); await s.show(cards[0], "up"); s.sfx.scribble(); await s.tween({ from: 0.3, to: 1, dur: 700, ease: "back", update: v => stalks.setAttribute("transform", `translate(0,${200 * (1 - v)}) scale(1,${v})`) }); });
-          s.step(async () => { s.sfx.pop(); await s.show(cards[1], "up"); s.sfx.snap(); await s.show(sackG, "bounce"); });
-          s.step(async () => { s.sfx.pop(); await s.show(cards[2], "up"); s.show([scribe, tab], "pop"); for (let i = 0; i < 3; i++) { s.sfx.count(i); await s.wait(250); } });
-          s.step(async () => { s.sfx.pop(); s.show(silo, "zoom"); await s.show(cards[3], "up"); s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1300, update: v => { placeSacks(v); sackG.setAttribute("opacity", 1 - v * 0.9); fillR.forEach(r => { r.setAttribute("y", 196 - v * 80); r.setAttribute("height", v * 80); }); } }); s.sfx.success(); });
+          s.step(async () => { s.sfx.swoosh(); await s.show(cards[0], "up"); });
+          s.step(async () => { s.sound("scissors", { vol: .45 }); await s.show(cards[1], "up"); });
+          s.step(async () => { s.sound("pencil-write", { vol: .6 }); await s.show(cards[2], "up"); s.show(ph2, "zoom"); s.say("Im Modell sitzt ein Schreiber und zählt mit."); });
+          s.step(async () => { s.sound("korn-schuetten", { vol: .55 }); await s.show(cards[3], "up"); s.sfx.success(); });
         },
       },
       /* 9 ---------------------------------------------------------------- */
@@ -401,27 +413,13 @@
         title: "Traumberuf: Schreiber",
         say: "Schreiber war ein angesehener Beruf. Ein alter Text erzählt, wie ein Vater seinem Sohn rät: Werde Schreiber!",
         build(s) {
-          const svg = svgBox(s, 500, 420);
-          svg.append(s.el("rect", { x: 0, y: 0, width: 500, height: 420, fill: "#fdf3df", rx: 14 }));
-          const sheet = s.el("rect", { x: 40, y: 60, width: 0, height: 300, fill: "#efe0b6", stroke: "#b49a6a", "stroke-width": 3 });
-          svg.append(sheet, s.el("rect", { x: 22, y: 50, width: 24, height: 320, rx: 12, fill: "#d9c08a", stroke: "#9b7a48", "stroke-width": 3 }));
-          const glyphs = s.el("g", { class: "later" });
-          const G = (x, y, k) => {
-            const gg = s.el("g", { transform: `translate(${x},${y})` });
-            if (k === 0) gg.append(s.el("path", { d: "M0,30 Q2,0 18,4 Q30,8 26,30 Z M14,8 l0,-8", fill: "none", stroke: "#1b2740", "stroke-width": 3 }));
-            if (k === 1) gg.append(s.el("path", { d: "M-4,18 l7,-7 l7,7 l7,-7 l7,7 l7,-7", fill: "none", stroke: "#1b2740", "stroke-width": 3 }));
-            if (k === 2) gg.append(s.el("ellipse", { cx: 12, cy: 16, rx: 14, ry: 8, fill: "none", stroke: "#1b2740", "stroke-width": 3 }), s.el("circle", { cx: 12, cy: 16, r: 4, fill: "#1b2740" }));
-            if (k === 3) gg.append(s.el("path", { d: "M0,28 L0,4 Q12,-4 24,4 L24,28 Z", fill: "none", stroke: "#c0392b", "stroke-width": 3 }));
-            return gg;
-          };
-          for (let r = 0; r < 5; r++) for (let c = 0; c < 7; c++) glyphs.append(G(80 + c * 55, 90 + r * 55, (r * 3 + c) % 4));
-          svg.append(glyphs);
+          const svg = s.photo("schreiber-louvre", { w: 480, h: 540, caption: "Sitzender Schreiber, um 2500 v. Chr.", pos: "50% 45%" });
                     const t1 = exc(s, "Ein alter Text: „Die Lehre des Cheti“", "later", p(s, "small", "Ein Vater namens Cheti bringt seinen Sohn zur Schule. Er rät ihm: Lerne fleißig und werde Schreiber! Die anderen Berufe beschreibt er als hart und gefährlich."));
           const t2 = exc(s, "Was macht ein Schreiber?", "later", p(s, "small", "Er zählt Ernte und Vieh, schreibt Steuern, Listen und Briefe auf. Schreiber waren das Rückgrat der Verwaltung."));
           const lf = lifeBox(s, "later", p(s, "small", "Heute lernt bei uns jedes Kind lesen und schreiben. Im alten Ägypten konnten das nur wenige – darum waren Schreiber so wichtig."));
-          s.add(grid(s, "500px 1fr", svg, s.h("div", { class: "stack" }, t1, t2, lf)));
+          s.add(grid(s, "480px 1fr", svg, s.h("div", { class: "stack" }, p(s, "small pencil", "Diese Figur aus bemaltem Kalkstein steht heute im Louvre in Paris. Auf den Knien liegt eine Papyrusrolle."), t1, t2, lf)));
           s.show(svg, "fade"); s.sfx.pop();
-          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 420, dur: 900, update: v => sheet.setAttribute("width", v) }); s.sfx.scribble(); await s.show(glyphs, "fade"); s.show(t1, "left"); });
+          s.step(async () => { s.sound("pencil-write", { vol: .6 }); await s.show(t1, "left"); });
           s.step(async () => { s.sfx.coin(); await s.show(t2, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
@@ -444,12 +442,13 @@
           const posN = v => bN.setAttribute("transform", `translate(${222 + Math.sin(v * 6) * 12},${470 - v * 380})`);
           const posS = v => bS.setAttribute("transform", `translate(${238 + Math.sin(v * 6) * 10},${90 + v * 340})`);
           posN(0); posS(0);
-          const goods = [["Gold und Elfenbein", "aus Nubien im Süden"], ["Zedernholz", "aus dem Libanon, über das Mittelmeer"], ["Myrrhe (Duftharz)", "aus dem fernen Land Punt"], ["Wein", "aus Griechenland und Phönizien – in Ägypten wuchs wenig Wein"]].map(([a, b]) => s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("b", { class: "t", style: { color: C } }, a), p(s, "small", b)));
+          const goods = [["Gold und Elfenbein", "aus Nubien im Süden"], ["Zedernholz", "aus dem Libanon, über das Mittelmeer"], ["Myrrhe (Duftharz)", "aus dem fernen Land Punt"], ["Wein", "aus Griechenland und Phönizien – in Ägypten wuchs wenig Wein"]].map(([a, b]) => s.h("div", { class: "card later", style: { padding: "6px 16px" } }, s.h("b", { class: "t", style: { color: C } }, a + " "), s.h("span", { class: "small" }, b)));
           const head = p(s, "h2 a-up", "Was kam nach Ägypten?");
-          s.add(grid(s, "440px 1fr", svg, s.h("div", { class: "stack", style: { gap: "12px" } }, head, ...goods)));
+          const fel = s.photo("feluke-assuan", { w: 600, h: 170, caption: "Segelboot (Feluke) auf dem Nil – bis heute", pos: "50% 60%" });
+          s.add(grid(s, "440px 1fr", svg, s.h("div", { class: "stack", style: { gap: "10px" } }, head, ...goods, fel)));
           s.show(svg, "fade"); s.sfx.whoosh();
-          s.step(async () => { s.show(arrN, "up"); s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 2000, update: posN }); s.say("Nach Norden ohne Segel: Die Strömung trägt das Boot."); });
-          s.step(async () => { s.show(arrS, "down"); s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 2000, update: posS }); s.say("Nach Süden mit Segel: Der Wind weht meist von Norden."); });
+          s.step(async () => { s.show(arrN, "up"); s.sound("ruder", { vol: .5 }); await s.tween({ from: 0, to: 1, dur: 2000, update: posN }); s.say("Nach Norden ohne Segel: Die Strömung trägt das Boot."); });
+          s.step(async () => { s.show(arrS, "down"); s.sound("segel", { vol: .5 }); await s.tween({ from: 0, to: 1, dur: 2000, update: posS }); s.say("Nach Süden mit Segel: Der Wind weht meist von Norden."); });
           s.step(async () => { for (let i = 0; i < 4; i++) { s.sfx.coin(); await s.show(goods[i], "left"); } });
         },
       },
@@ -460,11 +459,9 @@
         build(s) {
           const PW = 200, PH = 230;
           const panel = (i) => { const v = svgBox(s, PW, PH); v.append(s.el("rect", { x: 0, y: 0, width: PW, height: PH, fill: "#fdf3df", rx: 12 })); return v; };
-          const p1 = panel(), p2 = panel(), p3 = panel(), p4 = panel(), p5 = panel();
+          const p2 = panel(), p3 = panel(), p4 = panel();
           // 1 plant
-          const plant = s.el("g");
-          for (let i = -2; i <= 2; i++) plant.append(s.el("path", { d: `M100,${PH - 10} L${100 + i * 14},60`, stroke: "#3f8f3a", "stroke-width": 4 }), s.el("path", { d: `M${100 + i * 14},60 l-14,-26 M${100 + i * 14},60 l14,-26 M${100 + i * 14},60 l0,-30 M${100 + i * 14},60 l-22,-14 M${100 + i * 14},60 l22,-14`, stroke: "#5fae3c", "stroke-width": 2.5 }));
-          p1.append(s.el("rect", { x: 0, y: PH - 30, width: PW, height: 30, fill: NILE }), plant);
+          const ph1 = s.photo("papyrus-pflanze", { w: PW, h: PH });
           // 2 strips
           const strips2 = s.el("g");
           for (let i = 0; i < 6; i++) strips2.append(s.el("rect", { x: 30 + i * 24, y: 40, width: 18, height: 150, rx: 3, fill: "#efe0b6", stroke: "#b49a6a", "stroke-width": 2 }));
@@ -478,21 +475,19 @@
           for (let i = 0; i < 8; i++) l4b.append(s.el("rect", { x: 30, y: 40 + i * 18, width: 150, height: 20, fill: "#f3e6c2", stroke: "#b49a6a", "stroke-width": 1.5, opacity: .95 }));
           p4.append(l4a, l4b);
           // 5 press & dry
-          const sheet5 = s.el("rect", { x: 30, y: 60, width: 140, height: 130, fill: "#ead8a6", stroke: "#b49a6a", "stroke-width": 2 });
-          const press = s.el("rect", { x: 20, y: 0, width: 160, height: 40, rx: 6, fill: "#8e8a80", stroke: "#5d5a52", "stroke-width": 3 });
-          p5.append(sheet5, press);
+          const ph5 = s.photo("papyrus-blatt", { w: PW, h: PH, pos: "30% 50%", caption: "Echter Papyrus" });
           const caps = [["1. Ernten", "Papyrus wächst am Nil, bis zu 5 m hoch."], ["2. Schneiden", "Das weiße Mark in Streifen schneiden, bis 4 cm breit."], ["3. Legen", "Streifen dicht nebeneinander legen."], ["4. Quer darüber", "Eine zweite Lage quer darauf."], ["5. Pressen", "Pressen, trocknen, glatt reiben – fertig!"]];
-          const cols = [p1, p2, p3, p4, p5].map((v, i) => s.h("div", { class: "stack later", style: { gap: "8px", alignItems: "center" } }, v, s.h("b", { class: "t", style: { color: C } }, caps[i][0]), p(s, "small", caps[i][1])));
+          const cols = [ph1, p2, p3, p4, ph5].map((v, i) => s.h("div", { class: "stack later", style: { gap: "8px", alignItems: "center" } }, v, s.h("b", { class: "t", style: { color: C } }, caps[i][0]), p(s, "small", caps[i][1])));
           cols.forEach((c, i) => { c.querySelector("p").style.textAlign = "center"; });
           const word = s.h("div", { class: "row later", style: { gap: "14px", flexWrap: "nowrap", justifyContent: "center" } }, s.h("span", { class: "chip", style: { fontSize: "22px" } }, "Papyrus"), s.h("span", { class: "t" }, "→ lateinisch papyrus →"), s.h("span", { class: "chip", style: { fontSize: "22px", background: C, color: "#fff" } }, "Papier"));
           const merk = s.h("div", { class: "merk later" }, "Unser Wort ", B(s, "Papier"), " kommt von Papyrus. Echtes Papier aus Pflanzenfasern und Wasser erfand man aber erst später in China, um 105 n. Chr.");
           s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "14px" } }, ...cols), word, merk));
           s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); await s.show(cols[0], "up"); await s.tween({ from: 0.2, to: 1, dur: 700, ease: "back", update: v => plant.setAttribute("transform", `translate(0,${PH * (1 - v)}) scale(1,${v})`) }); });
-          s.step(async () => { s.sfx.snap(); await s.show(cols[1], "up"); for (let i = 0; i < 6; i++) { s.sfx.snap(); await s.wait(90); } });
+          s.step(async () => { s.sound("birds", { vol: .35, dur: 4 }); await s.show(cols[0], "up"); });
+          s.step(async () => { s.sound("scissors", { vol: .5 }); await s.show(cols[1], "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(cols[2], "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(cols[3], "up"); await s.tween({ from: -160, to: 0, dur: 700, update: v => l4b.setAttribute("transform", `translate(${v},0)`) }); });
-          s.step(async () => { s.sfx.pop(); await s.show(cols[4], "up"); s.sfx.drum(); await s.tween({ from: 0, to: 20, dur: 500, ease: "bounce", update: v => press.setAttribute("y", v) }); });
+          s.step(async () => { s.sfx.drum(); await s.show(cols[4], "up"); s.sound("paper-crumple", { vol: .35, dur: 1 }); });
           s.step(async () => { s.sfx.ding(); await s.show(word, "zoom"); await s.show(merk, "up"); });
         },
       },
@@ -510,14 +505,14 @@
           svg.append(river, flood, lake, dam);
           const Lt = [txt(s, 280, 120, "Nassersee: etwa 500 km lang", { fill: "#1d5bd0", class: "later" }), txt(s, 600, 70, "Damm", { class: "later" }), txt(s, 850, 110, "Nilschwemme", { fill: "#1d5bd0" })];
           svg.append(...Lt);
-          const big = s.h("span", { class: "huge", style: { color: C } }, "1960");
-          const when = exc(s, "Bauzeit", "later", s.h("div", { class: "row", style: { gap: "14px", flexWrap: "nowrap" } }, big, p(s, "small", "1960 Baubeginn, im Juli 1970 fertig. Eingeweiht wurde der Damm im Januar 1971.")));
+          const big = s.h("span", { class: "big", style: { color: C } }, "1960");
+          const when = exc(s, "Bauzeit", "later", s.photo("assuan-staudamm", { w: "100%", h: 150, caption: "Der Damm heute" }), s.h("div", { class: "row", style: { gap: "14px", flexWrap: "nowrap" } }, big, p(s, "small", "1960 Baubeginn, im Juli 1970 fertig. Eingeweiht im Januar 1971.")));
           const plus = exc(s, "Gut", "later", p(s, "small", "Wasser das ganze Jahr. Schutz vor Dürre und zu starker Flut."));
           const minus = exc(s, "Schlecht", "later", p(s, "small", "Der Schlamm bleibt im See. Die Bauern brauchen Kunstdünger. Weniger Fische, das Delta bröckelt. Viele Nubier mussten umziehen."));
           s.add(s.h("div", { class: "stack", style: { gap: "16px" } }, svg, s.h("div", { style: { display: "grid", gridTemplateColumns: "1.1fr 1fr 1fr", gap: "18px" } }, when, plus, minus)));
           s.show(svg, "fade"); s.sfx.whoosh();
           s.step(async () => { s.sfx.drum(); await s.show(dam, "bounce"); s.show(Lt[1], "pop"); s.show(when, "up"); await countUp(s, big, 1970, { from: 1960, dur: 900, raw: true }); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(lake, "left"); s.show(Lt[0], "pop"); await s.tween({ from: 1, to: 0, dur: 1200, update: v => { flood.setAttribute("opacity", 0.7 * v); Lt[2].setAttribute("opacity", v); } }); s.sfx.boing(); s.say("Die Nilschwemme ist vorbei. Der Schlamm bleibt im Stausee."); });
+          s.step(async () => { s.sound("fluss", { vol: .45, dur: 5 }); await s.show(lake, "left"); s.show(Lt[0], "pop"); await s.tween({ from: 1, to: 0, dur: 1200, update: v => { flood.setAttribute("opacity", 0.7 * v); Lt[2].setAttribute("opacity", v); } }); s.sfx.boing(); s.say("Die Nilschwemme ist vorbei. Der Schlamm bleibt im Stausee."); });
           s.step(async () => { s.sfx.success(); await s.show(plus, "up"); });
           s.step(async () => { s.sfx.error(); await s.show(minus, "up"); });
         },
@@ -532,11 +527,11 @@
           const barS = s.el("rect", { x: 130, y: 110, width: 0, height: 44, rx: 8, fill: "#7b4fd6" });
           const tN = txt(s, 140, 60, "", { "text-anchor": "start", fill: "#fff" }), tS = txt(s, 140, 140, "", { "text-anchor": "start" });
           svg.append(txt(s, 116, 60, "Nil", { "text-anchor": "end" }), txt(s, 116, 140, "Spree", { "text-anchor": "end" }), barN, barS, tN, tS);
-          const card = (lbl, text) => s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, lbl), p(s, "t", text));
-          const cs = [card("Spree und Nil", "Die Spree fließt durch Berlin und ist knapp 400 km lang. Der Nil ist etwa 16-mal so lang!"),
-            card("Papier", "Jedes Heft in deiner Schultasche erinnert an den Nil: Das Wort Papier kommt von Papyrus."),
-            card("Kalender", "Dein Jahr hat 365 Tage – wie das Jahr der alten Ägypter. Ein Schaltjahr kannten sie aber nicht."),
-            card("Ägypten heute", "Über 100 Millionen Menschen leben heute in Ägypten. Die meisten wohnen am Nil.")];
+          const card = (lbl, id, text) => s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: "14px", alignItems: "center" } }, s.photo(id, { w: 170, h: 140 }), s.h("div", null, s.h("span", { class: "exlabel" }, lbl), p(s, "small", text)));
+          const cs = [card("Spree und Nil", "spree-museumsinsel", "Die Spree fließt durch Berlin und ist knapp 400 km lang. Der Nil ist etwa 16-mal so lang!"),
+            card("Papier", "papyrus-blatt", "Jedes Heft in deiner Schultasche erinnert an den Nil: Das Wort Papier kommt von Papyrus."),
+            card("Kalender", "kalender-kom-ombo", "Dein Jahr hat 365 Tage – wie das Jahr der alten Ägypter. Ein Schaltjahr kannten sie aber nicht."),
+            card("Ägypten heute", "kairo-nil", "Über 100 Millionen Menschen leben heute in Ägypten. Die meisten wohnen am Nil.")];
           s.add(s.h("div", { class: "stack", style: { gap: "16px" } }, p(s, "h2 a-up", "Länge im Vergleich"), svg, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" } }, ...cs)));
           s.sfx.pop();
           s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1600, update: v => { barN.setAttribute("width", 900 * v); tN.textContent = s.fmt(Math.round(6650 * v)) + " km"; barS.setAttribute("width", Math.max(0, 900 * 400 / 6650 * v)); } }); tS.setAttribute("x", 130 + 900 * 400 / 6650 + 12); tS.textContent = "knapp 400 km"; s.sfx.coin(); await s.show(cs[0], "up"); });

@@ -1,0 +1,4 @@
+#!/bin/bash
+# wrapper: tools/media <command> ...   (see tools/media.py for the commands)
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/homebrew/bin:$HOME/.local/share/mise/installs/uv/0.10.12/uv-aarch64-apple-darwin:$PATH
+exec uv run -q "$(dirname "$0")/media.py" "$@"

@@ -9,6 +9,18 @@
   const pg = (s, pts, o) => s.el("polygon", Object.assign({ points: P(pts), fill: "none", stroke: INK, "stroke-width": 4, "stroke-linejoin": "round" }, o || {}));
   const pth = (s, d, o) => s.el("path", Object.assign({ d, fill: "none", stroke: INK, "stroke-width": 4, "stroke-linejoin": "round", "stroke-linecap": "round" }, o || {}));
   const undraw = el => { el.classList.remove("a-draw"); el.style.removeProperty("--len"); };
+  /* show a chosen part of a photo (view = [x, y, w, h] in image pixels, aspect = box aspect) and put an SVG
+     overlay on top whose coordinates are image pixels – so outlines sit exactly on the real object. */
+  function viewFig(s, fig, iw, ih, view, W) {
+    const sc = W / view[2], img = fig.querySelector("img");
+    img.style.visibility = "hidden";   // the visible picture is the figure background (keeps the box free of overflow)
+    Object.assign(fig.style, { backgroundImage: `url("${img.getAttribute("src")}")`, backgroundRepeat: "no-repeat", backgroundSize: `${iw * sc}px ${ih * sc}px`, backgroundPosition: `${-view[0] * sc}px ${-view[1] * sc}px` });
+    const ov = s.svg(view[2], view[3]);
+    ov.setAttribute("viewBox", view.join(" "));
+    Object.assign(ov.style, { position: "absolute", left: 0, top: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "visible" });
+    img.after(ov);
+    return { ov, k: 1 / sc };
+  }
 
   /* ---------- animated pencil ---------- */
   function makePen(s) {
@@ -283,33 +295,23 @@
         title: "Ebene Figuren um uns herum",
         say: "Flache Figuren findest du überall: auf Schildern, an Fenstern, an Türen und auf der Uhr. Wir suchen die Form darin.",
         build(s) {
+          const PW = 220, PH = 210;
           const items = [
-            { name: "Dreieck", prop: "3 Ecken, 3 Seiten", ex: "auch: Pizzastück, Hausdach", draw(svg) {
-              svg.append(pg(s, [[105, 148], [22, 14], [188, 14]], { fill: "#fff", stroke: RED, "stroke-width": 14 }));
-              return pg(s, [[105, 148], [22, 14], [188, 14]], { stroke: U, "stroke-width": 6 }); } },
-            { name: "Quadrat", prop: "4 gleich lange Seiten, 4 rechte Winkel", ex: "auch: Schachfeld, Post-it", draw(svg) {
-              svg.append(s.el("rect", { x: 40, y: 8, width: 130, height: 130, fill: "#cfe8ff", stroke: "#8a5a2b", "stroke-width": 10 }),
-                ln(s, 105, 8, 105, 138, { stroke: "#8a5a2b", "stroke-width": 7 }), ln(s, 40, 73, 170, 73, { stroke: "#8a5a2b", "stroke-width": 7 }),
-                s.el("rect", { x: 26, y: 143, width: 158, height: 12, rx: 3, fill: "#b98a5e" }));
-              return s.el("rect", { x: 40, y: 8, width: 130, height: 130, fill: "none", stroke: U, "stroke-width": 6 }); } },
-            { name: "Rechteck", prop: "Gegenüber gleich lang, 4 rechte Winkel", ex: "auch: Handy, Tafel", draw(svg) {
-              svg.append(s.el("rect", { x: 62, y: 4, width: 86, height: 152, fill: "#c98b55", stroke: "#6b4423", "stroke-width": 4 }),
-                s.el("rect", { x: 74, y: 16, width: 62, height: 54, fill: "none", stroke: "#8f5c34", "stroke-width": 3 }),
-                s.el("rect", { x: 74, y: 84, width: 62, height: 60, fill: "none", stroke: "#8f5c34", "stroke-width": 3 }),
-                s.el("circle", { cx: 136, cy: 80, r: 6, fill: "#e5c35a", stroke: "#6b4423", "stroke-width": 2 }));
-              return s.el("rect", { x: 62, y: 4, width: 86, height: 152, fill: "none", stroke: U, "stroke-width": 6 }); } },
-            { name: "Kreis", prop: "keine Ecken, ganz rund", ex: "auch: Pizza, Münze", draw(svg) {
-              svg.append(s.el("circle", { cx: 105, cy: 80, r: 70, fill: "#fff", stroke: INK, "stroke-width": 5 }));
-              for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6; svg.append(ln(s, 105 + 58 * Math.cos(a), 80 + 58 * Math.sin(a), 105 + 66 * Math.cos(a), 80 + 66 * Math.sin(a), { "stroke-width": i % 3 ? 2 : 4 })); }
-              svg.append(ln(s, 105, 80, 75, 62, { "stroke-width": 6 }), ln(s, 105, 80, 140, 46, { "stroke-width": 4 }), s.el("circle", { cx: 105, cy: 80, r: 5, fill: RED }));
-              return s.el("circle", { cx: 105, cy: 80, r: 70, fill: "none", stroke: U, "stroke-width": 6 }); } },
+            { name: "Dreieck", prop: "3 Ecken, 3 Seiten", ex: "auch: Pizzastück, Hausdach", fig: () => s.photo("vorfahrt-schild", { w: PW, h: PH }), iw: 700, ih: 528, view: [85, 30, 520, 496],
+              shape: k => pg(s, [[118, 93], [572, 93], [335, 461]], { stroke: U, "stroke-width": 7 * k }), snd: () => s.sound("traffic", { vol: .4, dur: 2.5 }) },
+            { name: "Quadrat", prop: "4 gleich lange Seiten, 4 rechte Winkel", ex: "auch: Schachfeld, Post-it", fig: () => s.photo("schachbrett", { w: PW, h: PH }), iw: 600, ih: 600, view: [50, 54, 506, 483],
+              shape: k => s.el("rect", { x: 98, y: 97, width: 411, height: 410, fill: "none", stroke: U, "stroke-width": 7 * k }), snd: () => s.sfx.snap() },
+            { name: "Rechteck", prop: "Gegenüber gleich lang, 4 rechte Winkel", ex: "auch: Handy, Tafel", fig: () => s.photo("holztuer", { w: PW, h: PH }), iw: 500, ih: 700, view: [15, 185, 471, 450],
+              shape: k => s.el("rect", { x: 101, y: 209, width: 292, height: 406, fill: "none", stroke: U, "stroke-width": 7 * k }), snd: () => s.sound("knock", { vol: .6, dur: 1.5 }) },
+            { name: "Kreis", prop: "keine Ecken, ganz rund", ex: "auch: Pizza, Münze", fig: () => s.photo("uhr-rohrdamm", { w: PW, h: PH, caption: "Berlin, U7" }), iw: 700, ih: 640, view: [194, 96, 314, 300],
+              shape: k => s.el("circle", { cx: 351, cy: 246, r: 104, fill: "none", stroke: U, "stroke-width": 7 * k }), snd: () => s.sound("clock-tick", { vol: .5, dur: 2.5 }) },
           ];
           const cards = items.map(it => {
-            const svg = s.svg(210, 160);
-            const outline = it.draw(svg); outline.classList.add("later"); svg.append(outline);
+            const fig = it.fig(), { ov, k } = viewFig(s, fig, it.iw, it.ih, it.view, PW);
+            const outline = it.shape(k); outline.classList.add("later"); ov.append(outline);
             const words = [s.h("p", { class: "h2", style: { color: U } }, it.name), s.h("p", { class: "small", style: { fontWeight: 700, textAlign: "center" } }, it.prop), s.h("p", { class: "small pencil", style: { textAlign: "center" } }, it.ex)];
             words.forEach(w => w.classList.add("later"));
-            const card = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "14px 10px" } }, svg, ...words);
+            const card = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px 10px" } }, fig, ...words);
             return { card, outline, words };
           });
           const merk = s.h("div", { class: "merk later" }, "Figuren sind ", s.h("b", null, "flach"), " (eben) – man kann sie aufs Papier zeichnen. Die Ränder heißen ", s.h("b", null, "Seiten"), ", die Spitzen heißen ", s.h("b", null, "Ecken"), ".");
@@ -318,7 +320,7 @@
           s.sfx.whoosh();
           cards.forEach((c, i) => s.step(async () => {
             s.sfx.zap(); await s.show(c.outline, "draw");
-            s.sfx.ding(); s.show(c.words, "up"); s.say(items[i].name + ": " + items[i].prop);
+            items[i].snd(); s.show(c.words, "up"); s.say(items[i].name + ": " + items[i].prop);
           }));
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
         },
@@ -350,6 +352,27 @@
             for (const i of pair) { s.sfx.pop(); s.show(cards[i], "bounce"); await s.wait(250); }
             s.say(pair.map(i => list[i][0]).join(" und "));
           }));
+        },
+      },
+      /* 2b ─────────────────────────────── */
+      {
+        title: "Körper in echt",
+        say: "So sehen die sechs Körper in echt aus. Schau genau hin: Wo sind Ecken, wo ist es rund?",
+        build(s) {
+          const o = (caption, pos) => ({ w: 350, h: 268, caption, pos: pos || "50% 50%" });
+          const figs = [
+            s.photo("spielwuerfel", o("Würfel: Spielwürfel")),
+            s.photo("ziegelsteine", o("Quader: Ziegelsteine")),
+            s.photo("murmeln", o("Kugel: Murmeln")),
+            s.photo("litfasssaeule", o("Zylinder: Litfaßsäule", "50% 45%")),
+            s.photo("leitkegel", o("Kegel: Leitkegel", "50% 55%")),
+            s.photo("pyramiden-gizeh", o("Pyramide: Gizeh, Ägypten", "50% 60%")),
+          ];
+          figs.forEach((f, i) => { if (i > 1) f.classList.add("later"); });
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(3, 350px)", gap: "22px 25px", justifyContent: "center" } }, figs)));
+          s.show(figs[0], "zoom"); s.show(figs[1], "zoom", 150); s.sound("wuerfeln", { vol: .6 });
+          s.step(async () => { s.sound("murmeln-rollen", { vol: .6 }); s.show(figs[2], "zoom"); await s.show(figs[3], "zoom", 150); s.say("Kugel und Zylinder sind rund – sie können rollen."); });
+          s.step(async () => { s.sound("wind", { vol: .4, dur: 3 }); s.show(figs[4], "zoom"); await s.show(figs[5], "zoom", 150); s.say("Kegel und Pyramide laufen oben spitz zu. Die Pyramiden in Ägypten sind über 4.000 Jahre alt."); });
         },
       },
       /* 3 ─────────────────────────────── */
@@ -454,8 +477,15 @@
             right = s.el("g", { transform: `translate(${AX},0)` }); right.append(...ex.half());
             stg.append(left, right, mid);
             btns.forEach(b => b.classList.toggle("solid", b.dataset.n === name));
+            Object.entries(REAL).forEach(([n, f]) => { f.style.display = n === name ? "" : "none"; });
           }
           const status = s.h("p", { class: "t", style: { minHeight: "68px" } }, "Wähle ein Bild und falte es an der roten Linie.");
+          const REAL = {
+            "Schmetterling": s.photo("tagpfauenauge", { w: 310, h: 196, caption: "Tagpfauenauge" }),
+            "Brandenburger Tor": s.photo("brandenburger-tor", { w: 310, h: 196, caption: "Brandenburger Tor", pos: "50% 40%" }),
+            "Geige": s.photo("geige-vorne", { w: 310, h: 196, caption: "Geige", pos: "50% 72%" }),
+          };
+          const realBox = s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "flex-end" } }, ...Object.values(REAL), s.h("p", { class: "small pencil" }, "So sieht es in echt aus."));
           async function fold() {
             if (busy) return; busy = true;
             s.show(axis, "fade");
@@ -468,12 +498,12 @@
             await s.tween({ from: -1, to: 1, dur: 1000, ease: "inOut", update: v => { right.setAttribute("transform", `translate(${AX},0) scale(${v.toFixed(3)},1)`); right.setAttribute("opacity", v < 0 ? .9 : 1); } });
             busy = false;
           }
-          const btns = Object.keys(EX).map(n => s.h("button", { class: "btn", "data-n": n, onclick: () => { if (busy) return; s.sfx.pop(); load(n); status.textContent = "Tippe auf „Falten“."; } }, n));
+          const btns = Object.keys(EX).map(n => s.h("button", { class: "btn", "data-n": n, onclick: () => { if (busy) return; if (n === "Geige") s.sound("klang-geige", { vol: .6 }); else s.sfx.pop(); load(n); status.textContent = "Tippe auf „Falten“."; } }, n));
           const foldBtn = s.h("button", { class: "btn solid", style: { background: ORANGE, borderColor: ORANGE }, onclick: fold }, "Falten ▶");
           load("Schmetterling");
-          const merk = s.h("div", { class: "merk later" }, "Kann man eine Figur so falten, dass beide Hälften ", s.h("b", null, "genau aufeinander"), " passen, ist sie ", s.h("b", null, "achsensymmetrisch"), ". Die Faltlinie heißt ", s.h("b", null, "Symmetrieachse"), ".");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Kann man eine Figur so falten, dass beide Hälften ", s.h("b", null, "genau aufeinander"), " passen, ist sie ", s.h("b", null, "achsensymmetrisch"), ". Die Faltlinie heißt ", s.h("b", null, "Symmetrieachse"), ".");
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", alignItems: "center", height: "100%" } }, svg,
-            s.h("div", { class: "stack" }, s.h("div", { class: "row", style: { gap: "12px" } }, btns, foldBtn), status, merk)));
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row", style: { gap: "12px" } }, btns, foldBtn), status, realBox, merk)));
           s.show(svg, "zoom"); s.sfx.whoosh();
           s.step(async () => { s.sfx.zap(); await s.show(axis, "fade"); status.textContent = "Die rote Linie ist die Faltlinie."; s.say("Hier falten wir."); });
           s.step(async () => { await fold(); });
@@ -555,9 +585,12 @@
           const sl = s.slider({ label: "Radius", min: 1, max: 5, value: r, fmt: v => v + " cm", onInput: v => { r = v; undraw(circle); arc.setAttribute("d", ""); s.show(circle, "fade"); place(r * PX); upd(); } });
           const formula = s.h("p", { class: "big later" }, "d = 2 · r", s.h("span", { class: "t pencil" }, "   und   r = d : 2"));
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
-            s.h("p", { class: "small" }, "🍕 Pizza mit d = 30 cm → r = 15 cm"),
-            s.h("p", { class: "small" }, "🚲 Die Speichen am Fahrrad sind Radien."),
-            s.h("p", { class: "small" }, "Fernsehturm: Die Kugel hat d = 32 m, also r = 16 m."));
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } },
+              s.photo("fahrradrad", { w: 170, h: 210, caption: "Speichen", pos: "50% 45%", style: { flex: "none" } }),
+              s.h("div", { class: "stack", style: { gap: "8px" } },
+                s.h("p", { class: "small" }, "Die Speichen am Fahrrad sind Radien: Sie gehen alle von der Mitte zum Rand."),
+                s.h("p", { class: "small" }, "Pizza mit d = 30 cm → r = 15 cm"),
+                s.h("p", { class: "small" }, "Fernsehturm: Die Kugel hat d = 32 m, also r = 16 m."))));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "500px 1fr", alignItems: "center", height: "100%" } }, svg, s.h("div", { class: "stack" }, sl, val, formula, life)));
           s.show(svg, "zoom"); s.sfx.whoosh();
           s.step(async () => { s.sfx.pop(); s.show(mDot, "pop"); await s.show(mLbl, "pop"); s.say("Das ist der Mittelpunkt M."); });
@@ -574,7 +607,7 @@
             place(R); arc.setAttribute("d", ""); circle.classList.remove("later"); s.sfx.ding();
           });
           s.step(async () => { s.sfx.zap(); await s.show(dia, "draw"); undraw(dia); s.show(dLbl, "pop"); s.sfx.pop(); await s.show(formula, "up"); s.say("Der Durchmesser geht durch den Mittelpunkt von Rand zu Rand. Er ist doppelt so lang wie der Radius."); });
-          s.step(async () => { s.sfx.success(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("bike-bell", { vol: .6 }); await s.show(life, "up"); });
         },
       },
       /* 7 ─────────────────────────────── */
@@ -666,7 +699,7 @@
               const t = tx(s, X(x) + dx / l * 26, Y(y) + dy / l * 26 + 9, n, { class: "lbl later", "font-weight": 700, fill: F.col, style: { fontSize: "24px" } });
               fig.append(t); s.show(t, "pop");
             }
-            s.sfx.whoosh();
+            s.sound("pencil-write", { vol: .5 });
             for (let i = 0; i < F.pts.length; i++) {
               const a = F.pts[i], b = F.pts[(i + 1) % F.pts.length];
               const L = ln(s, 0, 0, 0, 0, { stroke: F.col, "stroke-width": 4.5, class: "later" });
@@ -706,7 +739,7 @@
             const from = t;
             await s.tween({ from, to: target, dur: 1800 * Math.abs(target - from) + 100, ease: "inOut", update: v => { t = v; sl.input.value = Math.round(v * 100); sl.querySelector(".sl-top .mono").textContent = Math.round(v * 100) + " %"; } });
             t = target;
-            if (target === 1) { s.sfx.snap(); await s.wait(120); s.sfx.success(); }
+            if (target === 1) { s.sfx.snap(); await s.wait(120); s.sound("wuerfeln", { vol: .6 }); }
           }
           const b1 = s.h("button", { class: "btn solid", onclick: () => foldTo(1) }, "Falten"), b2 = s.h("button", { class: "btn", onclick: () => foldTo(0) }, "Aufklappen");
           const merk = s.h("div", { class: "merk later" }, "Ein Würfelnetz hat ", s.h("b", null, "6 Quadrate"), ". Beim Spielwürfel ergeben gegenüberliegende Seiten immer ", s.h("b", null, "7"), ": 1 + 6, 2 + 5, 3 + 4.");
@@ -837,7 +870,7 @@
             s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row" }, kb), ...items, life)));
           s.show(svg, "zoom"); s.sfx.whoosh();
           [1, 2, 3, 4].forEach(n => s.step(async () => {
-            busy = true; s.show(items[n - 1], "left"); s.sfx.pop(); s.say(steps[n - 1]);
+            busy = true; s.show(items[n - 1], "left"); s.sound("pencil-write", { vol: .45 }); s.say(steps[n - 1]);
             await stepDraw(n, false); done = n; busy = false;
             if (n === 4) { s.sfx.success(); s.show(life, "up"); }
           }));
@@ -996,56 +1029,33 @@
         title: "Im Alltag: Formen in Berlin",
         say: "In Berlin stecken überall Körper und Figuren: im Fernsehturm, im Reichstag, in Litfaßsäulen und Verkehrsschildern.",
         build(s) {
-          const svg = s.svg(1100, 360);
-          svg.append(s.el("rect", { x: 0, y: 0, width: 1100, height: 360, rx: 18, fill: "#eaf5fb" }), s.el("rect", { x: 0, y: 330, width: 1100, height: 30, fill: "#cfe3d5" }));
-          // Fernsehturm
-          const tv = s.el("g");
-          tv.append(pg(s, [[136, 332], [164, 332], [156, 126], [144, 126]], { fill: "#d7dce3", stroke: "#7d8796", "stroke-width": 2.5 }),
-            s.el("rect", { x: 147.5, y: 22, width: 5, height: 56, fill: "#c43d2b" }), s.el("rect", { x: 147.5, y: 22, width: 5, height: 10, fill: "#fff" }), s.el("rect", { x: 147.5, y: 42, width: 5, height: 10, fill: "#fff" }),
-            s.el("circle", { cx: 150, cy: 106, r: 32, fill: "#c9d2dc", stroke: "#6b7686", "stroke-width": 3 }),
-            pth(s, "M118,106 Q150,118 182,106", { stroke: "#6b7686", "stroke-width": 2 }), pth(s, "M150,74 Q140,106 150,138 M150,74 Q160,106 150,138", { stroke: "#6b7686", "stroke-width": 1.5 }),
-            s.el("rect", { x: 110, y: 312, width: 80, height: 20, fill: "#b8c0cb" }));
-          // Reichstag
-          const rt = s.el("g");
-          rt.append(s.el("rect", { x: 300, y: 240, width: 240, height: 92, fill: "#e8dcc0", stroke: "#9b8a62", "stroke-width": 2.5 }),
-            s.el("rect", { x: 292, y: 222, width: 46, height: 110, fill: "#dfd1b0", stroke: "#9b8a62", "stroke-width": 2.5 }), s.el("rect", { x: 502, y: 222, width: 46, height: 110, fill: "#dfd1b0", stroke: "#9b8a62", "stroke-width": 2.5 }),
-            ...[370, 395, 420, 445, 470].map(x => s.el("rect", { x: x - 5, y: 262, width: 10, height: 66, fill: "#cdbd96" })),
-            pg(s, [[352, 262], [488, 262], [420, 238]], { fill: "#dfd1b0", stroke: "#9b8a62", "stroke-width": 2.5 }),
-            pth(s, "M372,240 A48,52 0 0 1 468,240 Z", { fill: "#bfe0f2", stroke: "#5b7f99", "stroke-width": 3 }),
-            pth(s, "M396,240 A24,52 0 0 1 444,240 M420,188 L420,240 M380,214 L460,214", { stroke: "#5b7f99", "stroke-width": 1.6 }));
-          // Litfaßsäule
-          const lf = s.el("g");
-          lf.append(pth(s, "M650,190 L650,326 A30,8 0 0 0 710,326 L710,190", { fill: "#2f6b4f", stroke: "#1e4734", "stroke-width": 2.5 }),
-            s.el("rect", { x: 654, y: 206, width: 22, height: 40, fill: "#ffd94a" }), s.el("rect", { x: 680, y: 210, width: 26, height: 36, fill: "#e86a5a" }), s.el("rect", { x: 656, y: 254, width: 50, height: 46, fill: "#9db8f2" }),
-            s.el("ellipse", { cx: 680, cy: 190, rx: 34, ry: 9, fill: "#3f8a66", stroke: "#1e4734", "stroke-width": 2.5 }), pth(s, "M652,188 Q680,150 708,188 Z", { fill: "#3f8a66", stroke: "#1e4734", "stroke-width": 2.5 }));
-          // Schilder
-          const sg = s.el("g");
-          const oct = Array.from({ length: 8 }, (_, i) => { const a = (i + 0.5) * Math.PI / 4; return [880 + 40 * Math.cos(a), 112 + 40 * Math.sin(a)]; });
-          sg.append(ln(s, 880, 150, 880, 330, { stroke: "#8892a0", "stroke-width": 6 }), ln(s, 1030, 160, 1030, 330, { stroke: "#8892a0", "stroke-width": 6 }), ln(s, 958, 286, 958, 330, { stroke: "#8892a0", "stroke-width": 6 }),
-            pg(s, oct, { fill: "#d42a20", stroke: "#fff", "stroke-width": 4 }), tx(s, 880, 120, "STOP", { fill: "#fff", "font-weight": 800, style: { fontSize: "21px" } }),
-            pg(s, [[1030, 158], [985, 80], [1075, 80]], { fill: "#fff", stroke: "#d42a20", "stroke-width": 9 }),
-            pg(s, [[958, 208], [998, 248], [958, 288], [918, 248]], { fill: "#fff", stroke: "#8892a0", "stroke-width": 2 }), pg(s, [[958, 220], [986, 248], [958, 276], [930, 248]], { fill: "#f5c400" }));
-          svg.append(tv, rt, lf, sg);
-          const O = { stroke: U, "stroke-width": 6, fill: "none", class: "later" };
-          const ov = [
-            [s.el("circle", Object.assign({ cx: 150, cy: 106, r: 37 }, O)), tx(s, 232, 114, "Kugel", { class: "hlbl later", fill: U })],
-            [pth(s, "M366,240 A54,56 0 0 1 474,240 Z", O), tx(s, 420, 172, "Halbkugel", { class: "hlbl later", fill: U })],
-            [pth(s, "M644,186 L644,330 M716,186 L716,330", O), tx(s, 680, 132, "Zylinder", { class: "hlbl later", fill: U })],
-            [pg(s, oct.map(([x, y]) => [880 + (x - 880) * 1.15, 112 + (y - 112) * 1.15]), O), tx(s, 880, 190, "Achteck", { class: "hlbl later", fill: U }), tx(s, 1030, 190, "Dreieck", { class: "hlbl later", fill: U }), tx(s, 958, 316, "Quadrat", { class: "hlbl later", fill: U, "text-anchor": "end", x: 942 })],
+          const PW = 260, PH = 250, O = k => ({ stroke: U, "stroke-width": 7 * k, fill: "none", class: "later" });
+          const lab = (text, fill) => s.h("span", { class: "chip later", style: { fontSize: "21px", background: fill || U, color: "#fff", alignSelf: "center" } }, text);
+          const spots = [
+            { fig: s.photo("fernsehturm", { w: PW, h: PH }), iw: 804, ih: 1400, view: [252, 448, 310, 298], name: "Kugel",
+              shape: k => s.el("circle", Object.assign({ cx: 407, cy: 600, r: 62 }, O(k))) },
+            { fig: s.photo("reichstagskuppel", { w: PW, h: PH }), iw: 700, ih: 394, view: [140, 0, 410, 394], name: "Halbkugel",
+              shape: k => pth(s, "M140,170 A205,118 0 0 1 550,170 Z", O(k)) },
+            { fig: s.photo("litfass-denkmal", { w: PW, h: PH }), iw: 700, ih: 464, view: [101, 12, 458, 440], name: "Zylinder",
+              shape: k => pth(s, "M264,62 L264,428 A66,12 0 0 0 396,428 L396,62 M264,62 A66,12 0 0 1 396,62", O(k)) },
+            { fig: s.photo("stoppschild", { w: PW, h: PH }), iw: 525, ih: 700, view: [0, 90, 343, 330], name: "Achteck",
+              shape: k => pg(s, Array.from({ length: 8 }, (_, i) => { const a = (i + 0.5) * Math.PI / 4; return [115 + 89 * Math.cos(a), 242 + 89 * Math.sin(a)]; }), O(k)) },
           ];
-          ov.forEach(group => svg.append(...group));
+          const ov = spots.map(sp => { const v = viewFig(s, sp.fig, sp.iw, sp.ih, sp.view, PW); const sh = sp.shape(v.k); v.ov.append(sh); return [sh, lab(sp.name)]; });
           const facts = [
             ["Fernsehturm", "368 m hoch. Die Kugel hat 32 m Durchmesser."],
             ["Reichstagskuppel", "Kuppel aus Glas – fast eine halbe Kugel."],
             ["Litfaßsäule", "Ein Zylinder. Seit 1855 in Berlin, erfunden von Ernst Litfaß."],
-            ["Verkehrsschilder", "Stopp = Achteck, Vorfahrt achten = Dreieck, Vorfahrtstraße = Quadrat auf der Spitze."],
+            ["Verkehrsschilder", "Stopp = Achteck, Vorfahrt gewähren = Dreieck, Vorfahrtstraße = Quadrat auf der Spitze."],
           ];
-          const cards = facts.map(([h, t]) => s.h("div", { class: "life later", style: { padding: "12px 14px" } }, s.h("p", { class: "t", style: { fontWeight: 700, color: GREEN } }, h), s.h("p", { class: "small" }, t)));
-          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "16px" } }, svg, s.h("div", { class: "cols4", style: { gap: "14px" } }, cards)));
-          s.show(svg, "fade"); s.sfx.whoosh();
+          const cards = facts.map(([h, t]) => s.h("div", { class: "life later", style: { padding: "12px 14px" } }, s.h("p", { class: "t", style: { fontWeight: 700, color: GREEN } }, h), s.h("p", { class: "small", style: { fontSize: "21px" } }, t)));
+          const cols = spots.map((sp, i) => s.h("div", { class: "stack", style: { gap: "10px" } }, sp.fig, ov[i][1], cards[i]));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 260px)", gap: "20px", justifyContent: "center", alignItems: "start", alignContent: "center", height: "100%" } }, cols));
+          spots.forEach((sp, i) => s.show(sp.fig, "up", i * 120)); s.sound("tram-bell", { vol: .45, dur: 3 });
+          const snd14 = [() => s.sound("wind", { vol: .4, dur: 2.5 }), () => s.sfx.chord([0, 4, 7]), () => s.sfx.swoosh(), () => s.sound("traffic", { vol: .4, dur: 2.5 })];
           ov.forEach((group, i) => s.step(async () => {
             s.sfx.zap(); await s.show(group[0], "draw");
-            s.sfx.pop(); s.show(group.slice(1), "pop"); await s.show(cards[i], "up"); s.say(facts[i][0] + ": " + facts[i][1]);
+            snd14[i](); s.show(group[1], "pop"); await s.show(cards[i], "up"); s.say(facts[i][0] + ": " + facts[i][1]);
           }));
         },
       },
@@ -1055,19 +1065,6 @@
         say: "Auch beim Spielen und beim Sport stecken überall Körper und Figuren.",
         build(s) {
           const icon = {
-            zauber() {
-              const svg = s.svg(120, 120), cols = ["#e63b2e", "#ffd94a", "#2f9e44", "#1d5bd0", "#f08c00", "#ffffff"];
-              const O = [16, 44], a = 60, dx = 30, dy = 26;
-              for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) {
-                const x = O[0] + i * a / 3, y = O[1] + j * a / 3;
-                svg.append(pg(s, [[x, y], [x + a / 3, y], [x + a / 3, y + a / 3], [x, y + a / 3]], { fill: cols[(i + j) % 2 ? 0 : 3], stroke: "#111", "stroke-width": 2 }));
-                const tx0 = O[0] + i * a / 3 + (2 - j) * dx / 3, ty0 = O[1] - (3 - j) * dy / 3;
-                svg.append(pg(s, [[tx0, ty0 + dy / 3], [tx0 + a / 3, ty0 + dy / 3], [tx0 + a / 3 + dx / 3, ty0], [tx0 + dx / 3, ty0]], { fill: cols[(i * 2 + j) % 3 ? 1 : 5], stroke: "#111", "stroke-width": 2 }));
-                const sx = O[0] + a + i * dx / 3, sy = O[1] - i * dy / 3 + j * a / 3;
-                svg.append(pg(s, [[sx, sy], [sx + dx / 3, sy - dy / 3], [sx + dx / 3, sy - dy / 3 + a / 3], [sx, sy + a / 3]], { fill: cols[(i + 2 * j) % 3 ? 2 : 4], stroke: "#111", "stroke-width": 2 }));
-              }
-              return svg;
-            },
             mine() {
               const svg = s.svg(120, 120), x = 18, y = 46, a = 58, dx = 32, dy = 28;
               svg.append(pg(s, [[x, y], [x + a, y], [x + a, y + a], [x, y + a]], { fill: "#8b5a2b", stroke: "#3b2410", "stroke-width": 2 }),
@@ -1075,30 +1072,6 @@
                 pg(s, [[x + a, y], [x + a + dx, y - dy], [x + a + dx, y + a - dy], [x + a, y + a]], { fill: "#6e4520", stroke: "#3b2410", "stroke-width": 2 }),
                 pg(s, [[x, y], [x + a, y], [x + a, y + 12], [x + 44, y + 18], [x + 30, y + 12], [x + 14, y + 20], [x, y + 12]], { fill: "#5cae3c", stroke: "none" }));
               [[26, 74], [52, 88], [36, 96], [62, 70]].forEach(([px, py]) => svg.append(s.el("rect", { x: px, y: py, width: 7, height: 7, fill: "#a0703f" })));
-              return svg;
-            },
-            tetra() {
-              const svg = s.svg(120, 120), x = 28, y = 30, a = 44, b = 82, dx = 22, dy = 18;
-              svg.append(pg(s, [[x, y], [x + a, y], [x + a, y + b], [x, y + b]], { fill: "#ffffff", stroke: INK, "stroke-width": 2.5 }),
-                pg(s, [[x, y], [x + dx, y - dy], [x + a + dx, y - dy], [x + a, y]], { fill: "#e3e9fb", stroke: INK, "stroke-width": 2.5 }),
-                pg(s, [[x + a, y], [x + a + dx, y - dy], [x + a + dx, y + b - dy], [x + a, y + b]], { fill: "#9db8f2", stroke: INK, "stroke-width": 2.5 }),
-                s.el("rect", { x: x + 6, y: y + 26, width: a - 12, height: 30, rx: 6, fill: "#1d5bd0" }), s.el("circle", { cx: x + a / 2, cy: y + 41, r: 9, fill: "#fff" }));
-              return svg;
-            },
-            ball() {
-              const svg = s.svg(120, 120);
-              svg.append(s.el("circle", { cx: 60, cy: 60, r: 50, fill: "#fff", stroke: INK, "stroke-width": 3 }));
-              const pent = (cx, cy, r, rot) => Array.from({ length: 5 }, (_, i) => { const a = rot + i * 2 * Math.PI / 5; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; });
-              const c = pent(60, 60, 15, -Math.PI / 2);
-              svg.append(pg(s, c, { fill: INK, "stroke-width": 1 }));
-              c.forEach(([px, py], i) => { const a = -Math.PI / 2 + i * 2 * Math.PI / 5; svg.append(ln(s, px, py, 60 + 34 * Math.cos(a), 60 + 34 * Math.sin(a), { "stroke-width": 2 })); svg.append(pg(s, pent(60 + 44 * Math.cos(a), 60 + 44 * Math.sin(a), 9, a), { fill: INK, "stroke-width": 1 })); });
-              return svg;
-            },
-            dose() {
-              const svg = s.svg(120, 120);
-              svg.append(pth(s, "M32,18 L32,100 A28,9 0 0 0 88,100 L88,18", { fill: "#d62f2f", stroke: INK, "stroke-width": 2.5 }),
-                s.el("rect", { x: 33, y: 46, width: 54, height: 26, fill: "#fff" }), tx(s, 60, 66, "Limo", { fill: "#d62f2f", "font-weight": 800, style: { fontSize: "19px" } }),
-                s.el("ellipse", { cx: 60, cy: 18, rx: 28, ry: 9, fill: "#cfd5dc", stroke: INK, "stroke-width": 2.5 }), s.el("ellipse", { cx: 66, cy: 18, rx: 8, ry: 3, fill: "#8892a0" }));
               return svg;
             },
             drachen() {
@@ -1113,22 +1086,28 @@
           const list = [
             ["Zauberwürfel", "Würfel", "Sieht aus wie 3 · 3 · 3 = 27 kleine Würfel.", "zauber"],
             ["Minecraft-Block", "Würfel", "Jeder Block ist 1 m · 1 m · 1 m groß.", "mine"],
-            ["Tetra Pak", "Quader", "Aufgeklappt ist er ein Quadernetz.", "tetra"],
+            ["Kartons", "Quader", "Aufgeklappt ist ein Karton ein Quadernetz.", "tetra"],
             ["Fußball", "Kugel", "Genäht aus 12 Fünfecken und 20 Sechsecken.", "ball"],
             ["Getränkedose", "Zylinder", "Oben und unten ein Kreis – sie rollt geradeaus.", "dose"],
             ["Flugdrachen", "Drachenviereck", "Das Viereck hat seinen Namen vom Drachen!", "drachen"],
           ];
+          const PHOTO = {
+            zauber: () => s.photo("zauberwuerfel", { w: 130, h: 150 }),
+            tetra: () => s.photo("kartons", { w: 130, h: 150 }),
+            ball: () => s.photo("fussball", { w: 130, h: 150, pos: "50% 50%" }),
+            dose: () => s.photo("getraenkedose", { w: 130, h: 150, pos: "50% 40%" }),
+          };
           const cards = list.map(([n, k, f, ic], i) => {
-            const svg = icon[ic]();
-            return s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "120px 1fr", gap: "12px", alignItems: "center", padding: "12px 14px", cursor: "pointer" },
+            const svg = PHOTO[ic] ? PHOTO[ic]() : icon[ic]();
+            return s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "130px 1fr", gap: "12px", alignItems: "center", padding: "12px 14px", cursor: "pointer" },
               onclick: () => { s.sfx.note(i * 2); svg.classList.remove("a-bounce"); void svg.getBoundingClientRect(); svg.classList.add("a-bounce"); } },
             svg, s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("p", { class: "t", style: { fontWeight: 700 } }, n), s.h("span", { class: "chip", style: { alignSelf: "flex-start", background: "#dcf3ef", color: U } }, k), s.h("p", { class: "small" }, f)));
           });
           const merk = s.h("div", { class: "merk later" }, "Augen auf: In fast jedem Ding steckt ein Körper oder eine Figur!");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "18px" } }, s.h("div", { class: "cols3", style: { gap: "16px" } }, cards), merk));
           s.show(cards[0], "up"); s.show(cards[1], "up", 150); s.sfx.whoosh();
-          s.step(async () => { s.sfx.pop(); s.show(cards[2], "up"); await s.show(cards[3], "up", 150); s.say("Tetra Pak: ein Quader. Fußball: eine Kugel."); });
-          s.step(async () => { s.sfx.pop(); s.show(cards[4], "up"); await s.show(cards[5], "up", 150); s.say("Dose: ein Zylinder. Drachen: ein Drachenviereck."); });
+          s.step(async () => { s.sound("ball-kick", { vol: .7 }); s.show(cards[2], "up"); await s.show(cards[3], "up", 150); s.say("Karton: ein Quader. Fußball: eine Kugel."); });
+          s.step(async () => { s.sound("dose-oeffnen", { vol: .7 }); s.show(cards[4], "up"); await s.show(cards[5], "up", 150); s.say("Dose: ein Zylinder. Drachen: ein Drachenviereck."); });
           s.step(async () => { s.sfx.fanfare(); await s.show(merk, "up"); });
         },
       },

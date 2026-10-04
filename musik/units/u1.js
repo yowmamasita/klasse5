@@ -75,7 +75,7 @@
       const parts = [];
       for (let cx = 0; cx < 30; cx++) for (let r = 0; r < 10; r++) parts.push({ x: 190 + cx * 24 + ((r * 7 + cx * 3) % 9 - 4), y: 46 + r * 25 + ((cx * 5 + r) % 7 - 3) });
       let tp = -10, airOn = false, earOn = false, now = 0;
-      const pl = () => { tp = now; pluck(s, 110, 2.2, .35); };
+      const pl = () => { tp = now; s.sound("guitar-pluck"); };
       const draw = () => {
         const dt = now - tp, amp = dt >= 0 ? Math.exp(-dt * 1.1) : 0;
         g.clearRect(0, 0, W, H);
@@ -154,15 +154,15 @@
       };
       const actB = async () => {
         if (runs.b) return; runs.b = true;
-        play(s, 70, 1.4, { harm: [1, .7, .5, .4, .3], env: "pluck", vol: .45, slideTo: 110 }); s.sfx.snap();
+        s.sound("ruler-twang");
         await s.tween({ dur: 1400, ease: "linear", update: (v, t) => ruler.setAttribute("transform", `rotate(${Math.sin(t * TAU * 12) * 14 * (1 - t)} 136 96)`) });
         ruler.removeAttribute("transform"); runs.b = false;
       };
       const actC = async () => {
         if (runs.c) return; runs.c = true;
-        play(s, 440, 2, { env: "pluck", vol: .3 });
+        s.sound("tuning-fork", { dur: 2 });
         await s.tween({ dur: 500, ease: "out", update: v => fork.setAttribute("transform", `translate(${Math.sin(v * 80) * 2},${-40 + v * 40})`) });
-        s.sfx.noise(.4, .2, 600, 2500);
+        s.sound("splash", { vol: .45, dur: 1.2 });
         drops.forEach((d, i) => d.setAttribute("opacity", 1));
         await s.tween({ dur: 800, ease: "linear", update: (v, t) => drops.forEach((d, i) => { const ang = -Math.PI * (.15 + .7 * i / 7); d.setAttribute("cx", 150 + Math.cos(ang) * 120 * t); d.setAttribute("cy", 118 + Math.sin(ang) * 110 * t + 160 * t * t); d.setAttribute("opacity", 1 - t); }) });
         fork.setAttribute("transform", "translate(0,-40)"); runs.c = false;
@@ -178,9 +178,31 @@
       const merk = s.h("div", { class: "merk later" }, "Summ mit der Hand am Hals: Es kribbelt. Deine ", s.h("b", null, "Stimmbänder"), " schwingen. Ohne Schwingung gibt es keinen Schall.");
       s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "cols3" }, ex), merk));
       s.show(ex[0], "up");
-      s.step(async () => { s.sfx.pop(); await s.show(ex[1], "up"); });
-      s.step(async () => { s.sfx.pop(); await s.show(ex[2], "up"); });
+      s.step(async () => { s.sfx.swoosh(); await s.show(ex[1], "up"); });
+      s.step(async () => { s.sfx.swoosh(); await s.show(ex[2], "up"); });
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Ohne Schwingung gibt es keinen Schall."); });
+    },
+  });
+
+  /* 2b --------------------------------------------------------------- */
+  slides.push({
+    title: "Schwingungen in echt",
+    say: "So sieht man Schwingungen in echt: Sand auf einer Metallplatte, eine Stimmgabel und die Spur, die sie zeichnet.",
+    build(s) {
+      const items = [
+        ["chladni-plate", "Chladni-Platte", "Ein Geigenbogen streicht über die Platte. Der Sand hüpft weg und bleibt dort liegen, wo die Platte still hält.", "50% 45%"],
+        ["tuning-fork-resonator", "Stimmgabel", "Angeschlagen schwingen die beiden Zinken. Der Holzkasten darunter macht den Ton lauter.", "50% 40%"],
+        ["tuning-fork-trace", "Schwingung als Spur", "Eine Nadel an der Stimmgabel kratzt ihre Schwingung in Ruß auf eine Glasplatte: lauter Wellen!", "50% 50%"],
+      ];
+      const cards = items.map(([id, n, d, pos], i) => s.h("div", { class: "card" + (i ? " later" : ""), style: { display: "flex", flexDirection: "column", gap: "8px", padding: "12px" } },
+        s.photo(id, { w: "100%", h: 320, pos, caption: n }), s.h("p", { class: "small" }, d)));
+      const fork = s.soundBtn("tuning-fork", "Stimmgabel hören");
+      const merk = s.h("div", { class: "merk later", style: { flex: 1 } }, "Diese Klangfiguren hat ", s.h("b", null, "Ernst Chladni"), " aus Wittenberg 1787 beschrieben. Seitdem kann man Schwingungen ", s.h("b", null, "sehen"), ".");
+      s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "cols3" }, cards), s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "18px" } }, fork, merk)));
+      s.sound("ruler-twang", { vol: .5 });
+      s.step(async () => { s.sound("tuning-fork", { dur: 2.5 }); await s.show(cards[1], "zoom"); });
+      s.step(async () => { s.sfx.scribble(); await s.show(cards[2], "zoom"); });
+      s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
     },
   });
 
@@ -190,10 +212,10 @@
     say: "Es gibt vier Schallarten: Ton, Klang, Geräusch und Knall. Tippe auf jede Karte und hör genau hin.",
     build(s) {
       const kinds = [
-        { n: "Ton", f: u => 34 * Math.sin(TAU * 3 * u), d: "eine ganz reine Schwingung", ex: "Stimmgabel, Hörtest beim Ohrenarzt, Piepton", snd: () => play(s, 440, 1.2, { vol: .3 }) },
-        { n: "Klang", f: u => 22 * (Math.sin(TAU * 3 * u) + .5 * Math.sin(TAU * 6 * u) + .3 * Math.sin(TAU * 9 * u)), d: "viele Töne zusammen, regelmäßig", ex: "Gitarre, Flöte, deine Singstimme", snd: () => play(s, 440, 1.2, { harm: HARM.geige, vol: .25 }) },
-        { n: "Geräusch", f: u => 30 * Math.sin(u * 517) * Math.sin(u * 211 + 1) * Math.cos(u * 97), d: "ganz unregelmäßig, ohne Muster", ex: "Rauschen in der U-Bahn, Wind, Regen", snd: () => noise(s, 1.4, .35, 500, 900, 0, .4) },
-        { n: "Knall", f: u => u < .3 ? 0 : 42 * Math.exp(-(u - .3) * 22) * Math.sin(u * 300), d: "kurz, sehr stark, schnell vorbei", ex: "Luftballon platzt, Tür knallt, Feuerwerk", snd: () => knall(s) },
+        { n: "Ton", f: u => 34 * Math.sin(TAU * 3 * u), d: "eine ganz reine Schwingung", ex: "Stimmgabel, Hörtest beim Ohrenarzt, Piepton", snd: () => s.sound("tuning-fork", { dur: 1.8 }) },
+        { n: "Klang", f: u => 22 * (Math.sin(TAU * 3 * u) + .5 * Math.sin(TAU * 6 * u) + .3 * Math.sin(TAU * 9 * u)), d: "viele Töne zusammen, regelmäßig", ex: "Geige, Gitarre, deine Singstimme", snd: () => s.sound("violin-a4", { dur: 2 }) },
+        { n: "Geräusch", f: u => 30 * Math.sin(u * 517) * Math.sin(u * 211 + 1) * Math.cos(u * 97), d: "ganz unregelmäßig, ohne Muster", ex: "Rauschen in der U-Bahn, Wind, Regen", snd: () => s.sound("rain", { vol: .6, dur: 2.2 }) },
+        { n: "Knall", f: u => u < .3 ? 0 : 42 * Math.exp(-(u - .3) * 22) * Math.sin(u * 300), d: "kurz, sehr stark, schnell vorbei", ex: "Luftballon platzt, Tür knallt, Feuerwerk", snd: () => s.sound("balloon-pop") },
       ];
       const cards = kinds.map((k, i) => {
         const { canvas, g } = s.canvas(220, 100);
@@ -222,7 +244,7 @@
         { n: "Tonhöhe", d: "hoch oder tief", ex: "Pfiff hoch, Brummbär tief", svg: ico(v => { v.append(s.el("circle", { cx: 60, cy: 86, r: 14, fill: COL }), s.el("circle", { cx: 140, cy: 24, r: 14, fill: COL }), s.el("path", { d: "M78 78 L124 34", stroke: "#5d6678", "stroke-width": 4, "marker-end": "" })); }),
           demo: () => { play(s, 196, .5, { harm: HARM.floete }); play(s, 784, .5, { harm: HARM.floete, when: .55 }); } },
         { n: "Tondauer", d: "lang oder kurz", ex: "Gong lang, Klopfen kurz", svg: ico(v => { v.append(s.el("rect", { x: 14, y: 40, width: 40, height: 30, rx: 8, fill: COL }), s.el("rect", { x: 70, y: 40, width: 116, height: 30, rx: 8, fill: COL })); }),
-          demo: () => { play(s, 523, .15, { harm: HARM.floete }); play(s, 523, 1.1, { harm: HARM.floete, when: .3 }); } },
+          demo: () => { s.sound("knock", { dur: .7 }); s.sound("gong", { when: .9, dur: 3, vol: .7 }); } },
         { n: "Lautstärke", d: "laut oder leise", ex: "Flüstern leise, Jubel laut", svg: ico(v => { v.append(s.el("path", { d: "M20 55 L180 20 L180 90 Z", fill: COL, opacity: .85 })); }),
           demo: () => { play(s, 440, 1.4, { env: "swell", v0: .02, v1: .5, harm: HARM.floete }); } },
         { n: "Klangfarbe", d: "weich, hell, rau …", ex: "Geige klingt anders als Flöte", svg: ico(v => { [["#1d5bd0", 30], ["#dc3b2a", 80], ["#138a5a", 130], ["#ee7a1a", 175]].forEach(([c, x]) => v.append(s.el("circle", { cx: x, cy: 55, r: 22, fill: c, opacity: .85 }))); }),
@@ -233,7 +255,7 @@
       const life = card(s, "life later", "Im Alltag", s.h("p", { class: "t" }, "Dein Handy-Klingelton hat alle vier: Er hat hohe und tiefe Töne, lange und kurze, er wird lauter – und er klingt anders als der deiner Freundin."));
       s.add(s.h("div", { class: "stack", style: { gap: "22px" } }, s.h("div", { class: "cols4" }, tiles), life));
       tiles.forEach((t, i) => s.step(async () => { props[i].demo(); await s.show(t, "pop"); s.say(props[i].n + ": " + props[i].d); }));
-      s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+      s.step(async () => { s.sound("ringtone", { dur: 2.6, vol: .6 }); await s.show(life, "up"); });
     },
   });
 
@@ -262,10 +284,10 @@
       const merk = s.h("div", { class: "merk later" }, "Viele Schwingungen pro Sekunde = ", s.h("b", null, "hoher Ton"), ". Wenige = ", s.h("b", null, "tiefer Ton"), ". Man misst sie in ", s.h("b", null, "Hertz (Hz)"), ".");
       const life = card(s, "life later", "Im Alltag", s.h("p", { class: "small" }, "Vor dem Konzert stimmt das Orchester auf den Ton a′. Er hat meist 440 Hz – 440 Schwingungen in einer Sekunde!"));
       s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "600px 1fr", alignItems: "start" } }, s.h("div", { class: "stack" }, canvas, s.h("div", { class: "row" }, presets)),
-        s.h("div", { class: "stack", style: { gap: "12px" } }, big, what, sl, hear, merk, life)));
+        s.h("div", { class: "stack", style: { gap: "12px" } }, big, what, sl, s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, hear, s.soundBtn("tuning-fork", "Stimmgabel")), merk, life)));
       sl.set(60);
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-      s.step(async () => { sl.set(Math.round(20 * Math.log2(440 / 55))); play(s, 440, 1, { harm: HARM.geige, vol: .25 }); await s.show(life, "up"); });
+      s.step(async () => { sl.set(Math.round(20 * Math.log2(440 / 55))); s.sound("orchestra-tuning", { vol: .7 }); await s.show(life, "up"); });
     },
   });
 
@@ -297,11 +319,12 @@
       v.append(...marks);
       const merk = s.h("div", { class: "merk later" }, "Menschen hören etwa von ", s.h("b", null, "20 Hz bis 20.000 Hz"), ". Kinder hören hohe Töne oft besser – im Alter wird der Bereich kleiner.");
       const life = card(s, "life later", "Darüber und darunter", s.h("p", { class: "small" }, "Tiefer als 20 Hz heißt ", s.h("b", null, "Infraschall"), ", höher als 20.000 Hz ", s.h("b", null, "Ultraschall"), ". Den hörst du nicht – aber Hunde und Fledermäuse hören Ultraschall."));
-      s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, v, s.h("div", { class: "cols", style: { gridTemplateColumns: "1.2fr 1fr" } }, merk, life)));
+      const bat = s.photo("bat", { w: 300, h: 220, pos: "50% 55%", caption: "Wasserfledermaus", cls: "later" });
+      s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, v, s.h("div", { class: "cols", style: { gridTemplateColumns: "1.1fr 1fr 300px", alignItems: "start" } }, merk, life, bat)));
       s.show(bar, "fade"); s.show(tickG, "fade", 200);
       s.step(async () => { for (let i = 0; i < marks.length; i++) { s.show(marks[i], "pop"); s.sfx.count(i); await s.wait(160); } });
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-      s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+      s.step(async () => { s.sfx.whoosh(); s.show(bat, "zoom"); await s.show(life, "up"); });
     },
   });
 
@@ -336,14 +359,15 @@
       const btns = Object.keys(pats).map((k, i) => s.h("button", { class: "btn" + (i ? " later" : ""), style: { flex: 1 }, onclick: () => run(k) }, "▶ " + pats[k].n));
       const keyRow = s.h("div", { class: "row", style: { gap: "28px" } }, s.h("span", { class: "chip", style: { background: "#fde5cf" } }, "orange = kurzer Ton"), s.h("span", { class: "chip" }, "blau = langer Ton"));
       const merk = s.h("div", { class: "merk later" }, "Die ", s.h("b", null, "Tondauer"), " sagt, wie lange ein Ton klingt. In den Noten zeigt die ", s.h("b", null, "Form der Note"), ", wie lang er ist – das lernst du später genau.");
-      const life = s.h("button", { class: "life later", style: { textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer" }, onclick: () => { [0, .25, .5].forEach(w => play(s, 1760, .1, { type: "square", vol: .08, when: w })); play(s, 98, 2, { type: "sawtooth", vol: .12, when: 1 }); play(s, 147, 2, { type: "sawtooth", vol: .08, when: 1 }); } },
-        s.h("span", { class: "exlabel" }, "Im Alltag ▶ antippen"), s.h("p", { class: "small" }, "Der Wecker piept kurz-kurz-kurz, ein Schiffshorn tutet lang. Auch Silben sind kurz oder lang: „Ba-na-ne“ – das „na“ ist am längsten."));
+      const life = s.h("div", { class: "life later" },
+        s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "16px" } }, s.h("p", { class: "small", style: { flex: 1 } }, "Der Wecker piept kurz-kurz-kurz, ein Schiffshorn tutet lang. Auch Silben sind kurz oder lang: „Ba-na-ne“ – das „na“ ist am längsten."),
+        s.soundBtn("alarm-clock", "Wecker"), s.soundBtn("ship-horn", "Schiffshorn")));
       s.add(s.h("div", { class: "stack" }, v, keyRow, s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, btns), merk, life));
       run("klingel");
       s.step(async () => { s.show(btns[1], "pop"); await run("gong"); });
       s.step(async () => { s.show(btns[2], "pop"); await run("hupe"); });
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-      s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+      s.step(async () => { s.sound("alarm-clock", { dur: 1.5, vol: .5 }); await s.show(life, "up"); });
     },
   });
 
@@ -397,16 +421,16 @@
         s.h("p", { class: "h2", style: { fontStyle: "italic" } }, name), o.v, s.h("p", { class: "t" }, de),
         s.h("button", { class: "btn solid", onclick: () => run(o, cresc) }, "▶ anhören"));
       const c1 = box(A, "crescendo", "immer lauter werden", true, false), c2 = box(B, "decrescendo", "immer leiser werden", false, true);
-      const lifes = [["U-Bahn fährt ein", "Erst leise, dann immer lauter – crescendo.", () => noise(s, 2.5, .35, 200, 900, 0, .4)],
-        ["Krankenwagen fährt weg", "Das Martinshorn wird leiser – decrescendo.", () => { for (let k = 0; k < 4; k++) { play(s, 440, .45, { type: "square", vol: .12 * (1 - k * .22), when: k * 1 }); play(s, 587, .45, { type: "square", vol: .12 * (1 - k * .22), when: k * 1 + .5 }); } }],
-        ["Applaus im Konzert", "Die Leute klatschen immer stärker.", () => { for (let k = 0; k < 26; k++) noise(s, .05, .03 + k * .012, 1800, 2400, k * .09 + Math.random() * .04, 2); }]]
+      const lifes = [["U-Bahn fährt ein", "Erst leise, dann immer lauter – crescendo.", () => s.sound("subway-arrive", { vol: .7 })],
+        ["Krankenwagen fährt weg", "Das Martinshorn wird leiser – decrescendo.", () => s.sound("siren-pass", { from: 1, dur: 7, vol: .6 })],
+        ["Applaus im Konzert", "Erst klatschen wenige, dann alle.", () => s.sound("applause", { vol: .6, dur: 4.5 })]]
         .map(([t, d, f]) => s.h("button", { class: "life later", style: { textAlign: "left", font: "inherit", color: "inherit", cursor: "pointer" }, onclick: f }, s.h("span", { class: "exlabel" }, "Im Alltag ▶"), s.h("p", { class: "small", style: { fontWeight: 700 } }, t), s.h("p", { class: "small" }, d)));
       const merk9 = s.h("div", { class: "merk later" }, "Die ", s.h("b", null, "Gabel"), " in den Noten: Geht sie auf, wird es lauter. Geht sie zu, wird es leiser.");
       s.add(s.h("div", { class: "stack", style: { gap: "16px" } }, s.h("div", { class: "cols" }, c1, c2), merk9, s.h("div", { class: "cols3" }, lifes)));
       s.step(async () => { await run(A, true); });
       s.step(async () => { s.show(c2, "up"); await run(B, false); });
       s.step(async () => { s.sfx.ding(); await s.show(merk9, "up"); });
-      s.step(async () => { s.sfx.pop(); await s.show(lifes, "up"); });
+      s.step(async () => { s.sfx.whoosh(); await s.show(lifes, "up"); });
     },
   });
 
@@ -429,7 +453,8 @@
           s.h("p", { class: "h2", style: { color: cols[i] } }, k.n), canvas, s.h("p", { class: "small" }, k.d), s.h("span", { class: "chip" }, "▶ a′ = 440 Hz"));
       });
       const merk = s.h("div", { class: "merk later" }, "Gleiche Tonhöhe, gleiche Lautstärke – und trotzdem klingt es anders. Das ist die ", s.h("b", null, "Klangfarbe"), ". Die Form der Schwingung macht den Unterschied.");
-      const life = card(s, "life later", "Im Alltag", s.h("p", { class: "small" }, "Am Telefon erkennst du Mama, Papa oder deinen besten Freund sofort – jede Stimme hat ihre eigene Klangfarbe. Genauso klingen Geige und Flöte verschieden, auch wenn sie denselben Ton spielen."));
+      const life = card(s, "life later", "Im Alltag", s.h("p", { class: "small" }, "Am Telefon erkennst du Mama, Papa oder deinen besten Freund sofort – jede Stimme hat ihre eigene Klangfarbe. Genauso klingen Geige und Flöte verschieden."),
+        s.h("div", { class: "row", style: { marginTop: "8px" } }, s.soundBtn("violin-a4", "Geige"), s.soundBtn("flute-a-scale", "Querflöte", { dur: 3.2 })));
       s.add(s.h("div", { class: "stack" }, s.h("div", { class: "cols4" }, cards), s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr" } }, merk, life)));
       play(s, 440, .8, { vol: .3 });
       cards.slice(1).forEach((c, i) => s.step(async () => { const k = kinds[i + 1]; play(s, 440, .9, { type: k.t, vol: k.vol }); await s.show(c, "up"); }));
@@ -480,30 +505,23 @@
     title: "So klingen Instrumente",
     say: "Bei jedem Instrument schwingt etwas anderes: eine Saite, die Luft in einem Rohr, ein Fell oder das Instrument selbst.",
     build(s) {
-      const mkSvg = () => s.svg(220, 140);
-      const a = mkSvg(); const aStr = s.el("path", { d: "M20 70 L200 70", stroke: "#b8860b", "stroke-width": 5, fill: "none" });
-      a.append(s.el("rect", { x: 10, y: 50, width: 10, height: 40, fill: "#8a5a2b" }), s.el("rect", { x: 200, y: 50, width: 10, height: 40, fill: "#8a5a2b" }), aStr);
-      const b = mkSvg(); b.append(s.el("rect", { x: 20, y: 52, width: 180, height: 36, rx: 18, fill: "#d9c08a", stroke: "#8a6d2b", "stroke-width": 3 }));
-      [70, 110, 150].forEach(x => b.append(s.el("circle", { cx: x, cy: 70, r: 7, fill: "#5a4515" })));
-      const bAir = [0, 1, 2, 3, 4, 5].map(i => s.el("circle", { cx: 40 + i * 28, cy: 70, r: 4, fill: "#1d5bd0", opacity: .2 })); b.append(...bAir);
-      const c = mkSvg(); const cHead = s.el("ellipse", { cx: 110, cy: 50, rx: 80, ry: 18, fill: "#f6efe0", stroke: "#8a5a2b", "stroke-width": 3 });
-      c.append(s.el("path", { d: "M30 50 L30 110 Q110 135 190 110 L190 50", fill: "#dc3b2a", stroke: "#8a2a1a", "stroke-width": 3 }), cHead);
-      const d = mkSvg(); const bars = [0, 1, 2, 3, 4].map(i => s.el("rect", { x: 22 + i * 38, y: 30 + i * 8, width: 28, height: 90 - i * 16, rx: 5, fill: ["#dc3b2a", "#ee7a1a", "#ffd94a", "#138a5a", "#1d5bd0"][i] }));
-      d.append(...bars);
       const groups = [
-        { n: "Saite", ex: "Geige, Cello, Gitarre, Harfe", svg: a, go: async () => { pluck(s, 196, 1.6, .35); await s.tween({ dur: 1200, ease: "linear", update: (v, t) => aStr.setAttribute("d", `M20 70 Q110 ${70 + 30 * (1 - t) * Math.sin(t * 90)} 200 70`) }); } },
-        { n: "Luftsäule", ex: "Flöte, Klarinette, Trompete", svg: b, go: async () => { play(s, 523, 1.3, { harm: HARM.floete, vol: .3, attack: .08 }); noise(s, .3, .05, 2000, 3000); await s.tween({ dur: 1300, ease: "linear", update: (v, t) => bAir.forEach((p, i) => { p.setAttribute("opacity", .25 + .7 * Math.abs(Math.sin(t * 30 - i))); p.setAttribute("cx", 40 + i * 28 + 6 * Math.sin(t * 50 - i)); }) }); } },
-        { n: "Fell", ex: "Trommel, Pauke, Bongo", svg: c, go: async () => { drum(s, 0, .6); drum(s, .3, .4); await s.tween({ dur: 700, ease: "linear", update: (v, t) => cHead.setAttribute("ry", 18 + 8 * (1 - t) * Math.sin(t * 60)) }); } },
-        { n: "Platte und Stab", ex: "Xylophon, Becken, Glocke", svg: d, go: async () => { [0, 4, 7, 12, 16].forEach((n, i) => play(s, 523.25 * Math.pow(2, n / 12), .6, { harm: HARM.glocke, env: "pluck", vol: .25, when: i * .14 })); for (let i = 0; i < 5; i++) { wig(s, bars[i]); await s.wait(140); } } },
+        { n: "Saite", ex: "Geige, Cello, Gitarre, Harfe", ph: ["violin", "Geige", "50% 50%"], go: () => s.sound("violin-a4", { dur: 2.2 }) },
+        { n: "Luftsäule", ex: "Flöte, Klarinette, Trompete", ph: ["flute-playing", "Querflöte", "60% 50%"], go: () => s.sound("flute-a-scale", { dur: 2.4 }) },
+        { n: "Fell", ex: "Trommel, Pauke, Bongo", ph: ["timpani", "Pauken", "50% 55%"], go: () => s.sound("timpani-roll", { dur: 3, vol: .8 }) },
+        { n: "Platte und Stab", ex: "Xylophon, Marimba, Glocke", ph: ["marimba", "Marimba", "50% 50%"], go: () => s.sound("xylophone-sweep") },
       ];
-      const cards = groups.map((gr, i) => s.h("button", { class: "card later", style: { font: "inherit", color: "inherit", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "14px" }, onclick: gr.go },
-        s.h("p", { class: "h2", style: { color: COL } }, gr.n), gr.svg, s.h("p", { class: "small", style: { textAlign: "center", minHeight: "54px" } }, gr.ex), s.h("span", { class: "chip" }, "▶ anhören")));
+      const cards = groups.map((gr, i) => {
+        const fig = s.photo(gr.ph[0], { w: "100%", h: 170, pos: gr.ph[2], caption: gr.ph[1] });
+        return s.h("button", { class: "card later", style: { font: "inherit", color: "inherit", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px" }, onclick: () => { gr.go(); wig(s, fig); } },
+          s.h("p", { class: "h2", style: { color: COL } }, gr.n), fig, s.h("p", { class: "small", style: { textAlign: "center", minHeight: "54px" } }, gr.ex), s.h("span", { class: "chip" }, "▶ anhören"));
+      });
       const life = card(s, "life later", "Deine Instrumentalklasse", s.h("p", { class: "t" }, "Am Ende von Klasse 5 wählst du ein ", s.h("b", null, "Streichinstrument"), " (da schwingt eine Saite) oder ein ", s.h("b", null, "Blasinstrument"), " (da schwingt eine Luftsäule)."));
       const merk12 = s.h("div", { class: "merk later" }, "Bei jedem Instrument schwingt etwas: eine ", s.h("b", null, "Saite"), ", die ", s.h("b", null, "Luft"), " in einem Rohr, ein ", s.h("b", null, "Fell"), " oder das ", s.h("b", null, "Material selbst"), ".");
       s.add(s.h("div", { class: "stack", style: { gap: "16px" } }, s.h("div", { class: "cols4" }, cards), merk12, life));
-      cards.forEach((cd, i) => s.step(async () => { s.show(cd, "up"); await groups[i].go(); }));
+      cards.forEach((cd, i) => s.step(async () => { groups[i].go(); await s.show(cd, "up"); }));
       s.step(async () => { s.sfx.ding(); await s.show(merk12, "up"); });
-      s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+      s.step(async () => { s.sfx.fanfare(); await s.show(life, "up"); });
     },
   });
 
@@ -532,8 +550,7 @@
       const shout = async () => {
         if (busy) return; busy = true;
         const tt = 2 * dist / 343;
-        const hey = (vol, when) => { play(s, 330, .35, { harm: [1, .8, .6, .5, .4, .3], vol, when, slideTo: 260 }); };
-        hey(.35, 0); hey(.1, tt);
+        s.sound("hello-shout"); s.sound("hello-shout", { vol: .3, when: tt });
         const xw = wallX(dist);
         arcOut.setAttribute("opacity", 1);
         await s.tween({ from: xk + 30, to: xw, dur: tt * 500, ease: "linear", update: x => arcOut.setAttribute("d", arc(x, 1)) });
@@ -549,7 +566,7 @@
         s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr" } }, merk, life)));
       s.step(async () => { await shout(); });
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-      s.step(async () => { knall(s); await s.show(life, "up"); });
+      s.step(async () => { s.sound("thunder", { dur: 4, vol: .7 }); await s.show(life, "up"); });
     },
   });
 
@@ -559,11 +576,11 @@
     say: "Lautstärke misst man in Dezibel. Ab etwa 85 Dezibel kann lauter Schall auf Dauer die Ohren schädigen.",
     build(s) {
       const items = [
-        [50, "normales Gespräch", "40–60 dB", () => play(s, 220, .6, { harm: [1, .6, .4, .3], vol: .1, slideTo: 260 })],
-        [85, "Straßenverkehr", "80–90 dB", () => noise(s, 1, .2, 200, 500, 0, .6)],
-        [100, "Disco, Presslufthammer", "etwa 100 dB", () => { for (let k = 0; k < 8; k++) { noise(s, .06, .25, 1200, 800, k * .1, 1.5); } }],
+        [50, "normales Gespräch", "40–60 dB", () => s.sound("conversation", { vol: .4, force: true })],
+        [85, "Straßenverkehr", "80–90 dB", () => s.sound("traffic", { vol: .4, dur: 3, force: true })],
+        [100, "Disco, Presslufthammer", "etwa 100 dB", () => s.sound("jackhammer", { vol: .4, dur: 2.5, force: true })],
         [130, "Schmerzschwelle", "120–140 dB", () => noise(s, .5, .3, 3000, 3000, 0, 3)],
-        [150, "Düsenflugzeug (30 m)", "etwa 150 dB", () => noise(s, 1.2, .3, 800, 4000, 0, .5)],
+        [150, "Düsenflugzeug (30 m)", "etwa 150 dB", () => s.sound("jet-flyby", { from: 1.5, dur: 3, vol: .4, force: true })],
       ];
       const W = 640, H = 470, Y = i => 420 - i * 90;
       const v = s.svg(W, H);
@@ -579,8 +596,12 @@
       v.append(line85, ...rungs);
       const merk = s.h("div", { class: "merk later" }, "Lautstärke misst man in ", s.h("b", null, "Dezibel (dB)"), ". Sehr lauter Schall kann dein Gehör ", s.h("b", null, "für immer"), " schädigen.");
       const hint = s.h("p", { class: "small pencil" }, "Tippe auf eine Stufe. Keine Sorge: Hier klingt alles leise – nur zum Vergleichen.");
-      s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "640px 1fr", alignItems: "center" } }, v, s.h("div", { class: "stack" }, hint, merk)));
-      s.step(async () => { for (let i = 0; i < rungs.length; i++) { s.show(rungs[i], "left"); items[i][3](); await s.wait(700); } });
+      const meter = s.photo("sound-level-meter", { w: 170, h: 380, pos: "50% 50%", cls: "later" });
+      const mnote = s.h("div", { class: "card later", style: { padding: "10px 14px" } }, s.h("p", { class: "small" }, "Gemessen wird mit einem ", s.h("b", null, "Schallpegelmesser"), ". Dieser zeigt gerade 75,6 dB."));
+      s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "640px 1fr", alignItems: "center" } }, v,
+        s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center", gap: "16px" } }, meter, s.h("div", { class: "stack", style: { flex: 1 } }, hint, mnote, merk))));
+      s.show(meter, "zoom"); s.show(mnote, "up", 200);
+      s.step(async () => { for (let i = 0; i < rungs.length; i++) { s.show(rungs[i], "left"); s.sfx.count(i); await s.wait(300); } });
       s.step(async () => { s.sfx.zap(); await s.show(line85, "fade"); });
       s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
     },
@@ -591,15 +612,13 @@
     title: "Schütze deine Ohren",
     say: "Deine Ohren brauchen Schutz. Ein kaputtes Gehör heilt nicht wieder.",
     build(s) {
-      const W = 380, H = 300;
-      const v = s.svg(W, H);
-      v.append(s.el("path", { d: "M110 230 C40 200 40 70 150 50 C250 35 300 120 260 175 C235 210 200 200 190 240 C180 280 130 270 110 230 Z", fill: "#f1c7a6", stroke: "#c46a4a", "stroke-width": 6 }),
-        s.el("path", { d: "M160 100 C210 90 230 140 200 160 C185 172 175 160 170 175", fill: "none", stroke: "#c46a4a", "stroke-width": 6, "stroke-linecap": "round" }));
-      const meter = s.el("rect", { x: 330, y: 260, width: 34, height: 0, rx: 6, fill: "#138a5a" });
-      v.append(s.el("rect", { x: 330, y: 40, width: 34, height: 220, rx: 6, fill: "#eef2f6", stroke: "#c8d3de", "stroke-width": 2 }), meter);
+      const v = s.svg(380, 54);
+      v.append(s.el("rect", { x: 4, y: 10, width: 372, height: 34, rx: 10, fill: "#eef2f6", stroke: "#c8d3de", "stroke-width": 2 }));
+      const meter = s.el("rect", { x: 6, y: 12, width: 0, height: 30, rx: 9, fill: "#138a5a" }); v.append(meter);
+      const plugs = s.photo("earplugs", { w: 380, h: 300, pos: "50% 50%", caption: "Ohrstöpsel aus Schaumstoff" });
       const face = s.h("p", { class: "h2", style: { textAlign: "center", minHeight: "36px" } }, "alles gut");
       const sl = s.slider({ label: "Kopfhörer-Lautstärke", min: 0, max: 10, value: 4, onInput: x => {
-        const hgt = x * 22; meter.setAttribute("y", 260 - hgt); meter.setAttribute("height", hgt);
+        meter.setAttribute("width", x * 36.8);
         const c = x <= 5 ? "#138a5a" : x <= 7 ? "#ee7a1a" : "#dc3b2a"; meter.setAttribute("fill", c);
         face.textContent = x <= 5 ? "alles gut" : x <= 7 ? "Vorsicht – nicht zu lange" : "zu laut für deine Ohren!"; face.style.color = c;
         play(s, 330, .25, { harm: HARM.floete, vol: .02 + x * .03 });
@@ -611,8 +630,8 @@
         ["Ohrstöpsel benutzen", "Bei sehr lauten Konzerten, beim Feuerwerk oder beim Schlagzeugüben."],
         ["Pausen machen", "Nach lautem Lärm brauchen die Ohren Ruhe. Pfeift es im Ohr: Achtung!"],
       ].map(([a, b], i) => s.h("div", { class: "card later", style: { padding: "10px 16px" } }, s.h("p", { class: "t", style: { fontWeight: 700 } }, (i + 1) + ". " + a), s.h("p", { class: "small" }, b)));
-      s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "380px 1fr", alignItems: "start" } }, s.h("div", { class: "stack", style: { gap: "10px" } }, v, face, sl), s.h("div", { class: "stack", style: { gap: "12px" } }, tips)));
-      tips.forEach((t, i) => s.step(async () => { s.sfx.pop(); await s.show(t, "left"); }));
+      s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "380px 1fr", alignItems: "start" } }, s.h("div", { class: "stack", style: { gap: "8px" } }, plugs, v, face, sl), s.h("div", { class: "stack", style: { gap: "12px" } }, tips)));
+      tips.forEach((t, i) => s.step(async () => { if (i === 2) s.sound("drum-groove", { dur: 2, vol: .5 }); else s.sfx.swoosh(); await s.show(t, "left"); }));
     },
   });
 
@@ -623,17 +642,17 @@
     build(s) {
       const N = (n) => 523.25 * Math.pow(2, n / 12);
       const tiles = [
-        ["📱", "Handy-Klingelton", "Klang · Melodie aus hohen Tönen", () => [7, 4, 7, 12, 11, 7].forEach((n, i) => play(s, N(n), .16, { type: "square", vol: .1, when: i * .15 }))],
-        ["🔔", "Schulklingel", "Klang · lang und laut", () => { for (let k = 0; k < 14; k++) play(s, k % 2 ? 1046 : 988, .09, { harm: HARM.glocke, vol: .18, when: k * .08 }); }],
-        ["🎸", "Gitarrensaite", "Klang · die Saite schwingt", () => [0, 4, 7, 12].forEach((n, i) => pluck(s, N(n - 24), 1.6, .25, i * .07))],
-        ["🥁", "Schlagzeug", "Fell und Becken · Rhythmus", () => { [0, .5, 1, 1.5].forEach(t => { drum(s, t); hihat(s, t + .25); }); snare(s, .5); snare(s, 1.5); }],
-        ["🚇", "U-Bahn", "Geräusch · Rauschen und Quietschen", () => { noise(s, 2, .35, 150, 500, 0, .5); play(s, 1900, .6, { type: "sawtooth", vol: .04, when: 1.2, slideTo: 1700 }); }],
-        ["🔊", "Bass im Lied", "tiefe Frequenz · du spürst ihn im Bauch", () => [0, 0, 7, 5].forEach((n, i) => play(s, N(n - 36), .4, { harm: [1, .5, .2], vol: .5, when: i * .42 }))],
+        ["smartphone", "50% 45%", "Handy-Klingelton", "Klang · Melodie aus hohen Tönen", () => s.sound("ringtone", { dur: 3, force: true })],
+        ["school-bell-photo", "50% 50%", "Schulklingel", "Klang · lang und laut", () => s.sound("school-bell", { dur: 3, force: true })],
+        ["guitar", "50% 55%", "Gitarre", "Klang · die Saiten schwingen", () => s.sound("guitar-chord", { force: true })],
+        ["drum-kit", "50% 45%", "Schlagzeug", "Fell und Becken · Rhythmus", () => s.sound("drum-groove", { force: true })],
+        ["ubahn-berlin", "50% 50%", "U-Bahn", "Geräusch · Rauschen und Quietschen", () => s.sound("ubahn-train", { dur: 4, force: true })],
+        ["bass-guitar", "50% 40%", "E-Bass im Lied", "tiefe Töne · du spürst sie im Bauch", () => s.sound("bass-riff", { force: true })],
       ];
-      const els = tiles.map(([e, n, d, fn]) => {
-        const em = s.h("div", { style: { fontSize: "64px", lineHeight: "1" } }, e);
-        return s.h("button", { class: "card later", style: { font: "inherit", color: "inherit", cursor: "pointer", display: "flex", gap: "16px", alignItems: "center", textAlign: "left", padding: "16px", minHeight: "150px" }, onclick: () => { fn(); wig(s, em); } },
-          em, s.h("div", null, s.h("p", { class: "h2", style: { fontSize: "26px" } }, n), s.h("p", { class: "small pencil" }, d)));
+      const els = tiles.map(([id, pos, n, d, fn]) => {
+        const fig = s.photo(id, { w: "100%", h: 156, pos, caption: n });
+        return s.h("button", { class: "card later", style: { font: "inherit", color: "inherit", cursor: "pointer", display: "flex", flexDirection: "column", gap: "6px", textAlign: "left", padding: "10px" }, onclick: () => { fn(); wig(s, fig); } },
+          fig, s.h("p", { class: "small pencil" }, "▶ " + d));
       });
       const merk = s.h("div", { class: "merk later" }, "Jeder Schall hat ", s.h("b", null, "Tonhöhe, Tondauer, Lautstärke"), " und ", s.h("b", null, "Klangfarbe"), " – auch der Klingelton deines Handys.");
       s.add(s.h("div", { class: "stack", style: { gap: "18px" } }, s.h("div", { class: "cols3", style: { gap: "18px" } }, els), merk));

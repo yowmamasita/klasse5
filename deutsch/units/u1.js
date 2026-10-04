@@ -137,17 +137,19 @@
           const els = W.map(([t, k]) => (k ? chip(s, t, "x", "later") : s.h("span", { class: "d1p later" }, t)));
           els.forEach((e, i) => { e.dataset.k = W[i][1] || ""; });
           const row = s.h("div", { class: "d1row", style: { justifyContent: "center", minHeight: "120px" } }, els);
-          const top = ex(s, "Aus einem Spielbericht", row);
+          row.style.minHeight = "0";
+          const top = ex(s, "Aus einem Spielbericht", s.h("div", { style: { display: "grid", gridTemplateColumns: "280px 1fr", gap: "18px", alignItems: "center" } },
+            s.photo("fussball-zweikampf", { w: 280, h: 176, pos: "55% 50%" }), row));
           const groups = [["n", "art"], ["v"], ["adj"], ["pr"], ["pp", "k", "adv"]];
           const desc = { n: "Lebewesen, Dinge, Gefühle – groß!", art: "Begleiter: der, die, das, ein", v: "Was tut jemand? Was passiert?", adj: "Wie ist etwas?", pr: "Stellvertreter: ich, du, er …", pp: "Verhältniswort: auf, unter …", k: "Bindewort: und, aber, weil …", adv: "Umstandswort: heute, hier, gern" };
           const cards = {};
           const grid = s.h("div", { class: "cols4", style: { gap: "12px" } }, Object.keys(desc).map(k => (cards[k] = s.h("div", { class: "card later", style: { padding: "12px 14px", borderColor: WT[k].c, display: "flex", flexDirection: "column", gap: "8px", alignItems: "flex-start" } }, tag(s, k), s.h("p", { class: "small" }, desc[k])))));
-          const merk = s.h("div", { class: "merk later" }, "Es gibt viele Wortarten. Diese ", s.h("b", null, "acht"), " lernst du hier kennen. Ihre Farben bleiben im ganzen Kapitel gleich.");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "8px 18px 10px" } }, "Es gibt viele Wortarten. Diese ", s.h("b", null, "acht"), " lernst du hier kennen. Ihre Farben bleiben im ganzen Kapitel gleich.");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, top, grid, merk));
           s.show(els, "up");
           els.forEach((_, i) => setTimeout(() => s.alive && !s.fast && s.sfx.count(i % 12), i * 120));
           groups.forEach((g, gi) => s.step(async () => {
-            s.sfx.pop();
+            [() => s.sfx.pop(), () => s.sound("ball-kick"), () => s.sfx.whoosh(), () => s.sfx.snap(), () => s.sfx.chord([0, 4, 7])][gi]();
             const hits = els.filter(e => g.includes(e.dataset.k));
             hits.forEach(e => { paint(e, e.dataset.k); bump(s, e, 0.25); });
             await s.show(g.map(k => cards[k]), "pop");
@@ -162,14 +164,14 @@
         say: "Nomen sind Namen für Lebewesen, Dinge, Orte und sogar für Gefühle. Man schreibt sie immer groß.",
         build(s) {
           const cat = [
-            ["🐕", "Lebewesen", ["der Hund", "die Lehrerin", "der Torwart"]],
-            ["⚽", "Dinge", ["der Ball", "das Heft", "die U-Bahn"]],
-            ["🏙️", "Orte", ["Berlin", "die Schule", "der Park"]],
-            ["💭", "Gefühle, Ideen", ["die Freude", "der Mut", "die Angst"]],
+            [s.photo("hund", { w: "100%", h: 112, caption: "Lebewesen", pos: "50% 18%" }), "Lebewesen", ["der Hund", "die Lehrerin", "der Torwart"]],
+            [s.photo("fussball", { w: "100%", h: 112, caption: "Dinge" }), "Dinge", ["der Ball", "das Heft", "die U-Bahn"]],
+            [s.photo("fernsehturm-rathaus", { w: "100%", h: 112, caption: "Orte", pos: "50% 22%" }), "Orte", ["Berlin", "die Schule", "der Park"]],
+            [s.photo("fans-jubeln", { w: "100%", h: 112, caption: "Gefühle, Ideen" }), "Gefühle, Ideen", ["die Freude", "der Mut", "die Angst"]],
           ];
-          const cards = cat.map(([e, t, ws], i) => s.h("div", { class: "card" + (i > 1 ? " later" : ""), style: { padding: "16px 16px", display: "flex", flexDirection: "column", gap: "12px" } },
-            s.h("div", { class: "row", style: { gap: "10px" } }, s.h("span", { style: { fontSize: "40px", lineHeight: "1" } }, e), s.h("span", { class: "h2", style: { fontSize: "27px" } }, t)),
-            s.h("div", { class: "d1row", style: { gap: "10px" } }, ws.map(w => chip(s, w, "n")))));
+          const cards = cat.map(([e, t, ws], i) => s.h("div", { class: "card" + (i > 1 ? " later" : ""), style: { padding: "12px 14px", display: "flex", flexDirection: "column", gap: "10px" } },
+            e,
+            s.h("div", { class: "d1row", style: { gap: "8px" } }, ws.map(w => chip(s, w, "n")))));
           const left = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr", gap: "14px", height: "100%" } }, cards);
           // message in lower case
           const msg = [["ich", "Ich", "start"], ["habe"], ["meine"], ["schultasche", "Schultasche", "n"], ["im"], ["bus", "Bus", "n"], ["vergessen!"]];
@@ -181,10 +183,10 @@
           menu.classList.add("later");
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, s.h("b", null, "Artikelprobe: "), "Passt ", s.h("b", null, "der, die"), " oder ", s.h("b", null, "das"), " davor? Dann ist es ein Nomen – und du schreibst es groß: ", s.h("b", null, "die Freude"), ".");
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: "24px", height: "100%", alignItems: "start" } }, left, s.h("div", { class: "stack", style: { gap: "14px" } }, chat, menu, merk)));
-          s.show(cards.slice(0, 2), "up"); s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); await s.show(cards.slice(2), "up"); s.say("Auch was man nicht anfassen kann, ist ein Nomen. Zum Beispiel die Freude."); });
+          s.show(cards.slice(0, 2), "up"); s.sound("hund-bellt", { vol: 0.6 });
+          s.step(async () => { s.sound("crowd-cheer", { vol: 0.45, dur: 2.5, fade: 0.6 }); await s.show(cards.slice(2), "up"); s.say("Auch was man nicht anfassen kann, ist ein Nomen. Zum Beispiel die Freude."); });
           s.step(async () => {
-            s.sfx.scribble();
+            s.sound("pencil-write");
             for (let i = 0; i < msg.length; i++) {
               const [, up, k] = msg[i];
               if (!up) continue;
@@ -242,7 +244,7 @@
           s.wait(500).then(() => { const cone = sBest.querySelector("polygon"); s.show(cone, "fade"); s.sfx.zap(); });
           s.step(async () => { s.sfx.boing(); await s.show(c2, "up"); s.say("Ein, eine. Irgendeiner, der noch neu ist."); });
           exEls.forEach((e, i) => s.step(async () => {
-            s.sfx.pop(); await s.show(e.box, "left");
+            s.sound(["whistle", "zipper", "glass-clink"][i], { vol: 0.7 }); await s.show(e.box, "left");
             s.sfx.whoosh(); await s.show([e.box.querySelector("b"), e.second], "right");
             s.say(["Erst ein Spieler, dann der Spieler.", "Erst ein Heft, dann das Heft.", "Erst eine Pizza, dann die Pizza."][i]);
           }));
@@ -300,7 +302,7 @@
             info,
             s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "center", gap: "14px" } }, merk, s.h("div", { class: "stack", style: { gap: "8px" } }, all, reset))));
           s.show(chips, "pop"); s.sfx.pop();
-          s.step(async () => { for (const i of [3, 4, 5]) { await place(i); await s.wait(500); } });
+          s.step(async () => { s.sound("besteck", { vol: 0.7 }); for (const i of [3, 4, 5]) { await place(i); await s.wait(500); } });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Das Genus sieht man dem Ding nicht an. Lerne jedes Nomen mit Artikel."); });
         },
       },
@@ -310,20 +312,28 @@
         say: "Ein Nomen kann im Singular stehen, dann ist es eins. Oder im Plural, dann sind es viele. Der Plural hat verschiedene Endungen.",
         build(s) {
           const P5 = [
-            ["🐕", "-e", "Im Park", ["der", [["Hund"]]], [["Hund"], ["e", 1]]],
-            ["🧒", "-er", "Auf dem Schulhof", ["das", [["Kind"]]], [["Kind"], ["er", 1]]],
-            ["🍌", "-n / -en", "Im Supermarkt", ["die", [["Banane"]]], [["Banane"], ["n", 1]]],
-            ["🚗", "-s", "Auf der Straße", ["das", [["Auto"]]], [["Auto"], ["s", 1]]],
-            ["🍎", "Umlaut", "Am Obststand", ["der", [["Apfel"]]], [["Ä", 2], ["pfel"]]],
+            [["hund", "hunde", "hund-bellt"], "-e", "Im Park", ["der", [["Hund"]]], [["Hund"], ["e", 1]]],
+            [["ei", "eier", "ei-aufschlagen"], "-er", "Beim Frühstück", ["das", [["Ei"]]], [["Ei"], ["er", 1]]],
+            [["banane", "bananen", null], "-n / -en", "Auf dem Markt", ["die", [["Banane"]]], [["Banane"], ["n", 1]]],
+            [["auto", "autos", "autohupe"], "-s", "Auf dem Parkplatz", ["das", [["Auto"]]], [["Auto"], ["s", 1]]],
+            [["apfel", "aepfel", "apfel-biss"], "Umlaut", "Am Obststand", ["der", [["Apfel"]]], [["Ä", 2], ["pfel"]]],
           ];
-          const sgEmo = s.h("div", { class: "d1emo", style: { height: "150px", fontSize: "70px", display: "grid", placeItems: "center" } });
-          const plEmo = s.h("div", { class: "d1emo", style: { height: "150px", fontSize: "60px", display: "grid", gridTemplateColumns: "1fr 1fr", placeItems: "center", width: "160px", margin: "0 auto" } });
+          const O = { w: 228, h: 206 }, W = Object.assign({ fit: "contain", style: { background: "#fff" } }, O);
+          const PH = {
+            hund: () => s.photo("hund", O), hunde: () => s.photo("hunde", O), ei: () => s.photo("ei", W), eier: () => s.photo("eier", O),
+            banane: () => s.photo("banane", W), bananen: () => s.photo("bananen", O), auto: () => s.photo("auto", O), autos: () => s.photo("autos", O),
+            apfel: () => s.photo("apfel", W), aepfel: () => s.photo("aepfel", O),
+          };
+          const pic = id => PH[id]();
+          s.preload("hund-bellt"); s.preload("ei-aufschlagen"); s.preload("autohupe"); s.preload("apfel-biss");
+          const sgEmo = s.h("div", { style: { height: "206px", width: "228px", display: "grid", placeItems: "center" } });
+          const plEmo = s.h("div", { style: { height: "206px", width: "228px", display: "grid", placeItems: "center" } });
           const sgW = chip(s, "", "n", "l"), plW = chip(s, "", "n", "l");
           const half = (lab, emo, w) => s.h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "12px" } }, s.h("p", { class: "h2", style: { fontSize: "26px", color: "var(--pencil)" } }, lab), emo, w);
-          const stageCard = s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: "8px", padding: "30px 16px" } },
+          const stageCard = s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: "8px", padding: "18px 14px" } },
             half("Singular – eins", sgEmo, sgW), s.h("span", { class: "big", style: { color: "var(--pencil)" } }, "→"), half("Plural – viele", plEmo, plW));
           const where = s.h("p", { class: "t", style: { textAlign: "center" } }, "");
-          const merk = s.h("div", { class: "merk later", style: { fontSize: "23px" } }, "Im Plural heißt der Artikel immer ", s.h("b", null, "die"), ": die Hunde, die Kinder, die Autos.");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "23px" } }, "Im Plural heißt der Artikel immer ", s.h("b", null, "die"), ": die Hunde, die Eier, die Autos.");
           const btns = P5.map((p, i) => s.h("button", { class: "btn", style: { justifyContent: "space-between", width: "100%", fontSize: "25px", minHeight: "76px" }, onclick: () => { s.sfx.click(); pick(i); } },
             s.h("span", null, p[3][0] + " " + p[3][1][0][0], "  →  die ", parts(s, p[4])), s.h("span", { class: "d1tag", style: { background: "var(--red)" } }, p[1])));
           let cur = -1;
@@ -331,15 +341,18 @@
             cur = i;
             btns.forEach((b, j) => b.classList.toggle("solid", j === i));
             const p = P5[i];
-            sgEmo.textContent = p[0];
+            const [sgId, plId, snd] = p[0];
+            sgEmo.replaceChildren(pic(sgId));
             sgW.replaceChildren(p[3][0] + "\u00a0", ...parts(s, p[3][1]));
             plW.replaceChildren("die\u00a0", ...parts(s, p[4]));
             where.replaceChildren("Im Alltag: ", s.h("b", null, p[2]), " siehst du gleich mehrere.");
-            plEmo.replaceChildren(...[0, 1, 2, 3].map(() => s.h("span", { class: "later" }, p[0])));
+            const plPic = pic(plId); plPic.classList.add("later");
+            plEmo.replaceChildren(plPic);
             s.show(sgEmo, "zoom"); s.show(sgW, "pop");
-            s.sfx.pop();
-            const kids = [...plEmo.children];
-            for (let k = 0; k < kids.length; k++) { if (!s.alive || cur !== i) return; s.show(kids[k], "pop"); s.sfx.count(k + 2); await s.wait(140); }
+            if (snd) s.sound(snd, { vol: 0.7 }); else s.sfx.pop();
+            await s.wait(450);
+            if (!s.alive || cur !== i) return;
+            s.sfx.whoosh(); s.show(plPic, "zoom");
             await s.show(plW, "pop"); bump(s, plW);
           }
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: "24px", height: "100%" } },
@@ -364,7 +377,9 @@
           const btns = K.map((k, i) => s.h("button", { class: "btn d1btn2", onclick: () => { s.sfx.click(); pick(i); } }, s.h("span", null, (i + 1) + ". " + k[0]), s.h("small", null, k[1])));
           const q = s.h("p", { class: "d1q" }, "");
           const sent = s.h("p", { class: "big", style: { fontSize: "36px" } });
-          const card = ex(s, "Aus dem Spielbericht", s.h("div", { class: "stack", style: { gap: "10px", minHeight: "110px" } }, q, sent));
+          const card = ex(s, "Aus dem Spielbericht", s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 300px", gap: "18px", alignItems: "center" } },
+            s.h("div", { class: "stack", style: { gap: "10px", minHeight: "110px" } }, q, sent),
+            s.photo("torwart", { w: 300, h: 180, pos: "40% 50%" })));
           const rows = [["Nominativ", "Wer oder was?", "der Torwart", "die Mannschaft", "das Tor"], ["Genitiv", "Wessen?", "des Torwarts", "der Mannschaft", "des Tores"], ["Dativ", "Wem?", "dem Torwart", "der Mannschaft", "dem Tor"], ["Akkusativ", "Wen oder was?", "den Torwart", "die Mannschaft", "das Tor"]];
           const head = ["Fall", "Frage", "maskulin", "feminin", "neutral"].map(t => s.h("div", { class: "hd" }, t));
           const cells = rows.map(r => r.map((t, j) => {
@@ -386,7 +401,7 @@
             sent.replaceChildren(...(pre ? [pre] : []), phrase, post);
             if (!pre) { /* Satzanfang: Großbuchstabe */ artEl.textContent = art[0].toUpperCase() + art.slice(1); }
             q.textContent = "";
-            s.sfx.whoosh();
+            [() => s.sound("whistle", { vol: 0.6 }), () => s.sfx.whoosh(), () => s.sfx.swoosh(), () => s.sound("crowd-cheer", { vol: 0.5, dur: 2.5, fade: 0.6 })][i]();
             await s.show(sent, "fade");
             s.sfx.scribble();
             q.textContent = k[2];
@@ -408,20 +423,25 @@
         say: "Verben sagen, was jemand tut oder was passiert. Die Grundform heißt Infinitiv. Sie endet auf e n oder n.",
         build(s) {
           const sets = [
-            ["⚽", "Fußball", [["lauf", "en"], ["schieß", "en"], ["jubel", "n"]]],
-            ["🍳", "Küche", [["schneid", "en"], ["rühr", "en"], ["back", "en"]]],
-            ["🚇", "U-Bahn", [["einsteig", "en"], ["fahr", "en"], ["umsteig", "en"]]],
+            [["fussball-zweikampf", "ball-kick"], "Fußball", [["lauf", "en"], ["schieß", "en"], ["jubel", "n"]]],
+            [["gemuese-schneiden", "sizzle"], "Küche", [["schneid", "en"], ["rühr", "en"], ["back", "en"]]],
+            [["ubahn-bahnsteig", "ubahn-train"], "U-Bahn", [["einsteig", "en"], ["fahr", "en"], ["umsteig", "en"]]],
           ];
           const ends = [];
-          const cards = sets.map(([e, t, vs], i) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "12px", alignItems: "center", padding: "16px" } },
-            s.h("div", { class: "row", style: { gap: "10px" } }, s.h("span", { style: { fontSize: "38px", lineHeight: "1" } }, e), s.h("span", { class: "h2" }, t)),
-            vs.map(([st, en]) => { const end = s.h("span", { class: "d1word" }, en); ends.push(end); const c = chip(s, "", "v", "l"); c.append(st, end); c.style.width = "250px"; return c; })));
+          const PH = [s.photo("fussball-zweikampf", { w: "100%", h: 112, caption: "Fußball" }), s.photo("gemuese-schneiden", { w: "100%", h: 112, caption: "Küche" }), s.photo("ubahn-bahnsteig", { w: "100%", h: 112, caption: "U-Bahn" })];
+          s.preload("ball-kick", "sizzle", "ubahn-train");
+          const cards = sets.map(([, t, vs], i) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "10px", alignItems: "center", padding: "12px 14px" } },
+            PH[i],
+            vs.map(([st, en]) => { const end = s.h("span", { class: "d1word" }, en); ends.push(end); const c = chip(s, "", "v"); c.append(st, end); c.style.width = "250px"; return c; })));
           const top = s.h("p", { class: "t" }, "Verben schreibt man klein – außer am Satzanfang. Frag: ", s.h("b", null, "Was tut jemand? Was passiert?"));
           const merk = s.h("div", { class: "merk later" }, "Die Grundform heißt ", s.h("b", null, "Infinitiv"), ". Sie besteht aus ", s.h("b", null, "Stamm + Endung"), " und endet auf ", s.h("b", { class: "red" }, "-en"), " oder ", s.h("b", { class: "red" }, "-n"), " (jubel", s.h("b", { class: "red" }, "n"), ").");
           const lf = life(s, "Im Alltag", s.h("p", { class: "t" }, "Auf Schildern und in Rezepten steht oft der Infinitiv: ", s.h("b", { class: "red" }, "„Bitte nicht rauchen“"), ", ", s.h("b", { class: "red" }, "„Teig gut verrühren“"), "."));
           lf.classList.add("later");
           s.add(s.h("div", { class: "stack", style: { gap: "18px", height: "100%" } }, top, s.h("div", { class: "cols3", style: { gap: "18px" } }, cards), merk, lf));
-          s.show(cards, "up"); [0, 1, 2].forEach(i => setTimeout(() => s.alive && s.sfx.pop(), i * 120));
+          const snd = (i, o) => s.sound(sets[i][0][1], o);
+          s.show(cards[0], "up"); snd(0, { vol: 0.8 });
+          s.step(async () => { snd(1, { vol: 0.5, dur: 2.5, fade: 0.6 }); await s.show(cards[1], "up"); s.say("In der Küche: schneiden, rühren, backen."); });
+          s.step(async () => { snd(2, { vol: 0.5, dur: 3, fade: 0.8 }); await s.show(cards[2], "up"); s.say("In der U-Bahn: einsteigen, fahren, umsteigen."); });
           s.step(async () => {
             s.say("Jetzt trennen wir den Stamm von der Endung.");
             for (let i = 0; i < ends.length; i++) {
@@ -467,13 +487,13 @@
             s.h("div", { class: "d1bub" }, s.h("b", { class: "red" }, "Fährst"), " du morgen mit der U-Bahn?"),
             s.h("div", { class: "d1bub me" }, "Ja, ich ", s.h("b", { class: "red" }, "fahre"), " mit der U8. Und du?"),
             s.h("div", { class: "d1bub" }, "Ich ", s.h("b", { class: "red" }, "lese"), " lieber im Bus. Mein Bruder ", s.h("b", { class: "red" }, "liest"), " Comics."));
-          const chat = life(s, "Im Alltag: Chat", bubbles);
+          const chat = life(s, "Im Alltag: Chat", s.photo("u8", { w: "100%", h: 150, caption: "Die U8 in Berlin", pos: "50% 45%" }), bubbles);
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Die Endung zeigt die Person: ich spiel", s.h("b", { class: "red" }, "e"), ", du spiel", s.h("b", { class: "red" }, "st"), ", er spiel", s.h("b", { class: "red" }, "t"), ". Manche Verben ändern auch den Stamm: du f", s.h("b", { class: "orange" }, "ä"), "hrst, du l", s.h("b", { class: "orange" }, "ie"), "st.");
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", height: "100%" } }, s.h("div", null, table), s.h("div", { class: "stack", style: { gap: "14px" } }, chat, merk)));
           s.sfx.pop();
           s.step(async () => { s.say("Ich spiele, du spielst, er spielt, wir spielen, ihr spielt, sie spielen."); await drop("spielen"); });
           s.step(async () => { s.say("Bei fahren ändert sich bei du und er der Stamm. Du fährst."); await setVerb("fahren"); });
-          s.step(async () => { s.sfx.pop(); await s.show(chat, "up"); await s.show(bubbles, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { s.sound("ubahn-train", { vol: 0.5, dur: 3, fade: 0.8 }); await s.show(chat, "up"); await s.show(bubbles, "up"); s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 9 ------------------------------------------------------------------ */
@@ -507,7 +527,10 @@
             r.toks.z.style.color = "var(--red)"; bump(s, r.toks.v, 0.2); s.sfx.ding();
             s.say(["Du nimmst wird zu Nimm!", "Ihr nehmt wird zu Nehmt!", "Sie nehmen wird zu Nehmen Sie!"][i]);
           }));
-          s.step(async () => { for (const c of lifeCards) { s.sfx.pop(); s.show(c, "up"); await s.wait(180); } await s.wait(300); s.sfx.ding(); await s.show(merk, "up"); });
+          s.preload("ei-aufschlagen", "whistle", "ubahn-train");
+          const lifeSnd = [["ei-aufschlagen", { vol: 0.7 }], ["whistle", { vol: 0.6 }], ["ubahn-train", { vol: 0.5, dur: 3, fade: 0.8 }]];
+          lifeCards.forEach((c, i) => s.step(async () => { s.sound(...lifeSnd[i]); await s.show(c, "up"); s.say(["Im Rezept: Nimm drei Eier!", "Beim Training: Lauft los!", "In der U-Bahn: Steigen Sie bitte ein!"][i]); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 10 ----------------------------------------------------------------- */
@@ -549,14 +572,14 @@
           pool.after(hint);
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", height: "100%", alignItems: "start" } },
             menu,
-            s.h("div", { class: "stack", style: { gap: "14px" } }, two, lf, merk)));
+            s.h("div", { class: "stack", style: { gap: "14px" } }, s.photo("tomatensuppe", { w: "100%", h: 190, caption: "eine heiße Tomatensuppe", pos: "50% 55%" }), two, lf, merk)));
           s.show(adj, "pop"); s.sfx.pop();
           L.forEach(([, n, a, end], i) => s.step(async () => {
             s.sfx.whoosh();
             await fly(s, adj[i], slots[i]);
             slots[i].classList.add("full");
             const e = s.h("span", { class: "d1end" }, end);
-            adj[i].append(e); s.sfx.snap(); bump(s, adj[i]);
+            adj[i].append(e); if (i === 2) s.sound("sizzle", { vol: 0.5, dur: 2.2, fade: 0.6 }); else s.sfx.snap(); bump(s, adj[i]);
             s.say((L[i][0] ? L[i][0] + " " : "") + a + end + " " + n);
           }));
           s.step(async () => { s.sfx.pop(); await s.show(two, "up"); s.say("Die Suppe ist heiß. Aber vor dem Nomen sagt man die heiße Suppe."); });
@@ -624,6 +647,34 @@
           }));
           s.step(async () => { s.sfx.pop(); await s.show(grid, "up"); s.say("Positiv, Komparativ, Superlativ. Gut, besser, am besten ist unregelmäßig."); });
           s.step(async () => { s.sfx.pop(); await s.show(sents, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 11b ---------------------------------------------------------------- */
+      {
+        title: "Hoch, höher … in echt",
+        say: "So sehen die drei Bauwerke in echt aus. Hoch, höher, am höchsten.",
+        build(s) {
+          const T = [
+            ["brandenburger-tor", "Brandenburger Tor", "26 m", "hoch", "50% 50%", ["footsteps", { vol: 0.6 }], ["Das Brandenburger Tor ist ", "hoch", "."]],
+            ["siegessaeule", "Siegessäule", "67 m", "höher", "50% 40%", ["traffic", { vol: 0.4, dur: 3, fade: 0.8 }], ["Die Siegessäule ist ", "höher", " als das Tor."]],
+            ["fernsehturm-rathaus", "Fernsehturm", "368 m", "am höchsten", "50% 30%", ["tram-bell", { vol: 0.5, dur: 3, fade: 0.8 }], ["Der Fernsehturm ist ", "am höchsten", "."]],
+          ];
+          s.preload("footsteps", "traffic", "tram-bell");
+          const FIG = [s.photo("brandenburger-tor", { w: 340, h: 380, caption: "Brandenburger Tor · 26 m" }), s.photo("siegessaeule", { w: 340, h: 380, pos: "50% 45%", caption: "Siegessäule · 67 m" }), s.photo("fernsehturm-rathaus", { w: 340, h: 380, pos: "50% 30%", caption: "Fernsehturm · 368 m" })];
+          const cols = T.map(([, , , w, , , sent], i) => {
+            const fig = FIG[i];
+            const word = s.h("p", { class: "hand", style: { fontSize: "40px", color: "var(--green)", textAlign: "center", margin: 0 } }, w);
+            const line = s.h("p", { class: "t", style: { textAlign: "center", fontSize: "22px" } }, sent[0], s.h("b", { class: "green" }, sent[1]), sent[2]);
+            const col = s.h("div", { class: "stack later", style: { gap: "8px", alignItems: "center" } }, fig, word, line);
+            return col;
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Positiv ", s.h("b", null, "hoch"), " → Komparativ ", s.h("b", null, "höher"), " → Superlativ ", s.h("b", null, "am höchsten"), ". Der Fernsehturm steht am Alexanderplatz.");
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, s.h("div", { class: "cols3", style: { gap: "20px" } }, cols), merk));
+          T.forEach((x, i) => {
+            const go = async () => { s.sound(...x[5]); await s.show(cols[i], "up"); s.say(x[6].join("")); };
+            if (i === 0) go(); else s.step(go);
+          });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 12 ----------------------------------------------------------------- */
@@ -703,13 +754,13 @@
             if (id !== busy) return;
             T.layer.append(ball);
             frontFace.setAttribute("opacity", T.see ? 0.35 : 1);
-            s.sfx.boing();
+            s.sound("ball-aufprall", { vol: 0.8 });
             s.say("Der Ball liegt " + p + " der Kiste.");
           }
           const btns = Object.keys(POS).map(p => s.h("button", { class: "btn", style: { fontSize: "24px" }, onclick: () => { s.sfx.click(); go(p); } }, p));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Frage ", s.h("b", null, "Wo?"), " → nach der Präposition steht der Dativ: auf ", s.h("b", null, "der"), " Kiste, unter ", s.h("b", null, "dem"), " Tisch.");
           const lf = life(s, "Im Alltag",
-            s.h("p", { class: "t", style: { fontSize: "22px" } }, "Die U-Bahn fährt ", s.h("b", { style: { color: WT.pp.c } }, "unter"), " der Stadt."),
+            s.photo("ubahn-bahnsteig", { w: "100%", h: 160, caption: "Die U-Bahn fährt unter der Stadt.", pos: "50% 55%" }),
             s.h("p", { class: "t", style: { fontSize: "22px" } }, "Das Handy liegt ", s.h("b", { style: { color: WT.pp.c } }, "neben"), " dem Teller."),
             s.h("p", { class: "t", style: { fontSize: "22px" } }, "Der Ball landet ", s.h("b", { style: { color: WT.pp.c } }, "hinter"), " dem Tor."));
           lf.classList.add("later");
@@ -718,7 +769,7 @@
             s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "cols3", style: { gap: "10px" } }, btns), merk, lf)));
           s.show(svg, "zoom"); s.sfx.pop();
           ["auf", "unter", "in", "hinter", "vor"].forEach(p => s.step(async () => { await go(p); }));
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sfx.pop(); await s.show(lf, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sound("ubahn-train", { vol: 0.45, dur: 3, fade: 0.8 }); await s.show(lf, "up"); });
         },
       },
       /* 14 ----------------------------------------------------------------- */
@@ -748,8 +799,10 @@
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Nach ", s.h("b", null, "weil"), " und ", s.h("b", null, "dass"), " rutscht das Verb ans Ende. Vor ", s.h("b", null, "aber, weil, dass"), " steht ein Komma.");
           s.add(s.h("div", { class: "stack", style: { gap: "10px", height: "100%" } }, rows.map(r => r.el), merk));
           s.show(rows.map(r => r.el), "left"); s.sfx.whoosh();
+          s.preload("gitarre-akkord", "bike-bell", "whistle", "ubahn-announce");
+          const rowSnd = [["gitarre-akkord", { vol: 0.6 }], ["bike-bell", { vol: 0.6 }], ["whistle", { vol: 0.6 }], ["ubahn-announce", { vol: 0.5, dur: 3, fade: 0.8 }], null];
           rows.forEach((r, i) => s.step(async () => {
-            s.sfx.whoosh();
+            if (rowSnd[i]) s.sound(...rowSnd[i]); else s.sfx.whoosh();
             await morph(s, r.row, r.toks, r.state, { arc: 36, dur: 800 });
             s.sfx.snap(); bump(s, r.toks.K, 0.25);
             s.say(["Lea spielt Gitarre und Tom spielt Schlagzeug.", "Nimmst du die U-Bahn oder fährst du mit dem Rad?", "Das Spiel war spannend, aber wir haben verloren.", "Ich komme später, weil die U-Bahn Verspätung hat. Schau, das Verb rutscht ans Ende.", "Ich hoffe, dass du morgen kommst. Auch hier steht das Verb am Ende."][i]);
@@ -779,7 +832,7 @@
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Adverbien bekommen ", s.h("b", null, "keine Endung"), " und keinen Artikel. Frag: ", s.h("b", null, "Wann? Wo? Wie?"));
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, s.h("div", { class: "cols3", style: { gap: "16px" } }, cards), cmp, merk));
           s.sfx.pop();
-          cards.forEach((c, i) => s.step(async () => { s.sfx.pop(); await s.show(c, "up"); s.say(["Wann? Heute, morgen, gleich.", "Wo? Hier, dort, draußen.", "Wie? Gern, leider, sehr."][i]); }));
+          cards.forEach((c, i) => s.step(async () => { [() => s.sound("clock-tick", { vol: 0.6, dur: 2, fade: 0.4 }), () => s.sound("birds", { vol: 0.45, dur: 3, fade: 0.8 }), () => s.sfx.pop()][i](); await s.show(c, "up"); s.say(["Wann? Heute, morgen, gleich.", "Wo? Hier, dort, draußen.", "Wie? Gern, leider, sehr."][i]); }));
           s.step(async () => {
             s.sfx.pop(); await s.show(cmp, "up");
             const forms = [["der", "schöne", "Tag"], ["am", "schönen", "Tag"], ["ein", "schönes", "Spiel"]];
@@ -827,7 +880,7 @@
           s.show(textBox, "up"); s.sfx.pop();
           s.step(async () => { await toggle("n", true); });
           s.step(async () => { await toggle("v", true); });
-          s.step(async () => { for (const k of ["art", "adj", "pr", "pp", "k", "adv"]) { await toggle(k, true); await s.wait(300); } s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { for (const k of ["art", "adj", "pr", "pp", "k", "adv"]) { await toggle(k, true); await s.wait(300); } s.sound("crowd-cheer", { vol: 0.45, dur: 2.5, fade: 0.6 }); await s.show(merk, "up"); });
         },
       },
     ],

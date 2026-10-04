@@ -86,7 +86,7 @@
           s.show(svg, "zoom"); s.sfx.whoosh();
           let boatsOn = false;
           s.step(async () => {
-            s.sfx.whoosh(); s.show(strip, "fade"); await s.show(nile, "draw"); s.show(arms, "draw"); s.show(delta, "fade"); s.show(nileLbl, "pop"); s.sfx.ding();
+            s.sound("fluss", { vol: .4, dur: 5 }); s.show(strip, "fade"); await s.show(nile, "draw"); s.show(arms, "draw"); s.show(delta, "fade"); s.show(nileLbl, "pop"); s.sfx.ding();
             if (!boatsOn) {
               boatsOn = true;
               const b = [0, .33, .66].map(() => s.el("path", { d: "M-9 0 L9 0 L5 6 L-5 6 Z M0 0 L0 -12 L7 -3 Z", fill: "#8a4b12" }));
@@ -176,6 +176,8 @@
             if (k === "abu") { v.append(s.el("rect", { x: 10, y: 20, width: 150, height: 74, fill: "#e8c98f", stroke: INK, "stroke-width": 2 })); [30, 62, 98, 130].forEach(x => v.append(s.el("rect", { x: x - 10, y: 46, width: 22, height: 44, fill: "#c99a55" }), s.el("circle", { cx: x + 1, cy: 38, r: 10, fill: "#c99a55" }))); }
             return v;
           };
+          const PH = { pyr: "pyramiden-gizeh", ship: "hatschepsut", aton: "echnaton-altar", mask: "tut-maske", abu: "abu-simbel" };
+          const PP = { ship: "50% 20%", mask: "50% 25%", aton: "50% 30%" };
           const lines = [], dots = [], cards = [];
           people.forEach((p, i) => {
             const cx = colW / 2 + i * (colW + 16);
@@ -183,7 +185,7 @@
             dots.push(later(s.el("circle", { cx: x, cy: 64, r: 10, fill: "#a21caf", stroke: "#fff", "stroke-width": 3 })));
             lines.push(later(s.el("path", { d: `M${x} 74 C${x} 110 ${cx} 100 ${cx} 140`, stroke: "#a21caf", "stroke-width": 3, fill: "none", "stroke-dasharray": "6 5" })));
             cards.push(later(s.h("div", { class: "card", style: { padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", alignItems: "center", textAlign: "center" } },
-              icon(p.ic), s.h("p", { class: "h2", style: { fontSize: "25px" } }, p.n), s.h("span", { class: "chip", style: { fontSize: "19px", whiteSpace: "nowrap" } }, p.d), s.h("p", { class: "small" }, p.t))));
+              s.photo(PH[p.ic], { w: "100%", h: 130, pos: PP[p.ic] || "50% 40%" }), s.h("p", { class: "h2", style: { fontSize: "25px" } }, p.n), s.h("span", { class: "chip", style: { fontSize: "19px", whiteSpace: "nowrap" } }, p.d), s.h("p", { class: "small" }, p.t))));
           });
           svg.append(...lines, ...dots);
           s.add(s.h("div", { class: "stack", style: { gap: "0" } }, svg, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "16px", alignItems: "start" } }, ...cards)));
@@ -196,41 +198,19 @@
         title: "Nofretete und Tutanchamun",
         say: "Zwei Schätze aus Ägypten sind weltberühmt: die Büste der Nofretete und das Grab von Tutanchamun.",
         build(s) {
-          const nef = s.svg(300, 300);
-          nef.append(s.el("rect", { x: 0, y: 0, width: 300, height: 300, rx: 20, fill: "#f7e3f9" }),
-            s.el("path", { d: "M70 300 C70 250 110 232 150 232 C190 232 230 250 230 300 Z", fill: "#c98d55" }),
-            s.el("path", { d: "M88 268 C120 244 180 244 212 268", stroke: "#2f9a6a", "stroke-width": 10, fill: "none" }), s.el("path", { d: "M80 284 C120 258 180 258 220 284", stroke: RED, "stroke-width": 8, fill: "none" }),
-            s.el("rect", { x: 132, y: 178, width: 36, height: 60, fill: "#c98d55" }),
-            s.el("ellipse", { cx: 150, cy: 150, rx: 40, ry: 50, fill: "#d9a066" }),
-            s.el("path", { d: "M104 128 L96 34 C96 22 204 22 204 34 L196 128 Z", fill: "#2f5fb0", stroke: INK, "stroke-width": 3 }),
-            s.el("path", { d: "M100 92 L200 92", stroke: GOLD, "stroke-width": 8 }),
-            s.el("path", { d: "M128 146 L142 146 M158 146 L172 146", stroke: INK, "stroke-width": 4, "stroke-linecap": "round" }),
-            s.el("path", { d: "M140 176 Q150 182 160 176", stroke: "#a2382a", "stroke-width": 4, fill: "none" }));
-          const tomb = s.svg(300, 300);
-          const mask = s.el("g", null, s.el("rect", { x: 0, y: 0, width: 300, height: 300, rx: 20, fill: "#2a2116" }),
-            s.el("path", { d: "M70 290 L82 110 C88 50 212 50 218 110 L230 290 Z", fill: GOLD }),
-            s.el("path", { d: "M82 140 L104 140 M82 172 L104 172 M82 204 L104 204 M82 236 L104 236 M196 140 L218 140 M196 172 L218 172 M196 204 L218 204 M196 236 L218 236", stroke: "#2f5fb0", "stroke-width": 12 }),
-            s.el("ellipse", { cx: 150, cy: 150, rx: 44, ry: 54, fill: "#f2c14e" }),
-            s.el("path", { d: "M124 140 L142 140 M158 140 L176 140", stroke: "#1b2740", "stroke-width": 6, "stroke-linecap": "round" }),
-            s.el("path", { d: "M138 208 L162 208 L158 260 L142 260 Z", fill: "#2f5fb0" }));
-          const doorL = s.el("rect", { x: 0, y: 0, width: 150, height: 300, fill: "#8a6a44", stroke: "#5a4024", "stroke-width": 4 });
-          const doorR = s.el("rect", { x: 150, y: 0, width: 150, height: 300, fill: "#8a6a44", stroke: "#5a4024", "stroke-width": 4 });
-          const seal = s.el("circle", { cx: 150, cy: 150, r: 22, fill: RED });
-          tomb.append(mask, doorL, doorR, seal);
+          const nef = s.photo("nofretete", { w: 250, h: 330, pos: "50% 35%" });
+          const tomb = s.photo("tut-maske", { w: 250, h: 330, pos: "50% 30%", cls: "later" });
           const left = s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "250px 1fr", gap: "18px", alignItems: "center", height: "100%" } }, nef,
             s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("p", { class: "h2" }, "Nofretete"), s.h("p", { class: "small" }, "Frau von Echnaton. Ihre bemalte Büste ist über 3.300 Jahre alt."), s.h("p", { class: "small" }, s.h("b", null, "Gefunden:"), " 6. Dezember 1912 in Amarna")));
           const right = later(s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "250px 1fr", gap: "18px", alignItems: "center", height: "100%" } }, tomb,
             s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("p", { class: "h2" }, "Tutanchamun"), s.h("p", { class: "small" }, s.h("b", null, "4. November 1922:"), " Howard Carter findet sein Grab im Tal der Könige."), s.h("p", { class: "small" }, "Darin: die goldene Totenmaske."))));
           const life = later(s.h("div", { class: "life", style: { gridColumn: "1 / 3" } }, s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("p", { class: "t" }, "Nofretete „wohnt“ in Berlin! Seit 2009 steht sie im ", s.h("b", null, "Neuen Museum auf der Museumsinsel"), ". Du kannst sie besuchen.")));
-          nef.setAttribute("width", 250); nef.setAttribute("height", 250); tomb.setAttribute("width", 250); tomb.setAttribute("height", 250);
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "28px", height: "100%", alignContent: "center", alignItems: "stretch" } },
             s.h("div", { class: "a-left" }, left), right, life));
           s.sfx.whoosh();
           s.step(async () => {
-            s.sfx.pop(); await s.show(right, "up"); s.sfx.drum();
-            await s.wait(300); s.hide(seal); s.sfx.whoosh();
-            await s.tween({ dur: 1100, ease: "inOut", update: v => { doorL.setAttribute("transform", `translate(${-150 * v} 0)`); doorR.setAttribute("transform", `translate(${150 * v} 0)`); doorL.setAttribute("opacity", 1 - v); doorR.setAttribute("opacity", 1 - v); } });
-            s.sfx.success(); s.say("Gold! Hinter der Tür lag ein unglaublicher Schatz.");
+            s.sound("door-creak", { vol: .5 }); await s.show(right, "up");
+            s.sound("magic-chime", { vol: .5 }); await s.show(tomb, "zoom"); s.say("Gold! Hinter der Tür lag ein unglaublicher Schatz.");
           });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); s.say("Nofretete steht im Neuen Museum in Berlin."); });
         },
@@ -297,6 +277,20 @@
           });
         },
       },
+      /* 5b --------------------------------------------------------------- */
+      {
+        title: "Gizeh in echt",
+        say: "So sehen die Pyramiden von Gizeh heute aus. Ganz nah merkst du, wie riesig jeder Steinblock ist.",
+        build(s) {
+          const f1 = s.photo("pyramiden-gizeh", { w: 640, h: 390, caption: "Die Pyramiden von Gizeh", kb: true });
+          const f2 = s.photo("cheops-bloecke", { w: 440, h: 390, caption: "Cheops-Pyramide: Block auf Block", cls: "later", pos: "40% 60%" });
+          const f3 = s.photo("sphinx-pyramiden", { w: 1100, h: 210, caption: "Vorne die Sphinx: ein Löwe mit Menschenkopf", cls: "later", pos: "50% 60%" });
+          s.add(s.h("div", { class: "stack", style: { gap: "18px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "20px" } }, f1, f2), f3));
+          s.show(f1, "fade"); s.sound("wind", { vol: .35, dur: 6 });
+          s.step(async () => { s.sound("stein-schieben", { vol: .5 }); await s.show(f2, "zoom"); s.say("Jeder Steinblock ist riesig und tonnenschwer."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(f3, "up"); s.say("Vor den Pyramiden liegt die große Sphinx."); });
+        },
+      },
       /* 6 ---------------------------------------------------------------- */
       {
         title: "Wie kamen die Steine nach oben?",
@@ -336,8 +330,8 @@
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "22px" } }, "Wie genau es war, weiß niemand sicher. Forscher streiten bis heute!"));
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } },
             s.h("div", { class: "cols3", style: { gap: "18px" } }, ...sc.map(o => o.card)), boatCard, merk));
-          sc.forEach((o, i) => s.step(async () => { s.sfx.whoosh(); await s.show(o.card, "up"); runOn(o); s.sfx.pop(); s.say(kinds[i][1] + ". " + kinds[i][2]); }));
-          s.step(async () => { s.sfx.pop(); await s.show(boatCard, "up"); s.sfx.swoosh(); s.loop(t => { ship.setAttribute("transform", `translate(${100 + ((t * 60) % 400)} ${Math.sin(t * 3) * 2})`); }); });
+          sc.forEach((o, i) => s.step(async () => { s.sound("stein-schieben", { vol: .45, dur: 2.5 }); await s.show(o.card, "up"); runOn(o); s.sfx.pop(); s.say(kinds[i][1] + ". " + kinds[i][2]); }));
+          s.step(async () => { s.sound("ruder", { vol: .5 }); await s.show(boatCard, "up"); s.loop(t => { ship.setAttribute("transform", `translate(${100 + ((t * 60) % 400)} ${Math.sin(t * 3) * 2})`); }); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "pop"); });
         },
       },
@@ -372,8 +366,8 @@
           s.show(svg, "fade"); s.sfx.pop();
           s.loop(t => { team.setAttribute("transform", `translate(${Math.sin(t * 2.4) * 6} 0)`); smoke.forEach((c, i) => { const k = (t * .4 + i / 3) % 1; c.setAttribute("cy", 250 - k * 90); c.setAttribute("cx", 70 + Math.sin(k * 6) * 8); c.setAttribute("opacity", .5 * (1 - k)); }); });
           s.step(async () => { s.sfx.error(); await s.show(pts[0], "left"); s.sfx.snap(); s.show(lblTeam, "pop"); s.say("Keine Sklaven: Die Arbeiter hatten eine eigene Stadt."); });
-          s.step(async () => { s.sfx.coin(); s.show(lblVillage, "pop"); await s.show(pts[1], "left"); });
-          s.step(async () => { s.sfx.drum(); s.show(water, "pop"); await s.show(pts[2], "left"); });
+          s.step(async () => { s.sound("fire", { vol: .45, dur: 3 }); s.show(lblVillage, "pop"); await s.show(pts[1], "left"); });
+          s.step(async () => { s.sound("meissel", { vol: .45, dur: 2.5 }); s.show(water, "pop"); await s.show(pts[2], "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(pts[3], "left"); s.sfx.ding(); s.show(life, "up"); });
         },
       },
@@ -395,10 +389,10 @@
           };
           const gods = [["re", "Re", "Sonnengott. Der Pharao hieß „Sohn des Re“."], ["osiris", "Osiris", "Gott der Toten, König im Jenseits."], ["isis", "Isis", "Frau des Osiris, Mutter des Horus. Ihr Zeichen: ein Thron."], ["horus", "Horus", "Himmelsgott mit Falkenkopf. Sein Zeichen: das Horusauge."], ["anubis", "Anubis", "Gott mit Schakalkopf. Er wacht über Mumien und Gräber."], ["thot", "Thot", "Gott mit Ibiskopf. Gott der Schrift und Weisheit."]];
           let reSvg = null;
-          const cards = gods.map(([k, n, t]) => { const v = sym(k); if (k === "re") reSvg = v; return later(s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "110px 1fr", gap: "14px", alignItems: "center", padding: "12px 14px" } }, v, s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("p", { class: "h2", style: { fontSize: "27px", color: "var(--unit)" } }, n), s.h("p", { class: "small" }, t)))); });
+          const GP = { re: ["gott-re", "60% 30%"], osiris: ["gott-osiris", "50% 30%"], isis: ["gott-isis", "60% 25%"], horus: ["gott-horus", "50% 30%"], anubis: ["gott-anubis", "40% 50%"], thot: ["gott-thot", "35% 50%"] };
+          const cards = gods.map(([k, n, t]) => { const v = s.photo(GP[k][0], { w: 130, h: 180, pos: GP[k][1] }); return later(s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "130px 1fr", gap: "14px", alignItems: "center", padding: "12px 14px" } }, v, s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("p", { class: "h2", style: { fontSize: "27px", color: "var(--unit)" } }, n), s.h("p", { class: "small" }, t)))); });
           const merk = later(s.h("div", { class: "merk" }, "Viele Götter statt einem. Jeder Gott hat eine ", s.h("b", null, "Aufgabe"), " und ein ", s.h("b", null, "Erkennungszeichen"), " – wie ein Tierkopf oder ein Zeichen auf dem Kopf."));
           s.add(s.h("div", { class: "stack", style: { gap: "18px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { gap: "16px" } }, ...cards), merk));
-          s.loop(t => { if (reSvg) reSvg.rays.setAttribute("transform", `rotate(${t * 20} 55 55)`); });
           s.sfx.chord([0, 4, 7]);
           for (let p = 0; p < 3; p++) s.step(async () => { s.sfx.pop(); s.show(cards[p * 2], "pop"); await s.wait(200); s.sfx.pop(); await s.show(cards[p * 2 + 1], "pop"); s.say(gods[p * 2][1] + " und " + gods[p * 2 + 1][1] + "."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
@@ -448,7 +442,7 @@
           const countTo = (a, b, dur) => s.tween({ from: a, to: b, dur, ease: "linear", update: v => { const n = Math.round(v); if (day.textContent !== String(n)) { day.textContent = n; if (n % 5 === 0) s.sfx.tick(); } } });
           s.step(async () => { s.sfx.whoosh(); s.show(li[0], "left"); await s.show(drops, "down"); await s.wait(200); s.hide(drops); countTo(0, 1, 300); });
           s.step(async () => { s.sfx.pop(); s.show(li[1], "left"); await s.show(jars, "bounce"); s.sfx.ding(); s.show(heart, "pop"); s.show(heartL, "fade"); s.say("Das Herz blieb im Körper. Es war für das Totengericht wichtig."); });
-          s.step(async () => { s.sfx.scribble(); s.hide([heart, heartL]); s.show(li[2], "left"); await s.show(salt, "fade"); await countTo(1, 40, 1800); });
+          s.step(async () => { s.sound("korn-schuetten", { vol: .45 }); s.hide([heart, heartL]); s.show(li[2], "left"); await s.show(salt, "fade"); await countTo(1, 40, 1800); });
           s.step(async () => { s.hide(salt); s.show(li[3], "left"); s.show(wrapBase, "fade"); s.sfx.swoosh(); await s.show(bands, "draw"); s.sfx.pop(); s.show(amulet, "pop"); await countTo(40, 60, 700); });
           s.step(async () => { s.sfx.drum(); s.show(li[4], "left"); s.show(coffin, "down"); await s.show(coffinFace, "fade", 300); await countTo(60, 70, 600); s.sfx.ding(); s.show(life, "up"); });
         },
@@ -488,7 +482,7 @@
           const bad = later(s.h("button", { class: "btn", onclick: async () => { s.sfx.click(); await swing(-16); verdict.textContent = "Zu schwer von bösen Taten: Das Monster Ammit frisst das Herz."; s.sfx.error(); } }, "Schweres Herz"));
           const merk = later(s.h("div", { class: "merk", style: { fontSize: "22px" } }, s.h("b", null, "Maat"), " bedeutet Wahrheit, Gerechtigkeit und Ordnung. Wer gerecht lebt, hat ein leichtes Herz."));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "600px 1fr", gap: "26px", height: "100%", alignItems: "center" } }, svg,
-            s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("p", { class: "t a-up" }, "Gott ", s.h("b", null, "Osiris"), " ist der Richter. ", s.h("b", null, "Anubis"), " bedient die Waage, ", s.h("b", null, "Thot"), " schreibt das Ergebnis auf."), s.h("div", { class: "row" }, good, bad), verdict, merk)));
+            s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("p", { class: "t a-up" }, "Gott ", s.h("b", null, "Osiris"), " ist der Richter. ", s.h("b", null, "Anubis"), " bedient die Waage, ", s.h("b", null, "Thot"), " schreibt das Ergebnis auf."), s.photo("totengericht-ani", { w: 460, h: 160, caption: "Echtes Totenbuch des Ani: Anubis wiegt das Herz", pos: "48% 70%" }), s.h("div", { class: "row" }, good, bad), verdict, merk)));
           s.show(svg, "fade"); s.sfx.pop();
           s.step(async () => { s.sfx.pop(); s.show(lH, "fade"); await s.show(heart, "bounce"); s.sfx.pop(); s.show(lF, "fade"); await s.show(feather, "down"); s.show([anubis, thot], "up"); });
           s.step(async () => { s.show([good, bad], "pop"); await swing(0); verdict.textContent = "Gleich schwer! Tippe auf die Knöpfe."; s.sfx.ding(); });
@@ -525,6 +519,18 @@
           s.step(async () => { s.sfx.pop(); await s.show(tut, "up"); await s.tween({ dur: 1500, ease: "out", update: v => { num.textContent = s.fmt(Math.round(v * 5398)); } }); s.sfx.coin(); s.show(life, "up"); });
         },
       },
+      /* 11b -------------------------------------------------------------- */
+      {
+        title: "Grabschätze in echt",
+        say: "Solche Dinge fand man wirklich in ägyptischen Gräbern. Heute stehen sie in Museen.",
+        build(s) {
+          const items = [["kanopen", "Kanopenkrüge", "Darin lagen Leber, Lunge, Magen und Darm.", "50% 55%", "door-creak"], ["sarg-khonsu", "Särge in Menschengestalt", "Die Mumie lag in einem bemalten Sarg aus Holz.", "50% 30%", "knock"], ["senet-brett", "Senet-Spiel", "Ein Spielbrett mit Feldern und Figuren – für die Zeit im Jenseits.", "45% 50%", "stoeckchen"]];
+          const cards = items.map(([id, h, t, pos]) => later(s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "10px", padding: "12px" } }, s.photo(id, { w: "100%", h: 360, pos }), s.h("p", { class: "h2", style: { fontSize: "25px", color: "var(--unit)" } }, h), s.h("p", { class: "small" }, t))));
+          s.add(s.h("div", { class: "cols3", style: { gap: "18px", height: "100%", alignItems: "center" } }, ...cards));
+          s.preload("door-creak", "knock", "stoeckchen");
+          items.forEach((it, i) => s.step(async () => { s.sound(it[4], { vol: .5 }); await s.show(cards[i], "up"); }));
+        },
+      },
       /* 12 --------------------------------------------------------------- */
       {
         title: "Hieroglyphen: Bild oder Laut?",
@@ -548,7 +554,7 @@
           const life = later(s.h("div", { class: "life" }, s.h("span", { class: "exlabel" }, "Im Alltag: Bilderschrift heute"), s.h("p", { class: "t" }, "Emoji 😀 🍕 ⚽, Verkehrsschilder und die Zeichen für WC oder Aufzug am Bahnhof verstehst du ohne Buchstaben.")));
           s.add(s.h("div", { class: "stack", style: { gap: "16px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols", style: { gap: "22px" } }, c1, c2), s.h("div", { class: "row", style: { justifyContent: "center" } }, ...facts), life));
           s.sfx.pop();
-          s.step(async () => { for (const [g, w] of pic.parts) { s.sfx.pop(); s.show(g, "pop"); await s.show(w, "up"); } });
+          s.step(async () => { s.sound("meissel", { vol: .4, dur: 2 }); for (const [g, w] of pic.parts) { s.show(g, "pop"); await s.show(w, "up"); } });
           s.step(async () => { s.sfx.whoosh(); await s.show(c2, "left"); for (const [g, w] of snd.parts) { s.sfx.pop(); s.show(g, "pop"); await s.show(w, "zoom"); } s.say("Der Mund kann also Mund heißen – oder einfach R."); });
           s.step(async () => { s.sfx.snap(); await s.show(facts, "pop"); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
@@ -559,27 +565,24 @@
         title: "Der Stein von Rosette",
         say: "Lange konnte niemand Hieroglyphen lesen. Ein Stein mit drei Schriften half, das Rätsel zu lösen.",
         build(s) {
-          const svg = s.svg(420, 560);
-          svg.append(s.el("path", { d: "M10 26 L150 8 L300 18 L410 26 L410 556 L10 556 Z", fill: "#4a4f5c", stroke: "#2a2e38", "stroke-width": 4 }));
+          const ov = s.svg(420, 492);
           const band = (y, h, col, name) => {
             const g = s.el("g", { class: "later" });
-            g.append(s.el("rect", { x: 30, y, width: 360, height: h, rx: 10, fill: col, opacity: .28 }));
-            g.append(T(s, 46, y + 30, name, { a: "start", fs: 21, fill: "#fff" }));
+            g.append(s.el("rect", { x: 30, y, width: 330, height: h, rx: 10, fill: col, opacity: .22, stroke: col, "stroke-width": 4 }));
+            g.append(T(s, 44, y + 30, name, { a: "start", fs: 21, fill: "#fff", halo: false }));
             return g;
           };
-          const b1 = band(36, 150, "#f2a516", "Hieroglyphen"), b2 = band(200, 150, "#9fd3f0", "Demotisch"), b3 = band(364, 170, "#ffffff", "Griechisch");
-          for (let r = 0; r < 3; r++) for (let c = 0; c < 9; c++) { const k = ["owl", "water", "reed", "bread", "chick", "mouth", "cloth", "foot", "basket"][(r * 4 + c) % 9]; b1.append(sign(s, k, 50 + c * 37, 76 + r * 36, 28, "#f7e7c0")); }
-          const cart = s.el("rect", { x: 230, y: 112, width: 150, height: 40, rx: 20, fill: "none", stroke: GOLD, "stroke-width": 4, class: "later" });
-          b1.append(cart);
-          for (let r = 0; r < 4; r++) b2.append(s.el("path", { d: `M50 ${248 + r * 26} q10 -10 20 0 t20 0 q6 -12 14 -2 t16 4 q10 -8 20 0 t24 0 q8 -10 16 0 t20 0 q12 -6 22 2 t20 -4 q8 8 18 0 t22 2 q10 -8 20 0`, stroke: "#dff1fb", "stroke-width": 3, fill: "none" }));
-          for (let r = 0; r < 5; r++) for (let c = 0; c < 16; c++) { const x = 48 + c * 21, y = 408 + r * 25; b3.append(s.el("path", { d: [`M${x} ${y} L${x + 12} ${y} M${x + 6} ${y} L${x + 6} ${y + 14}`, `M${x} ${y + 14} L${x + 6} ${y} L${x + 12} ${y + 14}`, `M${x + 2} ${y} L${x + 2} ${y + 14} M${x + 2} ${y} L${x + 12} ${y + 7} L${x + 2} ${y + 14}`][(r + c) % 3], stroke: "#f2f2f2", "stroke-width": 2.2, fill: "none" })); }
-          svg.append(b1, b2, b3);
+          const b1 = band(10, 136, "#f2a516", "Hieroglyphen"), b2 = band(150, 170, "#9fd3f0", "Demotisch"), b3 = band(324, 140, "#ffffff", "Griechisch");
+          const cart = later(s.el("rect", { x: 30, y: 10, width: 330, height: 136, rx: 10, fill: "none", stroke: GOLD, "stroke-width": 7 }));
+          ov.append(b1, b2, b3, cart);
+          ov.style.position = "absolute"; ov.style.left = "0"; ov.style.top = "0";
+          const svg = s.h("div", { style: { position: "relative", width: "420px", height: "492px" } }, s.photo("stein-rosette", { w: 420, h: 492 }), ov);
           const tl = [["1799", "Der Stein wird in Ägypten gefunden – bei der Stadt Rosette."], ["196 v. Chr.", "Derselbe Text steht dreimal darauf – in drei Schriften."], ["Vergleichen", "Griechisch konnte man lesen! Die Namen in den Kartuschen – Ptolemaios, Kleopatra – zeigten die Laute."], ["14.9.1822", "Jean-François Champollion ruft: „Ich hab’s!“ Er kann Hieroglyphen lesen."]]
             .map(([a, b]) => later(s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "flex-start", gap: "14px" } }, s.h("span", { class: "chip", style: { minWidth: "150px", justifyContent: "center", background: "var(--unit)", color: "#fff", fontSize: "19px" } }, a), s.h("p", { class: "small", style: { fontSize: "20px" } }, b))));
           const life = later(s.h("div", { class: "life", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Heute"), s.h("p", { class: "small" }, "Der Stein steht seit 1802 im British Museum in London. Dort kannst du ihn ansehen.")));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "420px 1fr", gap: "30px", height: "100%", alignItems: "center" } }, svg, s.h("div", { class: "stack", style: { gap: "14px" } }, ...tl, life)));
-          s.show(svg, "zoom"); s.sfx.drum();
-          s.step(async () => { s.sfx.pop(); await s.show(tl[0], "left"); });
+          s.show(svg, "zoom"); s.sound("stein-schieben", { vol: .4, dur: 2.5 });
+          s.step(async () => { s.sound("kelle-graben", { vol: .5 }); await s.show(tl[0], "left"); });
           s.step(async () => { s.show(tl[1], "left"); for (const b of [b1, b2, b3]) { s.sfx.pop(); await s.show(b, "fade"); } });
           s.step(async () => { s.show(tl[2], "left"); s.sfx.ding(); await s.show(cart, "draw"); s.say("In den Kartuschen standen Königsnamen. So fand man die Laute."); });
           s.step(async () => { s.sfx.fanfare(); await s.show(tl[3], "left"); s.show(life, "up"); });
@@ -655,7 +658,7 @@
             const steps = up === 0 ? 5 : up;
             for (let k = 0; k < steps; k++) { posA = (posA + 1) % 30; s.sfx.count(k + 2); await s.tween({ dur: 220, update: v => { const a = cell((posA + 29) % 30), b = cell(posA); pieceA.setAttribute("transform", `translate(${s.lerp(a.x, b.x, v) + 22} ${s.lerp(a.y, b.y, v) + 27 - Math.sin(v * Math.PI) * 18})`); } }); }
           };
-          const throwBtn = s.h("button", { class: "btn solid", onclick: () => { s.sfx.click(); hop(); } }, "Stäbchen werfen");
+          const throwBtn = s.h("button", { class: "btn solid", onclick: () => { s.sound("stoeckchen", { force: true }); hop(); } }, "Stäbchen werfen");
           const left = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "10px", alignItems: "center", padding: "14px" } },
             s.h("p", { class: "h2" }, "Senet – ein Brettspiel"), board, s.h("p", { class: "small" }, "30 Felder in 3 Reihen. Statt Würfeln: Wurfhölzer."), s.h("div", { class: "row" }, sticks, throwBtn));
           const cards = [
@@ -663,9 +666,9 @@
             ["Spielzeug", "Puppen mit beweglichen Armen und Beinen, Kreisel, Bälle und Holztiere mit beweglichen Teilen."],
             ["Brot und Bier", "Jeden Tag, für alle. Das Bier war dick wie Brei. Dazu Zwiebeln, Linsen, Fisch, Datteln und Feigen."],
           ].map(([a, b]) => later(s.h("div", { class: "ex", style: { padding: "12px 16px" } }, s.h("span", { class: "exlabel" }, a), s.h("p", { class: "small", style: { fontSize: "20px" } }, b))));
-          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "560px 1fr", gap: "26px", height: "100%", alignItems: "center" } }, left, s.h("div", { class: "stack", style: { gap: "14px" } }, ...cards)));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "560px 1fr", gap: "26px", height: "100%", alignItems: "center" } }, left, s.h("div", { class: "stack", style: { gap: "12px" } }, s.photo("senet-nefertari", { w: "100%", h: 190, caption: "Königin Nefertari spielt Senet (Grabbild)", pos: "60% 55%" }), ...cards)));
           s.show(left, "left"); s.sfx.pop();
-          s.step(async () => { await hop(); s.say("Senet spielten Kinder und Erwachsene – sogar Tutanchamun hatte Senet-Spiele im Grab."); });
+          s.step(async () => { s.sound("stoeckchen"); await hop(); s.say("Senet spielten Kinder und Erwachsene – sogar Tutanchamun hatte Senet-Spiele im Grab."); });
           cards.forEach((c, i) => s.step(async () => { s.sfx.count(i * 3); await s.show(c, "left"); }));
         },
       },
@@ -682,10 +685,7 @@
           const total = later(T(s, 260, 140, "= 365", { fs: 24, fill: INK }));
           cal.append(total);
           const calLbls = [...cal.querySelectorAll("text")].filter(t => t.textContent === "30");
-          const museum = s.svg(300, 180);
-          museum.append(s.el("path", { d: "M20 70 L150 20 L280 70 Z", fill: "#e8e2d4", stroke: INK, "stroke-width": 3 }), s.el("rect", { x: 20, y: 160, width: 260, height: 14, fill: "#e8e2d4", stroke: INK, "stroke-width": 3 }));
-          const cols = [50, 100, 150, 200, 250].map(x => later(s.el("rect", { x: x - 10, y: 74, width: 20, height: 86, fill: "#f4f0e6", stroke: INK, "stroke-width": 2 })));
-          museum.append(...cols);
+          const museum = s.photo("neues-museum", { w: 300, h: 180 });
           const emo = s.h("div", { class: "row", style: { justifyContent: "center", fontSize: "52px", gap: "10px", minHeight: "180px" } }, ...["😀", "🍕", "🚇", "⚽"].map(e => later(s.h("span", null, e))));
           const mk = (label, pic, text) => later(s.h("div", { class: "life", style: { display: "flex", flexDirection: "column", gap: "8px", alignItems: "center", textAlign: "center" } }, s.h("span", { class: "exlabel" }, label), pic, s.h("p", { class: "small" }, ...text)));
           const c1 = mk("Museum", museum, ["Im ", s.h("b", null, "Neuen Museum"), " auf der Museumsinsel siehst du Nofretete und viele Schätze aus Ägypten."]);
@@ -694,7 +694,7 @@
           const merk = later(s.h("div", { class: "merk" }, "Ägypten: Pharaonen, Pyramiden, Götter, Mumien und Hieroglyphen – eine Hochkultur am Nil."));
           s.add(s.h("div", { class: "stack", style: { gap: "18px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3" }, c1, c2, c3), merk));
           s.sfx.whoosh();
-          s.step(async () => { s.sfx.pop(); await s.show(c1, "up"); for (const c of cols) { s.sfx.tick(); await s.show(c, "up"); } });
+          s.step(async () => { s.sound("footsteps", { vol: .5, dur: 2.5 }); await s.show(c1, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(c2, "up"); for (let i = 0; i < 12; i++) { s.sfx.count(i); s.show(blocks[i], "pop"); s.show(calLbls[i], "fade"); await s.wait(90); } for (const e of extra) { s.sfx.tick(); await s.show(e, "pop"); } s.sfx.ding(); s.show(total, "zoom"); });
           s.step(async () => { s.sfx.pop(); await s.show(c3, "up"); for (const e of emo.children) { s.sfx.boing(); await s.show(e, "bounce"); } });
           s.step(async () => { s.sfx.fanfare(); await s.show(merk, "up"); });

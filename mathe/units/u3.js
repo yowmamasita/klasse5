@@ -11,6 +11,17 @@
   const pth = (s, d, o) => s.el("path", Object.assign({ d, fill: "none", stroke: INK, "stroke-width": 4, "stroke-linejoin": "round", "stroke-linecap": "round" }, o || {}));
   const setL = (l, x1, y1, x2, y2) => { l.setAttribute("x1", x1); l.setAttribute("y1", y1); l.setAttribute("x2", x2); l.setAttribute("y2", y2); };
   const undraw = el => { el.classList.remove("a-draw"); };
+  /* show a chosen part of a photo (view = [x, y, w, h] in image pixels) with an SVG overlay in image pixel coordinates */
+  function viewFig(s, fig, iw, ih, view, W) {
+    const sc = W / view[2], img = fig.querySelector("img");
+    img.style.visibility = "hidden";   // the visible picture is the figure background (keeps the box free of overflow)
+    Object.assign(fig.style, { backgroundImage: `url("${img.getAttribute("src")}")`, backgroundRepeat: "no-repeat", backgroundSize: `${iw * sc}px ${ih * sc}px`, backgroundPosition: `${-view[0] * sc}px ${-view[1] * sc}px` });
+    const ov = s.svg(view[2], view[3]);
+    ov.setAttribute("viewBox", view.join(" "));
+    Object.assign(ov.style, { position: "absolute", left: 0, top: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "visible" });
+    img.after(ov);
+    return { ov, k: 1 / sc };
+  }
   const box = (s, w, h) => { const svg = s.svg(w, h); svg.append(s.el("rect", { x: 0, y: 0, width: w, height: h, rx: 16, fill: "#fff", stroke: "#ddd5f0", "stroke-width": 2 })); return svg; };
   /** arc / sector path around (cx,cy), angles in degrees, counter-clockwise on screen */
   const arcD = (cx, cy, r, a0, a1, sector) => {
@@ -138,15 +149,18 @@
             svg.append(...parts);
             const names = { strecke: ["Strecke ", s.h("span", { style: { textDecoration: "overline" } }, "AB")], strahl: ["Strahl AB"], gerade: ["Gerade g"] };
             const facts = { strecke: "Hat einen Anfang und ein Ende.", strahl: "Hat einen Anfang, aber kein Ende.", gerade: "Hat weder Anfang noch Ende." };
-            const lives = { strecke: "⚽ Vom Elfmeterpunkt bis zur Torlinie: genau 11 m.", strahl: "🔦 Wie das Licht einer Taschenlampe oder ein Laserstrahl.", gerade: "🚆 Denk dir eine schnurgerade Bahnstrecke – ohne Ende." };
-            const card = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "560px 1fr", gap: "18px", alignItems: "center", padding: "10px 16px" } }, svg,
+            const lives = { strecke: "Vom Elfmeterpunkt bis zur Torlinie: genau 11 m.", strahl: "Wie ein Laserstrahl in den Nachthimmel.", gerade: "Denk dir ein schnurgerades Gleis – ohne Ende." };
+            const PO = { w: 150, h: 140 };
+            const photos = { strecke: () => s.photo("elfmeterpunkt", Object.assign({ pos: "62% 60%" }, PO)), strahl: () => s.photo("laserstrahl", Object.assign({ pos: "55% 30%" }, PO)), gerade: () => s.photo("gleis-gerade", Object.assign({ pos: "50% 70%" }, PO)) };
+            const card = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "560px 150px 1fr", gap: "16px", alignItems: "center", padding: "10px 16px" } }, svg, photos[kind](),
               s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("p", { class: "h2", style: { color: kind === "strecke" ? BLUE : kind === "strahl" ? RED : GREEN } }, ...names[kind]), s.h("p", { class: "t", style: { fontWeight: 700 } }, facts[kind]), s.h("p", { class: "small" }, lives[kind])));
             return { card, line, arrows, extra, glow, kind };
           };
           ["strecke", "strahl", "gerade"].forEach(k => rows.push(mkRow(k)));
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, rows.map(r => r.card)));
+          const SND = { strecke: () => s.sound("whistle", { vol: .5 }), strahl: () => s.sfx.zap(), gerade: () => s.sound("ubahn-train", { vol: .4, dur: 3.5 }) };
           const reveal = async r => {
-            s.sfx.whoosh(); await s.show(r.card, "left", 0);
+            SND[r.kind](); await s.show(r.card, "left", 0);
             s.sfx.zap(); await s.show(r.line, "draw"); undraw(r.line);
             if (r.arrows.length) { s.sfx.pop(); s.show(r.arrows, "pop"); }
             s.show(r.extra, "fade");
@@ -215,17 +229,19 @@
         say: "Parallele und senkrechte Linien siehst du überall: in Noten, an Gleisen, im U-Bahn-Plan und an Kreuzungen.",
         build(s) {
           const mk = (title, text, chip, draw, extra) => {
-            const svg = box(s, 230, 180); draw(svg);
+            const svg = draw === "photo" ? null : box(s, 230, 180); if (svg) draw(svg);
             const ov = extra(svg);
-            const card = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "230px 1fr", gap: "16px", alignItems: "center", padding: "12px 14px" } }, svg,
+            const card = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "230px 1fr", gap: "16px", alignItems: "center", padding: "12px 14px" } }, svg || notes,
               s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("p", { class: "t", style: { fontWeight: 700 } }, title), s.h("span", { class: "chip", style: { alignSelf: "flex-start", background: SOFT, color: U } }, chip), s.h("p", { class: "small" }, text)));
             return { card, ov };
           };
+          const notes = s.photo("notenblatt", { w: 230, h: 180 });
           const cards = [
-            mk("Notenlinien", "5 Linien, alle parallel. Die Notenhälse stehen senkrecht darauf.", [parSign(s), " und ⊥"], svg => {
-              for (let i = 0; i < 5; i++) svg.append(ln(s, 14, 50 + i * 20, 216, 50 + i * 20, { stroke: INK, "stroke-width": 2 }));
-              [[62, 100], [110, 80], [158, 110], [196, 70]].forEach(([x, y]) => svg.append(s.el("ellipse", { cx: x, cy: y, rx: 11, ry: 8, fill: INK, transform: `rotate(-20 ${x} ${y})` }), ln(s, x + 10, y - 2, x + 10, y - 52, { "stroke-width": 2.5 })));
-            }, svg => { const o = [ln(s, 14, 50, 216, 50, { stroke: RED, "stroke-width": 4, class: "later" }), ln(s, 14, 130, 216, 130, { stroke: RED, "stroke-width": 4, class: "later" }), ln(s, 120, 78, 120, 28, { stroke: U, "stroke-width": 5, class: "later" })]; svg.append(...o); return o; }),
+            mk("Notenlinien", "5 Linien, alle parallel. Die Notenhälse stehen senkrecht darauf.", [parSign(s), " und ⊥"], "photo", () => {
+              const { ov, k } = viewFig(s, notes, 600, 450, [80, 50, 494, 387], 230);
+              const o = [ln(s, 80, 226.7, 574, 243, { stroke: RED, "stroke-width": 3.5 * k, class: "later" }), ln(s, 80, 261, 574, 275, { stroke: RED, "stroke-width": 3.5 * k, class: "later" }), ln(s, 274, 212, 274, 266, { stroke: U, "stroke-width": 6 * k, class: "later" })];
+              ov.append(...o); return o;
+            }),
             mk("Bahngleise", "Die Schienen sind parallel – 1435 mm Abstand. Die Schwellen liegen senkrecht dazu.", [parSign(s), " und ⊥"], svg => {
               for (let x = 22; x < 220; x += 26) svg.append(s.el("rect", { x, y: 52, width: 12, height: 76, fill: "#a0703f" }));
               svg.append(ln(s, 8, 70, 222, 70, { stroke: "#6b7686", "stroke-width": 7 }), ln(s, 8, 110, 222, 110, { stroke: "#6b7686", "stroke-width": 7 }));
@@ -241,9 +257,10 @@
             }, svg => { const o = [pth(s, "M140,44 L162,44 L162,66", { stroke: U, "stroke-width": 4, class: "later" }), tx(s, 186, 160, "90°", { fill: U, "font-weight": 700, class: "lbl later" })]; svg.append(...o); return o; }),
           ];
           s.add(s.h("div", { class: "cols", style: { height: "100%", gap: "16px", alignContent: "center" } }, cards.map(c => c.card)));
-          s.show(cards[0].card, "up"); s.sfx.whoosh();
+          s.show(cards[0].card, "up"); [0, 4, 7, 12].forEach((n, i) => s.sfx.note(n, 0.25)); 
           s.show(cards[0].ov, "draw", 400);
-          cards.slice(1).forEach((c, i) => s.step(async () => { s.sfx.pop(); await s.show(c.card, "up"); s.sfx.zap(); c.ov.forEach(o => { if (o.tagName === "text") s.show(o, "pop"); else s.show(o, "draw"); }); s.say(["Bahngleise", "Der U-Bahn-Plan", "Eine Kreuzung"][i]); }));
+          const snd3 = [() => s.sound("tram-bell", { vol: .45, dur: 2.5 }), () => s.sound("ubahn-announce", { vol: .5, dur: 5 }), () => s.sound("traffic", { vol: .4, dur: 3 })];
+          cards.slice(1).forEach((c, i) => s.step(async () => { snd3[i](); await s.show(c.card, "up"); s.sfx.zap(); c.ov.forEach(o => { if (o.tagName === "text") s.show(o, "pop"); else s.show(o, "draw"); }); s.say(["Bahngleise", "Der U-Bahn-Plan", "Eine Kreuzung"][i]); }));
         },
       },
       /* 4 ─────────────────────────────── */
@@ -283,14 +300,16 @@
           s.drag(Qh, { space: svg, onMove: p => { let x = clamp(Math.round(p.x), 40, 560); if (Math.abs(x - Pp[0]) <= 8) x = Pp[0]; if (x !== qx) { qx = x; sl.input.value = x; render(); s.sfx.tick(); } } });
           render();
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Der ", s.h("b", null, "Abstand"), " eines Punktes von einer Geraden ist die Länge des ", s.h("b", null, "Lots"), " – des senkrechten, kürzesten Weges.");
-          const life = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "🚸 Wer senkrecht über die Straße geht, ist am schnellsten drüben."), s.h("p", { class: "small" }, "🖼️ Ein Lot (Senkblei) hängt immer genau senkrecht nach unten."));
+          const life = s.h("div", { class: "life later", style: { padding: "10px 16px", display: "flex", gap: "14px", alignItems: "center" } },
+            s.photo("senklot", { w: 120, h: 170, pos: "50% 40%", style: { flex: "none" } }),
+            s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("p", { class: "small" }, "Ein Lot (Senkblei) an der Schnur hängt immer genau senkrecht nach unten. Damit prüfen Maurer, ob eine Wand gerade steht."), s.h("p", { class: "small" }, "Wer senkrecht über die Straße geht, ist am schnellsten drüben.")));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "600px 1fr", alignItems: "center", height: "100%", gap: "24px" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, big, sl, status, merk, life)));
           s.show(svg, "zoom"); s.sfx.whoosh();
           const moveQ = (to, dur) => s.tween({ from: qx, to, dur, update: v => { qx = Math.round(v); sl.input.value = qx; render(); } });
           s.step(async () => { s.say("Schau auf die Zahl: Wann ist der Weg am kürzesten?"); await moveQ(540, 2200); await moveQ(300, 1300); qx = 300; render(); });
           s.step(async () => { s.sfx.zap(); await s.show(lot, "draw"); undraw(lot); s.sfx.pop(); s.show([rm, lotL, fL], "pop"); s.say("Das ist das Lot von P auf g. F heißt Lotfußpunkt."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.success(); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.chord([0, 5, 9]); await s.show(life, "up"); });
         },
       },
       /* 5 ─────────────────────────────── */
@@ -318,11 +337,12 @@
             hi.append(p.ov, lead, tg); p.tg = tg; p.lead = lead;
           });
           svg.append(hi);
-          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Mit dem Geodreieck kannst du ", s.h("b", null, "messen"), " (Längen und Winkel) und ", s.h("b", null, "zeichnen"), " (Parallelen und Senkrechte). Es ist 16 cm lang.");
-          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, svg, merk));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", flex: 1 } }, "Mit dem Geodreieck kannst du ", s.h("b", null, "messen"), " (Längen und Winkel) und ", s.h("b", null, "zeichnen"), " (Parallelen und Senkrechte). Es ist 16 cm lang.");
+          const real = s.photo("geodreieck-foto", { w: 290, h: 178, caption: "So sieht es in echt aus", cls: "later" });
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, svg, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "18px", alignItems: "center" } }, merk, real)));
           s.sfx.whoosh(); pl.put(550, 700, 0, 0); pl.go(550, 420, 0, 1, 900);
           parts.forEach(p => s.step(async () => { s.sfx.zap(); s.show(p.ov, p.ov.tagName === "circle" ? "pop" : "draw"); await s.show(p.lead, "fade"); s.sfx.pop(); await s.show(p.tg, "fade"); s.say(p.say); }));
-          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+          s.step(async () => { s.sound("pencil-write", { vol: .5 }); await s.show(merk, "up"); await s.show(real, "zoom"); });
         },
       },
       /* 6 ─────────────────────────────── */
@@ -352,7 +372,7 @@
           let busy = false;
           const S1 = async () => { s.sfx.whoosh(); const A1 = at(F, 110, u); await pl.go(A1[0], A1[1], rho, 1, 1000); s.sfx.snap(); };
           const S2 = async () => { s.sfx.swoosh(); await pl.go(F[0], F[1], rho, 1, 900); s.sfx.ding(); };
-          const S3 = async () => { const a = at(F, 185, n); await pen.line(hLine, a[0], a[1], hEnd[0], hEnd[1], 1100); };
+          const S3 = async () => { const a = at(F, 185, n); s.sound("pencil-write", { vol: .5 }); await pen.line(hLine, a[0], a[1], hEnd[0], hEnd[1], 1100); };
           const S4 = async () => { s.sfx.whoosh(); pen.move(660, 40, 400); await pl.go(F[0] + 300, F[1] - 260, rho, 0, 700); s.sfx.pop(); s.show([rm, fL, hL], "pop"); s.sfx.success(); await s.show(done, "pop"); };
           const again = async () => {
             if (busy) return; busy = true; s.sfx.click();
@@ -400,7 +420,7 @@
           let busy = false;
           const S1 = async () => { s.sfx.whoosh(); const a = at(Pp, 250, u); await pl.go(a[0], a[1], rho, 1, 1000); s.sfx.snap(); s.show(hlHi, "fade"); };
           const S2 = async () => { s.sfx.swoosh(); const a = at(Pp, 30, u); await pl.go(a[0], a[1], rho, 1, 1000); s.sfx.ding(); };
-          const S3 = async () => { await pen.line(hLine, hA[0], hA[1], hB[0], hB[1], 1200); };
+          const S3 = async () => { s.sound("pencil-write", { vol: .5 }); await pen.line(hLine, hA[0], hA[1], hB[0], hB[1], 1200); };
           const S4 = async () => { s.sfx.whoosh(); pen.move(660, 40, 400); await pl.go(start[0], start[1], rho, 0, 700); s.hide(hlHi); s.sfx.pop(); s.show([hL, meas], "pop"); s.sfx.success(); await s.show(done, "pop"); };
           const again = async () => {
             if (busy) return; busy = true; s.sfx.click();
@@ -580,11 +600,11 @@
           const life = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, s.h("b", null, "Schulbeginn um 8:00 Uhr: "), "4 Abschnitte bis zur 12 – also 4 · 30° = 120°. Ein stumpfer Winkel!"));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "500px 1fr", alignItems: "center", height: "100%", gap: "26px" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, timeP, angP, kindP, sl, merk, life)));
           s.show(svg, "zoom"); s.sfx.whoosh();
-          const setH = async (to, txt) => { s.say(txt); const f = hour; await s.tween({ from: f, to, dur: 1100, update: x => render(x) }); hour = to; sl.input.value = to; sl.querySelector(".sl-top .mono").textContent = to + " Uhr"; render(to); s.sfx.ding(); };
+          const setH = async (to, txt) => { s.say(txt); s.sound("clock-tick", { vol: .45, dur: 1.2 }); const f = hour; await s.tween({ from: f, to, dur: 1100, update: x => render(x) }); hour = to; sl.input.value = to; sl.querySelector(".sl-top .mono").textContent = to + " Uhr"; render(to); s.sfx.ding(); };
           s.step(async () => { s.say("Zwölf gleiche Stücke. Jedes ist dreißig Grad groß."); for (let i = 0; i < 12; i++) { s.show(wedges.children[i], "fade"); s.sfx.count(i); await s.wait(140); } s.sfx.pop(); s.show(thirty, "pop"); await s.show(merk, "up"); });
           s.step(() => setH(4, "Vier Uhr: vier mal dreißig Grad, also hundertzwanzig Grad. Stumpf!"));
           s.step(() => setH(6, "Sechs Uhr: hundertachtzig Grad. Ein gestreckter Winkel."));
-          s.step(async () => { await setH(8, "Acht Uhr, Schulbeginn: wieder hundertzwanzig Grad."); await s.show(life, "up"); });
+          s.step(async () => { await setH(8, "Acht Uhr, Schulbeginn: wieder hundertzwanzig Grad."); s.sound("school-bell", { vol: .45, dur: 3 }); await s.show(life, "up"); });
         },
       },
       /* 11 ─────────────────────────────── */
@@ -606,7 +626,7 @@
               svg.append(s.el("rect", { x: 96, y: 126, width: 170, height: 12, rx: 5, fill: "#8d96a3" }), ar, lid, lb);
               const set = v => { lid.setAttribute("x2", Hc[0] + 110 * Math.cos(v * D2R)); lid.setAttribute("y2", Hc[1] - 110 * Math.sin(v * D2R)); ar.setAttribute("d", v > 2 ? arcD(Hc[0], Hc[1], 40, 0, v, true) : ""); };
               set(110);
-              return async () => { s.hide(lb); s.sfx.swoosh(); await s.tween({ from: 0, to: 110, dur: 1100, update: set }); s.sfx.snap(); s.show(lb, "pop"); };
+              return async () => { s.hide(lb); s.sfx.swoosh(); await s.tween({ from: 0, to: 110, dur: 1100, update: set }); s.sound("keyboard", { vol: .4, dur: 1.2 }); s.show(lb, "pop"); };
             }),
             card("Tür (von oben)", "recht", "Weit offen: 90°.", svg => {
               const Hc = [190, 116];
@@ -617,7 +637,7 @@
               svg.append(ar, door, rmk, lb);
               const set = v => { door.setAttribute("x2", Hc[0] - 80 * Math.cos(v * D2R)); door.setAttribute("y2", Hc[1] - 80 * Math.sin(v * D2R)); ar.setAttribute("d", v > 2 && v < 89.5 ? arcD(Hc[0], Hc[1], 40, 180 - v, 180, true) : ""); };
               set(90); s.show(rmk, "fade");
-              return async () => { s.hide([rmk, lb]); s.sfx.swoosh(); await s.tween({ from: 0, to: 90, dur: 1100, update: set }); s.sfx.drum(); s.show([rmk, lb], "pop"); };
+              return async () => { s.hide([rmk, lb]); s.sound("door-creak", { vol: .5, dur: 1.4 }); await s.tween({ from: 0, to: 90, dur: 1100, update: set }); s.sfx.drum(); s.show([rmk, lb], "pop"); };
             }),
             card("Pizza", "spitz", "8 Stücke: 360° : 8 = 45°.", svg => {
               const C = [130, 75], r = 62;
@@ -629,7 +649,7 @@
               svg.append(sl, lb);
               const set = v => sl.setAttribute("transform", `translate(${v * Math.cos(22.5 * D2R)},${-v * Math.sin(22.5 * D2R)})`);
               set(26); s.show(lb, "fade");
-              return async () => { s.hide(lb); s.sfx.pop(); await s.tween({ from: 0, to: 26, dur: 700, ease: "back", update: set }); s.show(lb, "pop"); };
+              return async () => { s.hide(lb); s.sound("pizza-schneiden", { vol: .6 }); await s.tween({ from: 0, to: 26, dur: 700, ease: "back", update: set }); s.show(lb, "pop"); };
             }),
             card("Skate-Rampe", "spitz", "Die Rampe ist etwa 30° steil.", svg => {
               svg.append(ln(s, 10, 132, 290, 132, { stroke: "#8d96a3", "stroke-width": 4 }), pg(s, [[50, 132], [250, 132], [250, 16.5]], { fill: "#d9c9a5", stroke: "#8a6d3b", "stroke-width": 3 }));
@@ -650,7 +670,7 @@
               svg.append(sk);
               const set = v => { let x, y; if (v < 1) { x = top[0] + v * 170; y = top[1] + v * 170 * t35 - 8; } else { const w = v - 1; x = top[0] + 170 + w * 100; y = top[1] + 170 * t35 - 8 - 20 * Math.sin(w * Math.PI) + w * 18; } sk.setAttribute("cx", x); sk.setAttribute("cy", y); };
               set(0.3);
-              return async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1000, ease: "in", update: set }); s.sfx.zap(); await s.tween({ from: 1, to: 2, dur: 900, ease: "out", update: set }); s.sfx.ding(); };
+              return async () => { s.sound("wind", { vol: .4, dur: 2 }); await s.tween({ from: 0, to: 1, dur: 1000, ease: "in", update: set }); s.sfx.zap(); await s.tween({ from: 1, to: 2, dur: 900, ease: "out", update: set }); s.sound("crowd-cheer", { vol: .35, dur: 2 }); };
             }),
             card("Torschuss", "Schusswinkel", "Aus der Mitte siehst du das Tor unter einem größeren Winkel.", svg => {
               svg.append(s.el("rect", { x: 0, y: 0, width: 300, height: 150, rx: 12, fill: "#5fb05a" }), ln(s, 10, 14, 290, 14, { stroke: "#fff", "stroke-width": 3 }), s.el("rect", { x: 110, y: 6, width: 80, height: 8, fill: "#fff" }));
@@ -659,7 +679,7 @@
               svg.append(sec, l1, l2, ball);
               const set = v => { const x = 150 + v * 120, y = 128 - v * 30; [l1, l2].forEach(l => { l.setAttribute("x1", x); l.setAttribute("y1", y); }); sec.setAttribute("points", P([[x, y], [110, 14], [190, 14]])); ball.setAttribute("cx", x); ball.setAttribute("cy", y); };
               set(0);
-              return async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1200, update: set }); s.sfx.boing(); await s.tween({ from: 1, to: 0, dur: 1200, update: set }); s.sfx.ding(); };
+              return async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 1200, update: set }); s.sound("ball-kick", { vol: .6 }); await s.tween({ from: 1, to: 0, dur: 1200, update: set }); s.sfx.ding(); };
             }),
           ];
           s.add(s.h("div", { class: "cols3", style: { height: "100%", gap: "16px", alignContent: "center" } }, cards.map(c => c.c)));
@@ -745,7 +765,7 @@
           const geom = () => { const rr = 0.30 * L + 10, t = a * D2R; return { m: [S[0] + rr * Math.cos(t), S[1] - rr * Math.sin(t)], e: [S[0] + 300 * Math.cos(t), S[1] - 300 * Math.sin(t)], t }; };
           const items = stepList(s, ["1. Schenkel zeichnen, Scheitel S markieren.", "Geodreieck anlegen: Nullpunkt auf S, Kante auf den Schenkel.", "Auf der Skala ab 0 bis zur Zahl gehen und einen Punkt setzen.", "Geodreieck weg – S mit dem Punkt verbinden. Fertig!"], [BLUE, INK, RED, U]);
           const D = [
-            async () => { s.sfx.pop(); s.show([Sd, SL], "pop"); await pen.line(s1, S[0], S[1], S[0] + 300, S[1], 800); await pen.move(680, 40, 300); },
+            async () => { s.sfx.pop(); s.show([Sd, SL], "pop"); s.sound("pencil-write", { vol: .45 }); await pen.line(s1, S[0], S[1], S[0] + 300, S[1], 800); await pen.move(680, 40, 300); },
             async () => { s.sfx.whoosh(); await pl.go(S[0], S[1], 0, 1, 1000); s.sfx.snap(); },
             async () => {
               const { m } = geom();
@@ -758,7 +778,7 @@
             async () => {
               const { e, t } = geom();
               s.sfx.whoosh(); await pl.go(S[0], -320, 0, 0, 800);
-              await pen.line(s2, S[0], S[1], e[0], e[1], 900); await pen.move(680, 40, 300);
+              s.sound("pencil-write", { vol: .45 }); await pen.line(s2, S[0], S[1], e[0], e[1], 900); await pen.move(680, 40, 300);
               sec.setAttribute("d", arcD(S[0], S[1], 56, 0, a, true));
               svgGk(s, aL, "α = " + a + "°"); aL.setAttribute("x", S[0] + 80 * Math.cos(t / 2)); aL.setAttribute("y", S[1] - 80 * Math.sin(t / 2) + 8);
               s.sfx.success(); s.show(sec, "fade"); await s.show(aL, "pop");
@@ -813,22 +833,23 @@
           const setR = () => { rad.setAttribute("x2", M[0] + r * PX); rL.textContent = "r = " + r + " cm"; rL.setAttribute("x", M[0] + r * PX / 2); rL.setAttribute("y", M[1] - 12); circ.setAttribute("r", r * PX); };
           placeComp(0.6 * PX, 0); setR();
           const sl = s.slider({ label: "Radius (Zirkel öffnen)", min: 1, max: 5, value: r, fmt: v => v + " cm", onInput: v => { r = v; setR(); placeComp(r * PX, 0); trace.setAttribute("d", ""); } });
-          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Die ", s.h("b", null, "Zirkelspitze"), " kommt in den Mittelpunkt M. Die ", s.h("b", null, "Öffnung"), " des Zirkels ist der Radius r.");
+          const zirkel = s.photo("zirkel", { w: 130, h: 190, caption: "Zirkel", pos: "50% 45%", cls: "later", style: { flex: "none" } });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", flex: 1 } }, "Die ", s.h("b", null, "Zirkelspitze"), " kommt in den Mittelpunkt M. Die ", s.h("b", null, "Öffnung"), " des Zirkels ist der Radius r.");
           const life = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Im Alltag"),
-            s.h("p", { class: "small" }, "⚽ Der Mittelkreis im Fußball hat r = 9,15 m."), s.h("p", { class: "small" }, "💦 Ein Rasensprenger macht einen nassen Kreis."), s.h("p", { class: "small" }, "🐐 Eine Ziege an der Leine grast im Kreis."));
+            s.h("p", { class: "small" }, "Der Mittelkreis im Fußball hat r\u00a0=\u00a09,15\u00a0m."), s.h("p", { class: "small" }, "Ein Rasensprenger macht einen nassen Kreis."), s.h("p", { class: "small" }, "Eine Ziege an der Leine grast im Kreis."));
           const draw = async () => {
-            const R = r * PX; let last = 0;
-            await s.tween({ from: 0, to: 359.9, dur: 2400, ease: "inOut", update: v => { th = v; placeComp(R, v * D2R); trace.setAttribute("d", arcD(M[0], M[1], R, 0, v)); const n = performance.now(); if (n - last > 230) { last = n; s.sfx.scribble(); } } });
-            placeComp(R, 0); trace.setAttribute("d", ""); circ.classList.remove("later"); s.sfx.ding();
+            const R = r * PX, scr = s.sound("pencil-write", { vol: .5, loop: true });
+            await s.tween({ from: 0, to: 359.9, dur: 2400, ease: "inOut", update: v => { th = v; placeComp(R, v * D2R); trace.setAttribute("d", arcD(M[0], M[1], R, 0, v)); } });
+            scr.stop(); placeComp(R, 0); trace.setAttribute("d", ""); circ.classList.remove("later"); s.sfx.ding();
           };
           const btn = s.h("button", { class: "btn solid later", style: { alignSelf: "flex-start" }, onclick: async () => { s.sfx.click(); circ.classList.add("later"); await draw(); } }, "Kreis zeichnen");
-          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", alignItems: "center", height: "100%", gap: "24px" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, sl, btn, merk, life)));
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", alignItems: "center", height: "100%", gap: "24px" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, sl, btn, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "14px", alignItems: "center" } }, merk, zirkel), life)));
           s.show(svg, "zoom"); s.sfx.whoosh();
           s.step(async () => { s.say("Zuerst öffnen wir den Zirkel am Lineal auf vier Zentimeter."); s.show(ruler, "fade"); s.sfx.whoosh(); await s.tween({ from: 0.6 * PX, to: r * PX, dur: 1100, update: v => placeComp(v, 0) }); s.sfx.snap(); s.show(rad, "fade"); await s.show(rL, "pop"); });
           s.step(async () => { s.say("Die Spitze kommt in den Mittelpunkt M."); s.hide(ruler); s.sfx.pop(); s.show(Md, "pop"); await s.show(ML, "pop"); });
           s.step(async () => { s.say("Jetzt drehen – und der Kreis ist fertig."); await draw(); s.show(btn, "pop"); });
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.success(); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); await s.show(zirkel, "zoom"); });
+          s.step(async () => { s.sound("whistle", { vol: .5 }); await s.show(life, "up"); });
         },
       },
     ],

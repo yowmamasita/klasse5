@@ -131,7 +131,7 @@
   const numbers = (blocks, order) => order.forEach((id, i) => { if (blocks[id].num) blocks[id].num.textContent = String(i + 1); });
 
   /** example card with a question that finds one Satzglied */
-  function qcard(s, label, spec, q, ansIdx, ansK, ansText) {
+  function qcard(s, label, spec, q, ansIdx, ansK, ansText, fig, snd) {
     const toks = spec.map(([k, t]) => blk(s, k, t));
     const row = s.h("div", { class: "d2row" }, toks, P(s, "."));
     const qEl = s.h("span", { class: "d2q" }, "");
@@ -139,10 +139,10 @@
     ans.classList.add("later");
     const arrow = s.h("b", { class: "later", style: { fontSize: "26px", color: "var(--pencil)" } }, "→");
     const qline = s.h("div", { class: "row", style: { gap: "12px", minHeight: "40px", marginTop: "4px", flexWrap: "nowrap" } }, qEl, arrow, ans);
-    const el = ex(s, label, row, qline);
+    const el = fig ? ex(s, label, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr auto", gap: "16px", alignItems: "center" } }, s.h("div", null, row, qline), fig)) : ex(s, label, row, qline);
     el.style.padding = "10px 20px";
     async function run() {
-      s.sfx.scribble();
+      if (snd) s.sound(...snd); else s.sfx.scribble();
       await type(s, qEl, q);
       await s.wait(250);
       paint(toks[ansIdx], ansK); s.sfx.ding(); bump(s, toks[ansIdx], 0.22);
@@ -198,9 +198,10 @@
           const btn = s.h("button", { class: "btn solid", onclick: () => { s.sfx.click(); go(oi + 1); } }, "Umstellen!");
           const card = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "10px", alignItems: "center", padding: "14px 22px" } }, row, info, btn);
           const merk = s.h("div", { class: "merk later" }, "Wörter, die beim Umstellen immer ", s.h("b", null, "zusammenbleiben"), ", bilden ein ", s.h("b", null, "Satzglied"), ". Dieser Satz hat vier Satzglieder.");
-          const histCard = s.h("div", { class: "card soft", style: { padding: "12px 20px" } }, s.h("span", { class: "exlabel" }, "Alle Sätze bedeuten dasselbe"), hist);
+          const histCard = s.h("div", { class: "card soft", style: { padding: "12px 20px", display: "grid", gridTemplateColumns: "1fr 280px", gap: "18px", alignItems: "center" } },
+            s.h("div", null, s.h("span", { class: "exlabel" }, "Alle Sätze bedeuten dasselbe"), hist), s.photo("fussball", { w: 280, h: 150, caption: "Fußball am Samstag" }));
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, card, histCard, merk));
-          s.show(card, "up"); s.sfx.pop(); addHist();
+          s.show(card, "up"); s.sound("ball-kick", { vol: 0.7 }); addHist();
           s.step(async () => { await go(1); info.textContent = "„am“ und „Samstag“ sind zusammen umgezogen!"; s.say("Schau, am und Samstag sind zusammen umgezogen."); });
           s.step(async () => { await go(2); info.textContent = "Der Satz klingt anders – aber er bedeutet dasselbe."; s.say("Der Satz klingt anders, aber er bedeutet dasselbe."); });
           s.step(async () => {
@@ -223,7 +224,10 @@
             ["Küche", [["S", "Oma"], ["P", "backt"], ["Z", "am Sonntag"], ["AO", "einen Apfelkuchen"]], [["S", "P", "Z", "AO"], ["Z", "P", "S", "AO"], ["AO", "P", "S", "Z"]]],
             ["Musik", [["S", "die Klasse 5a"], ["P", "probt"], ["Z", "heute"], ["O", "in der Aula"]], [["S", "P", "Z", "O"], ["Z", "P", "S", "O"], ["O", "P", "S", "Z"]]],
           ];
-          const cards = SET.map(([lab, spec, orders]) => {
+          const FIG = [s.photo("alexanderplatz-u2", { w: 150, h: 104 }), s.photo("apfelkuchen", { w: 150, h: 104 }), s.photo("orchesterprobe", { w: 150, h: 104 })];
+          s.preload("ubahn-train"); s.preload("ofen-ping"); s.preload("orchester-stimmen");
+          const SND = [["ubahn-train", { vol: 0.45, dur: 2.5, fade: 0.6 }], ["ofen-ping", { vol: 0.6 }], ["orchester-stimmen", { vol: 0.5, dur: 3, fade: 0.8 }]];
+          const cards = SET.map(([lab, spec, orders], ci) => {
             const B = {};
             spec.forEach(([k, t]) => { B[k] = blk(s, k, t, { num: true }); });
             B.pt = P(s, ".");
@@ -233,13 +237,13 @@
             numbers(B, orders[0]);
             const go = async () => {
               oi = (oi + 1) % orders.length;
-              s.sfx.whoosh();
+              s.sound(...SND[ci]);
               await morph(s, row, B, ordered(B, orders[oi]), { arc: 34, dur: 800 });
               numbers(B, orders[oi]); s.sfx.snap(); bump(s, B.P.num, 0.4);
             };
             const btn = s.h("button", { class: "btn", onclick: () => { s.sfx.click(); go(); } }, "Umstellen");
-            const el = s.h("div", { class: "ex", style: { display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: "12px", padding: "12px 20px" } },
-              s.h("div", null, s.h("span", { class: "exlabel" }, lab), row), btn);
+            const el = s.h("div", { class: "ex", style: { display: "grid", gridTemplateColumns: "1fr auto auto", alignItems: "center", gap: "12px", padding: "12px 20px" } },
+              s.h("div", null, s.h("span", { class: "exlabel" }, lab), row), FIG[ci], btn);
             return { el, go };
           });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "23px" } }, "Im Aussagesatz steht das ", s.h("b", { style: { color: SG.P.c } }, "Prädikat"), " (das Verb) immer an ", s.h("b", null, "Platz 2"), ". Die anderen Satzglieder dürfen wandern.");
@@ -288,10 +292,11 @@
         title: "Das Prädikat: der Motor",
         say: "Das Prädikat ist der Motor des Satzes. Es ist das Verb. Frag, was tut jemand, oder was geschieht.",
         build(s) {
+          s.preload("chor-singt"); s.preload("ubahn-tueren");
           const C = [
-            qcard(s, "Fußball", [["x", "Der Torwart"], ["x", "hält"], ["x", "den Elfmeter"]], "Was tut der Torwart?", 1, "P", "hält"),
-            qcard(s, "Musik", [["x", "Die Klasse"], ["x", "singt"], ["x", "ein Lied"]], "Was tut die Klasse?", 1, "P", "singt"),
-            qcard(s, "U-Bahn", [["x", "Jetzt"], ["x", "schließen"], ["x", "die Türen"]], "Was geschieht jetzt?", 1, "P", "schließen"),
+            qcard(s, "Fußball", [["x", "Der Torwart"], ["x", "hält"], ["x", "den Elfmeter"]], "Was tut der Torwart?", 1, "P", "hält", s.photo("torwart", { w: 210, h: 110 }), ["whistle", { vol: 0.6 }]),
+            qcard(s, "Musik", [["x", "Die Klasse"], ["x", "singt"], ["x", "ein Lied"]], "Was tut die Klasse?", 1, "P", "singt", s.photo("kinderchor", { w: 210, h: 110 }), ["chor-singt", { vol: 0.5, dur: 3.5, fade: 0.8 }]),
+            qcard(s, "U-Bahn", [["x", "Jetzt"], ["x", "schließen"], ["x", "die Türen"]], "Was geschieht jetzt?", 1, "P", "schließen", s.photo("ubahn-bahnsteig", { w: 210, h: 110 }), ["ubahn-tueren", { vol: 0.6 }]),
           ];
           // Singular / Plural toggle
           const T = { S: blk(s, "S", "Das Kind"), P: blk(s, "P", "singt"), pt: P(s, ".") };
@@ -324,7 +329,9 @@
             ["trennbares Verb", "Telefon", [["S", "Lea"], ["P1", "ruft"], ["P2", "an"], ["AO", "ihre Oma"]], ["S", "P1", "AO", "P2"]],
             ["mit Modalverb", "Essen", [["S", "wir"], ["P1", "wollen"], ["P2", "essen"], ["Z", "heute"], ["AO", "Pizza"]], ["S", "P1", "Z", "AO", "P2"]],
           ];
-          const rows = R.map(([lab, set, spec, fin]) => {
+          s.preload("telefon-klingelt"); s.preload("besteck");
+          const RSND = [["ball-kick", { vol: 0.7 }], ["telefon-klingelt", { vol: 0.5, dur: 2.2, fade: 0.4 }], ["besteck", { vol: 0.7 }]];
+          const rows = R.map(([lab, set, spec, fin], ri) => {
             const B = {};
             spec.forEach(([k, t]) => { B[k] = blk(s, k.startsWith("P") ? "P" : k, t); });
             B.pt = P(s, ".");
@@ -336,7 +343,7 @@
             const el = s.h("div", { class: "ex", style: { display: "grid", gridTemplateColumns: "220px 1fr", alignItems: "center", padding: "12px 20px" } },
               s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("span", { class: "h2", style: { fontSize: "25px" } }, lab), s.h("span", { class: "exlabel", style: { margin: 0 } }, set)), row);
             const run = async () => {
-              s.sfx.whoosh();
+              s.sound(...RSND[ri]);
               await morph(s, row, B, ordered(B, fin), { arc: 46, dur: 900 });
               const a = B.P1, b = B.P2;
               const x1 = a.offsetLeft + a.offsetWidth / 2, x2 = b.offsetLeft + b.offsetWidth / 2;
@@ -349,13 +356,15 @@
             };
             return { el, run };
           });
-          const lf = life(s, "Im Alltag: Durchsage", s.h("p", { class: "t" }, "„Der Zug ", s.h("b", { class: "red" }, "fährt"), " in Kürze ", s.h("b", { class: "red" }, "ab"), ".“ – abfahren hat zwei Teile."));
+          const lf = life(s, "Im Alltag: Durchsage", s.h("div", { style: { display: "grid", gridTemplateColumns: "230px 1fr", gap: "18px", alignItems: "center" } },
+            s.photo("hauptbahnhof", { w: 230, h: 120 }),
+            s.h("p", { class: "t" }, "„Der Zug ", s.h("b", { class: "red" }, "fährt"), " in Kürze ", s.h("b", { class: "red" }, "ab"), ".“ – abfahren hat zwei Teile.")));
           lf.classList.add("later");
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Ein zweiteiliges Prädikat bildet eine ", s.h("b", null, "Klammer"), ": Teil 1 an Platz 2, Teil 2 am Ende.");
           s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, rows.map(r => r.el), lf, merk));
           s.show(rows.map(r => r.el), "left"); s.sfx.whoosh();
           rows.forEach((r, i) => s.step(async () => { await r.run(); s.say(["Julian hat ein Tor geschossen.", "Lea ruft ihre Oma an.", "Wir wollen heute Pizza essen."][i]); }));
-          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { s.sound("ubahn-announce", { vol: 0.5, dur: 4, fade: 0.8 }); await s.show(lf, "up"); s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 6 ------------------------------------------------------------------ */
@@ -364,9 +373,9 @@
         say: "Das Subjekt findest du mit der Frage: Wer oder was? Dazu nimmst du das Prädikat mit in die Frage.",
         build(s) {
           const C = [
-            qcard(s, "U-Bahn", [["x", "Die U-Bahn"], ["P", "kommt"], ["x", "zu spät"]], "Wer oder was kommt zu spät?", 0, "S", "die U-Bahn"),
-            qcard(s, "Zu Hause", [["x", "Meine Schwester"], ["P", "liest"], ["x", "einen Comic"]], "Wer oder was liest einen Comic?", 0, "S", "meine Schwester"),
-            qcard(s, "Fußball", [["x", "Heute"], ["P", "spielt"], ["x", "unsere Mannschaft"], ["x", "im Stadion"]], "Wer oder was spielt heute?", 2, "S", "unsere Mannschaft"),
+            qcard(s, "U-Bahn", [["x", "Die U-Bahn"], ["P", "kommt"], ["x", "zu spät"]], "Wer oder was kommt zu spät?", 0, "S", "die U-Bahn", s.photo("u8", { w: 210, h: 110 }), ["ubahn-train", { vol: 0.45, dur: 2.5, fade: 0.6 }]),
+            qcard(s, "Zu Hause", [["x", "Meine Schwester"], ["P", "liest"], ["x", "einen Comic"]], "Wer oder was liest einen Comic?", 0, "S", "meine Schwester", s.photo("maedchen-liest", { w: 210, h: 110 }), ["page-turn-2", { vol: 0.8 }]),
+            qcard(s, "Fußball", [["x", "Heute"], ["P", "spielt"], ["x", "unsere Mannschaft"], ["x", "im Stadion"]], "Wer oder was spielt heute?", 2, "S", "unsere Mannschaft", s.photo("olympiastadion", { w: 210, h: 110 }), ["crowd-cheer", { vol: 0.45, dur: 2.5, fade: 0.6 }]),
           ];
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Das ", s.h("b", { style: { color: SG.S.c } }, "Subjekt"), " steht im Nominativ – und nicht immer vorne! Subjekt und Prädikat passen zusammen: ich spiel", s.h("b", null, "e"), ", wir spiel", s.h("b", null, "en"), ".");
           s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, C.map(c => c.el), merk));
@@ -381,9 +390,9 @@
         say: "Das Akkusativobjekt findest du mit der Frage: Wen oder was?",
         build(s) {
           const C = [
-            qcard(s, "Fußball", [["S", "Julian"], ["P", "schießt"], ["x", "den Ball"], ["x", "ins Tor"]], "Wen oder was schießt Julian?", 2, "AO", "den Ball"),
-            qcard(s, "Einkaufen", [["S", "Mama"], ["P", "kauft"], ["x", "einen Kürbis"]], "Wen oder was kauft Mama?", 2, "AO", "einen Kürbis"),
-            qcard(s, "U-Bahn", [["S", "Der Kontrolleur"], ["P", "prüft"], ["x", "die Fahrkarte"]], "Wen oder was prüft der Kontrolleur?", 2, "AO", "die Fahrkarte"),
+            qcard(s, "Fußball", [["S", "Julian"], ["P", "schießt"], ["x", "den Ball"], ["x", "ins Tor"]], "Wen oder was schießt Julian?", 2, "AO", "den Ball", s.photo("fussball-zweikampf", { w: 210, h: 110 }), ["ball-kick", { vol: 0.7 }]),
+            qcard(s, "Einkaufen", [["S", "Mama"], ["P", "kauft"], ["x", "einen Kürbis"]], "Wen oder was kauft Mama?", 2, "AO", "einen Kürbis", s.photo("kuerbisse", { w: 210, h: 110 }), ["cash-register", { vol: 0.5 }]),
+            qcard(s, "U-Bahn", [["S", "Der Kontrolleur"], ["P", "prüft"], ["x", "die Fahrkarte"]], "Wen oder was prüft der Kontrolleur?", 2, "AO", "die Fahrkarte", s.photo("fahrkartenautomat", { w: 210, h: 110 })),
           ];
           const art = s.h("span", { style: { display: "inline-block", color: "var(--red)" } }, "der");
           const flip = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", justifyContent: "center", gap: "6px", padding: "10px 20px" } },
@@ -402,9 +411,9 @@
         say: "Das Dativobjekt findest du mit der Frage: Wem? Oft bekommt jemand etwas.",
         build(s) {
           const C = [
-            qcard(s, "Fußball", [["S", "Julian"], ["P", "gibt"], ["x", "dem Trainer"], ["AO", "den Ball"]], "Wem gibt Julian den Ball?", 2, "DO", "dem Trainer"),
-            qcard(s, "Chat", [["S", "Ich"], ["P", "schreibe"], ["x", "meiner Freundin"], ["AO", "eine Nachricht"]], "Wem schreibe ich eine Nachricht?", 2, "DO", "meiner Freundin"),
-            qcard(s, "Restaurant", [["S", "Die Kellnerin"], ["P", "bringt"], ["x", "dem Gast"], ["AO", "die Suppe"]], "Wem bringt die Kellnerin die Suppe?", 2, "DO", "dem Gast"),
+            qcard(s, "Fußball", [["S", "Julian"], ["P", "gibt"], ["x", "dem Trainer"], ["AO", "den Ball"]], "Wem gibt Julian den Ball?", 2, "DO", "dem Trainer", s.photo("fussball", { w: 210, h: 100 }), ["whistle", { vol: 0.6 }]),
+            qcard(s, "Chat", [["S", "Ich"], ["P", "schreibe"], ["x", "meiner Freundin"], ["AO", "eine Nachricht"]], "Wem schreibe ich eine Nachricht?", 2, "DO", "meiner Freundin", s.photo("handy-tippen", { w: 210, h: 100 })),
+            qcard(s, "Restaurant", [["S", "Die Kellnerin"], ["P", "bringt"], ["x", "dem Gast"], ["AO", "die Suppe"]], "Wem bringt die Kellnerin die Suppe?", 2, "DO", "dem Gast", s.photo("tomatensuppe", { w: 210, h: 100 }), ["besteck", { vol: 0.7 }]),
           ];
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Nach ", s.h("b", null, "helfen, danken, gehören, gefallen"), " steht ein Dativobjekt: Ich helfe ", s.h("b", { style: { color: SG.DO.c } }, "meiner Oma"), ". Das Trikot gehört ", s.h("b", { style: { color: SG.DO.c } }, "mir"), ".");
           s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, C.map(c => c.el), merk, legend(s, ["P", "S", "AO", "DO"])));
@@ -440,8 +449,10 @@
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, sentCard, s.h("div", { class: "cols4", style: { gap: "12px" } }, qcards), merk));
           s.show(sentCard, "up"); s.show(qcards, "up"); s.sfx.pop();
           const states = [["S", "P", "Z", "AO"], ["S", "P", "Z", "G", "AO"], ["S", "P", "Z", "G", "AW", "AO"], ["S", "P", "Z", "G", "AW", "O", "AO"]];
+          const QSND = [["clock-tick", { vol: 0.6, dur: 2, fade: 0.4 }], ["birds", { vol: 0.45, dur: 3, fade: 0.8 }], ["kids-cheer", { vol: 0.5, dur: 2.5, fade: 0.6 }], ["playground", { vol: 0.45, dur: 3, fade: 0.8 }]];
+          s.preload("clock-tick"); s.preload("birds"); s.preload("kids-cheer"); s.preload("playground");
           states.forEach((st, i) => s.step(async () => {
-            s.sfx.whoosh();
+            s.sound(...QSND[i]);
             await morph(s, row, B, [...st, "pt"], { arc: 70, dur: 900 });
             s.sfx.snap(); bump(s, B[Q[i][0]], 0.2); s.show(hints[Q[i][0]], "fade");
             s.say(["Wann? Am Samstag.", "Warum? Wegen des schönen Wetters.", "Wie? Begeistert.", "Wo? Im Park."][i]);
@@ -486,7 +497,7 @@
             s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "10px" } }, btns), cards, legend(s, ["P", "S", "AO", "Z", "O", "AW", "G"])));
           s.show(cards, "up"); s.sfx.pop();
           ["Z", "O", "AW", "G"].forEach(k => s.step(async () => { await light(k); }));
-          s.step(async () => { await light("all"); s.sfx.success(); s.say("Alle Satzglieder in Farbe."); });
+          s.step(async () => { await light("all"); s.sound("crowd-cheer", { vol: 0.45, dur: 2.5, fade: 0.6 }); s.say("Alle Satzglieder in Farbe."); });
         },
       },
       /* 11 ----------------------------------------------------------------- */
@@ -513,15 +524,17 @@
             ["Präpositionalattribut", "Eisdiele", [["ein Eis "], ["mit Sahne", 1]], "Was für ein Eis?"],
             ["Genitivattribut", "Fußball", [["das Trikot "], ["des Torwarts", 1]], "Wessen Trikot?"],
           ];
-          const cards = T.map(([n, lab, parts, q]) => { const c = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 16px" } },
-            s.h("span", { class: "exlabel", style: { margin: 0 } }, lab), s.h("span", { class: "h2", style: { fontSize: "22px" } }, n),
+          const FIG = [s.photo("volle-bahn", { w: "100%", h: 120, pos: "50% 60%" }), s.photo("eisbecher", { w: "100%", h: 120, pos: "50% 40%" }), s.photo("torwart", { w: "100%", h: 120 })];
+          const cards = T.map(([n, lab, parts, q], i) => { const c = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "6px", padding: "12px 16px" } },
+            FIG[i], s.h("span", { class: "exlabel", style: { margin: 0 } }, lab), s.h("span", { class: "h2", style: { fontSize: "22px" } }, n),
             s.h("p", { class: "t", style: { fontSize: "27px", fontWeight: 700 } }, parts.map(([t, a]) => (a ? s.h("span", { class: "d2att", style: { color: "var(--violet)" } }, t) : t))),
             s.h("span", { class: "d2q", style: { fontSize: "27px" } }, q)); return c; });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Ein ", s.h("b", null, "Attribut"), " ist eine Beifügung zu einem Nomen. Es ist ", s.h("b", null, "Teil eines Satzglieds"), ", kein eigenes Satzglied.");
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, top, s.h("div", { class: "cols3", style: { gap: "14px" } }, cards), merk));
           s.show(top, "up"); s.sfx.pop();
           s.step(async () => { await go(); s.say("Ein großes Eis isst der kleine Bruder von Lea. Die Attribute ziehen mit um."); });
-          s.step(async () => { for (const c of cards) { s.sfx.pop(); s.show(c, "up"); await s.wait(200); } s.say("Welche U-Bahn? Die volle. Was für ein Eis? Mit Sahne. Wessen Trikot? Des Torwarts."); });
+          const CSND = [["ubahn-train", { vol: 0.45, dur: 2.5, fade: 0.6 }], ["glass-clink", { vol: 0.7 }], ["whistle", { vol: 0.6 }]];
+          cards.forEach((c, i) => s.step(async () => { s.sound(...CSND[i]); await s.show(c, "up"); s.say(["Welche U-Bahn? Die volle.", "Was für ein Eis? Mit Sahne.", "Wessen Trikot? Des Torwarts."][i]); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -563,7 +576,10 @@
           s.show(top, "up"); s.sfx.pop();
           s.step(async () => { await set("F"); });
           s.step(async () => { await set("B"); });
-          s.step(async () => { for (const c of lifes) { s.sfx.pop(); s.show(c, "up"); await s.wait(200); } s.sfx.pop(); await s.show(w, "fade"); s.sfx.ding(); await s.show(merk, "up"); });
+          const LSND = [["crowd-cheer", { vol: 0.45, dur: 2.5, fade: 0.6 }], ["keyboard", { vol: 0.5, dur: 1.5, fade: 0.3 }], ["school-bell", { vol: 0.45, dur: 2.5, fade: 0.6 }]];
+          s.preload("crowd-cheer"); s.preload("keyboard"); s.preload("school-bell");
+          lifes.forEach((c, i) => s.step(async () => { s.sound(...LSND[i]); await s.show(c, "up"); }));
+          s.step(async () => { s.sfx.pop(); await s.show(w, "fade"); s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 13 ----------------------------------------------------------------- */
@@ -592,7 +608,7 @@
             const el = s.h("div", { class: "ex", style: { display: "grid", gridTemplateColumns: "140px 1fr", alignItems: "center", padding: "12px 18px 4px" } },
               s.h("div", { class: "stack", style: { gap: "4px", alignItems: "flex-start" } }, s.h("span", { class: "d2tag", style: { background: KONJ.c } }, k), s.h("span", { class: "small pencil" }, lab)), row);
             const run = async () => {
-              s.sfx.whoosh();
+              if (k === "weil") s.sound("husten", { vol: 0.7 }); else if (k === "wenn") s.sound("rain", { vol: 0.4, dur: 3, fade: 0.8 }); else s.sfx.whoosh();
               await morph(s, row, toks, state, { arc: 40, dur: 900 });
               s.sfx.snap();
               const seq = state.map(x => toks[Array.isArray(x) ? x[0] : x]);
@@ -644,14 +660,14 @@
           const drive = async b => {
             b.train.classList.remove("later");
             if (s.fast) return;
-            for (let i = 0; i < 4; i++) setTimeout(() => s.alive && s.sfx.drum(), i * 180);
+            s.sound("ubahn-train", { vol: 0.45, dur: 2.5, fade: 0.7 });
             await s.tween({ dur: 1000, ease: "out", update: v => { b.train.style.transform = `translateX(${(1 - v) * -1100}px)`; } });
             b.train.style.transform = "";
           };
           s.step(async () => { await drive(b1); s.sfx.ding(); s.say("Ich nehme die U-Bahn, denn es regnet heute. Zwei Loks, also zwei Hauptsätze."); });
-          s.step(async () => { s.sfx.pop(); await s.show(b1.exEls, "up"); });
+          s.step(async () => { s.sound("geige", { vol: 0.5, dur: 2.5, fade: 0.6 }); await s.show(b1.exEls, "up"); });
           s.step(async () => { await drive(b2); s.sfx.ding(); s.say("Ich nehme die U-Bahn, weil es heute regnet. Der Nebensatz ist ein Wagen. Sein Verb steht hinten."); });
-          s.step(async () => { s.sfx.pop(); await s.show(b2.exEls, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+          s.step(async () => { s.sound("birds", { vol: 0.4, dur: 2.5, fade: 0.6 }); await s.show(b2.exEls, "up"); s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 15 ----------------------------------------------------------------- */

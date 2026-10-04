@@ -150,14 +150,15 @@
             return v;
           };
           const data = [
-            ["flat", "a flat", "die Wohnung", "lukas", "I live in a flat in Berlin. It's on the third floor.", "Lukas: im 3. Stock (gelbes Fenster)."],
-            ["terraced", "a terraced house", "das Reihenhaus", "ruby", "I live in a terraced house in London.", "Häuser in einer Reihe, Wand an Wand – in England sehr typisch."],
-            ["detached", "a detached house", "das freistehende Haus", null, "My grandma lives in a detached house.", "Ein Haus ganz für sich, mit Garten rundherum."],
+            ["flat", "a flat", "die Wohnung", "lukas", "I live in a flat in Berlin. It's on the third floor.", "Viele Wohnungen in einem Haus – wie bei Lukas in Berlin.", "berlin-flats", "Berlin-Neukölln"],
+            ["terraced", "a terraced house", "das Reihenhaus", "ruby", "I live in a terraced house in London.", "Häuser in einer Reihe, Wand an Wand – in England sehr typisch.", "terraced-house", "London"],
+            ["detached", "a detached house", "das freistehende Haus", null, "My grandma lives in a detached house.", "Ein Haus ganz für sich, mit Garten rundherum.", "detached-house", "Cornwall"],
           ];
-          const cards = data.map(([k, en, de, who, sent, note]) => {
-            const pic = draw(k);
+          void draw;
+          const cards = data.map(([k, en, de, who, sent, note, img, place]) => {
+            const pic = s.photo(img, { w: "100%", h: 200, caption: place });
             const c = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "10px", alignItems: "stretch", padding: "14px 16px" } },
-              s.h("div", { class: "center" }, pic), hear(s, en, de),
+              pic, hear(s, en, de),
               s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "10px", alignItems: "center" } }, who ? avatar(s, who, 56) : null, hear(s, sent)),
               s.h("p", { class: "small pencil" }, note));
             c.sent = sent; return c;
@@ -166,7 +167,7 @@
             s.h("b", null, "ground floor"), " = Erdgeschoss, ", s.h("b", null, "first floor"), " = 1. Stock – genau wie bei uns.");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { gap: "18px" } }, cards), merk));
           s.sfx.whoosh();
-          cards.forEach(c => s.step(async () => { s.sfx.pop(); await s.show(c, "up"); s.speak(c.sent, EN); }));
+          cards.forEach((c, i) => s.step(async () => { i === 1 ? s.sound("door-creak", { vol: .5, dur: 1.5 }) : s.sound("knock", { vol: .5, dur: 1.2 }); await s.show(c, "up"); s.speak(c.sent, EN); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Flat heißt Wohnung. Ground floor ist das Erdgeschoss."); });
         },
       },
@@ -207,9 +208,9 @@
           const tip = s.h("p", { class: "hand", style: { color: "var(--red)", margin: 0 } }, "Tippe auf ein Zimmer!");
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: `${W}px 1fr`, gap: "26px", height: "100%", alignItems: "center" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, tip, s1, s2, s3, merk)));
           s.show(svg, "fade"); s.sfx.whoosh();
-          s.step(async () => { for (const g of down) { s.sfx.pop(); await s.show(g, "pop", 0); } s.sfx.snap(); s.show(stairs, "draw"); s.speak("the kitchen, the hall, the living room", EN); });
+          s.step(async () => { for (const g of down) { s.sfx.pop(); await s.show(g, "pop", 0); } s.sound("footsteps", { vol: .5, dur: 2 }); s.show(stairs, "draw"); s.speak("the kitchen, the hall, the living room", EN); });
           s.step(async () => { for (const g of up) { s.sfx.pop(); await s.show(g, "pop", 0); } s.show(lblUp, "fade"); s.speak("the bedroom, the bathroom, Ruby's room", EN); });
-          s.step(async () => { s.sfx.pop(); await s.show(garden, "pop"); s.speak("the garden", EN); });
+          s.step(async () => { s.sound("birds", { vol: .4, dur: 3, fade: .8 }); await s.show(garden, "pop"); s.speak("the garden", EN); });
           s.step(async () => { for (const b of [s1, s2, s3]) { s.sfx.pop(); await s.show(b, "left", 0); } });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
@@ -307,6 +308,7 @@
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, s.h("b", null, "in front of"), " = vor (3 Wörter!)", s.h("br"), s.h("b", null, "between"), " A ", s.h("b", null, "and"), " B = zwischen A und B");
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: `${W}px 1fr`, gap: "30px", height: "100%", alignItems: "center" } }, s.h("div", { class: "stack" }, svg, sent), s.h("div", { class: "stack", style: { gap: "14px" } }, grid, merk)));
           s.show(svg, "zoom"); s.sfx.whoosh();
+          s.sound("cat-meow", { vol: .7 });
           const tour = keys => async () => { for (const k of keys) { await go(k); await s.wait(1300); } };
           s.step(tour(["in", "on", "under"]));
           s.step(tour(["next to", "behind", "in front of"]));
@@ -347,7 +349,7 @@
           sets.forEach(([keys, en], i) => btns[i].addEventListener("click", () => light(keys)));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "23px" } }, s.h("b", null, "next to"), " = neben · ", s.h("b", null, "between"), " = zwischen · ", s.h("b", null, "opposite"), " = gegenüber (auf der anderen Straßenseite)");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, svg, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" } }, btns), merk));
-          s.show(svg, "fade"); s.sfx.whoosh();
+          s.show(svg, "fade"); s.sound("traffic", { vol: .35, dur: 6, fade: 1 });
           sets.forEach(([keys, en], i) => s.step(async () => {
             light(keys); s.sfx.pop();
             if (i === 2) { s.show(arrow, "draw"); s.show(arrowHead, "fade", 600); }
@@ -385,7 +387,7 @@
           const head = s.h("div", { class: "row", style: { flexWrap: "nowrap" } }, avatar(s, "lukas", 70), s.h("p", { class: "h2" }, "Lukas's room in Berlin"));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: `${W}px 1fr`, gap: "28px", height: "100%", alignItems: "center" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, head, btns, merk)));
           s.show(svg, "zoom"); s.sfx.whoosh();
-          lines.forEach(([g, en], i) => s.step(async () => { s.sfx.pop(); s.show(g, "pop"); await s.show(btns[i], "left"); s.speak(en, EN); }));
+          lines.forEach(([g, en], i) => s.step(async () => { g === cat ? s.sound("cat-meow", { vol: .7 }) : s.sfx.pop(); s.show(g, "pop"); await s.show(btns[i], "left"); s.speak(en, EN); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -425,14 +427,15 @@
           const letter = s.h("div", { class: "u6-letter" }, ps);
           const reads = paras.map(([txt], i) => { const b = s.h("button", { class: "btn", style: { minHeight: "56px" }, onclick: () => { s.sfx.click(); s.speak(txt, EN); } }); b.innerHTML = SPK; b.appendChild(s.h("span", null, "Teil " + (i + 1))); b.classList.add("later"); return b; });
           const tips = s.h("div", { class: "card soft later" }, s.h("span", { class: "exlabel" }, "So schreibst du einen Brief"), s.h("p", { class: "small" }, s.h("b", null, "Dear …,"), " = Liebe/Lieber …", s.h("br"), s.h("b", null, "Write soon!"), " = Schreib bald!", s.h("br"), s.h("b", null, "Love, / Best wishes,"), " = Liebe Grüße"));
-          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "pen pal"), s.h("p", { class: "small" }, "= Brieffreund/in. Vielleicht findest du auch einmal einen pen pal in England – dann kannst du so über dein Zuhause schreiben."));
+          const life = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "14px", alignItems: "center" } }, s.photo("post-box", { w: 150, h: 200, caption: "post box" }),
+            s.h("div", null, s.h("span", { class: "exlabel" }, "pen pal"), s.h("p", { class: "small" }, "= Brieffreund/in. In England wirfst du den Brief in einen roten ", s.h("b", null, "post box"), " (Briefkasten).")));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "640px 1fr", gap: "26px", height: "100%", alignItems: "center" } }, letter,
             s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row", style: { gap: "10px" } }, reads), tips, life)));
           s.show(letter, "up"); s.sfx.whoosh();
-          s.step(async () => { s.sfx.scribble(); await s.show(ps[0], "fade"); s.sfx.scribble(); await s.show(ps[1], "fade"); s.show(reads.slice(0, 2), "pop"); });
-          s.step(async () => { s.sfx.scribble(); await s.show(ps[2], "fade"); s.show(reads[2], "pop"); });
-          s.step(async () => { s.sfx.scribble(); await s.show(ps[3], "fade"); s.show(reads[3], "pop"); s.sfx.ding(); });
-          s.step(async () => { s.sfx.pop(); await s.show(tips, "left"); s.sfx.pop(); await s.show(life, "left"); });
+          s.step(async () => { s.sound("pencil-write"); await s.show(ps[0], "fade"); s.sound("pencil-write"); await s.show(ps[1], "fade"); s.show(reads.slice(0, 2), "pop"); });
+          s.step(async () => { s.sound("pencil-write"); await s.show(ps[2], "fade"); s.show(reads[2], "pop"); });
+          s.step(async () => { s.sound("pencil-write"); await s.show(ps[3], "fade"); s.show(reads[3], "pop"); });
+          s.step(async () => { s.sfx.pop(); await s.show(tips, "left"); s.sfx.swoosh(); await s.show(life, "left"); });
         },
       },
       /* 9 */
@@ -452,6 +455,22 @@
           s.show(q, "down"); s.show(rows[0], "up", 150); s.sfx.whoosh();
           s.step(async () => { rows[1].forEach((_, i) => setTimeout(() => s.alive && s.sfx.count(i + 4), i * 120)); await s.show(rows[1], "up"); });
           s.step(async () => { rows[2].forEach((_, i) => setTimeout(() => s.alive && s.sfx.count(i + 8), i * 120)); await s.show(rows[2], "up"); s.say("Chemist's ist die Apotheke oder Drogerie."); });
+        },
+      },
+      /* 9b */
+      {
+        title: "A high street – in echt",
+        say: "So sieht eine High Street in England aus: eine Straße mit vielen Läden. Was gibt es hier? Tippe auf die Sätze.",
+        build(s) {
+          const fig = s.photo("high-street", { w: 600, h: 430, caption: "a high street in England", kb: true });
+          const lines = [["This is a high street.", "Das ist eine Einkaufsstraße."], ["There's a supermarket.", "Es gibt einen Supermarkt."], ["There's a pizza shop.", "Es gibt eine Pizzeria."], ["There are traffic lights.", "Es gibt eine Ampel."]];
+          const bs = lines.map(([en, de]) => { const b = hear(s, en, de); b.classList.add("later"); return b; });
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "high street"), s.h("p", { class: "small" }, "So heißt in Großbritannien die Hauptstraße mit den Läden. Fast jede Stadt hat eine."));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "600px 1fr", gap: "26px", height: "100%", alignItems: "center" } }, fig,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, bs, s.soundBtn("traffic", "Straßenlärm", { vol: .5 }), life)));
+          s.show(fig, "zoom"); s.sound("traffic", { vol: .35, dur: 5, fade: 1 });
+          s.step(async () => { for (const b of bs) { s.sfx.pop(); await s.show(b, "left", 0); } s.speak("There's a supermarket. There are traffic lights.", EN); });
+          s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
       },
       /* 10 */
@@ -545,6 +564,7 @@
             const ls = r.lines.map(([en, de]) => { const b = hear(s, en, de); b.classList.add("later"); list.append(b); return b; });
             me.at(...START); trail.setAttribute("points", START.join(","));
             await s.wait(1600);
+            s.sound("footsteps", { vol: .4, dur: 3, fade: .5 });
             const all = [START, ...r.pts];
             const segLines = key === "supermarket" ? [[0], [1, 2]] : [[0], [1], [2]];
             for (let i = 0; i < r.pts.length; i++) {
@@ -594,13 +614,13 @@
             bub("q", "Tourist:", "Thank you very much!"),
             bub("a", "Ruby:", "You're welcome!"),
           ];
-          const facts = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Gut zu wissen"), s.h("p", { class: "small" }, "Im Bahnhof King's Cross gibt es ein Fotomotiv: ", s.h("b", null, "Platform 9¾"), " aus Harry Potter, mit einem Gepäckwagen, der in der Wand verschwindet. Die British Library ist die Nationalbibliothek von Großbritannien."));
+          const facts = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "210px 1fr", gap: "14px", alignItems: "center" } }, s.photo("kings-cross", { w: 210, h: 230, caption: "King's Cross" }), s.h("div", null, s.h("span", { class: "exlabel" }, "Gut zu wissen"), s.h("p", { class: "small" }, "Im Bahnhof King's Cross gibt es ein Fotomotiv: ", s.h("b", null, "Platform 9¾"), " aus Harry Potter, mit einem Gepäckwagen, der in der Wand verschwindet. Die British Library ist die Nationalbibliothek von Großbritannien.")));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: `${W}px 1fr`, gap: "26px", height: "100%", alignItems: "start" } }, s.h("div", { class: "stack", style: { gap: "14px" } }, svg, facts), s.h("div", { class: "stack", style: { gap: "10px" } }, d)));
           s.show(svg, "fade"); s.sfx.whoosh();
           const say = i => s.speak(d[i].textContent.replace(/^(Tourist:|Ruby:)/, ""), EN);
           s.step(async () => { s.sfx.pop(); await s.show(d[0], "left"); say(0); });
-          s.step(async () => { s.sfx.pop(); await s.show(d[1], "right"); say(1); await walk(s, me, [[445, 250], [420, 250]]); trail.setAttribute("points", "445,205 445,250 420,250"); });
-          s.step(async () => { s.sfx.pop(); await s.show(d[2], "right"); say(2); await walk(s, me, [[100, 250]]); trail.setAttribute("points", "445,205 445,250 100,250"); glow(bl.r, true, "#dc2626"); s.sfx.success(); });
+          s.step(async () => { s.sfx.pop(); await s.show(d[1], "right"); say(1); s.sound("footsteps", { vol: .4, dur: 2 }); await walk(s, me, [[445, 250], [420, 250]]); trail.setAttribute("points", "445,205 445,250 420,250"); });
+          s.step(async () => { s.sfx.pop(); await s.show(d[2], "right"); say(2); s.sound("footsteps", { vol: .4, dur: 3 }); await walk(s, me, [[100, 250]]); trail.setAttribute("points", "445,205 445,250 100,250"); glow(bl.r, true, "#dc2626"); s.sfx.success(); });
           s.step(async () => { s.sfx.pop(); await s.show(d[3], "left"); say(3); await s.wait(1200); s.sfx.pop(); await s.show(d[4], "right"); say(4); });
           s.step(async () => { s.sfx.ding(); await s.show(facts, "up"); });
         },
@@ -642,11 +662,35 @@
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, svg,
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "22px", alignItems: "start" } }, waysBox, s.h("div", { class: "stack", style: { gap: "12px" } }, tubeFact, berlin))));
           s.show(svg, "fade");
-          s.step(async () => { s.show(bus, "fade"); busOn = true; s.sfx.tone(330, 0.25, "square", 0.08); s.sfx.tone(392, 0.3, "square", 0.08, 0.28); s.speak("a red double-decker bus", EN); await s.wait(600); s.sfx.pop(); await s.show(ways[0], "left"); });
-          s.step(async () => { s.show(train, "fade"); trainOn = true; s.sfx.whoosh(); await s.wait(400); s.sfx.pop(); await s.show(ways[1], "left"); s.sfx.ding(); await s.show(tubeFact, "up"); s.speak("the Tube, the London Underground", EN); });
+          s.step(async () => { s.show(bus, "fade"); busOn = true; s.sound("london-bus-sound", { vol: .5, dur: 4, fade: 1 }); s.speak("a red double-decker bus", EN); await s.wait(600); s.sfx.pop(); await s.show(ways[0], "left"); });
+          s.step(async () => { s.show(train, "fade"); trainOn = true; s.sound("mind-the-gap", { vol: .8 }); await s.wait(400); s.sfx.pop(); await s.show(ways[1], "left"); s.sfx.ding(); await s.show(tubeFact, "up"); s.speak("the Tube, the London Underground", EN); });
           s.step(async () => { for (const w of ways.slice(2)) { s.sfx.pop(); await s.show(w, "left", 0); } s.speak("by train, by bike, on foot", EN); });
           s.step(async () => { s.sfx.ding(); await s.show(berlin, "up"); });
           void yearT;
+        },
+      },
+      /* 13b */
+      {
+        title: "Bus, Tube, taxi – in echt",
+        say: "So sehen die Verkehrsmittel in London wirklich aus. Hör dir an, wie sie klingen. In der Tube hörst du oft: Mind the gap!",
+        build(s) {
+          const items = [
+            ["london-bus", "a double-decker bus", "I go to school by bus.", "Ich fahre mit dem Bus zur Schule.", "london-bus-sound", "Bus"],
+            ["tube", "the Tube", "Mind the gap!", "Achte auf die Lücke (zwischen Zug und Bahnsteig)!", "mind-the-gap", "Ansage"],
+            ["black-cab", "a black cab", "Let's take a taxi.", "Lass uns ein Taxi nehmen.", "tube-doors", "Tube-Türen"],
+          ];
+          const cols = items.map(([img, cap, en, de, snd, lab]) => {
+            const c = s.h("div", { class: "stack later", style: { gap: "10px", alignItems: "stretch" } }, s.photo(img, { w: 346, h: 300, caption: cap }), hear(s, en, de));
+            if (img !== "black-cab") c.append(s.soundBtn(snd, lab, { vol: .7 }));
+            return c;
+          });
+          const doors = s.soundBtn("tube-doors", "Tube-Türen schließen", { vol: .7 });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "23px", display: "flex", gap: "16px", alignItems: "center", justifyContent: "space-between" } }, s.h("span", null, s.h("b", null, "by"), " bus, ", s.h("b", null, "by"), " Tube, ", s.h("b", null, "by"), " taxi – aber ", s.h("b", null, "on"), " foot!"), doors);
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, s.h("div", { class: "cols3", style: { gap: "20px" } }, cols), merk));
+          s.step(async () => { s.sound("london-bus-sound", { vol: .5, dur: 3, fade: 1 }); await s.show(cols[0], "up"); s.speak(items[0][2], EN); });
+          s.step(async () => { s.sound("mind-the-gap", { vol: .8 }); await s.show(cols[1], "up"); });
+          s.step(async () => { s.sound("traffic", { vol: .4, dur: 3, fade: .8 }); await s.show(cols[2], "up"); s.speak(items[2][2], EN); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 14 */
@@ -665,7 +709,8 @@
             s.el("circle", { cx: 110, cy: 80, r: 18, fill: "#fff", stroke: "#8a6a2a", "stroke-width": 3 }));
           const hand = s.el("line", { x1: 110, y1: 80, x2: 110, y2: 67, stroke: "#1b2740", "stroke-width": 3, "stroke-linecap": "round" });
           v1.append(hand, s.el("line", { x1: 110, y1: 80, x2: 119, y2: 80, stroke: "#1b2740", "stroke-width": 3, "stroke-linecap": "round" }));
-          v1.addEventListener("click", () => { [[4, 0], [0, .45], [2, .9], [-5, 1.35]].forEach(([n, w]) => s.sfx.tone(392 * Math.pow(2, n / 12), 1.0, "sine", 0.22, w)); setTimeout(() => s.alive && s.speak("Big Ben is the bell.", EN), 2100); s.tween({ from: 0, to: 360, dur: 1500, update: a => hand.setAttribute("transform", `rotate(${a} 110 80)`) }); });
+          let chime = null;
+          v1.addEventListener("click", () => { if (chime) chime.stop(); chime = s.sound("big-ben-chimes", { vol: .7, dur: 6, fade: 1 }); setTimeout(() => s.alive && s.speak("Big Ben is the bell.", EN), 6200); s.tween({ from: 0, to: 360, dur: 1500, update: a => hand.setAttribute("transform", `rotate(${a} 110 80)`) }); });
           // Tower Bridge
           const v2 = s.svg(220, 200);
           v2.append(s.el("rect", { x: 0, y: 150, width: 220, height: 50, fill: "#6aa7d8" }),
@@ -709,7 +754,24 @@
           ];
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, s.h("p", { class: "hand", style: { color: "var(--red)", margin: 0 } }, "Tippe auf die Bilder!"), s.h("div", { class: "cols4", style: { gap: "14px" } }, cards)));
           s.sfx.whoosh();
-          cards.forEach((c, i) => s.step(async () => { s.sfx.pop(); await s.show(c, "up"); s.speak(c.en, EN); if (i === 0) [[4, 0], [0, .45], [2, .9], [-5, 1.35]].forEach(([n, w]) => s.sfx.tone(392 * Math.pow(2, n / 12), 0.9, "sine", 0.18, w + 0.8)); }));
+          cards.forEach((c, i) => s.step(async () => { s.sfx.pop(); await s.show(c, "up"); s.speak(c.en, EN); if (i === 0) s.sound("big-ben-chimes", { vol: .6, dur: 5, fade: 1, when: .8 }); }));
+        },
+      },
+      /* 14b */
+      {
+        title: "London landmarks – in echt",
+        say: "Und so sehen die vier Sehenswürdigkeiten in echt aus. Hör mal: So klingen die Glocken von Big Ben.",
+        build(s) {
+          const items = [["big-ben", "Elizabeth Tower", "Big Ben", "50% 40%"], ["tower-bridge", "Tower Bridge", "Tower Bridge", "50% 50%"], ["london-eye", "London Eye", "the London Eye", "40% 50%"], ["buckingham-palace", "Buckingham Palace", "Buckingham Palace", "60% 50%"]];
+          const figs = items.map(([img, cap, , pos]) => s.photo(img, { w: 255, h: 400, caption: cap, pos, cls: "later" }));
+          figs.forEach((f, i) => f.addEventListener("click", () => { s.sfx.click(); s.speak(items[i][2], EN); }));
+          const ben = s.soundBtn("big-ben-chimes", "Big Ben läutet", { vol: .7 });
+          const note = s.h("p", { class: "small later", style: { margin: 0 } }, "Auf dem Foto ist die Tower Bridge gerade offen: Die zwei Brückenteile stehen hoch.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "16px" } }, s.h("div", { class: "cols4", style: { gap: "14px" } }, figs), s.h("div", { class: "row", style: { gap: "18px", flexWrap: "nowrap" } }, ben, note)));
+          s.step(async () => { s.sound("big-ben-chimes", { vol: .5, dur: 4, fade: 1 }); await s.show(figs[0], "zoom"); s.speak("Big Ben", EN); });
+          s.step(async () => { s.sound("waves", { vol: .4, dur: 3, fade: 1 }); await s.show(figs[1], "zoom"); s.show(note, "fade"); s.speak("Tower Bridge", EN); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(figs[2], "zoom"); s.speak("the London Eye", EN); });
+          s.step(async () => { s.sfx.drum(); await s.show(figs[3], "zoom"); s.speak("Buckingham Palace", EN); });
         },
       },
       /* 15 */
@@ -805,7 +867,7 @@
             s.speak("Go straight on. Turn right at the crossroads. The water slide is on your right.", EN);
             await walk(s, me, [[302, 312]]); trail.setAttribute("points", "302,545 302,312");
             await walk(s, me, [[459, 312]]); trail.setAttribute("points", "302,545 302,312 459,312");
-            light(["slide"]); s.sfx.success(); s.confetti(40 + 459, 92 + 330, 60);
+            light(["slide"]); s.sound("kids-cheer", { vol: .5, dur: 3, fade: .6 }); s.confetti(40 + 459, 92 + 330, 60);
           });
           void title;
         },

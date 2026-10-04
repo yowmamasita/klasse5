@@ -185,23 +185,26 @@
         say: "Das sind unsere Freunde für das ganze Englischjahr: Lukas und Julia aus Berlin, Ruby aus London und ihr Hund Biscuit. Tippe auf die Sprechblasen!",
         build(s) {
           const mk = (draw, name, line, de) => {
-            const svg = s.svg(230, 250); draw(svg);
+            const svg = s.svg(230, 250, { width: 160, height: 174 }); draw(svg);
             return s.h("div", { class: "card stack later", style: { alignItems: "center", gap: "10px", padding: "12px 14px" } },
               svg, s.h("p", { class: "h2", style: { color: "var(--unit)" } }, name),
-              spk(s, line, { cls: "bub sm" }), s.h("p", { class: "small pencil", style: { textAlign: "center" } }, de));
+              typeof line === "string" ? spk(s, line, { cls: "bub sm" }) : line, s.h("p", { class: "small pencil", style: { textAlign: "center" } }, de));
           };
           const cards = [
             mk(v => v.append(cast(s, "lukas", 112, 246, { wave: true, h: 200 })), "Lukas", "Hi! I'm Lukas. I'm from Berlin.", "Lukas ist 10 und geht in die 5. Klasse – wie du."),
             mk(v => v.append(cast(s, "julia", 72, 246, { h: 170 }), cat(s, { x: 150, y: 246, sc: 1.05 })), "Julia & Mo", "Hello! I'm Julia. This is Mo.", "Julia (8) ist Lukas' Schwester. Mo ist ihre Katze."),
             mk(v => v.append(cast(s, "ruby", 112, 246, { wave: true, h: 214 })), "Ruby", "Hi! I'm Ruby. I'm from London.", "Ruby (11) ist Lukas' Brieffreundin – sein pen pal."),
-            mk(v => v.append(dog(s, { x: 88, y: 240, sc: 1.6 })), "Biscuit", "Woof! Woof!", "Rubys Hund. Biscuit heißt „Keks“."),
+            mk(v => v.append(dog(s, { x: 88, y: 240, sc: 1.6 })), "Biscuit", s.soundBtn("dog-bark", "Woof! Woof!"), "Rubys Hund. Biscuit heißt „Keks“."),
           ];
-          const info = life(s, "In real life", s.h("p", { class: "t" }, "London liegt eine Stunde hinter Berlin: Ist es in Berlin 10 Uhr, ist es in London erst 9 Uhr."));
-          info.classList.add("later");
+          const info = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "330px 1fr", gap: "20px", alignItems: "center", padding: "12px 16px" } },
+            s.photo("big-ben", { w: 330, h: 176, pos: "62% 40%", caption: "Big Ben in London" }),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("span", { class: "exlabel", style: { color: "var(--green)", marginBottom: "0" } }, "In real life"),
+              s.h("p", { class: "t" }, "London liegt eine Stunde hinter Berlin: Ist es in Berlin 10 Uhr, ist es in London erst 9 Uhr."),
+              s.h("div", { class: "row" }, s.soundBtn("big-ben-chimes", "Big Ben schlägt"))));
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "space-between" } }, s.h("div", { class: "cols4", style: { gap: "16px" } }, cards), info));
           s.show(cards[0], "up"); s.sfx.pop();
-          [1, 2, 3].forEach(i => s.step(async () => { s.sfx.pop(); if (i === 3) s.sfx.boing(); await s.show(cards[i], "up"); }));
-          s.step(async () => { s.sfx.ding(); await s.show(info, "up"); s.say("Wenn es in Berlin zehn Uhr ist, ist es in London neun Uhr."); });
+          [1, 2, 3].forEach(i => s.step(async () => { if (i === 3) s.sound("dog-bark", { vol: 0.6 }); else s.sfx.pop(); await s.show(cards[i], "up"); }));
+          s.step(async () => { s.sound("big-ben-chimes", { vol: 0.5, dur: 6 }); await s.show(info, "up"); s.say("Wenn es in Berlin zehn Uhr ist, ist es in London neun Uhr."); });
         },
       },
       /* 2 ------------------------------------------------------------ */
@@ -225,7 +228,7 @@
           const merk = s.h("div", { class: "merk later" }, s.h("b", null, "I'm"), " = I am  ·  ", s.h("b", null, "What's"), " = What is", s.h("br"), "Nice to meet you. = Schön, dich kennenzulernen.");
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "400px 1fr", height: "100%", alignItems: "center" } }, svg,
             s.h("div", { class: "stack", style: { gap: "14px" } }, ...bubs, s.h("div", { class: "row" }, play), merk)));
-          s.show(svg, "fade"); s.sfx.whoosh();
+          s.show(svg, "fade"); s.sound("school-bell", { vol: 0.4, dur: 2.5 });
           bubs.forEach((b, i) => s.step(async () => { s.sfx.pop(); bump(s, lines[i][0] === "Ruby" ? R : L, 0.08); await s.show(b, lines[i][2] ? "left" : "right"); if (i === 3) s.show(play, "pop"); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
@@ -260,7 +263,7 @@
           };
           const sl = s.slider({ label: "Uhrzeit", min: 6, max: 22, value: 8, fmt: v => v + ":00 Uhr", onInput: v => {
             paint(v); const [g, d] = G(v);
-            if (g !== cur) { cur = g; flip(s, lb, g); de.textContent = d; s.sfx.coin(); }
+            if (g !== cur) { cur = g; flip(s, lb, g); de.textContent = d; if (g === "Good night!") s.sound("owl", { vol: 0.6 }); else if (g === "Good morning!") s.sound("birds", { vol: 0.4, dur: 3 }); else s.sfx.coin(); }
           } });
           paint(8);
           // right: how are you
@@ -279,7 +282,7 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "500px 1fr", height: "100%" } },
             s.h("div", { class: "stack", style: { gap: "12px" } }, svg, sl, s.h("div", { class: "row" }, gBtn), de, gLife),
             s.h("div", { class: "stack", style: { gap: "10px" } }, q, ...answers, andYou, merk)));
-          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.show(svg, "zoom"); s.sound("birds", { vol: 0.4, dur: 5 });
           s.step(async () => {
             s.sfx.tick();
             await s.tween({ from: 8, to: 20, dur: 1600, update: v => { const h = Math.round(v); sl.input.value = h; paint(v); } });
@@ -413,7 +416,7 @@
           s.step(async () => { s.sfx.pop(); await s.show(dlg.slice(2), "up"); });
           s.step(async () => { await s.show(tileBox, "zoom"); await spell("RUBY"); });
           s.step(async () => { s.sfx.whoosh(); s.show(lab, "fade"); await s.show(nameBtns, "up"); s.show(lf, "up"); });
-          s.step(async () => { s.sfx.ding(); s.show(merk, "up"); s.show(phone, "up", 200); await spell("BELLA"); });
+          s.step(async () => { s.show(merk, "up"); s.show(phone, "up", 200); s.sound("phone-ring", { vol: 0.5, dur: 2.4 }); if (!s.fast) await s.wait(2600); await spell("BELLA"); });
         },
       },
       /* 7 ------------------------------------------------------------ */
@@ -447,7 +450,7 @@
           s.show(t12, "pop");
           s.step(async () => { s.show(lab2, "fade"); teens.forEach((b, i) => setTimeout(() => s.alive && s.sfx.note(i + 2, 0.12), i * 120)); await s.show(teens, "down"); });
           s.step(async () => { tys.forEach((b, i) => setTimeout(() => s.alive && s.sfx.note(i - 5, 0.12), i * 120)); await s.show(tys, "up"); s.say("Vergleiche: thirteen und thirty."); });
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(lf, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sound("coins", { vol: 0.6 }); s.show(lf, "up"); });
         },
       },
       /* 8 ------------------------------------------------------------ */
@@ -529,8 +532,32 @@
           s.step(async () => {
             for (const [g, t] of [[bus, "The bus is red."], [sunG, "The sun is yellow."], [biscuit, "Biscuit is brown."]]) { curS = t; flip(s, sentence, t); s.sfx.pop(); await bump(s, g, 0.12); await s.wait(350); }
           });
-          s.step(async () => { s.sfx.ding(); await s.show(fact, "up"); });
+          s.step(async () => { s.sound("london-bus-street", { vol: 0.45, dur: 4 }); await s.show(fact, "up"); });
           s.step(async () => { s.sfx.scribble(); await s.show(merk, "up"); s.say("Britisches Englisch schreibt colour mit u und grey mit e."); });
+        },
+      },
+      /* 9b ---------------------------------------------------------- */
+      {
+        title: "Colours: London in echt",
+        say: "So sehen die Farben von London in echt aus. Tippe auf die Sätze und hör dir die Stadt an!",
+        build(s) {
+          const o = pos => ({ w: "100%", h: 330, pos });
+          const P = [
+            [s.photo("london-bus", o("56% 50%")), "The bus is red.", "Doppeldecker – double-decker"],
+            [s.photo("post-box", o("50% 50%")), "The post box is red.", "Briefkasten – post box"],
+            [s.photo("phone-box", o("50% 45%")), "The phone box is red.", "Telefonzelle – phone box"],
+            [s.photo("black-cab", o("38% 55%")), "The taxi is black.", "Londoner Taxis: black cabs"],
+          ];
+          const cols = P.map(([ph, t, d]) => s.h("div", { class: "stack later", style: { gap: "10px", alignItems: "stretch" } }, ph, spk(s, t, { de: d, cls: "sm full" })));
+          const sounds = s.h("div", { class: "row later", style: { gap: "14px" } }, s.h("span", { class: "t pencil" }, "Hör dir London an:"),
+            s.soundBtn("london-bus-street", "Ein Bus fährt vorbei"), s.soundBtn("bus-announce", "Ansage im Bus"), s.soundBtn("big-ben-chimes", "Big Ben"));
+          s.add(s.h("div", { class: "stack", style: { gap: "18px", height: "100%", justifyContent: "center" } },
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "20px" } }, cols), sounds));
+          s.show(cols[0], "up"); s.sound("london-bus-street", { vol: 0.45, dur: 5 });
+          s.step(async () => { s.sfx.pop(); await s.show(cols[1], "up"); });
+          s.step(async () => { s.sound("phone-ring", { vol: 0.45, dur: 2.4 }); await s.show(cols[2], "up"); });
+          s.step(async () => { s.sound("traffic", { vol: 0.4, dur: 3 }); await s.show(cols[3], "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(sounds, "up"); s.say("Typisch London: rote Busse, rote Briefkästen, rote Telefonzellen und schwarze Taxis."); });
         },
       },
       /* 10 ----------------------------------------------------------- */
@@ -559,19 +586,17 @@
             b.style.width = "100%";
             return s.h("div", { class: "card stack later", style: { alignItems: "center", gap: "6px", padding: "8px 8px 10px" } }, v, b);
           });
-          // pencil case
-          const pc = s.svg(250, 130);
-          const lid = E("g", { class: "e1g", style: { transformOrigin: "50% 100%" } }, E("path", { d: "M20 64 Q20 30 60 30 L190 30 Q230 30 230 64 Z", fill: "#138a5a" }));
-          pc.append(E("rect", { x: 20, y: 60, width: 210, height: 60, rx: 22, fill: "#1aa36b" }), lid, E("line", { x1: 30, y1: 64, x2: 220, y2: 64, stroke: "#ffd94a", "stroke-width": 4, "stroke-dasharray": "6 5" }), E("circle", { cx: 220, cy: 64, r: 7, fill: "#ffd94a" }));
+          // pencil case: a real one
+          const pc = s.photo("pencil-case", { w: 270, h: 190, pos: "50% 55%", caption: "a pencil case" });
           const q = spk(s, "What's in your pencil case?", { de: "Was ist in deinem Federmäppchen?" });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "rubber"), " (britisch) = eraser (amerikanisch) = Radiergummi");
           s.add(s.h("div", { class: "stack", style: { gap: "12px" } },
             s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "22px" } }, pc, s.h("div", { class: "stack", style: { gap: "10px" } }, q, merk)),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px" } }, cards)));
-          s.show(pc, "bounce"); s.sfx.boing();
-          const open = async () => { s.sfx.zap(); await s.tween({ from: 0, to: -55, dur: 450, ease: "back", update: v => { lid.style.transform = `translateY(${v * 0.4}px) rotate(${v * 0.3}deg)`; } }); };
+          s.show(pc, "zoom"); s.sfx.pop();
+          const open = async () => { s.sound("zipper", { vol: 0.7 }); await bump(s, pc, 0.06); };
           s.step(async () => { await open(); cards.slice(0, 5).forEach((_, i) => setTimeout(() => s.alive && s.sfx.pop(), i * 120)); await s.show(cards.slice(0, 5), "down"); });
-          s.step(async () => { cards.slice(5).forEach((_, i) => setTimeout(() => s.alive && s.sfx.pop(), i * 120)); await s.show(cards.slice(5), "up"); });
+          s.step(async () => { s.sound("scissors", { vol: 0.6 }); await s.show(cards.slice(5), "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "left"); s.say("Rubber ist britisches Englisch für Radiergummi."); });
         },
       },
@@ -623,7 +648,7 @@
               s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("p", { class: "h2" }, "👩‍🏫 Your teacher says:"), ...tb),
               s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("p", { class: "h2" }, "🙋 You say:"), ...yb)),
             merk, cLife));
-          s.sfx.whoosh(); s.show(tb, "left");
+          s.sound("classroom", { vol: 0.35, dur: 5 }); s.show(tb, "left");
           s.step(async () => { yb.forEach((_, i) => setTimeout(() => s.alive && s.sfx.pop(), i * 120)); await s.show(yb, "right"); s.say("Wenn du etwas nicht verstehst: Sorry, I don't understand."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(cLife, "up"); });
         },
@@ -651,7 +676,7 @@
             s.h("div", { class: "stack", style: { gap: "10px" } }, ...sent, merk, sLife)));
           s.sfx.whoosh(); cards.forEach((_, i) => setTimeout(() => s.alive && s.sfx.count(i), i * 70)); s.show(cards, "pop");
           s.step(async () => { s.sfx.pop(); await s.show(sent, "right"); });
-          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(sLife, "up"); s.say("Nur Sprachen wie English und German schreibt man groß."); });
+          s.step(async () => { s.sound("pencil-write", { vol: 0.6 }); await s.show(merk, "up"); s.show(sLife, "up"); s.say("Nur Sprachen wie English und German schreibt man groß."); });
         },
       },
       /* 14 ----------------------------------------------------------- */
@@ -673,10 +698,29 @@
           s.add(s.h("div", { class: "stack", style: { gap: "12px" } },
             s.h("div", { class: "cols", style: { gap: "16px" } }, colR, colL),
             s.h("div", { class: "cols3", style: { gap: "12px" } }, facts)));
-          s.show(colR, "left"); s.sfx.whoosh();
+          s.show(colR, "left"); s.sound("school-bell", { vol: 0.4, dur: 2.5 });
           s.step(async () => { for (const [i, r] of R.entries()) { s.sfx.count(i); s.show(r, "left"); await s.wait(160); } await s.wait(300); });
           s.step(async () => { await s.show(colL, "right"); for (const [i, r] of L.entries()) { s.sfx.count(i); s.show(r, "right"); await s.wait(160); } await s.wait(300); s.say("In Berlin beginnt der Tag schon um acht Uhr."); });
           s.step(async () => { s.sfx.ding(); await s.show(facts, "up"); s.say("Typisch britisch: Schuluniform, form tutor und houses."); });
+        },
+      },
+      /* 14b --------------------------------------------------------- */
+      {
+        title: "School uniform: in echt",
+        say: "So sieht eine Schuluniform in England aus. Tippe auf die Sätze – du kennst die Farben schon!",
+        build(s) {
+          const ph = s.photo("school-uniform", { w: 560, h: 420, pos: "50% 60%", caption: "Schülerinnen in Schuluniform, Großbritannien" });
+          const L = [["This is a school uniform.", "Das ist eine Schuluniform."], ["The jumpers are green.", "jumper = Pullover"], ["The skirts are green, too.", "skirt = Rock"], ["The socks are white.", "socks = Socken"], ["The shoes are black.", "shoes = Schuhe"]];
+          const lines = L.map(([t, d]) => spk(s, t, { de: d, cls: "sm full later" }));
+          const lf = life(s, "Im Alltag", s.h("p", { class: "small" }, "Jede Schule hat ihre eigenen Farben. Ruby trägt eine blaue Uniform mit roter Krawatte (tie)."));
+          lf.classList.add("later");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", gap: "24px", height: "100%", alignItems: "center" } },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, ph, s.h("div", { class: "row" }, s.soundBtn("school-bell", "Schulklingel"))),
+            s.h("div", { class: "stack", style: { gap: "10px" } }, ...lines, lf)));
+          s.show(ph, "zoom"); s.sound("camera-shutter", { vol: 0.6 });
+          s.step(async () => { s.sfx.pop(); await s.show(lines.slice(0, 3), "right"); });
+          s.step(async () => { s.sfx.pop(); await s.show(lines.slice(3), "right"); });
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },
       /* 15 ----------------------------------------------------------- */
@@ -795,9 +839,9 @@
           order.forEach(([k, l]) => { tabs[k] = s.h("button", { class: "e1tab" }, l); tabs[k].addEventListener("click", () => showTab(k)); });
           Object.values(panels).forEach(p => area.append(p));
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, s.h("div", { class: "e1tabs" }, order.map(([k]) => tabs[k])), area));
-          showTab("mail", false); s.show(panels.mail, "up"); s.sfx.pop();
-          s.step(async () => { await showTab("visit"); });
-          s.step(async () => { await showTab("badge"); s.confetti(700, 300, 60); s.sfx.fanfare(); });
+          showTab("mail", false); s.show(panels.mail, "up"); s.sound("keyboard", { vol: 0.5, dur: 2 });
+          s.step(async () => { s.sound("school-bell", { vol: 0.4, dur: 2.5 }); await showTab("visit"); });
+          s.step(async () => { await showTab("badge"); s.confetti(700, 300, 60); s.sound("applause", { vol: 0.45, dur: 3 }); });
         },
       },
     ],

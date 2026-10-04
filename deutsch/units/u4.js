@@ -147,6 +147,31 @@
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
+      /* 1b --------------------------------------------------------------- */
+      {
+        title: "Lang oder kurz – in echt",
+        say: "Hör dir echte Stimmen an. Ofen klingt lang, offen kurz. Beet klingt lang, Bett kurz.",
+        build(s) {
+          const half = (fig, word, btn, tagTxt, cls) => s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "250px 1fr", gap: "14px", alignItems: "center" } }, fig,
+            s.h("div", { class: "stack", style: { gap: "10px", alignItems: "flex-start" } }, s.h("span", { class: "u4w mk", style: { font: "800 46px/1.1 var(--f-display)" } }, W(s, word)), s.h("span", { class: "u4tag" + cls }, tagTxt), btn));
+          const H = [
+            half(s.photo("kachelofen", { w: 250, h: 200, pos: "50% 45%", caption: "der Ofen" }), "{O}fen", s.soundBtn("wort-ofen", "Anhören"), "langes o", ""),
+            half(s.photo("offene-tuer", { w: 250, h: 200, caption: "Das Tor ist offen." }), "[o]ffen", s.soundBtn("wort-offen", "Anhören"), "kurzes o", " b"),
+            half(s.photo("beet", { w: 250, h: 200, caption: "das Beet" }), "B{ee}t", s.soundBtn("wort-beet", "Anhören"), "langes e", ""),
+            half(s.photo("bett", { w: 250, h: 200, caption: "das Bett" }), "B[e]tt", s.soundBtn("wort-bett", "Anhören"), "kurzes e", " b"),
+          ];
+          const vs = () => s.h("span", { class: "u4vs" }, "↔");
+          const merk = s.h("div", { class: "merk later", style: { padding: "10px 18px 12px" } }, "Echte Stimmen: Bei ", s.h("b", null, "Ofen"), " und ", s.h("b", null, "Beet"), " klingt der Vokal lang, bei ", s.h("b", null, "offen"), " und ", s.h("b", null, "Bett"), " kurz.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "16px", justifyContent: "center" } },
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 40px 1fr", gap: "14px", alignItems: "center" } }, H[0], vs(), H[1]),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 40px 1fr", gap: "14px", alignItems: "center" } }, H[2], vs(), H[3]), merk));
+          s.preload("wort-ofen"); s.preload("wort-offen"); s.preload("wort-beet"); s.preload("wort-bett");
+          const SN = ["wort-ofen", "wort-offen", "wort-beet", "wort-bett"];
+          s.show(H[0], "left"); s.sound(SN[0]);
+          [1, 2, 3].forEach(i => s.step(async () => { s.sound(SN[i]); await s.show(H[i], i % 2 ? "right" : "left"); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
       /* 2 ---------------------------------------------------------------- */
       {
         title: "Silben schwingen",
@@ -165,7 +190,7 @@
             return { cols, arcs };
           };
           const clap = async (cols, word) => {
-            for (const c of cols) { if (!s.alive) return; bump(c); s.sfx.drum(); await s.wait(380); }
+            for (const c of cols) { if (!s.alive) return; bump(c); s.sound("clap", { vol: 0.7, dur: 0.4 }); await s.wait(380); }
             speak(word, 0.8);
           };
           const cards = words.map(sy => {
@@ -186,7 +211,7 @@
           s.show(cards, "pop"); s.sfx.pop();
           s.step(async () => {
             s.say("Ho-se. Ta-fel. Ba-na-ne. Kis-te. Fuß-ball. Te-le-fon.");
-            for (const arcs of allArcs) for (const a of arcs) { s.show(a, "draw"); s.sfx.drum(); await s.wait(260); }
+            for (const arcs of allArcs) for (const a of arcs) { s.show(a, "draw"); s.sound("clap", { vol: 0.6, dur: 0.35 }); await s.wait(260); }
           });
           s.step(async () => { s.sfx.whoosh(); await s.show(life, "up"); clap(rw.cols, ""); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
@@ -230,12 +255,12 @@
           s.step(async () => {
             s.say("Ho-se, Ta-fel, le-sen, Blu-me. Die Tür ist offen, der Vokal darf lang klingen.");
             s.show(L.card, "left"); s.sfx.whoosh(); await s.wait(350);
-            s.show(L.d.parts, "fade"); s.sfx.boing(); await s.wait(300); mark(L.btns); s.sfx.ding();
+            s.show(L.d.parts, "fade"); s.sound("door-creak", { vol: 0.5, dur: 1.5, fade: 0.3 }); await s.wait(300); mark(L.btns); s.sfx.ding();
           });
           s.step(async () => {
             s.say("Kis-te, Ham-mer, Mut-ter, Wol-ke. Ein Konsonant schließt die Tür. Der Vokal ist kurz.");
             s.show(R.card, "right"); s.sfx.whoosh(); await s.wait(350);
-            s.show(R.d.parts, "pop"); s.sfx.drum(); await s.wait(300); mark(R.btns); s.sfx.snap();
+            s.show(R.d.parts, "pop"); s.sound("knock", { vol: 0.6, dur: 1.2, fade: 0.2 }); await s.wait(300); mark(R.btns); s.sfx.snap();
           });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
@@ -258,12 +283,13 @@
           sv.append(line, cap);
           const tier = sayBtn(s, "T{!ie}r", { mk: true });
           const left = s.h("div", { class: "stack", style: { alignItems: "center", gap: "12px" } }, sv, tier);
-          const box = (lab, words) => {
+          const box = (lab, words, fig) => {
+            const row = s.h("div", { class: "row", style: { gap: "10px" } }, ...words.map(w => sayBtn(s, w, { mk: true, cls: "sm" })));
             const b = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, lab),
-              s.h("div", { class: "row", style: { gap: "10px" } }, ...words.map(w => sayBtn(s, w, { mk: true, cls: "sm" }))));
+              fig ? s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 150px", gap: "12px", alignItems: "center" } }, row, fig) : row);
             return b;
           };
-          const b1 = box("Im Zoo", ["T{!ie}re", "B{!ie}ne", "Z{!ie}ge"]);
+          const b1 = box("Im Zoo", ["T{!ie}re", "B{!ie}ne", "Z{!ie}ge"], s.photo("ziege", { w: 150, h: 120, pos: "50% 30%" }));
           const b2 = box("Post von Oma", ["Br{!ie}f", "L{!ie}be Grüße"]);
           const b3 = box("In der Pause", ["sp{!ie}len", "W{!ie}se", "Z{!ie}l"]);
           const merk = s.h("div", { class: "merk later" }, "Langes i in deutschen Wörtern: ", s.h("b", null, "meistens ie"), ".");
@@ -275,7 +301,9 @@
             s.say("Aus i wird ie. Das e hörst du nicht, es zeigt nur, das i ist lang.");
             s.show(e, "bounce"); s.sfx.boing(); await s.wait(500); s.show(line, "draw"); s.sfx.zap(); await s.wait(400); s.show(cap, "fade"); s.sfx.ding();
           });
-          [b1, b2, b3].forEach((b, i) => s.step(async () => { s.sfx.pop(); s.sfx.count(i * 2); await s.show(b, "right"); }));
+          s.preload("ziege-meckert"); s.preload("pencil-write"); s.preload("school-bell");
+          const BS = [["ziege-meckert", { vol: 0.6 }], ["pencil-write", { vol: 0.8 }], ["school-bell", { vol: 0.45, dur: 2.5, fade: 0.6 }]];
+          [b1, b2, b3].forEach((b, i) => s.step(async () => { s.sound(...BS[i]); await s.show(b, "right"); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -291,15 +319,16 @@
             s.h("span", { class: "u4tag b" }, lab), sayBtn(s, w, { mk: true })));
           const rows = [tiles.slice(0, 3), tiles.slice(3, 6), tiles.slice(6, 9)];
           const merk = s.h("div", { class: "merk later", style: { flex: "1.3" } }, "Fremdwörter: langes i ", s.h("b", null, "oft nur mit i"), ". Lerne sie als Merkwörter.");
-          const vs = s.h("div", { class: "card later", style: { flex: "1", display: "flex", flexDirection: "column", gap: "8px", justifyContent: "center" } },
-            P(s, "t", "Achtung, Unterschied:"),
-            s.h("div", { class: "row", style: { gap: "10px" } }, sayBtn(s, "T{!ie}r", { mk: true, cls: "sm" }), sayBtn(s, "T{!i}ger", { mk: true, cls: "sm" })));
+          const vs = s.h("div", { class: "card later", style: { flex: "1.2", display: "grid", gridTemplateColumns: "1fr 170px", gap: "12px", alignItems: "center" } },
+            s.h("div", { class: "stack", style: { gap: "8px" } }, P(s, "t", "Achtung, Unterschied:"),
+              s.h("div", { class: "row", style: { gap: "10px" } }, sayBtn(s, "T{!ie}r", { mk: true, cls: "sm" }), sayBtn(s, "T{!i}ger", { mk: true, cls: "sm" }))),
+            s.photo("tiger", { w: 170, h: 130, pos: "50% 40%" }));
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "16px", justifyContent: "center" } },
             P(s, "t", "Diese Wörter kommen aus anderen Sprachen. Das i klingt lang – und hat ", s.h("b", null, "kein e"), "."),
             s.h("div", { class: "cols3", style: { gap: "14px" } }, ...tiles),
             s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "stretch", marginTop: "12px" } }, merk, vs)));
           rows.forEach((r, i) => s.step(async () => { s.sfx.pop(); s.sfx.count(i * 3); await s.show(r, "pop"); }));
-          s.step(async () => { s.say("Tier ist ein deutsches Wort, also ie. Tiger schreibt man nur mit i."); s.sfx.ding(); s.show(merk, "up"); await s.show(vs, "up", 150); });
+          s.step(async () => { s.say("Tier ist ein deutsches Wort, also ie. Tiger schreibt man nur mit i."); s.sound("tiger-bruellt", { vol: 0.4 }); s.show(merk, "up"); await s.show(vs, "up", 150); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -326,6 +355,27 @@
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
+      /* 6b --------------------------------------------------------------- */
+      {
+        title: "Igel, Biber, Tiger – in echt",
+        say: "Igel, Biber und Tiger haben ein langes i. Trotzdem schreibt man sie nur mit i. Hör dir die Tiere und die Wörter an.",
+        build(s) {
+          const col = (fig, word, btns) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "10px", alignItems: "center", padding: "12px" } },
+            fig, s.h("span", { class: "u4w mk", style: { font: "800 46px/1.1 var(--f-display)" } }, W(s, word)), s.h("div", { class: "row", style: { gap: "8px", justifyContent: "center" } }, ...btns));
+          const C3 = [
+            col(s.photo("igel", { w: "100%", h: 270 }), "{!I}gel", [s.soundBtn("wort-igel", "Wort"), s.soundBtn("igel-schnueffelt", "Igel")]),
+            col(s.photo("biber", { w: "100%", h: 270 }), "B{!i}ber", [s.soundBtn("wort-biber", "Wort")]),
+            col(s.photo("tiger", { w: "100%", h: 270, pos: "50% 35%" }), "T{!i}ger", [s.soundBtn("wort-tiger", "Wort"), s.soundBtn("tiger-bruellt", "Tiger")]),
+          ];
+          const merk = s.h("div", { class: "merk later", style: { padding: "10px 18px 12px" } }, "Langes i, aber ", s.h("b", null, "kein e"), ": Igel, Biber, Tiger sind ", s.h("b", null, "Merkwörter"), ".");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "16px", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { gap: "16px" } }, C3), merk));
+          s.preload("igel-schnueffelt"); s.preload("splash"); s.preload("tiger-bruellt");
+          const AS = [["igel-schnueffelt", { vol: 0.7, dur: 2 }], ["splash", { vol: 0.5 }], ["tiger-bruellt", { vol: 0.45 }]];
+          s.show(C3[0], "up"); s.sound(...AS[0]);
+          [1, 2].forEach(i => s.step(async () => { s.sound(...AS[i]); await s.show(C3[i], "up"); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
       /* 7 ---------------------------------------------------------------- */
       {
         title: "ih und ieh: kleine Clubs",
@@ -346,7 +396,7 @@
           s.show([A.c, B.c], "zoom"); s.sfx.whoosh();
           s.step(async () => { s.say("ihr, ihm, ihn, ihnen"); for (let i = 0; i < 4; i++) { s.show(A.btns[i], "bounce"); s.sfx.count(i); await s.wait(160); } });
           s.step(async () => { s.say("Vieh, ziehen, fliehen, wiehern"); for (let i = 0; i < 4; i++) { s.show(B.btns[i], "bounce"); s.sfx.count(i + 4); await s.wait(160); } });
-          s.step(async () => { s.sfx.pop(); s.show(A.exEl, "up"); await s.show(B.exEl, "up", 150); });
+          s.step(async () => { s.sfx.pop(); s.show(A.exEl, "up"); await s.show(B.exEl, "up", 150); s.sound("pferd-wiehert", { vol: 0.6 }); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -367,15 +417,16 @@
           const ies = ["Melod{!ie}", "Batter{!ie}", "Energ{!ie}", "Fantas{!ie}"].map(w => sayBtn(s, w, { mk: true, cls: "sm" }));
           const card2 = s.h("div", { class: "card stack later", style: { gap: "12px" } }, P(s, "h2", "-ie am Wortende"), P(s, "small pencil", "betont und lang"), s.h("div", { class: "cols", style: { gap: "10px" } }, ...ies));
           const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.photo("orchesterprobe", { w: "100%", h: 130, caption: "musizieren" }),
             P(s, "t", "Ich telefon", s.h("b", null, "ie"), "re mit Oma."), P(s, "t", "In der Instrumentalklasse musiz", s.h("b", null, "ie"), "ren wir."), P(s, "t", "Prob", s.h("b", null, "ie"), "r mal die Suppe!"));
           s.add(s.h("div", { class: "cols", style: { height: "100%", alignItems: "center" } }, card1, s.h("div", { class: "stack" }, card2, life)));
           s.show(card1, "left"); s.sfx.whoosh();
           s.step(async () => {
-            s.say("telefonieren, probieren, reparieren, musizieren");
+            s.say("telefonieren, probieren, reparieren, musizieren"); s.sound("telefon-klingelt", { vol: 0.45, dur: 2, fade: 0.4 });
             for (const x of rows) { s.show(x.end, "right"); await s.wait(300); s.sfx.snap(); await s.wait(200); }
           });
           s.step(async () => { s.sfx.pop(); await s.show(card2, "up"); });
-          s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("orchester-stimmen", { vol: 0.45, dur: 3, fade: 0.8 }); await s.show(life, "up"); });
         },
       },
       /* 9 ---------------------------------------------------------------- */
@@ -453,7 +504,7 @@
             s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1.2fr", alignItems: "stretch" } }, life, merk)));
           s.step(async () => { s.say("Zahl, nehmen, wohnen, Uhr. Nach dem h kommt l, m, n oder r."); for (let i = 0; i < cards.length; i++) { s.show(cards[i], "down"); s.sfx.count(i * 2); await s.wait(150); } });
           s.step(async () => { s.say("Aber Tal, Schal, Name, Tor und Schule haben kein h."); s.sfx.boing(); await s.show(nohRow, "left"); });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("bike-bell", { vol: 0.6 }); await s.show(life, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -462,16 +513,16 @@
         title: "Doppelvokale: aa, ee, oo",
         say: "Nur wenige Wörter haben einen doppelten Vokal. Aa, ee und oo. Lerne sie als Merkwörter.",
         build(s) {
-          const groups = [["aa", ["S{!aa}l", "H{!aa}r", "P{!aa}r", "W{!aa}ge"], "Ein Paar Socken"],
-            ["ee", ["M{!ee}r", "T{!ee}", "Schn{!ee}", "B{!ee}re"], "Erdbeeren vom Markt"],
-            ["oo", ["B{!oo}t", "Z{!oo}", "M{!oo}s", "M{!oo}r"], "Boot fahren auf dem See"]];
+          const groups = [["aa", ["S{!aa}l", "H{!aa}r", "P{!aa}r", "W{!aa}ge"], s.photo("socken", { w: "100%", h: 110, pos: "50% 50%", caption: "ein Paar Socken" })],
+            ["ee", ["M{!ee}r", "T{!ee}", "Schn{!ee}", "B{!ee}re"], s.photo("erdbeeren", { w: "100%", h: 110, caption: "Erdbeeren" })],
+            ["oo", ["B{!oo}t", "Z{!oo}", "M{!oo}s", "M{!oo}r"], s.photo("ruderboot", { w: "100%", h: 110, pos: "70% 92%", caption: "Boot fahren auf dem See" })]];
           const cards = groups.map(([v, ws, life]) => {
             const t1 = s.h("span", { class: "u4tile", style: { color: C, borderColor: C } }, v[0]);
             const t2 = s.h("span", { class: "u4tile", style: { color: C, borderColor: C } }, v[1]);
             const c = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "12px", alignItems: "center" } },
               s.h("div", { class: "row", style: { gap: "6px" } }, t1, t2),
               s.h("div", { class: "cols", style: { gap: "10px", width: "100%" } }, ...ws.map(w => sayBtn(s, w, { mk: true, cls: "sm" }))),
-              P(s, "small green", "Im Alltag: " + life));
+              life);
             return { c, t1, t2 };
           });
           const um = s.h("div", { class: "card soft later", style: { flex: "1" } }, P(s, "t", s.h("b", null, "Mit Umlaut nur ein Buchstabe:")),
@@ -482,7 +533,7 @@
             s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "stretch" } }, um, merk)));
           cards.forEach((x, i) => s.step(async () => {
             s.say(["Saal, Haar, Paar, Waage", "Meer, Tee, Schnee, Beere", "Boot, Zoo, Moos, Moor"][i]);
-            s.show(x.c, "up"); s.sfx.whoosh();
+            s.show(x.c, "up"); if (i === 0) s.sfx.whoosh(); else s.sound(i === 1 ? "waves" : "splash", { vol: 0.45, dur: 2.5, fade: 0.6 });
             if (!s.fast) {
               x.t1.style.transform = "translateX(-40px)"; x.t2.style.transform = "translateX(40px)";
               await s.wait(250);
@@ -564,7 +615,7 @@
           });
           s.step(async () => {
             s.say("Fahrrad, Fahrkarte, Abfahrt, er fährt, Fahrer. Alle mit h.");
-            s.show(right, "zoom"); s.sfx.whoosh(); await s.wait(400);
+            s.show(right, "zoom"); s.sound("bike-bell", { vol: 0.6 }); await s.wait(400);
             for (let i = 0; i < fam.length; i++) { s.show(lines[i], "draw"); s.sfx.zap(); await s.wait(250); s.show(labs[i], "pop"); s.sfx.count(i * 2); await s.wait(200); }
           });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
@@ -592,14 +643,17 @@
             const we = s.h("div", { class: "later", style: { textAlign: "center", font: "700 30px/1.1 var(--f-display)", cursor: "pointer" } }, W(s, w, "mk"));
             const tg = s.h("div", { class: "later", style: { textAlign: "center" } }, s.h("span", { class: "u4tag" + (kind === "i" ? " b" : kind === "ohne" ? " g" : "") }, kind));
             wordEls.push(we); tagEls.push(tg);
-            const play = () => { s.sfx.note(semi, 0.35); bump(we); speak(sp, 0.7); };
+            const real = { Violine: "geige", "Flöte": "floete", Klavier: "klavier-ton" }[sp];
+            const play = () => { if (real) s.sound(real, { vol: 0.6, dur: 1.6, fade: 0.4, force: true }); else s.sfx.note(semi, 0.35); bump(we); speak(sp, 0.7); };
             g.addEventListener("click", play); we.addEventListener("click", play); we.style.cursor = "pointer";
           });
           const grid = cls => s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(8, 1fr)", width: SW + "px", paddingLeft: "60px", columnGap: "4px" } });
           const g1 = grid(); g1.append(...wordEls);
           const g2 = grid(); g2.append(...tagEls);
-          const geige = s.h("div", { class: "life later", style: { flex: "1" } }, s.h("span", { class: "exlabel" }, "Achtung"),
-            P(s, "t", s.h("b", null, "Geige"), ": ", s.h("b", null, "ei"), " ist ein Doppellaut – kein langes i!"));
+          const geige = s.h("div", { class: "life later", style: { flex: "1.2", display: "grid", gridTemplateColumns: "150px 1fr", gap: "12px", alignItems: "center" } },
+            s.photo("geige-foto", { w: 150, h: 100 }), s.h("div", null, s.h("span", { class: "exlabel" }, "Achtung"),
+            P(s, "t", s.h("b", null, "Geige"), ": ", s.h("b", null, "ei"), " ist ein Doppellaut – kein langes i!")));
+          s.preload("geige"); s.preload("floete"); s.preload("klavier-ton");
           const merk = s.h("div", { class: "merk later", style: { flex: "1.3" } }, "Musik, Violine: Fremdwörter mit i. Klavier, Lied: ie. Flöte, Noten, Probe: ganz ohne Zeichen.");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "18px", justifyContent: "center" } }, sv, g1, g2,
             s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "stretch", marginTop: "18px" } }, geige, merk)));
@@ -608,7 +662,7 @@
             for (let i = 0; i < items.length; i++) { s.show(notes[i], "pop"); s.show(wordEls[i], "up"); s.sfx.note(items[i][2], 0.3); await s.wait(260); }
           });
           s.step(async () => { for (let i = 0; i < tagEls.length; i++) { s.show(tagEls[i], "pop"); s.sfx.tick(); await s.wait(90); } s.sfx.ding(); });
-          s.step(async () => { s.sfx.boing(); s.show(geige, "up"); await s.show(merk, "up", 150); });
+          s.step(async () => { s.sound("geige", { vol: 0.5, dur: 2, fade: 0.5 }); s.show(geige, "up"); await s.show(merk, "up", 150); });
         },
       },
       /* 15 --------------------------------------------------------------- */
@@ -632,8 +686,10 @@
           const legend = s.h("div", { class: "row later", style: { gap: "18px", justifyContent: "center" } },
             s.h("span", { class: "u4tag" }, "Strich = langer Vokal"), s.h("span", { class: "u4tag" }, "farbig = Zeichen ie, h, ee"), s.h("span", { class: "u4tag b" }, "Kiwis, Apfelsinen: Fremdwörter mit i"));
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "22px", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { alignItems: "stretch" } }, c1, c2, c3), legend));
+          s.preload("ubahn-announce"); s.preload("sizzle"); s.preload("pencil-write");
+          const CS = [["ubahn-announce", { vol: 0.45, dur: 3, fade: 0.8 }], ["sizzle", { vol: 0.45, dur: 2.5, fade: 0.6 }], ["pencil-write", { vol: 0.8 }]];
           cards.forEach(([c, b], i) => s.step(async () => {
-            s.show(c, ["left", "up", "right"][i]); s.sfx.whoosh(); await s.wait(450);
+            s.show(c, ["left", "up", "right"][i]); s.sound(...CS[i]); await s.wait(450);
             for (const x of b) { mark(x); s.sfx.tick(); await s.wait(120); }
           }));
           s.step(async () => { s.sfx.ding(); await s.show(legend, "up"); });
@@ -664,7 +720,7 @@
           s.step(async () => { s.sfx.pop(); s.show(tips[0], "right"); await moveTo(1); });
           s.step(async () => { s.sfx.pop(); s.show(tips[1], "right"); await moveTo(2); s.sfx.success(); });
           s.step(async () => { s.sfx.pop(); await s.show(tips[2], "right"); });
-          s.step(async () => { s.sfx.pop(); await s.show(tips[3], "right"); s.say("Lesen, merken, abdecken, schreiben, vergleichen. Super gemacht!"); s.sfx.fanfare(); s.confetti(590, 400, 80); });
+          s.step(async () => { s.sfx.pop(); await s.show(tips[3], "right"); s.say("Lesen, merken, abdecken, schreiben, vergleichen. Super gemacht!"); s.sound("applause", { vol: 0.5, dur: 4, fade: 1 }); s.confetti(590, 400, 80); });
         },
       },
     ],

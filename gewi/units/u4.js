@@ -13,27 +13,14 @@
   const P = (s, txt, cls = "small") => s.h("p", { class: cls }, txt);
   const g = (s, attrs, ...k) => s.el("g", attrs || {}, ...k);
 
-  /* Vierbeiner in lokalen Koordinaten 0..210 × 0..100 */
-  function quad(s, o) {
-    const c = o.col, gg = g(s, {});
-    const legs = o.dark || c;
+  /* Schaf in lokalen Koordinaten 0..210 × 0..100 */
+  function sheepFig(s) {
+    const c = "#f3efe6", legs = "#5a4a3a", gg = g(s, {});
     [50, 70, 118, 138].forEach(x => gg.append(s.el("rect", { x, y: 66, width: 11, height: 32, rx: 4, fill: legs })));
-    if (o.tail) gg.append(s.el("path", { d: "M34 50 q-14 6 -12 22", stroke: legs, "stroke-width": 5, fill: "none", "stroke-linecap": "round" }));
+    gg.append(s.el("path", { d: "M34 50 q-14 6 -12 22", stroke: legs, "stroke-width": 5, fill: "none", "stroke-linecap": "round" }));
     gg.append(s.el("ellipse", { cx: 94, cy: 52, rx: 62, ry: 26, fill: c }));
-    if (o.wool) [48, 70, 92, 114, 136].forEach((x, i) => gg.append(s.el("circle", { cx: x, cy: 34 + (i % 2) * 4, r: 15, fill: c })));
-    if (o.bristle) gg.append(s.el("path", { d: "M50 30 l6 -10 l6 10 l6 -10 l6 10 l6 -10 l6 10 l6 -10 l6 10", stroke: legs, "stroke-width": 4, fill: "none" }));
-    if (o.pig) {
-      gg.append(s.el("ellipse", { cx: 158, cy: 52, rx: 26, ry: 20, fill: c }), s.el("rect", { x: 176, y: 44, width: 18, height: 18, rx: 6, fill: o.snout || c, stroke: legs, "stroke-width": 2 }),
-        s.el("path", { d: "M148 34 l8 -12 l6 14", fill: c, stroke: legs, "stroke-width": 2 }), s.el("circle", { cx: 164, cy: 46, r: 3, fill: "#1b1b1b" }));
-      if (o.tusk) gg.append(s.el("path", { d: "M178 64 q4 -12 12 -16", stroke: "#f2e6c9", "stroke-width": 4, fill: "none", "stroke-linecap": "round" }));
-    } else {
-      gg.append(s.el("path", { d: "M140 42 L158 22 L172 30 L156 62 Z", fill: c }), s.el("ellipse", { cx: 172, cy: 32, rx: 22, ry: 12, fill: o.face || c, transform: "rotate(25 172 32)" }), s.el("circle", { cx: 168, cy: 27, r: 3, fill: "#1b1b1b" }));
-      const hc = o.hornCol || "#6b5a48";
-      if (o.horns === "curl") gg.append(s.el("path", { d: "M160 20 q-14 -14 -24 0 q-6 14 10 16", stroke: hc, "stroke-width": 7, fill: "none", "stroke-linecap": "round" }));
-      if (o.horns === "scim") gg.append(s.el("path", { d: `M160 20 q-10 -${o.big ? 30 : 16} -${o.big ? 38 : 22} -${o.big ? 26 : 14}`, stroke: hc, "stroke-width": 6, fill: "none", "stroke-linecap": "round" }));
-      if (o.horns === "lyre") gg.append(s.el("path", { d: `M160 20 q6 -${o.big ? 22 : 12} ${o.big ? 26 : 14} -${o.big ? 22 : 12}`, stroke: hc, "stroke-width": 6, fill: "none", "stroke-linecap": "round" }));
-      if (o.beard) gg.append(s.el("path", { d: "M180 40 l2 14 l-8 -10", fill: legs }));
-    }
+    [48, 70, 92, 114, 136].forEach((x, i) => gg.append(s.el("circle", { cx: x, cy: 34 + (i % 2) * 4, r: 15, fill: c })));
+    gg.append(s.el("path", { d: "M140 42 L158 22 L172 30 L156 62 Z", fill: c }), s.el("ellipse", { cx: 172, cy: 32, rx: 22, ry: 12, fill: "#3b3028", transform: "rotate(25 172 32)" }), s.el("circle", { cx: 168, cy: 27, r: 3, fill: "#1b1b1b" }));
     return gg;
   }
 
@@ -67,7 +54,7 @@
             s.el("path", { d: "M70 240 l20 30 M95 240 l20 30 M200 240 l20 30 M225 240 l20 30", stroke: "#8a6a3a", "stroke-width": 3 }));
           const rows = [];
           for (let i = 0; i < 5; i++) { const y = 330 + i * 24; const r = g(s, { class: "later" }); for (let x = 320; x < 560; x += 22) r.append(s.el("path", { d: `M${x} ${y} l0 -18 m-5 6 l5 -8 l5 8`, stroke: "#5f9e45", "stroke-width": 3, fill: "none" })); svg.append(r); rows.push(r); }
-          const sheep = g(s, { class: "later" }, ...[[90, 380], [160, 400]].map(([x, y]) => g(s, { transform: `translate(${x} ${y}) scale(.45)` }, quad(s, { col: "#f3efe6", dark: "#5a4a3a", wool: true, face: "#3b3028" }))));
+          const sheep = g(s, { class: "later" }, ...[[90, 380], [160, 400]].map(([x, y]) => g(s, { transform: `translate(${x} ${y}) scale(.45)` }, sheepFig(s))));
           svg.append(tag, before, house, sheep);
           const right = s.h("div", { class: "stack" },
             box(s, "ex", "Vorher", P(s, "Jagen, sammeln, weiterziehen – wie in der Altsteinzeit.")),
@@ -80,7 +67,7 @@
             s.sfx.swoosh(); await s.tween({ from: 1, to: 0, dur: 500, update: v => before.setAttribute("opacity", v) });
             tag.textContent = "Nachher: sesshaft"; s.sfx.pop(); s.show(house, "pop"); s.show(e2, "left");
             for (let i = 0; i < rows.length; i++) { s.sfx.count(i); s.show(rows[i], "up"); await s.wait(140); }
-            s.sfx.boing(); await s.show(sheep, "bounce");
+            s.sound("schaf", { vol: .7 }); await s.show(sheep, "bounce");
           });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Das nennt man Neolithische Revolution. Sie begann im Fruchtbaren Halbmond."); });
         },
@@ -159,13 +146,14 @@
           const grainCards = [["Einkorn", "wohl zuerst gezähmt in der Südost-Türkei"], ["Emmer", "seit mindestens 10.000 Jahren angebaut"], ["Gerste", "eine der ersten Getreidearten"]].map(([n, t]) => s.h("div", { class: "card later", style: { padding: "10px 14px" } }, s.h("p", { class: "h2", style: { color: C, fontSize: "24px" } }, n), P(s, t)));
           const right = s.h("div", { class: "stack" },
             box(s, "ex", "Was passiert?", P(s, "Bei wildem Getreide zerfällt die reife Ähre – die Körner fallen auf den Boden. Die ersten Bauern ernteten und säten vor allem Körner, die an der Ähre blieben. So entstand nach vielen Jahren Getreide, das man gut ernten kann.")),
+            s.photo("einkorn", { w: "100%", h: 150, pos: "50% 45%", caption: "Echte Einkorn-Ähren", cls: "later" }),
             s.h("div", { class: "cols3", style: { gap: "10px" } }, grainCards),
             box(s, "life later", "Im Alltag", P(s, "Getreide steckt in Brot, Brötchen, Nudeln und Müsli. Und Ötzis letzte Mahlzeit enthielt Einkorn!")));
-          const life = right.children[2];
+          const life = right.children[3], ek = right.children[1];
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "480px 1fr", height: "100%", alignItems: "center", gap: "26px" } }, s.h("div", { class: "stack", style: { alignItems: "center", gap: "10px" } }, svg, btn), right));
           s.show(svg, "fade"); s.sfx.pop();
           s.step(async () => { await wind(); s.say("Beim wilden Einkorn fallen die Körner ab. Beim Kultur-Einkorn bleiben sie dran."); });
-          s.step(async () => { for (let i = 0; i < 3; i++) { s.sfx.count(i * 2); s.show(grainCards[i], "pop"); await s.wait(180); } });
+          s.step(async () => { s.sound("korn-schuetten", { vol: .5, dur: 2 }); s.show(ek, "zoom"); for (let i = 0; i < 3; i++) { s.show(grainCards[i], "pop"); await s.wait(180); } });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
       },
@@ -175,25 +163,22 @@
         say: "Vor rund 10.000 bis 11.000 Jahren zähmten die Menschen im Vorderen Orient die ersten Nutztiere: Schaf, Ziege, Rind und Schwein.",
         build(s) {
           const rows = [
-            [{ col: "#8a5a36", dark: "#4a3020", horns: "curl", face: "#e8dcc8", hornCol: "#5a4a3a" }, "Mufflon", { col: "#f3efe6", dark: "#5a4a3a", wool: true, face: "#3b3028", tail: true }, "Schaf", "Wolle, Milch, Fleisch"],
-            [{ col: "#a07a50", dark: "#5a4030", horns: "scim", big: true, beard: true }, "Bezoarziege", { col: "#d9cbb0", dark: "#6b5a48", horns: "scim", beard: true }, "Ziege", "Milch, Fleisch, Fell"],
-            [{ col: "#3b2a20", dark: "#2a1a10", horns: "lyre", big: true, hornCol: "#e8dcc8", tail: true }, "Auerochse", { col: "#a0622d", dark: "#6b3a1a", horns: "lyre", hornCol: "#e8dcc8", tail: true, face: "#f2e6d8" }, "Rind", "Milch, Fleisch, Leder – später zieht es Pflug und Wagen"],
-            [{ col: "#4a3a30", dark: "#2a1e18", pig: true, bristle: true, tusk: true, snout: "#6b5a4a" }, "Wildschwein", { col: "#f2b8b0", dark: "#c98a80", pig: true, snout: "#e89a90" }, "Schwein", "Fleisch, Leder – frisst auch Reste"],
+            [() => s.photo("mufflon", { w: "100%", h: 128, caption: "Mufflon" }), () => s.photo("schafe", { w: "100%", h: 128, caption: "Schaf" }), "Schaf", "Wolle, Milch, Fleisch", "schaf"],
+            [() => s.photo("bezoarziege", { w: "100%", h: 128, pos: "40% 50%", caption: "Bezoarziege" }), () => s.photo("hausziege", { w: "100%", h: 128, caption: "Ziege" }), "Ziege", "Milch, Fleisch, Fell", "ziege-meckern"],
+            [() => s.photo("auerochse", { w: "100%", h: 128, pos: "30% 50%", caption: "Auerochse (Skelett)" }), () => s.photo("rind", { w: "100%", h: 128, caption: "Rind" }), "Rind", "Milch, Fleisch, Leder – später zieht es Pflug und Wagen", "kuh-muhen"],
+            [() => s.photo("wildschwein", { w: "100%", h: 128, caption: "Wildschwein" }), () => s.photo("hausschwein", { w: "100%", h: 128, caption: "Schwein" }), "Schwein", "Fleisch, Leder – frisst auch Reste", "schwein-grunzen"],
           ];
-          const rowEls = rows.map(([wo, wn, ho, hn, use]) => {
-            const svg = s.svg(470, 104);
-            const a = quad(s, wo); a.setAttribute("transform", "translate(0 2) scale(.98)");
-            const arr = s.el("path", { d: "M212 52 L258 52 M246 40 L260 52 L246 64", stroke: C, "stroke-width": 5, fill: "none", "stroke-linecap": "round", class: "later" });
-            const b = quad(s, ho); b.setAttribute("transform", "translate(262 6) scale(.9)"); b.setAttribute("class", "later");
-            svg.append(a, arr, b);
-            const text = s.h("div", { class: "later" }, s.h("p", { class: "t" }, s.h("span", { class: "pencil" }, wn), " → ", s.h("b", { style: { color: C } }, hn)), P(s, use));
-            const el = s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "470px 1fr", gap: "18px", alignItems: "center", background: "var(--card)", border: "2px solid var(--line)", borderRadius: "16px", padding: "4px 16px" } }, svg, text);
-            el._p = { arr, b, text }; return el;
+          const cols = rows.map(([wild, home, hn, use, snd]) => {
+            const arr = s.h("p", { class: "later", style: { textAlign: "center", font: "800 30px/1 var(--f-display)", color: C } }, "↓");
+            const hb = s.h("div", { class: "later" }, home());
+            const text = s.h("div", { class: "later" }, s.h("p", { class: "t", style: { fontWeight: 800, color: C } }, hn), P(s, use));
+            const el = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "6px", padding: "10px 12px" } }, wild(), arr, hb, text);
+            el._p = { arr, hb, text, snd }; return el;
           });
-          const head = P(s, "Vor rund 10.000 bis 11.000 Jahren zähmten die Menschen im Vorderen Orient die ersten Nutztiere.", "t");
+          const head = P(s, "Vor rund 10.000 bis 11.000 Jahren wurden im Vorderen Orient die ersten Nutztiere gezähmt. Oben Wildtier, unten Haustier.");
           const foot = box(s, "life later", "Übrigens", P(s, "Der Hund war schon viel früher da: Ihn zähmten schon Jäger und Sammler."));
-          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "10px" } }, head, ...rowEls, foot));
-          const reveal = async i => { const r = rowEls[i]; s.sfx.pop(); await s.show(r, "left"); s.sfx.whoosh(); await s.show(r._p.arr, "draw"); s.sfx.boing(); s.show(r._p.b, "pop"); await s.show(r._p.text, "fade"); };
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "10px" } }, head, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" } }, cols), foot));
+          const reveal = async i => { const c = cols[i]; s.sfx.pop(); await s.show(c, "up"); await s.show(c._p.arr, "down"); s.sound(c._p.snd, { vol: .7 }); s.show(c._p.hb, "zoom"); await s.show(c._p.text, "fade"); };
           reveal(0);
           s.step(async () => { await reveal(1); });
           s.step(async () => { await reveal(2); s.say("Aus dem großen Auerochsen wurde das Hausrind."); });
@@ -225,11 +210,13 @@
           ].map(([a, b], i) => s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "178px 1fr", gap: "12px", alignItems: "center", background: i % 2 ? "var(--unit-soft)" : "var(--card)", border: "2px solid var(--line)", borderRadius: "14px", padding: "8px 14px" } },
             s.h("b", { style: { font: "800 22px/1.1 var(--f-display)", color: C } }, (i ? "→ " : "") + a), P(s, b)));
           const life = box(s, "life later", "Im Alltag", P(s, "Vorratsschrank, Einmachgläser, Kühlschrank – und heute gibt es Tausende Berufe."));
-          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "380px 1fr", height: "100%", alignItems: "center", gap: "26px" } }, svg, s.h("div", { class: "stack", style: { gap: "10px" } }, ...chain, life)));
+          svg.style.width = "300px"; svg.style.height = "363px";
+          const realPot = s.photo("bandkeramik-topf", { w: 300, h: 230, pos: "50% 45%", caption: "Echter Topf der Bandkeramik", cls: "later" });
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "300px 1fr", height: "100%", alignItems: "center", gap: "26px" } }, s.h("div", { class: "stack", style: { gap: "10px", alignItems: "center" } }, svg, realPot), s.h("div", { class: "stack", style: { gap: "10px" } }, ...chain, life)));
           (async () => { for (let i = 0; i < coils.length; i++) { s.sfx.count(i); s.show(coils[i], "down"); await s.wait(120); } })();
           s.show(chain[0], "left");
-          s.step(async () => { lbl.textContent = "glatt streichen"; s.sfx.scribble(); await s.show(pot, "fade"); s.hide(coils); lbl.textContent = "verzieren: Bänder!"; s.show(bands[0], "draw"); await s.show(bands[1], "draw", 200); s.show(chain[1], "left"); s.say("Wegen dieser Bandmuster heißen die ersten Bauern in Mitteleuropa Bandkeramiker."); });
-          s.step(async () => { lbl.textContent = "Vorrat für den Winter"; s.sfx.coin(); await s.show(grain, "pop"); await s.show(chain[2], "left"); });
+          s.step(async () => { lbl.textContent = "glatt streichen"; s.sfx.scribble(); await s.show(pot, "fade"); s.hide(coils); lbl.textContent = "verzieren: Bänder!"; s.show(bands[0], "draw"); await s.show(bands[1], "draw", 200); s.show(chain[1], "left"); s.sfx.ding(); s.show(realPot, "zoom"); s.say("Wegen dieser Bandmuster heißen die ersten Bauern in Mitteleuropa Bandkeramiker."); });
+          s.step(async () => { lbl.textContent = "Vorrat für den Winter"; s.sound("korn-schuetten", { vol: .6 }); await s.show(grain, "pop"); await s.show(chain[2], "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(chain[3], "left"); });
           s.step(async () => { s.sfx.pop(); await s.show(chain[4], "left"); s.sfx.ding(); await s.show(life, "up"); });
         },
@@ -240,7 +227,7 @@
         say: "In Mitteleuropa bauten die ersten Bauern lange Holzhäuser. In Çatalhöyük in der Türkei standen die Häuser so dicht, dass man über die Dächer ging.",
         build(s) {
           // Langhaus
-          const s1 = s.svg(500, 250);
+          const s1 = s.svg(500, 250); s1.style.height = "170px";
           s1.append(s.el("rect", { x: 0, y: 200, width: 500, height: 50, fill: "#cdb27e" }));
           const posts = g(s, {}, ...[40, 90, 140, 190, 240, 290, 340, 390, 440].map(x => s.el("rect", { x: x - 4, y: 110, width: 8, height: 92, fill: "#6b4a22" })));
           const walls = g(s, { class: "later" }, s.el("rect", { x: 36, y: 128, width: 412, height: 74, fill: "#c9a46a", stroke: "#8a6a3a", "stroke-width": 3 }));
@@ -251,7 +238,7 @@
           const scale = g(s, { class: "later" }, s.el("path", { d: "M36 222 L448 222 M36 214 L36 230 M448 214 L448 230", stroke: INK, "stroke-width": 3 }), tx(s, 242, 244, "ca. 20 m", { fs: 20, fw: 800 }));
           s1.append(posts, walls, roof, man, scale);
           // Çatalhöyük
-          const s2 = s.svg(500, 250);
+          const s2 = s.svg(500, 250); s2.style.height = "170px";
           s2.append(s.el("rect", { x: 0, y: 200, width: 500, height: 50, fill: "#cdb27e" }));
           const blocks = [[20, 120, 90], [110, 100, 80], [190, 130, 100], [290, 110, 90], [380, 125, 100]];
           const houses = blocks.map(([x, y, w]) => s.el("rect", { x, y, width: w, height: 200 - y, fill: "#d9b48a", stroke: "#8a6a3a", "stroke-width": 3, class: "later" }));
@@ -262,12 +249,12 @@
           climber.setAttribute("transform", "translate(240 90)");
           const roofWalk = tx(s, 400, 60, "Eingang übers Dach!", { fs: 21, fw: 800, fill: C, cls: "later" });
           s2.append(hole, ladder, climber, roofWalk);
-          const c1 = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 18px" } }, s1, s.h("p", { class: "h2", style: { color: C, fontSize: "26px" } }, "Langhaus (Mitteleuropa)"),
+          const c1 = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 18px" } }, s.photo("langhaus", { w: "100%", h: 190, pos: "50% 55%", caption: "Nachbau im Freilichtmuseum Oerlinghausen" }), s1, s.h("p", { class: "h2", style: { color: C, fontSize: "26px" } }, "Langhaus (Mitteleuropa)"),
             P(s, "Bandkeramiker, ca. 5700–4900 v. Chr. Meist ca. 20 m lang (12 bis 40 m) und ca. 7 m breit. Holzpfosten, Wände aus Flechtwerk und Lehm. Platz für 20 bis 30 Menschen."));
-          const c2 = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 18px" } }, s2, s.h("p", { class: "h2", style: { color: C, fontSize: "26px" } }, "Çatalhöyük (Türkei)"),
+          const c2 = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 18px" } }, s.photo("catalhoeyuek", { w: "100%", h: 190, caption: "Ausgrabung in Çatalhöyük" }), s2, s.h("p", { class: "h2", style: { color: C, fontSize: "26px" } }, "Çatalhöyük (Türkei)"),
             P(s, "Ca. 7500–5700 v. Chr., bei Konya. 3.500 bis 8.000 Menschen. Keine Straßen: Man ging über die Dächer und stieg durch eine Luke ins Haus. UNESCO-Welterbe seit 2012."));
           s.add(s.h("div", { class: "cols", style: { height: "100%", alignItems: "center", gap: "22px" } }, c1, c2));
-          s.sfx.drum();
+          s.sound("stoeckchen", { vol: .6 });
           s.step(async () => { s.sfx.scribble(); await s.show(walls, "fade"); s.sfx.whoosh(); await s.show(roof, "down"); s.show(man, "pop"); await s.show(scale, "fade"); s.say("Ein Langhaus war meistens etwa 20 Meter lang."); });
           s.step(async () => { s.sfx.pop(); await s.show(c2, "up"); for (let i = 0; i < houses.length; i++) { s.sfx.count(i); s.show(houses[i], "up"); await s.wait(110); } });
           s.step(async () => { s.show(hole, "fade"); s.sfx.pop(); await s.show(ladder, "up"); s.show(climber, "pop"); s.show(roofWalk, "pop"); await s.tween({ from: 90, to: 160, dur: 1200, update: v => climber.setAttribute("transform", `translate(240 ${v})`) }); s.sfx.ding(); });
@@ -297,10 +284,12 @@
           const b2 = box(s, "ex later", "Wer war er?", P(s, "Er starb zwischen 3368 und 3108 v. Chr. – vor über 5.000 Jahren. Er war ca. 45 Jahre alt, ca. 1,60 m groß und wog ca. 50 kg."));
           const b3 = box(s, "ex later", "Was geschah?", P(s, "Ein Pfeil traf ihn in die linke Schulter. Kurz vorher hatte er gegessen: Steinbock-Fleisch und Einkorn."));
           const life = box(s, "life later", "Heute", P(s, "Ötzi liegt im Südtiroler Archäologiemuseum in Bozen – in einer Kühlzelle bei −6,5 °C."));
-          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", height: "100%", alignItems: "center", gap: "24px" } }, svg, s.h("div", { class: "stack", style: { gap: "11px" } }, b1, b2, b3, life)));
-          s.show(svg, "fade"); s.sfx.whoosh();
+          const site = s.photo("oetzi-fundstelle", { w: 520, h: 300, pos: "50% 60%", caption: "Denkmal nahe der Fundstelle am Tisenjoch", cls: "later" });
+          svg.style.height = "300px"; svg.style.width = "332px";
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", height: "100%", alignItems: "center", gap: "24px" } }, s.h("div", { class: "stack", style: { gap: "12px", alignItems: "center" } }, svg, site), s.h("div", { class: "stack", style: { gap: "11px" } }, b1, b2, b3, life)));
+          s.show(svg, "fade"); s.sound("wind", { vol: .4, dur: 4 });
           s.step(async () => { s.sfx.pop(); s.show(hikers, "left"); s.show(b1, "left"); await s.wait(400); s.sfx.zap(); await s.show(iceman, "zoom"); await s.show(alt, "pop"); });
-          s.step(async () => { s.sfx.whoosh(); s.show(tl0, "down"); await s.show(b2, "left"); s.say("Ötzi lebte vor über 5.000 Jahren."); });
+          s.step(async () => { s.sfx.whoosh(); s.show(tl0, "down"); s.show(site, "zoom"); await s.show(b2, "left"); s.say("Ötzi lebte vor über 5.000 Jahren."); });
           s.step(async () => { s.sfx.drum(); await s.show(b3, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
         },
@@ -336,7 +325,7 @@
           const ring = s.el("circle", { r: 40, fill: "none", stroke: C, "stroke-width": 5, "stroke-dasharray": "10 6", class: "later" });
           svg.append(ring);
           const items = [
-            ["Beil", fx - 100, 300, 44, "Kupferbeil", "Die Klinge ist zu 99,7 % aus Kupfer, der Griff aus Eibenholz, ca. 60 cm lang. Damals ein sehr wertvolles Werkzeug!"],
+            ["Beil", fx - 100, 300, 44, "Kupferbeil", "Klinge zu 99,7 % aus Kupfer, Griff aus Eibenholz, ca. 60 cm lang. Das Foto zeigt einen Nachbau."],
             ["Bogen", fx + 162, 340, 56, "Bogen", "Aus Eibenholz, ca. 1,80 m lang – länger, als Ötzi groß war. Er war noch nicht fertig geschnitzt."],
             ["Köcher", fx + 58, 250, 50, "Köcher mit Pfeilen", "Im Köcher steckten 14 Pfeile – aber nur 2 waren fertig, mit Feuersteinspitze und Federn."],
             ["Dolch", fx + 31, 418, 30, "Dolch", "Eine Klinge aus Feuerstein mit einem Griff aus Eschenholz."],
@@ -347,11 +336,13 @@
             ["Schuhe", fx, foot - 8, 44, "Schuhe", "Oben Rindsleder, die Sohle aus Bärenfell, innen ein Netz aus Grasschnüren."],
           ];
           const iT = s.h("p", { class: "h2", style: { color: C } }, "Tippe auf einen Knopf!"), iB = s.h("p", { class: "small" }, "Ötzi hatte alles dabei, was man für ein paar Tage in den Bergen braucht.");
-          const info = s.h("div", { class: "card", style: { height: "190px", display: "flex", flexDirection: "column", gap: "8px" } }, iT, iB);
+          const axePh = s.photo("oetzi-beil", { w: 110, h: 160, fit: "contain", style: { display: "none" } });
+          const info = s.h("div", { class: "card", style: { height: "190px", display: "flex", gap: "14px", alignItems: "center" } }, axePh, s.h("div", { style: { display: "flex", flexDirection: "column", gap: "8px" } }, iT, iB));
           const btns = items.map((it, i) => s.h("button", { class: "btn", style: { width: "100%", padding: "0 8px" }, onclick: () => { s.sfx.pop(); pick(i); } }, it[0]));
           function pick(i) {
             const it = items[i];
             ring.setAttribute("cx", it[1]); ring.setAttribute("cy", it[2]); ring.setAttribute("r", it[3]);
+            axePh.style.display = i === 0 ? "" : "none";
             s.show(ring, "pop"); iT.textContent = it[4]; iB.textContent = it[5]; s.show(info, "fade");
             btns.forEach((b, j) => b.classList.toggle("solid", j === i));
           }
@@ -388,11 +379,12 @@
           const legend = tx(s, 10, 425, "Quelle: Agrarbericht Brandenburg", { a: "start", fs: 19, fill: PEN });
           svg.append(legend);
           const b1 = box(s, "ex", "Ackerbau und Viehhaltung", P(s, "Ackerbau = Pflanzen anbauen (Getreide, Raps, Kartoffeln). Viehhaltung = Tiere halten (Kühe, Schweine, Hühner). Beides hängt zusammen: Mais und Getreide sind oft Tierfutter."));
-          const b2 = box(s, "ex later", "Sand und wenig Regen", P(s, "Brandenburg hat oft sandige Böden und wenig Regen (2022: 434 mm, Deutschland: 669 mm). Roggen kommt damit gut klar."));
+          const b2 = box(s, "ex later", "Sand und wenig Regen", s.photo("roggenfeld", { w: "100%", h: 130, caption: "Roggenfeld" }), P(s, "Brandenburg hat oft sandige Böden und wenig Regen (2022: 434 mm, Deutschland: 669 mm). Roggen kommt damit gut klar."));
           const b3 = box(s, "life later", "Wusstest du?", P(s, "Deutschland erntet mehr Roggen als jedes andere Land der Welt: 2023 ein Viertel der Welternte."));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "600px 1fr", height: "100%", alignItems: "center", gap: "24px" } }, svg, s.h("div", { class: "stack", style: { gap: "12px" } }, b1, b2, b3)));
           s.step(async () => {
-            for (let i = 0; i < bars.length; i++) { const b = bars[i]; s.sfx.count(i * 2); s.tween({ from: 0, to: b.v * k, dur: 700, ease: "out", update: w => b.bar.setAttribute("width", w) }).then(() => { b.val.setAttribute("x", 110 + b.v * k + 10); s.show(b.val, "fade"); }); await s.wait(200); }
+            s.sound("traktor", { vol: .5, dur: 3.5 });
+            for (let i = 0; i < bars.length; i++) { const b = bars[i]; s.tween({ from: 0, to: b.v * k, dur: 700, ease: "out", update: w => b.bar.setAttribute("width", w) }).then(() => { b.val.setAttribute("x", 110 + b.v * k + 10); s.show(b.val, "fade"); }); await s.wait(200); }
             await s.wait(700); s.say("Mais wächst auf der größten Fläche. Ein großer Teil davon ist Futter für Rinder.");
           });
           s.step(async () => { const b = bars[0]; s.sfx.pop(); s.show(b.silo, "fade"); await s.tween({ from: 0, to: b.sil * k, dur: 600, update: w => b.silo.setAttribute("width", w) }); s.show(siloLbl, "fade"); s.show(b2, "left"); });
@@ -420,11 +412,11 @@
           const lbl = tx(s, 240, 60, "Der Spargel wächst …", { fs: 24, fw: 800, fill: C });
           svg.append(knife, lbl);
           const grow = async () => { s.sfx.boing(); await s.tween({ from: 420, to: 190, dur: 1500, ease: "out", update: v => { top = v; drawSpear(v); } }); lbl.textContent = "Spitze erreicht die Oberfläche"; };
-          const cut = async () => { s.show(knife, "down"); s.sfx.swoosh(); await s.wait(500); s.sfx.snap(); lbl.textContent = "Gestochen! Ganz weiß."; await s.tween({ from: 0, to: 60, dur: 700, ease: "back", update: v => drawSpear(top, v) }); };
-          const b1 = box(s, "ex later", "Beelitz", P(s, "Seit 1861 wird in Beelitz Spargel angebaut – ca. 40 km südwestlich von Berlin, auf sandigem Boden."));
+          const cut = async () => { s.show(knife, "down"); s.sound("kelle-graben", { rate: 1.2 }); await s.wait(500); s.sfx.snap(); lbl.textContent = "Gestochen! Ganz weiß."; await s.tween({ from: 0, to: 60, dur: 700, ease: "back", update: v => drawSpear(top, v) }); };
+          const b1 = box(s, "ex later", "Beelitz", s.h("div", { style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: "12px", alignItems: "center" } }, s.photo("beelitz-spargelfeld", { w: 170, h: 120 }), P(s, "Seit 1861 wird in Beelitz Spargel angebaut – ca. 40 km südwestlich von Berlin, auf sandigem Boden. Auf dem Foto: die Erdwälle.")));
           const b2 = box(s, "ex later", "Warum weiß?", P(s, "Der Spargel wächst in einem Erdwall, also im Dunkeln. Ohne Licht bleibt er weiß. Man sticht ihn, bevor die Spitze ans Licht kommt."));
           const b3 = box(s, "ex later", "Saison", P(s, "Gestochen wird ab dem Frühling bis zum 24. Juni (Johannistag). Bauernregel: „Kirschen rot, Spargel tot.“"));
-          const life = box(s, "life later", "Im Alltag", P(s, "Im Frühling stehen in Berlin überall Spargelstände. Und in Beelitz gibt es am ersten Juniwochenende ein Spargelfest."));
+          const life = box(s, "life later", "Im Alltag", s.h("div", { style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: "12px", alignItems: "center" } }, s.photo("spargelstand", { w: 170, h: 110 }), P(s, "Im Frühling stehen in Berlin überall Spargelstände. Und in Beelitz gibt es am ersten Juniwochenende ein Spargelfest.")));
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "480px 1fr", height: "100%", alignItems: "center", gap: "24px" } }, svg, s.h("div", { class: "stack", style: { gap: "11px" } }, b1, b2, b3, life)));
           s.show(svg, "fade"); s.sfx.pop(); s.show(b1, "left");
           s.step(async () => { await grow(); s.show(b2, "left"); s.say("Der Spargel wächst im dunklen Erdwall nach oben."); });
@@ -463,12 +455,15 @@
           const b1 = box(s, "ex later", "Zutaten", P(s, "Für Brötchen braucht man vor allem Mehl, Wasser, Hefe und Salz."));
           const b2 = box(s, "life later", "Berlinerisch", P(s, "In Berlin heißt das Brötchen „Schrippe“. In Bayern sagt man „Semmel“."));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Viele Menschen arbeiten zusammen: ", s.h("b", null, "Arbeitsteilung"), " – wie in der Jungsteinzeit, nur viel größer.");
-          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, svg, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1.3fr", gap: "16px" } }, b1, b2, merk)));
+          const pM = s.photo("maehdrescher", { w: 220, h: 150, caption: "Mähdrescher", cls: "later" }), pS = s.photo("schrippen", { w: 220, h: 150, caption: "Schrippen", cls: "later" });
+          svg.style.height = "260px"; svg.style.width = "953px";
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "12px", alignItems: "center" } }, svg,
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "220px 1fr 220px 1fr", gap: "16px", alignItems: "center", width: "100%" } }, pM, b1, pS, b2), merk));
           s.sfx.pop();
-          s.step(async () => { await drive(1); await s.show(st[1], "pop"); });
+          s.step(async () => { await drive(1); s.sound("traktor", { vol: .5, dur: 3 }); s.show(pM, "zoom"); await s.show(st[1], "pop"); });
           s.step(async () => { await drive(2); s.show(st[2], "pop"); s.loop(t => blades.setAttribute("transform", `translate(550 100) rotate(${t * 60})`)); s.say("In der Mühle werden die Körner zu Mehl gemahlen."); });
           s.step(async () => { await drive(3); await s.show(st[3], "pop"); s.show(b1, "up"); });
-          s.step(async () => { await drive(4); await s.show(st[4], "bounce"); s.sfx.success(); s.show(b2, "up"); });
+          s.step(async () => { await drive(4); await s.show(st[4], "bounce"); s.sfx.success(); s.show(pS, "zoom"); s.show(b2, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -499,7 +494,7 @@
             ["1 · Ernte", "Grün geerntet, z. B. in Ecuador – dem größten Bananen-Exporteur (2023: 4,0 Mio. t)."],
             ["2 · Kühlschiff", "Bei etwa 13 °C. Unter 13,2 °C hört die Banane auf zu reifen – so bleibt sie unterwegs grün."],
             ["3 · Reifekammer", "In Europa reift sie 4 bis 8 Tage mit dem Reifegas Ethylen – dann ist sie gelb."],
-          ].map(([a, b]) => box(s, "ex later", a, P(s, b)));
+          ].map(([a, b], i) => i ? box(s, "ex later", a, P(s, b)) : box(s, "ex later", a, s.h("div", { style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "10px", alignItems: "center" } }, s.photo("bananenplantage", { w: 150, h: 112 }), P(s, b))));
           const bars = s.svg(1100, 120);
           const bLen = 1040;
           const r1 = s.el("rect", { x: 30, y: 30, width: 0, height: 24, rx: 6, fill: "#3f8a3a" }), r2 = s.el("rect", { x: 30, y: 84, width: 0, height: 24, rx: 6, fill: C });
@@ -509,7 +504,7 @@
             s.h("div", { class: "cols", style: { gridTemplateColumns: "620px 1fr", gap: "20px", alignItems: "center" } }, svg, s.h("div", { class: "stack", style: { gap: "10px" } }, steps)), bars));
           s.show(svg, "fade"); s.sfx.whoosh(); s.show(steps[0], "left");
           s.step(async () => {
-            s.show(route, "draw"); s.show(steps[1], "left"); s.show(ship, "pop"); s.sfx.whoosh();
+            s.show(route, "draw"); s.show(steps[1], "left"); s.show(ship, "pop"); s.sound("schiffshorn", { vol: .5 });
             let L = 600; try { L = route.getTotalLength(); } catch (e) {}
             await s.tween({ from: 0, to: 1, dur: 2200, ease: "inOut", update: v => { try { const q = route.getPointAtLength(L * v); ship.setAttribute("transform", `translate(${q.x} ${q.y - 6})`); } catch (e) {} } });
             s.sfx.ding();
@@ -618,7 +613,7 @@
           right.append(s.h("p", { class: "t" }, "Daten von 2022 für ganz Deutschland:"), kgBox, tips);
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "400px 1fr", height: "100%", alignItems: "center", gap: "26px" } }, svg, right));
           s.show(svg, "up"); s.sfx.pop();
-          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 312, dur: 1200, ease: "out", update: v => { fillAll.setAttribute("y", 440 - v); fillAll.setAttribute("height", v); } }); s.sfx.drum(); await s.show(lAll, "pop"); });
+          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 312, dur: 1200, ease: "out", update: v => { fillAll.setAttribute("y", 440 - v); fillAll.setAttribute("height", v); } }); s.sound("paper-crumple", { vol: .7 }); await s.show(lAll, "pop"); });
           s.step(async () => { s.sfx.swoosh(); await s.tween({ from: 0, to: 312 * .58, dur: 900, update: v => { fillHH.setAttribute("y", 440 - v); fillHH.setAttribute("height", v); } }); await s.show(lHH, "pop"); s.say("58 Prozent davon kommen aus privaten Haushalten."); });
           s.step(async () => {
             s.show(kgBox, "left");
@@ -635,16 +630,16 @@
         say: "Wochenmarkt, Erntedank, Etiketten im Supermarkt und dein Schulessen: Überall begegnet dir der Weg vom Feld auf den Teller.",
         build(s) {
           const items = [
-            ["🧺", "Wochenmarkt", "Auf dem Wochenmarkt verkaufen oft Bauern aus der Region direkt: Obst, Gemüse, Eier, Käse. Frag doch mal, woher etwas kommt!"],
-            ["🌾", "Erntedank", "Erntedank ist am ersten Sonntag im Oktober – 2026 fällt er auf den 4. Oktober. In Kirchen steht dann oft eine Erntekrone aus Getreide."],
-            ["🏷️", "Etiketten lesen", "Auf Packungen und Schildern stehen Herkunftsland, Bio-Siegel, Zutaten und Mindesthaltbarkeitsdatum. Wer liest, weiß mehr!"],
-            ["🍽️", "Schulessen", "Woher kommen die Kartoffeln, das Brot und die Äpfel in deiner Mensa? Regional oder von weit her? Frag nach!"],
+            [() => s.photo("wochenmarkt", { w: 190, h: 190 }), "Wochenmarkt", "Auf dem Wochenmarkt verkaufen oft Bauern aus der Region direkt: Obst, Gemüse, Eier, Käse. Frag doch mal, woher etwas kommt!"],
+            [() => s.photo("erntekrone", { w: 190, h: 190 }), "Erntedank", "Erntedank ist am ersten Sonntag im Oktober – 2026 fällt er auf den 4. Oktober. In Kirchen steht dann oft eine Erntekrone aus Getreide."],
+            [() => s.h("div", { style: { width: "190px", height: "120px", fontSize: "80px", display: "flex", alignItems: "center", justifyContent: "center" } }, "🏷️"), "Etiketten lesen", "Auf Packungen und Schildern stehen Herkunftsland, Bio-Siegel, Zutaten und Mindesthaltbarkeitsdatum. Wer liest, weiß mehr!"],
+            [() => s.h("div", { style: { width: "190px", height: "120px", fontSize: "80px", display: "flex", alignItems: "center", justifyContent: "center" } }, "🍽️"), "Schulessen", "Woher kommen die Kartoffeln, das Brot und die Äpfel in deiner Mensa? Regional oder von weit her? Frag nach!"],
           ];
-          const cards = items.map(([e, t, b]) => s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "64px 1fr", gap: "14px", alignItems: "start" } },
-            s.h("div", { style: { fontSize: "48px", lineHeight: "1" } }, e), s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("p", { class: "h2", style: { fontSize: "26px" } }, t), P(s, b))));
+          const cards = items.map(([e, t, b]) => s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "190px 1fr", gap: "14px", alignItems: "center" } },
+            e(), s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("p", { class: "h2", style: { fontSize: "26px" } }, t), P(s, b))));
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", height: "100%", alignContent: "center" } }, cards));
-          s.show(cards[0], "pop"); s.sfx.pop();
-          s.step(async () => { s.sfx.pop(); await s.show(cards[1], "pop"); s.say("Erntedank feiern wir am ersten Sonntag im Oktober."); });
+          s.show(cards[0], "pop"); s.sound("traffic", { vol: .35, dur: 3 });
+          s.step(async () => { s.sound("church-bells", { vol: .4, dur: 4 }); await s.show(cards[1], "pop"); s.say("Erntedank feiern wir am ersten Sonntag im Oktober."); });
           s.step(async () => { s.sfx.pop(); await s.show(cards[2], "pop"); });
           s.step(async () => { s.sfx.success(); await s.show(cards[3], "pop"); s.confetti(590, 400, 80); });
         },

@@ -30,7 +30,7 @@
     const put = v => bs.forEach((b, i) => { b.style.transform = v ? `translateX(${((i - mid) * dist * v).toFixed(1)}px)` : ""; });
     put(1);
     await s.tween({ from: 1, to: 0, dur, ease: "back", update: put });
-    put(0); s.sfx.snap();
+    put(0); s.sound("lego-click", { vol: .8 });
   }
   /** pull blocks apart (word → building blocks) */
   async function splitOut(s, bs, gap = 8) {
@@ -71,16 +71,19 @@
           const leg = s.h("div", { class: "row later", style: { justifyContent: "center" } },
             s.h("span", { class: "chip", style: { fontSize: "21px" } }, s.h("b", { style: { color: BW } }, "Haus"), " = Bestimmungswort: sagt, welche Tür"),
             s.h("span", { class: "chip", style: { fontSize: "21px" } }, s.h("b", { style: { color: GW } }, "Tür"), " = Grundwort: sagt, was es ist"));
-          const card = (w1, w2, txt, ic) => {
+          const card = (w1, w2, txt, ph) => {
             const bs = [blk(s, w1, BW, "sm"), blk(s, w2, GW, "sm")];
             const c = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "8px", alignItems: "flex-start" } },
-              s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px" } }, join(s, bs), s.h("span", { style: { fontSize: "34px", lineHeight: 1 } }, ic)),
+              ph, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px" } }, join(s, bs)),
               s.h("p", { class: "small", style: { fontSize: "21px" } }, txt));
             c.bs = bs; return c;
           };
-          const cards = [card("Fuß", "ball", "Ein Ball, den man mit dem Fuß spielt.", "⚽"), card("Regen", "schirm", "Ein Schirm gegen den Regen.", "☂️"), card("Brot", "dose", "Eine Dose für das Pausenbrot.", "🥪")];
+          const cards = [card("Fuß", "ball", "Ein Ball, den man mit dem Fuß spielt.", s.photo("fussball", { w: "100%", h: 150, pos: "38% 55%" })),
+            card("Regen", "schirm", "Ein Schirm gegen den Regen.", s.photo("regenschirm", { w: "100%", h: 150, pos: "50% 70%" })),
+            card("Brot", "dose", "Eine Dose für das Pausenbrot.", s.photo("brotdose", { w: "100%", h: 150 }))];
           const m = merk(s, s.h("b", null, "Zusammensetzung"), " (Kompositum) = ", s.h("b", { style: { color: BW } }, "Bestimmungswort"), " + ", s.h("b", { style: { color: GW } }, "Grundwort"), ". Das Grundwort steht ", s.h("span", { class: "hl" }, "hinten"), ".");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "22px" } }, demo, leg, s.h("div", { class: "cols3" }, cards), m));
+          s.preload("lego-click");
           s.sfx.whoosh(); snapIn(s, [a, b], 260, 900).then(() => { if (s.alive) { s.sfx.pop(); s.show(res, "left"); } });
           s.step(async () => { s.sfx.ding(); await s.show(leg, "up"); });
           s.step(async () => { for (const c of cards) { s.show(c, "up"); await snapIn(s, c.bs, 90); } });
@@ -126,22 +129,17 @@
         title: "Der Tausch-Trick",
         say: "Wenn du die Bausteine tauschst, entsteht ein ganz anderes Ding. Ein Hausboot ist ein Boot. Ein Boothaus ist ein Haus.",
         build(s) {
-          const pic = (draw) => { const v = s.svg(440, 210); v.append(s.el("rect", { x: 0, y: 0, width: 440, height: 210, rx: 16, fill: "#eef6fb" })); draw(v); return v; };
-          const water = v => v.append(s.el("rect", { x: 0, y: 160, width: 440, height: 50, fill: "#7fb8e6" }), s.el("path", { d: "M0,160 q20,-8 40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0 t40,0", fill: "none", stroke: "#4f8fc6", "stroke-width": 3 }));
-          const house = (v, x, y, w, h, c) => v.append(s.el("rect", { x, y, width: w, height: h, fill: c, stroke: INK, "stroke-width": 3 }), s.el("polygon", { points: `${x - 10},${y} ${x + w / 2},${y - h * 0.6} ${x + w + 10},${y}`, fill: RED, stroke: INK, "stroke-width": 3 }));
-          const boat = (v, x, y, w) => v.append(s.el("path", { d: `M${x},${y} L${x + w},${y} L${x + w - 26},${y + 32} L${x + 26},${y + 32} Z`, fill: "#9a5b1f", stroke: INK, "stroke-width": 3 }));
           // A: Hausboot / Boothaus
-          const hb = pic(v => { water(v); boat(v, 90, 140, 260); house(v, 160, 92, 120, 48, "#ffe7a3"); v.append(s.el("rect", { x: 200, y: 108, width: 26, height: 22, fill: "#9fd3ff", stroke: INK, "stroke-width": 2 })); });
-          const bh = pic(v => { water(v); house(v, 110, 70, 220, 92, "#d9c2a3"); v.append(s.el("rect", { x: 165, y: 102, width: 110, height: 60, fill: "#4a5568" })); boat(v, 170, 132, 100); });
-          const fl = (v, x, y) => { v.append(s.el("line", { x1: x, y1: y, x2: x, y2: y - 70, stroke: GREEN, "stroke-width": 5 }), s.el("ellipse", { cx: x - 16, cy: y - 34, rx: 14, ry: 7, fill: GREEN })); [0, 72, 144, 216, 288].forEach(a => v.append(s.el("circle", { cx: x + 16 * Math.cos(a * Math.PI / 180), cy: y - 82 + 16 * Math.sin(a * Math.PI / 180), r: 11, fill: "#f06292" }))); v.append(s.el("circle", { cx: x, cy: y - 82, r: 9, fill: "#ffd94a" })); };
-          const pot = (v, x, y, w, h) => v.append(s.el("path", { d: `M${x},${y} L${x + w},${y} L${x + w - 16},${y + h} L${x + 16},${y + h} Z`, fill: "#d9773b", stroke: INK, "stroke-width": 3 }), s.el("rect", { x: x - 6, y: y - 12, width: w + 12, height: 16, rx: 4, fill: "#c4632a", stroke: INK, "stroke-width": 3 }));
-          const bt = pic(v => { pot(v, 160, 96, 120, 90); });
-          const tb = pic(v => { fl(v, 220, 116); pot(v, 175, 124, 90, 66); });
+          const PW = 480, PH = 250;
+          const hb = s.photo("hausboot", { w: PW, h: PH, pos: "50% 60%", caption: "Hausboot" });
+          const bh = s.photo("bootshaus", { w: PW, h: PH, pos: "30% 50%", caption: "Boothaus" });
+          const bt = s.photo("blumentoepfe", { w: PW, h: PH, pos: "50% 45%", caption: "Blumentöpfe" });
+          const tb = s.photo("topfblume", { w: PW, h: PH, pos: "50% 40%", caption: "Topfblumen" });
           const panel = (labA, labB, picA, picB, capA, capB) => {
             const b1 = blk(s, labA[0], BW), b2 = blk(s, labA[1], GW);
             const j = join(s, [b1, b2]);
-            const holder = s.h("div", { style: { position: "relative", width: "440px", height: "210px" } }, picA, picB);
-            [picA, picB].forEach(p => Object.assign(p.style, { position: "absolute", left: "0", top: "0" })); picB.style.opacity = "0";
+            const holder = s.h("div", { style: { position: "relative", width: PW + "px", height: PH + "px" } }, picA, picB);
+            [picA, picB].forEach(p => Object.assign(p.style, { position: "absolute", left: "0", top: "0", transition: "none" })); picB.style.opacity = "0"; picB.style.visibility = "hidden";
             const cap = s.h("p", { class: "t", style: { textAlign: "center", minHeight: "68px" } }, capA);
             let swapped = false;
             const swap = async () => {
@@ -155,7 +153,8 @@
               j.firstChild.textContent = lab[0]; j.lastChild.textContent = lab[1];
               j.firstChild.style.background = BW; j.lastChild.style.background = GW; // the last block is always the Grundwort
               const show = swapped ? picB : picA, hide = swapped ? picA : picB;
-              s.tween({ dur: 400, update: v => { show.style.opacity = v; hide.style.opacity = 1 - v; } });
+              show.style.visibility = "visible";
+              s.tween({ dur: 400, update: v => { show.style.opacity = v; hide.style.opacity = 1 - v; } }).then(() => { if (hide.style.opacity === "0") hide.style.visibility = "hidden"; });
               cap.textContent = swapped ? capB : capA; s.sfx.snap(); s.show(cap, "fade");
             };
             const btn = s.h("button", { class: "btn", onclick: () => { s.sfx.click(); swap(); } }, "⇄ tauschen");
@@ -186,9 +185,10 @@
             r.p = { A, F, Bb }; return r;
           });
           const lf = life(s, s.h("p", { class: "small" }, "Sprich das Wort langsam: Geburt", s.h("b", { class: "red" }, "s"), "tag, Sonne", s.h("b", { class: "red" }, "n"), "schein. Den Kleber hörst du mit – deshalb schreibst du ihn auch."));
+          const dog = s.photo("hundeleine", { w: "100%", h: 250, pos: "50% 0%", caption: "die Hund·e·leine", cls: "later" });
           const m = merk(s, "Zwischen den Bausteinen steht manchmal ein ", s.h("b", { class: "red" }, "Fugenlaut"), ": ", s.h("b", { class: "red" }, "s, n, e, es, en"), " …");
-          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "1.1fr 1fr", alignItems: "center", height: "100%" } }, s.h("div", { class: "stack", style: { gap: "14px" } }, rows), s.h("div", { class: "stack" }, m, lf)));
-          s.sfx.pop();
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "1.1fr 1fr", alignItems: "center", height: "100%" } }, s.h("div", { class: "stack", style: { gap: "14px" } }, rows), s.h("div", { class: "stack" }, dog, m, lf)));
+          s.sfx.pop(); s.preload("lego-click");
           const go = async r => {
             r.classList.remove("later"); s.show(r, "fade");
             const { A, F, Bb } = r.p;
@@ -201,7 +201,7 @@
             s.sfx.snap();
           };
           s.step(async () => { await go(rows[0]); s.say("Geburt, s, Tag. Geburtstag."); });
-          s.step(async () => { for (let i = 1; i < 4; i++) await go(rows[i]); });
+          s.step(async () => { for (let i = 1; i < 4; i++) { await go(rows[i]); if (i === 2) { s.sound("dog-bark", { vol: .5 }); s.show(dog, "zoom"); } } });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(lf, "up"); });
         },
@@ -211,20 +211,15 @@
         title: "Im Alltag: Berliner Wortmonster",
         say: "Berlin ist voller langer Wörter. Zerleg sie in Bausteine, dann sind sie gar nicht mehr schwer.",
         build(s) {
-          // Fernsehturm drawing
-          const tv = s.svg(250, 600);
-          const tower = s.el("g");
-          tower.append(
-            s.el("polygon", { points: "112,590 138,590 132,190 118,190", fill: "#c9ced8", stroke: INK, "stroke-width": 2 }),
-            s.el("circle", { cx: 125, cy: 168, r: 38, fill: "#c9ced8", stroke: INK, "stroke-width": 2 }),
-            s.el("rect", { x: 87, y: 160, width: 76, height: 10, fill: "#7a8394" }),
-            s.el("rect", { x: 121, y: 70, width: 8, height: 92, fill: "#c9ced8", stroke: INK, "stroke-width": 1.5 }),
-            s.el("rect", { x: 123.5, y: 30, width: 3, height: 42, fill: RED }));
-          const meas = s.el("g", { class: "later" });
-          meas.append(s.el("line", { x1: 196, y1: 30, x2: 196, y2: 590, stroke: RED, "stroke-width": 3 }), s.el("line", { x1: 186, y1: 30, x2: 206, y2: 30, stroke: RED, "stroke-width": 3 }), s.el("line", { x1: 186, y1: 590, x2: 206, y2: 590, stroke: RED, "stroke-width": 3 }));
-          const mtxt = T(s, 196, 330, "368 m", { fill: RED, "font-size": 26, class: "later" });
-          const mbg = s.el("rect", { x: 152, y: 304, width: 88, height: 36, rx: 8, fill: "#fff", class: "later" });
-          tv.append(s.el("line", { x1: 0, y1: 592, x2: 250, y2: 592, stroke: PENCIL, "stroke-width": 3 }), tower, meas, mbg, mtxt);
+          const PH = { w: 380, h: 520, style: { position: "absolute", left: "0", top: "0" } };
+          const pics = [
+            s.photo("fernsehturm-rathaus", Object.assign({ pos: "51% 50%", caption: "Fernsehturm" }, PH)),
+            s.photo("hauptbahnhof", Object.assign({ pos: "40% 50%", caption: "Hauptbahnhof", cls: "later" }, PH)),
+            s.photo("kanzleramt", Object.assign({ pos: "50% 50%", caption: "Bundeskanzleramt", cls: "later" }, PH)),
+            s.photo("ddsg-dampfer", Object.assign({ pos: "28% 50%", caption: "Dampfer der DDSG (altes Foto)", cls: "later" }, PH)),
+          ];
+          const tv = s.h("div", { style: { position: "relative", width: "380px", height: "520px" } }, ...pics);
+          const tvCap = pics[0].querySelector("figcaption");
           const words = [
             [["Fern", BW], ["seh", VIOLET], ["turm", GW]], "368 m hoch – das höchste Bauwerk Deutschlands.",
             [["Haupt", BW], ["bahn", VIOLET], ["hof", GW]], "Berlins wichtigster Bahnhof: Hier halten ICE, S-Bahn und U-Bahn.",
@@ -240,8 +235,9 @@
             const r = s.h("div", { class: "stack later", style: { gap: "4px" } }, j, fact);
             r.bs = bs; rows.push(r);
           }
-          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "250px 1fr", gap: "30px", alignItems: "center", height: "100%" } }, tv, s.h("div", { class: "stack", style: { gap: "18px" } }, rows)));
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "380px 1fr", gap: "30px", alignItems: "center", height: "100%" } }, tv, s.h("div", { class: "stack", style: { gap: "18px" } }, rows)));
           s.show(tv, "up"); s.sfx.whoosh();
+          const swapPic = async (i, snd) => { s.hide(pics[i - 1]); if (snd) snd(); await s.show(pics[i], "zoom"); };
           const split = async r => {
             r.classList.remove("later"); s.sfx.pop(); await s.show(r, "left");
             await s.wait(250);
@@ -250,14 +246,13 @@
           };
           s.step(async () => {
             await split(rows[0]);
-            s.sfx.zap(); await s.show(meas, "fade"); s.show(mbg, "pop");
-            mtxt.classList.remove("later");
-            await s.tween({ from: 0, to: 368, dur: 1200, ease: "out", update: v => { mtxt.textContent = Math.round(v) + " m"; } });
-            mtxt.textContent = "368 m"; s.sfx.ding();
+            s.sfx.zap();
+            await s.tween({ from: 0, to: 368, dur: 1200, ease: "out", update: v => { tvCap.textContent = "Fernsehturm: " + Math.round(v) + " m"; } });
+            tvCap.textContent = "Fernsehturm: 368 m"; s.sfx.ding();
           });
-          s.step(async () => { await split(rows[1]); });
-          s.step(async () => { await split(rows[2]); });
-          s.step(async () => { await split(rows[3]); s.say("Donau, Dampf, Schiff, Fahrt, s, Gesellschaft."); });
+          s.step(async () => { swapPic(1, () => s.sound("ubahn-train", { vol: .4, dur: 3.5 })); await split(rows[1]); });
+          s.step(async () => { swapPic(2); await split(rows[2]); });
+          s.step(async () => { swapPic(3, () => s.sound("ship-horn", { vol: .5 })); await split(rows[3]); s.say("Donau, Dampf, Schiff, Fahrt, s, Gesellschaft."); });
         },
       },
       /* 6 ─────────────── Schilder */
@@ -265,22 +260,20 @@
         title: "Im Alltag: Wörter auf Schildern",
         say: "Auf Schildern in der Stadt stehen ganz viele zusammengesetzte Wörter.",
         build(s) {
-          const sign = (draw) => { const v = s.svg(480, 110); draw(v); return v; };
-          const s1 = sign(v => { v.append(s.el("rect", { x: 40, y: 10, width: 400, height: 90, rx: 8, fill: "#0b8a45" }), s.el("rect", { x: 56, y: 24, width: 62, height: 62, rx: 6, fill: "#fff" }), s.el("text", { x: 87, y: 70, "text-anchor": "middle", "font-size": 40, text: "🏃" }), T(s, 270, 66, "Notausgang", { fill: "#fff", "font-size": 34 })); });
-          const s2 = sign(v => { v.append(s.el("circle", { cx: 100, cy: 55, r: 44, fill: "#ffd700", stroke: "#0b8a45", "stroke-width": 9 }), T(s, 100, 70, "H", { fill: "#0b8a45", "font-size": 48 }), s.el("rect", { x: 170, y: 22, width: 270, height: 66, rx: 8, fill: "#fff", stroke: INK, "stroke-width": 3 }), T(s, 305, 66, "Bushaltestelle", { "font-size": 30 })); });
-          const s3 = sign(v => { v.append(s.el("rect", { x: 40, y: 10, width: 400, height: 90, rx: 8, fill: "#1d5bd0" }), s.el("text", { x: 92, y: 72, "text-anchor": "middle", "font-size": 44, text: "🛝" }), T(s, 270, 66, "Spielplatz", { fill: "#fff", "font-size": 36 })); });
-          const s4 = sign(v => { v.append(s.el("rect", { x: 40, y: 10, width: 400, height: 90, rx: 8, fill: "#ffd700", stroke: INK, "stroke-width": 3 }), s.el("text", { x: 92, y: 72, "text-anchor": "middle", "font-size": 42, text: "🎫" }), T(s, 275, 66, "Fahrkartenautomat", { "font-size": 32 })); });
+          const s1 = s.photo("notausgang", { w: "100%", h: 136, pos: "50% 50%" }), s2 = s.photo("bushaltestelle", { w: "100%", h: 136, pos: "62% 40%" });
+          const s3 = s.photo("spielplatz-schild", { w: "100%", h: 136, pos: "50% 45%" }), s4 = s.photo("fahrkartenautomat", { w: "100%", h: 136, pos: "50% 45%" });
           const data = [[s1, [["Not", BW], ["ausgang", GW]]], [s2, [["Bus", BW], ["haltestelle", GW]]], [s3, [["Spiel", BW], ["platz", GW]]], [s4, [["Fahrkarte", BW], ["n", FUGE], ["automat", GW]]]];
-          const cards = data.map(([sv, parts]) => {
+          const snds = [() => s.sound("door-creak", { vol: .5, dur: 1.6 }), () => s.sound("traffic", { vol: .4, dur: 2.5 }), () => s.sound("playground", { vol: .5, dur: 2.5 }), () => s.sound("coins", { vol: .6 })];
+          const cards = data.map(([sv, parts], k) => {
             const bs = parts.map(([t, c]) => blk(s, t, c, "sm" + (c === FUGE ? " glue" : "")));
             const j = join(s, bs); j.classList.add("later");
             const c = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", padding: "14px 16px" } }, sv, j);
-            c.j = j; c.bs = bs; return c;
+            c.j = j; c.bs = bs; c.snd = snds[k]; return c;
           });
           const m = merk(s, "Schilder müssen kurz sein – darum steckt man Wörter zusammen. ", s.h("i", null, "Ein Ausgang für den Notfall"), " = ", s.h("b", null, "Notausgang"), ".");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "16px" } }, s.h("div", { class: "cols", style: { gap: "18px" } }, cards), m));
           s.sfx.pop();
-          const go = async c => { s.sfx.whoosh(); await s.show(c, "zoom"); s.show(c.j, "fade"); await splitOut(s, c.bs, 8); };
+          const go = async c => { c.snd(); await s.show(c, "zoom"); s.show(c.j, "fade"); await splitOut(s, c.bs, 8); };
           s.step(async () => { await go(cards[0]); await go(cards[1]); });
           s.step(async () => { await go(cards[2]); await go(cards[3]); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
@@ -314,9 +307,9 @@
           const lf = life(s, s.h("p", { class: "small" }, "Ein Elfmeter heißt so, weil der Ball 11 Meter vor der Torlinie liegt. Das Wort erklärt sich selbst!"));
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, hint, s.h("div", { class: "cols" }, sport.card, schule.card), lf));
           s.show([sport.card, schule.card], "up"); s.sfx.pop();
-          s.step(async () => { for (const it of sport.items) if (!it.isOpen()) { await it.toggle(); await s.wait(120); } });
-          s.step(async () => { for (const it of schule.items) if (!it.isOpen()) { await it.toggle(); await s.wait(120); } });
-          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+          s.step(async () => { s.sound("ball-kick", { vol: .6 }); for (const it of sport.items) if (!it.isOpen()) { await it.toggle(); await s.wait(120); } });
+          s.step(async () => { s.sound("school-bell", { vol: .4, dur: 2 }); for (const it of schule.items) if (!it.isOpen()) { await it.toggle(); await s.wait(120); } });
+          s.step(async () => { s.sound("whistle", { vol: .5 }); await s.show(lf, "up"); });
         },
       },
       /* 8 ─────────────── Präfixe */
@@ -401,9 +394,9 @@
             r.go = async () => { s.sfx.pop(); await s.show(r, "left"); s.sfx.whoosh(); await s.show(art, "right"); await flipLetter(s, fl, f1, RED); s.show(st, "fade"); };
             return r;
           });
-          const signs = s.svg(400, 300);
-          const sg = (y, txt, ic) => { const g = s.el("g", { class: "later" }); g.append(s.el("rect", { x: 20, y, width: 360, height: 120, rx: 14, fill: "#fff", stroke: RED, "stroke-width": 8 }), s.el("text", { x: 76, y: y + 78, "text-anchor": "middle", "font-size": 46, text: ic }), T(s, 240, y + 60, txt[0], { fill: RED, "font-size": 30 }), T(s, 240, y + 96, txt[1], { fill: INK, "font-size": 26 })); signs.append(g); return g; };
-          const g1 = sg(10, ["Baden", "verboten!"], "🏊"), g2 = sg(170, ["Betreten", "verboten!"], "🚧");
+          const g1 = s.photo("baden-verboten", { w: 400, h: 160, pos: "50% 50%", cls: "later" });
+          const g2 = s.photo("betreten-verboten", { w: 400, h: 160, pos: "50% 55%", cls: "later" });
+          const signs = s.h("div", { class: "stack", style: { gap: "10px" } }, g1, g2);
           const lf = life(s, s.h("p", { class: "small" }, "Auf Schildern: ", s.h("b", null, "Baden"), " und ", s.h("b", null, "Betreten"), " sind hier Nomen – darum groß."));
           const m = merk(s, "Steht ", s.h("b", null, "das, beim, zum"), " oder ", s.h("b", null, "vom"), " vor einem Verb, wird es zum ", s.h("b", null, "Nomen"), ": Du schreibst es ", s.h("span", { class: "hl" }, "groß"), ".");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } },
@@ -411,7 +404,7 @@
           s.sfx.pop();
           s.step(async () => { await rows[0].go(); s.say("lesen, das Lesen."); });
           s.step(async () => { await rows[1].go(); await rows[2].go(); });
-          s.step(async () => { s.sfx.drum(); await s.show(g1, "zoom"); s.sfx.drum(); await s.show(g2, "zoom"); await s.show(lf, "up"); });
+          s.step(async () => { s.sound("splash", { vol: .5 }); await s.show(g1, "zoom"); s.sound("footsteps", { vol: .5, dur: 1.5 }); await s.show(g2, "zoom"); await s.show(lf, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
@@ -489,7 +482,7 @@
           s.step(async () => { await cards[0].go(); });
           s.step(async () => { await cards[1].go(); await cards[2].go(); await cards[3].go(); });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(m, "up"); });
-          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+          s.step(async () => { s.sound("bike-bell", { vol: .6 }); await s.show(lf, "up"); });
         },
       },
       /* 13 ─────────────── Wortfeld sagen */
@@ -586,7 +579,11 @@
           const edge = (x1, y1, x2, y2) => s.el("line", { x1, y1, x2, y2, stroke: PENCIL, "stroke-width": 4, "stroke-linecap": "round", class: "later" });
           const top = node(550, 36, 230, "Instrumente", U, 26);
           const mids = [[190, "Streichinstrumente"], [550, "Blasinstrumente"], [910, "Schlaginstrumente"]].map(([x, t]) => ({ x, n: node(x, 146, 250, t, BLUE, 22), e: edge(550, 62, x, 120) }));
-          const leafs = [[100, "Geige 🎻", 0], [280, "Cello", 0], [460, "Flöte", 1], [640, "Trompete 🎺", 1], [820, "Trommel 🥁", 2], [1000, "Pauke", 2]].map(([x, t, p]) => ({ n: node(x, 258, 165, t, "#fff", 22), e: edge(mids[p].x, 172, x, 232) }));
+          const leafs = [[100, "Geige 🎻", 0, "geige"], [280, "Cello", 0, "cello"], [460, "Flöte", 1, "floete"], [640, "Trompete 🎺", 1, "trompete"], [820, "Trommel 🥁", 2, "trommel"], [1000, "Pauke", 2, "pauke"]].map(([x, t, p, snd]) => ({ n: node(x, 258, 165, t, "#fff", 22), e: edge(mids[p].x, 172, x, 232), snd }));
+          s.preload("geige"); s.preload("cello"); s.preload("floete"); s.preload("trompete"); s.preload("trommel"); s.preload("pauke");
+          let cur = null;
+          leafs.forEach(l => { l.n.style.cursor = "pointer"; l.n.addEventListener("click", () => { if (cur) cur.stop(); cur = s.sound(l.snd, { force: true }); l.n.classList.remove("a-pop"); void l.n.getBoundingClientRect(); l.n.classList.add("a-pop"); }); });
+          const hint = s.h("p", { class: "hand later", style: { margin: 0, textAlign: "center", color: RED } }, "👆 Tippe ein Instrument an – hör es dir an!");
           svg.append(...mids.map(m => m.e), ...leafs.map(l => l.e), top, ...mids.map(m => m.n), ...leafs.map(l => l.n));
           const mini = (top, kids, ic) => s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" } },
             s.h("span", { class: "chip", style: { background: U, color: "#fff", fontSize: "22px" } }, ic + " " + top),
@@ -594,10 +591,10 @@
           const ex2 = mini("Fahrzeuge", ["Bus", "U-Bahn", "Fahrrad", "Auto"], "🚇");
           const ex3 = mini("Obst", ["Apfel", "Banane", "Kirsche", "Birne"], "🍎");
           const m = merk(s, s.h("b", null, "Oberbegriff"), " = fasst zusammen. ", s.h("b", null, "Unterbegriff"), " = genauer. In Geschichten machen genaue Wörter Bilder im Kopf.");
-          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "12px" } }, svg, s.h("div", { class: "cols" }, ex2, ex3), m));
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "12px" } }, svg, hint, s.h("div", { class: "cols" }, ex2, ex3), m));
           s.sfx.pop(); s.show(top, "zoom");
           s.step(async () => { for (const md of mids) { s.sfx.note(4); s.show(md.e, "draw"); await s.wait(200); await s.show(md.n, "pop"); } });
-          s.step(async () => { for (let i = 0; i < leafs.length; i++) { s.sfx.note(7 + (i % 3)); s.show(leafs[i].e, "draw"); await s.wait(160); await s.show(leafs[i].n, "pop"); } s.say("Geige ist ein Unterbegriff von Streichinstrumente. Und Streichinstrumente ist ein Unterbegriff von Instrumente."); });
+          s.step(async () => { for (let i = 0; i < leafs.length; i++) { s.sfx.note(7 + (i % 3)); s.show(leafs[i].e, "draw"); await s.wait(160); await s.show(leafs[i].n, "pop"); } s.sound("geige", { vol: .6 }); s.show(hint, "fade"); s.say("Geige ist ein Unterbegriff von Streichinstrumente. Und Streichinstrumente ist ein Unterbegriff von Instrumente."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(ex2, "left"); s.sfx.whoosh(); await s.show(ex3, "right"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
@@ -624,7 +621,7 @@
             ...[["Zusammensetzen", BW], ["Präfix", PRE], ["Suffix", SUF], ["Wortfamilie", RED], ["Wortfeld", U], ["Ober-/Unterbegriff", PENCIL]].map(([t, c]) => s.h("span", { class: "chip", style: { fontSize: "21px", border: `3px solid ${c}`, background: "#fff" } }, t)));
           const tl = s.h("p", { class: "hand later", style: { margin: 0, textAlign: "center", color: RED } }, "Dein Werkzeugkasten für Wörter 🧰");
           s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, rows, tl, tools));
-          s.show(rows[0], "zoom"); s.sfx.pop();
+          s.show(rows[0], "zoom"); s.sfx.pop(); s.preload("lego-click");
           for (let i = 1; i < 4; i++) s.step(async () => { const r = rows[i]; r.classList.remove("later"); await s.show(r, "up"); await snapIn(s, r.bs, 40); if (i === 3) { s.sfx.fanfare(); s.confetti(590, 400, 80); } });
           s.step(async () => { s.sfx.success(); await s.show(tl, "fade"); await s.show(tools, "up"); });
         },

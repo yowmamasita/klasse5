@@ -120,7 +120,7 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "500px 1fr", alignItems: "center", height: "100%" } }, svg,
             s.h("div", { class: "stack" }, P(s, "big", "Drei Achtel"), fs, mk)));
           s.show(svg, "zoom"); s.sfx.pop();
-          s.step(async () => { for (const c of cuts) { s.sfx.snap(); await s.show(c, "draw") ; } });
+          s.step(async () => { s.sound("pizza-schneiden", { vol: .7 }); for (const c of cuts) await s.show(c, "draw"); });
           s.step(async () => {
             for (let i = 0; i < 3; i++) {
               const { g, mid } = slices[i]; s.sfx.pop();
@@ -168,6 +168,28 @@
           s.step(async () => { s.sfx.pop(); await s.show(cards[1], "up"); s.say("Drei Viertel der Schokolade."); });
           s.step(async () => { s.sfx.pop(); await s.show(cards[2], "up"); s.say("Drei Viertel des Schulwegs."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(ctrl, "up"); });
+        },
+      },
+      /* 2b --------------------------------------------------------------- */
+      {
+        title: "Brüche zum Anfassen",
+        say: "Brüche gibt es nicht nur im Heft. Pizza, Schokolade, Messbecher und Uhr sind in gleiche Teile geteilt.",
+        build(s) {
+          const ph = (caption, pos = "50% 50%") => ({ w: 258, h: 400, pos, caption, cls: "later" });
+          const figs = [
+            s.photo("pizza-8", ph("Pizza: 8 gleiche Stücke, jedes ist ein Achtel")),
+            s.photo("schokolade-16", Object.assign(ph("Schokolade: 4 · 4 = 16 Stücke"), { fit: "contain", style: { background: "#f2f2f4" } })),
+            s.photo("messbecher-cups", ph("Messbecher: Striche für Drittel, Halbe und Viertel", "40% 50%")),
+            s.photo("bahnhofsuhr", ph("Bahnhofsuhr: 60 Minuten rundherum")),
+          ];
+          const mk = merk(s, "Ein Ganzes wird in ", s.h("b", null, "gleich große"), " Teile geteilt – beim Essen, beim Messen und auf der Uhr.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "22px" } },
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "22px", justifyContent: "center" } }, figs), mk));
+          s.step(async () => { s.sound("pizza-schneiden", { vol: .6 }); await s.show(figs[0], "zoom"); });
+          s.step(async () => { s.sound("schoko-knack"); await s.show(figs[1], "zoom"); });
+          s.step(async () => { s.sound("water-pour", { vol: .5, dur: 1.2 }); await s.show(figs[2], "zoom"); });
+          s.step(async () => { s.sound("clock-tick", { vol: .5, dur: 1.5 }); await s.show(figs[3], "zoom"); });
+          s.step(async () => { s.sfx.ding(); await s.show(mk, "up"); });
         },
       },
       /* 3 ---------------------------------------------------------------- */
@@ -238,7 +260,7 @@
               s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("p", { class: "big" }, F(s, 3, 4, { color: UC }), " von 20 €"), l1, l2, mk)),
             s.h("div", { class: "cols3" }, cards)));
           s.sfx.coin();
-          s.step(async () => { for (let r = 0; r < 4; r++) { s.sfx.coin(); rows[r].band.setAttribute("opacity", .22); s.show(brs[r], "left"); await s.wait(260); } await s.show(l1, "up"); });
+          s.step(async () => { s.sound("coins", { vol: .7 }); for (let r = 0; r < 4; r++) { rows[r].band.setAttribute("opacity", .22); s.show(brs[r], "left"); await s.wait(260); } await s.show(l1, "up"); });
           s.step(async () => { s.sfx.whoosh(); rows[3].rg.style.opacity = .3; rows[3].band.setAttribute("opacity", .06); brs[3].style.opacity = .35; await s.show(big3, "left"); s.sfx.success(); await s.show(l2, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(mk, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(cards, "up"); });
@@ -258,13 +280,13 @@
           const hand = s.el("line", { x1: cx, y1: cy, x2: cx, y2: cy - 160, stroke: UC, "stroke-width": 8, "stroke-linecap": "round" });
           svg.append(hand, s.el("circle", { cx, cy, r: 11, fill: INK }));
           const line = s.h("p", { class: "h2", style: { minHeight: "64px", display: "flex", alignItems: "center", flexWrap: "wrap", gap: "6px" } });
-          let m = 0, lastTick = 0;
+          let m = 0, lastTick = 0, quiet = false;
           const gcd = (a, b) => (b ? gcd(b, a % b) : a);
           const setM = mm => {
             m = mm;
             if (mm >= 60) { sector.setAttribute("d", ""); full.setAttribute("opacity", .28); } else { full.setAttribute("opacity", 0); sector.setAttribute("d", mm > 0.01 ? wedge(cx, cy, R - 4, -90, -90 + mm * 6) : ""); }
             const a = rad(mm * 6 - 90); hand.setAttribute("x2", cx + 160 * Math.cos(a)); hand.setAttribute("y2", cy + 160 * Math.sin(a));
-            if (Math.floor(mm) !== lastTick) { lastTick = Math.floor(mm); s.sfx.tick(); }
+            if (Math.floor(mm) !== lastTick) { lastTick = Math.floor(mm); if (!quiet) s.sfx.tick(); }
           };
           const label = mm => {
             line.innerHTML = "";
@@ -273,7 +295,7 @@
             else if (mm === 60) line.append(nb("60 min = "), F(s, 60, 60), nb(" h = 1 h"));
             else { line.append(nb(`${mm} min = `), F(s, mm, 60), " h"); if (g > 1) line.append(" = ", F(s, mm / g, 60 / g, { color: UC }), " h"); }
           };
-          const sweep = async to => { const f = m; await s.tween({ dur: 900, update: v => setM(lerp(f, to, v)) }); setM(to); label(to); s.sfx.ding(); };
+          const sweep = async to => { const f = m; quiet = true; s.sound("clock-tick", { vol: .5, dur: 1 }); await s.tween({ dur: 900, update: v => setM(lerp(f, to, v)) }); setM(to); quiet = false; label(to); s.sfx.ding(); };
           setM(0); label(0);
           const chip = (...k) => s.h("div", { class: "chip later", style: { fontSize: "22px", padding: "8px 16px" } }, ...k);
           const chips = [chip("Viertelstunde: ", F(s, 1, 4), nb(" h = 15 min")), chip("halbe Stunde: ", F(s, 1, 2), nb(" h = 30 min")), chip("Dreiviertelstunde: ", F(s, 3, 4), nb(" h = 45 min"))];
@@ -287,7 +309,7 @@
           s.step(async () => { await sweep(15); await s.show(chips[0], "left"); });
           s.step(async () => { await sweep(30); await s.show(chips[1], "left"); });
           s.step(async () => { await sweep(45); await s.show(chips[2], "left"); });
-          s.step(async () => { s.sfx.pop(); await s.show(sl, "up"); await s.show(lf, "up"); s.say("Schiebe den Regler: Wie viel von einer Stunde ist das?"); });
+          s.step(async () => { s.sfx.pop(); await s.show(sl, "up"); s.sound("whistle", { vol: .6 }); await s.show(lf, "up"); s.say("Schiebe den Regler: Wie viel von einer Stunde ist das?"); });
         },
       },
       /* 6 ---------------------------------------------------------------- */
@@ -477,7 +499,7 @@
           lf.classList.add("later");
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "460px 1fr", alignItems: "center", height: "100%" } }, svg, s.h("div", { class: "stack", style: { gap: "18px" } }, chain, how, mk, lf)));
           s.show(svg, "zoom"); s.sfx.pop();
-          const stepCut = async (cs, i, txt) => { for (const c of cs) { s.sfx.snap(); await s.show(c, "draw"); } s.sfx.count(i * 2); s.show(eqs[i - 1], "fade"); await s.show(parts[i], "pop"); how.textContent = nb(txt); };
+          const stepCut = async (cs, i, txt) => { for (const c of cs) { s.sound("schoko-knack"); await s.show(c, "draw"); } s.sfx.count(i * 2); s.show(eqs[i - 1], "fade"); await s.show(parts[i], "pop"); how.textContent = nb(txt); };
           s.step(async () => { await stepCut(c2, 1, "Zähler · 2, Nenner · 2: 2 von 4 Stücken."); });
           s.step(async () => { await stepCut(c3, 2, "Nochmal · 2: 4 von 8 Stücken."); });
           s.step(async () => { await stepCut(c4, 3, "Rittersport-Größe: 8 von 16 Stücken – immer noch die Hälfte!"); s.sfx.success(); });
@@ -548,7 +570,7 @@
             return { juice, fine, eq, h: (H * z) / n };
           };
           const G1 = glass(60, "Julian", 2, 3), G2 = glass(300, "Louisa", 3, 4);
-          const pour = async G => { s.sfx.whoosh(); await s.tween({ dur: 900, ease: "out", update: v => { G.juice.setAttribute("y", B - G.h * v); G.juice.setAttribute("height", G.h * v); } }); };
+          const pour = async G => { s.sound("water-pour", { vol: .6, dur: 1.1 }); await s.tween({ dur: 900, ease: "out", update: v => { G.juice.setAttribute("y", B - G.h * v); G.juice.setAttribute("height", G.h * v); } }); };
           const hn = P(s, "t later", s.h("b", null, "Hauptnenner"), " = kgV(3, 4) = 12");
           const eq = s.h("div", { class: "u5eq later", style: { fontSize: "34px" } }, F(s, 2, 3), "=", F(s, 8, 12, { color: UC }), "<", F(s, 9, 12, { color: UC }), "=", F(s, 3, 4));
           const concl = P(s, "h2 later", s.h("span", { style: { color: GREEN } }, "→ Louisa hat mehr Saft!"));
@@ -564,7 +586,7 @@
             s.h("div", { class: "stack", style: { gap: "12px" } }, P(s, "t", "Julian: ", F(s, 2, 3), " Glas, Louisa: ", F(s, 3, 4), " Glas. Wer hat mehr?"), hn, eq, concl, mk, wall)));
           s.sfx.pop();
           s.step(async () => { await pour(G1); await pour(G2); s.sfx.ding(); });
-          s.step(async () => { s.sfx.scribble(); await s.show([G1.fine, G2.fine], "fade"); await s.show(hn, "up"); s.show([G1.eq, G2.eq], "pop"); s.sfx.count(4); await s.show(eq, "up"); });
+          s.step(async () => { s.sound("pencil-write"); await s.show([G1.fine, G2.fine], "fade"); await s.show(hn, "up"); s.show([G1.eq, G2.eq], "pop"); s.sfx.count(4); await s.show(eq, "up"); });
           s.step(async () => { s.sfx.success(); await s.show(concl, "up"); await s.show(mk, "up"); });
           s.step(async () => { for (const r of wrows) { s.sfx.count(wrows.indexOf(r) * 2); await s.show(r, "left"); } s.say("Ein Halb, zwei Drittel, drei Viertel, fünf Sechstel – der Größe nach geordnet."); });
         },
@@ -604,7 +626,7 @@
           s.step(async () => {
             s.sfx.pop(); await s.show(lf, "up");
             const lvl = h => s.tween({ dur: 700, update: v => { const cur = +cupFill.getAttribute("height"); const nh = lerp(cur, h, v); cupFill.setAttribute("y", 140 - nh); cupFill.setAttribute("height", nh); } });
-            s.sfx.whoosh(); await lvl(32.5); s.sfx.whoosh(); await lvl(97.5); cupFill.setAttribute("y", 42.5); cupFill.setAttribute("height", 97.5); s.sfx.ding();
+            s.sound("water-pour", { vol: .55, dur: .8 }); await lvl(32.5); s.sound("water-pour", { vol: .55, dur: .8 }); await lvl(97.5); cupFill.setAttribute("y", 42.5); cupFill.setAttribute("height", 97.5); s.sfx.ding();
           });
         },
       },
@@ -645,7 +667,7 @@
             s.h("div", { class: "cols", style: { gridTemplateColumns: "600px 1fr", alignItems: "center" } }, svg, s.h("div", { class: "stack", style: { gap: "10px" } }, e1, e2, e3, mk)),
             s.h("div", { class: "cols", style: { gap: "20px" } }, c1, c2)));
           s.sfx.pop();
-          s.step(async () => { s.sfx.scribble(); await s.show(fine, "fade"); s.sfx.count(3); await s.show(e2, "up"); s.say("Ein Halb sind drei Sechstel, ein Drittel sind zwei Sechstel."); });
+          s.step(async () => { s.sound("pencil-write"); await s.show(fine, "fade"); s.sfx.count(3); await s.show(e2, "up"); s.say("Ein Halb sind drei Sechstel, ein Drittel sind zwei Sechstel."); });
           s.step(async () => {
             await s.show(sumBar, "fade");
             for (const f of fly) { f.r.classList.remove("later"); s.sfx.count(fly.indexOf(f)); await s.tween({ dur: 420, update: v => { f.r.setAttribute("x", lerp(f.fx, f.tx, v)); f.r.setAttribute("y", lerp(f.fy, f.ty, v)); } }); }
@@ -691,8 +713,8 @@
             s.h("div", { class: "cols", style: { gridTemplateColumns: "440px 1fr", alignItems: "center", gap: "20px" } }, cs,
               s.h("div", { class: "card stack", style: { gap: "10px", padding: "12px 18px" } }, P(s, "t", s.h("b", null, "Kuchenbasar: "), "Es sind ", M(s, 2, 1, 4), " Kuchen da, ", F(s, 3, 4), " werden verkauft."), sEq, hint))));
           s.sfx.pop();
-          s.step(async () => { s.sfx.whoosh(); await s.show(a1, "draw"); s.sfx.ding(); await s.show(l1, "pop"); });
-          s.step(async () => { s.sfx.whoosh(); await s.show(a2, "draw"); s.sfx.ding(); await s.show(l2, "pop"); await s.show(flag, "pop"); });
+          s.step(async () => { s.sound("footsteps", { vol: .6, dur: 1.6 }); await s.show(a1, "draw"); s.sfx.ding(); await s.show(l1, "pop"); });
+          s.step(async () => { s.sound("footsteps", { vol: .6, dur: 1.2 }); await s.show(a2, "draw"); s.sfx.ding(); await s.show(l2, "pop"); await s.show(flag, "pop"); });
           s.step(async () => { s.sfx.success(); await s.show(eq, "up"); s.say("Zwei plus eins sind drei. Ein Viertel plus zwei Viertel sind drei Viertel."); });
           s.step(async () => { for (const c of cuts) { s.sfx.snap(); await s.show(c, "draw"); } k2.ws.forEach(w => { w.setAttribute("stroke", "#c2185b"); w.setAttribute("stroke-width", 3); }); s.sfx.count(4); await s.show(pS.slice(0, 4), "pop"); await s.show(hint, "fade"); });
           s.step(async () => {
@@ -734,10 +756,10 @@
             await s.show(B.so, "up"); s.sfx.ding();
           });
           s.step(async () => {
-            for (let i = 0; i < 9; i++) { cells[i].setAttribute("fill", i < 5 ? "#fca5a5" : "#93c5fd"); s.sfx.coin(); await s.wait(60); }
+            s.sound("cash-register", { vol: .6 }); for (let i = 0; i < 9; i++) { cells[i].setAttribute("fill", i < 5 ? "#fca5a5" : "#93c5fd"); await s.wait(60); }
             s.show([tb, tkino], "pop"); await s.show(C.so, "up"); s.sfx.ding();
           });
-          s.step(async () => { s.sfx.fanfare(); s.confetti(590, 400, 120); await s.show(mk, "up"); });
+          s.step(async () => { s.sound("kids-cheer", { vol: .6 }); s.confetti(590, 400, 120); await s.show(mk, "up"); });
         },
       },
     ],

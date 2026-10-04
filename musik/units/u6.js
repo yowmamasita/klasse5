@@ -207,21 +207,24 @@
         say: "Ein Motiv ist der kleinste Baustein einer Melodie. Es ist kurz, und man erkennt es sofort wieder.",
         build(s) {
           const M = [
-            { h: "Beethoven, 5. Sinfonie", t: "kurz – kurz – kurz – lang. Uraufführung 1808 in Wien.", notes: [[null, 0.5], [67, 0.5], [67, 0.5], [67, 0.5], [63, 3]], v: "streicher", bpm: 200, lo: 58, hi: 72 },
-            { h: "Kuckucksruf", t: "Zwei Töne, von oben nach unten. Wie der Vogel im Wald.", notes: [[79, 1], [76, 2], [79, 1], [76, 2]], v: "floete", bpm: 150, lo: 72, hi: 83 },
-            { h: "Big-Ben-Gong", t: "Vier Töne vom Uhrturm in London. Auch Türklingeln und Schulgongs spielen sie.", notes: [[68, 1], [66, 1], [64, 1], [59, 2]], v: "glocke", bpm: 80, lo: 56, hi: 71 },
-            { h: "Jagdsignal", t: "Ein Sprung nach oben: kurz, laut, wie ein Ruf.", notes: [[60, 1], [65, 2], [60, 1], [65, 2]], v: "trompete", bpm: 150, lo: 56, hi: 69 },
+            { h: "Beethoven, 5. Sinfonie", t: "kurz – kurz – kurz – lang. Uraufführung 1808 in Wien.", notes: [[null, 0.5], [67, 0.5], [67, 0.5], [67, 0.5], [63, 3]], v: "streicher", bpm: 200, lo: 58, hi: 72, pic: "beethoven", pos: "50% 30%", cap: "Ludwig van Beethoven", rec: "beethoven5-anfang", dur: 5 },
+            { h: "Kuckucksruf", t: "Zwei Töne, von oben nach unten. Wie der Vogel im Wald.", notes: [[79, 1], [76, 2], [79, 1], [76, 2]], v: "floete", bpm: 150, lo: 72, hi: 83, pic: "kuckuck-vogel", pos: "60% 40%", cap: "Kuckuck", rec: "kuckuck", dur: 6 },
+            { h: "Big-Ben-Gong", t: "Vier Töne vom Uhrturm in London. Auch Türklingeln und Schulgongs spielen sie.", notes: [[68, 1], [66, 1], [64, 1], [59, 2]], v: "glocke", bpm: 80, lo: 56, hi: 71, pic: "big-ben", pos: "50% 45%", cap: "Big Ben, London", rec: "westminster-gong", dur: 10 },
+            { h: "Jagdsignal", t: "Ein Sprung nach oben: kurz, laut, wie ein Ruf.", notes: [[60, 1], [65, 2], [60, 1], [65, 2]], v: "trompete", bpm: 150, lo: 56, hi: 69, pic: "jagdhoerner", pos: "50% 80%", cap: "Jagdhörner", rec: "jagdsignal", dur: 8 },
           ];
           const tiles = M.map((d, i) => {
-            const R = roll(s, 210, 110, d.notes, { lo: d.lo, hi: d.hi, color: () => ["#2f7d32", "#1d5bd0", "#ee7a1a", "#7b4fd6"][i] });
+            const real = s.soundBtn(d.rec, "Echt hören", { dur: d.dur });
+            real.style.alignSelf = "flex-start"; real.style.marginTop = "auto";
+            real.addEventListener("click", e => e.stopPropagation());
+            const R = roll(s, 210, 64, d.notes, { lo: d.lo, hi: d.hi, color: () => ["#2f7d32", "#1d5bd0", "#ee7a1a", "#7b4fd6"][i] });
             const go = () => { seq(s, d.v, d.notes, d.bpm); R.light(d.bpm); };
             const tile = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 16px", cursor: "pointer" }, onclick: go },
-              R.svg, s.h("p", { class: "h2", style: { fontSize: "22px" } }, d.h), s.h("p", { class: "small" }, d.t), s.h("p", { class: "small pencil" }, "Antippen zum Hören"));
+              s.photo(d.pic, { w: "100%", h: 104, pos: d.pos, caption: d.cap }), R.svg, s.h("p", { class: "h2", style: { fontSize: "22px" } }, d.h), s.h("p", { class: "small" }, d.t), real);
             tile.go = go; return tile;
           });
           const merk = s.h("div", { class: "merk later" }, "Ein ", s.h("b", null, "Motiv"), " ist der kleinste Baustein einer Melodie – wie ein Wort im Satz. Man erkennt es sofort wieder.");
           s.add(s.h("div", { class: "stack", style: { gap: "14px" } },
-            s.h("p", { class: "t a-up" }, "Die Balken zeigen die Töne: weiter oben = höher, länger = länger gehalten."),
+            s.h("p", { class: "t a-up" }, "Tippe eine Karte an: Die Balken zeigen die Töne. „Echt hören“ = echte Aufnahme."),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: "14px" } }, tiles), merk));
           tiles.forEach((tl, i) => s.step(async () => { s.show(tl, "up"); tl.go(); s.say(M[i].h); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
@@ -315,7 +318,7 @@
             verziert: { n: "Verziert", v: "floete", bpm: 130, notes: T.flatMap(([m, b]) => (b === 1 ? [[m, 0.5], [m + 2, 0.25], [m, 0.25]] : [[m, b]])), t: "Kleine Extra-Töne schmücken die Melodie." },
             tief: { n: "Tief und langsam", v: "streicher", bpm: 80, notes: T.map(([m, b]) => [m - 12, b]), t: "Eine Oktave tiefer und viel langsamer." },
           };
-          const holder = s.h("div", { style: { height: "230px" } });
+          const holder = s.h("div", { style: { height: "170px" } });
           const desc = s.h("p", { class: "t" }, "");
           let R = null;
           const keys = Object.keys(VAR);
@@ -323,7 +326,7 @@
           function pick(k) {
             const d = VAR[k];
             keys.forEach(x => btns[x].classList.toggle("solid", x === k));
-            R = roll(s, 1100, 230, d.notes, { lo: 46, hi: 74, beats: 16, color: () => (k === "thema" ? COL.A : k === "moll" ? COL.B : k === "rhythmus" ? COL.C : k === "verziert" ? COL.D : "#5d6678") });
+            R = roll(s, 1100, 170, d.notes, { lo: 46, hi: 74, beats: 16, color: () => (k === "thema" ? COL.A : k === "moll" ? COL.B : k === "rhythmus" ? COL.C : k === "verziert" ? COL.D : "#5d6678") });
             holder.replaceChildren(R.svg); s.show(R.svg, "fade");
             desc.replaceChildren(s.h("b", null, d.n + ": "), d.t);
             seq(s, d.v, d.notes, d.bpm); R.light(d.bpm);
@@ -331,13 +334,17 @@
           keys.forEach(k => { btns[k] = s.h("button", { class: "btn", onclick: () => pick(k) }, VAR[k].n); });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Variation: Die Melodie bleibt ", s.h("b", null, "erkennbar"), ", aber etwas ändert sich. Mozart schrieb 12 Variationen über diese Melodie (KV 265).");
           const life = lifeBox(s, "Ein Remix eines Songs, ein Lied in neuer Version (Cover), ein Klingelton in einer anderen Fassung.");
+          const mz = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "120px 1fr", gap: "12px", alignItems: "center", padding: "10px 12px" } },
+            s.photo("mozart", { w: 120, h: 190, pos: "50% 25%" }),
+            s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("p", { class: "small", style: { fontWeight: "700" } }, "Mozart, echt gespielt:"),
+              s.soundBtn("mozart-thema", "Thema"), s.soundBtn("mozart-var1", "Variation 1"), s.soundBtn("mozart-var5", "Variation 5")));
           s.add(s.h("div", { class: "stack", style: { gap: "10px" } },
             s.h("p", { class: "small" }, "Das Thema ist ein altes französisches Volkslied. Bei uns heißt es „Morgen kommt der Weihnachtsmann“, in England „Twinkle, Twinkle, Little Star“."),
             s.h("div", { class: "row", style: { gap: "10px" } }, keys.map(k => btns[k])), desc, holder,
-            s.h("div", { style: { display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: "16px" } }, merk, life)));
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1.2fr 0.8fr", gap: "16px" } }, merk, mz, life)));
           pick("thema");
           ["moll", "rhythmus", "verziert", "tief"].forEach(k => s.step(async () => { pick(k); s.say(VAR[k].n + ". " + VAR[k].t); }));
-          s.step(async () => { s.show(merk, "up"); s.sfx.ding(); await s.wait(300); s.show(life, "up"); });
+          s.step(async () => { s.show(merk, "up"); s.show(mz, "up", 200); s.sound("mozart-var1", { dur: 6 }); await s.wait(300); s.show(life, "up"); });
         },
       },
       /* ---------- 5 ---------- */
@@ -406,8 +413,10 @@
           const P = [WEIHN.A, WEIHN.B, WEIHN.A];
           const partSnd = i => { const sec = seq(s, "klavier", P[i], 150); (i === 1 ? [48, 43, 48, 43, 48, 43, 48, 43] : [48, 48, 53, 48, 53, 48, 43, 48]).forEach((m, k) => play(s, "pizz", m, 0.5, k * 0.8)); return sec; };
           const go = () => playParts(s, st, 3, partSnd);
-          const ex = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Beispiele: Volkslieder in A B A"),
-            s.h("p", { class: "small" }, "„Morgen kommt der Weihnachtsmann“, „Alle Vögel sind schon da“, „Weißt du, wie viel Sternlein stehen“. Die Texte von Hoffmann von Fallersleben sind fast 200 Jahre alt."));
+          const ex = s.h("div", { class: "ex later", style: { display: "grid", gridTemplateColumns: "120px 1fr", gap: "16px", alignItems: "center" } },
+            s.photo("fallersleben", { w: 120, h: 150, pos: "50% 25%" }),
+            s.h("div", null, s.h("span", { class: "exlabel" }, "Beispiele: Volkslieder in A B A"),
+              s.h("p", { class: "small" }, "„Morgen kommt der Weihnachtsmann“, „Alle Vögel sind schon da“, „Weißt du, wie viel Sternlein stehen“. Die Texte von Hoffmann von Fallersleben (Foto) sind fast 200 Jahre alt.")));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, s.h("b", null, "A B A:"), " Anfang – etwas Neues – der Anfang kommt zurück. Das klingt rund und fertig.");
           const life = lifeBox(s, "Wie ein Sandwich: Brot – Belag – Brot. Wie ein Ausflug: zu Hause – Zoo – wieder zu Hause.");
           s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, st.svg,
@@ -426,15 +435,18 @@
           const L = "ABACA";
           const st = strip(s, L.split("").map(x => ({ L: x, sub: x === "A" ? "Refrain" : "Neues" })), 1100, 150, { sub: true, later: true });
           const go = () => playParts(s, st, 5, i => section(s, L[i]));
-          const ex = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Berühmtes Beispiel"),
-            s.h("p", { class: "small" }, "Ludwig van Beethoven: „Für Elise“ – ein kleines Rondo mit der Form A B A C A. Teil A kennt fast jeder."));
+          const ex = s.h("div", { class: "ex later", style: { display: "grid", gridTemplateColumns: "130px 1fr", gap: "16px", alignItems: "center" } },
+            s.photo("beethoven", { w: 130, h: 150, pos: "50% 30%" }),
+            s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("span", { class: "exlabel" }, "Berühmtes Beispiel"),
+              s.h("p", { class: "small" }, "Ludwig van Beethoven: „Für Elise“ – ein kleines Rondo mit der Form A B A C A. Teil A kennt fast jeder."),
+              s.h("div", { class: "row" }, s.soundBtn("fuer-elise", "Teil A von „Für Elise“ hören"))));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, s.h("b", null, "Rondo:"), " A kehrt immer wieder (wie ein Refrain). Dazwischen kommen neue Teile: B, C, D …");
           const life = lifeBox(s, "Wie ein Rundgang: Nach jeder Station kommst du zum Treffpunkt zurück. Wie eine TV-Show: Zwischen den Beiträgen läuft immer dieselbe Erkennungsmelodie.");
           s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, st.svg,
             s.h("div", { class: "row" }, s.h("button", { class: "btn solid", onclick: go }, "Rondo abspielen"), s.h("p", { class: "small pencil" }, "Selbst ausgedachte Melodien")),
             ex, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" } }, merk, life)));
           s.step(async () => { s.show(st.blocks.map(b => b.g), "left"); await go(); });
-          s.step(async () => { s.show(ex, "up"); s.sfx.pop(); });
+          s.step(async () => { s.show(ex, "up"); s.sound("fuer-elise", { dur: 8 }); });
           s.step(async () => { s.show(merk, "up"); s.sfx.ding(); await s.wait(300); s.show(life, "up"); });
         },
       },
@@ -566,7 +578,11 @@
             preset("Rock", ROWS.map(r => r.on)),
             preset("Leer", ROWS.map(() => Array(8).fill(0))));
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, s.h("b", null, "Ostinato"), " (heißt: hartnäckig) = ein kurzes Muster, das sich immer wiederholt. Darüber kann sich die Melodie verändern.");
-          const life = lifeBox(s, "Videospiele: Die Hintergrundmusik ist oft eine Schleife (Loop). Rockmusik: Ein Gitarren-Riff wiederholt sich. Ravels „Boléro“: Die kleine Trommel spielt die ganze Zeit denselben Rhythmus.");
+          const life = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "110px 1fr", gap: "14px", alignItems: "center" } },
+            s.photo("ravel", { w: 110, h: 140, pos: "50% 25%" }),
+            s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+              s.h("p", { class: "small" }, "Loops in Videospielen, Gitarren-Riffs im Rock. In Ravels „Boléro“ spielt die kleine Trommel die ganze Zeit denselben Rhythmus."),
+              s.h("div", { class: "row" }, s.soundBtn("bolero", "Boléro (1930, Ravel dirigiert)"))));
           s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, presets, s.h("div", { class: "card" }, grid),
             s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" } }, merk, life)));
           s.step(async () => { ROWS[0].on.forEach((v, i) => (state[0][i] = !!v)); paint(); toggle(true); s.say("Erst das Bass-Muster. Es wiederholt sich immer wieder."); });
@@ -623,13 +639,17 @@
           const ex = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Noch mehr Bordun"),
             s.h("p", { class: "small" }, "Die Drehleier hat Bordunsaiten. In Indien spielt die Tanpura einen Dauerton. Auf der Orgel gibt es ein Register, das „Bordun“ heißt."));
           const life = lifeBox(s, "Summ einen tiefen Ton und lass deine Freundin darüber pfeifen – schon habt ihr einen Bordun!");
-          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "420px 1fr", gap: "24px", height: "100%" } }, svg,
+          svg.setAttribute("width", 280); svg.setAttribute("height", 313);
+          const real = s.h("div", { class: "stack", style: { gap: "8px", alignItems: "center" } },
+            s.photo("dudelsack", { w: 420, h: 220, pos: "50% 45%", caption: "Ein echter Dudelsack" }),
+            s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } }, s.soundBtn("dudelsack-bordun", "Nur Bordun"), s.soundBtn("dudelsack-melodie", "Mit Melodie")), svg);
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "420px 1fr", gap: "24px", height: "100%" } }, real,
             s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row" }, dbtn, mbtn), c1, merk, ex, life)));
           s.show(svg, "zoom"); s.sfx.whoosh();
           s.step(async () => { setDrone(true); s.say("Hör den Dauerton."); });
           s.step(async () => { melody(); s.say("Und jetzt die Melodie darüber."); });
           s.step(async () => { s.show(merk, "up"); s.sfx.ding(); s.show(ex, "up", 300); });
-          s.step(async () => { setDrone(false); s.show(life, "up"); });
+          s.step(async () => { setDrone(false); s.show(life, "up"); s.sound("dudelsack-melodie", { dur: 8, vol: .8 }); });
         },
       },
       /* ---------- 13 ---------- */
@@ -667,14 +687,16 @@
           const btn = {}; Object.keys(PAIRS).forEach(k => { btn[k] = s.h("button", { class: "btn", onclick: () => run(k) }, PAIRS[k].n); });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, s.h("b", null, "Ruf und Antwort:"), " Einer ruft, die Gruppe antwortet – mit einem Echo oder mit einer neuen Antwort.");
           const fact = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Woher kommt das?"), s.h("p", { class: "small" }, "Aus Arbeitsliedern afrikanischer Menschen, die in Amerika versklavt waren. Später wurde es typisch für Gospel, Blues und Jazz."));
-          const life = lifeBox(s, "Im Stadion ruft der Stadionsprecher den Vornamen des Torschützen, die Fans brüllen den Nachnamen. In der Kirche singt einer vor, die Gemeinde antwortet. Im Unterricht klatscht die Lehrerin vor.");
+          const life = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "1fr 170px", gap: "12px", alignItems: "center" } },
+            s.h("div", null, s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("p", { class: "small" }, "Im Stadion ruft der Stadionsprecher den Vornamen des Torschützen, die Fans brüllen den Nachnamen. In der Kirche singt einer vor, die Gemeinde antwortet.")),
+            s.photo("fankurve", { w: 160, h: 150, pos: "50% 50%", caption: "Fankurve" }));
           s.add(s.h("div", { class: "stack", style: { gap: "10px" } }, svg, s.h("div", { class: "row", style: { gap: "10px" } }, Object.values(btn), info),
-            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1.2fr", gap: "14px" } }, merk, fact, life)));
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1.45fr", gap: "14px" } }, merk, fact, life)));
           info.textContent = "Tippe auf einen Knopf.";
           s.step(async () => { await run("echo"); });
           s.step(async () => { await run("neu"); });
           s.step(async () => { await run("klatsch"); });
-          s.step(async () => { s.show(merk, "up"); s.show(fact, "up", 200); s.show(life, "up", 400); s.sfx.ding(); });
+          s.step(async () => { s.show(merk, "up"); s.show(fact, "up", 200); s.show(life, "up", 400); s.sound("crowd-cheer", { vol: .6, dur: 4 }); });
         },
       },
       /* ---------- 14 ---------- */
@@ -730,41 +752,25 @@
         title: "Im Alltag: Formen überall",
         say: "Musikalische Formen hörst du jeden Tag: im Radio, im Stadion, beim Zocken und in der Schule.",
         build(s) {
-          const scene = k => {
-            const v = s.svg(150, 110);
-            if (k === "radio") {
-              v.append(s.el("rect", { x: 10, y: 30, width: 130, height: 72, rx: 12, fill: "#ee7a1a" }), s.el("circle", { cx: 50, cy: 66, r: 24, fill: "#1b2740" }), s.el("circle", { cx: 50, cy: 66, r: 10, fill: "#5d6678" }),
-                s.el("rect", { x: 86, y: 46, width: 42, height: 14, rx: 3, fill: "#fff6c9" }), s.el("line", { x1: 30, y1: 30, x2: 70, y2: 4, stroke: "#5d6678", "stroke-width": 3 }));
-            } else if (k === "stadion") {
-              v.append(s.el("ellipse", { cx: 75, cy: 64, rx: 70, ry: 40, fill: "#9aa6b2" }), s.el("ellipse", { cx: 75, cy: 66, rx: 52, ry: 26, fill: "#3a9a4a" }), s.el("line", { x1: 75, y1: 40, x2: 75, y2: 92, stroke: "#fff", "stroke-width": 2 }));
-              for (let i = 0; i < 9; i++) v.append(s.el("circle", { cx: 15 + i * 15, cy: 18 + (i % 2) * 6, r: 5, fill: ["#dc3b2a", "#1d5bd0"][i % 2] }));
-            } else if (k === "spiel") {
-              v.append(s.el("rect", { x: 10, y: 6, width: 130, height: 98, rx: 10, fill: "#1b2740" }), s.el("rect", { x: 20, y: 16, width: 110, height: 78, fill: "#7fd0ff" }));
-              [[30, 80], [46, 80], [62, 80], [78, 80], [94, 80], [110, 80], [62, 64], [78, 48]].forEach(([x, y]) => v.append(s.el("rect", { x, y, width: 16, height: 14, fill: "#8a4a20", stroke: "#3a2210" })));
-              v.append(s.el("rect", { x: 34, y: 58, width: 14, height: 22, fill: "#dc3b2a" }));
-            } else {
-              v.append(s.el("rect", { x: 20, y: 40, width: 110, height: 66, fill: "#e8d3b5" }), s.el("path", { d: "M10,42 L75,8 L140,42 Z", fill: "#b3261e" }), s.el("circle", { cx: 75, cy: 64, r: 16, fill: "#fff", stroke: "#1b2740", "stroke-width": 3 }),
-                s.el("line", { x1: 75, y1: 64, x2: 75, y2: 52, stroke: "#1b2740", "stroke-width": 3 }), s.el("line", { x1: 75, y1: 64, x2: 84, y2: 64, stroke: "#1b2740", "stroke-width": 3 }));
-            }
-            return v;
-          };
+          const PICS = { radio: ["radio", "50% 50%", "contain"], stadion: ["fankurve", "50% 50%"], spiel: ["gameboy", "50% 50%", "contain"], gong: ["big-ben", "50% 40%"] };
+          const scene = k => s.photo(PICS[k][0], { w: 170, h: 200, pos: PICS[k][1], fit: PICS[k][2] || "cover" });
           const T = [
             { k: "radio", h: "Radio", f: "Strophe – Refrain", t: "Fast jeder Song wechselt zwischen Strophe und Refrain. Der Refrain bleibt im Ohr.",
               snd: () => { seq(s, "floete", [[60, 1], [60, 0.5], [62, 0.5], [64, 1], [64, 1], [62, 1], [60, 0.5], [62, 0.5], [64, 2]], 132); seq(s, "trompete", [[67, 1], [69, 0.5], [67, 0.5], [72, 1.5], [71, 0.5], [69, 1], [67, 1], [69, 1], [72, 1]], 132, 8 * 60 / 132); } },
             { k: "stadion", h: "Fußballstadion", f: "Ruf und Antwort", t: "Der Stadionsprecher ruft, Tausende Fans antworten. Fangesänge wechseln oft zwischen Vorsänger und Kurve.",
-              snd: () => { seq(s, "trompete", [[67, 0.5], [67, 0.5], [72, 1]], 140); seq(s, "stimme", [[67, 0.5], [67, 0.5], [72, 1]], 140, 1.0); [0, 0.21, 0.43].forEach(w => play(s, "klatsch", 0, 0, 1.9 + w, 1.4)); } },
+              snd: tap => { seq(s, "trompete", [[67, 0.5], [67, 0.5], [72, 1]], 140); s.sound("crowd-cheer", { when: 1.0, dur: 4, vol: .8, force: tap }); } },
             { k: "spiel", h: "Videospiel", f: "Ostinato (Loop)", t: "Die Hintergrundmusik ist eine kurze Schleife, die sich immer wiederholt – stundenlang.",
               snd: () => { for (let r = 0; r < 2; r++) seq(s, "chip", [[72, 0.5], [76, 0.5], [79, 0.5], [76, 0.5], [74, 0.5], [77, 0.5], [81, 0.5], [77, 0.5]], 180, r * 4 * 60 / 180); seq(s, "bass", [[48, 1], [48, 1], [50, 1], [50, 1], [48, 1], [48, 1], [50, 1], [50, 1]], 180, 0, 0.7); } },
-            { k: "gong", h: "Schulgong", f: "Motiv", t: "Viele Gongs spielen ein kurzes Motiv aus vier Tönen – wie der Big Ben in London.",
-              snd: () => seq(s, "glocke", [[68, 1], [66, 1], [64, 1], [59, 2]], 80) },
+            { k: "gong", h: "Schulgong", f: "Motiv", t: "Viele Gongs spielen ein kurzes Motiv aus vier Tönen – wie der Big Ben in London. Hier: die echten Glocken.",
+              snd: tap => s.sound("westminster-gong", { dur: 9, force: tap }) },
           ];
           const tiles = T.map(d => {
             const v = scene(d.k);
-            const tile = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "16px", alignItems: "center", padding: "14px 18px" } }, v,
+            const tile = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "170px 1fr", gap: "16px", alignItems: "center", padding: "14px 18px" } }, v,
               s.h("div", { class: "stack", style: { gap: "6px" } },
                 s.h("div", { class: "row", style: { gap: "10px" } }, s.h("p", { class: "h2", style: { fontSize: "24px" } }, d.h), s.h("span", { class: "chip" }, d.f)),
                 s.h("p", { class: "small" }, d.t),
-                s.h("button", { class: "btn", style: { alignSelf: "flex-start" }, onclick: () => { d.snd(); } }, "Anhören")));
+                s.h("button", { class: "btn", style: { alignSelf: "flex-start" }, onclick: () => { d.snd(true); } }, "Anhören")));
             d.tile = tile; return tile;
           });
           const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Hör beim nächsten Song genau hin: Wo ist die Strophe, wo der Refrain? Gibt es eine Bridge?");

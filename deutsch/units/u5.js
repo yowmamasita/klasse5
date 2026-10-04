@@ -158,8 +158,8 @@
             s.h("div", { class: "cols" }, A.c, B.c), merk));
           let onA = false, onB = false;
           s.loop(t => { if (onA) A.w.draw(t); if (onB) B.w.draw(t); });
-          s.step(async () => { s.say("Sonne, Hase, Rose, lesen. Das s summt."); onA = true; s.show(A.c, "left"); s.sfx.tone(150, 0.9, "sawtooth", 0.07); s.sfx.tone(152, 0.9, "sine", 0.15); await s.wait(600); });
-          s.step(async () => { s.say("Bus, Wasser, Straße, Fuß. Das s zischt."); onB = true; s.show(B.c, "right"); s.sfx.noise(0.9, 0.22, 5000, 7000, 0, 2); await s.wait(600); });
+          s.step(async () => { s.say("Sonne, Hase, Rose, lesen. Das s summt."); onA = true; s.show(A.c, "left"); s.sound("bee-buzz", { vol: .6 }); await s.wait(600); });
+          s.step(async () => { s.say("Bus, Wasser, Straße, Fuß. Das s zischt."); onB = true; s.show(B.c, "right"); s.sound("snake-hiss", { vol: .7 }); await s.wait(600); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -174,15 +174,16 @@
           const lifes = [["Im Schwimmbad", "Das Wasser ist kalt."], ["In der Schule", "Unsere Klasse ist die 5a."], ["Beim Ausflug", "Wir fahren mit dem Schiff über den Fluss."]]
             .map(([l, t]) => s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, l), P(s, "t", t)));
           const merk = s.h("div", { class: "merk later" }, "Kurzer Vokal + zischendes s → ", s.h("b", null, "ss"), ".");
+          const spree = s.photo("spree-schiff", { w: "100%", h: 250, pos: "50% 60%", caption: "der Fluss: die Spree in Berlin", cls: "later" });
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr", height: "100%", alignItems: "center" } },
             s.h("div", { class: "stack", style: { gap: "18px" } },
               s.h("div", { class: "card stack", style: { alignItems: "center", gap: "12px" } }, P(s, "t", "Der kurze Vokal braucht zwei s:"), T.row),
               s.h("div", { class: "cols3", style: { gap: "10px" } }, ...words), merk),
-            s.h("div", { class: "stack", style: { gap: "14px" } }, ...lifes)));
+            s.h("div", { class: "stack", style: { gap: "14px" } }, spree, ...lifes)));
           s.sfx.whoosh();
           s.step(async () => { s.say("Wa, sser. Das a ist kurz, also zwei s."); s.sfx.snap(); await T.run(); s.sfx.ding(); });
           s.step(async () => { for (let i = 0; i < words.length; i++) { s.show(words[i], "pop"); s.sfx.count(i); await s.wait(120); } });
-          s.step(async () => { for (const l of lifes) { s.show(l, "right"); s.sfx.pop(); await s.wait(200); } });
+          s.step(async () => { s.show(spree, "zoom"); s.sound("splash", { vol: .5 }); for (const l of lifes) { s.show(l, "right"); await s.wait(200); } });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -195,7 +196,7 @@
           const g2 = ["h{ei}ßen", "dr{au}ßen", "w{ei}ß", "b{ei}ßen"].map(w => sayBtn(s, w, { cls: "sm" }));
           const box = (lab, btns) => s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, lab), s.h("div", { class: "cols", style: { gap: "10px" } }, ...btns));
           const b1 = box("nach langem Vokal", g1), b2 = box("nach Doppellaut (ei, au, eu)", g2);
-          const sign = s.h("div", { class: "later", style: { background: "#fff", border: "5px solid #1b2740", borderRadius: "10px", padding: "12px 24px", font: "800 40px/1 var(--f-display)", textAlign: "center", boxShadow: "0 4px 0 rgba(0,0,0,.15)" } }, "Emser Stra", s.h("span", { class: "u5c" }, "ß"), "e");
+          const sign = s.photo("strassenschild", { w: "100%", h: 190, pos: "50% 45%", caption: "echtes Berliner Straßenschild", cls: "later" });
           const signBox = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"), P(s, "t", "Julians Schule liegt an der Emser Straße. Auf Briefen: „Viele Grüße“."));
           const facts = s.h("div", { class: "card soft later", style: { padding: "14px 18px" } },
             P(s, "t", s.h("b", null, "Großbuchstaben: "), "STRAẞE oder STRASSE"),
@@ -207,7 +208,7 @@
           s.step(async () => { s.say("Straße, Fuß, groß, Grüße"); s.sfx.whoosh(); await s.show(b1, "left"); });
           s.step(async () => { s.say("heißen, draußen, weiß, beißen"); s.sfx.whoosh(); await s.show(b2, "left"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
-          s.step(async () => { s.sfx.boing(); s.show(sign, "bounce"); await s.show(signBox, "up", 200); });
+          s.step(async () => { s.sound("traffic", { vol: .4, dur: 3 }); s.show(sign, "zoom"); await s.show(signBox, "up", 200); });
           s.step(async () => { s.sfx.pop(); await s.show(facts, "up"); });
         },
       },
@@ -234,7 +235,7 @@
             s.say(rows[i][2] + ". Also " + rows[i][5] + ".");
             s.show(p[0], "left"); s.sfx.swoosh(); await s.wait(200);
             s.show(p[1], "pop"); s.sfx.pop(); await s.wait(350);
-            s.show(p[2], "fade"); rows[i][4] === "g" ? s.sfx.tone(150, 0.4, "sawtooth", 0.06) : s.sfx.noise(0.35, 0.18, 5000, 7000, 0, 2); await s.wait(400);
+            s.show(p[2], "fade"); rows[i][4] === "g" ? s.sound("bee-buzz", { vol: .5, dur: .9 }) : s.sound("snake-hiss", { vol: .6, dur: .9 }); await s.wait(400);
             s.show(p[3], "zoom"); s.sfx.ding();
           }));
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
@@ -340,7 +341,7 @@
           s.show(left, "zoom"); s.sfx.whoosh();
           s.step(async () => { s.say("Mut, ter. Das u ist kurz. Also tt."); s.sfx.drum(); await s.wait(250); s.sfx.drum(); await T.run(); s.sfx.ding(); });
           s.step(async () => { s.say("Vater ist lang, ein t. Mutter ist kurz, zwei t."); s.sfx.pop(); await s.show(vs, "up"); });
-          s.step(async () => { for (const l of lifes) { s.show(l, "right"); s.sfx.pop(); await s.wait(220); } });
+          s.step(async () => { const fx = [["ball-kick", 1], ["sizzle", 1.3], ["glass-clink", 1]]; for (let i = 0; i < lifes.length; i++) { s.show(lifes[i], "right"); s.sound(fx[i][0], { vol: .55, dur: fx[i][1] }); await s.wait(700); } });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -367,7 +368,7 @@
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "18px", justifyContent: "center" } },
             s.h("div", { class: "cols" }, cK, cZ), s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "stretch" } }, merk, ex)));
           s.step(async () => { s.say("Zucker, Decke, backen, Brücke"); s.show(cK, "left"); s.sfx.whoosh(); await s.wait(450); await K.run(); });
-          s.step(async () => { s.say("Katze, Platz, sitzen, Mütze"); s.show(cZ, "right"); s.sfx.whoosh(); await s.wait(450); await Z.run(); });
+          s.step(async () => { s.say("Katze, Platz, sitzen, Mütze"); s.show(cZ, "right"); s.sfx.whoosh(); await s.wait(450); await Z.run(); s.sound("cat-meow", { vol: .6 }); });
           s.step(async () => { s.say("Nach l, n, r, das merke ja, steht nie tz und nie ck."); s.sfx.ding(); await s.show(merk, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(ex, "up"); });
         },
@@ -423,7 +424,7 @@
           s.show(colL, "left"); s.sfx.whoosh();
           s.step(async () => { s.say("das Laufen, beim Essen, zum Lesen"); for (const x of L) { await x.on(); await s.wait(200); } });
           s.step(async () => { s.say("etwas Schönes, viel Neues, alles Gute"); s.show(colR, "right"); s.sfx.whoosh(); await s.wait(400); for (const x of R) { await x.on(); await s.wait(200); } });
-          s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+          s.step(async () => { s.sound("splash", { vol: .45 }); await s.show(life, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
@@ -445,7 +446,7 @@
             const el = s.h("div", { class: "u5sign later", style: { background: g.bg, color: g.fg, border: g.border || "4px solid rgba(0,0,0,.25)" } },
               s.h("div", { class: "st", style: { fontFamily: g.font, fontSize: g.font.includes("hand") ? "40px" : "30px" } }, g.pre, bad, g.post), fix, why);
             let done = false;
-            const correct = async () => { if (done) return; done = true; s.sfx.scribble(); bad.classList.add("u5strike"); await s.wait(300); s.show(fix, "pop"); s.sfx.pop(); await s.wait(250); s.show(why, "fade"); };
+            const correct = async () => { if (done) return; done = true; s.sound("pencil-write", { vol: .7 }); bad.classList.add("u5strike"); await s.wait(300); s.show(fix, "pop"); s.sfx.pop(); await s.wait(250); s.show(why, "fade"); };
             el.addEventListener("click", correct);
             return { el, correct };
           });
@@ -506,11 +507,11 @@
           };
           const Q = t => s.h("span", { class: "u5qm" }, t), Z = t => s.h("span", { class: "u5pz" }, t), BS = t => s.h("span", { class: "u5bs" }, t), WR = t => s.h("span", { class: "u5wr" }, t);
           const panels = [
-            { who: "Louisa", col: "#7b4fd6", prop: "swing", bub: "Kommst du mit auf den Spielplatz?", tag: "Begleitsatz hinten",
+            { who: "Louisa", col: "#7b4fd6", prop: "swing", snd: ["playground", 3], bub: "Kommst du mit auf den Spielplatz?", tag: "Begleitsatz hinten",
               sent: [Q("„"), WR("Kommst du mit auf den Spielplatz?"), Q("“"), Z(","), " ", BS("fragt Louisa.")] },
-            { who: "Mama", col: "#138a5a", prop: "pot", bub: "Das Essen ist fertig!", tag: "Begleitsatz vorne",
+            { who: "Mama", col: "#138a5a", prop: "pot", snd: ["sizzle", 2], bub: "Das Essen ist fertig!", tag: "Begleitsatz vorne",
               sent: [BS("Mama ruft"), Z(":"), " ", Q("„"), WR("Das Essen ist fertig!"), Q("“")] },
-            { who: "Trainer", col: "#1d5bd0", prop: "ball", bub: "Heute üben wir Elfmeter.", tag: "Begleitsatz eingeschoben",
+            { who: "Trainer", col: "#1d5bd0", prop: "ball", snd: ["whistle", 1.3], bub: "Heute üben wir Elfmeter.", tag: "Begleitsatz eingeschoben",
               sent: [Q("„"), WR("Heute"), Q("“"), Z(","), " ", BS("sagt der Trainer"), Z(","), " ", Q("„"), WR("üben wir Elfmeter."), Q("“")] },
           ];
           const els = panels.map(p => {
@@ -520,11 +521,12 @@
             const c = s.h("div", { class: "card stack", style: { gap: "10px" } }, bub, s.h("div", { class: "row", style: { gap: "4px", flexWrap: "nowrap" } }, fig(p.col, p.prop)), P(s, "small pencil", p.who), sent, tag);
             return { c, bub, sent, tag, p };
           });
+          s.preload("playground"); s.preload("sizzle"); s.preload("whistle");
           s.add(s.h("div", { class: "cols3", style: { height: "100%", alignItems: "center" } }, ...els.map(e => e.c)));
           s.show(els.map(e => e.c), "up"); s.sfx.pop();
           els.forEach(e => s.step(async () => {
             s.say(e.p.bub);
-            e.bub.classList.remove("a-shake"); void e.bub.offsetWidth; e.bub.classList.add("a-shake"); s.sfx.boing(); await s.wait(450);
+            e.bub.classList.remove("a-shake"); void e.bub.offsetWidth; e.bub.classList.add("a-shake"); s.sound(e.p.snd[0], { vol: .5, dur: e.p.snd[1] }); await s.wait(450);
             s.show(e.sent, "down"); s.sfx.scribble(); await s.wait(500); s.show(e.tag, "pop"); s.sfx.ding();
           }));
         },
@@ -585,8 +587,27 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1.1fr", height: "100%", alignItems: "center" } }, left, s.h("div", { class: "stack", style: { gap: "16px" } }, page, merk)));
           s.show(left, "left"); s.sfx.whoosh();
           s.step(async () => { s.say("lief, laufen. Häuser, Haus. schöner, schön. aß, essen."); for (const x of rows) { s.show(x.ar, "left"); s.sfx.swoosh(); await s.wait(200); s.show(x.bb, "pop"); s.sfx.pop(); await s.wait(250); } });
-          s.step(async () => { s.show(page, "zoom"); s.sfx.whoosh(); await s.wait(500); bump(lw1); bump(lw2); s.sfx.ding(); });
+          s.step(async () => { s.show(page, "zoom"); s.sound("page-turn-3"); await s.wait(500); bump(lw1); bump(lw2); s.sfx.ding(); });
           s.step(async () => { const e = entries.find(x => x.hit); e.classList.add("on"); bump(e); s.sfx.success(); s.say("Gefunden. Laufen, du läufst, er lief."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 17 --------------------------------------------------------------- */
+      {
+        title: "So sieht das in echt aus",
+        say: "Wörterbücher gibt es schon lange. Die Brüder Grimm und Konrad Duden haben berühmte Wörterbücher gemacht. Schon damals gab es Leitwörter.",
+        build(s) {
+          const items = [
+            [s.photo("grimm-woerterbuch", { w: 240, h: 340, fit: "contain", style: { background: "#fff" } }), ["Brüder Grimm: ", s.h("b", null, "Deutsches Wörterbuch"), ". Begonnen 1838 – fertig erst 1961, nach 123 Jahren!"], 240],
+            [s.photo("duden-1880", { w: 240, h: 340, fit: "contain", style: { background: "#fff" } }), ["Konrad Duden, 1880: der „Urduden“ – ", s.h("b", null, "27.000 Wörter"), " auf 187 Seiten."], 240],
+            [s.photo("duden-1880-seite", { w: 540, h: 340, pos: "50% 4%", caption: "Leitwörter: beschuhen … Betretung" }), ["Eine Seite im Urduden. Oben links und rechts: die ", s.h("b", null, "Leitwörter"), ". Die Schrift heißt Fraktur."], 540],
+          ].map(([ph, txt, w]) => {
+            return s.h("div", { class: "stack later", style: { gap: "10px", width: w + "px", flex: "none" } }, ph, P(s, "small", ...txt));
+          });
+          const merk = s.h("div", { class: "merk later" }, "Heute schlägst du genauso nach: Abc, Grundform, Leitwörter – wie vor über 140 Jahren!");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "18px", justifyContent: "center" } },
+            s.h("div", { class: "row", style: { gap: "30px", flexWrap: "nowrap", alignItems: "flex-start", justifyContent: "center" } }, ...items), merk));
+          items.forEach((it, i) => s.step(async () => { s.sound("page-turn-2", { vol: .8 }); await s.show(it, "up"); }));
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sfx.fanfare(); s.confetti(590, 400, 80); });
         },
       },

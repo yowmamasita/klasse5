@@ -277,7 +277,7 @@
           };
           show(["ruby"]);
           s.step(() => show(["sarah", "tom"], T.lines.g2).then(() => s.say("Rubys Eltern heißen Sarah und Tom.")));
-          s.step(() => show(["sam", "leo", "biscuit"]).then(() => s.say("Sam und Leo sind Zwillinge – twins. Sie sind sechs.")));
+          s.step(() => { s.sound("dog-bark", { vol: 0.5, when: 0.5 }); return show(["sam", "leo", "biscuit"]).then(() => s.say("Sam und Leo sind Zwillinge – twins. Sie sind sechs.")); });
           s.step(() => show(["pat", "ken"], T.lines.g1));
           s.step(() => show(["lucy", "dev", "maya"], T.lines.g3).then(() => s.say("Lucy ist Toms Schwester. Ihre Tochter Maya ist Rubys Cousine.")));
         },
@@ -397,7 +397,7 @@
           s.show(demo, "zoom"); s.sfx.pop();
           s.step(flipQ);
           s.step(async () => { s.sfx.pop(); await s.show(qa.slice(0, 2), "up"); });
-          s.step(async () => { s.sfx.pop(); await s.show(qa.slice(2), "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(qa.slice(2), "up"); s.sound("dog-bark", { vol: 0.6 }); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(qLife, "up"); s.say("Yes, I have. No, I haven't. Ohne got!"); });
         },
       },
@@ -465,7 +465,7 @@
           aLife.classList.add("later");
           s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, demo,
             s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1fr", gap: "16px" } }, s.h("div", { class: "stack", style: { gap: "8px" } }, ...EX.slice(0, 3)), s.h("div", { class: "stack", style: { gap: "8px" } }, ...EX.slice(3), merk)), aLife));
-          s.show(v, "zoom"); s.sfx.pop();
+          s.show(v, "zoom"); s.sound("cat-meow", { vol: 0.7 });
           s.step(async () => { s.sfx.boing(); await s.show(tag, "bounce"); s.sfx.pop(); await s.show(obj, "right"); s.show(hear, "pop"); });
           s.step(async () => { s.sfx.pop(); await s.show(EX.slice(0, 2), "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(EX.slice(2), "up"); s.say("Bei den twins steht der Apostroph hinter dem s."); });
@@ -498,9 +498,9 @@
           lf.classList.add("later");
           s.add(s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "cols3", style: { gap: "14px" } }, C.map(c => c.el)), merk, lf));
           s.sfx.whoosh(); s.show(C[0].el, "up");
-          s.step(() => many(C[0]));
-          s.step(async () => { await s.show(C[1].el, "up"); await many(C[1]); s.say("Nach s, x, sh und ch hängst du es an."); });
-          s.step(async () => { await s.show(C[2].el, "up"); await many(C[2]); s.say("Aus y wird ies."); });
+          s.step(() => { s.sound("dog-bark", { vol: 0.5 }); return many(C[0]); });
+          s.step(async () => { s.sound("london-bus-street", { vol: 0.4, dur: 3 }); await s.show(C[1].el, "up"); await many(C[1]); s.say("Nach s, x, sh und ch hängst du es an."); });
+          s.step(async () => { s.sound("kids-cheer", { vol: 0.4 }); await s.show(C[2].el, "up"); await many(C[2]); s.say("Aus y wird ies."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(lf, "up"); });
         },
       },
@@ -525,8 +525,8 @@
           s.add(s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("div", { class: "cols3", style: { gap: "8px" } }, cards.map(k => k.c)), merk, iLife));
           s.sfx.whoosh(); s.show(cards.map(k => k.c), "pop");
           s.step(() => go(cards.slice(0, 3)));
-          s.step(() => go(cards.slice(3, 6)).then(() => s.say("Ein Fuß, zwei feet. Eine Maus, zwei mice.")));
-          s.step(() => go(cards.slice(6)));
+          s.step(() => { s.sound("mouse-squeak", { vol: 0.6, dur: 1.6, when: 0.7 }); return go(cards.slice(3, 6)).then(() => s.say("Ein Fuß, zwei feet. Eine Maus, zwei mice.")); });
+          s.step(() => { s.sound("sheep-baa", { vol: 0.6, when: 0.4 }); return go(cards.slice(6)); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(iLife, "up"); });
         },
       },
@@ -575,17 +575,24 @@
       /* 10 ----------------------------------------------------------- */
       {
         title: "At the pet shop",
-        say: "Willkommen im Zoogeschäft! Tippe auf die Tiere und hör dir die Namen an.",
+        say: "Willkommen im Zoogeschäft! Tippe auf die Wörter und hör dir die Namen an. Tippe auf ein Foto – manche Tiere kannst du hören!",
         build(s) {
-          const sign = s.svg(1100, 96);
-          sign.append(...Array.from({ length: 11 }, (_, i) => s.el("path", { d: `M${i * 100} 0 h100 v56 a25 25 0 0 1 -50 0 a25 25 0 0 1 -50 0 z`, fill: i % 2 ? "#ffffff" : "#0f766e", stroke: "#0f766e", "stroke-width": 2 })),
-            s.el("rect", { x: 390, y: 10, width: 320, height: 62, rx: 14, fill: "#ffd94a", stroke: "#1b2740", "stroke-width": 3 }),
-            s.el("text", { x: 550, y: 54, "text-anchor": "middle", "font-size": 36, "font-weight": 800, fill: "#1b2740", text: "PAWS PET SHOP" }));
-          const A = [["🐕", "dog", "Hund"], ["🐈", "cat", "Katze"], ["🐇", "rabbit", "Kaninchen"], ["🐹", "hamster", "Hamster"], ["🦜", "budgie", "Wellensittich"], ["🐟", "goldfish", "Goldfisch"], ["🐢", "tortoise", "Landschildkröte"], ["🐁", "mouse", "Maus"]];
-          const cards = A.map(([e, w, d]) => {
-            const em = s.h("span", { style: { fontSize: "50px", lineHeight: "1", display: "inline-block" } }, e);
-            const b = spk(s, w, { de: d, cls: "sm full", say: (/^[aeiou]/.test(w) ? "an " : "a ") + w, on: () => s.tween({ dur: 500, ease: "out", update: (v, t) => { em.style.transform = `translateY(${-28 * Math.sin(Math.PI * t)}px)`; } }) });
-            return s.h("div", { class: "card stack later", style: { alignItems: "center", gap: "8px", padding: "10px 10px" } }, em, b);
+          const o = { w: "100%", h: 122 };
+          const A = [
+            [s.photo("dog", Object.assign({ pos: "50% 35%" }, o)), "dog", "Hund", "dog-bark"],
+            [s.photo("cat", Object.assign({ pos: "35% 40%" }, o)), "cat", "Katze", "cat-meow"],
+            [s.photo("rabbit", Object.assign({ pos: "50% 45%" }, o)), "rabbit", "Kaninchen", null],
+            [s.photo("hamster", Object.assign({ pos: "45% 55%" }, o)), "hamster", "Hamster", null],
+            [s.photo("budgie", Object.assign({ pos: "50% 40%" }, o)), "budgie", "Wellensittich", "budgie-chirp"],
+            [s.photo("goldfish", Object.assign({ pos: "45% 50%" }, o)), "goldfish", "Goldfisch", "bubbles"],
+            [s.photo("tortoise", Object.assign({ pos: "50% 55%" }, o)), "tortoise", "Landschildkröte", null],
+            [s.photo("mice", Object.assign({ pos: "50% 50%" }, o)), "mouse", "Maus", "mouse-squeak"],
+          ];
+          const SND = { "dog-bark": () => s.sound("dog-bark"), "cat-meow": () => s.sound("cat-meow"), "budgie-chirp": () => s.sound("budgie-chirp", { dur: 2.5 }), bubbles: () => s.sound("bubbles"), "mouse-squeak": () => s.sound("mouse-squeak", { dur: 1.6 }) };
+          const cards = A.map(([ph, w, d, snd]) => {
+            if (snd) { ph.style.cursor = "pointer"; ph.addEventListener("click", () => { SND[snd](); bump(s, ph, 0.04); }); }
+            const b = spk(s, w, { de: d, cls: "sm full", say: (/^[aeiou]/.test(w) ? "an " : "a ") + w, on: () => bump(s, ph, 0.05) });
+            return s.h("div", { class: "card stack later", style: { gap: "8px", padding: "8px 8px 10px" } }, ph, b);
           });
           const psMerk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "tortoise"), " = Landschildkröte, ", s.h("b", null, "turtle"), " = Wasserschildkröte.  ", s.h("b", null, "a"), " rabbit, aber ", s.h("b", null, "an"), " animal!");
           const dlg = [
@@ -593,12 +600,11 @@
             ["Julia", "Yes, please. Have you got a rabbit?", ""],
             ["Shop assistant", "Yes, we have. Here it is!", "r"],
           ].map(([who, t, side]) => spk(s, t, { who, cls: "bub sm later " + side }));
-          s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, sign,
+          s.add(s.h("div", { class: "stack", style: { gap: "12px" } },
             s.h("div", { class: "cols4", style: { gap: "12px" } }, cards),
             s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap", alignItems: "flex-end" } }, ...dlg), psMerk));
-          s.show(sign, "down"); s.sfx.whoosh();
-          s.step(async () => { cards.slice(0, 4).forEach((_, i) => setTimeout(() => s.alive && s.sfx.count(i), i * 110)); await s.show(cards.slice(0, 4), "pop"); });
-          s.step(async () => { cards.slice(4).forEach((_, i) => setTimeout(() => s.alive && s.sfx.count(i + 4), i * 110)); await s.show(cards.slice(4), "pop"); });
+          s.show(cards.slice(0, 4), "pop"); s.sound("dog-bark", { vol: 0.6 });
+          s.step(async () => { s.sound("budgie-chirp", { vol: 0.5, dur: 2.5 }); await s.show(cards.slice(4), "pop"); });
           s.step(async () => { for (const d of dlg) { s.sfx.pop(); await s.show(d, "up"); } s.say("Julia fragt mit have got: Have you got a rabbit?"); });
           s.step(async () => { s.sfx.ding(); await s.show(psMerk, "up"); });
         },
@@ -623,10 +629,11 @@
             ["Play with him.", "Spiel mit ihm.", ball],
             ["Don't give him chocolate!", "Keine Schokolade – die ist giftig für Hunde!", null],
           ];
-          const items = L.map(([t, d, g]) => {
+          const SN = [null, "water-pour", "dog-bark", "ball-kick", null];
+          const items = L.map(([t, d, g], i) => {
             const box = s.h("span", { class: "e2chk" });
             const b = spk(s, t, { de: d, cls: "sm" }); b.style.flex = "1";
-            return { el: s.h("div", { class: "row later", style: { gap: "10px", flexWrap: "nowrap" } }, box, b), box, g };
+            return { el: s.h("div", { class: "row later", style: { gap: "10px", flexWrap: "nowrap" } }, box, b), box, g, snd: SN[i] };
           });
           const tick = box => { const v = s.svg(26, 26); const p = s.el("path", { d: "M4 14 L11 21 L23 5", stroke: "#138a5a", "stroke-width": 4, fill: "none", "stroke-linecap": "round" }); v.append(p); box.append(v); return s.show(p, "draw"); };
           const fact = life(s, "In real life", s.h("p", { class: "small" }, "In Großbritannien braucht jeder Hund mit 8 Wochen einen Mikrochip. Draußen trägt er ein Halsband mit Namen und Adresse des Besitzers."));
@@ -635,8 +642,8 @@
           s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "360px 1fr", gap: "24px", height: "100%" } },
             s.h("div", { class: "stack", style: { gap: "12px" } }, svg, merk),
             s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("p", { class: "h2" }, "Ruby's list for Biscuit"), ...items.map(i => i.el), fact)));
-          s.show(svg, "zoom"); s.sfx.boing();
-          const doItem = async it => { s.sfx.pop(); await s.show(it.el, "right"); if (it.g) s.show(it.g, it.g === lead ? "draw" : "pop"); s.sfx.snap(); await tick(it.box); };
+          s.show(svg, "zoom"); s.sound("dog-bark", { vol: 0.5 });
+          const doItem = async it => { if (it.snd) s.sound(it.snd, { vol: 0.6, dur: 2 }); else s.sfx.pop(); await s.show(it.el, "right"); if (it.g) s.show(it.g, it.g === lead ? "draw" : "pop"); s.sfx.snap(); await tick(it.box); };
           s.step(async () => { await doItem(items[0]); await doItem(items[1]); });
           s.step(async () => { await doItem(items[2]); await doItem(items[3]); });
           s.step(async () => { s.sfx.error(); await doItem(items[4]); s.say("Schokolade ist für Hunde giftig."); });
@@ -732,9 +739,9 @@
           }
           s.loop(t => { flames.forEach((f, i) => { if (f.style.opacity !== "0") f.style.transform = `scaleX(${1 + 0.12 * Math.sin(t * 9 + i)})`; }); });
           const blow = s.h("button", { class: "btn solid" }, "💨 Blow out the candles!");
-          blow.addEventListener("click", async () => { s.sfx.whoosh(); for (const f of flames) { f.style.opacity = "0"; await s.wait(40); } s.sfx.success(); s.confetti(300, 300, 80); });
+          blow.addEventListener("click", async () => { s.sfx.whoosh(); for (const f of flames) { f.style.opacity = "0"; await s.wait(40); } s.sound("kids-cheer", { vol: 0.6, force: true }); s.confetti(300, 300, 80); });
           const relight = s.h("button", { class: "btn" }, "🕯️ Neu anzünden");
-          relight.addEventListener("click", () => { flames.forEach(f => (f.style.opacity = "")); s.sfx.zap(); });
+          relight.addEventListener("click", () => { flames.forEach(f => (f.style.opacity = "")); s.sound("match-strike", { force: true }); });
           const LY = ["Happy birthday to you,", "Happy birthday to you,", "Happy birthday, dear Lukas,", "Happy birthday to you!"];
           const lyr = LY.map(l => s.h("p", { class: "e2lyr", style: { margin: 0 } }, l));
           const MEL = [[[-5, .3], [-5, .15], [-3, .45], [-5, .45], [0, .45], [-1, .9]], [[-5, .3], [-5, .15], [-3, .45], [-5, .45], [2, .45], [0, .9]], [[-5, .3], [-5, .15], [7, .45], [4, .45], [0, .45], [-1, .45], [-3, .9]], [[5, .3], [5, .15], [4, .45], [0, .45], [2, .45], [0, .9]]];
@@ -758,7 +765,7 @@
           s.show(svg, "bounce"); s.sfx.boing();
           s.step(async () => { s.sfx.pop(); await s.show(PH, "right"); });
           s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(lyrBox, "up"); s.say("Das Lied Happy Birthday to You kennt fast jeder auf der Welt."); });
-          s.step(async () => { s.sfx.ding(); await s.show(facts, "up"); });
+          s.step(async () => { s.sound("applause", { vol: 0.45, dur: 3 }); await s.show(facts, "up"); });
         },
       },
       /* 15 ----------------------------------------------------------- */
@@ -805,9 +812,9 @@
           order.forEach(([k, l]) => { tabs[k] = s.h("button", { class: "e2tab" }, l); tabs[k].addEventListener("click", () => showTab(k)); });
           Object.values(panels).forEach(p => area.append(p));
           s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, s.h("div", { class: "e2tabs" }, order.map(([k]) => tabs[k])), area));
-          showTab("photo", false); s.show(panels.photo, "up"); s.sfx.pop();
+          showTab("photo", false); s.show(panels.photo, "up"); s.sound("camera-shutter", { vol: 0.6 });
           s.step(async () => { await showTab("sb"); });
-          s.step(async () => { await showTab("note"); s.sfx.fanfare(); s.confetti(700, 300, 60); });
+          s.step(async () => { await showTab("note"); s.sound("dog-bark", { vol: 0.6 }); s.confetti(700, 300, 60); });
         },
       },
     ],

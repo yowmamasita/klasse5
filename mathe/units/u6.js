@@ -80,13 +80,13 @@
           const merk = s.h("div", { class: "merk later" }, "Das Komma trennt die ", s.h("b", null, "Ganzen"), " von den ", s.h("b", null, "Teilen"), " eines Ganzen.");
           const right = s.h("div", { class: "stack" }, s.h("p", { class: "h2" }, "Was bedeutet das Komma?"), r1, r2, merk);
 
-          const mk = (lab, emo, val, dec, suf, desc) => {
+          const mk = (lab, emo, val, dec, suf, desc, snd) => {
             const v = s.h("span", { class: "big mono" }, s.fmt(0, dec) + suf);
             const c = exbox(s, lab, [s.h("div", { class: "row", style: { gap: "12px" } }, s.h("span", { style: { fontSize: "40px" } }, emo), v), s.h("p", { class: "small" }, desc)], "ex later");
-            return { c, run: async () => { s.sfx.whoosh(); s.show(c, "up"); await countTo(s, v, 0, val, dec, suf, 1100); s.sfx.ding(); } };
+            return { c, run: async () => { if (snd) s.sound(snd, { vol: .6, dur: 1.2 }); else s.sfx.whoosh(); s.show(c, "up"); await countTo(s, v, 0, val, dec, suf, 1100); s.sfx.ding(); } };
           };
           const cards = [
-            mk("Sport", "⏱️", 9.58, 2, " s", "Weltrekord über 100 m: Usain Bolt, Berlin 2009."),
+            mk("Sport", "⏱️", 9.58, 2, " s", "Weltrekord über 100 m: Usain Bolt, Berlin 2009.", "stopwatch"),
             mk("Körper", "📏", 1.42, 2, " m", "So groß ist ein Kind: 1 Meter und 42 Zentimeter."),
             mk("Wetter", "🌡️", 21.5, 1, " °C", "Im Klassenzimmer: 21 Grad und noch ein halbes."),
           ];
@@ -96,13 +96,33 @@
           s.show(svg, "zoom"); s.sfx.pop();
 
           s.step(async () => {
-            s.sfx.snap(); await s.show(ring, "draw");
+            s.sound("cash-register", { vol: .5 }); await s.show(ring, "draw");
             s.sfx.whoosh(); s.show([a1, a2], "draw"); await s.wait(500);
             s.sfx.pop(); s.show([l1, l2], "pop"); s.show(r1, "left", 200); await s.show(r2, "left", 500);
             s.say("Links vom Komma stehen die ganzen Euro, rechts die Cent.");
           });
           cards.forEach(c => s.step(c.run));
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+        },
+      },
+      /* 1b ----------------------------------------------------------------- */
+      {
+        title: "Kommazahlen in echt",
+        say: "Im Stadion, auf dem Markt und beim Fiebermessen: Überall stehen Zahlen mit Komma.",
+        build(s) {
+          const ph = (caption, pos = "50% 50%") => ({ w: 340, h: 420, pos, caption, cls: "later" });
+          const figs = [
+            s.photo("bolt-peking", ph("Usain Bolt, Olympia Peking 2008: 100\u00a0m in 9,69\u00a0s", "50% 30%")),
+            s.photo("preis-pflaumen", ph("Wochenmarkt: Pflaumen für 2,50\u00a0€ das Kilo", "42% 50%")),
+            s.photo("fieberthermometer", ph("Fieberthermometer: 38,0 °C", "50% 50%")),
+          ];
+          const mk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Links vom Komma stehen die ", s.h("b", null, "Ganzen"), ", rechts die ", s.h("b", null, "Teile"), ": Hundertstelsekunden, Cent, Zehntelgrad.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "20px" } },
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "40px", justifyContent: "center" } }, figs), mk));
+          s.step(async () => { s.sound("stopwatch", { vol: .6, dur: 1.5 }); await s.show(figs[0], "zoom"); s.say("Usain Bolt lief 2008 in Peking 9 Komma 69 Sekunden."); });
+          s.step(async () => { s.sound("coins", { vol: .7 }); await s.show(figs[1], "zoom"); s.say("2 Euro 50 für ein Kilo Pflaumen."); });
+          s.step(async () => { s.sfx.note(12, 0.15, "square"); await s.show(figs[2], "zoom"); s.say("38 Komma 0 Grad: Das ist Fieber."); });
+          s.step(async () => { s.sfx.ding(); await s.show(mk, "up"); });
         },
       },
       /* 2 ------------------------------------------------------------------ */
@@ -239,7 +259,7 @@
           });
           s.step(async () => {
             s.say("Jetzt hundert Kästchen. Ein Kästchen ist ein Hundertstel, null Komma null eins.");
-            s.sfx.scribble(); s.show(hlines, "draw"); await s.wait(700);
+            s.sound("pencil-write"); s.show(hlines, "draw"); await s.wait(700);
             s.sfx.pop(); s.show(cell, "pop"); relabel("100 Hundertstel = 1 Ganzes"); await s.show(c2, "left");
           });
           s.step(async () => {
@@ -358,7 +378,7 @@
             s.say("Der Bleistift ist 7 Komma 4 Zentimeter lang.");
             s.show(obj, "fade"); s.show(big, "pop"); await glide(ITEMS[0]);
           });
-          s.step(async () => { s.say("Das sind 7 Zentimeter und 4 Millimeter."); s.sfx.scribble(); s.show(hl, "fade"); await s.show(sub, "up"); });
+          s.step(async () => { s.say("Das sind 7 Zentimeter und 4 Millimeter."); s.sound("pencil-write"); s.show(hl, "fade"); await s.show(sub, "up"); });
           s.step(async () => { s.sfx.pop(); s.show(btns, "up"); await s.show(hint, "fade", 200); });
           s.step(async () => { s.sfx.ding(); s.show(merk, "up"); await s.show(lifeL, "up", 200); });
         },
@@ -512,7 +532,7 @@
           s.step(async () => {
             s.say("Minus 25 Prozent: Ein Viertel vom Preis fällt weg.");
             s.sfx.pop(); await s.show(c2, "up"); s.show(starG, "pop"); s.sfx.boing(); await s.wait(400);
-            s.sfx.scribble(); await s.show(strike, "draw"); s.sfx.coin(); await s.show(neu, "pop");
+            s.sfx.scribble(); await s.show(strike, "draw"); s.sound("cash-register", { vol: .6 }); await s.show(neu, "pop");
           });
           s.step(async () => {
             s.say("70 Prozent Kakao: 7 von 10 Stücken sind Kakao.");
@@ -576,7 +596,7 @@
             s.sfx.whoosh(); await s.show(csWrap, "fade"); s.sfx.pop(); await s.show(zero, "pop");
             s.sfx.snap(); s.show(zHl, "fade"); s.show([gt, gtl], "pop", 200); await s.wait(400); s.sfx.ding(); await s.show(res, "pop");
           });
-          s.step(async () => { s.sfx.coin(); s.show(life, "up"); await s.show(merk, "up", 200); });
+          s.step(async () => { s.sound("coins", { vol: .7 }); s.show(life, "up"); await s.show(merk, "up", 200); });
         },
       },
       /* 10 ----------------------------------------------------------------- */
@@ -614,11 +634,11 @@
           const race = () => new Promise(res => {
             if (s.fast) { draw(99); clock.textContent = "9,84 s"; return res(); }
             if (running) return res();
-            running = true; done.fill(false); s.sfx.drum();
+            running = true; done.fill(false); s.sound("startschuss", { vol: .6 });
             s.loop(t => {
               draw(t); clock.textContent = s.fmt(Math.min(t, 9.84), 2) + " s";
               RUN.forEach((r, i) => { if (!done[i] && t >= r.t) { done[i] = true; s.sfx.count(7 - i * 2); } });
-              if (t > 10.1) { running = false; s.sfx.fanfare(); res(); return false; }
+              if (t > 10.1) { running = false; s.sound("crowd-cheer", { vol: .55, dur: 3 }); res(); return false; }
             });
           });
           const startBtn = s.h("button", { class: "btn solid later", onclick: () => { s.sfx.click(); race(); } }, "Startschuss! 🏁");
@@ -638,7 +658,7 @@
           s.step(async () => { s.say("Beim Sportfest: Lena 8 Komma 4, Tim 8 Komma 0 4, Ali 8 Komma 45 Sekunden."); s.sfx.pop(); await s.show(sport, "up"); });
           s.step(async () => {
             s.say("Mit Nullen auffüllen, dann vergleichen. Tim ist am schnellsten.");
-            s.sfx.scribble(); await s.show(sp2, "left"); s.sfx.ding(); await s.show(sp3, "left"); s.show(sport.lastChild, "fade"); s.confetti(840, 600, 60); await s.show(merkR, "up", 300);
+            s.sound("pencil-write"); await s.show(sp2, "left"); s.sfx.ding(); await s.show(sp3, "left"); s.show(sport.lastChild, "fade"); s.confetti(840, 600, 60); await s.show(merkR, "up", 300);
           });
         },
       },
@@ -742,7 +762,7 @@
           const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Komma unter Komma! Dann stehen Einer unter Einern, Zehntel unter Zehnteln.");
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "420px 1fr", gap: "36px", alignItems: "center", height: "100%" } },
             svg, s.h("div", { class: "stack", style: { gap: "14px" } }, intro, warn, ...rules, merk)));
-          s.show(svg, "fade"); s.sfx.scribble();
+          s.show(svg, "fade"); s.sound("pencil-write");
 
           s.step(async () => { s.say("Die Zahlen sind rechtsbündig geschrieben. Die Kommas stehen nicht untereinander!"); s.sfx.error(); s.show([bad1, bad2], "draw"); await s.show(warn, "left"); });
           s.step(async () => {
@@ -759,7 +779,7 @@
               if (i === 1) { s.sfx.pop(); s.show(carry, "pop"); await s.wait(250); }
               s.sfx.count(j * 2); await s.show(res[i], i === 2 ? "down" : "pop"); await s.wait(150);
             }
-            s.sfx.coin(); s.show(euro, "pop"); await s.show(rules[2], "left");
+            s.sound("cash-register", { vol: .6 }); s.show(euro, "pop"); await s.show(rules[2], "left");
           });
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
         },
@@ -791,16 +811,16 @@
           const ex2 = exbox(s, "Wachsen", [s.h("p", { class: "t mono" }, "1,42 m − 1,36 m = ", s.h("b", null, "0,06 m")), s.h("p", { class: "small" }, "In einem Jahr 6 cm gewachsen!")], "ex later", { padding: "10px 18px" });
           s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "380px 1fr", gap: "40px", alignItems: "center", height: "100%" } },
             svg, s.h("div", { class: "stack", style: { gap: "14px" } }, intro, tip, ex1, ex2)));
-          s.show(svg, "fade"); s.sfx.scribble();
+          s.show(svg, "fade"); s.sound("pencil-write");
 
           s.step(async () => { s.say("5 Euro schreiben wir als 5 Komma 00. Dann steht Komma unter Komma."); for (const t of add) { s.sfx.pop(); await s.show(t, "pop"); } await s.show(tip, "left"); });
           s.step(async () => {
             s.say("Jetzt rechnen wie gewohnt, von rechts nach links, mit Übertrag.");
             const seq = [[3, c1], [2, null], [1, null], [0, c2]];
             for (const [j, [i, cc]] of seq.entries()) { s.sfx.count(j * 2); await s.show(res[i], i === 1 ? "down" : "pop"); if (cc) { s.sfx.tick(); await s.show(cc, "pop"); } }
-            s.sfx.coin(); await s.show(euro, "pop");
+            s.sound("coins", { vol: .7 }); await s.show(euro, "pop");
           });
-          s.step(async () => { s.say("Auf der Fahrradtour: noch 5 Komma 7 Kilometer."); s.sfx.whoosh(); await s.show(ex1, "up"); });
+          s.step(async () => { s.say("Auf der Fahrradtour: noch 5 Komma 7 Kilometer."); s.sound("bike-bell", { vol: .6 }); await s.show(ex1, "up"); });
           s.step(async () => { s.say("Du bist 6 Zentimeter gewachsen!"); s.sfx.boing(); await s.show(ex2, "up"); });
         },
       },
@@ -834,10 +854,10 @@
             svg, s.h("div", { class: "stack", style: { gap: "14px" } }, e1, e2, e3, life)));
           s.show(svg, "down"); s.sfx.whoosh();
 
-          s.step(async () => { s.say("Die Kasse druckt: Milch, Brot, Äpfel, Bananen, Schokolade."); for (const [i, g] of lines.entries()) { s.sfx.tick(); s.sfx.note(i * 2, 0.08, "square"); await s.show(g, "down"); } });
+          s.step(async () => { s.say("Die Kasse druckt: Milch, Brot, Äpfel, Bananen, Schokolade."); s.sound("bon-drucker", { vol: .6 }); for (const g of lines) { await s.show(g, "down"); await s.wait(180); } });
           s.step(async () => { s.say("Erst überschlagen: ungefähr 9 Euro 50."); s.sfx.pop(); await s.show(e1, "left"); });
-          s.step(async () => { s.say("Genau: 9 Euro 51."); s.sfx.snap(); s.show(band, "fade"); s.sfx.coin(); s.show(sumG, "down"); await s.show(e2, "left"); });
-          s.step(async () => { s.say("Du gibst 10 Euro. Rückgeld: 49 Cent."); s.sfx.coin(); s.show(payG, "down"); s.show(bye, "pop", 300); await s.show(e3, "left"); });
+          s.step(async () => { s.say("Genau: 9 Euro 51."); s.show(band, "fade"); s.sound("cash-register", { vol: .6 }); s.show(sumG, "down"); await s.show(e2, "left"); });
+          s.step(async () => { s.say("Du gibst 10 Euro. Rückgeld: 49 Cent."); s.sound("coins", { vol: .7 }); s.show(payG, "down"); s.show(bye, "pop", 300); await s.show(e3, "left"); });
           s.step(async () => { s.sfx.success(); await s.show(life, "up"); });
         },
       },
@@ -902,7 +922,8 @@
             [card("Getränk", s6, "1,5 l", "Eine große Flasche: 1 Liter und ein halber."), async () => { await s.tween({ from: 0, to: 1, dur: 1200, ease: "out", update: u => { const hgt = 92 * u; water.setAttribute("y", 108 - hgt); water.setAttribute("height", hgt); } }); }],
           ];
           s.add(s.h("div", { class: "cols3", style: { height: "100%", alignContent: "center", gap: "22px 22px" } }, cards.map(c => c[0])));
-          const reveal = async (k) => { const [c, anim] = cards[k]; s.sfx.pop(); s.show(c, "up"); await s.wait(200); s.sfx.whoosh(); await anim(); s.sfx.ding(); };
+          const SND = [null, () => s.sound("splash", { vol: .5 }), () => s.sound("bike-bell", { vol: .6 }), () => s.sound("ubahn-train", { vol: .45, dur: 3 }), null, () => s.sound("water-pour", { vol: .55, dur: 1.4 })];
+          const reveal = async (k) => { const [c, anim] = cards[k]; s.sfx.pop(); s.show(c, "up"); await s.wait(200); if (SND[k]) SND[k](); else s.sfx.whoosh(); await anim(); s.sfx.ding(); };
           reveal(0);
           [1, 2, 3, 4, 5].forEach(k => s.step(() => reveal(k)));
         },
