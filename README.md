@@ -18,7 +18,9 @@ python3 serve.py          # http://localhost:8790/
 python3 serve.py 8790 0.0.0.0
 ```
 
-Any static file server works; `serve.py` only adds a no-cache header and a bigger connection queue.
+`serve.py` adds a no-cache header, a bigger connection queue, and stamps every page's local `.js`/`.css`
+URLs with `?v=<git commit>` so a browser never mixes a new page with an old cached engine (restart it after
+`git pull`). Other static servers work for development.
 On the iPad: open the address in Safari, then *Teilen → Zum Home-Bildschirm* for a full-screen app.
 
 ## Deploy (home server)
