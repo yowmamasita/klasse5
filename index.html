@@ -56,6 +56,19 @@ li b { flex: none; width: 20px; height: 20px; border-radius: 6px; background: co
 .bar i { display: block; height: 100%; width: 0; background: var(--c); border-radius: 4px; }
 .hint { font-size: 16px; color: var(--pencil); margin: 0; max-width: 70ch; line-height: 1.45; }
 @media (prefers-reduced-motion: reduce) { .subj { transition: none; } }
+.grid .hint { align-self: center; padding: 0 6px; }
+/* Landscape tablet/desktop: the whole page is laid out at 1180 px and scaled to fit the screen (no scrolling). */
+html.fit, html.fit body { height: 100%; overflow: hidden; }
+html.fit main { position: fixed; left: 0; top: 0; width: 1180px; max-width: none; margin: 0; padding: 26px 28px 24px 52px; gap: 18px; transform-origin: 0 0; }
+html.fit header { display: flex; align-items: baseline; gap: 26px; }
+html.fit header h1 { font-size: 64px; }
+html.fit header p { font-size: 32px; margin: 0; }
+html.fit .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+html.fit .subj { padding: 16px 16px 14px; gap: 6px; }
+html.fit .name { font-size: 32px; }
+html.fit .blurb { font-size: 15px; }
+html.fit ol { gap: 4px; }
+html.fit li { font-size: 14.5px; }
 </style>
 </head>
 <body>
@@ -101,8 +114,8 @@ li b { flex: none; width: 20px; height: 20px; border-radius: 6px; background: co
   <ol><li><b>1</b>Farben mischen</li><li><b>2</b>Farbkontraste und Farbwirkung</li><li><b>3</b>Zeichnen: Punkt, Linie, Fläche</li><li><b>4</b>Raum und Perspektive</li><li><b>5</b>Drucken</li><li><b>6</b>Collage, Komposition und Bauen</li><li><b>7</b>Kunst im alten Ägypten</li><li><b>8</b>Bilder betrachten und Kunst entdecken</li><li><b>9</b>Inszenieren: Standbild, Maske, Foto und Film</li></ol>
   <span class="bar"><i></i></span>
 </a>
-</nav>
 <p class="hint">Tippe auf ein Fach. In jeder Präsentation zeigt „Weiter“ den nächsten Schritt, Wischen geht auch. Am besten das iPad quer halten. Tipp: Über „Teilen → Zum Home-Bildschirm“ wird daraus eine App ohne Browserleiste.</p>
+</nav>
 </main>
 <script>
 document.querySelectorAll(".subj").forEach(a => {
@@ -113,6 +126,28 @@ document.querySelectorAll(".subj").forEach(a => {
   a.querySelector(".prog").textContent = started ? started + "/" + total + " begonnen" : "";
   a.querySelector(".bar i").style.width = (started / total * 100) + "%";
 });
+/* fit the page to a landscape screen instead of scrolling */
+(() => {
+  const root = document.documentElement, main = document.querySelector("main"), W = 1180;
+  const fit = () => {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const on = vw >= 900 && vw > vh;
+    root.classList.toggle("fit", on);
+    if (!on) { main.style.transform = ""; main.style.width = ""; return; }
+    main.style.transform = "none";
+    /* largest scale at which the page, laid out across the full screen width, still fits the height */
+    let s = Math.min(1.15, vw / W), w, h;
+    for (; s > 0.5; s -= 0.01) {
+      w = vw / s; main.style.width = w + "px"; h = main.scrollHeight;
+      if (h * s <= vh) break;
+    }
+    main.style.transform = `translate(0px, ${Math.max(0, (vh - h * s) / 2)}px) scale(${s})`;
+  };
+  fit();
+  window.addEventListener("resize", fit);
+  window.addEventListener("orientationchange", () => setTimeout(fit, 200));
+  if (document.fonts) document.fonts.ready.then(fit);
+})();
 </script>
 </body>
 </html>
