@@ -1,0 +1,708 @@
+/* Kapitel 2 – Satzglieder und Sätze. Jede Satzglied-Art hat im ganzen Kapitel genau eine Farbe. */
+(() => {
+  "use strict";
+  const CSS = `
+.d2b{display:inline-flex;align-items:center;gap:.28em;padding:5px 13px;border-radius:12px;border:3px solid #a3adbb;background:#fff;font:700 27px/1.15 var(--f-display);color:var(--ink);white-space:nowrap}
+.d2b.l{font-size:36px;padding:7px 18px;border-radius:16px}
+.d2b.s{font-size:22px;padding:3px 10px;border-width:2px;border-radius:10px}
+.d2tok{display:inline-flex;flex-direction:column;align-items:center;gap:4px;position:relative}
+.d2lab{font:700 19px/1 var(--f-display);white-space:nowrap}
+.d2num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 19px/1 var(--f-display);color:#fff;background:#8a96a8}
+.d2row{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;position:relative}
+.d2p{font:700 30px/1.15 var(--f-display);margin-left:-6px;position:relative;z-index:1;align-self:flex-end;padding-bottom:6px}
+.d2q{font:700 30px/1.1 var(--f-hand);color:var(--red)}
+.d2att{text-decoration:underline dotted #5d6678 3px;text-underline-offset:6px}
+.d2loose .d2b{border-color:transparent!important;background:transparent!important;padding:0;gap:10px}
+.d2loose .d2b > span{border:2px solid #a3adbb;background:#fff;border-radius:10px;padding:3px 10px}
+.d2tag{display:inline-block;font:700 19px/1 var(--f-display);color:#fff;border-radius:999px;padding:6px 12px;white-space:nowrap}
+.d2bar{position:absolute;height:14px;border:4px solid;border-top:0;border-radius:0 0 10px 10px;transform-origin:left center}
+.d2car{position:relative;display:inline-flex;align-items:center;gap:.28em;padding:12px 20px;border-radius:12px;font:700 25px/1.2 var(--f-display);white-space:nowrap;margin-bottom:18px}
+.d2car::after{content:"";position:absolute;left:12px;right:12px;bottom:-15px;height:18px;background:radial-gradient(circle at 9px 9px,#1b2740 7px,#8a96a8 8px,transparent 9px) left / 46px 18px space no-repeat}
+.d2lok{background:#0f766e;color:#fff;border-radius:12px 26px 12px 12px}
+.d2lok::before{content:"";position:absolute;left:18px;top:-14px;width:16px;height:14px;background:#0b5c56;border-radius:3px 3px 0 0}
+.d2wag{background:#fde7c7;color:var(--ink);border:3px solid #b45309}
+.d2cpl{display:inline-flex;align-items:center;margin-bottom:18px}
+.d2cpl::before,.d2cpl::after{content:"";width:12px;height:4px;background:#1b2740}
+.d2opt{min-height:56px;border-radius:12px;border:3px solid;font:700 20px/1.1 var(--f-display);color:var(--ink);cursor:pointer;padding:4px 8px;width:100%}
+`;
+  if (!document.getElementById("d2css")) { const st = document.createElement("style"); st.id = "d2css"; st.textContent = CSS; document.head.appendChild(st); }
+
+  /* ---------- eine Farbe pro Satzglied ---------- */
+  const SG = {
+    S: { name: "Subjekt", q: "Wer oder was?", c: "#1d5bd0", b: "#e3ecfc" },
+    P: { name: "Prädikat", q: "Was tut …?", c: "#dc3b2a", b: "#fde4e1" },
+    AO: { name: "Akkusativobjekt", q: "Wen oder was?", c: "#138a5a", b: "#dcf2e7" },
+    DO: { name: "Dativobjekt", q: "Wem?", c: "#7b4fd6", b: "#ece5fb" },
+    Z: { name: "Adverbiale der Zeit", q: "Wann?", c: "#d9650b", b: "#fdecd9" },
+    O: { name: "Adverbiale des Ortes", q: "Wo? Wohin?", c: "#0e7c8c", b: "#d9f1f4" },
+    AW: { name: "Adverbiale der Art und Weise", q: "Wie?", c: "#c0267a", b: "#fbe1ee" },
+    G: { name: "Adverbiale des Grundes", q: "Warum?", c: "#8a5a2b", b: "#f2e8dc" },
+    x: { name: "", q: "", c: "#a3adbb", b: "#ffffff" },
+  };
+  const KONJ = { c: "#5d6678", b: "#eef0f3" };
+  const short = { S: "Subjekt", P: "Prädikat", AO: "Akk.-Objekt", DO: "Dativobjekt", Z: "Zeit", O: "Ort", AW: "Art und Weise", G: "Grund" };
+
+  /* ---------- Bewegungs-Helfer ---------- */
+  const SC = () => { const st = document.getElementById("stage"); return st ? st.getBoundingClientRect().width / 1180 || 1 : 1; };
+  const noAnim = el => { [...el.classList].forEach(c => { if (/^a-/.test(c)) el.classList.remove(c); }); };
+  function bump(s, el, k = 0.18) {
+    noAnim(el);
+    return s.tween({ dur: 420, ease: "out", update: (v, t) => { el.style.transform = `scale(${1 + k * Math.sin(Math.PI * t)})`; } }).then(() => { el.style.transform = ""; });
+  }
+  async function flipText(s, el, txt) {
+    if (s.fast || !s.alive) { el.textContent = txt; return; }
+    noAnim(el);
+    await s.tween({ dur: 150, ease: "in", update: v => { el.style.transform = `scaleY(${1 - v})`; } });
+    el.textContent = txt;
+    await s.tween({ dur: 240, ease: "back", update: v => { el.style.transform = `scaleY(${v})`; } });
+    el.style.transform = "";
+  }
+  async function type(s, el, txt, ms = 26) {
+    if (s.fast) { el.textContent = txt; return; }
+    el.textContent = "";
+    for (let i = 1; i <= txt.length; i++) { if (!s.alive) return; el.textContent = txt.slice(0, i); if (i % 3 === 0) s.sfx.tick(); await s.wait(ms); }
+  }
+  /** rearrange tokens of a row: state = [id | [id, newFirstWord]]; tokens not listed disappear, new ones pop in */
+  async function morph(s, row, toks, state, { arc = 40, dur = 700 } = {}) {
+    const sc = SC();
+    const idOf = new Map(Object.entries(toks).map(([k, v]) => [v, k]));
+    const ids = state.map(x => (Array.isArray(x) ? x[0] : x));
+    const vis = e => e.style.display !== "none" && !e.classList.contains("later");
+    const first = new Map();
+    Object.values(toks).forEach(e => { noAnim(e); if (vis(e)) first.set(e, e.getBoundingClientRect()); });
+    const leaving = [...first.keys()].filter(e => !ids.includes(idOf.get(e)));
+    if (leaving.length && !s.fast) await s.tween({ dur: 220, update: v => leaving.forEach(e => { e.style.opacity = 1 - v; e.style.transform = `scale(${1 - 0.5 * v})`; }) });
+    leaving.forEach(e => { e.style.display = "none"; e.style.opacity = ""; e.style.transform = ""; });
+    const moving = [];
+    state.forEach(x => {
+      const [id, txt] = Array.isArray(x) ? x : [x];
+      const e = toks[id];
+      e.style.display = ""; e.classList.remove("later");
+      const tx = e.querySelector(".tx") || e;
+      if (txt != null) tx.textContent = txt;
+      row.appendChild(e); moving.push(e);
+    });
+    if (s.fast || !s.alive) return;
+    const data = moving.map(e => {
+      const l = e.getBoundingClientRect(), f = first.get(e);
+      return f ? { e, dx: (f.left - l.left) / sc, dy: (f.top - l.top) / sc } : { e, isNew: true };
+    });
+    data.forEach(d => { d.e.style.position = "relative"; d.e.style.zIndex = 3; if (d.isNew) { d.e.style.opacity = 0; d.e.style.transform = "scale(.3)"; } else d.e.style.transform = `translate(${d.dx}px,${d.dy}px)`; });
+    await s.tween({ dur, ease: "inOut", update: (v, t) => data.forEach(d => {
+      if (d.isNew) { const p = Math.max(0, (t - 0.4) / 0.6); d.e.style.opacity = Math.min(1, p * 2); d.e.style.transform = `scale(${0.3 + 0.7 * s.ease.back(p)})`; return; }
+      const mv = Math.abs(d.dx) + Math.abs(d.dy) > 4;
+      const lift = mv ? (d.dx < 0 ? -1 : 1) * arc * Math.sin(Math.PI * t) : 0;
+      d.e.style.transform = `translate(${d.dx * (1 - v)}px,${d.dy * (1 - v) + lift}px)`;
+    }) });
+    data.forEach(d => { d.e.style.transform = ""; d.e.style.opacity = ""; d.e.style.zIndex = ""; });
+  }
+  const phrase = t => [...t.chip.children].map(c => c.textContent).join(" ");
+  const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
+  const ex = (s, label, ...kids) => s.h("div", { class: "ex" }, s.h("span", { class: "exlabel" }, label), ...kids);
+  const life = (s, label, ...kids) => s.h("div", { class: "life" }, s.h("span", { class: "exlabel" }, label), ...kids);
+  const P = (s, t) => s.h("span", { class: "d2p" }, t);
+
+  /** Satzglied-Baustein. text: "am Samstag" or [["der"],["kleine","att"],["Bruder"]] */
+  function blk(s, k, text, { label, num, size } = {}) {
+    const words = Array.isArray(text) ? text : text.split(" ").map(w => [w]);
+    const chipEl = s.h("span", { class: "d2b" + (size ? " " + size : "") }, words.map(([w, a], i) => s.h("span", { class: (i === 0 ? "tx" : "") + (a ? " d2att" : "") }, w)));
+    const kids = [];
+    let numEl = null, labEl = null;
+    if (num) { numEl = s.h("span", { class: "d2num" }, ""); kids.push(numEl); }
+    kids.push(chipEl);
+    if (label != null) { labEl = s.h("span", { class: "d2lab" }, label); kids.push(labEl); }
+    const t = s.h("div", { class: "d2tok" }, kids);
+    t.chip = chipEl; t.num = numEl; t.lab = labEl;
+    t.first = words[0][0];
+    paint(t, k);
+    return t;
+  }
+  function paint(t, k) {
+    const c = t.chip || t;
+    c.style.borderColor = SG[k].c; c.style.background = SG[k].b; t.dataset.k = k;
+    if (t.lab) t.lab.style.color = k === "x" ? "var(--pencil)" : SG[k].c;
+    if (t.num) t.num.style.background = k === "P" ? SG.P.c : "#8a96a8";
+    return t;
+  }
+  const tag = (s, k, text) => s.h("span", { class: "d2tag", style: { background: SG[k].c } }, text || short[k]);
+  const legend = (s, keys) => s.h("div", { class: "row", style: { gap: "8px" } }, keys.map(k => tag(s, k)));
+  /** state from an order of block ids: first word of the first block gets a capital letter */
+  const ordered = (blocks, order, punct = ".") => [...order.map((id, i) => [id, i === 0 ? cap(blocks[id].first) : blocks[id].first]), ["pt", punct]];
+  const numbers = (blocks, order) => order.forEach((id, i) => { if (blocks[id].num) blocks[id].num.textContent = String(i + 1); });
+
+  /** example card with a question that finds one Satzglied */
+  function qcard(s, label, spec, q, ansIdx, ansK, ansText) {
+    const toks = spec.map(([k, t]) => blk(s, k, t));
+    const row = s.h("div", { class: "d2row" }, toks, P(s, "."));
+    const qEl = s.h("span", { class: "d2q" }, "");
+    const ans = blk(s, ansK, ansText, { size: "s" });
+    ans.classList.add("later");
+    const arrow = s.h("b", { class: "later", style: { fontSize: "26px", color: "var(--pencil)" } }, "→");
+    const qline = s.h("div", { class: "row", style: { gap: "12px", minHeight: "40px", marginTop: "4px", flexWrap: "nowrap" } }, qEl, arrow, ans);
+    const el = ex(s, label, row, qline);
+    el.style.padding = "10px 20px";
+    async function run() {
+      s.sfx.scribble();
+      await type(s, qEl, q);
+      await s.wait(250);
+      paint(toks[ansIdx], ansK); s.sfx.ding(); bump(s, toks[ansIdx], 0.22);
+      await s.show([arrow, ans], "left");
+    }
+    return { el, run, toks };
+  }
+
+  Deck.unit({
+    id: "u2", num: 2, title: "Satzglieder und Sätze", color: "#0f766e", soft: "#dcf3ef",
+    subtitle: "Bausteine, die man umstellen kann",
+    blurb: "Umstellprobe, Subjekt, Objekte, Haupt- und Nebensatz.",
+    goals: [
+      "Mit der Umstellprobe Satzglieder finden",
+      "Prädikat, Subjekt und Objekte erfragen",
+      "Wann? Wo? Wie? Warum? – die Adverbialen",
+      "Aussage-, Frage- und Aufforderungssatz",
+      "Hauptsatz, Nebensatz, Satzreihe, Satzgefüge",
+    ],
+    icon(svg, el) {
+      [["#1d5bd0", 6, 14, 22], ["#dc3b2a", 32, 14, 30], ["#138a5a", 14, 40, 40]].forEach(([c, x, y, w]) =>
+        svg.append(el("rect", { x, y, width: w, height: 18, rx: 5, fill: c, opacity: 0.85 })));
+    },
+    slides: [
+      /* 1 ------------------------------------------------------------------ */
+      {
+        title: "Die Umstellprobe",
+        say: "Wir stellen einen Satz um, wie Bausteine. Achte darauf, welche Wörter immer zusammenbleiben.",
+        build(s) {
+          const B = {
+            S: blk(s, "x", "Julian", { label: "", size: "l" }),
+            P: blk(s, "x", "spielt", { label: "", size: "l" }),
+            Z: blk(s, "x", "am Samstag", { label: "", size: "l" }),
+            AO: blk(s, "x", "Fußball", { label: "", size: "l" }),
+            pt: P(s, "."),
+          };
+          B.pt.style.paddingBottom = "34px"; B.pt.style.fontSize = "38px";
+          const hist = s.h("div", { class: "stack", style: { gap: "4px" } });
+          const sentence = () => orders[oi].map(k => phrase(B[k])).join(" ") + ".";
+          const addHist = () => { const line = s.h("p", { class: "t", style: { fontSize: "23px" } }, s.h("b", { class: "pencil" }, (hist.children.length + 1) + ". "), sentence()); if (hist.children.length >= 4) hist.firstChild.remove(); hist.append(line); s.show(line, "left"); };
+          const keys = ["S", "P", "Z", "AO"];
+          keys.forEach(k => { B[k].lab.textContent = short[k]; B[k].lab.classList.add("later"); });
+          const row = s.h("div", { class: "d2row d2loose", style: { justifyContent: "center", minHeight: "120px", alignContent: "center", gap: "14px" } }, keys.map(k => B[k]), B.pt);
+          const orders = [["S", "P", "Z", "AO"], ["Z", "P", "S", "AO"], ["AO", "P", "S", "Z"], ["S", "P", "AO", "Z"]];
+          let oi = 0;
+          const info = s.h("p", { class: "t", style: { textAlign: "center", minHeight: "34px" } }, "Vier Bausteine – wie kann man sie umstellen?");
+          const go = async i => {
+            oi = i % orders.length;
+            s.sfx.whoosh();
+            await morph(s, row, B, ordered(B, orders[oi]), { arc: 50, dur: 850 });
+            s.sfx.snap(); addHist();
+          };
+          const btn = s.h("button", { class: "btn solid", onclick: () => { s.sfx.click(); go(oi + 1); } }, "Umstellen!");
+          const card = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "10px", alignItems: "center", padding: "14px 22px" } }, row, info, btn);
+          const merk = s.h("div", { class: "merk later" }, "Wörter, die beim Umstellen immer ", s.h("b", null, "zusammenbleiben"), ", bilden ein ", s.h("b", null, "Satzglied"), ". Dieser Satz hat vier Satzglieder.");
+          const histCard = s.h("div", { class: "card soft", style: { padding: "12px 20px" } }, s.h("span", { class: "exlabel" }, "Alle Sätze bedeuten dasselbe"), hist);
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, card, histCard, merk));
+          s.show(card, "up"); s.sfx.pop(); addHist();
+          s.step(async () => { await go(1); info.textContent = "„am“ und „Samstag“ sind zusammen umgezogen!"; s.say("Schau, am und Samstag sind zusammen umgezogen."); });
+          s.step(async () => { await go(2); info.textContent = "Der Satz klingt anders – aber er bedeutet dasselbe."; s.say("Der Satz klingt anders, aber er bedeutet dasselbe."); });
+          s.step(async () => {
+            row.classList.remove("d2loose");
+            s.sfx.chord([0, 4, 7]);
+            for (const k of keys) { paint(B[k], k); bump(s, B[k], 0.2); await s.show(B[k].lab, "pop"); s.sfx.pop(); }
+            info.textContent = "Jeder Baustein bekommt eine Farbe: ein Satzglied.";
+            await s.show(merk, "up");
+            s.say("Wörter, die zusammenbleiben, bilden ein Satzglied.");
+          });
+        },
+      },
+      /* 2 ------------------------------------------------------------------ */
+      {
+        title: "Umstellen im Alltag",
+        say: "Bei jedem Umstellen bleibt ein Baustein an Platz zwei. Das ist das Prädikat, das Verb.",
+        build(s) {
+          const SET = [
+            ["U-Bahn", [["S", "die U2"], ["P", "fährt"], ["Z", "heute"], ["O", "zum Alexanderplatz"]], [["S", "P", "Z", "O"], ["Z", "P", "S", "O"], ["O", "P", "S", "Z"]]],
+            ["Küche", [["S", "Oma"], ["P", "backt"], ["Z", "am Sonntag"], ["AO", "einen Apfelkuchen"]], [["S", "P", "Z", "AO"], ["Z", "P", "S", "AO"], ["AO", "P", "S", "Z"]]],
+            ["Musik", [["S", "die Klasse 5a"], ["P", "probt"], ["Z", "heute"], ["O", "in der Aula"]], [["S", "P", "Z", "O"], ["Z", "P", "S", "O"], ["O", "P", "S", "Z"]]],
+          ];
+          const cards = SET.map(([lab, spec, orders]) => {
+            const B = {};
+            spec.forEach(([k, t]) => { B[k] = blk(s, k, t, { num: true }); });
+            B.pt = P(s, ".");
+            const row = s.h("div", { class: "d2row" }, orders[0].map(k => B[k]), B.pt);
+            let oi = 0;
+            morph(s, row, B, ordered(B, orders[0]));
+            numbers(B, orders[0]);
+            const go = async () => {
+              oi = (oi + 1) % orders.length;
+              s.sfx.whoosh();
+              await morph(s, row, B, ordered(B, orders[oi]), { arc: 34, dur: 800 });
+              numbers(B, orders[oi]); s.sfx.snap(); bump(s, B.P.num, 0.4);
+            };
+            const btn = s.h("button", { class: "btn", onclick: () => { s.sfx.click(); go(); } }, "Umstellen");
+            const el = s.h("div", { class: "ex", style: { display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: "12px", padding: "12px 20px" } },
+              s.h("div", null, s.h("span", { class: "exlabel" }, lab), row), btn);
+            return { el, go };
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "23px" } }, "Im Aussagesatz steht das ", s.h("b", { style: { color: SG.P.c } }, "Prädikat"), " (das Verb) immer an ", s.h("b", null, "Platz 2"), ". Die anderen Satzglieder dürfen wandern.");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, cards.map(c => c.el), merk));
+          s.show(cards.map(c => c.el), "left"); s.sfx.whoosh();
+          cards.forEach((c, i) => s.step(async () => { await c.go(); s.say(["Heute fährt die U2 zum Alexanderplatz.", "Am Sonntag backt Oma einen Apfelkuchen.", "Heute probt die Klasse 5a in der Aula."][i]); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 3 ------------------------------------------------------------------ */
+      {
+        title: "Die Farben der Satzglieder",
+        say: "Jedes Satzglied hat eine eigene Farbe und eine eigene Frage. Diese Farben bleiben im ganzen Kapitel gleich.",
+        build(s) {
+          const L = [
+            ["P", "spielt", "Was tut …? Was geschieht?"],
+            ["S", "Julian", "Wer oder was?"],
+            ["AO", "den Ball", "Wen oder was?"],
+            ["DO", "dem Trainer", "Wem?"],
+            ["Z", "am Samstag", "Wann? Wie lange?"],
+            ["O", "im Park", "Wo? Wohin? Woher?"],
+            ["AW", "mit Freude", "Wie? Auf welche Weise?"],
+            ["G", "wegen des Regens", "Warum? Weshalb?"],
+          ];
+          const names = { P: "Prädikat", S: "Subjekt", AO: "Akkusativobjekt", DO: "Dativobjekt", Z: "Adverbiale der Zeit", O: "Adverbiale des Ortes", AW: "Adverbiale der Art und Weise", G: "Adverbiale des Grundes" };
+          const cards = L.map(([k, ex1, q]) => s.h("div", { class: "card later", style: { borderColor: SG[k].c, borderWidth: "3px", padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", alignItems: "flex-start" } },
+            s.h("span", { class: "h2", style: { fontSize: "21px", color: SG[k].c } }, names[k]),
+            s.h("span", { class: "d2q", style: { fontSize: "28px" } }, q),
+            blk(s, k, ex1, { size: "s" })));
+          const grid = s.h("div", { class: "cols4", style: { gap: "12px" } }, cards);
+          const steps = ["1. Prädikat suchen", "2. Subjekt erfragen", "3. Objekte erfragen", "4. Adverbiale erfragen"];
+          const way = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 14px" } },
+            s.h("div", { class: "row", style: { gap: "10px" } }, steps.map((t, i) => [i ? s.h("b", { class: "pencil" }, "→") : null, s.h("span", { class: "chip", style: { fontSize: "20px", background: "#fff" } }, t)])));
+          const exRow = s.h("div", { class: "d2row", style: { justifyContent: "center" } }, [["Z", "Am Samstag"], ["P", "gibt"], ["S", "Julian"], ["DO", "seinem Freund"], ["O", "im Park"], ["AO", "den Ball"]].map(([k, t]) => blk(s, k, t)), P(s, "."));
+          const exCard = ex(s, "Ein Satz – sechs Farben", exRow); exCard.classList.add("later");
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, grid, exCard, way));
+          s.sfx.pop();
+          s.step(async () => { for (const c of cards.slice(0, 4)) { s.sfx.pop(); s.show(c, "pop"); await s.wait(160); } s.say("Prädikat, Subjekt, Akkusativobjekt und Dativobjekt."); });
+          s.step(async () => { for (const c of cards.slice(4)) { s.sfx.pop(); s.show(c, "pop"); await s.wait(160); } s.say("Und vier Adverbiale. Sie antworten auf wann, wo, wie und warum."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(exCard, "up"); const bs = [...exRow.querySelectorAll(".d2tok")]; for (const b of bs) { bump(s, b, 0.2); s.sfx.count(bs.indexOf(b) + 2); await s.wait(150); } s.say("Am Samstag gibt Julian seinem Freund im Park den Ball."); });
+          s.step(async () => { s.sfx.ding(); await s.show(way, "up"); s.say("Fang immer mit dem Prädikat an."); });
+        },
+      },
+      /* 4 ------------------------------------------------------------------ */
+      {
+        title: "Das Prädikat: der Motor",
+        say: "Das Prädikat ist der Motor des Satzes. Es ist das Verb. Frag, was tut jemand, oder was geschieht.",
+        build(s) {
+          const C = [
+            qcard(s, "Fußball", [["x", "Der Torwart"], ["x", "hält"], ["x", "den Elfmeter"]], "Was tut der Torwart?", 1, "P", "hält"),
+            qcard(s, "Musik", [["x", "Die Klasse"], ["x", "singt"], ["x", "ein Lied"]], "Was tut die Klasse?", 1, "P", "singt"),
+            qcard(s, "U-Bahn", [["x", "Jetzt"], ["x", "schließen"], ["x", "die Türen"]], "Was geschieht jetzt?", 1, "P", "schließen"),
+          ];
+          // Singular / Plural toggle
+          const T = { S: blk(s, "S", "Das Kind"), P: blk(s, "P", "singt"), pt: P(s, ".") };
+          const trow = s.h("div", { class: "d2row", style: { minHeight: "56px" } }, T.S, T.P, T.pt);
+          let pl = false;
+          const tog = async () => {
+            pl = !pl; s.sfx.boing();
+            const [a, b] = pl ? ["Die Kinder", "singen"] : ["Das Kind", "singt"];
+            T.S.chip.replaceChildren(...a.split(" ").map((w, i) => s.h("span", { class: i ? "" : "tx" }, w)));
+            bump(s, T.S); await flipText(s, T.P.chip, b); bump(s, T.P, 0.25);
+          };
+          const tbtn = s.h("button", { class: "btn", onclick: tog }, "eins ↔ viele");
+          const tcard = s.h("div", { class: "card later", style: { display: "flex", gap: "16px", alignItems: "center", justifyContent: "space-between", padding: "12px 20px" } },
+            s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("span", { class: "small pencil" }, "Es passt sich dem Subjekt an:"), trow), tbtn);
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Suche immer zuerst das ", s.h("b", { style: { color: SG.P.c } }, "Prädikat"), ". Es ist das Verb – ohne Prädikat kein Satz!");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, C.map(c => c.el), s.h("div", { style: { display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: "14px" } }, tcard, merk)));
+          s.show(C.map(c => c.el), "up"); s.sfx.pop();
+          C.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Was tut der Torwart? Er hält.", "Was tut die Klasse? Sie singt.", "Was geschieht? Die Türen schließen."][i]); }));
+          s.step(async () => { s.sfx.pop(); await s.show(tcard, "up"); await tog(); s.say("Das Kind singt. Die Kinder singen."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5 ------------------------------------------------------------------ */
+      {
+        title: "Zweiteilige Prädikate",
+        say: "Manchmal hat das Prädikat zwei Teile. Der zweite Teil wandert ans Satzende. So entsteht eine Klammer um den Satz.",
+        build(s) {
+          const R = [
+            ["Perfekt", "Fußball", [["S", "Julian"], ["P1", "hat"], ["P2", "geschossen"], ["AO", "ein Tor"]], ["S", "P1", "AO", "P2"]],
+            ["trennbares Verb", "Telefon", [["S", "Lea"], ["P1", "ruft"], ["P2", "an"], ["AO", "ihre Oma"]], ["S", "P1", "AO", "P2"]],
+            ["mit Modalverb", "Essen", [["S", "wir"], ["P1", "wollen"], ["P2", "essen"], ["Z", "heute"], ["AO", "Pizza"]], ["S", "P1", "Z", "AO", "P2"]],
+          ];
+          const rows = R.map(([lab, set, spec, fin]) => {
+            const B = {};
+            spec.forEach(([k, t]) => { B[k] = blk(s, k.startsWith("P") ? "P" : k, t); });
+            B.pt = P(s, ".");
+            const start = spec.map(([k]) => k);
+            const row = s.h("div", { class: "d2row", style: { paddingBottom: "24px", flexWrap: "nowrap" } }, start.map(k => B[k]), B.pt);
+            morph(s, row, B, ordered(B, start));
+            const bar = s.h("div", { class: "d2bar later", style: { borderColor: SG.P.c } });
+            row.append(bar);
+            const el = s.h("div", { class: "ex", style: { display: "grid", gridTemplateColumns: "220px 1fr", alignItems: "center", padding: "12px 20px" } },
+              s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("span", { class: "h2", style: { fontSize: "25px" } }, lab), s.h("span", { class: "exlabel", style: { margin: 0 } }, set)), row);
+            const run = async () => {
+              s.sfx.whoosh();
+              await morph(s, row, B, ordered(B, fin), { arc: 46, dur: 900 });
+              const a = B.P1, b = B.P2;
+              const x1 = a.offsetLeft + a.offsetWidth / 2, x2 = b.offsetLeft + b.offsetWidth / 2;
+              const y = Math.max(a.offsetTop + a.offsetHeight, b.offsetTop + b.offsetHeight) + 2;
+              Object.assign(bar.style, { left: x1 + "px", width: x2 - x1 + "px", top: y + "px" });
+              bar.classList.remove("later");
+              s.sfx.zap();
+              await s.tween({ dur: 600, ease: "out", update: v => { bar.style.transform = `scaleX(${v})`; } });
+              bar.style.transform = "";
+            };
+            return { el, run };
+          });
+          const lf = life(s, "Im Alltag: Durchsage", s.h("p", { class: "t" }, "„Der Zug ", s.h("b", { class: "red" }, "fährt"), " in Kürze ", s.h("b", { class: "red" }, "ab"), ".“ – abfahren hat zwei Teile."));
+          lf.classList.add("later");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Ein zweiteiliges Prädikat bildet eine ", s.h("b", null, "Klammer"), ": Teil 1 an Platz 2, Teil 2 am Ende.");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, rows.map(r => r.el), lf, merk));
+          s.show(rows.map(r => r.el), "left"); s.sfx.whoosh();
+          rows.forEach((r, i) => s.step(async () => { await r.run(); s.say(["Julian hat ein Tor geschossen.", "Lea ruft ihre Oma an.", "Wir wollen heute Pizza essen."][i]); }));
+          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 6 ------------------------------------------------------------------ */
+      {
+        title: "Das Subjekt: Wer oder was?",
+        say: "Das Subjekt findest du mit der Frage: Wer oder was? Dazu nimmst du das Prädikat mit in die Frage.",
+        build(s) {
+          const C = [
+            qcard(s, "U-Bahn", [["x", "Die U-Bahn"], ["P", "kommt"], ["x", "zu spät"]], "Wer oder was kommt zu spät?", 0, "S", "die U-Bahn"),
+            qcard(s, "Zu Hause", [["x", "Meine Schwester"], ["P", "liest"], ["x", "einen Comic"]], "Wer oder was liest einen Comic?", 0, "S", "meine Schwester"),
+            qcard(s, "Fußball", [["x", "Heute"], ["P", "spielt"], ["x", "unsere Mannschaft"], ["x", "im Stadion"]], "Wer oder was spielt heute?", 2, "S", "unsere Mannschaft"),
+          ];
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Das ", s.h("b", { style: { color: SG.S.c } }, "Subjekt"), " steht im Nominativ – und nicht immer vorne! Subjekt und Prädikat passen zusammen: ich spiel", s.h("b", null, "e"), ", wir spiel", s.h("b", null, "en"), ".");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, C.map(c => c.el), merk));
+          s.show(C.map(c => c.el), "up"); s.sfx.pop();
+          C.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Wer oder was kommt zu spät? Die U-Bahn.", "Wer oder was liest? Meine Schwester.", "Wer oder was spielt? Unsere Mannschaft. Das Subjekt steht hier in der Mitte."][i]); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 7 ------------------------------------------------------------------ */
+      {
+        title: "Akkusativobjekt: Wen oder was?",
+        say: "Das Akkusativobjekt findest du mit der Frage: Wen oder was?",
+        build(s) {
+          const C = [
+            qcard(s, "Fußball", [["S", "Julian"], ["P", "schießt"], ["x", "den Ball"], ["x", "ins Tor"]], "Wen oder was schießt Julian?", 2, "AO", "den Ball"),
+            qcard(s, "Einkaufen", [["S", "Mama"], ["P", "kauft"], ["x", "einen Kürbis"]], "Wen oder was kauft Mama?", 2, "AO", "einen Kürbis"),
+            qcard(s, "U-Bahn", [["S", "Der Kontrolleur"], ["P", "prüft"], ["x", "die Fahrkarte"]], "Wen oder was prüft der Kontrolleur?", 2, "AO", "die Fahrkarte"),
+          ];
+          const art = s.h("span", { style: { display: "inline-block", color: "var(--red)" } }, "der");
+          const flip = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", justifyContent: "center", gap: "6px", padding: "10px 20px" } },
+            s.h("span", { class: "t" }, "Wer oder was? ", s.h("b", null, "der Ball")),
+            s.h("span", { class: "t" }, "Wen oder was? ", s.h("b", null, art, " Ball"), s.h("b", { class: "pencil" }, "  ← Akkusativ")));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Bei maskulinen Nomen siehst du den Akkusativ am Artikel: ", s.h("b", null, "der → den"), ", ", s.h("b", null, "ein → einen"), ".");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, C.map(c => c.el), s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "14px" } }, flip, merk)));
+          s.show(C.map(c => c.el), "up"); s.sfx.pop();
+          C.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Wen oder was schießt Julian? Den Ball.", "Wen oder was kauft Mama? Einen Kürbis.", "Wen oder was prüft der Kontrolleur? Die Fahrkarte."][i]); }));
+          s.step(async () => { s.sfx.pop(); await s.show(flip, "up"); await flipText(s, art, "den"); s.sfx.zap(); s.sfx.ding(); await s.show(merk, "up"); s.say("Aus der Ball wird den Ball."); });
+        },
+      },
+      /* 8 ------------------------------------------------------------------ */
+      {
+        title: "Dativobjekt: Wem?",
+        say: "Das Dativobjekt findest du mit der Frage: Wem? Oft bekommt jemand etwas.",
+        build(s) {
+          const C = [
+            qcard(s, "Fußball", [["S", "Julian"], ["P", "gibt"], ["x", "dem Trainer"], ["AO", "den Ball"]], "Wem gibt Julian den Ball?", 2, "DO", "dem Trainer"),
+            qcard(s, "Chat", [["S", "Ich"], ["P", "schreibe"], ["x", "meiner Freundin"], ["AO", "eine Nachricht"]], "Wem schreibe ich eine Nachricht?", 2, "DO", "meiner Freundin"),
+            qcard(s, "Restaurant", [["S", "Die Kellnerin"], ["P", "bringt"], ["x", "dem Gast"], ["AO", "die Suppe"]], "Wem bringt die Kellnerin die Suppe?", 2, "DO", "dem Gast"),
+          ];
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Nach ", s.h("b", null, "helfen, danken, gehören, gefallen"), " steht ein Dativobjekt: Ich helfe ", s.h("b", { style: { color: SG.DO.c } }, "meiner Oma"), ". Das Trikot gehört ", s.h("b", { style: { color: SG.DO.c } }, "mir"), ".");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, C.map(c => c.el), merk, legend(s, ["P", "S", "AO", "DO"])));
+          s.show(C.map(c => c.el), "up"); s.sfx.pop();
+          C.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Wem gibt Julian den Ball? Dem Trainer.", "Wem schreibe ich? Meiner Freundin.", "Wem bringt die Kellnerin die Suppe? Dem Gast."][i]); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 9 ------------------------------------------------------------------ */
+      {
+        title: "Wann? Wo? Wie? Warum?",
+        say: "Adverbiale Bestimmungen erzählen mehr: wann, wo, wie und warum etwas passiert. Schau, wie der Satz wächst.",
+        build(s) {
+          const B = {
+            S: blk(s, "S", "Julian", { label: "Wer?" }),
+            P: blk(s, "P", "spielt", { label: "Was tut er?" }),
+            AO: blk(s, "AO", "Fußball", { label: "Was?" }),
+            Z: blk(s, "Z", "am Samstag", { label: "Wann?" }),
+            G: blk(s, "G", "wegen des schönen Wetters", { label: "Warum?" }),
+            AW: blk(s, "AW", "begeistert", { label: "Wie?" }),
+            O: blk(s, "O", "im Park", { label: "Wo?" }),
+            pt: P(s, "."),
+          };
+          B.pt.style.paddingBottom = "28px";
+          const row = s.h("div", { class: "d2row", style: { justifyContent: "center", minHeight: "150px", alignContent: "center", rowGap: "14px" } }, B.S, B.P, B.AO, B.pt);
+          const sentCard = s.h("div", { class: "card", style: { padding: "16px" } }, row);
+          const Q = [["Z", "Wann?", "Zeit", "auch: um acht Uhr, gestern"], ["G", "Warum?", "Grund", "auch: wegen der Hitze"], ["AW", "Wie?", "Art und Weise", "auch: schnell, mit Mühe"], ["O", "Wo?", "Ort", "auch: im Bus, zu Hause"]];
+          const hints = {};
+          const qcards = Q.map(([k, q, n, h]) => { hints[k] = s.h("p", { class: "small later", style: { gridArea: "1 / 1", textAlign: "center", color: SG[k].c } }, h); B[k].style.gridArea = "1 / 1"; return s.h("div", { class: "card", style: { borderColor: SG[k].c, borderWidth: "3px", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px", padding: "12px" } },
+            s.h("span", { class: "d2q", style: { color: SG[k].c, fontSize: "38px" } }, q), s.h("span", { class: "small", style: { fontWeight: 700 } }, "Adverbiale: " + n),
+            s.h("div", { style: { minHeight: "82px", display: "grid", placeItems: "center", width: "100%" } }, B[k], hints[k])); });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Adverbiale Bestimmungen sagen ", s.h("b", null, "wann, wo, wie"), " und ", s.h("b", null, "warum"), ". Tipp für die Reihenfolge: ", s.h("b", null, "te – ka – mo – lo"), " (Zeit, Grund, Art, Ort).");
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, sentCard, s.h("div", { class: "cols4", style: { gap: "12px" } }, qcards), merk));
+          s.show(sentCard, "up"); s.show(qcards, "up"); s.sfx.pop();
+          const states = [["S", "P", "Z", "AO"], ["S", "P", "Z", "G", "AO"], ["S", "P", "Z", "G", "AW", "AO"], ["S", "P", "Z", "G", "AW", "O", "AO"]];
+          states.forEach((st, i) => s.step(async () => {
+            s.sfx.whoosh();
+            await morph(s, row, B, [...st, "pt"], { arc: 70, dur: 900 });
+            s.sfx.snap(); bump(s, B[Q[i][0]], 0.2); s.show(hints[Q[i][0]], "fade");
+            s.say(["Wann? Am Samstag.", "Warum? Wegen des schönen Wetters.", "Wie? Begeistert.", "Wo? Im Park."][i]);
+          }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Julian spielt am Samstag wegen des schönen Wetters begeistert im Park Fußball."); });
+        },
+      },
+      /* 10 ----------------------------------------------------------------- */
+      {
+        title: "Im Alltag: Frage-Scheinwerfer",
+        say: "Tippe auf eine Frage. Der Scheinwerfer zeigt dir in jedem Satz die passende Antwort.",
+        build(s) {
+          const SENT = [
+            ["U-Bahn", [["Z", "Heute"], ["P", "fährt"], ["S", "die U-Bahn"], ["G", "wegen einer Baustelle"], ["AW", "langsam"], ["O", "durch den Tunnel"]]],
+            ["Küche", [["Z", "Am Abend"], ["P", "rührt"], ["S", "Papa"], ["AO", "die Soße"], ["AW", "vorsichtig"], ["O", "im Topf"]]],
+            ["Fußball", [["Z", "Nach dem Spiel"], ["P", "feiern"], ["S", "die Fans"], ["G", "wegen des Sieges"], ["AW", "laut"], ["O", "vor dem Stadion"]]],
+          ];
+          const all = [];
+          const cards = SENT.map(([lab, spec]) => {
+            const toks = spec.map(([k, t]) => { const b = blk(s, "x", t); b.dataset.real = k; all.push(b); return b; });
+            const el = ex(s, lab, s.h("div", { class: "d2row" }, toks, P(s, ".")));
+            el.style.padding = "12px 20px";
+            return el;
+          });
+          const QB = [["Z", "Wann?"], ["O", "Wo?"], ["AW", "Wie?"], ["G", "Warum?"]];
+          async function light(k) {
+            btns.forEach(b => { const bk = b.dataset.k; if (SG[bk]) b.style.background = bk === k || k === "all" ? SG[bk].b : "#fff"; });
+            s.sfx.zap();
+            all.forEach(b => {
+              const r = b.dataset.real, hit = k === "all" || r === k, known = ["S", "P", "AO"].includes(r);
+              paint(b, hit || known ? r : "x");
+              b.style.opacity = hit ? "1" : "0.4";
+              if (hit) bump(s, b, 0.15);
+            });
+            if (k !== "all") s.say(QB.find(q => q[0] === k)[1]);
+          }
+          const btns = QB.map(([k, q]) => { const b = s.h("button", { class: "btn", style: { borderColor: SG[k].c, color: SG[k].c, fontSize: "26px", fontFamily: "var(--f-hand)" }, onclick: () => { s.sfx.click(); light(k); } }, q); b.dataset.k = k; return b; });
+          const allB = s.h("button", { class: "btn solid", onclick: () => { s.sfx.click(); light("all"); } }, "Alle Farben");
+          allB.dataset.k = "all";
+          btns.push(allB);
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } },
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "10px" } }, btns), cards, legend(s, ["P", "S", "AO", "Z", "O", "AW", "G"])));
+          s.show(cards, "up"); s.sfx.pop();
+          ["Z", "O", "AW", "G"].forEach(k => s.step(async () => { await light(k); }));
+          s.step(async () => { await light("all"); s.sfx.success(); s.say("Alle Satzglieder in Farbe."); });
+        },
+      },
+      /* 11 ----------------------------------------------------------------- */
+      {
+        title: "Attribute: Beifügungen",
+        say: "Attribute beschreiben ein Nomen genauer. Sie sind kein eigenes Satzglied, sondern wandern immer mit ihrem Nomen mit.",
+        build(s) {
+          const B = {
+            S: blk(s, "S", [["der"], ["kleine", 1], ["Bruder"], ["von", 1], ["Lea", 1]]),
+            P: blk(s, "P", "isst"),
+            AO: blk(s, "AO", [["ein"], ["großes", 1], ["Eis"]]),
+            pt: P(s, "."),
+          };
+          const row = s.h("div", { class: "d2row", style: { justifyContent: "center", minHeight: "70px" } }, B.S, B.P, B.AO, B.pt);
+          const orders = [["S", "P", "AO"], ["AO", "P", "S"]];
+          let oi = 0;
+          morph(s, row, B, ordered(B, orders[0]));
+          const go = async () => { oi = 1 - oi; s.sfx.whoosh(); await morph(s, row, B, ordered(B, orders[oi]), { arc: 50, dur: 850 }); s.sfx.snap(); };
+          const btn = s.h("button", { class: "btn solid", onclick: () => { s.sfx.click(); go(); } }, "Umstellen!");
+          const top = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "14px", padding: "18px" } }, row,
+            s.h("p", { class: "small pencil" }, "Gepunktet unterstrichen = Attribut. Es zieht mit seinem Nomen um."), btn);
+          const T = [
+            ["Adjektivattribut", "U-Bahn", [["die "], ["volle", 1], [" U-Bahn"]], "Welche U-Bahn?"],
+            ["Präpositionalattribut", "Eisdiele", [["ein Eis "], ["mit Sahne", 1]], "Was für ein Eis?"],
+            ["Genitivattribut", "Fußball", [["das Trikot "], ["des Torwarts", 1]], "Wessen Trikot?"],
+          ];
+          const cards = T.map(([n, lab, parts, q]) => { const c = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "14px 16px" } },
+            s.h("span", { class: "exlabel", style: { margin: 0 } }, lab), s.h("span", { class: "h2", style: { fontSize: "22px" } }, n),
+            s.h("p", { class: "t", style: { fontSize: "27px", fontWeight: 700 } }, parts.map(([t, a]) => (a ? s.h("span", { class: "d2att", style: { color: "var(--violet)" } }, t) : t))),
+            s.h("span", { class: "d2q", style: { fontSize: "27px" } }, q)); return c; });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Ein ", s.h("b", null, "Attribut"), " ist eine Beifügung zu einem Nomen. Es ist ", s.h("b", null, "Teil eines Satzglieds"), ", kein eigenes Satzglied.");
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, top, s.h("div", { class: "cols3", style: { gap: "14px" } }, cards), merk));
+          s.show(top, "up"); s.sfx.pop();
+          s.step(async () => { await go(); s.say("Ein großes Eis isst der kleine Bruder von Lea. Die Attribute ziehen mit um."); });
+          s.step(async () => { for (const c of cards) { s.sfx.pop(); s.show(c, "up"); await s.wait(200); } s.say("Welche U-Bahn? Die volle. Was für ein Eis? Mit Sahne. Wessen Trikot? Des Torwarts."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 12 ----------------------------------------------------------------- */
+      {
+        title: "Satzarten: . ? !",
+        say: "Es gibt drei Satzarten: den Aussagesatz, den Fragesatz und den Aufforderungssatz. Das Verb wandert, und das Satzzeichen wechselt.",
+        build(s) {
+          const B = { S: blk(s, "S", "du", { size: "l" }), P1: blk(s, "P", "kommst", { size: "l" }), Z: blk(s, "Z", "heute", { size: "l" }), P2: blk(s, "P", "mit", { size: "l" }), pt: s.h("span", { class: "d2p", style: { fontSize: "72px", color: "var(--red)", paddingBottom: "0", lineHeight: "1" } }, ".") };
+          const row = s.h("div", { class: "d2row", style: { justifyContent: "center", alignItems: "flex-end", minHeight: "90px", gap: "14px" } }, B.S, B.P1, B.Z, B.P2, B.pt);
+          const ST = {
+            A: [["S", "Du"], ["P1", "kommst"], "Z", "P2", ["pt", "."]],
+            F: [["P1", "Kommst"], ["S", "du"], "Z", "P2", ["pt", "?"]],
+            B: [["P1", "Komm"], "Z", "P2", ["pt", "!"]],
+          };
+          const names = { A: ["Aussagesatz", "Verb an Platz 2 – Punkt am Ende."], F: ["Fragesatz", "Verb an Platz 1 – Fragezeichen am Ende."], B: ["Aufforderungssatz", "Verb an Platz 1, oft ohne Subjekt – Ausrufezeichen."] };
+          const nm = s.h("p", { class: "big", style: { textAlign: "center", color: "var(--unit)" } }, "");
+          const ds = s.h("p", { class: "t", style: { textAlign: "center" } }, "");
+          async function set(k) {
+            btns.forEach(b => b.classList.toggle("solid", b.dataset.k === k));
+            s.sfx.whoosh();
+            morph(s, row, B, ST[k], { arc: 40, dur: 800 }).then(() => { s.sfx.pop(); bump(s, B.pt, 0.5); });
+            await flipText(s, nm, names[k][0]); ds.textContent = names[k][1];
+            s.say({ A: "Du kommst heute mit.", F: "Kommst du heute mit?", B: "Komm heute mit!" }[k]);
+          }
+          const btns = Object.keys(names).map(k => { const b = s.h("button", { class: "btn", onclick: () => { s.sfx.click(); set(k); } }, names[k][0]); b.dataset.k = k; return b; });
+          const top = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "10px", alignItems: "center", padding: "14px 18px" } },
+            s.h("div", { class: "row", style: { gap: "10px", justifyContent: "center" } }, btns), row, nm, ds);
+          const L = [
+            ["Im Alltag: Spielbericht", "Unsere Mannschaft hat 2:1 gewonnen", "."],
+            ["Im Alltag: Chat", "Kommst du heute zum Training", "?"],
+            ["Im Alltag: Klassenzimmer", "Pack bitte dein Heft ein", "!"],
+          ];
+          const lifes = L.map(([lab, t, p]) => { const c = life(s, lab, s.h("p", { class: "t" }, t, s.h("b", { class: "red", style: { fontSize: "32px" } }, p))); c.classList.add("later"); return c; });
+          const w = s.h("p", { class: "small pencil later", style: { textAlign: "center" } }, "Auch mit Fragewort: „Wann kommst du mit?“ – dann steht das Verb an Platz 2.");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Am Satzzeichen erkennst du die Satzart: ", s.h("b", { class: "red" }, " .  "), "Aussage, ", s.h("b", { class: "red" }, " ?  "), "Frage, ", s.h("b", { class: "red" }, " !  "), "Aufforderung.");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, top, s.h("div", { class: "cols3", style: { gap: "14px" } }, lifes), w, merk));
+          morph(s, row, B, ST.A); nm.textContent = names.A[0]; ds.textContent = names.A[1]; btns[0].classList.add("solid");
+          s.show(top, "up"); s.sfx.pop();
+          s.step(async () => { await set("F"); });
+          s.step(async () => { await set("B"); });
+          s.step(async () => { for (const c of lifes) { s.sfx.pop(); s.show(c, "up"); await s.wait(200); } s.sfx.pop(); await s.show(w, "fade"); s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 13 ----------------------------------------------------------------- */
+      {
+        title: "Hauptsatz und Nebensatz",
+        say: "Ein Hauptsatz kann allein stehen. Ein Nebensatz nicht. Er beginnt mit weil, dass oder wenn, und sein Verb rutscht ans Ende.",
+        build(s) {
+          const ROWS = [
+            ["weil", "Schule", "Ich bleibe zu Hause . Ich bin krank .", [1, 6], "0 1 2 3 C K 5:ich 7 6 8"],
+            ["dass", "Chat", "Ich weiß es . Du gewinnst heute .", [1, 5], "0 1 C K 4:du 6 5 7"],
+            ["wenn", "Fußball", "Wir spielen draußen . Es regnet nicht .", [1, 5], "0 1 2 C K 4:es 6 5 7"],
+          ];
+          const HS = "#0f766e", NS = "#b45309";
+          const rows = ROWS.map(([k, lab, txt, verbs, fin]) => {
+            const words = txt.split(" ");
+            const toks = {};
+            words.forEach((w, i) => { toks[i] = /^[.?!,]$/.test(w) ? s.h("span", { class: "d2p", style: { fontSize: "29px", paddingBottom: "0" } }, w) : s.h("span", { class: "tx", style: { display: "inline-block", fontSize: "29px", fontWeight: verbs.includes(i) ? 700 : 400, color: verbs.includes(i) ? SG.P.c : "" } }, w); });
+            toks.K = s.h("span", { class: "d2b s later", style: { borderColor: KONJ.c, background: KONJ.b } }, k);
+            toks.C = s.h("span", { class: "d2p later", style: { fontSize: "29px", paddingBottom: "0" } }, ",");
+            const row = s.h("div", { class: "d2row", style: { gap: "8px", alignItems: "baseline", flexWrap: "nowrap", paddingBottom: "40px" } }, words.map((_, i) => toks[i]));
+            const state = fin.split(" ").map(x => { const [id, t] = x.split(":"); return t ? [id, t] : id; });
+            const barH = s.h("div", { class: "d2bar later", style: { borderColor: HS } }), barN = s.h("div", { class: "d2bar later", style: { borderColor: NS } });
+            const labH = s.h("span", { class: "d2lab later", style: { position: "absolute", color: HS } }, "Hauptsatz");
+            const labN = s.h("span", { class: "d2lab later", style: { position: "absolute", color: NS } }, "Nebensatz – Verb am Ende");
+            row.append(barH, barN, labH, labN);
+            const el = s.h("div", { class: "ex", style: { display: "grid", gridTemplateColumns: "140px 1fr", alignItems: "center", padding: "12px 18px 4px" } },
+              s.h("div", { class: "stack", style: { gap: "4px", alignItems: "flex-start" } }, s.h("span", { class: "d2tag", style: { background: KONJ.c } }, k), s.h("span", { class: "small pencil" }, lab)), row);
+            const run = async () => {
+              s.sfx.whoosh();
+              await morph(s, row, toks, state, { arc: 40, dur: 900 });
+              s.sfx.snap();
+              const seq = state.map(x => toks[Array.isArray(x) ? x[0] : x]);
+              const ci = seq.indexOf(toks.C);
+              const span = (a, b) => { const l = a.offsetLeft, r = b.offsetLeft + b.offsetWidth; return [l, r]; };
+              const [h1, h2] = span(seq[0], seq[ci - 1]);
+              const [n1, n2] = span(seq[ci + 1], seq[seq.length - 2]);
+              const y = seq[0].offsetTop + seq[0].offsetHeight + 4;
+              Object.assign(barH.style, { left: h1 + "px", width: h2 - h1 + "px", top: y + "px" });
+              Object.assign(barN.style, { left: n1 + "px", width: n2 - n1 + "px", top: y + "px" });
+              Object.assign(labH.style, { left: h1 + "px", top: y + 18 + "px" });
+              Object.assign(labN.style, { left: n1 + "px", top: y + 18 + "px" });
+              await s.show([barH, labH], "fade"); s.sfx.pop();
+              await s.show([barN, labN], "fade"); s.sfx.pop();
+            };
+            return { el, run };
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, "Der ", s.h("b", { style: { color: NS } }, "Nebensatz"), " kann nicht allein stehen. Er beginnt mit ", s.h("b", null, "weil, dass, wenn"), " … – das Verb steht am Ende. Dazwischen steht ein ", s.h("b", null, "Komma"), ".");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, rows.map(r => r.el), merk));
+          s.show(rows.map(r => r.el), "left"); s.sfx.whoosh();
+          rows.forEach((r, i) => s.step(async () => { await r.run(); s.say(["Ich bleibe zu Hause, weil ich krank bin.", "Ich weiß, dass du heute gewinnst.", "Wir spielen draußen, wenn es nicht regnet."][i]); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 14 ----------------------------------------------------------------- */
+      {
+        title: "Satzreihe und Satzgefüge",
+        say: "Zwei Hauptsätze zusammen sind eine Satzreihe. Ein Hauptsatz mit einem Nebensatz ist ein Satzgefüge. Stell dir Züge vor.",
+        build(s) {
+          const car = (cls, parts) => s.h("span", { class: "d2car " + cls }, parts.map(([t, v]) => s.h("span", { style: v ? { color: cls === "d2lok" ? "#ffd94a" : SG.P.c, textDecoration: "underline", textUnderlineOffset: "5px" } : null }, t)));
+          const cpl = t => s.h("span", { class: "d2cpl" }, s.h("span", { class: "d2b s", style: { borderColor: KONJ.c, background: KONJ.b } }, t));
+          const train1 = s.h("div", { class: "row", style: { gap: "0", flexWrap: "nowrap" } },
+            car("d2lok", [["Ich"], ["nehme", 1], ["die U-Bahn,"]]), cpl("denn"), car("d2lok", [["es"], ["regnet", 1], ["heute."]]));
+          const train2 = s.h("div", { class: "row", style: { gap: "0", flexWrap: "nowrap" } },
+            car("d2lok", [["Ich"], ["nehme", 1], ["die U-Bahn,"]]), cpl("weil"), car("d2wag", [["es"], ["heute"], ["regnet.", 1]]));
+          const block = (title, formula, train, exs) => {
+            const tr = s.h("div", { style: { overflow: "visible" } }, train);
+            const exEls = s.h("div", { class: "stack later", style: { gap: "4px" } }, exs.map(e => s.h("p", { class: "t", style: { fontSize: "23px" } }, e)));
+            const el = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", gap: "10px", padding: "14px 20px" } },
+              s.h("div", { class: "row", style: { gap: "14px" } }, s.h("span", { class: "h2" }, title), s.h("span", { class: "small pencil" }, formula)), tr, exEls);
+            return { el, tr, train, exEls };
+          };
+          const b1 = block("Satzreihe", "Hauptsatz + Hauptsatz", train1, ["Lea spielt Geige, aber Tom spielt Klavier.", "Wir gehen ins Kino oder wir spielen Fußball."]);
+          const b2 = block("Satzgefüge", "Hauptsatz + Nebensatz", train2, ["Wir gehen raus, wenn die Sonne scheint.", "Mama sagt, dass das Essen fertig ist."]);
+          [b1, b2].forEach(b => b.train.classList.add("later"));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Ein Hauptsatz ist eine ", s.h("b", null, "Lok"), " – er fährt allein. Ein Nebensatz ist ein ", s.h("b", null, "Wagen"), " – er braucht eine Lok. Das Verb steht im Wagen ganz hinten.");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, b1.el, b2.el, merk));
+          s.sfx.pop();
+          const drive = async b => {
+            b.train.classList.remove("later");
+            if (s.fast) return;
+            for (let i = 0; i < 4; i++) setTimeout(() => s.alive && s.sfx.drum(), i * 180);
+            await s.tween({ dur: 1000, ease: "out", update: v => { b.train.style.transform = `translateX(${(1 - v) * -1100}px)`; } });
+            b.train.style.transform = "";
+          };
+          s.step(async () => { await drive(b1); s.sfx.ding(); s.say("Ich nehme die U-Bahn, denn es regnet heute. Zwei Loks, also zwei Hauptsätze."); });
+          s.step(async () => { s.sfx.pop(); await s.show(b1.exEls, "up"); });
+          s.step(async () => { await drive(b2); s.sfx.ding(); s.say("Ich nehme die U-Bahn, weil es heute regnet. Der Nebensatz ist ein Wagen. Sein Verb steht hinten."); });
+          s.step(async () => { s.sfx.pop(); await s.show(b2.exEls, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 15 ----------------------------------------------------------------- */
+      {
+        title: "Im Alltag: der Satz-Baukasten",
+        say: "Bau dir eigene Sätze! Tippe auf die Bausteine. Mit Umstellen wandern sie, und das Prädikat bleibt an Platz zwei.",
+        build(s) {
+          const OPT = {
+            S: ["Julian", "meine Oma", "der Trainer", "die Katze"],
+            P: ["kauft", "sucht", "findet", "malt"],
+            Z: ["heute", "am Montag", "nach der Schule"],
+            AO: ["einen Kuchen", "den Ball", "eine Pizza", "das Ticket"],
+            O: ["im Park", "in der U-Bahn", "am Alexanderplatz"],
+          };
+          const keys = ["S", "P", "Z", "AO", "O"];
+          const B = {};
+          const pick = { S: 0, P: 0, Z: 0, AO: 0, O: 0 };
+          keys.forEach(k => { B[k] = blk(s, k, OPT[k][0], { num: true }); });
+          B.pt = P(s, ".");
+          const orders = [["S", "P", "Z", "AO", "O"], ["Z", "P", "S", "AO", "O"], ["O", "P", "S", "Z", "AO"], ["AO", "P", "S", "Z", "O"]];
+          let oi = 0;
+          const row = s.h("div", { class: "d2row", style: { justifyContent: "center", minHeight: "128px", alignContent: "center" } }, keys.map(k => B[k]), B.pt);
+          const setWords = () => keys.forEach(k => { const t = OPT[k][pick[k]]; B[k].chip.replaceChildren(...t.split(" ").map((w, i) => s.h("span", { class: i ? "" : "tx" }, w))); B[k].first = t.split(" ")[0]; });
+          const apply = async (anim = true) => { await morph(s, row, B, ordered(B, orders[oi]), anim ? { arc: 44, dur: 800 } : {}); numbers(B, orders[oi]); };
+          setWords(); apply(false);
+          const say = () => s.say(orders[oi].map(k => phrase(B[k])).join(" ") + ".");
+          const choose = async (k, i) => {
+            pick[k] = i; s.sfx.pop();
+            setWords(); await apply(false); bump(s, B[k], 0.25);
+            optBtns[k].forEach((b, j) => { b.style.boxShadow = j === i ? `0 0 0 3px ${SG[k].c} inset` : "none"; });
+          };
+          const umstellen = async () => { oi = (oi + 1) % orders.length; s.sfx.whoosh(); await apply(true); s.sfx.snap(); bump(s, B.P.num, 0.4); };
+          const zufall = async () => { s.sfx.zap(); for (const k of keys) { await choose(k, Math.floor(Math.random() * OPT[k].length)); await s.wait(120); } };
+          const optBtns = {};
+          const cols = keys.map(k => {
+            optBtns[k] = OPT[k].map((t, i) => s.h("button", { class: "d2opt", style: { borderColor: SG[k].c, background: SG[k].b }, onclick: () => { choose(k, i); } }, t));
+            return s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("div", { style: { textAlign: "center" } }, tag(s, k)), s.h("p", { class: "d2q", style: { textAlign: "center", fontSize: "26px", margin: 0, color: SG[k].c } }, SG[k].q), optBtns[k]);
+          });
+          optBtns.S[0].style.boxShadow = `0 0 0 3px ${SG.S.c} inset`;
+          keys.forEach(k => { optBtns[k][0].style.boxShadow = `0 0 0 3px ${SG[k].c} inset`; });
+          const bU = s.h("button", { class: "btn solid", onclick: () => { s.sfx.click(); umstellen(); } }, "Umstellen");
+          const bZ = s.h("button", { class: "btn", onclick: () => { s.sfx.click(); zufall(); } }, "Zufall");
+          const bS = s.h("button", { class: "btn", onclick: () => { s.sfx.click(); say(); } }, "Vorlesen");
+          const top = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", padding: "12px 16px" } }, row, s.h("div", { class: "row", style: { gap: "12px" } }, bU, bZ, bS));
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%" } }, top, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "12px" } }, cols)));
+          s.show(top, "up"); s.show(cols, "up"); s.sfx.pop();
+          s.step(async () => { await choose("S", 1); await choose("AO", 0); await choose("O", 2); s.say("Meine Oma kauft heute einen Kuchen am Alexanderplatz."); });
+          s.step(async () => { await umstellen(); s.say("Umgestellt. Das Prädikat bleibt an Platz zwei."); });
+          s.step(async () => { await umstellen(); s.sfx.success(); });
+        },
+      },
+    ],
+  });
+})();
