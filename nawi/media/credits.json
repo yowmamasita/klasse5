@@ -1,4 +1,16 @@
 {
+ "ahornfruechte": {
+  "file": "ahornfruechte.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 466,
+  "title": "Ahornfrüchte",
+  "author": "Fcb981 at English Wikipedia",
+  "license": "CC BY 2.5",
+  "license_url": "https://creativecommons.org/licenses/by/2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Maple_seed_pods_Fcb981.JPG",
+  "orig": "File:Maple seed pods Fcb981.JPG"
+ },
  "armstrong": {
   "file": "armstrong.mp3",
   "kind": "snd",
@@ -69,6 +81,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Wing_mirror.jpg",
   "orig": "File:Wing mirror.jpg"
  },
+ "bachforelle": {
+  "file": "bachforelle.jpg",
+  "kind": "img",
+  "w": 640,
+  "h": 323,
+  "title": "Bachforelle",
+  "author": "Harka, Akos",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Salmo_trutta_fario_Hungary.jpg",
+  "orig": "File:Salmo trutta fario Hungary.jpg"
+ },
  "bakterien-ecoli": {
   "file": "bakterien-ecoli.jpg",
   "kind": "img",
@@ -128,6 +152,29 @@
   "source": "https://commons.wikimedia.org/wiki/File:Window_condensation_12022021.jpg",
   "orig": "File:Window condensation 12022021.jpg"
  },
+ "biene-kirschbluete": {
+  "file": "biene-kirschbluete.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Biene an Kirschblüte",
+  "author": "User:Mournlight",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bee_on_cherry_blossom.JPG",
+  "orig": "File:Bee on cherry blossom.JPG"
+ },
+ "bienen-summen": {
+  "file": "bienen-summen.mp3",
+  "kind": "snd",
+  "dur": 3.48,
+  "title": "Honigbiene summt",
+  "author": "TheKingOfGeeks360",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/TheKingOfGeeks360/sounds/846433/",
+  "orig": "846433"
+ },
  "bleistift-wasserglas": {
   "file": "bleistift-wasserglas.jpg",
   "kind": "img",
@@ -163,6 +210,30 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:The_Blue_Marble,_AS17-148-22727.jpg",
   "orig": "File:The Blue Marble, AS17-148-22727.jpg"
+ },
+ "bohne-keimung": {
+  "file": "bohne-keimung.jpg",
+  "kind": "img",
+  "w": 1100,
+  "h": 785,
+  "title": "Bohne: vom Samen zum Keimling",
+  "author": "B. Domangue",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Navy_Bean_Seed_to_Seedling_Germination.jpg",
+  "orig": "File:Navy Bean Seed to Seedling Germination.jpg"
+ },
+ "botanischer-garten": {
+  "file": "botanischer-garten.jpg",
+  "kind": "img",
+  "w": 640,
+  "h": 480,
+  "title": "Botanischer Garten Berlin: Großes Tropenhaus",
+  "author": "Colin Smith on geo.hlipp.de",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Botanischer_Garten_-_Tropenhaus_(Glass_House)_-_geo.hlipp.de_-_35116.jpg",
+  "orig": "File:Botanischer Garten - Tropenhaus (Glass House) - geo.hlipp.de - 35116.jpg"
  },
  "brille": {
   "file": "brille.jpg",
@@ -222,6 +293,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/daveincamas/sounds/221665/",
   "orig": "221665"
+ },
+ "eichhoernchen": {
+  "file": "eichhoernchen.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 547,
+  "title": "Eichhörnchen",
+  "author": "Rhododendrites",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Red_squirrel_(21808).jpg",
+  "orig": "File:Red squirrel (21808).jpg"
  },
  "eis-saft": {
   "file": "eis-saft.jpg",
@@ -460,6 +543,17 @@
   "source": "https://freesound.org/people/Iamgiorgio/sounds/371815/",
   "orig": "371815"
  },
+ "frosch-quaken": {
+  "file": "frosch-quaken.mp3",
+  "kind": "snd",
+  "dur": 3.95,
+  "title": "Frösche quaken",
+  "author": "Kamix0",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/Kamix0/sounds/391520/",
+  "orig": "391520"
+ },
  "fussabdruck-mond": {
   "file": "fussabdruck-mond.jpg",
   "kind": "img",
@@ -553,6 +647,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Pyrex_Glass_Rod.jpg",
   "orig": "File:Pyrex Glass Rod.jpg"
  },
+ "grasfrosch": {
+  "file": "grasfrosch.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 492,
+  "title": "Grasfrosch",
+  "author": "Holger Krisp",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Grasfrosch-Rana-temporaria-side.jpg",
+  "orig": "File:Grasfrosch-Rana-temporaria-side.jpg"
+ },
  "grosser-wagen": {
   "file": "grosser-wagen.jpg",
   "kind": "img",
@@ -625,6 +731,28 @@
   "source": "https://commons.wikimedia.org/wiki/File:Cork_Micrographia_Hooke.png",
   "orig": "File:Cork Micrographia Hooke.png"
  },
+ "huhn-gackert": {
+  "file": "huhn-gackert.mp3",
+  "kind": "snd",
+  "dur": 3.93,
+  "title": "Huhn gackert",
+  "author": "chanyatenn",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/chanyatenn/sounds/424076/",
+  "orig": "424076"
+ },
+ "hund-bellen": {
+  "file": "hund-bellen.mp3",
+  "kind": "snd",
+  "dur": 1.8,
+  "title": "Hund bellt",
+  "author": "crazymonke9",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/crazymonke9/sounds/418108/",
+  "orig": "418108"
+ },
  "hund-hechelt": {
   "file": "hund-hechelt.jpg",
   "kind": "img",
@@ -648,6 +776,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Dog%27s_Nose.jpg",
   "orig": "File:Dog's Nose.jpg"
+ },
+ "igel": {
+  "file": "igel.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 542,
+  "title": "Igel",
+  "author": "Michael Gäbler",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Erinaceus_europaeus_(Linnaeus,_1758).jpg",
+  "orig": "File:Erinaceus europaeus (Linnaeus, 1758).jpg"
  },
  "jupiter": {
   "file": "jupiter.jpg",
@@ -745,6 +885,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Lit_white_candle.jpg",
   "orig": "File:Lit white candle.jpg"
  },
+ "klette": {
+  "file": "klette.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 467,
+  "title": "Klettfrüchte (Große Klette)",
+  "author": "Famberhorst",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Grote_klit_of_grote_klis_(Arctium_lappa)_19-01-2026._(d.j.b.).jpg",
+  "orig": "File:Grote klit of grote klis (Arctium lappa) 19-01-2026. (d.j.b.).jpg"
+ },
  "kochen": {
   "file": "kochen.mp3",
   "kind": "snd",
@@ -779,6 +931,17 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:2023_Elektroniczna_waga_kuchenna.jpg",
   "orig": "File:2023 Elektroniczna waga kuchenna.jpg"
+ },
+ "kuh-muht": {
+  "file": "kuh-muht.mp3",
+  "kind": "snd",
+  "dur": 2.6,
+  "title": "Kuh muht",
+  "author": "invertedturtle",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/invertedturtle/sounds/546479/",
+  "orig": "546479"
  },
  "kupferdraht": {
   "file": "kupferdraht.jpg",
@@ -897,6 +1060,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Allegheny_Ludlum_Steel_Corp_Scrap_Piles.jpg",
   "orig": "File:Allegheny Ludlum Steel Corp Scrap Piles.jpg"
  },
+ "marienkaefer": {
+  "file": "marienkaefer.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 467,
+  "title": "Siebenpunkt-Marienkäfer",
+  "author": "Stephan Sprinz",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Siebenpunkt-Marienk%C3%A4fer_(Coccinella_septempunctata)_auf_Bl%C3%BCte_im_FFH-Gebiet_%22Viernheimer_Waldheide_und_angrenzende_Fl%C3%A4chen%22.jpg",
+  "orig": "File:Siebenpunkt-Marienkäfer (Coccinella septempunctata) auf Blüte im FFH-Gebiet \"Viernheimer Waldheide und angrenzende Flächen\".jpg"
+ },
  "mars": {
   "file": "mars.jpg",
   "kind": "img",
@@ -908,6 +1083,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Mars_atmosphere_by_Hubble.jpg",
   "orig": "File:Mars atmosphere by Hubble.jpg"
+ },
+ "maulwurf-hand": {
+  "file": "maulwurf-hand.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 485,
+  "title": "Maulwurf: Grabhände",
+  "author": "Didier Descouens",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Talpa_europaea_MHNT_Tete.jpg",
+  "orig": "File:Talpa europaea MHNT Tete.jpg"
  },
  "meniskus": {
   "file": "meniskus.jpg",
@@ -1124,6 +1311,18 @@
   "license_url": "https://creativecommons.org/licenses/by/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Dale_of_Norway_sweater.jpg",
   "orig": "File:Dale of Norway sweater.jpg"
+ },
+ "pusteblume": {
+  "file": "pusteblume.jpg",
+  "kind": "img",
+  "w": 690,
+  "h": 700,
+  "title": "Pusteblume (Löwenzahn)",
+  "author": "Phil Sellens from East Sussex",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Dandelion_Seed_Head_(Taraxacum_officinale)_(3560536510).jpg",
+  "orig": "File:Dandelion Seed Head (Taraxacum officinale) (3560536510).jpg"
  },
  "radweg-berlin": {
   "file": "radweg-berlin.jpg",
@@ -1446,6 +1645,29 @@
   "source": "https://commons.wikimedia.org/wiki/File:Sunset_over_the_North_Sea.jpg",
   "orig": "File:Sunset over the North Sea.jpg"
  },
+ "spatz": {
+  "file": "spatz.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 525,
+  "title": "Haussperling (Spatz)",
+  "author": "Arnold Paul",
+  "license": "CC BY-SA 2.5",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Passer_domesticus_04.jpg",
+  "orig": "File:Passer domesticus 04.jpg"
+ },
+ "spatzen": {
+  "file": "spatzen.mp3",
+  "kind": "snd",
+  "dur": 5.0,
+  "title": "Spatzen tschilpen",
+  "author": "QWerk",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:House_Sparrows_chirping.ogg",
+  "orig": "File:House Sparrows chirping.ogg"
+ },
  "spree-dom": {
   "file": "spree-dom.jpg",
   "kind": "img",
@@ -1469,6 +1691,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:ISS035-E-17210_-_View_of_Germany.jpg",
   "orig": "File:ISS035-E-17210 - View of Germany.jpg"
+ },
+ "star-kirsche": {
+  "file": "star-kirsche.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 641,
+  "title": "Star frisst Kirsche",
+  "author": "hedera.baltica from Wrocław, Poland",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Starling_on_a_cherry_tree_(27994614865).jpg",
+  "orig": "File:Starling on a cherry tree (27994614865).jpg"
  },
  "stempel": {
   "file": "stempel.mp3",
@@ -1775,6 +2009,64 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0/au/deed.en",
   "source": "https://commons.wikimedia.org/wiki/File:AWS_stevenson_screen_at_Wagga_Airport.jpg",
   "orig": "File:AWS stevenson screen at Wagga Airport.jpg"
+ },
+ "wildschwein": {
+  "file": "wildschwein.mp3",
+  "kind": "snd",
+  "dur": 4.0,
+  "title": "Wildschwein grunzt",
+  "author": "TheVeoMammoth11",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0/",
+  "source": "https://freesound.org/people/TheVeoMammoth11/sounds/492654/",
+  "orig": "492654"
+ },
+ "wildschweine-spandau": {
+  "file": "wildschweine-spandau.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 450,
+  "title": "Wildschweine in Berlin-Spandau",
+  "author": "Leonhard Lenz",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Wild_boars_in_a_park_in_Berlin-Spandau_12.jpg",
+  "orig": "File:Wild boars in a park in Berlin-Spandau 12.jpg"
+ },
+ "wolf": {
+  "file": "wolf.jpg",
+  "kind": "img",
+  "w": 605,
+  "h": 700,
+  "title": "Wolf",
+  "author": "Clément Bardot",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Loup_gris_(Canis_lupus_).jpg",
+  "orig": "File:Loup gris (Canis lupus ).jpg"
+ },
+ "wolf-heulen": {
+  "file": "wolf-heulen.mp3",
+  "kind": "snd",
+  "dur": 4.26,
+  "title": "Wölfe heulen",
+  "author": "Sacha.Julien",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/Sacha.Julien/sounds/753896/",
+  "orig": "753896"
+ },
+ "zauneidechse": {
+  "file": "zauneidechse.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 467,
+  "title": "Zauneidechse",
+  "author": "George Chernilevsky",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Lacerta_agilis_female_2013_G1.jpg",
+  "orig": "File:Lacerta agilis female 2013 G1.jpg"
  },
  "ziegenauge": {
   "file": "ziegenauge.jpg",

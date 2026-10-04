@@ -1,5 +1,5 @@
 /* Kapitel 9 – Sachtexte, Sprechen und Zuhören (Sachtext/Geschichte, 5-Schritt-Lesemethode am Fernsehturm-Text,
-   Diagramme und Tabellen, Gesprächsregeln, Meinung begründen, fair diskutieren, Kurzvortrag, Feedback) */
+   Diagramme und Tabellen, Medien (Kindernachrichten, Werbung erkennen), Gesprächsregeln, Meinung begründen, fair diskutieren, Kurzvortrag, Feedback) */
 (() => {
   const P = { blue: "#1d5bd0", red: "#dc3b2a", green: "#138a5a", violet: "#7b4fd6", orange: "#ee7a1a", ink: "#1b2740", pencil: "#5d6678", yellow: "#ffd94a", line: "#c8d3de", unit: "#a16207", soft: "#fdf3d7", teal: "#0e7490" };
   const CSS = `
@@ -54,8 +54,8 @@
   Deck.unit({
     id: "u9", num: 9, title: "Sachtexte, Sprechen und Zuhören", color: P.unit, soft: P.soft,
     subtitle: "Lesen wie ein Profi, reden wie ein Profi",
-    blurb: "Lesemethode, Diagramme, Gesprächsregeln, Meinung, Referat.",
-    goals: ["Sachtexte von Geschichten unterscheiden", "Mit der 5-Schritt-Lesemethode einen Sachtext verstehen", "Diagramme und Tabellen lesen", "Fair diskutieren und die eigene Meinung begründen", "Einen Kurzvortrag halten und Feedback geben"],
+    blurb: "Lesemethode, Diagramme, Medien, Gespräche, Meinung, Referat.",
+    goals: ["Sachtexte von Geschichten unterscheiden", "Mit der 5-Schritt-Lesemethode einen Sachtext verstehen", "Diagramme, Tabellen und Medien verstehen", "Fair diskutieren und die eigene Meinung begründen", "Einen Kurzvortrag halten und Feedback geben"],
     icon(svg, el) {
       svg.append(el("rect", { x: 6, y: 10, width: 34, height: 46, rx: 4, fill: "#fff", stroke: P.unit, "stroke-width": 3 }),
         el("path", { d: "M12 22 h22 M12 30 h22 M12 38 h14", stroke: P.unit, "stroke-width": 3 }),
@@ -284,6 +284,76 @@
           s.step(async () => { s.sfx.tick(); hi([cells[3][3]], "#fde4e1"); await s.wait(300); s.sfx.ding(); hi(cells.map(r => r[2]), "#fdf3d7"); cells[3][2].style.background = P.yellow; await s.show(steps[1], "left"); });
           s.step(async () => { s.sfx.success(); cells[1][2].style.background = P.yellow; cells[1][2].style.fontWeight = 700; await s.show(steps[2], "left"); s.say("Ich nehme den dritten Bus um 7 Uhr 36."); });
           s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* 8a – Medien -------------------------------------------------------- */
+      {
+        title: "Kindernachrichten",
+        say: "Nachrichten gibt es auch für Kinder. Sie erklären schwierige Wörter und zeigen, warum etwas wichtig ist.",
+        build(s) {
+          const ADULT = "Der Bundestag hat den Haushalt für das kommende Jahr verabschiedet.";
+          const KID = "Der Bundestag – das ist das Parlament in Berlin – hat beschlossen, wofür Deutschland nächstes Jahr Geld ausgibt: zum Beispiel für Schulen, Straßen und Bahnen.";
+          const pic = s.photo("plenarsaal", { w: "100%", h: 180, pos: "50% 60%" });
+          const label = s.h("span", { class: "u9chip", style: { background: P.ink, color: "#fff" } }, "Nachrichten für Erwachsene");
+          const news = s.h("p", { class: "t", style: { fontSize: "22px", minHeight: "120px", margin: 0 } }, ADULT);
+          let kid = false;
+          const flip = async () => {
+            kid = !kid; s.sfx.whoosh();
+            if (!s.fast) await s.tween({ from: 1, to: 0, dur: 180, update: x => (news.style.opacity = x) });
+            news.textContent = kid ? KID : ADULT; label.textContent = kid ? "Kindernachrichten" : "Nachrichten für Erwachsene"; label.style.background = kid ? P.unit : P.ink;
+            if (!s.fast) await s.tween({ from: 0, to: 1, dur: 260, update: x => (news.style.opacity = x) });
+            news.style.opacity = ""; s.sfx.pop();
+          };
+          const btn = s.h("button", { class: "btn solid", onclick: () => flip() }, "Umschalten");
+          const tv = s.h("div", { style: { background: "#1b2740", borderRadius: "22px", padding: "12px", display: "flex", flexDirection: "column", gap: "10px" } }, pic,
+            s.h("div", { style: { background: "#fff", borderRadius: "12px", padding: "10px 14px", display: "flex", flexDirection: "column", gap: "6px" } }, s.h("div", { class: "row", style: { justifyContent: "space-between" } }, label, btn), news));
+          const TIPS = [["Fachwörter erklärt", "„Bundestag – das ist …“"], ["Kurze Sätze", "eine Info pro Satz"], ["Bedeutung erklärt", "Was hat das mit mir zu tun?"], ["Bilder und Grafiken", "Karten, Erklärfilme"]];
+          const tips = TIPS.map(([a, b], i) => later(s.h("div", { class: "card", style: { padding: "8px 14px", display: "grid", gridTemplateColumns: "44px 1fr", gap: "12px", alignItems: "center" } }, s.h("span", { class: "u9num" }, String(i + 1)), s.h("p", { class: "small", style: { fontSize: "20px" } }, B(s, a + ": ", P.unit), b))));
+          const W5 = later(s.h("div", { class: "card soft", style: { padding: "10px 14px", display: "flex", flexDirection: "column", gap: "8px" } }, s.h("p", { class: "small", style: { fontSize: "20px" } }, "Eine gute Nachricht beantwortet die ", B(s, "W-Fragen", P.unit), ":"),
+            s.h("div", { class: "row", style: { gap: "8px" } }, ...["Wer?", "Was?", "Wann?", "Wo?", "Warum?"].map(w => s.h("span", { class: "u9chip", style: { background: "#fff", border: "2px solid " + P.unit } }, w)))));
+          const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small", style: { fontSize: "20px" } }, B(s, "„logo!“"), " vom ZDF gibt es seit 1989. Sie läuft montags bis freitags am Abend auf KiKA und erklärt die Nachrichten des Tages für Kinder.")));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "520px 1fr", gap: "18px", alignItems: "start" }, s.h("div", { class: "stack", style: { gap: "12px" } }, tv, lf), s.h("div", { class: "stack", style: { gap: "10px" } }, ...tips, W5)));
+          s.show(tv, "zoom"); s.sound("crowd-cheer", { vol: .15, dur: 1.5, fade: .6 });
+          s.step(async () => { await flip(); s.say(KID); });
+          s.step(async () => { for (const i of [0, 1]) { s.sfx.count(i); await s.show(tips[i], "left"); } });
+          s.step(async () => { for (const i of [2, 3]) { s.sfx.count(i + 2); await s.show(tips[i], "left"); } });
+          s.step(async () => { s.sfx.pop(); await s.show(W5, "up"); s.say("Wer, was, wann, wo, warum?"); });
+          s.step(async () => { s.sound("ubahn-announce", { vol: .3, dur: 2, fade: .5 }); await s.show(lf, "up"); });
+        },
+      },
+      /* 8b ---------------------------------------------------------------- */
+      {
+        title: "Information, Meinung, Werbung",
+        say: "Nicht jeder Text will dich nur informieren. Manche Texte sagen eine Meinung. Und Werbung will, dass du etwas kaufst.",
+        build(s) {
+          const BINS = [
+            ["Information", P.blue, "will dich informieren", [["Der Fernsehturm ist ", "368 Meter", " hoch."], ["Am Samstag regnet es in Berlin, ", "sagt der Wetterdienst", "."]]],
+            ["Meinung", P.violet, "sagt, was jemand denkt", [["", "Ich finde", ", der Fernsehturm ist das ", "schönste", " Gebäude Berlins."], ["Hausaufgaben am Wochenende sind ", "unfair", "!"]]],
+            ["Werbung", P.red, "will, dass du kaufst", [["", "NEU!", " Knusper-Müsli macht dich ", "stark wie ein Löwe", "!"], ["", "Nur heute:", " Turnschuhe ", "50 % billiger", "!"]]],
+          ];
+          const marks = [];
+          const bins = BINS.map(([n, c, sub, items]) => {
+            const snips = items.map(parts => later(s.h("div", { style: { background: "#fff", border: "2px solid " + P.line, borderRadius: "10px", padding: "8px 12px", fontSize: "20px", lineHeight: 1.35 } },
+              ...parts.map((p, i) => { if (i % 2 === 0) return p; const m = s.h("span", { style: { borderRadius: "4px", padding: "0 2px", transition: "background .4s" } }, p); m.c = c; marks.push(m); return m; }))));
+            const el = s.h("div", { class: "card", style: { borderTop: "8px solid " + c, padding: "10px 14px", display: "flex", flexDirection: "column", gap: "8px" } },
+              s.h("p", { style: { margin: 0, font: "800 25px/1.1 var(--f-display)", color: c } }, n), s.h("p", { class: "small pencil" }, sub), ...snips);
+            el.snips = snips; return el;
+          });
+          let lit = false;
+          const light = () => { lit = !lit; s.sfx.click(); marks.forEach(m => { m.style.background = lit ? (m.c === P.blue ? "#dde8fb" : m.c === P.violet ? "#ece5fb" : "#fde4e1") : ""; m.style.fontWeight = lit ? 700 : ""; }); if (lit) s.sfx.ding(); };
+          const sig = s.h("button", { class: "btn", onclick: () => light() }, "Signalwörter zeigen");
+          const SIGNS = ["will, dass du etwas kaufst", "übertreibt: „der beste“, „stark wie ein Löwe“", "macht Druck: „Nur heute!“", "muss gekennzeichnet sein: „Anzeige“ oder „Werbung“ – auch bei Influencern"];
+          const signEls = SIGNS.map(t => later(s.h("p", { class: "small", style: { fontSize: "20px" } }, s.h("b", { style: { color: P.red } }, "• "), t)));
+          const wcard = s.h("div", { class: "card", style: { padding: "10px 16px", display: "flex", flexDirection: "column", gap: "4px" } }, s.h("p", { style: { margin: 0, font: "700 23px/1.2 var(--f-display)", color: P.red } }, "Werbung erkennen: Sie …"), ...signEls);
+          const pic = later(s.photo("litfasssaeule", { w: 230, h: 250, pos: "50% 40%", caption: "Litfaßsäule" }));
+          const fact = later(s.h("p", { class: "small", style: { fontSize: "19px" } }, "Erfunden in Berlin: Die erste Litfaßsäule stellte Ernst Litfaß 1855 auf."));
+          s.add(root(s, "stack", { gap: "12px" }, s.h("div", { class: "cols3", style: { gap: "12px", alignItems: "start" } }, ...bins),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 230px 200px", gap: "14px", alignItems: "start" } }, s.h("div", { class: "stack", style: { gap: "10px" } }, wcard, sig), pic, fact)));
+          s.sfx.pop();
+          bins.forEach((b, i) => s.step(async () => { [() => s.sfx.coin(), () => s.sfx.boing(), () => s.sound("cash-register", { vol: .45 })][i](); for (const sn of b.snips) { await s.show(sn, "left"); await s.wait(150); } s.say(BINS[i][0] + ": " + BINS[i][2] + "."); }));
+          s.step(async () => { light(); s.say("Signalwörter verraten die Textsorte: ich finde, nur heute, neu."); });
+          s.step(async () => { for (const e of signEls) { s.sfx.pop(); await s.show(e, "left"); } });
+          s.step(async () => { s.sound("paper-crumple", { vol: .4, dur: 1 }); await s.show(pic, "zoom"); await s.show(fact, "fade"); s.say("Schon vor über 170 Jahren hingen in Berlin Plakate an Litfaßsäulen."); });
         },
       },
       /* 9 ---------------------------------------------------------------- */

@@ -245,6 +245,18 @@
   "source": "https://freesound.org/people/Kate_is_yellow/sounds/708207/",
   "orig": "708207"
  },
+ "fensterrose": {
+  "file": "fensterrose.jpg",
+  "kind": "img",
+  "w": 600,
+  "h": 572,
+  "title": "Fensterrose, Kathedrale von Chartres",
+  "author": "PtrQs",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Chartres_RosetteSued_122_DSC08269.jpg",
+  "orig": "File:Chartres RosetteSued 122 DSC08269.jpg"
+ },
  "fernsehturm": {
   "file": "fernsehturm.jpg",
   "kind": "img",
@@ -807,6 +819,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Chess_game_Staunton_No._6_top_view.jpg",
   "orig": "File:Chess game Staunton No. 6 top view.jpg"
  },
+ "schneeflocke": {
+  "file": "schneeflocke.jpg",
+  "kind": "img",
+  "w": 480,
+  "h": 600,
+  "title": "Schneeflocke",
+  "author": "Alexey Kljatov",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Snowflake_macro_photography_1.jpg",
+  "orig": "File:Snowflake macro photography 1.jpg"
+ },
  "schoko-knack": {
   "file": "schoko-knack.mp3",
   "kind": "snd",
@@ -841,6 +865,18 @@
   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
   "source": "https://commons.wikimedia.org/wiki/File:School_lunch_in_yl%C3%A4st%C3%B6_school.jpg",
   "orig": "File:School lunch in ylästö school.jpg"
+ },
+ "schwimmbecken": {
+  "file": "schwimmbecken.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 532,
+  "title": "50-m-Schwimmbecken",
+  "author": "www.localfitness.com.au",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Olympic_Swimming_Pool_-_Fast_Lane.JPG",
+  "orig": "File:Olympic Swimming Pool - Fast Lane.JPG"
  },
  "senklot": {
   "file": "senklot.jpg",
@@ -995,6 +1031,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:2014_D%C3%A9caNation_-_Long_Jump_27.jpg",
   "orig": "File:2014 DécaNation - Long Jump 27.jpg"
+ },
+ "windrad": {
+  "file": "windrad.jpg",
+  "kind": "img",
+  "w": 400,
+  "h": 600,
+  "title": "Windkraftanlage mit drei Rotorblättern",
+  "author": "Ralf Lotys (Sicherlich)",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:2020-05_Wei%C3%9Fandt-G%C3%B6lzau_(05)_Windkraftanlage.jpg",
+  "orig": "File:2020-05 Weißandt-Gölzau (05) Windkraftanlage.jpg"
  },
  "wuerfel": {
   "file": "wuerfel.jpg",

@@ -1,4 +1,9 @@
 {
+ "00de1b5cb1955faa": {
+  "lang": "de-DE",
+  "spoken": "Die große Sekunde: Alle meine Entchen.",
+  "text": "Die große Sekunde: Alle meine Entchen."
+ },
  "010f2fb5f1391436": {
   "lang": "de-DE",
   "spoken": "Im Deutschen heißt der siebte Ton h. Im Englischen heißt er B.",
@@ -19,10 +24,20 @@
   "spoken": "Das Tempo sagt, wie schnell der Puls ist. Man misst es in Schlägen pro Minute.",
   "text": "Das Tempo sagt, wie schnell der Puls ist. Man misst es in Schlägen pro Minute."
  },
+ "026312cf4263781d": {
+  "lang": "de-DE",
+  "spoken": "Fünf Töne ohne Halbtonschritte: Die Pentatonik gibt es auf der ganzen Welt. In Schottland, in China, in Indonesien. Und auf den schwarzen Tasten!",
+  "text": "Fünf Töne ohne Halbtonschritte: Die Pentatonik gibt es auf der ganzen Welt. In Schottland, in China, in Indonesien. Und auf den schwarzen Tasten!"
+ },
  "04e24be4ac807244": {
   "lang": "de-DE",
   "spoken": "Im Chor gibt es vier Stimmlagen: Sopran, Alt, Tenor und Bass. Tippe auf einen Balken und hör, wie hoch oder tief er klingt.",
   "text": "Im Chor gibt es vier Stimmlagen: Sopran, Alt, Tenor und Bass. Tippe auf einen Balken und hör, wie hoch oder tief er klingt."
+ },
+ "053393e0e3a00ca9": {
+  "lang": "de-DE",
+  "spoken": "Manche Intervalle klingen weich und ruhig, sie verschmelzen. Das ist eine Konsonanz. Andere reiben sich und klingen spannend. Das ist eine Dissonanz.",
+  "text": "Manche Intervalle klingen weich und ruhig, sie verschmelzen. Das ist eine Konsonanz. Andere reiben sich und klingen spannend. Das ist eine Dissonanz."
  },
  "0650a613c45b1a4e": {
   "lang": "de-DE",
@@ -74,6 +89,16 @@
   "spoken": "Und jetzt alle vier Stimmen.",
   "text": "Und jetzt alle vier Stimmen."
  },
+ "0a52f1d846a62b6a": {
+  "lang": "de-DE",
+  "spoken": "Auld Lang Syne aus Schottland: nur auf schwarzen Tasten.",
+  "text": "Auld Lang Syne aus Schottland: nur auf schwarzen Tasten."
+ },
+ "0a8ec1d1da4a8882": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 9. Intervalle und Musik der Welt. Abstände zwischen Tönen – und Klänge aus aller Welt",
+  "text": "Kapitel 9. Intervalle und Musik der Welt. Abstände zwischen Tönen – und Klänge aus aller Welt"
+ },
  "0abe08bcc7379bf7": {
   "lang": "de-DE",
   "spoken": "Rhythmus ist überall. Tippe auf die Karten und hör genau hin.",
@@ -83,6 +108,11 @@
   "lang": "de-DE",
   "spoken": "Das Auflösungszeichen macht wieder f daraus.",
   "text": "Das Auflösungszeichen macht wieder f daraus."
+ },
+ "0c1228d66b83ff72": {
+  "lang": "de-DE",
+  "spoken": "In Indien spielen oft Sitar und Tabla zusammen. Die Sitar hat Saiten, die von allein mitklingen. Die Tabla sind zwei Trommeln: eine hohe und eine tiefe.",
+  "text": "In Indien spielen oft Sitar und Tabla zusammen. Die Sitar hat Saiten, die von allein mitklingen. Die Tabla sind zwei Trommeln: eine hohe und eine tiefe."
  },
  "0c297a2a6c37a5fd": {
   "lang": "de-DE",
@@ -109,6 +139,11 @@
   "spoken": "Bei den Holzbläsern schwingt die Luft an einer Kante oder an einem Rohrblatt. Tippe auf ein Instrument, dann hörst du eine echte Aufnahme.",
   "text": "Bei den Holzbläsern schwingt die Luft an einer Kante oder an einem Rohrblatt. Tippe auf ein Instrument, dann hörst du eine echte Aufnahme."
  },
+ "13d96195e9c78f48": {
+  "lang": "de-DE",
+  "spoken": "Die Resonanzsaiten schwingen mit.",
+  "text": "Die Resonanzsaiten schwingen mit."
+ },
  "14d418625fe5e7ff": {
   "lang": "de-DE",
   "spoken": "Ein Vorzeichen gilt bis zum Taktstrich. Das Auflösungszeichen hebt es vorher schon auf.",
@@ -128,6 +163,11 @@
   "lang": "de-DE",
   "spoken": "Pop und Rock haben meistens vier Schläge.",
   "text": "Pop und Rock haben meistens vier Schläge."
+ },
+ "1b05581f530dfb66": {
+  "lang": "de-DE",
+  "spoken": "Trinidad und Tobago (Karibik): Die Steel Pan wird aus Ölfässern gebaut.",
+  "text": "Trinidad und Tobago (Karibik): Die Steel Pan wird aus Ölfässern gebaut."
  },
  "1e365d03ceba4862": {
   "lang": "de-DE",
@@ -204,6 +244,11 @@
   "spoken": "Die Posaune macht ihr Rohr mit dem Zug länger. Trompete, Horn und Tuba haben dafür Ventile.",
   "text": "Die Posaune macht ihr Rohr mit dem Zug länger. Trompete, Horn und Tuba haben dafür Ventile."
  },
+ "2ee96ee2c87d2971": {
+  "lang": "de-DE",
+  "spoken": "Bass, Ton, Slap.",
+  "text": "Bass, Ton, Slap."
+ },
  "2f3be28396858ad3": {
   "lang": "de-DE",
   "spoken": "Schlaginstrumente schlägt man an. Manche haben feste Töne, wie Pauke und Xylofon. Andere machen Rhythmus und Geräusche. Tippe auf ein Foto, dann hörst du es.",
@@ -254,6 +299,11 @@
   "spoken": "Eine Saite kann man mit dem Bogen streichen oder mit dem Finger zupfen. Und wenn die Saite kürzer wird, klingt sie höher.",
   "text": "Eine Saite kann man mit dem Bogen streichen oder mit dem Finger zupfen. Und wenn die Saite kürzer wird, klingt sie höher."
  },
+ "37f350d0897fb136": {
+  "lang": "de-DE",
+  "spoken": "Die Quinte: Morgen kommt der Weihnachtsmann.",
+  "text": "Die Quinte: Morgen kommt der Weihnachtsmann."
+ },
  "38c44157511b629d": {
   "lang": "de-DE",
   "spoken": "Die Welle erreicht dein Ohr.",
@@ -294,10 +344,20 @@
   "spoken": "Von c nach d: ein Ganzton. Dazwischen liegt eine Taste.",
   "text": "Von c nach d: ein Ganzton. Dazwischen liegt eine Taste."
  },
+ "3f0a5ef8a052cec8": {
+  "lang": "de-DE",
+  "spoken": "Nordaustralien: Das Didgeridoo ist ein Baumstamm, den Termiten ausgehöhlt haben.",
+  "text": "Nordaustralien: Das Didgeridoo ist ein Baumstamm, den Termiten ausgehöhlt haben."
+ },
  "401505e418161728": {
   "lang": "de-DE",
   "spoken": "Bei der Oboe schwingen zwei Rohrblätter gegeneinander.",
   "text": "Bei der Oboe schwingen zwei Rohrblätter gegeneinander."
+ },
+ "40fcab3ff71150c3": {
+  "lang": "de-DE",
+  "spoken": "Auf dem Klavier zählst du die weißen Tasten. Die erste und die letzte Taste zählen mit. Das klappt von jedem Ton aus.",
+  "text": "Auf dem Klavier zählst du die weißen Tasten. Die erste und die letzte Taste zählen mit. Das klappt von jedem Ton aus."
  },
  "414d3e40513cf74b": {
   "lang": "de-DE",
@@ -313,6 +373,11 @@
   "lang": "de-DE",
   "spoken": "Cello, ca. 1,20 m hoch.",
   "text": "Cello, ca. 1,20 m hoch."
+ },
+ "44f5f71bf3027a5e": {
+  "lang": "de-DE",
+  "spoken": "Ein Intervall ist der Abstand zwischen zwei Tönen. Tippe auf eine Taste und hör, wie weit sie vom c entfernt ist.",
+  "text": "Ein Intervall ist der Abstand zwischen zwei Tönen. Tippe auf eine Taste und hör, wie weit sie vom c entfernt ist."
  },
  "4525e2a88f7b5c5d": {
   "lang": "de-DE",
@@ -369,6 +434,11 @@
   "spoken": "Ton: eine ganz reine Schwingung",
   "text": "Ton: eine ganz reine Schwingung"
  },
+ "5107510031459442": {
+  "lang": "de-DE",
+  "spoken": "Intervalle hörst du jeden Tag: beim Martinshorn, an der Haustür, beim Gitarrestimmen und im Wald.",
+  "text": "Intervalle hörst du jeden Tag: beim Martinshorn, an der Haustür, beim Gitarrestimmen und im Wald."
+ },
  "512e43d555f4243b": {
   "lang": "de-DE",
   "spoken": "Tonleitern und Töne begegnen dir jeden Tag. Tippe auf die Karten und hör genau hin.",
@@ -383,6 +453,11 @@
   "lang": "de-DE",
   "spoken": "Programmmusik: ein Gewitter, ein Fluss, ein Wolf.",
   "text": "Programmmusik: ein Gewitter, ein Fluss, ein Wolf."
+ },
+ "52643aae6488a206": {
+  "lang": "de-DE",
+  "spoken": "Kleiner Abstand, mittlerer Abstand, großer Abstand.",
+  "text": "Kleiner Abstand, mittlerer Abstand, großer Abstand."
  },
  "52ce591715b62780": {
   "lang": "de-DE",
@@ -413,6 +488,16 @@
   "lang": "de-DE",
   "spoken": "Im Rondo kommt Teil A immer wieder zurück. Dazwischen gibt es jedes Mal etwas Neues: B, dann C.",
   "text": "Im Rondo kommt Teil A immer wieder zurück. Dazwischen gibt es jedes Mal etwas Neues: B, dann C."
+ },
+ "56b86a05ae345316": {
+  "lang": "de-DE",
+  "spoken": "Ein Gamelan ist ein ganzes Orchester aus Gongs, Metallplatten und Trommeln. Die Musik läuft in Runden. Der große Gong zeigt, wann eine Runde zu Ende ist.",
+  "text": "Ein Gamelan ist ein ganzes Orchester aus Gongs, Metallplatten und Trommeln. Die Musik läuft in Runden. Der große Gong zeigt, wann eine Runde zu Ende ist."
+ },
+ "58342e7013912b43": {
+  "lang": "de-DE",
+  "spoken": "Wir zählen die Stufen vom ersten bis zum zweiten Ton. Beide Töne zählen mit. Von c bis e sind es drei Stufen: eine Terz.",
+  "text": "Wir zählen die Stufen vom ersten bis zum zweiten Ton. Beide Töne zählen mit. Von c bis e sind es drei Stufen: eine Terz."
  },
  "5882aa4b5a8b428f": {
   "lang": "de-DE",
@@ -499,6 +584,11 @@
   "spoken": "Musik erzählt überall mit: im Zeichentrick, in Videospielen, in Kino-Trailern und in Hörspielen.",
   "text": "Musik erzählt überall mit: im Zeichentrick, in Videospielen, in Kino-Trailern und in Hörspielen."
  },
+ "62a3837377b3fa7e": {
+  "lang": "de-DE",
+  "spoken": "Kommen die zwei Töne nacheinander, ist das Intervall melodisch. Klingen sie gleichzeitig, ist es harmonisch.",
+  "text": "Kommen die zwei Töne nacheinander, ist das Intervall melodisch. Klingen sie gleichzeitig, ist es harmonisch."
+ },
  "641be5464509db36": {
   "lang": "de-DE",
   "spoken": "Mathe",
@@ -519,6 +609,11 @@
   "spoken": "Wir bauen die Dur-Treppe ab g. Ganz, ganz, halb, ganz, ganz – und dann brauchen wir einen Ganzton. Mit f klappt das nicht!",
   "text": "Wir bauen die Dur-Treppe ab g. Ganz, ganz, halb, ganz, ganz – und dann brauchen wir einen Ganzton. Mit f klappt das nicht!"
  },
+ "67f87f1983c6e17e": {
+  "lang": "de-DE",
+  "spoken": "Jetzt reisen wir um die Welt. Tippe auf einen Punkt auf der Karte, dann hörst du das Instrument von dort.",
+  "text": "Jetzt reisen wir um die Welt. Tippe auf einen Punkt auf der Karte, dann hörst du das Instrument von dort."
+ },
  "683a44e553b71127": {
   "lang": "de-DE",
   "spoken": "Tief und langsam. Eine Oktave tiefer und viel langsamer.",
@@ -534,6 +629,16 @@
   "spoken": "Filmmusik",
   "text": "Filmmusik"
  },
+ "6b666cf69cf5b78d": {
+  "lang": "de-DE",
+  "spoken": "Mit Zirkularatmung klingt der Ton ohne Pause weiter.",
+  "text": "Mit Zirkularatmung klingt der Ton ohne Pause weiter."
+ },
+ "6c71a3eb6d66317a": {
+  "lang": "de-DE",
+  "spoken": "Wir starten in Berlin.",
+  "text": "Wir starten in Berlin."
+ },
  "6ca972df456a6287": {
   "lang": "de-DE",
   "spoken": "Ein Ostinato ist ein kurzes Muster, das sich immer wieder wiederholt. Darüber kann eine Melodie spielen. Tippe die Kästchen an.",
@@ -543,6 +648,11 @@
   "lang": "de-DE",
   "spoken": "Schall ist Schwingung. Eine Saite schwingt, schubst die Luft an, und die Welle wandert bis zu deinem Ohr.",
   "text": "Schall ist Schwingung. Eine Saite schwingt, schubst die Luft an, und die Welle wandert bis zu deinem Ohr."
+ },
+ "6dd1d9753ad68133": {
+  "lang": "de-DE",
+  "spoken": "Westafrika (Mali, Guinea): Die Djembe wird mit bloßen Händen gespielt.",
+  "text": "Westafrika (Mali, Guinea): Die Djembe wird mit bloßen Händen gespielt."
  },
  "6e3640ec241c76e6": {
   "lang": "de-DE",
@@ -554,10 +664,20 @@
   "spoken": "Bratsche, Korpus ca. 41 cm.",
   "text": "Bratsche, Korpus ca. 41 cm."
  },
+ "702d3cd1b7a48194": {
+  "lang": "de-DE",
+  "spoken": "Indien: Die Sitar hat viele Saiten, die Tabla sind zwei Trommeln.",
+  "text": "Indien: Die Sitar hat viele Saiten, die Tabla sind zwei Trommeln."
+ },
  "7236cc09a0cf3557": {
   "lang": "de-DE",
   "spoken": "Streichinstrumente: Saiten werden gestrichen oder gezupft.",
   "text": "Streichinstrumente: Saiten werden gestrichen oder gezupft."
+ },
+ "727e8887ff19497e": {
+  "lang": "de-DE",
+  "spoken": "Das Alphorn hat keine Klappen und keine Ventile. Es kann nur Naturtöne spielen. Zwischen den Naturtönen liegen genau die Intervalle, die du kennst: Oktave, Quinte, Quarte, Terz.",
+  "text": "Das Alphorn hat keine Klappen und keine Ventile. Es kann nur Naturtöne spielen. Zwischen den Naturtönen liegen genau die Intervalle, die du kennst: Oktave, Quinte, Quarte, Terz."
  },
  "72bd9da5b0d85c3a": {
   "lang": "de-DE",
@@ -593,6 +713,11 @@
   "lang": "de-DE",
   "spoken": "Jetzt als Kanon: Jede Stimme beginnt zwei Takte später.",
   "text": "Jetzt als Kanon: Jede Stimme beginnt zwei Takte später."
+ },
+ "78cb6e8e3654a2b1": {
+  "lang": "de-DE",
+  "spoken": "c, g, d, a, e: immer eine Quinte weiter.",
+  "text": "c, g, d, a, e: immer eine Quinte weiter."
  },
  "7918cbcf51761964": {
   "lang": "de-DE",
@@ -674,6 +799,11 @@
   "spoken": "c, e, g: Wir springen immer über einen Ton.",
   "text": "c, e, g: Wir springen immer über einen Ton."
  },
+ "8b9978b012b01710": {
+  "lang": "de-DE",
+  "spoken": "c, d, e: drei Stufen. Das ist eine Terz.",
+  "text": "c, d, e: drei Stufen. Das ist eine Terz."
+ },
  "8c1c77bf09abd21d": {
   "lang": "de-DE",
   "spoken": "Zu jedem Notenwert gibt es eine Pause. In der Pause ist es still, aber du zählst weiter.",
@@ -754,6 +884,11 @@
   "spoken": "Der Walzer hat drei Schläge: Um pa pa.",
   "text": "Der Walzer hat drei Schläge: Um pa pa."
  },
+ "9bccde7ad6c077e9": {
+  "lang": "de-DE",
+  "spoken": "Super! Du kannst jetzt Intervalle zählen und hören, und du kennst Instrumente aus aller Welt.",
+  "text": "Super! Du kannst jetzt Intervalle zählen und hören, und du kennst Instrumente aus aller Welt."
+ },
  "9c64bee59a2eaaab": {
   "lang": "de-DE",
   "spoken": "Aus e wird es.",
@@ -763,6 +898,11 @@
   "lang": "de-DE",
   "spoken": "Das sind die Noten von c bis zum nächsten c. Das tiefe c steht auf einer kleinen Hilfslinie.",
   "text": "Das sind die Noten von c bis zum nächsten c. Das tiefe c steht auf einer kleinen Hilfslinie."
+ },
+ "9cf3b2094d5d2564": {
+  "lang": "de-DE",
+  "spoken": "Das Didgeridoo kommt von den Aborigines aus dem Norden Australiens. Es ist ein Baumstamm, den Termiten von innen ausgehöhlt haben.",
+  "text": "Das Didgeridoo kommt von den Aborigines aus dem Norden Australiens. Es ist ein Baumstamm, den Termiten von innen ausgehöhlt haben."
  },
  "9dce3d362476f74e": {
   "lang": "de-DE",
@@ -814,6 +954,11 @@
   "spoken": "Tippe auf eine Figur und hör ihren Klang. Der Vogel ist eine Flöte, der Wolf sind drei Hörner.",
   "text": "Tippe auf eine Figur und hör ihren Klang. Der Vogel ist eine Flöte, der Wolf sind drei Hörner."
  },
+ "a382bf6c7265bb62": {
+  "lang": "de-DE",
+  "spoken": "Hör auf den großen Gong am Ende jeder Runde.",
+  "text": "Hör auf den großen Gong am Ende jeder Runde."
+ },
  "a4148fc95497d943": {
   "lang": "de-DE",
   "spoken": "Musik",
@@ -823,6 +968,11 @@
   "lang": "de-DE",
   "spoken": "Bei der Klarinette schwingt ein Rohrblatt.",
   "text": "Bei der Klarinette schwingt ein Rohrblatt."
+ },
+ "a57f775894d8f15c": {
+  "lang": "de-DE",
+  "spoken": "Viele Lieder beginnen mit einem bestimmten Intervall. Wenn du den Liedanfang kennst, erkennst du das Intervall.",
+  "text": "Viele Lieder beginnen mit einem bestimmten Intervall. Wenn du den Liedanfang kennst, erkennst du das Intervall."
  },
  "a5bc6609ffee99eb": {
   "lang": "de-DE",
@@ -904,6 +1054,11 @@
   "spoken": "Nach sieben Tönen kommt wieder ein c. Es klingt gleich, nur höher. Das nennt man eine Oktave.",
   "text": "Nach sieben Tönen kommt wieder ein c. Es klingt gleich, nur höher. Das nennt man eine Oktave."
  },
+ "b1f0a9a2caf64714": {
+  "lang": "de-DE",
+  "spoken": "Die Steel Pan kommt aus Trinidad und Tobago in der Karibik. Sie wird aus alten Ölfässern gebaut. Die Töne liegen im Kreis, und Nachbarn sind eine Quinte voneinander entfernt.",
+  "text": "Die Steel Pan kommt aus Trinidad und Tobago in der Karibik. Sie wird aus alten Ölfässern gebaut. Die Töne liegen im Kreis, und Nachbarn sind eine Quinte voneinander entfernt."
+ },
  "b22dc1b06805881b": {
   "lang": "de-DE",
   "spoken": "Musikalische Formen hörst du jeden Tag: im Radio, im Stadion, beim Zocken und in der Schule.",
@@ -913,6 +1068,16 @@
   "lang": "de-DE",
   "spoken": "Eine Phrase. Am Ende: Luft holen.",
   "text": "Eine Phrase. Am Ende: Luft holen."
+ },
+ "b581385042245145": {
+  "lang": "de-DE",
+  "spoken": "Schweiz: Das Alphorn ist über drei Meter lang und hat keine Klappen.",
+  "text": "Schweiz: Das Alphorn ist über drei Meter lang und hat keine Klappen."
+ },
+ "b5ac85aa35779e68": {
+  "lang": "de-DE",
+  "spoken": "Terz ist nicht gleich Terz. Die große Terz hat vier Halbtöne und klingt hell, nach Dur. Die kleine Terz hat drei Halbtöne und klingt dunkler, nach Moll.",
+  "text": "Terz ist nicht gleich Terz. Die große Terz hat vier Halbtöne und klingt hell, nach Dur. Die kleine Terz hat drei Halbtöne und klingt dunkler, nach Moll."
  },
  "b85f7b17376136ab": {
   "lang": "de-DE",
@@ -959,10 +1124,20 @@
   "spoken": "Eine Saite schwingt nicht nur als Ganzes, sondern auch in Hälften, Dritteln und Vierteln. Das sind die Obertöne.",
   "text": "Eine Saite schwingt nicht nur als Ganzes, sondern auch in Hälften, Dritteln und Vierteln. Das sind die Obertöne."
  },
+ "bc92b98082332d1c": {
+  "lang": "de-DE",
+  "spoken": "Die Djembe kommt aus Westafrika. Mit der Hand spielst du drei Klänge: in der Mitte den tiefen Bass, am Rand den Ton und ganz außen den knallenden Slap.",
+  "text": "Die Djembe kommt aus Westafrika. Mit der Hand spielst du drei Klänge: in der Mitte den tiefen Bass, am Rand den Ton und ganz außen den knallenden Slap."
+ },
  "bd63a71ccade2577": {
   "lang": "de-DE",
   "spoken": "Sechzehn Sechzehntel!",
   "text": "Sechzehn Sechzehntel!"
+ },
+ "bd8fbf2c016eeeb6": {
+  "lang": "de-DE",
+  "spoken": "c und g zusammen: harmonisch.",
+  "text": "c und g zusammen: harmonisch."
  },
  "be04a315477e3da1": {
   "lang": "de-DE",
@@ -1009,6 +1184,11 @@
   "spoken": "Der Dirigent zeigt mit dem Einsatz, wann alle anfangen, und mit dem Abschlag, wann alle aufhören.",
   "text": "Der Dirigent zeigt mit dem Einsatz, wann alle anfangen, und mit dem Abschlag, wann alle aufhören."
  },
+ "c27f6713897d16c7": {
+  "lang": "de-DE",
+  "spoken": "c bis g: fünf Stufen, eine Quinte.",
+  "text": "c bis g: fünf Stufen, eine Quinte."
+ },
  "c5d245ac4898723c": {
   "lang": "de-DE",
   "spoken": "Ein Sprechstück ist Musik nur mit gesprochenen Wörtern. Tippe Wörter in die vier Kästchen und starte den Beat.",
@@ -1049,6 +1229,11 @@
   "spoken": "Je höher am Körper, desto heller der Klang.",
   "text": "Je höher am Körper, desto heller der Klang."
  },
+ "ceb3517fb995795e": {
+  "lang": "de-DE",
+  "spoken": "Und acht Stufen: die Oktave. Da klingt das c wieder wie c, nur höher.",
+  "text": "Und acht Stufen: die Oktave. Da klingt das c wieder wie c, nur höher."
+ },
  "ceeed300aea075aa": {
   "lang": "de-DE",
   "spoken": "Kurz vor dem Konzert passiert immer das Gleiche: Die Oboe spielt ein a, alle stimmen, der Dirigent kommt, alle klatschen. Dann wird es still – und die Musik beginnt.",
@@ -1074,6 +1259,11 @@
   "spoken": "So sieht man Schwingungen in echt: Sand auf einer Metallplatte, eine Stimmgabel und die Spur, die sie zeichnet.",
   "text": "So sieht man Schwingungen in echt: Sand auf einer Metallplatte, eine Stimmgabel und die Spur, die sie zeichnet."
  },
+ "d422bb0661d8a802": {
+  "lang": "de-DE",
+  "spoken": "Die kleine Sekunde: Die Welle wackelt. Die Töne reiben sich.",
+  "text": "Die kleine Sekunde: Die Welle wackelt. Die Töne reiben sich."
+ },
  "d450414fa4a7e9af": {
   "lang": "de-DE",
   "spoken": "Dafür ist der letzte Takt kürzer.",
@@ -1088,6 +1278,16 @@
   "lang": "de-DE",
   "spoken": "Bei jedem Instrument schwingt etwas anderes: eine Saite, die Luft in einem Rohr, ein Fell oder das Instrument selbst.",
   "text": "Bei jedem Instrument schwingt etwas anderes: eine Saite, die Luft in einem Rohr, ein Fell oder das Instrument selbst."
+ },
+ "d7a8d2cb4cb1f889": {
+  "lang": "de-DE",
+  "spoken": "c, d, e, f: vier Stufen, eine Quarte.",
+  "text": "c, d, e, f: vier Stufen, eine Quarte."
+ },
+ "d8b3480f7580961f": {
+  "lang": "de-DE",
+  "spoken": "Wer normal bläst, muss Pausen zum Luftholen machen.",
+  "text": "Wer normal bläst, muss Pausen zum Luftholen machen."
  },
  "d8d21dfbbeb6a680": {
   "lang": "de-DE",
@@ -1118,6 +1318,11 @@
   "lang": "de-DE",
   "spoken": "Straßenmusik am Alexanderplatz",
   "text": "Straßenmusik am Alexanderplatz"
+ },
+ "dbdfcd1ba40f1795": {
+  "lang": "de-DE",
+  "spoken": "Erst c, dann g: melodisch.",
+  "text": "Erst c, dann g: melodisch."
  },
  "de3493f8b48afc26": {
   "lang": "de-DE",
@@ -1189,6 +1394,11 @@
   "spoken": "c, d, e, f, g, a, h, und wieder c.",
   "text": "c, d, e, f, g, a, h, und wieder c."
  },
+ "e9569edb6ad54e70": {
+  "lang": "de-DE",
+  "spoken": "Die Quinte: Die Welle ist gleichmäßig. Das klingt ruhig.",
+  "text": "Die Quinte: Die Welle ist gleichmäßig. Das klingt ruhig."
+ },
  "ec50d69500959ea9": {
   "lang": "de-DE",
   "spoken": "Die Wiederholungszeichen sagen: Alles dazwischen wird noch einmal gespielt.",
@@ -1198,6 +1408,16 @@
   "lang": "de-DE",
   "spoken": "Am Anfang jeder Notenzeile steht ein Schlüssel. Der Violinschlüssel wickelt sich um die zweite Linie. Dort steht das g.",
   "text": "Am Anfang jeder Notenzeile steht ein Schlüssel. Der Violinschlüssel wickelt sich um die zweite Linie. Dort steht das g."
+ },
+ "ecafb7924b933159": {
+  "lang": "de-DE",
+  "spoken": "c bis e: vier Halbtöne. Große Terz. Das klingt hell.",
+  "text": "c bis e: vier Halbtöne. Große Terz. Das klingt hell."
+ },
+ "edd29d5c97e8df5d": {
+  "lang": "de-DE",
+  "spoken": "f, g, a, h: auch vier Stufen, auch eine Quarte.",
+  "text": "f, g, a, h: auch vier Stufen, auch eine Quarte."
  },
  "eed8ae8f39bcf042": {
   "lang": "de-DE",
@@ -1213,6 +1433,11 @@
   "lang": "de-DE",
   "spoken": "Dieses alte Kinderlied kennst du. Drück auf Abspielen und lies mit.",
   "text": "Dieses alte Kinderlied kennst du. Drück auf Abspielen und lies mit."
+ },
+ "f2617a2fe9fe202f": {
+  "lang": "de-DE",
+  "spoken": "Oktave, Quinte, Quarte, große Terz, kleine Terz.",
+  "text": "Oktave, Quinte, Quarte, große Terz, kleine Terz."
  },
  "f336a1be869a92e2": {
   "lang": "de-DE",
@@ -1248,6 +1473,11 @@
   "lang": "de-DE",
   "spoken": "Das Zwerchfell ist dein wichtigster Atemmuskel. Beim Einatmen zieht es sich nach unten, und die Lunge bekommt Platz.",
   "text": "Das Zwerchfell ist dein wichtigster Atemmuskel. Beim Einatmen zieht es sich nach unten, und die Lunge bekommt Platz."
+ },
+ "f8525013f4d38ead": {
+  "lang": "de-DE",
+  "spoken": "c bis es: drei Halbtöne. Kleine Terz. Das klingt dunkler.",
+  "text": "c bis es: drei Halbtöne. Kleine Terz. Das klingt dunkler."
  },
  "f9a89dc45532d117": {
   "lang": "de-DE",

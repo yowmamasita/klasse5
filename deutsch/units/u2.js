@@ -1,4 +1,4 @@
-/* Kapitel 2 – Satzglieder und Sätze. Jede Satzglied-Art hat im ganzen Kapitel genau eine Farbe. */
+/* Kapitel 2 – Satzglieder und Sätze (inkl. Relativsätze, das/dass). Jede Satzglied-Art hat im ganzen Kapitel genau eine Farbe. */
 (() => {
   "use strict";
   const CSS = `
@@ -154,13 +154,13 @@
   Deck.unit({
     id: "u2", num: 2, title: "Satzglieder und Sätze", color: "#0f766e", soft: "#dcf3ef",
     subtitle: "Bausteine, die man umstellen kann",
-    blurb: "Umstellprobe, Subjekt, Objekte, Haupt- und Nebensatz.",
+    blurb: "Umstellprobe, Satzglieder, Neben- und Relativsätze.",
     goals: [
       "Mit der Umstellprobe Satzglieder finden",
       "Prädikat, Subjekt und Objekte erfragen",
       "Wann? Wo? Wie? Warum? – die Adverbialen",
       "Aussage-, Frage- und Aufforderungssatz",
-      "Hauptsatz, Nebensatz, Satzreihe, Satzgefüge",
+      "Hauptsatz, Nebensatz, Satzgefüge, Relativsatz",
     ],
     icon(svg, el) {
       [["#1d5bd0", 6, 14, 22], ["#dc3b2a", 32, 14, 30], ["#138a5a", 14, 40, 40]].forEach(([c, x, y, w]) =>
@@ -755,6 +755,155 @@
           s.step(async () => { await post(4); });
           s.step(async () => { await post(5); s.sfx.ding(); await s.show(c2, "up"); });
           s.step(async () => { s.sfx.success(); await s.show(merk, "up"); s.show(pic, "zoom"); });
+        },
+      },
+      /* 16a ---------------------------------------------------------------- */
+      {
+        title: "Der Relativsatz",
+        say: "Ein Relativsatz erklärt ein Nomen genauer. Er beginnt mit der, die oder das. Und wie in jedem Nebensatz steht das Verb am Ende.",
+        build(s) {
+          const NS = "#b45309", RED = "var(--red)";
+          const GEN = { der: "#1d5bd0", die: "#dc3b2a", das: "#138a5a" };
+          const wd = (t, st) => s.h("span", { class: "tx", style: Object.assign({ display: "inline-block", fontSize: "40px" }, st || {}) }, t);
+          const toks = {
+            a: wd("Der"), n: s.h("span", { class: "tx hl", style: { display: "inline-block", fontSize: "40px", fontWeight: 700 } }, "Hund"),
+            c1: s.h("span", { class: "d2p", style: { fontSize: "40px", color: RED, display: "none" } }, ","),
+            r: s.h("span", { class: "d2b", style: { borderColor: NS, background: "#fdecd9", fontSize: "36px", display: "none" } }, "der"),
+            o: wd("im Park", { display: "none" }), v: wd("bellt", { display: "none", fontWeight: 700, color: SG.P.c }),
+            c2: s.h("span", { class: "d2p", style: { fontSize: "40px", color: RED, display: "none" } }, ","),
+            p: wd("gehört"), l: wd("Lea"), pt: s.h("span", { class: "d2p", style: { fontSize: "40px" } }, "."),
+          };
+          const row = s.h("div", { class: "d2row", style: { gap: "10px", alignItems: "baseline", flexWrap: "nowrap", padding: "76px 10px 44px", justifyContent: "center" } }, Object.values(toks));
+          const arc = s.svg(100, 100); Object.assign(arc.style, { position: "absolute", left: "0", top: "0", pointerEvents: "none", overflow: "visible" });
+          const path = s.el("path", { class: "later", d: "M0 0", fill: "none", stroke: NS, "stroke-width": 4, "stroke-linecap": "round" });
+          const head = s.el("path", { class: "later", d: "M0 0", fill: NS });
+          arc.append(path, head);
+          const labR = s.h("span", { class: "d2lab later", style: { position: "absolute", color: NS } }, "Relativpronomen");
+          const labV = s.h("span", { class: "d2lab later", style: { position: "absolute", color: SG.P.c } }, "Verb am Ende");
+          const labN = s.h("span", { class: "d2lab later", style: { position: "absolute", color: "var(--ink)" } }, "Nomen");
+          row.append(arc, labR, labV, labN);
+          const place = () => {
+            const W = row.offsetWidth, H = row.offsetHeight;
+            arc.setAttribute("viewBox", `0 0 ${W} ${H}`); arc.style.width = W + "px"; arc.style.height = H + "px";
+            const cx = e => e.offsetLeft + e.offsetWidth / 2;
+            const x1 = cx(toks.r), x2 = cx(toks.n), y1 = toks.r.offsetTop - 4, y2 = toks.n.offsetTop - 2;
+            path.setAttribute("d", `M${x1} ${y1} C${x1} ${y1 - 54} ${x2} ${y2 - 54} ${x2} ${y2 - 10}`);
+            head.setAttribute("d", `M${x2 - 10} ${y2 - 18} L${x2} ${y2 - 2} L${x2 + 10} ${y2 - 18} Z`);
+            const yb = toks.v.offsetTop + toks.v.offsetHeight + 6;
+            Object.assign(labR.style, { left: toks.r.offsetLeft + "px", top: yb + "px" });
+            Object.assign(labV.style, { left: toks.v.offsetLeft + "px", top: yb + "px" });
+            Object.assign(labN.style, { left: toks.n.offsetLeft + toks.n.offsetWidth / 2 - labN.offsetWidth / 2 + "px", top: yb + "px" });
+          };
+          const top = s.h("div", { class: "card", style: { padding: "4px 18px" } }, row);
+          const ex3 = [
+            ["der", "Bus", "Der ", "Bus", ", ", "der", " zum Alexanderplatz ", "fährt", ", ist voll.", () => s.sound("ubahn-train", { vol: .35, dur: 1.6, fade: .5 })],
+            ["die", "Pizza", "Die ", "Pizza", ", ", "die", " im Ofen ", "backt", ", duftet.", () => s.sound("sizzle", { vol: .4, dur: 1.4 })],
+            ["das", "Eis", "Das ", "Eis", ", ", "das", " in der Sonne ", "schmilzt", ", tropft.", () => s.sound("water-pour", { vol: .4, dur: 1.4 })],
+          ].map(([g, n, a, nn, c, rp, mid, vb, rest, snd]) => {
+            const col = GEN[g];
+            const el = s.h("div", { class: "card later", style: { padding: "16px 18px", borderTop: "6px solid " + col, display: "flex", flexDirection: "column", gap: "6px" } },
+              s.h("p", { class: "small", style: { fontWeight: 700, color: col, fontSize: "21px" } }, g + " " + n + " → " + rp),
+              s.h("p", { class: "t", style: { fontSize: "26px", lineHeight: 1.35 } }, a, s.h("b", { style: { color: col } }, nn), s.h("b", { style: { color: RED } }, c.trim()), " ", s.h("b", { style: { color: col, textDecoration: "underline", textUnderlineOffset: "5px" } }, rp), mid, s.h("b", { style: { color: SG.P.c } }, vb), s.h("b", { style: { color: RED } }, ","), rest.slice(1)));
+            el.snd = snd; return el;
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "24px", padding: "12px 20px 14px" } }, "Ein ", s.h("b", { style: { color: NS } }, "Relativsatz"), " erklärt ein Nomen genauer. Er beginnt mit ", s.h("b", null, "der, die, das"), " – passend zum Nomen. Das ", s.h("b", { style: { color: SG.P.c } }, "Verb"), " steht am Ende, und ein ", s.h("b", { style: { color: RED } }, "Komma"), " trennt ihn ab.");
+          s.add(s.h("div", { class: "stack", style: { gap: "18px", height: "100%" } }, top, s.h("div", { class: "cols3", style: { gap: "16px" } }, ex3), merk));
+          s.show(top, "up"); s.sfx.pop();
+          s.step(async () => {
+            s.sound("hund-bellt", { vol: .5, dur: 1.2 });
+            await morph(s, row, toks, ["a", "n", "c1", "r", "o", "v", "c2", "p", "l", "pt"], { arc: 40, dur: 900 });
+            s.sfx.snap(); place(); s.say("Der Hund, der im Park bellt, gehört Lea.");
+          });
+          s.step(async () => { place(); s.sfx.swoosh(); s.show(path, "draw"); await s.wait(s.fast ? 0 : 700); s.show(head, "pop"); s.sfx.ding(); await s.show([labR, labN], "fade"); s.say("Das Wort der zeigt zurück auf den Hund."); });
+          s.step(async () => { place(); s.sfx.pop(); bump(s, toks.v, 0.3); await s.show(labV, "fade"); s.say("Bellt steht ganz am Ende."); });
+          ex3.forEach((e, i) => s.step(async () => { e.snd(); await s.show(e, "up"); s.say(["der Bus, der", "die Pizza, die", "das Eis, das"][i]); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 16b ---------------------------------------------------------------- */
+      {
+        title: "Relativsatz: Komma davor und danach",
+        say: "Steht der Relativsatz mitten im Satz, braucht er zwei Kommas: eins davor und eins danach. Steht er am Ende, reicht eins.",
+        build(s) {
+          const NS = "#b45309", RED = "var(--red)";
+          const wd = (t, st) => s.h("span", { class: "tx", style: Object.assign({ display: "inline-block", fontSize: "26px", whiteSpace: "nowrap" }, st || {}) }, t);
+          const cm = () => s.h("span", { class: "tx", style: { fontSize: "32px", fontWeight: 700, color: RED, display: "none", marginLeft: "-6px" } }, ",");
+          const rel = (t, st) => s.h("span", { class: "tx", style: Object.assign({ display: "none", fontSize: "26px", whiteSpace: "nowrap", color: NS, fontWeight: 700 }, st || {}) }, t);
+          const dot = () => s.h("span", { class: "tx", style: { fontSize: "27px", fontWeight: 700, marginLeft: "-6px" } }, ".");
+          /* A: eingeschoben */
+          const A = { a: wd("Meine"), b: wd("Oma"), c1: cm(), r: rel("die"), m: rel("in Hamburg"), v: rel("wohnt", { color: SG.P.c }), c2: cm(), p: wd("kommt"), z: wd("morgen"), pt: dot() };
+          const rowA = s.h("div", { class: "d2row", style: { gap: "8px", alignItems: "baseline", flexWrap: "nowrap", minHeight: "48px" } }, Object.values(A));
+          /* B: am Ende */
+          const Bt = { z: wd("Morgen"), p: wd("kommt"), a: wd("meine"), b: wd("Oma"), c1: cm(), r: rel("die"), m: rel("in Hamburg"), v: rel("wohnt", { color: SG.P.c }), pt: dot() };
+          const rowB = s.h("div", { class: "d2row", style: { gap: "8px", alignItems: "baseline", flexWrap: "nowrap", minHeight: "48px" } }, Object.values(Bt));
+          const fullA = ["a", "b", "c1", "r", "m", "v", "c2", "p", "z", "pt"], baseA = ["a", "b", "p", "z", "pt"];
+          let inA = false;
+          const toggleA = async () => { inA = !inA; s.sfx.whoosh(); await morph(s, rowA, A, inA ? fullA : baseA, { arc: 36, dur: 800 }); if (inA) { s.sfx.snap(); bump(s, A.c1, .5); bump(s, A.c2, .5); } else s.sfx.pop(); };
+          const bA = s.h("button", { class: "btn", onclick: () => { s.sfx.click(); toggleA(); } }, "Relativsatz rein / raus");
+          const tagA = s.h("span", { class: "d2tag later", style: { background: NS } }, "in der Mitte: 2 Kommas");
+          const tagB = s.h("span", { class: "d2tag later", style: { background: NS } }, "am Ende: 1 Komma");
+          const cardA = s.h("div", { class: "card", style: { padding: "12px 18px", display: "flex", flexDirection: "column", gap: "10px" } }, s.h("div", { class: "row", style: { gap: "12px" } }, s.h("span", { class: "h2", style: { fontSize: "25px" } }, "Eingeschoben"), tagA), rowA, s.h("div", null, bA));
+          const cardB = s.h("div", { class: "card later", style: { padding: "12px 18px", display: "flex", flexDirection: "column", gap: "10px" } }, s.h("div", { class: "row", style: { gap: "12px" } }, s.h("span", { class: "h2", style: { fontSize: "25px" } }, "Am Satzende"), tagB), rowB);
+          /* welcher */
+          const pr = s.h("b", { style: { color: NS, display: "inline-block" } }, "der");
+          let wel = false;
+          const flipW = async () => { wel = !wel; s.sfx.click(); await flipText(s, pr, wel ? "welcher" : "der"); s.sfx.pop(); };
+          const bW = s.h("button", { class: "btn", onclick: () => flipW() }, "der ↔ welcher");
+          const cardW = s.h("div", { class: "card soft later", style: { padding: "12px 18px", display: "flex", flexDirection: "column", gap: "8px" } },
+            s.h("p", { class: "t", style: { fontSize: "23px" } }, "Der Bus", s.h("b", { style: { color: RED } }, ","), " ", pr, " zum Zoo fährt", s.h("b", { style: { color: RED } }, ","), " ist voll."),
+            s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap" } }, bW, s.h("p", { class: "small pencil" }, "welcher, welche, welches gehen auch – klingen aber eher altmodisch.")));
+          const L = [
+            ["Im Alltag: Schule", "Die Lehrerin", "die Musik unterrichtet", "spielt Geige."],
+            ["Im Alltag: Lesen", "Das Buch", "das ich gerade lese", "ist spannend."],
+          ].map(([lab, a, r, b]) => { const c = life(s, lab, s.h("p", { class: "t", style: { fontSize: "22px" } }, a, s.h("b", { style: { color: RED } }, ","), " ", s.h("span", { style: { color: NS } }, r), s.h("b", { style: { color: RED } }, ","), " " + b)); c.classList.add("later"); c.style.padding = "10px 16px"; return c; });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "23px", padding: "12px 18px 14px" } }, "Der Relativsatz ist ein Nebensatz. Er wird ", s.h("b", null, "immer"), " mit ", s.h("b", { style: { color: RED } }, "Komma"), " abgetrennt – in der Mitte ", s.h("b", null, "davor und danach"), ".");
+          [A.c1, A.r, A.m, A.v, A.c2].forEach(e => (e.style.display = "none"));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "700px 1fr", gap: "16px", height: "100%", alignContent: "start" } },
+            s.h("div", { class: "stack", style: { gap: "14px" } }, cardA, cardB, merk), s.h("div", { class: "stack", style: { gap: "14px" } }, cardW, ...L)));
+          s.show(cardA, "up"); s.sfx.pop();
+          s.step(async () => { await toggleA(); s.show(tagA, "pop"); s.say("Meine Oma, die in Hamburg wohnt, kommt morgen. Zwei Kommas."); });
+          s.step(async () => { await toggleA(); s.say("Ohne Relativsatz klappt der Satz auch. Der Relativsatz ist nur eine Zusatz-Info."); });
+          s.step(async () => { await toggleA(); s.sfx.whoosh(); await s.show(cardB, "up"); await morph(s, rowB, Bt, ["z", "p", "a", "b", "c1", "r", "m", "v", "pt"], { arc: 30, dur: 700 }); s.sfx.snap(); s.show(tagB, "pop"); s.say("Morgen kommt meine Oma, die in Hamburg wohnt. Nur ein Komma."); });
+          s.step(async () => { s.sound("ubahn-announce", { vol: .35, dur: 2, fade: .5 }); await s.show(cardW, "up"); await flipW(); s.say("Der Bus, welcher zum Zoo fährt, ist voll."); });
+          s.step(async () => { s.sound("geige", { vol: .4, dur: 2, fade: .6 }); await s.show(L[0], "up"); s.sound("page-turn-2", { vol: .7 }); await s.show(L[1], "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 16c ---------------------------------------------------------------- */
+      {
+        title: "das oder dass?",
+        say: "Das Relativpronomen das schreibt man mit einem s. Die Probe: Kannst du es durch welches ersetzen? Dann ist es das. Wenn nicht, schreibst du dass.",
+        build(s) {
+          const NS = "#b45309", RED = "var(--red)", GR = "#138a5a";
+          const ROWS = [
+            ["Das Fahrrad, ", "das", " im Hof steht, gehört mir.", true, () => s.sound("bike-bell", { vol: .5 })],
+            ["Ich hoffe, ", "dass", " es morgen nicht regnet.", false, () => s.sound("rain", { vol: .35, dur: 2, fade: .6 })],
+            ["Das Lied, ", "das", " wir im Orchester spielen, ist schwer.", true, () => s.sound("orchester-stimmen", { vol: .35, dur: 2, fade: .6 })],
+            ["Mama sagt, ", "dass", " das Essen fertig ist.", false, () => s.sound("ofen-ping", { vol: .5 })],
+          ];
+          const rows = ROWS.map(([a, w, b, rel, snd]) => {
+            const word = s.h("b", { style: { display: "inline-block", color: rel ? NS : "#5d6678", textDecoration: "underline", textUnderlineOffset: "6px" } }, w);
+            const res = s.h("span", { class: "d2tag later", style: { background: rel ? GR : RED, justifySelf: "start" } }, rel ? "welches passt → das" : "welches passt nicht → dass");
+            let busy = false, done = false;
+            const probe = async () => {
+              if (busy) return; busy = true; snd(); s.sfx.whoosh();
+              await flipText(s, word, "welches"); word.style.color = rel ? GR : RED;
+              if (rel) s.sfx.ding(); else s.sfx.error();
+              await s.wait(s.fast ? 0 : 900);
+              await flipText(s, word, w); word.style.color = rel ? NS : "#5d6678";
+              if (!done) { done = true; await s.show(res, "pop"); }
+              busy = false;
+            };
+            const btn = s.h("button", { class: "btn", style: { minWidth: "150px" }, onclick: () => { s.sfx.click(); probe(); } }, "Probe");
+            const el = s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "1fr 150px", gap: "6px 16px", alignItems: "center", padding: "10px 18px" } },
+              s.h("p", { class: "t", style: { fontSize: "25px" } }, a, word, b), btn, res);
+            return { el, probe };
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px", padding: "10px 18px 12px" } }, s.h("b", { style: { color: NS } }, "das"), " zeigt auf ein Nomen zurück und lässt sich durch ", s.h("b", null, "welches"), " ersetzen. ", s.h("b", { style: { color: RED } }, "dass"), " verbindet zwei Sätze – dort passt ", s.h("b", null, "welches"), " nie.");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%" } }, rows.map(r => r.el), merk));
+          s.show(rows.map(r => r.el), "left"); s.sfx.pop();
+          rows.forEach((r, i) => s.step(async () => { await r.probe(); s.say(["Das Fahrrad, welches im Hof steht. Passt! Also das.", "Ich hoffe, welches es morgen nicht regnet? Passt nicht. Also dass.", "Das Lied, welches wir spielen. Passt! Also das.", "Mama sagt, welches das Essen fertig ist? Passt nicht. Also dass."][i]); }));
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
         },
       },
       /* 17 ----------------------------------------------------------------- */

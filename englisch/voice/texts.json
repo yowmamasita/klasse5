@@ -249,6 +249,11 @@
   "spoken": "first, second, third, fourth, fifth",
   "text": "first, second, third, fourth, fifth"
  },
+ "0765fdf42a7ba982": {
+  "lang": "en-GB",
+  "spoken": "It's Monday.",
+  "text": "It's Monday."
+ },
  "077dbf55b3b47fca": {
   "lang": "en-GB",
   "spoken": "thirty",
@@ -324,6 +329,11 @@
   "spoken": "E.",
   "text": "E."
  },
+ "09db546d7b8a4bfb": {
+  "lang": "de-DE",
+  "spoken": "Und its ohne Apostroph heißt sein oder ihr – it's mit Apostroph heißt it is.",
+  "text": "Und its ohne Apostroph heißt sein oder ihr – it's mit Apostroph heißt it is."
+ },
  "09f8db0eccbed936": {
   "lang": "de-DE",
   "spoken": "Das ist Ruby aus London. Wir begleiten sie durch ihren Tag.",
@@ -363,6 +373,11 @@
   "lang": "de-DE",
   "spoken": "Für eine Frage stellst du was oder were an den Anfang. Für nein hängst du not an: wasn't und weren't.",
   "text": "Für eine Frage stellst du was oder were an den Anfang. Für nein hängst du not an: wasn't und weren't."
+ },
+ "0ad2360c0d6f82d7": {
+  "lang": "de-DE",
+  "spoken": "Im Vokabelverzeichnis steht hinter jedem Wort seine Lautschrift. Sie zeigt dir, wie man das Wort spricht – auch wenn es ganz anders geschrieben wird.",
+  "text": "Im Vokabelverzeichnis steht hinter jedem Wort seine Lautschrift. Sie zeigt dir, wie man das Wort spricht – auch wenn es ganz anders geschrieben wird."
  },
  "0ad2a98855f574a1": {
   "lang": "en-GB",
@@ -409,6 +424,11 @@
   "spoken": "Sam und Leo sind Zwillinge – twins. Sie sind sechs.",
   "text": "Sam und Leo sind Zwillinge – twins. Sie sind sechs."
  },
+ "0c7d76e2f69dea4c": {
+  "lang": "en-GB",
+  "spoken": "she",
+  "text": "she"
+ },
  "0c813d3001e3e89b": {
   "lang": "en-GB",
   "spoken": "some bread",
@@ -443,6 +463,11 @@
   "lang": "en-GB",
   "spoken": "washes",
   "text": "washes"
+ },
+ "0e2cc87aea8d4cac": {
+  "lang": "en-GB",
+  "spoken": "cat",
+  "text": "cat"
  },
  "0e5371bf66cc738f": {
   "lang": "en-GB",
@@ -533,6 +558,11 @@
   "lang": "en-GB",
   "spoken": "Write soon! Love, Lukas",
   "text": "Write soon! Love, Lukas"
+ },
+ "11058f00c14dd780": {
+  "lang": "de-DE",
+  "spoken": "Auch Tiere können etwas besitzen: the dog's bone.",
+  "text": "Auch Tiere können etwas besitzen: the dog's bone."
  },
  "112594c76da90495": {
   "lang": "en-GB",
@@ -719,10 +749,20 @@
   "spoken": "it is raining. it's raining.",
   "text": "it is raining. it's raining."
  },
+ "17cd4aa0e05f9f5d": {
+  "lang": "en-GB",
+  "spoken": "apple",
+  "text": "apple"
+ },
  "17d0e961d9804f7f": {
   "lang": "en-GB",
   "spoken": "Hello! I'm Julia. This is Mo.",
   "text": "Hello! I'm Julia. This is Mo."
+ },
+ "17e58168bbd961a0": {
+  "lang": "en-GB",
+  "spoken": "banana",
+  "text": "banana"
  },
  "18017890b8541bfe": {
   "lang": "en-GB",
@@ -788,6 +828,11 @@
   "lang": "en-GB",
   "spoken": "twenty-third",
   "text": "twenty-third"
+ },
+ "1a0cab5a8afe83b9": {
+  "lang": "en-GB",
+  "spoken": "teacher",
+  "text": "teacher"
  },
  "1a1e934f0cc67148": {
   "lang": "en-GB",
@@ -954,6 +999,11 @@
   "spoken": "Turn left at the second street.",
   "text": "Turn left at the second street."
  },
+ "1fd49741d0af2f69": {
+  "lang": "en-GB",
+  "spoken": "think",
+  "text": "think"
+ },
  "2005077944f9b738": {
   "lang": "en-GB",
   "spoken": "played",
@@ -1024,6 +1074,11 @@
   "spoken": "It's hot – let's go to the lido!",
   "text": "It's hot – let's go to the lido!"
  },
+ "223039b57533ecf0": {
+  "lang": "de-DE",
+  "spoken": "Auch Vokale haben eigene Zeichen. Und ein kleiner Strich oben zeigt dir, welche Silbe du laut und stark sprichst.",
+  "text": "Auch Vokale haben eigene Zeichen. Und ein kleiner Strich oben zeigt dir, welche Silbe du laut und stark sprichst."
+ },
  "224b2508aabfd9a4": {
   "lang": "en-GB",
   "spoken": "a loaf of bread",
@@ -1043,6 +1098,11 @@
   "lang": "de-DE",
   "spoken": "Ruby kauft beim Bäcker ein. Hör dir das Gespräch an. Tippe auf die Lautsprecher.",
   "text": "Ruby kauft beim Bäcker ein. Hör dir das Gespräch an. Tippe auf die Lautsprecher."
+ },
+ "231663cf3d8ac9f1": {
+  "lang": "en-GB",
+  "spoken": "Grandma's house",
+  "text": "Grandma's house"
  },
  "233fc0685323a915": {
   "lang": "en-GB",
@@ -1339,6 +1399,11 @@
   "spoken": "Yes, I have. No, I haven't. Ohne got!",
   "text": "Yes, I have. No, I haven't. Ohne got!"
  },
+ "2b26d4a7e53f45bc": {
+  "lang": "en-GB",
+  "spoken": "it. eat.",
+  "text": "it. eat."
+ },
  "2b6d325c110f57dd": {
   "lang": "en-GB",
   "spoken": "double L",
@@ -1529,6 +1594,11 @@
   "spoken": "Dear Ruby,",
   "text": "Dear Ruby,"
  },
+ "3243403c4cb4186d": {
+  "lang": "en-GB",
+  "spoken": "the women's team",
+  "text": "the women's team"
+ },
  "3243a3d7110bf6be": {
   "lang": "en-GB",
   "spoken": "two slices of bread",
@@ -1563,6 +1633,11 @@
   "lang": "en-GB",
   "spoken": "L.",
   "text": "L."
+ },
+ "3364d742eb50a735": {
+  "lang": "de-DE",
+  "spoken": "Diese Zeichen findest du auch in jedem Wörterbuch und in Vokabel-Apps.",
+  "text": "Diese Zeichen findest du auch in jedem Wörterbuch und in Vokabel-Apps."
  },
  "3389f86c548b2b4b": {
   "lang": "en-GB",
@@ -1678,6 +1753,11 @@
   "lang": "en-GB",
   "spoken": "There's a kitchen, a bathroom, a living room and two bedrooms. My room is small, but I love it. There's a bed under the window and there are two posters on the wall. Our cat Mo often sleeps on my bed!",
   "text": "There's a kitchen, a bathroom, a living room and two bedrooms. My room is small, but I love it. There's a bed under the window and there are two posters on the wall. Our cat Mo often sleeps on my bed!"
+ },
+ "37140c5491134568": {
+  "lang": "de-DE",
+  "spoken": "He's heißt he is. Ruby's heißt: gehört zu Ruby.",
+  "text": "He's heißt he is. Ruby's heißt: gehört zu Ruby."
  },
  "374b481a979b57ec": {
   "lang": "de-DE",
@@ -1889,10 +1969,20 @@
   "spoken": "a pen",
   "text": "a pen"
  },
+ "40becaa00ca8c605": {
+  "lang": "en-GB",
+  "spoken": "shop",
+  "text": "shop"
+ },
  "4186ce9c9660416b": {
   "lang": "en-GB",
   "spoken": "a comic: two pounds ninety-nine",
   "text": "a comic: two pounds ninety-nine"
+ },
+ "41b5be05eb0bac00": {
+  "lang": "en-GB",
+  "spoken": "bag",
+  "text": "bag"
  },
  "41c277a65c90c8b3": {
   "lang": "en-GB",
@@ -2044,6 +2134,11 @@
   "spoken": "It's raining in London.",
   "text": "It's raining in London."
  },
+ "47e353fbab50bbb9": {
+  "lang": "en-GB",
+  "spoken": "brother",
+  "text": "brother"
+ },
  "47e5157152b046b2": {
   "lang": "de-DE",
   "spoken": "Antworte mit Kurzantwort: Yes, I can. No, I can't.",
@@ -2088,6 +2183,11 @@
   "lang": "en-GB",
   "spoken": "do karate",
   "text": "do karate"
+ },
+ "496ca496370d8994": {
+  "lang": "en-GB",
+  "spoken": "Maya's mum",
+  "text": "Maya's mum"
  },
  "499905d901dcdfdc": {
   "lang": "en-GB",
@@ -2229,6 +2329,11 @@
   "spoken": "The post box is red.",
   "text": "The post box is red."
  },
+ "4f7f9211e55e2eaf": {
+  "lang": "en-GB",
+  "spoken": "sister",
+  "text": "sister"
+ },
  "4f8d5bda9be957f3": {
   "lang": "en-GB",
   "spoken": "Yes, we have. Here it is!",
@@ -2329,10 +2434,20 @@
   "spoken": "Hi Zoe! Do you want to come to the youth club on Friday?",
   "text": "Hi Zoe! Do you want to come to the youth club on Friday?"
  },
+ "5274a3bdcf1c80a5": {
+  "lang": "en-GB",
+  "spoken": "thank you",
+  "text": "thank you"
+ },
  "52920157e12c446d": {
   "lang": "en-GB",
   "spoken": "Water!",
   "text": "Water!"
+ },
+ "52a56fc39384c5c9": {
+  "lang": "de-DE",
+  "spoken": "Gehört etwas zwei Leuten zusammen, bekommt nur der letzte Name das 's.",
+  "text": "Gehört etwas zwei Leuten zusammen, bekommt nur der letzte Name das 's."
  },
  "52e241c6c012517e": {
   "lang": "en-GB",
@@ -2599,6 +2714,11 @@
   "spoken": "We walked to school.",
   "text": "We walked to school."
  },
+ "5ba5faa878312776": {
+  "lang": "de-DE",
+  "spoken": "Und hier für has. Steht got dahinter, ist es fast immer has.",
+  "text": "Und hier für has. Steht got dahinter, ist es fast immer has."
+ },
  "5bc0eb76e9133498": {
   "lang": "en-GB",
   "spoken": "X.",
@@ -2643,6 +2763,11 @@
   "lang": "en-GB",
   "spoken": "go swimming",
   "text": "go swimming"
+ },
+ "5d8311f4f8cc23a8": {
+  "lang": "de-DE",
+  "spoken": "Zwei Mädchen: Das s ist schon da, also kommt der Apostroph dahinter.",
+  "text": "Zwei Mädchen: Das s ist schon da, also kommt der Apostroph dahinter."
  },
  "5e060528731e469f": {
   "lang": "en-GB",
@@ -2829,6 +2954,11 @@
   "spoken": "Aus Sams Sicht ist Ruby seine Schwester.",
   "text": "Aus Sams Sicht ist Ruby seine Schwester."
  },
+ "643e7c9692a7566d": {
+  "lang": "en-GB",
+  "spoken": "computer",
+  "text": "computer"
+ },
  "6488abf5ed2520bf": {
   "lang": "en-GB",
   "spoken": "They are never bored.",
@@ -2843,6 +2973,11 @@
   "lang": "en-GB",
   "spoken": "liked",
   "text": "liked"
+ },
+ "6505f5857a9a0baf": {
+  "lang": "en-GB",
+  "spoken": "He's Ruby's brother.",
+  "text": "He's Ruby's brother."
  },
  "653279304f7ba503": {
   "lang": "en-GB",
@@ -2913,6 +3048,11 @@
   "lang": "en-GB",
   "spoken": "No, I haven't. I've got a dog – Biscuit!",
   "text": "No, I haven't. I've got a dog – Biscuit!"
+ },
+ "67b432e0c2ea6224": {
+  "lang": "en-GB",
+  "spoken": "the men's shoes",
+  "text": "the men's shoes"
  },
  "67e380fe2b4acce1": {
   "lang": "en-GB",
@@ -3163,6 +3303,16 @@
   "lang": "de-DE",
   "spoken": "Bei manchen Verben ändert sich die Schreibung ein bisschen. Hier sind die vier Regeln.",
   "text": "Bei manchen Verben ändert sich die Schreibung ein bisschen. Hier sind die vier Regeln."
+ },
+ "6ff64aac0e80dbae": {
+  "lang": "en-GB",
+  "spoken": "the boys' toilets",
+  "text": "the boys' toilets"
+ },
+ "6ffbe5e4d24b39e5": {
+  "lang": "en-GB",
+  "spoken": "sit. seat.",
+  "text": "sit. seat."
  },
  "70188df132180022": {
   "lang": "de-DE",
@@ -3433,6 +3583,11 @@
   "lang": "en-GB",
   "spoken": "Excuse me, how do I get to the library?",
   "text": "Excuse me, how do I get to the library?"
+ },
+ "78b8f7ab1d4094a8": {
+  "lang": "en-GB",
+  "spoken": "It's got four legs.",
+  "text": "It's got four legs."
  },
  "7908a6b2c828fd56": {
   "lang": "en-GB",
@@ -3919,6 +4074,11 @@
   "spoken": "Hi Lukas! What are you doing?",
   "text": "Hi Lukas! What are you doing?"
  },
+ "88efd49d946123f1": {
+  "lang": "de-DE",
+  "spoken": "Hier steht 's für is: She is my cousin.",
+  "text": "Hier steht 's für is: She is my cousin."
+ },
  "88fb4fa32bdd80cc": {
   "lang": "de-DE",
   "spoken": "Fragen mit do: Do kommt ganz nach vorn. Am Ende steht ein Fragezeichen.",
@@ -4009,6 +4169,11 @@
   "spoken": "I've got two brothers and a dog.",
   "text": "I've got two brothers and a dog."
  },
+ "8b41454fc6b3891d": {
+  "lang": "en-GB",
+  "spoken": "the children's toys",
+  "text": "the children's toys"
+ },
  "8b5278e94d8f3967": {
   "lang": "en-GB",
   "spoken": "Ruby walks to school every day.",
@@ -4083,6 +4248,11 @@
   "lang": "en-GB",
   "spoken": "Thank you very much!",
   "text": "Thank you very much!"
+ },
+ "8d0ccd05b8ff1550": {
+  "lang": "en-GB",
+  "spoken": "Tom and Sarah's car",
+  "text": "Tom and Sarah's car"
  },
  "8d0fa70688fa70a9": {
   "lang": "en-GB",
@@ -4213,6 +4383,11 @@
   "lang": "en-GB",
   "spoken": "Wipe your feet, please.",
   "text": "Wipe your feet, please."
+ },
+ "919050fec993d471": {
+  "lang": "en-GB",
+  "spoken": "my parents' car",
+  "text": "my parents' car"
  },
  "91adca45011cf7ea": {
   "lang": "en-GB",
@@ -4379,6 +4554,11 @@
   "spoken": "never ist nie, sometimes manchmal, often oft, usually meistens, always immer.",
   "text": "never ist nie, sometimes manchmal, often oft, usually meistens, always immer."
  },
+ "97c1f36d92ab5428": {
+  "lang": "en-GB",
+  "spoken": "window",
+  "text": "window"
+ },
  "97c297f601fe33b4": {
   "lang": "en-GB",
   "spoken": "How are you?",
@@ -4443,6 +4623,11 @@
   "lang": "en-GB",
   "spoken": "Q.",
   "text": "Q."
+ },
+ "98e34a99ddd447b0": {
+  "lang": "en-GB",
+  "spoken": "the girls' room",
+  "text": "the girls' room"
  },
  "98fc47ee576d7558": {
   "lang": "de-DE",
@@ -4629,6 +4814,11 @@
   "spoken": "three apples",
   "text": "three apples"
  },
+ "9e3f28f3c785d913": {
+  "lang": "en-GB",
+  "spoken": "He's got a bike.",
+  "text": "He's got a bike."
+ },
  "9e5cbb3086958e55": {
   "lang": "en-GB",
   "spoken": "an exercise book",
@@ -4658,6 +4848,11 @@
   "lang": "en-GB",
   "spoken": "brown",
   "text": "brown"
+ },
+ "9f91ac61bd233d95": {
+  "lang": "de-DE",
+  "spoken": "Endet der Plural auf s: nur Apostroph. Children, men und women: ganz normal 's.",
+  "text": "Endet der Plural auf s: nur Apostroph. Children, men und women: ganz normal 's."
  },
  "9f9fe2f2e421e329": {
   "lang": "en-GB",
@@ -4708,6 +4903,11 @@
   "lang": "en-GB",
   "spoken": "Did Ruby go to the cinema? Yes, she did.",
   "text": "Did Ruby go to the cinema? Yes, she did."
+ },
+ "a127e5bc6d25a940": {
+  "lang": "en-GB",
+  "spoken": "Biscuit's ball",
+  "text": "Biscuit's ball"
  },
  "a149461bc0229b4f": {
   "lang": "en-GB",
@@ -4939,6 +5139,11 @@
   "spoken": "the garden",
   "text": "the garden"
  },
+ "aa2a1fe51dbb471c": {
+  "lang": "en-GB",
+  "spoken": "the girl's room",
+  "text": "the girl's room"
+ },
  "aa5f4be5838683b3": {
   "lang": "en-GB",
   "spoken": "Can you swim in the sea there?",
@@ -5049,6 +5254,11 @@
   "spoken": "fifteen",
   "text": "fifteen"
  },
+ "ae9f9cf338c74d69": {
+  "lang": "en-GB",
+  "spoken": "the dog's bone",
+  "text": "the dog's bone"
+ },
  "aeab18ba548e75ff": {
   "lang": "en-GB",
   "spoken": "Can I have a jacket potato, please?",
@@ -5108,6 +5318,11 @@
   "lang": "en-GB",
   "spoken": "storm. It's stormy.",
   "text": "storm. It's stormy."
+ },
+ "b04ee8f931fb728e": {
+  "lang": "de-DE",
+  "spoken": "SIS-ter, com-PU-ter, ba-NA-na.",
+  "text": "SIS-ter, com-PU-ter, ba-NA-na."
  },
  "b06ef758dd13e307": {
   "lang": "de-DE",
@@ -5289,6 +5504,11 @@
   "spoken": "when",
   "text": "when"
  },
+ "b7427421dc9a2b43": {
+  "lang": "en-GB",
+  "spoken": "He's ten.",
+  "text": "He's ten."
+ },
  "b7427dc16ed665ff": {
   "lang": "en-GB",
   "spoken": "Lukas has football on Fridays.",
@@ -5409,6 +5629,11 @@
   "spoken": "I enjoyed the party.",
   "text": "I enjoyed the party."
  },
+ "bac3d89ac0ebeaae": {
+  "lang": "en-GB",
+  "spoken": "ship. sheep.",
+  "text": "ship. sheep."
+ },
  "bb26c3747e1fe487": {
   "lang": "en-GB",
   "spoken": "the bus stop",
@@ -5474,6 +5699,11 @@
   "spoken": "I live in Neukölln.",
   "text": "I live in Neukölln."
  },
+ "bcd84d6f6810b0de": {
+  "lang": "de-DE",
+  "spoken": "Das kleine 's kann drei verschiedene Dinge bedeuten: Etwas gehört jemandem. Oder es ist die Kurzform von is. Oder die Kurzform von has.",
+  "text": "Das kleine 's kann drei verschiedene Dinge bedeuten: Etwas gehört jemandem. Oder es ist die Kurzform von is. Oder die Kurzform von has."
+ },
  "bd6ad874530e8b0e": {
   "lang": "en-GB",
   "spoken": "Here he is! Do you like him?",
@@ -5498,6 +5728,11 @@
   "lang": "en-GB",
   "spoken": "How many children are in your class?",
   "text": "How many children are in your class?"
+ },
+ "bdfa423ebcf9e4d4": {
+  "lang": "en-GB",
+  "spoken": "It's Biscuit's ball.",
+  "text": "It's Biscuit's ball."
  },
  "bdfde9eb9eb032f7": {
   "lang": "en-GB",
@@ -5789,6 +6024,11 @@
   "spoken": "Do you have a pet?",
   "text": "Do you have a pet?"
  },
+ "c8eecc9371cf3b9a": {
+  "lang": "de-DE",
+  "spoken": "Hör mal genau hin: the girl's room und the girls' room klingen gleich. Nur der Apostroph zeigt dir, ob es ein Mädchen ist oder mehrere.",
+  "text": "Hör mal genau hin: the girl's room und the girls' room klingen gleich. Nur der Apostroph zeigt dir, ob es ein Mädchen ist oder mehrere."
+ },
  "c9565ef298344fd3": {
   "lang": "de-DE",
   "spoken": "In Berlin I'm in the chess club!",
@@ -5838,6 +6078,11 @@
   "lang": "de-DE",
   "spoken": "an hour. a uniform.",
   "text": "an hour. a uniform."
+ },
+ "ca9762194cbde919": {
+  "lang": "en-GB",
+  "spoken": "She's got a cat.",
+  "text": "She's got a cat."
  },
  "cab06c5303f29499": {
   "lang": "en-GB",
@@ -5979,6 +6224,11 @@
   "spoken": "My sister plays the piano.",
   "text": "My sister plays the piano."
  },
+ "cfe5cecb8958d293": {
+  "lang": "de-DE",
+  "spoken": "Das th hat zwei Laute. Und das englische w klingt wie ein kurzes u.",
+  "text": "Das th hat zwei Laute. Und das englische w klingt wie ein kurzes u."
+ },
  "cfed5a403544ff20": {
   "lang": "de-DE",
   "spoken": "On Sunday morning I practise the guitar.",
@@ -6083,6 +6333,11 @@
   "lang": "en-GB",
   "spoken": "a window",
   "text": "a window"
+ },
+ "d2d58f98d54f3dfd": {
+  "lang": "en-GB",
+  "spoken": "Sam and Leo's room",
+  "text": "Sam and Leo's room"
  },
  "d31947f42226f6be": {
   "lang": "en-GB",
@@ -6243,6 +6498,11 @@
   "lang": "en-GB",
   "spoken": "Excuse me, how do I get to the supermarket?",
   "text": "Excuse me, how do I get to the supermarket?"
+ },
+ "d8527205f4e16be4": {
+  "lang": "en-GB",
+  "spoken": "Ruby and Maya's grandma",
+  "text": "Ruby and Maya's grandma"
  },
  "d866d2774ec1499a": {
   "lang": "en-GB",
@@ -6439,6 +6699,16 @@
   "spoken": "Is Ruby from London?",
   "text": "Is Ruby from London?"
  },
+ "dfb58aa4c49df9f5": {
+  "lang": "en-GB",
+  "spoken": "She's my cousin.",
+  "text": "She's my cousin."
+ },
+ "e03c32ceee057095": {
+  "lang": "en-GB",
+  "spoken": "water",
+  "text": "water"
+ },
  "e08d771a7af23810": {
   "lang": "en-GB",
   "spoken": "they are. they're.",
@@ -6519,6 +6789,11 @@
   "spoken": "Don't touch it!",
   "text": "Don't touch it!"
  },
+ "e430a68a5f99cf74": {
+  "lang": "de-DE",
+  "spoken": "Die zwei Punkte heißen: lang. Ship ist kurz, sheep ist lang.",
+  "text": "Die zwei Punkte heißen: lang. Ship ist kurz, sheep ist lang."
+ },
  "e47313ebce5d6b96": {
   "lang": "en-GB",
   "spoken": "I go to bed at eight p.m.",
@@ -6533,6 +6808,11 @@
   "lang": "de-DE",
   "spoken": "Bei W-Fragen steht das Fragewort ganz vorn. Danach kommt do oder does, dann die Person und das Verb.",
   "text": "Bei W-Fragen steht das Fragewort ganz vorn. Danach kommt do oder does, dann die Person und das Verb."
+ },
+ "e4a0488f6d1467fa": {
+  "lang": "de-DE",
+  "spoken": "Das Zeichen ə ist der schwächste Laut im Englischen.",
+  "text": "Das Zeichen ə ist der schwächste Laut im Englischen."
  },
  "e51e494f58d13d2a": {
   "lang": "en-GB",
@@ -6553,6 +6833,11 @@
   "lang": "en-GB",
   "spoken": "Ruby watched a film.",
   "text": "Ruby watched a film."
+ },
+ "e5cdef53f61a29bb": {
+  "lang": "en-GB",
+  "spoken": "mother",
+  "text": "mother"
  },
  "e5df9f63df71f73c": {
   "lang": "en-GB",
@@ -6714,6 +6999,11 @@
   "spoken": "The taxi is black.",
   "text": "The taxi is black."
  },
+ "ea665e61bc407e02": {
+  "lang": "en-GB",
+  "spoken": "the cat's bowl",
+  "text": "the cat's bowl"
+ },
  "ea99744123c8781e": {
   "lang": "en-GB",
   "spoken": "The cat is between the box and the ball.",
@@ -6768,6 +7058,11 @@
   "lang": "en-GB",
   "spoken": "Listen!",
   "text": "Listen!"
+ },
+ "ecffd3be70f118e3": {
+  "lang": "en-GB",
+  "spoken": "this",
+  "text": "this"
  },
  "ed02c4159713a32a": {
   "lang": "en-GB",

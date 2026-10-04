@@ -1,6 +1,7 @@
 /* Unit 2 – Family, friends and pets.
    Cast (used again in Unit 2): Lukas (10, Berlin), his sister Julia (8) and her cat Mo,
-   Lukas' pen pal Ruby (11, London, Year 7) and her dog Biscuit. */
+   Lukas' pen pal Ruby (11, London, Year 7) and her dog Biscuit.
+   Slides 6a/6b: possessive 's in depth (girl's / girls', animals, two owners) and the three meanings of 's. */
 (() => {
   "use strict";
   const CSS = `
@@ -240,7 +241,7 @@
     goals: [
       "Rubys Familie kennenlernen: mum, dad, cousin …",
       "Sagen, was du hast: I've got a sister.",
-      "my, your, his … me, him, them – und Julia's cat",
+      "my, your, his … – und 's: Julia's cat, the girls' room, he's",
       "Plural: dogs, boxes, babies – und children, feet, mice",
       "Leute und Haustiere beschreiben, Geburtstage feiern",
     ],
@@ -566,6 +567,122 @@
           s.step(async () => { s.sfx.pop(); await s.show(EX.slice(0, 2), "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(EX.slice(2), "up"); s.say("Bei den twins steht der Apostroph hinter dem s."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(aLife, "up"); });
+        },
+      },
+      /* 6a ----------------------------------------------------------- */
+      {
+        title: "girl's oder girls'?",
+        say: "Hör mal genau hin: the girl's room und the girls' room klingen gleich. Nur der Apostroph zeigt dir, ob es ein Mädchen ist oder mehrere.",
+        build(s) {
+          /* scene: one girl or two girls in front of their door */
+          const E = s.el, v = s.svg(420, 250);
+          v.append(E("rect", { x: 0, y: 236, width: 420, height: 14, rx: 4, fill: "#d9c3a0" }));
+          v.append(E("rect", { x: 290, y: 46, width: 110, height: 190, rx: 6, fill: "#f06fa5", stroke: "#b84a7c", "stroke-width": 4 }));
+          v.append(E("rect", { x: 304, y: 64, width: 82, height: 70, rx: 4, fill: "none", stroke: "#b84a7c", "stroke-width": 3 }), E("rect", { x: 304, y: 150, width: 82, height: 70, rx: 4, fill: "none", stroke: "#b84a7c", "stroke-width": 3 }));
+          v.append(E("circle", { cx: 386, cy: 146, r: 6, fill: "#e8b923" }));
+          v.append(E("path", { d: "M345 92 l6 12 13 2 -9 9 2 13 -12 -6 -12 6 2 -13 -9 -9 13 -2 z", fill: "#fff" }));
+          const g1 = person(s, Object.assign({}, FAM.ruby.o, { x: 90, y: 236, h: 196 }));
+          const g2 = person(s, Object.assign({}, FAM.maya.o, { x: 200, y: 236, h: 180 }));
+          g2.classList.add("later");
+          v.append(g1, g2);
+          /* the words: the girl ' s room – apostrophe and s swap places */
+          const ap = s.h("span", { class: "e2hl", style: { display: "inline-block" } }, "'");
+          const sS = s.h("span", { style: { display: "inline-block" } }, "s");
+          const word = s.h("span", { class: "e2tok p", style: { display: "inline-flex", alignItems: "baseline" } }, s.h("span", null, "girl"), ap, sS);
+          const sent = s.h("div", { class: "row", style: { gap: "10px", justifyContent: "center", flexWrap: "nowrap" } }, s.h("span", { class: "e2tok" }, "the"), word, s.h("span", { class: "e2tok" }, "room"));
+          const how = s.h("p", { class: "t", style: { textAlign: "center", margin: 0 } }, "ein Mädchen: Apostroph ", s.h("b", { class: "red" }, "vor"), " dem s");
+          let two = false;
+          const tabs = {};
+          const setTwo = async (t, quiet) => {
+            if (t === two && !quiet) return;
+            two = t; Object.entries(tabs).forEach(([k, b]) => b.classList.toggle("on", (k === "two") === t));
+            if (!quiet) { s.sfx.whoosh(); if (t) { s.show(g2, "pop"); s.sfx.pop(); } else s.hide(g2); }
+            await reorder(s, word, t ? [word.firstChild, sS, ap] : [word.firstChild, ap, sS], 40);
+            bump(s, ap, 0.6); if (!quiet) s.sfx.boing();
+            how.textContent = "";
+            how.append(t ? "zwei Mädchen: Apostroph " : "ein Mädchen: Apostroph ", s.h("b", { class: "red" }, t ? "hinter" : "vor"), " dem s");
+            if (!quiet) EN(s, t ? "the girls' room" : "the girl's room");
+          };
+          tabs.one = s.h("button", { class: "e2tab on", style: { whiteSpace: "nowrap" } }, "one girl"); tabs.two = s.h("button", { class: "e2tab", style: { whiteSpace: "nowrap" } }, "two girls");
+          tabs.one.addEventListener("click", () => setTwo(false)); tabs.two.addEventListener("click", () => setTwo(true));
+          const hear = spk(s, "the girl's room", { label: "Klingt gleich!", say: () => (two ? "the girls' room" : "the girl's room") });
+          const left = s.h("div", { class: "stack", style: { gap: "10px", alignItems: "center" } },
+            s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap" } }, tabs.one, tabs.two), v, sent, how, hear);
+          /* right: four little rule cards, three examples each */
+          const red = t => s.h("span", { class: "e2hl" }, t);
+          const card = (title, rule, items) => {
+            const bs = items.map(([lb, t]) => spk(s, t, { label: s.h("span", null, ...lb), cls: "sm full" }));
+            return s.h("div", { class: "card stack later", style: { gap: "6px", padding: "8px 12px 10px" } },
+              s.h("p", { style: { margin: 0, font: "700 22px/1.15 var(--f-display)", color: "var(--unit)" } }, title), s.h("p", { class: "small pencil", style: { margin: 0 } }, rule), ...bs);
+          };
+          const C = [
+            card("Tiere", "auch bei Tieren: 's", [[["the dog", red("'s"), " bone"], "the dog's bone"], [["the cat", red("'s"), " bowl"], "the cat's bowl"], [["Biscuit", red("'s"), " ball"], "Biscuit's ball"]]),
+            card("Zwei Besitzer", "'s nur beim letzten Namen", [[["Sam and Leo", red("'s"), " room"], "Sam and Leo's room"], [["Tom and Sarah", red("'s"), " car"], "Tom and Sarah's car"], [["Ruby and Maya", red("'s"), " grandma"], "Ruby and Maya's grandma"]]),
+            card("Plural mit -s", "nur ein Apostroph dahinter", [[["the girl", red("s'"), " room"], "the girls' room"], [["the boy", red("s'"), " toilets"], "the boys' toilets"], [["my parent", red("s'"), " car"], "my parents' car"]]),
+            card("Plural ohne -s", "ganz normal: 's", [[["the children", red("'s"), " toys"], "the children's toys"], [["the men", red("'s"), " shoes"], "the men's shoes"], [["the women", red("'s"), " team"], "the women's team"]]),
+          ];
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "8px 16px 10px" } }, "Man ", s.h("b", null, "hört"), " keinen Unterschied – man ", s.h("b", null, "sieht"), " ihn nur beim Schreiben.");
+          left.append(merk);
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "430px 1fr", gap: "18px", height: "100%" } }, left,
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", alignContent: "start" } }, C)));
+          setTwo(false, true); s.show(v, "zoom"); s.sfx.pop();
+          s.step(async () => { await setTwo(true); s.say("Zwei Mädchen: Das s ist schon da, also kommt der Apostroph dahinter."); });
+          s.step(async () => { s.sound("dog-bark", { vol: 0.5 }); await s.show(C[0], "up"); s.say("Auch Tiere können etwas besitzen: the dog's bone."); });
+          s.step(async () => { s.sfx.pop(); await s.show(C[1], "up"); s.say("Gehört etwas zwei Leuten zusammen, bekommt nur der letzte Name das 's."); });
+          s.step(async () => { s.sfx.pop(); await s.show(C[2], "up"); s.sfx.pop(); await s.show(C[3], "up"); s.say("Endet der Plural auf s: nur Apostroph. Children, men und women: ganz normal 's."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 6b ----------------------------------------------------------- */
+      {
+        title: "'s – drei Bedeutungen",
+        say: "Das kleine 's kann drei verschiedene Dinge bedeuten: Etwas gehört jemandem. Oder es ist die Kurzform von is. Oder die Kurzform von has.",
+        build(s) {
+          const COL = { pos: "var(--unit)", is: "var(--blue)", has: "var(--red)" };
+          const mark = (k, t) => s.h("b", { style: { color: COL[k] } }, t);
+          /* parts: strings, or [kind, text] for coloured bits */
+          const lab = parts => s.h("span", null, ...parts.map(p => (typeof p === "string" ? p : mark(p[0], p[1]))));
+          const col = (k, head, sub, items) => {
+            const rows = items.map(([parts, t, long]) => {
+              const b = spk(s, t, { label: lab(parts), cls: "sm full" });
+              const l = s.h("p", { class: "small later", style: { margin: "0 0 0 8px" } }, long);
+              return { b, l, el: s.h("div", { class: "stack", style: { gap: "2px" } }, b, l) };
+            });
+            const el = s.h("div", { class: "card stack later", style: { gap: "8px", padding: "10px 12px", borderTop: `6px solid ${COL[k]}` } },
+              s.h("p", { style: { margin: 0, font: "800 26px/1.1 var(--f-display)", color: COL[k] } }, head), s.h("p", { class: "small pencil", style: { margin: 0 } }, sub), ...rows.map(r => r.el));
+            return { el, longs: rows.map(r => r.l) };
+          };
+          const C = [
+            col("pos", "'s = gehört", "Wem gehört es?", [
+              [["Ruby", ["pos", "'s"], " dog"], "Ruby's dog", "der Hund von Ruby"],
+              [["Maya", ["pos", "'s"], " mum"], "Maya's mum", "die Mama von Maya"],
+              [["Grandma", ["pos", "'s"], " house"], "Grandma's house", "das Haus von Oma"]]),
+            col("is", "'s = is", "Kurzform von is", [
+              [["She", ["is", "'s"], " my cousin."], "She's my cousin.", "= She is my cousin."],
+              [["He", ["is", "'s"], " ten."], "He's ten.", "= He is ten."],
+              [["It", ["is", "'s"], " Monday."], "It's Monday.", "= It is Monday."]]),
+            col("has", "'s = has", "Kurzform von has – mit got", [
+              [["She", ["has", "'s"], " got a cat."], "She's got a cat.", "= She has got a cat."],
+              [["He", ["has", "'s"], " got a bike."], "He's got a bike.", "= He has got a bike."],
+              [["It", ["has", "'s"], " got four legs."], "It's got four legs.", "= It has got four legs."]]),
+          ];
+          /* one sentence, two different 's */
+          const S2 = [
+            [[["is", "He's"], " ", ["pos", "Ruby's"], " brother."], "He's Ruby's brother.", [["is", "He's"], " = He is", "  ·  ", ["pos", "Ruby's"], " = gehört zu Ruby"]],
+            [[["is", "It's"], " ", ["pos", "Biscuit's"], " ball."], "It's Biscuit's ball.", [["is", "It's"], " = It is", "  ·  ", ["pos", "Biscuit's"], " = gehört Biscuit"]],
+          ].map(([parts, t, ex]) => { const b = spk(s, t, { label: lab(parts), cls: "sm full" }); const l = s.h("p", { class: "small later", style: { margin: "0 0 0 8px" } }, lab(ex)); return { b, l, el: s.h("div", { class: "stack", style: { gap: "2px" } }, b, l) }; });
+          const both = s.h("div", { class: "ex stack later", style: { gap: "6px" } }, s.h("span", { class: "exlabel" }, "Ein Satz – zweimal 's"), ...S2.map(x => x.el));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "8px 16px 10px" } },
+            s.h("b", null, "Trick:"), " Passt ", mark("is", "is"), " oder ", mark("has", "has"), "? Dann ist es eine Kurzform – sonst ", mark("pos", "Besitz"), ".", s.h("br"),
+            s.h("b", null, "its"), " = sein/ihr (Biscuit loves ", s.h("b", null, "its"), " ball)  ·  ", s.h("b", null, "it's"), " = it is");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px" } },
+            s.h("div", { class: "cols3", style: { gap: "12px", alignItems: "start" } }, C.map(c => c.el)),
+            s.h("div", { class: "cols", style: { gridTemplateColumns: "1fr 1.15fr", gap: "14px", alignItems: "start" } }, both, merk)));
+          s.sfx.whoosh(); s.show(C[0].el, "up"); s.show(C[0].longs, "fade", 300);
+          s.step(async () => { s.sfx.pop(); await s.show(C[1].el, "up"); s.sfx.snap(); await s.show(C[1].longs, "left"); s.say("Hier steht 's für is: She is my cousin."); });
+          s.step(async () => { s.sfx.pop(); await s.show(C[2].el, "up"); s.sfx.snap(); await s.show(C[2].longs, "left"); s.say("Und hier für has. Steht got dahinter, ist es fast immer has."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(both, "up"); for (const x of S2) { s.sfx.zap(); await s.show(x.l, "left"); } s.say("He's heißt he is. Ruby's heißt: gehört zu Ruby."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Und its ohne Apostroph heißt sein oder ihr – it's mit Apostroph heißt it is."); });
         },
       },
       /* 7 ------------------------------------------------------------ */

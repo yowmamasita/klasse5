@@ -1,4 +1,4 @@
-/* Kapitel 8 – Märchen, Fabeln, Gedichte (Grimm, Äsop/La Fontaine/Lessing, Vers/Reim/Metrum, Erlkönig, Buchvorstellung, Vorlesen) */
+/* Kapitel 8 – Märchen, Fabeln, Gedichte (Grimm, Äsop/La Fontaine/Lessing, Sagen: Herakles/Odysseus/Ikarus nach Schwab, Kahlbutz, Schlangenkönig, Vers/Reim/Metrum, Erlkönig, Buchvorstellung, Vorlesen) */
 (() => {
   const P = { blue: "#1d5bd0", red: "#dc3b2a", green: "#138a5a", violet: "#7b4fd6", orange: "#ee7a1a", ink: "#1b2740", pencil: "#5d6678", yellow: "#ffd94a", line: "#c8d3de", unit: "#0e7490", soft: "#dff3f7", gold: "#e0a800" };
   const later = el => { el.classList.add("later"); return el; };
@@ -18,8 +18,8 @@
   Deck.unit({
     id: "u8", num: 8, title: "Märchen, Fabeln, Gedichte", color: "#0e7490", soft: "#dff3f7",
     subtitle: "Es war einmal … und reimt sich das?",
-    blurb: "Märchen, Fabeln, Reime, Rhythmus, Balladen, Bücher vorstellen.",
-    goals: ["Märchen und ihre Merkmale erkennen", "Fabeln verstehen und ihre Lehre finden", "Vers, Strophe, Reim und Rhythmus in Gedichten entdecken", "Eine Ballade mit verteilten Rollen erleben", "Ein Buch vorstellen und gut vorlesen"],
+    blurb: "Märchen, Fabeln, Sagen, Reime, Balladen, Bücher vorstellen.",
+    goals: ["Märchen und ihre Merkmale erkennen", "Fabeln und Sagen verstehen – Lehre und wahrer Kern", "Vers, Strophe, Reim und Rhythmus in Gedichten entdecken", "Eine Ballade mit verteilten Rollen erleben", "Ein Buch vorstellen und gut vorlesen"],
     icon(svg, el) {
       svg.append(el("path", { d: "M8 18 Q22 12 35 18 V60 Q22 54 8 60 Z", fill: "#0e7490", opacity: .25 }), el("path", { d: "M35 18 Q48 12 62 18 V60 Q48 54 35 60 Z", fill: "#0e7490", opacity: .45 }),
         el("path", { d: "M50 4 l3 7 l7 1 l-5 5 l1 7 l-6 -3 l-6 3 l1 -7 l-5 -5 l7 -1 z", fill: "#e0a800" }));
@@ -367,6 +367,242 @@
           s.sfx.pop();
           poets.forEach((p, i) => s.step(async () => { s.sound("page-turn-2", { vol: .8 }); s.show(dots[i], "pop"); await s.show(cards[i], "up"); s.say(p[0] + ". " + p[3]); if (i === 2) s.sfx.error(); }));
           s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+        },
+      },
+      /* 8a – Sagen --------------------------------------------------------- */
+      {
+        title: "Was ist eine Sage?",
+        say: "Eine Sage klingt manchmal wie ein Märchen. Aber sie spielt an einem echten Ort und hat einen wahren Kern.",
+        build(s) {
+          const ic = draw => { const v = s.svg(56, 56); v.style.width = "56px"; v.style.height = "56px"; draw(v); return v; };
+          const M = [
+            ["Wahrer Kern", "Ein Ort, eine Person oder ein Ereignis hat es wirklich gegeben.", v => v.append(s.el("circle", { cx: 24, cy: 24, r: 16, fill: "#fff", stroke: P.unit, "stroke-width": 4 }), s.el("path", { d: "M36 36 L50 50", stroke: P.unit, "stroke-width": 6, "stroke-linecap": "round" }), s.el("circle", { cx: 24, cy: 24, r: 6, fill: P.gold }))],
+            ["Ort und Zeit genannt", "„Auf der Insel Kreta …“, „In Kampehl, vor über 300 Jahren …“", v => v.append(s.el("path", { d: "M28 52 C14 34 10 28 10 20 A18 18 0 0 1 46 20 C46 28 42 34 28 52 Z", fill: P.red }), s.el("circle", { cx: 28, cy: 20, r: 7, fill: "#fff" }))],
+            ["Übernatürliches", "Götter, Riesen, Ungeheuer, Geister oder ein Fluch.", v => v.append(s.el("path", { d: "M30 4 L18 30 H28 L22 52 L42 22 H31 L38 4 Z", fill: P.gold, stroke: "#a87a00", "stroke-width": 2, "stroke-linejoin": "round" }))],
+            ["Lange weitererzählt", "Erst mündlich, später aufgeschrieben. Man sollte sie glauben.", v => v.append(s.el("path", { d: "M6 10 h32 a4 4 0 0 1 4 4 v16 a4 4 0 0 1 -4 4 h-18 l-8 8 v-8 h-6 a4 4 0 0 1 -4 -4 v-16 a4 4 0 0 1 4 -4 z", fill: P.unit }), s.el("path", { d: "M50 24 h-4 a3 3 0 0 0 -3 3 v12 a3 3 0 0 0 3 3 h2 v6 l6 -6", fill: "none", stroke: P.unit, "stroke-width": 3 }))],
+          ];
+          const cards = M.map(([t, d, draw]) => later(s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "56px 1fr", gap: "14px", alignItems: "center", padding: "12px 16px" } }, ic(draw),
+            s.h("div", null, s.h("p", { class: "h2", style: { fontSize: "24px", color: P.unit } }, t), s.h("p", { class: "small", style: { fontSize: "20px" } }, d)))));
+          const ROWS = [["Anfang", "„Es war einmal …“", "„Vor langer Zeit in Lübbenau …“"], ["Ort", "irgendwo, im Wald", "genannt: Kreta, Spreewald"], ["Wahr?", "ausgedacht", "mit wahrem Kern"], ["Ende", "meist glücklich", "oft ernst oder traurig"]];
+          const head = s.h("div", { style: { display: "grid", gridTemplateColumns: "92px 1fr 1fr", gap: "8px", paddingBottom: "6px", borderBottom: "3px solid " + P.unit } }, s.h("span"), B(s, "Märchen", P.violet), B(s, "Sage", P.unit));
+          const trs = ROWS.map(([a, b, c]) => later(s.h("div", { style: { display: "grid", gridTemplateColumns: "92px 1fr 1fr", gap: "8px", alignItems: "center", padding: "7px 0", borderBottom: "2px solid " + P.line } },
+            s.h("b", { style: { fontSize: "19px", color: P.pencil } }, a), s.h("span", { style: { fontSize: "20px", color: P.violet } }, b), s.h("span", { style: { fontSize: "20px", color: P.unit, fontWeight: 700 } }, c))));
+          const tab = later(s.h("div", { class: "card", style: { padding: "12px 16px", display: "flex", flexDirection: "column" } }, head, ...trs));
+          const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small", style: { fontSize: "20px" } }, "Im Spreewald gibt es Sagen-Kahnfahrten: Beim Fahren durch die Kanäle hörst du die Sagen der Gegend.")));
+          const m = later(merk(s, { style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Eine ", B(s, "Sage"), " erzählt von ", B(s, "echten Orten"), " oder Menschen – und mischt Wahres mit ", B(s, "Übernatürlichem"), "."));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "1fr 470px", gap: "14px 18px", alignContent: "start" },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, ...cards), s.h("div", { class: "stack", style: { gap: "12px" } }, tab, lf), s.h("div", { style: { gridColumn: "1 / 3" } }, m)));
+          s.sfx.pop();
+          s.step(async () => { s.sound("page-turn-1"); for (const c of cards.slice(0, 2)) { await s.show(c, "left"); await s.wait(200); } s.say("Wahrer Kern. Ort und Zeit werden genannt."); });
+          s.step(async () => { s.sound("thunder", { vol: .35, dur: 2, fade: .6 }); for (const c of cards.slice(2)) { await s.show(c, "left"); await s.wait(200); } s.say("Übernatürliches. Und lange weitererzählt."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(tab, "zoom"); for (const [i, r] of trs.entries()) { s.sfx.count(i); await s.show(r, "up"); } });
+          s.step(async () => { s.sound("waves", { vol: .35, dur: 2.5, fade: .6 }); await s.show(lf, "up"); s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 8b ---------------------------------------------------------------- */
+      {
+        title: "Herakles und seine Aufgaben",
+        say: "Herakles ist der stärkste Held der griechischen Sagen. Er muss zwölf schwere Aufgaben lösen. Drei davon schauen wir uns an.",
+        build(s) {
+          const pic = s.photo("herakles-mosaik", { w: 400, h: 300, pos: "50% 50%", caption: "Herakles und der Löwe (römisches Mosaik)" });
+          const intro = s.h("div", { class: "card soft", style: { padding: "12px 16px" } }, s.h("p", { class: "small", style: { fontSize: "21px" } }, B(s, "Herakles", P.unit), " – bei den Römern ", B(s, "Herkules"), " – muss König Eurystheus dienen. Der gibt ihm ", B(s, "zwölf"), " Aufgaben, die eigentlich niemand schaffen kann."));
+          const T3 = [
+            ["1", "Der Löwe von Nemea", "Kein Pfeil dringt durch sein Fell. Herakles ringt ihn mit bloßen Händen nieder. Danach trägt er das Fell wie eine Rüstung.", "Kraft", P.red, () => s.sound("lion-roar", { vol: .45 })],
+            ["2", "Die Hydra", "Eine Wasserschlange mit vielen Köpfen. Schlägt er einen ab, wachsen neue nach! Sein Helfer brennt die Hälse aus – nun wächst nichts mehr.", "Teamarbeit", P.green, () => s.sound("snake-hiss", { vol: .5 })],
+            ["5", "Der Stall des Augias", "Ein riesiger Stall, seit Jahren nicht ausgemistet. Herakles leitet zwei Flüsse hindurch – an einem einzigen Tag ist alles sauber.", "List", P.blue, () => s.sound("water-pour", { vol: .45, dur: 2 })],
+          ];
+          const cards = T3.map(([n, t, d, tag, c]) => later(s.h("div", { class: "card", style: { borderLeft: "8px solid " + c, padding: "10px 16px", display: "flex", flexDirection: "column", gap: "4px" } },
+            s.h("div", { class: "row", style: { gap: "10px", justifyContent: "space-between", flexWrap: "nowrap" } }, s.h("p", { style: { margin: 0, font: "700 23px/1.2 var(--f-display)", color: c } }, "Aufgabe " + n + ": " + t), s.h("span", { class: "chip", style: { flex: "none" } }, tag)),
+            s.h("p", { class: "small", style: { fontSize: "20px" } }, d))));
+          const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small", style: { fontSize: "20px" } }, "Eine riesige, fast unlösbare Arbeit nennen wir heute noch eine ", B(s, "„Herkulesaufgabe“"), " – zum Beispiel das Kinderzimmer nach einer Geburtstagsparty aufräumen.")));
+          const src = s.h("p", { class: "small pencil" }, "Nacherzählt nach Gustav Schwab, „Sagen des klassischen Altertums“ (1838–1840)");
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "400px 1fr", gap: "18px", alignItems: "start" },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, pic, intro, src), s.h("div", { class: "stack", style: { gap: "12px" } }, ...cards, lf)));
+          s.show(pic, "zoom"); s.sfx.whoosh();
+          T3.forEach((x, i) => s.step(async () => { x[5](); await s.show(cards[i], "left"); s.say(x[1] + ". " + x[2]); }));
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
+        },
+      },
+      /* 8c ---------------------------------------------------------------- */
+      {
+        title: "Odysseus und der Zyklop",
+        say: "Odysseus ist nicht der Stärkste, aber der Schlaueste. Das zeigt sein Abenteuer beim einäugigen Riesen Polyphem.",
+        build(s) {
+          const pic = s.photo("polyphem-boecklin", { w: "100%", h: 200, pos: "50% 18%", caption: "Arnold Böcklin, 1896: Polyphem schleudert Felsen nach dem Schiff." });
+          const PAN = [
+            ["Gefangen", "Odysseus und seine Männer sitzen in der Höhle des Riesen Polyphem fest. Der hat nur ein Auge.", () => s.sound("sheep", { vol: .5 })],
+            ["„Niemand“", "Odysseus schenkt ihm starken Wein. „Wie heißt du?“, fragt der Riese. „Ich heiße Niemand.“", () => s.sound("glass-clink", { vol: .5 })],
+            ["Das Auge", "Als Polyphem schläft, stoßen die Männer einen glühenden Pfahl in sein einziges Auge.", () => s.sound("fire", { vol: .4, dur: 1.6 })],
+            ["Die Flucht", "Am Morgen lässt der blinde Riese seine Schafe hinaus. Die Männer klammern sich unter ihre Bäuche.", () => s.sound("footsteps", { vol: .4, dur: 1.6 })],
+          ];
+          const pans = PAN.map(([t, d], i) => later(s.h("div", { class: "card", style: { padding: "10px 14px", display: "flex", flexDirection: "column", gap: "6px" } },
+            s.h("div", { class: "row", style: { gap: "8px", flexWrap: "nowrap" } }, s.h("span", { style: { width: "34px", height: "34px", borderRadius: "50%", background: P.unit, color: "#fff", display: "grid", placeItems: "center", font: "800 19px var(--f-display)", flex: "none" } }, String(i + 1)), s.h("b", { style: { fontSize: "22px", color: P.unit } }, t)),
+            s.h("p", { class: "small", style: { fontSize: "20px" } }, d))));
+          const cry = "Polyphem schreit: Hilfe! Niemand will mich töten! Die anderen Zyklopen rufen: Wenn dich niemand angreift, dann brauchst du ja keine Hilfe! Und sie gehen wieder schlafen.";
+          const btn = later(readBtn(s, "Polyphem ruft um Hilfe", cry, true));
+          const joke = later(s.h("div", { class: "card soft", style: { padding: "10px 16px", display: "grid", gridTemplateColumns: "1fr auto", gap: "14px", alignItems: "center" } }, s.h("p", { class: "small", style: { fontSize: "21px" } }, "„Hilfe! ", B(s, "Niemand"), " will mich töten!“ – „Wenn ", B(s, "niemand"), " dich angreift, brauchst du keine Hilfe!“ Der Trick mit dem Namen rettet alle."), btn));
+          const m = later(merk(s, { style: { fontSize: "22px", padding: "10px 16px 12px" } }, "Odysseus siegt mit ", B(s, "List"), ", nicht mit Kraft."));
+          s.add(root(s, "stack", { gap: "12px" }, pic, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" } }, ...pans),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 290px", gap: "12px", alignItems: "stretch" } }, joke, m)));
+          s.show(pic, "zoom"); s.sound("waves", { vol: .3, dur: 2.5, fade: .7 });
+          PAN.forEach((p, i) => s.step(async () => { p[2](); await s.show(pans[i], "up"); s.say(p[1]); }));
+          s.step(async () => { s.sfx.boing(); await s.show(joke, "up"); s.show(btn, "pop"); read(s, cry); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 8d ---------------------------------------------------------------- */
+      {
+        title: "Dädalus und Ikarus",
+        say: "Dädalus baut Flügel aus Federn und Wachs. Er warnt seinen Sohn: Flieg nicht zu hoch und nicht zu tief! Probier es mit dem Schieber aus.",
+        build(s) {
+          const W = 560, H = 360, SEA = 300;
+          const v = s.svg(W, H); v.style.width = W + "px"; v.style.height = H + "px";
+          v.append(s.el("rect", { x: 0, y: 0, width: W, height: H, rx: 16, fill: "#cfe9ff" }),
+            s.el("circle", { cx: 500, cy: 56, r: 64, fill: "#ffe680", opacity: .5 }), s.el("circle", { cx: 500, cy: 56, r: 40, fill: P.yellow }),
+            s.el("rect", { x: 0, y: SEA, width: W, height: H - SEA, fill: "#2f7fc0" }),
+            s.el("path", { d: `M0 ${SEA} q20 -8 40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0 t40 0`, fill: "none", stroke: "#fff", "stroke-width": 3, opacity: .7 }),
+            s.el("path", { d: `M0 ${SEA} L0 250 Q40 236 70 250 Q100 230 130 262 L150 ${SEA} Z`, fill: "#b9925a" }));
+          /* wings made of feathers */
+          const mkWing = (dir) => {
+            const g = s.el("g", null);
+            const fs = [];
+            for (let i = 0; i < 6; i++) { const f = s.el("path", { d: `M0 0 Q${dir * (16 + i * 7)} ${-18 - i * 3} ${dir * (30 + i * 9)} ${-6 + i * 4}`, fill: "none", stroke: "#fff", "stroke-width": 7, "stroke-linecap": "round" }); fs.push(f); g.append(f); }
+            g.append(s.el("circle", { cx: 0, cy: 0, r: 5, fill: "#e8c26a" }));
+            return { g, fs };
+          };
+          const flyer = (skin, hair, scale) => {
+            const L = mkWing(-1), R = mkWing(1);
+            const body = s.el("g", null, s.el("ellipse", { cx: 0, cy: 8, rx: 9, ry: 18, fill: skin }), s.el("circle", { cx: 0, cy: -16, r: 9, fill: skin }), s.el("path", { d: "M-9 -20 Q0 -32 9 -20", fill: hair }), s.el("path", { d: "M-5 24 L-8 40 M5 24 L8 40", stroke: skin, "stroke-width": 5, "stroke-linecap": "round" }));
+            const g = s.el("g", null, L.g, R.g, body);
+            return { g, L, R, scale };
+          };
+          const dad = flyer("#e8b48a", "#8a96a8", .8), son = flyer("#f6d2b4", "#6b3d17", 1);
+          v.append(dad.g, son.g);
+          const xs = 270, xd = 160;
+          let h = 5, fallen = false, flap = 0, lost = 0, melting = false;
+          const yOf = hh => 280 - hh * 24;
+          let ySon = yOf(5);
+          const place = () => {
+            const k = Math.sin(flap) * .35;
+            [dad, son].forEach(f => { f.L.g.setAttribute("transform", `rotate(${k * 40})`); f.R.g.setAttribute("transform", `rotate(${-k * 40})`); });
+            dad.g.setAttribute("transform", `translate(${xd} ${yOf(5)}) scale(.8)`);
+            son.g.setAttribute("transform", `translate(${xs} ${ySon})${fallen ? " rotate(160)" : ""}`);
+          };
+          const feathers = [...son.L.fs, ...son.R.fs];
+          const status = s.h("p", { class: "t", style: { fontSize: "22px", minHeight: "60px", textAlign: "center", margin: 0 } }, "Mittlere Höhe – genau richtig!");
+          const setStatus = () => {
+            if (fallen) status.textContent = "Ikarus stürzt ins Meer.";
+            else if (h >= 8) status.textContent = "Zu nah an der Sonne: Das Wachs schmilzt!";
+            else if (h <= 2) status.textContent = "Zu tief: Die Gischt macht die Federn nass und schwer.";
+            else status.textContent = "Mittlere Höhe – so hat es Dädalus geraten.";
+            feathers.forEach(f => f.setAttribute("stroke", h <= 2 && !fallen ? "#9fb3c8" : "#fff"));
+          };
+          const dropOne = async () => {
+            const f = feathers[lost++]; if (!f) return;
+            s.sfx.tick();
+            await s.tween({ from: 0, to: 1, dur: s.fast ? 1 : 500, update: t => { f.setAttribute("transform", `translate(${12 * t} ${120 * t})`); f.setAttribute("opacity", 1 - t); } });
+          };
+          const fall = async () => {
+            fallen = true; setStatus(); s.sfx.whoosh();
+            const y0 = ySon;
+            await s.tween({ from: 0, to: 1, dur: s.fast ? 1 : 1100, ease: "in", update: t => { ySon = y0 + (SEA + 8 - y0) * t; place(); } });
+            s.sound("splash", { vol: .6 });
+          };
+          const melt = async () => {
+            if (melting || fallen) return; melting = true;
+            while (lost < feathers.length && h >= 8 && s.alive) await dropOne();
+            melting = false;
+            if (lost >= feathers.length && !fallen) await fall();
+          };
+          const sl = s.slider({ label: "Flughöhe von Ikarus", min: 1, max: 10, step: 1, value: 5, fmt: x => x >= 8 ? "sehr hoch" : x <= 2 ? "sehr tief" : "mittel", onInput: x => { if (fallen) return; h = x; setStatus(); if (h >= 8) melt(); } });
+          const reset = () => { fallen = false; lost = 0; h = 5; sl.set(5); feathers.forEach(f => { f.removeAttribute("transform"); f.setAttribute("opacity", 1); }); setStatus(); s.sfx.pop(); };
+          const again = later(s.h("button", { class: "btn", onclick: () => { s.sfx.click(); reset(); } }, "Nochmal fliegen"));
+          s.loop((t, dt) => { flap += dt * 9; if (!fallen) { const target = yOf(h); ySon += (target - ySon) * Math.min(1, dt * 4); } place(); });
+          place();
+          sl.style.width = "100%"; sl.style.boxSizing = "border-box"; sl.style.padding = "0 12px";
+          v.append(T(s, xd, yOf(5) - 40, "Dädalus", { "font-size": 19, fill: P.pencil }));
+          const left = s.h("div", { class: "card", style: { padding: "10px 12px", display: "flex", flexDirection: "column", gap: "6px", alignItems: "center" } }, v, sl, status, again);
+          const story = [
+            "Dädalus ist ein berühmter Erfinder. König Minos hält ihn mit seinem Sohn Ikarus auf der Insel Kreta fest.",
+            "Dädalus baut Flügel: Er befestigt Federn mit Wachs. „Flieg nicht zu hoch, sonst schmilzt das Wachs. Und nicht zu tief, sonst werden die Federn nass!“",
+            "Doch Ikarus fliegt übermütig immer höher – der Sonne entgegen.",
+          ];
+          const ps = story.map((t, i) => { const p = s.h("p", { class: "small", style: { fontSize: "20px" } }, t); return i ? later(p) : p; });
+          const pic = later(s.photo("ikarus-bruegel", { w: "100%", h: 200, pos: "60% 60%", caption: "Gemälde: Wo ist Ikarus? Rechts unten im Wasser!" }));
+          const m = later(merk(s, { style: { fontSize: "20px", padding: "10px 16px 12px" } }, "Das Meer dort heißt bis heute ", B(s, "Ikarisches Meer"), ". Die Sage warnt vor ", B(s, "Übermut"), "."));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "584px 1fr", gap: "16px", alignItems: "start" }, left, s.h("div", { class: "stack", style: { gap: "10px" } }, ...ps, pic, m)));
+          s.sound("wind", { vol: .3, dur: 3, fade: .8 });
+          s.step(async () => { s.sfx.pop(); await s.show(ps[1], "left"); s.say("Flieg nicht zu hoch und nicht zu tief!"); });
+          s.step(async () => { await s.show(ps[2], "left"); sl.set(10); s.say("Ikarus fliegt immer höher. Das Wachs schmilzt."); await melt(); s.show(again, "pop"); });
+          s.step(async () => { s.sound("waves", { vol: .35, dur: 2.5, fade: .6 }); await s.show(pic, "zoom"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 8e ---------------------------------------------------------------- */
+      {
+        title: "Sagen aus Brandenburg",
+        say: "Auch bei uns in Brandenburg gibt es Sagen. Tippe auf den Knopf: Was ist wahr, und was ist sagenhaft?",
+        build(s) {
+          const OK = "#d4f2e1", SG = "#ece5fb";
+          const segs = [];
+          const txt = parts => s.h("p", { class: "small", style: { fontSize: "20px", lineHeight: 1.5 } }, ...parts.map(([k, t]) => { if (!k) return t; const e = s.h("span", { style: { borderRadius: "4px", padding: "0 2px", transition: "background .4s" } }, t); e.k = k; segs.push(e); return e; }));
+          const kahl = txt([["w", "Ritter Christian Friedrich von Kahlbutz lebte von 1651 bis 1702 in Kampehl bei Neustadt (Dosse)."], [0, " "], ["s", "Er soll einen Schäfer getötet haben. Vor Gericht schwor er: Wenn er der Mörder sei, solle sein Körper nach dem Tod nie verwesen."], [0, " "], ["w", "1794 fand man seinen Sarg – der Körper war nicht verwest. Die Mumie liegt bis heute in der Gruft der Dorfkirche."]]);
+          const schl = txt([["s", "Der Schlangenkönig trägt eine goldene Krone. Ein gieriger Kaufmann stahl sie – er wurde reich, aber Lübbenau wurde arm."], [0, " "], ["w", "Im Spreewald leben harmlose Nattern. Viele alte Häuser dort tragen am Giebel gekreuzte Schlangen mit Kronen."]]);
+          const pic = s.photo("kampehl-kirche", { w: "100%", h: 190, pos: "50% 60%", caption: "Kampehl: Dorfkirche mit Gruft" });
+          /* gable with crowned snakes */
+          const g = s.svg(300, 226); g.style.width = "100%"; g.style.height = "226px";
+          const house = s.el("g", { transform: "translate(0 30)" });
+          g.append(s.el("rect", { x: 0, y: 0, width: 300, height: 226, rx: 14, fill: "#e6f3fa" }), house);
+          house.append(
+            s.el("path", { d: "M60 196 L60 110 L150 46 L240 110 L240 196 Z", fill: "#c8a074", stroke: "#7a4a1f", "stroke-width": 4 }),
+            s.el("path", { d: "M40 124 L150 44 L260 124", fill: "none", stroke: "#7a4a1f", "stroke-width": 10, "stroke-linecap": "round" }),
+            s.el("rect", { x: 132, y: 136, width: 36, height: 60, fill: "#7a4a1f" }), s.el("rect", { x: 84, y: 124, width: 30, height: 26, fill: "#fff", stroke: "#7a4a1f", "stroke-width": 3 }), s.el("rect", { x: 186, y: 124, width: 30, height: 26, fill: "#fff", stroke: "#7a4a1f", "stroke-width": 3 }));
+          const head = (x, y, dir) => s.el("g", { transform: `translate(${x} ${y}) rotate(${dir * 25})` },
+            s.el("ellipse", { cx: 0, cy: 0, rx: 15, ry: 10, fill: "#3c7a1c", stroke: "#24520f", "stroke-width": 2 }),
+            s.el("circle", { cx: dir * 6, cy: -2, r: 2.6, fill: "#fff" }),
+            s.el("path", { d: `M${dir * 14} 2 l${dir * 9} 2 l${-dir * 3} 2 l${dir * 3} 2`, fill: "none", stroke: P.red, "stroke-width": 2 }),
+            s.el("path", { d: "M-11 -8 l2 -14 l5 7 l4 -10 l4 10 l5 -7 l2 14 z", fill: P.gold, stroke: "#a87a00", "stroke-width": 1.5 }));
+          const snakes = later(s.el("g", null,
+            s.el("path", { d: "M150 46 L196 14", stroke: "#3c7a1c", "stroke-width": 9, "stroke-linecap": "round" }), s.el("path", { d: "M150 46 L104 14", stroke: "#3c7a1c", "stroke-width": 9, "stroke-linecap": "round" }),
+            head(204, 12, 1), head(96, 12, -1)));
+          house.append(snakes);
+          const card = (title, media, body) => s.h("div", { class: "card", style: { padding: "12px 16px", display: "flex", flexDirection: "column", gap: "8px" } }, s.h("p", { class: "h2", style: { fontSize: "25px", color: P.unit } }, title), media, body);
+          const c1 = card("Ritter Kahlbutz", pic, kahl), c2 = card("Der Schlangenkönig im Spreewald", g, schl);
+          let on = false;
+          const toggle = async () => { on = !on; s.sfx.click(); for (const e of segs) { e.style.background = on ? (e.k === "w" ? OK : SG) : ""; } if (on) s.sfx.ding(); };
+          const key = later(s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } }, s.h("span", { class: "chip", style: { background: OK } }, "wahr"), s.h("span", { class: "chip", style: { background: SG } }, "sagenhaft")));
+          const btn = s.h("button", { class: "btn solid", onclick: () => toggle() }, "Wahrer Kern?");
+          s.add(root(s, "stack", { gap: "12px" }, s.h("div", { class: "cols", style: { gap: "16px", alignItems: "start" } }, c1, c2), s.h("div", { class: "row", style: { gap: "16px", justifyContent: "center" } }, btn, key)));
+          s.show([c1, c2], "up"); s.sfx.pop();
+          s.step(async () => { s.sound("church-bells", { vol: .3, dur: 2.5, fade: .7 }); pulseOnce(pic); s.say("Ritter Kahlbutz aus Kampehl."); });
+          s.step(async () => { s.sound("snake-hiss", { vol: .45 }); await s.show(snakes, "zoom"); s.say("Der Schlangenkönig mit der goldenen Krone."); });
+          s.step(async () => { await toggle(); await s.show(key, "pop"); s.say("Grün ist wahr. Lila ist sagenhaft."); });
+        },
+      },
+      /* 8f ---------------------------------------------------------------- */
+      {
+        title: "Märchen, Sage, Fabel",
+        say: "Märchen, Sage und Fabel sind alte Erzählungen. Aber jede hat ihre eigenen Merkmale.",
+        build(s) {
+          const C3 = [["Märchen", P.violet, "„Es war einmal ein Müller …“"], ["Sage", P.unit, "„In Kampehl lebte einst ein Ritter …“"], ["Fabel", P.orange, "„Ein Rabe saß mit einem Käse auf einem Ast …“"]];
+          const heads = C3.map(([n, c, q]) => { const quote = later(s.h("p", { class: "small", style: { fontSize: "20px", fontStyle: "italic", minHeight: "56px" } }, q)); const el = s.h("div", { style: { borderTop: "8px solid " + c, background: "#fff", borderRadius: "12px", padding: "10px 14px", display: "flex", flexDirection: "column", gap: "4px", boxShadow: "0 2px 0 rgba(0,0,0,.06)" } }, s.h("p", { style: { margin: 0, font: "800 27px/1.1 var(--f-display)", color: c } }, n), quote); el.quote = quote; return el; });
+          const ROWS = [
+            ["Figuren", "Prinzessin, Hexe, Zwerge", "Helden, Riesen, Götter, echte Menschen", "Tiere, die wie Menschen handeln"],
+            ["Ort, Zeit", "unbestimmt", "genannt", "unwichtig"],
+            ["Wahr?", "nein", "wahrer Kern", "nein"],
+            ["Will …", "unterhalten: Das Gute siegt", "erklären, warnen, erinnern", "eine Lehre geben"],
+            ["Beispiel", "Rotkäppchen", "Dädalus und Ikarus", "Der Fuchs und der Rabe"],
+          ];
+          const rows = ROWS.map(([a, ...cells]) => later(s.h("div", { style: { display: "grid", gridTemplateColumns: "130px 1fr 1fr 1fr", gap: "12px", alignItems: "center", padding: "12px 0", borderBottom: "2px solid " + P.line } },
+            s.h("b", { style: { fontSize: "20px", color: P.pencil } }, a), ...cells.map((t, i) => s.h("span", { style: { fontSize: "21px", color: C3[i][1], fontWeight: a === "Wahr?" ? 700 : 400 } }, t)))));
+          const top = s.h("div", { style: { display: "grid", gridTemplateColumns: "130px 1fr 1fr 1fr", gap: "12px" } }, s.h("span"), ...heads);
+          const m = later(merk(s, { style: { fontSize: "21px", padding: "10px 18px 12px" } }, "Erkennst du den ", B(s, "Anfang"), ", erkennst du oft schon die Textsorte: ", B(s, "„Es war einmal“", P.violet), " – ", B(s, "echter Ort", P.unit), " – ", B(s, "sprechende Tiere", P.orange), "."));
+          s.add(root(s, "stack", { gap: "14px" }, top, s.h("div", { class: "card", style: { padding: "4px 16px 8px" } }, ...rows), m));
+          s.show(heads, "up"); s.sfx.pop();
+          s.step(async () => { const snd = [() => s.sound("magic-chime", { vol: .5 }), () => s.sound("church-bells", { vol: .3, dur: 2, fade: .6 }), () => s.sound("raven", { vol: .5, dur: 1.5 })]; for (const [i, h] of heads.entries()) { snd[i](); await s.show(h.quote, "left"); await s.wait(350); } });
+          s.step(async () => { for (const i of [0, 1, 2]) { s.sfx.count(i); await s.show(rows[i], "up"); } });
+          s.step(async () => { for (const i of [3, 4]) { s.sfx.count(i + 3); await s.show(rows[i], "up"); } });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
       /* 9 ---------------------------------------------------------------- */

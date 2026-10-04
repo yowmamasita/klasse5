@@ -34,6 +34,18 @@
   "source": "https://freesound.org/people/Kiyoshiakira/sounds/436772/",
   "orig": "436772"
  },
+ "bauhaus-dessau": {
+  "file": "bauhaus-dessau.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 702,
+  "title": "Bauhausgebäude Dessau",
+  "author": "JensKunstfreund",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Au%C3%9Fenansichten_des_Bauhaus-Geb%C3%A4udes_in_Dessau_01.jpg",
+  "orig": "File:Außenansichten des Bauhaus-Gebäudes in Dessau 01.jpg"
+ },
  "berge-dunst": {
   "file": "berge-dunst.jpg",
   "kind": "img",
@@ -620,6 +632,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Close-up,_portrait_of_a_big_red_cat_in_the_rays_of_the_evening_sun._Pets_in_the_nature_-_Flickr_-_Yuliya_Sergeevna.jpg",
   "orig": "File:Close-up, portrait of a big red cat in the rays of the evening sun. Pets in the nature - Flickr - Yuliya Sergeevna.jpg"
  },
+ "kells-chi-rho": {
+  "file": "kells-chi-rho.jpg",
+  "kind": "img",
+  "w": 505,
+  "h": 700,
+  "title": "Book of Kells, Chi-Rho-Seite (fol. 34r)",
+  "author": "unbekannt",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:KellsFol034rChiRhoMonogram.jpg",
+  "orig": "File:KellsFol034rChiRhoMonogram.jpg"
+ },
  "kineograph": {
   "file": "kineograph.jpg",
   "kind": "img",
@@ -761,6 +785,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Preparing_a_Linocut_Design.jpg",
   "orig": "File:Preparing a Linocut Design.jpg"
+ },
+ "litfasssaeule": {
+  "file": "litfasssaeule.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 535,
+  "title": "Litfaßsäule in Berlin wird beklebt",
+  "author": "Unknown authorUnknown author",
+  "license": "CC BY-SA 3.0 de",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_B_145_Bild-P016584,_Berlin,_Litfa%C3%9Fs%C3%A4ule_mit_Bekleber_bei_Nacht.jpg",
+  "orig": "File:Bundesarchiv B 145 Bild-P016584, Berlin, Litfaßsäule mit Bekleber bei Nacht.jpg"
  },
  "macke-farbkreis": {
   "file": "macke-farbkreis.jpg",
@@ -1023,6 +1059,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Nofretete_Neues_Museum.jpg",
   "orig": "File:Nofretete Neues Museum.jpg"
  },
+ "oberbaumbruecke": {
+  "file": "oberbaumbruecke.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 450,
+  "title": "Oberbaumbrücke, Berlin",
+  "author": "Arild Vågen",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Oberbaumbr%C3%BCcke_November_2013_01.jpg",
+  "orig": "File:Oberbaumbrücke November 2013 01.jpg"
+ },
  "osiris-gruen": {
   "file": "osiris-gruen.jpg",
   "kind": "img",
@@ -1150,6 +1198,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:All_Gizah_Pyramids.jpg",
   "orig": "File:All Gizah Pyramids.jpg"
+ },
+ "reichstag-kuppel": {
+  "file": "reichstag-kuppel.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 527,
+  "title": "Glaskuppel des Reichstagsgebäudes",
+  "author": "AleWi",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Dome,_Reichstag,_Berlin_-_20260312_-_02.jpg",
+  "orig": "File:Dome, Reichstag, Berlin - 20260312 - 02.jpg"
  },
  "relief-amarna": {
   "file": "relief-amarna.jpg",
@@ -1359,6 +1419,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:The_judgement_of_the_dead_in_the_presence_of_Osiris.jpg",
   "orig": "File:The judgement of the dead in the presence of Osiris.jpg"
+ },
+ "trajan-inschrift": {
+  "file": "trajan-inschrift.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 422,
+  "title": "Inschrift der Trajanssäule, Rom",
+  "author": "MumblerJamie",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Inscription,_Trajan%27s_Column.jpg",
+  "orig": "File:Inscription, Trajan's Column.jpg"
  },
  "tusche-feder": {
   "file": "tusche-feder.jpg",

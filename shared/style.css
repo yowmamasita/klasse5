@@ -194,6 +194,9 @@ table.tafel td { width: 64px; height: 64px; text-align: center; border: 2px soli
 .units.many .ico { width: 54px; height: 54px; top: 10px; }
 .units.many .ut { font-size: 21px; padding-right: 0; }
 .units.many .ud { font-size: 16px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+/* 10 chapters: 5 × 2 grid */
+.units.ten { grid-template-columns: repeat(5, 1fr); }
+.units.ten .ud { -webkit-line-clamp: 4; }
 
 .home .hint { font-size: 18px; color: var(--pencil); margin: 0; }
 

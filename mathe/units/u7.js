@@ -1,4 +1,4 @@
-/* Kapitel 7 – Umfang und Flächeninhalt */
+/* Kapitel 7 – Umfang, Flächeninhalt, Oberfläche und Rauminhalt (Volumen von Quader und Würfel) */
 (() => {
   const U = "#a21caf", USOFT = "#f7e3f9", TILE = "#e7a6f0", INK = "#1b2740";
   const BLUE = "#1d5bd0", RED = "#dc3b2a", GREEN = "#138a5a", ORANGE = "#ee7a1a", BROWN = "#8a4b12";
@@ -48,16 +48,48 @@
     return { stage, set, get t() { return cur; } };
   }
 
+  /* ---------- oblique (Schrägbild) unit cubes for Rauminhalt: depth at 45°, shortened to half ---------- */
+  const CUBE = { front: "#e7a6f0", top: "#f6d6fa", side: "#c56ad6", line: "#6d1f7a" };
+  const CUBE2 = { front: "#9fd2f5", top: "#cfe8fb", side: "#5ea9e0", line: "#1d4f8a" };
+  const DK = 0.3536;
+  const opt = (X0, Y0, S) => (i, j, k) => [X0 + i * S + j * S * DK, Y0 - k * S - j * S * DK];
+  const poly = (s, pts, fill, line, sw = 1.6) => s.el("polygon", { points: pts.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" "), fill, stroke: line, "stroke-width": sw, "stroke-linejoin": "round" });
+  /* one box (cuboid) from (i,j,k) with size (w,d,h) – three visible faces */
+  function boxG(s, pt, i, j, k, w, d, h, col = CUBE, sw = 1.6) {
+    const g = s.el("g");
+    g.append(poly(s, [pt(i, j, k), pt(i + w, j, k), pt(i + w, j, k + h), pt(i, j, k + h)], col.front, col.line, sw),
+      poly(s, [pt(i, j, k + h), pt(i + w, j, k + h), pt(i + w, j + d, k + h), pt(i, j + d, k + h)], col.top, col.line, sw),
+      poly(s, [pt(i + w, j, k), pt(i + w, j + d, k), pt(i + w, j + d, k + h), pt(i + w, j, k + h)], col.side, col.line, sw));
+    return fb(g);
+  }
+  /* all unit cubes of an a×b×c block in painter order (layer by layer, back to front, left to right) */
+  function cubesOf(s, pt, a, b, c, col) {
+    const out = [];
+    for (let k = 0; k < c; k++) for (let j = b - 1; j >= 0; j--) for (let i = 0; i < a; i++) { const g = boxG(s, pt, i, j, k, 1, 1, 1, col); g.ijk = [i, j, k]; out.push(g); }
+    return out;
+  }
+  /* wire frame of an a×b×c box: hidden edges dashed */
+  function wireG(s, pt, a, b, c, color = INK, sw = 3) {
+    const g = s.el("g", { fill: "none", stroke: color, "stroke-width": sw, "stroke-linejoin": "round", "stroke-linecap": "round" });
+    const L = (p, q, dash) => s.el("line", Object.assign({ x1: p[0], y1: p[1], x2: q[0], y2: q[1] }, dash ? { "stroke-dasharray": "8 7", "stroke-width": sw * .7 } : {}));
+    g.append(L(pt(0, b, 0), pt(a, b, 0), 1), L(pt(0, b, 0), pt(0, b, c), 1), L(pt(0, 0, 0), pt(0, b, 0), 1),
+      L(pt(0, 0, 0), pt(a, 0, 0)), L(pt(a, 0, 0), pt(a, 0, c)), L(pt(a, 0, c), pt(0, 0, c)), L(pt(0, 0, c), pt(0, 0, 0)),
+      L(pt(0, 0, c), pt(0, b, c)), L(pt(0, b, c), pt(a, b, c)), L(pt(a, b, c), pt(a, 0, c)), L(pt(a, 0, 0), pt(a, b, 0)), L(pt(a, b, 0), pt(a, b, c)));
+    return g;
+  }
+  /* hidden (dashed) edges of a wire frame on/off – off once the box is full of cubes */
+  const dashes = (wire, on) => wire.querySelectorAll("[stroke-dasharray]").forEach(l => { l.style.opacity = on ? 1 : 0; });
+
   Deck.unit({
-    id: "u7", num: 7, title: "Umfang und Flächeninhalt", color: U, soft: USOFT,
-    subtitle: "Zaun rundherum – Rasen innen drin",
-    blurb: "Rand messen, Flächen zählen, Kisten aufklappen.",
+    id: "u7", num: 7, title: "Umfang, Fläche und Rauminhalt", color: U, soft: USOFT,
+    subtitle: "Zaun rundherum, Rasen innen drin, Kisten füllen",
+    blurb: "Rand messen, Flächen zählen, Kisten aufklappen und füllen.",
     goals: [
       "Umfang und Flächeninhalt unterscheiden",
-      "Flächen auszählen, zerlegen und ergänzen",
-      "Rechteck und Quadrat berechnen",
+      "Flächen auszählen und Rechteck und Quadrat berechnen",
       "Flächeneinheiten mit der Zahl 100 umrechnen",
       "Die Oberfläche von Würfel und Quader finden",
+      "Das Volumen von Quader und Würfel berechnen und in Liter umrechnen",
     ],
     icon(svg, el) {
       svg.append(el("rect", { x: 12, y: 16, width: 46, height: 38, fill: USOFT }));
@@ -784,12 +816,259 @@
         },
       },
 
+      /* 14a ---------------------------------------------------------------- */
+      {
+        title: "Was ist Rauminhalt?",
+        say: "Welche Kiste ist größer? Wir füllen beide mit gleich großen Würfeln und zählen.",
+        build(s) {
+          const S = 60;
+          const mk = (name, a, b, c, X0) => {
+            const svg = s.svg(470, 290), pt = opt(X0, 268, S);
+            const cubes = cubesOf(s, pt, a, b, c, name === "A" ? CUBE : CUBE2);
+            cubes.forEach(q => q.classList.add("later"));
+            const wire = wireG(s, pt, a, b, c, INK, 3.5);
+            svg.append(...cubes, wire);
+            const cnt = s.h("b", { class: "mono" }, "0");
+            const lab = s.h("p", { class: "t" }, s.h("b", null, "Kiste " + name), ` (${a} lang, ${b} tief, ${c} hoch): `, cnt, " Würfel");
+            const card = s.h("div", { class: "card", style: { padding: "10px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px" } }, svg, lab);
+            const fill = async () => {
+              s.sound("holzblock", { vol: .5 });
+              await cascade(s, cubes, "down", 70, i => { cnt.textContent = String(i + 1); if (i % 3 === 0) s.sfx.count(Math.min(i / 3, 12)); });
+              cnt.textContent = String(cubes.length); dashes(wire, false); s.sfx.ding();
+            };
+            return { card, fill };
+          };
+          const A = mk("A", 4, 2, 3, 100), B = mk("B", 3, 3, 3, 120);
+          const res = s.h("p", { class: "h2 later", style: { textAlign: "center" } }, "Kiste B hat mehr Platz: 27 Würfel > 24 Würfel");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Der ", s.h("b", null, "Rauminhalt"), " (das ", s.h("b", null, "Volumen"), ") sagt, wie viel Platz in einem Körper ist: Wie viele ", s.h("b", null, "Einheitswürfel"), " passen hinein?");
+          const lf = life(s, "Im Alltag", s.h("p", { class: "small" }, "Wie viele Koffer passen in den Kofferraum? Wie viel Wasser passt in die Badewanne? Wie viele Legosteine in die Kiste?"));
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } },
+            s.h("div", { class: "cols", style: { gap: "20px" } }, A.card, B.card), res,
+            s.h("div", { class: "cols", style: { gap: "20px", alignItems: "stretch" } }, merk, lf)));
+          s.show([A.card, B.card], "up"); s.sfx.whoosh();
+          s.step(async () => { s.say("Kiste A: 24 Würfel passen hinein."); await A.fill(); });
+          s.step(async () => { s.say("Kiste B: 27 Würfel."); await B.fill(); s.sfx.success(); await s.show(res, "pop"); });
+          s.step(async () => { s.sfx.pop(); await s.show(merk, "up"); s.say("Der Rauminhalt heißt auch Volumen."); });
+          s.step(async () => { s.sound("zipper", { vol: .5 }); await s.show(lf, "up"); });
+        },
+      },
+
+      /* 14b ---------------------------------------------------------------- */
+      {
+        title: "Einheitswürfel: cm³, dm³, m³",
+        say: "Für den Rauminhalt gibt es Einheitswürfel: den Kubikzentimeter, den Kubikdezimeter und den Kubikmeter.",
+        build(s) {
+          const col = (unit, name, edge, size, txt, extra) => {
+            const svg = s.svg(300, 220), S = size, pt = opt(150 - S * (1 + DK) / 2, 110 + S * (1 + DK) / 2, S);
+            const cube = boxG(s, pt, 0, 0, 0, 1, 1, 1, CUBE, 3);
+            svg.append(cube);
+            const ex = extra ? extra(pt, S) : null; if (ex) svg.append(ex);
+            const words = [s.h("p", { class: "big", style: { color: U } }, unit), s.h("p", { class: "t", style: { fontWeight: 700 } }, name), s.h("span", { class: "chip", style: { background: USOFT, color: U } }, "Kante " + edge), s.h("p", { class: "small", style: { textAlign: "center" } }, txt)];
+            words.forEach(w => w.classList.add("later")); cube.classList.add("later");
+            const card = s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px 14px" } }, svg, ...words);
+            return { card, cube, words, ex };
+          };
+          const kid = (pt, S) => {
+            const g = s.el("g", { class: "later" }), x = pt(1, 1, 0)[0] + 24, y = pt(0, 0, 0)[1], H = 1.4 * S;
+            g.append(s.el("circle", { cx: x, cy: y - H + 11, r: 11, fill: "#f5d3a1", stroke: INK, "stroke-width": 2.5 }),
+              s.el("path", { d: `M${x},${y - H + 22} V${y - H * .42} M${x},${y - H * .42} L${x - 12},${y} M${x},${y - H * .42} L${x + 12},${y} M${x - 16},${y - H * .72} L${x},${y - H + 34} L${x + 16},${y - H * .72}`, fill: "none", stroke: INK, "stroke-width": 4, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+            return g;
+          };
+          const C = [
+            col("1 cm³", "Kubikzentimeter", "1 cm", 46, "Ein Würfel, so groß wie deine Fingerkuppe."),
+            col("1 dm³", "Kubikdezimeter", "10 cm", 104, "Da passt genau 1 Liter Wasser hinein."),
+            col("1 m³", "Kubikmeter", "1 m", 120, "So groß wie ein Minecraft-Block. Daneben ein Kind (1,40 m).", kid),
+          ];
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Rauminhalt misst man in ", s.h("b", null, "Einheitswürfeln"), ". Die kleine ", s.h("b", null, "³"), " heißt „Kubik“: Würfel mit Länge, Breite und Höhe. (Noch kleiner: mm³, mit 1 mm Kante.)");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "16px" } }, s.h("div", { class: "cols3", style: { gap: "18px" } }, C.map(c => c.card)), merk));
+          s.sfx.whoosh();
+          const snd = [() => s.sfx.pop(), () => s.sound("water-pour", { vol: .5, dur: 2 }), () => s.sfx.drum()];
+          C.forEach((c, i) => s.step(async () => {
+            snd[i](); await s.show(c.cube, "zoom");
+            if (c.ex) s.show(c.ex, "up");
+            await s.show(c.words, "up"); s.say(["Ein Kubikzentimeter: ein Würfel mit einem Zentimeter Kante.", "Ein Kubikdezimeter: zehn Zentimeter Kante. Das ist genau ein Liter.", "Ein Kubikmeter: ein Meter Kante – so groß wie ein Minecraft-Block."][i]);
+          }));
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+        },
+      },
+
+      /* 14c ---------------------------------------------------------------- */
+      {
+        title: "Volumen des Quaders",
+        say: "Wir bauen einen Quader aus Würfeln: erst eine Reihe, dann eine Schicht, dann mehrere Schichten.",
+        build(s) {
+          const S = 52, svg = s.svg(520, 380), pt = opt(36, 352, S);
+          const lay = s.el("g"); svg.append(lay);
+          let a = 5, b = 3, c = 4, shown = 0;
+          const fA = s.h("b", { class: "blue" }, "5"), fB = s.h("b", { class: "green" }, "3"), fC = s.h("b", { class: "red" }, "4"), fV = s.h("b", null, "60");
+          const formula = s.h("p", { class: "h2 mono later" }, "V = ", fA, " · ", fB, " · ", fC, " = ", fV, " cm³");
+          const stage = s.h("p", { class: "t", style: { minHeight: "70px" } }, "Jeder Würfel ist 1 cm³ groß.");
+          let cubes = [];
+          function build(n) {
+            lay.textContent = ""; cubes = cubesOf(s, pt, a, b, c);
+            cubes.forEach((q, i) => { if (i >= n) q.classList.add("later"); });
+            const wire = wireG(s, pt, a, b, c, INK, 2.5); dashes(wire, n < cubes.length);
+            lay.append(...cubes, wire);
+            fA.textContent = a; fB.textContent = b; fC.textContent = c; fV.textContent = a * b * c;
+          }
+          const show = (from, to, gap) => cascade(s, cubes.slice(from, to), "down", gap, i => s.sfx.count(Math.min(i, 14)));
+          const sl = [
+            s.slider({ label: "Länge a (cm)", min: 1, max: 6, value: a, onInput: v => { a = v; build(1e9); } }),
+            s.slider({ label: "Breite b (cm)", min: 1, max: 4, value: b, onInput: v => { b = v; build(1e9); } }),
+            s.slider({ label: "Höhe c (cm)", min: 1, max: 5, value: c, onInput: v => { c = v; build(1e9); } }),
+          ];
+          const sls = s.h("div", { class: "stack later", style: { gap: "4px" } }, ...sl);
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, s.h("b", null, "Quader: V = a · b · c"), s.h("br"), "Länge · Breite · Höhe. Alle Längen in derselben Einheit!");
+          const ex1 = s.h("div", { class: "ex later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Beispiel: Schuhkarton"), s.h("p", { class: "t mono" }, "30 cm · 20 cm · 10 cm = 6000 cm³"));
+          build(0);
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", alignItems: "center", height: "100%" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "10px" } }, stage, formula, sls, merk, ex1)));
+          s.sfx.whoosh();
+          s.step(async () => { stage.textContent = "1 Reihe: 5 Würfel"; s.say("Eine Reihe: fünf Würfel."); await show(10, 15, 160); shown = 15; });
+          s.step(async () => { stage.textContent = "1 Schicht: 3 Reihen · 5 = 15 Würfel"; s.say("Drei Reihen sind eine Schicht: fünfzehn Würfel."); await show(0, 10, 110); s.sfx.ding(); });
+          s.step(async () => {
+            stage.textContent = "4 Schichten · 15 = 60 Würfel"; s.say("Vier Schichten übereinander: sechzig Würfel.");
+            for (let k = 1; k < 4; k++) { s.sound("holzblock", { vol: .45 }); await cascade(s, cubes.slice(k * 15, k * 15 + 15), "down", 35); }
+            dashes(lay.lastChild, false); s.sfx.ding(); await s.show(formula, "up");
+          });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); s.show(sls, "up"); stage.textContent = "Probier die Schieber aus!"; });
+          s.step(async () => { s.sfx.pop(); await s.show(ex1, "left"); s.say("Ein Schuhkarton: dreißig mal zwanzig mal zehn, also sechstausend Kubikzentimeter."); });
+        },
+      },
+
+      /* 14d ---------------------------------------------------------------- */
+      {
+        title: "Volumen des Würfels",
+        say: "Beim Würfel sind alle Kanten gleich lang. Darum rechnet man a mal a mal a.",
+        build(s) {
+          const BOX = 330, svg = s.svg(440, 440), lay = s.el("g"); svg.append(lay);
+          let a = 1;
+          const rows = [1, 2, 3, 4, 5].map(n => s.h("tr", null, s.h("td", { class: "mono" }, String(n)), s.h("td", { class: "mono", style: { whiteSpace: "nowrap" } }, `${n} · ${n} · ${n}`), s.h("td", { class: "mono" }, s.h("b", null, String(n * n * n)))));
+          const table = s.h("table", { class: "tafel later", style: { fontSize: "22px" } }, s.h("tr", null, s.h("th", null, "a"), s.h("th", { style: { whiteSpace: "nowrap" } }, "a · a · a"), s.h("th", null, "V")), ...rows);
+          const big = s.h("p", { class: "h2 mono" });
+          function draw(n, anim) {
+            a = n; lay.textContent = "";
+            const S = BOX / (n * (1 + DK)), pt = opt(55, 425 - 40, S);
+            const cubes = cubesOf(s, pt, n, n, n);
+            lay.append(...cubes);
+            big.innerHTML = ""; big.append("V = ", `${n} · ${n} · ${n} = `, s.h("b", { class: "red" }, String(n * n * n)), " Würfel");
+            rows.forEach((r, i) => { r.style.background = i + 1 === n ? "#fff1a8" : ""; });
+            if (anim) cascade(s, cubes, "pop", Math.max(6, 160 / (n * n)));
+          }
+          const sl = s.slider({ label: "Kante a", min: 1, max: 5, value: 1, onInput: v => draw(v, false) });
+          const f = s.h("div", { class: "card later", style: { padding: "10px 16px" } }, s.h("p", { class: "h2" }, "Würfel: V = a · a · a = a³"), s.h("p", { class: "small" }, "a³ liest man „a hoch 3“ – wie bei den Zehnerpotenzen."));
+          const lf = life(s, "Im Alltag", s.h("p", { class: "small" }, "Zauberwürfel: 3 · 3 · 3 = 27 kleine Würfel"), s.h("p", { class: "small" }, "1-dm-Würfel: 10 · 10 · 10 = 1000 cm³"), s.h("p", { class: "small" }, "Minecraft-Block: 1 m · 1 m · 1 m = 1 m³"));
+          draw(1, false);
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "440px 1fr", alignItems: "center", height: "100%" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, sl, big, f, s.h("div", { class: "cols", style: { gridTemplateColumns: "auto 1fr", gap: "16px", alignItems: "start" } }, table, lf))));
+          s.sfx.whoosh();
+          s.step(async () => {
+            s.say("Kante zwei: acht Würfel. Kante drei: siebenundzwanzig Würfel.");
+            for (const n of [2, 3]) { sl.set(n); draw(n, true); s.sfx.count(n); await s.wait(1500); }
+          });
+          s.step(async () => { s.sfx.ding(); await s.show(f, "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(table, "left"); s.say("Die Würfelzahlen wachsen schnell: eins, acht, siebenundzwanzig, vierundsechzig, hundertfünfundzwanzig."); });
+          s.step(async () => { s.sound("wuerfeln", { vol: .6 }); await s.show(lf, "up"); });
+        },
+      },
+
+      /* 14e ---------------------------------------------------------------- */
+      {
+        title: "Umrechnen: Liter und ml",
+        say: "In einen Kubikdezimeter passen tausend Kubikzentimeter. Und genau ein Liter Wasser.",
+        build(s) {
+          const S = 25, svg = s.svg(420, 380), pt = opt(24, 356, S);
+          const slab = k => {
+            const g = boxG(s, pt, 0, 0, k, 10, 10, 1, CUBE, 1.6), L = [];
+            for (let i = 1; i < 10; i++) L.push([pt(i, 0, k), pt(i, 0, k + 1)], [pt(i, 0, k + 1), pt(i, 10, k + 1)], [pt(0, i, k + 1), pt(10, i, k + 1)], [pt(10, i, k), pt(10, i, k + 1)]);
+            L.forEach(([p, q]) => g.append(s.el("line", { x1: p[0], y1: p[1], x2: q[0], y2: q[1], stroke: CUBE.line, "stroke-width": 1, opacity: .55 })));
+            g.classList.add("later"); return g;
+          };
+          const row = Array.from({ length: 10 }, (_, i) => { const q = boxG(s, pt, i, 0, 0, 1, 1, 1); q.classList.add("later"); return q; });
+          const layer0 = slab(0), slabs = Array.from({ length: 9 }, (_, k) => slab(k + 1));
+          const waterH = s.el("g", { class: "later" });
+          svg.append(layer0, ...row, ...slabs, waterH, wireG(s, pt, 10, 10, 10, INK, 3.5));
+          const setWater = h => {
+            waterH.textContent = "";
+            if (h <= 0) return;
+            waterH.append(boxG(s, pt, 0, 0, 0, 10, 10, h, { front: "rgba(80,160,230,.78)", top: "rgba(150,205,245,.85)", side: "rgba(50,130,205,.8)", line: "#1d4f8a" }, 2));
+          };
+          const count = s.h("p", { class: "big mono", style: { color: U } }, "0 cm³");
+          const lit = s.h("p", { class: "h2 later", style: { color: BLUE } }, "1 dm³ = 1000 cm³ = 1 Liter");
+          const stair = s.h("div", { class: "card later", style: { padding: "12px 16px" } },
+            s.h("p", { class: "t mono", style: { whiteSpace: "pre" } }, s.h("b", null, "m³"), "  —·1000→  ", s.h("b", null, "dm³"), "  —·1000→  ", s.h("b", null, "cm³")),
+            s.h("p", { class: "t mono", style: { whiteSpace: "pre" } }, s.h("b", null, "1 l"), " = 1 dm³     ", s.h("b", null, "1 ml"), " = 1 cm³"),
+            s.h("p", { class: "t mono", style: { whiteSpace: "pre" } }, "1 l = 1000 ml     1 m³ = 1000 l"));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Bei Rauminhalten ist die Umrechnungszahl ", s.h("b", null, "1000"), " – denn 10 · 10 · 10 = 1000.");
+          const lf = life(s, "Im Alltag", s.h("p", { class: "small" }, "Eine 1,5-l-Flasche Wasser: 1,5 dm³ = 1500 cm³ = 1500 ml."));
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "420px 1fr", alignItems: "center", height: "100%" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("p", { class: "t" }, "Ein Würfel mit 10 cm Kante – gefüllt mit 1-cm³-Würfeln:"), count, lit, stair, merk, lf)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          const setC = n => { count.textContent = n + " cm³"; };
+          s.step(async () => { s.say("Eine Reihe: zehn Würfel."); await cascade(s, row, "down", 110, i => { s.sfx.count(i); setC(i + 1); }); });
+          s.step(async () => { s.say("Eine Schicht: zehn Reihen, also hundert Würfel."); s.sfx.whoosh(); await s.show(layer0, "fade"); s.hide(row); setC(100); s.sfx.ding(); });
+          s.step(async () => {
+            s.say("Zehn Schichten: tausend Würfel.");
+            for (let k = 0; k < 9; k++) { s.show(slabs[k], "down"); s.sfx.count(k); setC((k + 2) * 100); await s.wait(260); }
+            s.sfx.success();
+          });
+          s.step(async () => {
+            s.say("Statt Würfeln gießen wir Wasser hinein: Es passt genau ein Liter.");
+            s.hide(slabs); s.hide(layer0); waterH.classList.remove("later"); s.sound("water-pour", { vol: .6, dur: 3 });
+            await s.tween({ from: 0, to: 10, dur: 2600, ease: "linear", update: v => setWater(v) });
+            s.sfx.ding(); await s.show(lit, "pop");
+          });
+          s.step(async () => { s.sfx.pop(); await s.show(stair, "up"); s.show(merk, "up", 200); });
+          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+
+      /* 14f ---------------------------------------------------------------- */
+      {
+        title: "Im Alltag: Rauminhalt",
+        say: "Rauminhalte begegnen dir überall: in der Milchtüte, im Aquarium, im Umzugskarton und im Schwimmbad.",
+        build(s) {
+          const pool = s.photo("schwimmbecken", { w: 470, h: 300, caption: "Wettkampfbecken: 50 m lang, 25 m breit" });
+          const lit = s.h("b", { class: "mono" }, "0");
+          const pcalc = s.h("div", { class: "card later", style: { padding: "10px 16px" } },
+            s.h("p", { class: "t mono" }, "50 m · 25 m · 2 m = ", s.h("b", null, "2500 m³")),
+            s.h("p", { class: "t" }, "= ", lit, " Liter Wasser!"),
+            s.h("p", { class: "small pencil" }, "Bei 2 m Tiefe – so tief muss ein Wettkampfbecken mindestens sein."));
+          const D = [
+            ["🥛", "Milchtüte", "1 l = 1 dm³ = 1000 cm³"],
+            ["🐠", "Aquarium", "60 cm · 30 cm · 30 cm = 54.000 cm³ = 54 l"],
+            ["📦", "Umzugskarton", "etwa 60 cm · 35 cm · 35 cm = 73.500 cm³ ≈ 73 l"],
+            ["⛏️", "Minecraft-Block", "1 m · 1 m · 1 m = 1 m³ = 1000 l"],
+          ];
+          const cards = D.map(([e, t, c]) => s.h("div", { class: "life later", style: { display: "flex", gap: "14px", alignItems: "center", padding: "10px 16px" } },
+            s.h("span", { style: { fontSize: "40px", lineHeight: "1" } }, e),
+            s.h("div", { class: "stack", style: { gap: "2px" } }, s.h("b", { class: "t" }, t), s.h("span", { class: "small mono" }, c))));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Getränke misst man in ", s.h("b", null, "l"), " und ", s.h("b", null, "ml"), ", Kisten in ", s.h("b", null, "cm³"), " oder ", s.h("b", null, "dm³"), ", Becken und Räume in ", s.h("b", null, "m³"), ".");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "470px 1fr", alignItems: "center", height: "100%", gap: "22px" } },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, pool, pcalc),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, ...cards, merk)));
+          s.show(pool, "zoom"); s.sound("splash", { vol: .5 });
+          const snd = [() => s.sound("water-pour", { vol: .5, dur: 2 }), () => s.sound("bubbles", { vol: .5, dur: 2 }), () => s.sound("paper-crumple", { vol: .5, dur: 1.5 }), () => s.sfx.drum()];
+          [[0, 1], [2, 3]].forEach(pair => s.step(async () => {
+            for (const i of pair) { snd[i](); await s.show(cards[i], "left"); }
+            s.say(pair[0] === 0 ? "Eine Milchtüte hat einen Liter. Ein Aquarium mit sechzig mal dreißig mal dreißig Zentimetern fasst vierundfünfzig Liter." : "Ein Umzugskarton fasst etwa siebzig Liter. Ein Minecraft-Block ist ein Kubikmeter.");
+          }));
+          s.step(async () => {
+            s.say("Ein Wettkampfbecken fasst zweieinhalb Millionen Liter Wasser!");
+            s.sound("waves", { vol: .4, dur: 3 }); await s.show(pcalc, "up");
+            await s.tween({ from: 0, to: 2500000, dur: 1800, ease: "out", update: v => { lit.textContent = s.fmt(Math.round(v / 1000) * 1000); } });
+            lit.textContent = s.fmt(2500000); s.sfx.ding();
+          });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+        },
+      },
+
       /* 15 ----------------------------------------------------------------- */
       {
-        title: "Umfang, Fläche, Oberfläche?",
-        say: "Im Alltag musst du entscheiden: Brauche ich den Umfang, die Fläche oder die Oberfläche?",
+        title: "Umfang, Fläche oder Volumen?",
+        say: "Im Alltag musst du entscheiden: Brauche ich den Umfang, die Fläche, die Oberfläche oder das Volumen?",
         build(s) {
-          const TAG = { U: ["Umfang", "#fde3c8", "#9a4a00"], F: ["Fläche", "#d6f0df", GREEN], O: ["Oberfläche", USOFT, U] };
+          const TAG = { U: ["Umfang", "#fde3c8", "#9a4a00"], F: ["Fläche", "#d6f0df", GREEN], O: ["Oberfläche", USOFT, U], V: ["Volumen", "#ece4fb", "#5b35b0"] };
           const D = [
             ["🏡", "Zaun um den Garten", "U", "8 m × 5 m → 26 m Zaun"],
             ["🧶", "Teppich fürs Zimmer", "F", "4 m × 3 m → 12 m²"],
@@ -798,8 +1077,8 @@
             ["🖌️", "Wand streichen", "F", "Fenster abziehen!"],
             ["🖼️", "Bilderrahmen", "U", "30 cm × 20 cm → 100 cm"],
             ["🌱", "Rasen säen", "F", "Saat pro m² auf der Packung"],
-            ["📱", "iPad-Bildschirm", "F", "≈ 23 cm × 16 cm ≈ 368 cm²"],
-            ["🏫", "Klassenzimmer", "F", "10 m × 6 m = 60 m²"],
+            ["🐠", "Aquarium füllen", "V", "60 × 30 × 30 cm → 54 l"],
+            ["📦", "Umzugskarton packen", "V", "60 × 35 × 35 cm ≈ 73 l"],
           ];
           const cards = D.map(([e, t, k, c]) => s.h("div", { class: "card later", style: { display: "flex", gap: "14px", alignItems: "center", padding: "12px 16px" } },
             s.h("span", { style: { fontSize: "40px", lineHeight: "1" } }, e),
@@ -807,7 +1086,7 @@
               s.h("b", { class: "t" }, t),
               s.h("span", { class: "chip", style: { background: TAG[k][1], color: TAG[k][2], alignSelf: "flex-start", fontSize: "19px" } }, TAG[k][0]),
               s.h("span", { class: "small mono" }, c))));
-          const merk = s.h("div", { class: "merk later" }, "Am Rand entlang → ", s.h("b", null, "Umfang"), " (m). Innen drin → ", s.h("b", null, "Fläche"), " (m²). Alle Seiten eines Körpers → ", s.h("b", null, "Oberfläche"), " (m²).");
+          const merk = s.h("div", { class: "merk later" }, "Am Rand entlang → ", s.h("b", null, "Umfang"), " (m). Innen drin → ", s.h("b", null, "Fläche"), " (m²). Alle Seiten eines Körpers → ", s.h("b", null, "Oberfläche"), " (m²). Was hineinpasst → ", s.h("b", null, "Volumen"), " (m³, l).");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } },
             s.h("div", { class: "cols3", style: { gap: "14px" } }, ...cards), merk));
           const row = i => cascade(s, cards.slice(i * 3, i * 3 + 3), "pop", 220, j => s.sfx.count(i * 3 + j));

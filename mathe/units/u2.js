@@ -1,4 +1,4 @@
-/* Kapitel 2 – Körper und Figuren (Berliner Rahmenlehrplan, Niveau C–D) */
+/* Kapitel 2 – Körper und Figuren (Berliner Rahmenlehrplan, Niveau C–D): Körper, Netze, Achsen-/Punkt-/Drehsymmetrie, Verschiebung, Koordinaten, Vierecke */
 (() => {
   "use strict";
   const U = "#0f766e", INK = "#1b2740", BLUE = "#1d5bd0", RED = "#dc3b2a", GREEN = "#138a5a", ORANGE = "#ee7a1a", VIOLET = "#7b4fd6", PENCIL = "#5d6678";
@@ -277,11 +277,88 @@
     return { svg, X, Y, u, ox, oy, xmax, ymax, axes: [axX, axY, arrX, arrY], nums, names, grid };
   }
 
+  /* ---------- helpers for Punkt-/Drehsymmetrie and Verschiebung ---------- */
+  const rad = d => d * Math.PI / 180;
+  const heartD = "M0,14 C-26,-4 -22,-26 -10,-26 C-4,-26 0,-20 0,-16 C0,-20 4,-26 10,-26 C22,-26 26,-4 0,14 Z";
+  /* playing card „Herz 2“ centred on (0,0), k = scale; point-symmetric like a real card */
+  function cardG(s, k = 1, ghost = false, noText = false) {
+    const g = s.el("g", { transform: `scale(${k})` });
+    const st = ghost ? { fill: "none", stroke: "#9aa3b5", "stroke-width": 3, "stroke-dasharray": "9 7" } : null;
+    g.append(s.el("rect", Object.assign({ x: -100, y: -140, width: 200, height: 280, rx: 16, fill: "#fff", stroke: INK, "stroke-width": 4 }, st || {})));
+    const half = () => {
+      const h = s.el("g");
+      h.append(s.el("path", Object.assign({ d: heartD, transform: "translate(0,-62) scale(1.9)", fill: RED }, st || {})),
+        s.el("path", Object.assign({ d: heartD, transform: "translate(-74,-80) scale(.62)", fill: RED }, st || {})));
+      if (!ghost && !noText) h.append(s.el("text", { x: -74, y: -104, "text-anchor": "middle", "font-size": 30, "font-weight": 800, fill: RED, text: "2" }));
+      return h;
+    };
+    const lower = half(); lower.setAttribute("transform", "rotate(180)");
+    g.append(half(), lower);
+    return g;
+  }
+  /* Verkehrszeichen 215 (Kreisverkehr): blue disc, three white arrows counter-clockwise */
+  function roundaboutG(s, R = 170, ghost = false) {
+    const g = s.el("g");
+    if (ghost) { g.append(s.el("circle", { cx: 0, cy: 0, r: R, fill: "none", stroke: "#9aa3b5", "stroke-width": 3, "stroke-dasharray": "9 7" })); }
+    else g.append(s.el("circle", { cx: 0, cy: 0, r: R, fill: "#1f5fbf", stroke: "#fff", "stroke-width": R * .05 }), s.el("circle", { cx: 0, cy: 0, r: R * 1.025, fill: "none", stroke: "#c9d2e0", "stroke-width": 2 }));
+    const r = R * .56, w = R * .17;
+    for (let k = 0; k < 3; k++) {
+      const a0 = -90 + k * 120, a1 = a0 + 42, a2 = a0 - 34;
+      const p = a => [r * Math.cos(rad(a)), r * Math.sin(rad(a))];
+      const [x1, y1] = p(a1), [x2, y2] = p(a2);
+      const col = ghost ? { stroke: "#9aa3b5", "stroke-width": 3, "stroke-dasharray": "9 7" } : { stroke: "#fff", "stroke-width": w };
+      g.append(s.el("path", Object.assign({ d: `M${x1.toFixed(1)},${y1.toFixed(1)} A${r},${r} 0 0 0 ${x2.toFixed(1)},${y2.toFixed(1)}`, fill: "none" }, col)));
+      const t = rad(a2), d = [Math.sin(t), -Math.cos(t)], n = [Math.cos(t), Math.sin(t)], hl = R * .2, hw = R * .19;
+      const tip = [x2 + d[0] * hl, y2 + d[1] * hl], b1 = [x2 + n[0] * hw, y2 + n[1] * hw], b2 = [x2 - n[0] * hw, y2 - n[1] * hw];
+      g.append(pg(s, [tip, b1, b2], ghost ? { stroke: "#9aa3b5", "stroke-width": 3, "stroke-dasharray": "9 7" } : { fill: "#fff", stroke: "#fff", "stroke-width": 2 }));
+    }
+    return g;
+  }
+  /* rotating figures for the Drehsymmetrie slide: n = order, draw(s, ghost) → <g> centred on (0,0) */
+  const ROT = {
+    "Windrad": { n: 3, note: "3 Rotorblätter", draw(s, ghost) {
+      const g = s.el("g");
+      const st = ghost ? { fill: "none", stroke: "#9aa3b5", "stroke-width": 3, "stroke-dasharray": "9 7" } : { fill: "#f4f6f8", stroke: INK, "stroke-width": 3 };
+      for (let k = 0; k < 3; k++) {
+        const b = s.el("g", { transform: `rotate(${k * 120})` });
+        b.append(pth(s, "M-8,-6 C-30,-60 -24,-150 -4,-186 C10,-150 16,-60 8,-6 Z", st));
+        if (!ghost) b.append(pth(s, "M-17,-120 C-14,-150 -10,-170 -4,-186 C4,-172 8,-150 9,-120 Z", { fill: RED, stroke: "none" }));
+        g.append(b);
+      }
+      g.append(s.el("circle", ghost ? { cx: 0, cy: 0, r: 20, fill: "none", stroke: "#9aa3b5", "stroke-width": 3 } : { cx: 0, cy: 0, r: 20, fill: "#c3c9d4", stroke: INK, "stroke-width": 3 }));
+      return g;
+    } },
+    "Kreisverkehr": { n: 3, note: "3 Pfeile", draw: (s, ghost) => roundaboutG(s, 175, ghost) },
+    "Felge": { n: 5, note: "5 Speichen", draw(s, ghost) {
+      const g = s.el("g"), c = ghost ? "#9aa3b5" : "#5d6678", dash = ghost ? { "stroke-dasharray": "9 7" } : {};
+      g.append(s.el("circle", Object.assign({ cx: 0, cy: 0, r: 172, fill: "none", stroke: ghost ? c : "#2b2f38", "stroke-width": ghost ? 3 : 22 }, dash)));
+      if (!ghost) g.append(s.el("circle", { cx: 0, cy: 0, r: 152, fill: "none", stroke: "#aab2bf", "stroke-width": 12 }));
+      for (let k = 0; k < 5; k++) {
+        const sp = s.el("g", { transform: `rotate(${k * 72})` });
+        sp.append(pth(s, "M-16,-30 L-30,-146 L-6,-146 L4,-32 Z M16,-30 L30,-146 L14,-146 L8,-32 Z", Object.assign({ fill: ghost ? "none" : "#aab2bf", stroke: c, "stroke-width": 3 }, dash)));
+        g.append(sp);
+      }
+      g.append(s.el("circle", Object.assign({ cx: 0, cy: 0, r: 36, fill: ghost ? "none" : "#c3c9d4", stroke: c, "stroke-width": 3 }, dash)));
+      return g;
+    } },
+    "Schneeflocke": { n: 6, note: "6 Arme", draw(s, ghost) {
+      const g = s.el("g"), st = ghost ? { stroke: "#9aa3b5", "stroke-width": 3, "stroke-dasharray": "9 7" } : { stroke: "#3b8fd6", "stroke-width": 9 };
+      for (let k = 0; k < 6; k++) {
+        const a = s.el("g", { transform: `rotate(${k * 60})` });
+        a.append(pth(s, "M0,0 L0,-180 M0,-70 L-40,-110 M0,-70 L40,-110 M0,-125 L-28,-155 M0,-125 L28,-155", st));
+        if (!ghost) a.append(s.el("circle", { cx: 0, cy: -180, r: 9, fill: "#3b8fd6" }));
+        g.append(a);
+      }
+      g.append(s.el("polygon", { points: P(Array.from({ length: 6 }, (_, i) => [34 * Math.cos(rad(i * 60 - 90)), 34 * Math.sin(rad(i * 60 - 90))])), fill: ghost ? "none" : "#d6ebfb", stroke: ghost ? "#9aa3b5" : "#3b8fd6", "stroke-width": ghost ? 3 : 6 }));
+      return g;
+    } },
+  };
+
   Deck.unit({
     id: "u2", num: 2, title: "Körper und Figuren", color: U, soft: "#dcf3ef",
     subtitle: "Formen sehen, falten, zeichnen",
-    blurb: "Würfel, Kugel, Netze, Koordinaten und das Haus der Vierecke.",
-    goals: ["Figuren und Körper erkennen und benennen", "Ecken, Kanten, Flächen und Symmetrie entdecken", "Punkte und Figuren ins Koordinatensystem zeichnen", "Würfelnetze falten und Schrägbilder zeichnen", "Das Haus der Vierecke verstehen"],
+    blurb: "Würfel, Netze, Symmetrie, Koordinaten und das Haus der Vierecke.",
+    goals: ["Figuren und Körper erkennen, Ecken und Kanten zählen", "Achsen-, Punkt- und Drehsymmetrie entdecken, Figuren verschieben", "Punkte und Figuren ins Koordinatensystem zeichnen", "Würfelnetze falten und Schrägbilder zeichnen", "Das Haus der Vierecke verstehen"],
     icon(svg, el) {
       svg.append(
         el("polygon", { points: "10,30 40,30 40,60 10,60", fill: "#5fb3a7", stroke: U, "stroke-width": 2.5 }),
@@ -550,6 +627,284 @@
           cards.forEach((c, i) => s.show(c.card, "up", i * 80)); s.sfx.whoosh();
           [[0, 1], [2, 3], [4, 5]].forEach(pair => s.step(async () => { for (const i of pair) await cards[i].run(); }));
           s.step(async () => { s.sfx.success(); await s.show(life, "up"); });
+        },
+      },
+      /* 5a ─────────────────────────────── */
+      {
+        title: "Punktsymmetrie: halbe Drehung",
+        say: "Manche Figuren passen nach einer halben Drehung wieder genau auf sich selbst. Sie sind punktsymmetrisch.",
+        build(s) {
+          const ZX = 260, ZY = 215, GH = { fill: "none", stroke: "#9aa3b5", "stroke-width": 3, "stroke-dasharray": "9 7" };
+          const Zp = [[-110, -150], [110, -150], [110, -110], [-50, 110], [110, 110], [110, 150], [-110, 150], [-110, 110], [50, -110], [-110, -110]];
+          const FIG = {
+            "Parallelogramm": gh => pg(s, [[-150, 70], [50, 70], [150, -70], [-50, -70]], gh ? GH : { fill: "#bfe9e2", stroke: U, "stroke-width": 5 }),
+            "Buchstabe Z": gh => pg(s, Zp, gh ? GH : { fill: "#ffd9a8", stroke: ORANGE, "stroke-width": 5 }),
+            "Spielkarte": gh => cardG(s, .95, gh),
+          };
+          const svg = s.svg(520, 430);
+          svg.append(s.el("rect", { x: 0, y: 0, width: 520, height: 430, rx: 18, fill: "#fff", stroke: "#d6e2ea", "stroke-width": 2 }));
+          const base = s.el("g", { transform: `translate(${ZX},${ZY})` });
+          const ghostG = s.el("g"), rotG = s.el("g"), pairs = s.el("g", { class: "later" });
+          const halo = { stroke: "#fff", "stroke-width": 6, "paint-order": "stroke", style: { fontSize: "24px" } };
+          [[[-150, 70], [150, -70], "P", "P'", -168, 100, 168, -84], [[50, 70], [-50, -70], "Q", "Q'", 66, 100, -66, -84]].forEach(([a, b, n1, n2, lx1, ly1, lx2, ly2]) => {
+            pairs.append(ln(s, a[0], a[1], b[0], b[1], { stroke: RED, "stroke-width": 3, "stroke-dasharray": "10 7" }),
+              s.el("circle", { cx: a[0], cy: a[1], r: 8, fill: BLUE }), s.el("circle", { cx: b[0], cy: b[1], r: 8, fill: RED }),
+              tx(s, lx1, ly1, n1, Object.assign({ fill: BLUE, "font-weight": 700 }, halo)), tx(s, lx2, ly2, n2, Object.assign({ fill: RED, "font-weight": 700 }, halo)));
+          });
+          const zDot = s.el("circle", { cx: 0, cy: 0, r: 9, fill: INK, stroke: "#fff", "stroke-width": 3 });
+          const zLab = tx(s, 22, -14, "Z", Object.assign({ fill: INK, "font-weight": 800, "text-anchor": "start" }, halo));
+          base.append(ghostG, rotG, pairs, zDot, zLab);
+          svg.append(base);
+          let ang = 0, cur = "", busy = false, matched = false;
+          const deg = s.h("span", { class: "big mono", style: { color: U, minWidth: "110px", display: "inline-block", textAlign: "right" } }, "0°");
+          const status = s.h("p", { class: "t", style: { minHeight: "66px" } }, "Dreh die Figur mit dem Finger – oder tippe auf „Halbe Drehung“.");
+          function setAng(a) {
+            ang = ((a % 360) + 360) % 360;
+            rotG.setAttribute("transform", `rotate(${ang.toFixed(1)})`);
+            deg.textContent = Math.round(ang) + "°";
+            const hit = Math.abs(ang - 180) < .5;
+            if (hit && !matched) { matched = true; s.sfx.ding(); status.textContent = "180° – passt genau auf die alte Lage! Punktsymmetrisch."; }
+            if (!hit && matched) { matched = false; status.textContent = "Weiterdrehen …"; }
+          }
+          function load(name) {
+            cur = name; ghostG.textContent = ""; rotG.textContent = "";
+            ghostG.append(FIG[name](true)); rotG.append(FIG[name](false));
+            btns.forEach(b => b.classList.toggle("solid", b.dataset.n === name));
+            if (name !== "Parallelogramm") s.hide(pairs);
+            matched = false; setAng(0); status.textContent = "Der graue Umriss zeigt, wo die Figur am Anfang lag.";
+          }
+          async function half() {
+            if (busy) return; busy = true; s.sfx.whoosh();
+            const from = ang;
+            await s.tween({ from, to: from + 180, dur: 1500, ease: "inOut", update: setAng });
+            setAng(Math.round(from + 180)); busy = false;
+          }
+          const btns = Object.keys(FIG).map(n => s.h("button", { class: "btn", "data-n": n, onclick: () => { if (busy) return; s.sfx.pop(); load(n); } }, n));
+          const turnBtn = s.h("button", { class: "btn solid", style: { background: ORANGE, borderColor: ORANGE }, onclick: () => { s.sfx.click(); half(); } }, "Halbe Drehung ↻");
+          let a0 = 0, g0 = 0;
+          const angle = p => Math.atan2(p.y - ZY, p.x - ZX) * 180 / Math.PI;
+          s.drag(svg, { space: svg, onStart: p => { a0 = angle(p); g0 = ang; }, onMove: p => {
+            if (busy) return;
+            let a = g0 + angle(p) - a0; const n = ((a % 360) + 360) % 360;
+            if (Math.abs(n - 180) < 8) a += 180 - n;
+            setAng(a);
+          } });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Passt eine Figur nach einer ", s.h("b", null, "halben Drehung (180°)"), " um einen Punkt Z wieder genau auf sich selbst, ist sie ", s.h("b", null, "punktsymmetrisch"), ". Z heißt ", s.h("b", null, "Symmetriezentrum"), ".");
+          const letters = ["N", "S", "Z", "H", "O", "X", "A"].map(L => {
+            const sp = s.h("span", { style: { display: "inline-block", width: "52px", textAlign: "center", font: "800 44px/1.1 var(--f-display)", color: L === "A" ? RED : U, cursor: "pointer", transition: "transform .8s ease" } }, L);
+            sp.turned = false;
+            sp.onclick = () => { sp.turned = !sp.turned; sp.style.transform = sp.turned ? "rotate(180deg)" : ""; if (L === "A") s.sfx.boing(); else s.sfx.swoosh(); };
+            return sp;
+          });
+          const lett = s.h("div", { class: "ex later", style: { padding: "12px 16px" } }, s.h("span", { class: "exlabel" }, "Buchstaben"),
+            s.h("div", { class: "row", style: { gap: "6px", flexWrap: "nowrap" } }, ...letters),
+            s.h("p", { class: "small" }, "Tippe zum Drehen: N, S, Z, H, O, X bleiben gleich – A steht dann auf dem Kopf."));
+          load("Parallelogramm");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "520px 1fr", alignItems: "center", height: "100%" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row", style: { gap: "10px" } }, btns),
+              s.h("div", { class: "row", style: { gap: "18px", flexWrap: "nowrap" } }, turnBtn, deg), status, merk, lett)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.say("Wir drehen das Parallelogramm um den Punkt Z – eine halbe Drehung."); await half(); });
+          s.step(async () => {
+            if (cur !== "Parallelogramm") load("Parallelogramm");
+            s.sfx.zap(); await s.show(pairs, "fade");
+            status.textContent = "P und P' liegen genau gegenüber, gleich weit weg von Z. Genauso Q und Q'.";
+            s.say("Jeder Punkt hat einen Partner: genau gegenüber, gleich weit von Z entfernt.");
+          });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+          s.step(async () => {
+            await s.show(lett, "up"); s.say("Auch Buchstaben können punktsymmetrisch sein.");
+            for (const L of letters.slice(0, 3)) { L.onclick(); await s.wait(450); }
+          });
+        },
+      },
+      /* 5b ─────────────────────────────── */
+      {
+        title: "Drehsymmetrie",
+        say: "Ein Windrad passt schon nach einer Drittel-Drehung wieder auf sich selbst. Das nennt man drehsymmetrisch.",
+        build(s) {
+          const C = 230, svg = s.svg(460, 460);
+          svg.append(s.el("rect", { x: 0, y: 0, width: 460, height: 460, rx: 18, fill: "#fff", stroke: "#d6e2ea", "stroke-width": 2 }));
+          const base = s.el("g", { transform: `translate(${C},${C})` }), ghostG = s.el("g"), rotG = s.el("g");
+          base.append(ghostG, rotG, s.el("circle", { cx: 0, cy: 0, r: 7, fill: RED, stroke: "#fff", "stroke-width": 2 }));
+          svg.append(base);
+          let cur = "Windrad", ang = 0, busy = false, lastHit = 0;
+          const deg = s.h("span", { class: "big mono", style: { color: U } }, "0°");
+          const note = s.h("p", { class: "t", style: { fontWeight: 700 } }, "");
+          const hits = s.h("div", { class: "row", style: { gap: "8px", minHeight: "44px", flexWrap: "nowrap" } });
+          const formula = s.h("p", { class: "t mono", style: { minHeight: "36px" } }, "");
+          const stepOf = () => 360 / ROT[cur].n;
+          function setAng(a) {
+            ang = a; rotG.setAttribute("transform", `rotate(${(a % 360).toFixed(1)})`);
+            deg.textContent = Math.round(((a % 360) + 360) % 360) + "°";
+          }
+          function chip(v) { const c = s.h("span", { class: "chip", style: { fontSize: "21px", background: "#dcf3ef", color: U } }, v + "°"); hits.append(c); s.show(c, "pop"); }
+          function load(name) {
+            cur = name; ghostG.textContent = ""; rotG.textContent = "";
+            ghostG.append(ROT[name].draw(s, true)); rotG.append(ROT[name].draw(s, false));
+            btns.forEach(b => b.classList.toggle("solid", b.dataset.n === name));
+            note.textContent = name + ": " + ROT[name].note; hits.textContent = ""; formula.textContent = ""; lastHit = 0; setAng(0);
+          }
+          async function spin() {
+            if (busy) return; busy = true; hits.textContent = ""; formula.textContent = ""; setAng(0);
+            const st = stepOf(), n = ROT[cur].n;
+            s.sfx.whoosh();
+            for (let k = 1; k <= n && s.alive; k++) {
+              await s.tween({ from: (k - 1) * st, to: k * st, dur: 380 + st * 7, ease: "inOut", update: setAng });
+              s.sfx.count(k - 1); chip(k * st);
+              await s.wait(380);
+            }
+            s.sfx.ding(); formula.textContent = `Kleinster Drehwinkel: 360° : ${n} = ${st}°`;
+            busy = false;
+          }
+          const btns = Object.keys(ROT).map(n => s.h("button", { class: "btn", "data-n": n, onclick: () => { if (busy) return; s.sfx.pop(); load(n); } }, n));
+          const spinBtn = s.h("button", { class: "btn solid", style: { background: ORANGE, borderColor: ORANGE }, onclick: () => { s.sfx.click(); spin(); } }, "Einmal ganz herum ↻");
+          let a0 = 0, g0 = 0;
+          const angle = p => Math.atan2(p.y - C, p.x - C) * 180 / Math.PI;
+          s.drag(svg, { space: svg, onStart: p => { a0 = angle(p); g0 = ang; }, onMove: p => {
+            if (busy) return;
+            let a = g0 + angle(p) - a0; const st = stepOf(), n = ((a % 360) + 360) % 360, k = Math.round(n / st);
+            if (Math.abs(n - k * st) < 6) { a += k * st - n; if (k % ROT[cur].n && k !== lastHit) { s.sfx.ding(); } lastHit = k; } else lastHit = -1;
+            setAng(a);
+          } });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Passt eine Figur schon nach einer Drehung um ", s.h("b", null, "weniger als 360°"), " wieder genau auf sich, ist sie ", s.h("b", null, "drehsymmetrisch"), ".", s.h("br"),
+            "Kleinster Drehwinkel = 360° : Anzahl der gleichen Teile. Punktsymmetrie ist Drehsymmetrie mit 180°.");
+          load("Windrad");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "460px 1fr", alignItems: "center", height: "100%" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } },
+              s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" } }, btns),
+              s.h("div", { class: "row", style: { gap: "18px", flexWrap: "nowrap", justifyContent: "space-between" } }, spinBtn, deg),
+              note, s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } }, s.h("span", { class: "t" }, "Passt bei:"), hits), formula,
+              s.h("p", { class: "small pencil" }, "Du kannst die Figur auch mit dem Finger drehen. Der graue Umriss bleibt liegen."), merk)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.say("Das Windrad hat drei gleiche Blätter. Es passt nach 120, 240 und 360 Grad."); await spin(); });
+          s.step(async () => { load("Schneeflocke"); s.sfx.pop(); s.say("Die Schneeflocke hat sechs Arme. Sie passt schon nach 60 Grad."); await spin(); });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5c ─────────────────────────────── */
+      {
+        title: "Verschiebung",
+        say: "Bei einer Verschiebung rutscht die ganze Figur gleich weit in dieselbe Richtung. Ein Pfeil zeigt, wohin.",
+        build(s) {
+          const u = 40, W = 560, H = 440, ox = 0, oy = 0;
+          const X = x => ox + x * u, Y = y => oy + y * u;
+          const svg = s.svg(W, H);
+          svg.append(s.el("rect", { x: 0, y: 0, width: W, height: H, rx: 16, fill: "#fff", stroke: "#d6e2ea", "stroke-width": 2 }));
+          for (let i = 1; i < 14; i++) svg.append(ln(s, X(i), 0, X(i), H, { stroke: "#cfdfe9", "stroke-width": 1.5 }));
+          for (let j = 1; j < 11; j++) svg.append(ln(s, 0, Y(j), W, Y(j), { stroke: "#cfdfe9", "stroke-width": 1.5 }));
+          const boat = (hull, sail, mast) => {
+            const g = s.el("g");
+            g.append(ln(s, X(3.4), Y(3.6), X(3.4), Y(8), { stroke: mast, "stroke-width": 4 }),
+              pg(s, [[X(3.6), Y(4)], [X(3.6), Y(7.6)], [X(6), Y(7.6)]], { fill: sail, stroke: mast, "stroke-width": 3 }),
+              pg(s, [[X(1), Y(8)], [X(6), Y(8)], [X(5), Y(9)], [X(2), Y(9)]], { fill: hull, stroke: mast, "stroke-width": 3 }));
+            return g;
+          };
+          const PTS = [[1, 8, "A"], [6, 8, "B"], [3.6, 4, "C"]];
+          const orig = boat("#e3e7ee", "#f3f5f8", "#9aa3b5");
+          PTS.forEach(([x, y]) => orig.append(s.el("circle", { cx: X(x), cy: Y(y), r: 6, fill: "#9aa3b5" })));
+          const arrows = s.el("g", { class: "later", "pointer-events": "none" });
+          const copy = s.el("g"), copyIn = boat("#c26a2a", "#ffd94a", INK);
+          PTS.forEach(([x, y]) => copyIn.append(s.el("circle", { cx: X(x), cy: Y(y), r: 7, fill: RED })));
+          const hit = s.el("rect", { x: X(.6), y: Y(3.4), width: u * 5.8, height: u * 6, fill: "transparent" });
+          copy.append(copyIn, hit);
+          svg.append(orig, copy, arrows);
+          let dx = 0, dy = 0;
+          const right = s.h("b", { class: "mono", style: { color: BLUE } }, "0"), up = s.h("b", { class: "mono", style: { color: RED } }, "0");
+          const read = s.h("p", { class: "h2" }, "→ ", right, " nach rechts,  ↑ ", up, " nach oben");
+          function draw() {
+            copy.setAttribute("transform", `translate(${(dx * u).toFixed(1)},${(dy * u).toFixed(1)})`);
+            arrows.textContent = "";
+            const L = Math.hypot(dx, dy) * u;
+            if (L > 20) PTS.forEach(([x, y]) => {
+              const x1 = X(x), y1 = Y(y), x2 = X(x + dx), y2 = Y(y + dy), ux = (x2 - x1) / L, uy = (y2 - y1) / L, bx = x2 - ux * 18, by = y2 - uy * 18;
+              arrows.append(ln(s, x1, y1, bx, by, { stroke: RED, "stroke-width": 3.5 }),
+                pg(s, [[x2 - ux * 6, y2 - uy * 6], [bx - uy * 9, by + ux * 9], [bx + uy * 9, by - ux * 9]], { fill: RED, stroke: RED, "stroke-width": 1 }));
+            });
+            right.textContent = String(Math.round(dx)); up.textContent = String(Math.round(-dy));
+          }
+          draw();
+          let st0 = null, d0 = [0, 0];
+          s.drag(hit, { space: svg, onStart: p => { st0 = p; d0 = [dx, dy]; }, onMove: p => {
+            const nx = clamp(Math.round(d0[0] + (p.x - st0.x) / u), -1, 8), ny = clamp(Math.round(d0[1] + (p.y - st0.y) / u), -3, 2);
+            if (nx !== dx || ny !== dy) { dx = nx; dy = ny; s.show(arrows, "fade"); draw(); s.sfx.tick(); }
+          } });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Bei einer ", s.h("b", null, "Verschiebung"), " wandert jeder Punkt ", s.h("b", null, "gleich weit in dieselbe Richtung"), ". Alle Pfeile sind gleich lang und parallel. Die Figur bleibt gleich groß und dreht sich nicht.");
+          const strip = s.svg(470, 92);
+          const motifs = Array.from({ length: 6 }, (_, i) => {
+            const g = s.el("g", { class: "later" }), x = 14 + i * 76;
+            g.append(pg(s, [[x, 80], [x + 62, 80], [x + 31, 30]], { fill: i % 2 ? "#bfe9e2" : "#a8dcc0", stroke: U, "stroke-width": 3 }), s.el("circle", { cx: x + 31, cy: 16, r: 11, fill: "#ffd94a", stroke: ORANGE, "stroke-width": 3 }));
+            strip.append(g); return g;
+          });
+          const pat = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.h("p", { class: "small" }, "Immer um denselben Pfeil weiter verschoben – so entstehen Muster auf Fliesen, Tapeten und Geschenkpapier."), strip,
+            s.h("p", { class: "small" }, "Auch Schublade, Aufzug und Rolltreppe verschieben sich."));
+          const hint = s.h("p", { class: "small pencil later" }, "Zieh das bunte Boot über das Gitter!");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", alignItems: "center", height: "100%" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("p", { class: "t" }, "Verschiebungspfeil:"), read, hint, merk, pat)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.step(async () => {
+            s.say("Das Boot fährt sechs Kästchen nach rechts und drei nach oben.");
+            s.sound("waves", { vol: .35, dur: 2.5 });
+            await s.tween({ from: 0, to: 1, dur: 1600, ease: "inOut", update: v => { dx = 6 * v; dy = -3 * v; draw(); } });
+            dx = 6; dy = -3; draw(); s.sfx.ding(); await s.show(arrows, "fade"); s.show(hint, "fade");
+          });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); s.say("Alle Pfeile sind gleich lang und zeigen in dieselbe Richtung."); });
+          s.step(async () => { await s.show(pat, "up"); for (let i = 0; i < motifs.length; i++) { s.show(motifs[i], "left"); s.sfx.count(i); await s.wait(220); } });
+        },
+      },
+      /* 5d ─────────────────────────────── */
+      {
+        title: "Im Alltag: Symmetrie überall",
+        say: "Symmetrie findest du überall: im Windrad, in der Schneeflocke, in Kirchenfenstern, auf Spielkarten, Schildern und Fliesen.",
+        build(s) {
+          const TAG = { D: ["Drehsymmetrie", "#dcf3ef", U], P: ["Punktsymmetrie", "#fde3c8", "#9a4a00"], V: ["Verschiebung", "#e4ecfb", BLUE] };
+          const BOX = 136;
+          const tapSvg = (draw, deg, sc) => {
+            const svg = s.svg(BOX, BOX), base = s.el("g", { transform: `translate(${BOX / 2},${BOX / 2})` }), rot = s.el("g");
+            const inner = s.el("g", { transform: `scale(${sc})` }); inner.append(draw()); rot.append(inner); base.append(rot); svg.append(base);
+            let a = 0, busy = false;
+            svg.run = async () => { if (busy) return; busy = true; s.sfx.whoosh(); const f = a; await s.tween({ from: f, to: f + deg, dur: 1100, ease: "inOut", update: v => rot.setAttribute("transform", `rotate(${v.toFixed(1)})`) }); a = (f + deg) % 360; s.sfx.ding(); busy = false; };
+            return svg;
+          };
+          const tiles = () => {
+            const svg = s.svg(BOX, BOX), id = "u2tile" + Math.random().toString(36).slice(2, 7);
+            svg.append(s.el("defs", null, s.el("clipPath", { id }, s.el("rect", { x: 0, y: 0, width: BOX, height: BOX, rx: 10 }))));
+            const clipG = s.el("g", { "clip-path": `url(#${id})` }), mv = s.el("g");
+            for (let r = -1; r < 3; r++) for (let c = -1; c < 4; c++) {
+              const x = c * 50, y = r * 50;
+              mv.append(s.el("rect", { x, y, width: 50, height: 50, fill: "#f4efe3", stroke: "#b9ad93", "stroke-width": 2 }),
+                pg(s, [[x, y + 50], [x + 50, y + 50], [x + 50, y]], { fill: "#2f7f9e", stroke: "none" }), s.el("circle", { cx: x + 15, cy: y + 15, r: 7, fill: ORANGE }));
+            }
+            clipG.append(mv); svg.append(clipG);
+            let busy = false;
+            svg.run = async () => { if (busy) return; busy = true; s.sfx.swoosh(); await s.tween({ from: 0, to: 50, dur: 1000, ease: "inOut", update: v => mv.setAttribute("transform", `translate(${v.toFixed(1)},0)`) }); mv.setAttribute("transform", ""); s.sfx.ding(); busy = false; };
+            return svg;
+          };
+          const D = [
+            ["Windrad", "D", "3 gleiche Rotorblätter: Nach 120° sieht der Rotor wieder gleich aus.", () => s.photo("windrad", { w: BOX, h: BOX, pos: "50% 30%" })],
+            ["Schneeflocke", "D", "Immer 6 Arme: Jede Drehung um 60° passt.", () => s.photo("schneeflocke", { w: BOX, h: BOX })],
+            ["Fensterrose", "D", "Kathedrale von Chartres: viele gleiche Teile rund um die Mitte.", () => s.photo("fensterrose", { w: BOX, h: BOX })],
+            ["Spielkarte", "P", "Halb gedreht sieht sie gleich aus – egal, wie du sie hältst. Tippe!", () => tapSvg(() => cardG(s, 1, false, true), 180, .46)],
+            ["Kreisverkehr", "D", "Drei Pfeile: Nach 120° passt das Schild wieder. Tippe!", () => tapSvg(() => roundaboutG(s, 170), 120, .4)],
+            ["Fliesen", "V", "Um eine Fliese verschoben: Das Muster passt wieder. Tippe!", tiles],
+          ];
+          const cards = D.map(([name, k, txt, mk], i) => {
+            const vis = mk();
+            const card = s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: BOX + "px 1fr", gap: "12px", alignItems: "center", padding: "12px 14px", cursor: vis.run ? "pointer" : "default" },
+              onclick: () => { if (vis.run) vis.run(); else s.sfx.note(i * 2); } },
+            vis, s.h("div", { class: "stack", style: { gap: "6px" } }, s.h("p", { class: "t", style: { fontWeight: 700 } }, name),
+              s.h("span", { class: "chip", style: { alignSelf: "flex-start", fontSize: "19px", background: TAG[k][1], color: TAG[k][2] } }, TAG[k][0]),
+              s.h("p", { class: "small" }, txt)));
+            card.vis = vis;
+            return card;
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Auch viele ", s.h("b", null, "Logos"), " sind dreh- oder punktsymmetrisch – so kann man sie sich gut merken.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "14px" } }, s.h("div", { class: "cols3", style: { gap: "14px", gridTemplateColumns: "repeat(3, minmax(0, 1fr))" } }, cards), merk));
+          s.show(cards[0], "up"); s.show(cards[1], "up", 150); s.sound("wind", { vol: .35, dur: 2.5 });
+          s.step(async () => { s.sound("church-bells", { vol: .35, dur: 3 }); s.show(cards[2], "up"); await s.show(cards[3], "up", 150); s.say("Kirchenfenster und Spielkarten."); if (!s.fast) await cards[3].vis.run(); });
+          s.step(async () => { s.sound("traffic", { vol: .35, dur: 2.5 }); s.show(cards[4], "up"); await s.show(cards[5], "up", 150); s.say("Das Kreisverkehr-Schild und ein Fliesenmuster."); if (!s.fast) { cards[4].vis.run(); await cards[5].vis.run(); } });
+          s.step(async () => { s.sfx.fanfare(); await s.show(merk, "up"); });
         },
       },
       /* 6 ─────────────────────────────── */

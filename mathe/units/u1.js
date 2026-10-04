@@ -1,4 +1,4 @@
-/* Kapitel 1 – Natürliche Zahlen (große Zahlen, Runden, Rechnen, Rechengesetze, Größen, Gleichungen) */
+/* Kapitel 1 – Natürliche Zahlen (große Zahlen, Runden, Rechnen, Rechengesetze, Größen, Terme und Variablen, Gleichungen) */
 (() => {
   const P = { blue: "#1d5bd0", red: "#dc3b2a", green: "#138a5a", violet: "#7b4fd6", orange: "#ee7a1a", ink: "#1b2740", pencil: "#5d6678", yellow: "#ffd94a", line: "#c8d3de", soft: "#e4ecfb" };
   const LBL = { font: "700 14px/1 var(--f-display)", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: "8px", color: "var(--green)" };
@@ -152,7 +152,7 @@
     id: "u1", num: 1, title: "Natürliche Zahlen", color: "#1d5bd0", soft: "#e4ecfb",
     subtitle: "Große Zahlen, schlaues Rechnen, Größen",
     blurb: "Millionen lesen, runden, schriftlich rechnen, Größen umrechnen.",
-    goals: ["Große Zahlen bis zur Million lesen und ordnen", "Runden und klug schätzen", "Schriftlich rechnen und Rechengesetze nutzen", "Längen, Gewichte und Zeiten umrechnen", "Gleichungen wie eine Waage lösen"],
+    goals: ["Große Zahlen bis zur Million lesen und ordnen", "Runden und klug schätzen", "Schriftlich rechnen und Rechengesetze nutzen", "Längen, Gewichte und Zeiten umrechnen", "Terme aufstellen und Gleichungen wie eine Waage lösen"],
     icon(svg, el) {
       svg.append(el("rect", { x: 6, y: 20, width: 58, height: 30, rx: 8, fill: "#1d5bd0", opacity: .15 }),
         el("text", { x: 35, y: 44, "text-anchor": "middle", "font-size": 22, "font-weight": 800, fill: "#1d5bd0", text: "1.000" }));
@@ -1007,6 +1007,149 @@
           anims[0]();
           const snd15 = [null, () => s.sound("zipper"), () => s.sound("school-bell", { vol: .45, dur: 3 }), () => s.sound("ubahn-train", { vol: .45, dur: 5 })];
           [1, 2, 3].forEach(i => s.step(async () => { snd15[i](); await s.show(cards[i], i % 2 ? "right" : "left"); await anims[i](); }));
+        },
+      },
+      /* 15a -------------------------------------------------------------- */
+      {
+        title: "Terme und Rechenbäume",
+        say: "Ein Term ist ein Rechenausdruck ohne Gleichheitszeichen. Ein Rechenbaum zeigt, was zuerst gerechnet wird.",
+        build(s) {
+          const DEF = {
+            "7 + 4 · 5": { leaves: [[70, "7"], [230, "4"], [380, "5"]], nodes: [[305, 120, "·", ["L1", "L2"], "20"], [190, 240, "+", ["L0", "N0"], "27"]], name: "Summe", why: "Zuletzt wird addiert." },
+            "(12 + 8) · 3": { leaves: [[70, "12"], [220, "8"], [400, "3"]], nodes: [[145, 120, "+", ["L0", "L1"], "20"], [290, 240, "·", ["N0", "L2"], "60"]], name: "Produkt", why: "Zuletzt wird multipliziert." },
+            "20 − 2 · 3": { leaves: [[70, "20"], [250, "2"], [400, "3"]], nodes: [[325, 120, "·", ["L1", "L2"], "6"], [200, 240, "−", ["L0", "N0"], "14"]], name: "Differenz", why: "Zuletzt wird subtrahiert." },
+          };
+          const svg = s.svg(470, 330), tree = s.el("g"); svg.append(tree);
+          const termBig = s.h("p", { class: "big mono", style: { color: P.blue } }, "");
+          const name = s.h("p", { class: "t", style: { minHeight: "70px" } }, "");
+          let busy = false;
+          async function grow(key) {
+            if (busy) return; busy = true;
+            const d = DEF[key]; tree.textContent = ""; name.textContent = "";
+            btns.forEach(b => b.classList.toggle("solid", b.dataset.k === key));
+            termBig.textContent = key;
+            const pos = {}, box = (x, y, t, col) => {
+              const w = 26 + 16 * t.length, g = fb(s.el("g", { class: "later" }));
+              g.append(s.el("rect", { x: x - w / 2, y: y - 22, width: w, height: 40, rx: 9, fill: "#fff", stroke: col, "stroke-width": 3 }), T(s, x, y + 7, t, { fill: col, "font-size": 24 }));
+              tree.append(g); return g;
+            };
+            const leafEls = d.leaves.map(([x, t], i) => { pos["L" + i] = [x, 46]; return box(x, 26, t, P.ink); });
+            s.show(leafEls, "pop"); s.sfx.pop(); await s.wait(500);
+            for (let n = 0; n < d.nodes.length && s.alive; n++) {
+              const [x, y, op, from, val] = d.nodes[n];
+              const edges = from.map(r => { const [x1, y1] = pos[r]; const e = s.el("line", { x1, y1, x2: x, y2: y - 22, stroke: P.pencil, "stroke-width": 3, class: "later" }); tree.insertBefore(e, tree.firstChild); return e; });
+              s.sfx.scribble(); await s.show(edges, "draw");
+              const c = fb(s.el("g", { class: "later" }));
+              c.append(s.el("circle", { cx: x, cy: y, r: 22, fill: n === d.nodes.length - 1 ? P.red : P.violet }), T(s, x, y + 9, op, { fill: "#fff", "font-size": 28 }));
+              tree.append(c); s.show(c, "pop"); s.sfx.count(n * 2); await s.wait(350);
+              const v = s.el("line", { x1: x, y1: y + 22, x2: x, y2: y + 40, stroke: P.pencil, "stroke-width": 3 }); tree.append(v);
+              box(x, y + 60, val, n === d.nodes.length - 1 ? P.red : P.violet).classList.remove("later");
+              pos["N" + n] = [x, y + 80];
+              s.sfx.ding(); await s.wait(500);
+            }
+            name.innerHTML = ""; name.append(d.why, " Der Term ist eine ", s.h("b", { class: "red" }, d.name), ".");
+            busy = false;
+          }
+          const btns = Object.keys(DEF).map(k => s.h("button", { class: "btn mono", "data-k": k, onclick: () => { s.sfx.click(); grow(k); } }, k));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Ein ", s.h("b", null, "Term"), " ist ein Rechenausdruck aus Zahlen, Variablen und Rechenzeichen – ", s.h("b", null, "ohne „=“"), ". Die ", s.h("b", null, "letzte"), " Rechnung gibt den Namen: Summe (+), Differenz (−), Produkt (·), Quotient (:).");
+          const lf = life(s, { class: "life later", style: { padding: "10px 18px" } }, s.h("p", { class: "small" }, "Kassenzettel: 3 Brötchen zu je 1 € und ein Saft für 2 € – der Term 3 · 1 + 2 ist eine Summe: 5 €."));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "500px 1fr", gap: "24px", alignItems: "center" },
+            ex(s, "Rechenbaum", { class: "ex a-left", style: { display: "flex", flexDirection: "column", gap: "8px", alignItems: "center" } }, s.h("div", { class: "row", style: { gap: "8px", flexWrap: "nowrap" } }, btns), svg),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, termBig, name, merk, lf)));
+          s.sfx.whoosh();
+          s.step(async () => { s.say("Sieben plus vier mal fünf: Punkt vor Strich. Erst vier mal fünf, dann plus sieben."); await grow("7 + 4 · 5"); });
+          s.step(async () => { s.say("Hier zuerst die Klammer, dann mal drei. Das Ergebnis ist ein Produkt."); await grow("(12 + 8) · 3"); });
+          s.step(async () => { s.say("Erst zwei mal drei, dann zwanzig minus sechs. Eine Differenz."); await grow("20 − 2 · 3"); });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); s.show(lf, "up", 300); });
+        },
+      },
+      /* 15b -------------------------------------------------------------- */
+      {
+        title: "Variablen: Platzhalter",
+        say: "Eine Variable ist ein Platzhalter für eine Zahl. Setzt du eine Zahl ein, kannst du den Term ausrechnen.",
+        build(s) {
+          const SIT = {
+            "Kino": { v: "x", min: 1, max: 10, start: 1, to: 4, icon: "🎟️", unit: "€", text: "Eine Kinokarte kostet 8 €. Es gehen x Kinder ins Kino.", term: ["", " · 8"], f: x => 8 * x, show: x => `${x} · 8` },
+            "Sparschwein": { v: "w", min: 0, max: 10, start: 0, to: 6, icon: "🪙", unit: "€", text: "Im Sparschwein sind 20 €. Jede Woche kommen 5 € dazu. Nach w Wochen:", term: ["20 + 5 · ", ""], f: w => 20 + 5 * w, show: w => `20 + 5 · ${w}` },
+            "Pizza": { v: "p", min: 1, max: 6, start: 1, to: 3, icon: "🍕", unit: "Stücke", text: "Jede Pizza hat 8 Stücke. Wir bestellen p Pizzen.", term: ["8 · ", ""], f: p => 8 * p, show: p => `8 · ${p}` },
+          };
+          let cur = "Kino", val = 1;
+          const story = s.h("p", { class: "t", style: { minHeight: "70px" } });
+          const termEl = s.h("p", { class: "big mono" });
+          const icons = s.h("div", { style: { minHeight: "48px", fontSize: "34px", lineHeight: "1.3", letterSpacing: "2px" } });
+          const ins = s.h("p", { class: "h2 mono", style: { color: P.green } });
+          const table = s.h("table", { class: "tafel", style: { fontSize: "22px" } });
+          const slWrap = s.h("div");
+          let sl = null;
+          function render() {
+            const S = SIT[cur];
+            termEl.innerHTML = ""; termEl.append("Term:  ", S.term[0], sp(s, S.v, P.orange, { fontWeight: 800 }), S.term[1]);
+            icons.textContent = S.icon.repeat(Math.min(val, 10));
+            ins.innerHTML = ""; ins.append(sp(s, `${S.v} = ${val}`, P.orange), `:  ${S.show(val)} = `, s.h("b", null, `${S.f(val)} ${S.unit}`));
+            table.innerHTML = "";
+            const xs = []; for (let i = S.min; i <= Math.min(S.max, S.min + 5); i++) xs.push(i);
+            table.append(s.h("tr", null, s.h("th", null, S.v), ...xs.map(x => s.h("td", { class: "mono", style: { background: x === val ? "#fff1a8" : "" } }, String(x)))),
+              s.h("tr", null, s.h("th", null, "Wert"), ...xs.map(x => s.h("td", { class: "mono", style: { background: x === val ? "#fff1a8" : "" } }, String(S.f(x))))));
+          }
+          function load(name) {
+            cur = name; const S = SIT[name]; val = S.start;
+            story.textContent = S.text;
+            btns.forEach(b => b.classList.toggle("solid", b.dataset.n === name));
+            sl = s.slider({ label: "Setze für " + S.v + " ein:", min: S.min, max: S.max, value: val, onInput: v => { val = v; render(); } });
+            slWrap.innerHTML = ""; slWrap.append(sl);
+            render();
+          }
+          async function play(name) {
+            load(name); s.sfx.pop();
+            const S = SIT[name];
+            for (let v = S.start + 1; v <= S.to && s.alive; v++) { await s.wait(450); sl.set(v); s.sfx.count(v); }
+            if (name === "Kino") s.sound("cash-register", { vol: .5 }); else if (name === "Sparschwein") s.sound("coins", { vol: .6 }); else s.sound("pizza-schneiden", { vol: .6 });
+          }
+          const btns = Object.keys(SIT).map(n => s.h("button", { class: "btn", "data-n": n, onclick: () => { s.sfx.click(); load(n); } }, n));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Eine ", s.h("b", null, "Variable"), " (x, w, p …) ist ein ", s.h("b", null, "Platzhalter"), " für eine Zahl. Setzt du eine Zahl ein, kannst du den Term ausrechnen. Statt 8 · p schreibt man oft kurz 8p.");
+          load("Kino");
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "560px 1fr", gap: "24px", alignItems: "center" },
+            ex(s, "Sachsituation", { class: "ex a-left", style: { display: "flex", flexDirection: "column", gap: "10px" } }, s.h("div", { class: "row", style: { gap: "10px" } }, btns), story, termEl, icons),
+            s.h("div", { class: "stack", style: { gap: "14px" } }, slWrap, ins, table, merk)));
+          s.sfx.whoosh();
+          s.step(async () => { s.say("Für x setzen wir eins, zwei, drei, vier ein. Vier Kinder zahlen zweiunddreißig Euro."); await play("Kino"); });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+          s.step(async () => { s.say("Zwanzig Euro plus fünf Euro pro Woche. Nach sechs Wochen sind es fünfzig Euro."); await play("Sparschwein"); });
+          s.step(async () => { s.say("Drei Pizzen haben vierundzwanzig Stücke."); await play("Pizza"); });
+        },
+      },
+      /* 15c -------------------------------------------------------------- */
+      {
+        title: "Terme aufstellen",
+        say: "Aus einem Satz wird ein Term: Wir suchen die Wörter, die eine Rechnung verraten.",
+        build(s) {
+          const D = [
+            { lab: "Beispiel 1: Hefte", parts: ["Leon kauft 3 Hefte ", ["zu je", "·"], " a Euro."], term: "3 · a", ins: "a = 2:  3 · 2 = 6 €", snd: () => s.sound("cash-register", { vol: .5 }) },
+            { lab: "Beispiel 2: Alter", parts: ["Leon ist L Jahre alt. Nora ist 4 Jahre ", ["jünger", "−"], "."], term: "L − 4", ins: "L = 11:  11 − 4 = 7 Jahre", snd: () => s.sfx.boing() },
+            { lab: "Beispiel 3: Zahlenrätsel", parts: [["Das Doppelte", "2 ·"], " einer Zahl n, ", ["vermehrt um", "+"], " 5."], term: "2 · n + 5", ins: "n = 10:  2 · 10 + 5 = 25", snd: () => s.sfx.chord([0, 4, 7]) },
+            { lab: "Beispiel 4: Schokolade", parts: ["Eine Tafel mit s Stückchen wird ", ["auf 4 Kinder verteilt", ":"], "."], term: "s : 4", ins: "s = 24:  24 : 4 = 6 Stückchen", snd: () => s.sound("schoko-knack", { vol: .6 }) },
+          ];
+          const cards = D.map(d => {
+            const keys = [];
+            const sent = s.h("p", { class: "t", style: { minHeight: "34px" } }, ...d.parts.map(p => { if (typeof p === "string") return p; const k = s.h("span", { style: { borderRadius: "6px", padding: "0 3px", transition: "background .4s" } }, p[0]); keys.push([k, p[1]]); return k; }));
+            const chips = s.h("div", { class: "row later", style: { gap: "8px" } }, ...keys.map(([k, sym]) => s.h("span", { class: "chip", style: { fontSize: "19px" } }, k.textContent + " → ", s.h("b", { class: "red", style: { fontSize: "26px", lineHeight: "1" } }, sym))));
+            const term = s.h("p", { class: "h2 mono later", style: { color: P.blue } }, "Term: " + d.term);
+            const ins = s.h("p", { class: "small mono later" }, d.ins);
+            const c = ex(s, d.lab, { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "4px", padding: "10px 18px" } }, sent, chips, term, ins);
+            c.run = async () => {
+              await s.show(c, "up");
+              for (const [k] of keys) { k.style.background = "var(--yellow)"; s.sfx.scribble(); await s.wait(400); }
+              await s.show(chips, "fade"); s.sfx.pop(); await s.wait(200);
+              await s.show(term, "left"); d.snd(); await s.show(ins, "up");
+            };
+            return c;
+          });
+          const kw = (sym, words) => s.h("span", { style: { display: "inline-block", marginRight: "18px" } }, s.h("b", { class: "red", style: { fontSize: "26px", lineHeight: "1" } }, sym), " " + words);
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "8px 18px 10px" } }, "Signalwörter: ", kw("+", "mehr, dazu, vermehrt um"), kw("−", "weniger, jünger, vermindert um"), kw("·", "je, das Doppelte, mal"), kw(":", "verteilt auf, die Hälfte"));
+          s.add(root(s, "stack", { justifyContent: "center", gap: "12px" }, s.h("div", { class: "cols", style: { gap: "12px 16px" } }, ...cards), merk));
+          s.sfx.whoosh();
+          cards.forEach((c, i) => s.step(async () => { await c.run(); s.say(["Zu je heißt mal: drei mal a.", "Jünger heißt minus: L minus vier.", "Das Doppelte heißt zwei mal, vermehrt um heißt plus.", "Verteilt auf vier Kinder heißt geteilt durch vier."][i]); }));
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
         },
       },
       /* 16 --------------------------------------------------------------- */

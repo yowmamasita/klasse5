@@ -106,6 +106,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Beelitz_Spargel.JPG",
   "orig": "File:Beelitz Spargel.JPG"
  },
+ "berlin-1945": {
+  "file": "berlin-1945.jpg",
+  "kind": "img",
+  "w": 693,
+  "h": 478,
+  "title": "Berlin im Mai 1945: zerstörte Häuser am Alexanderplatz",
+  "author": "Gorovits, Henryk",
+  "license": "CC BY-SA 3.0 de",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_204-012,_Berlin,_Alexanderplatz,_Georgenkirche.jpg",
+  "orig": "File:Bundesarchiv Bild 204-012, Berlin, Alexanderplatz, Georgenkirche.jpg"
+ },
  "berliner-goldhut": {
   "file": "berliner-goldhut.jpg",
   "kind": "img",
@@ -154,6 +166,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin_Museumsinsel_Fernsehturm.jpg",
   "orig": "File:Berlin Museumsinsel Fernsehturm.jpg"
  },
+ "bosporus": {
+  "file": "bosporus.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 750,
+  "title": "Brücke über den Bosporus in Istanbul: links Europa, rechts Asien",
+  "author": "Carlos Delgado",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bo%C4%9Fazi%C3%A7i_K%C3%B6pr%C3%BCs%C3%BC_-_Aerial_view.jpg",
+  "orig": "File:Boğaziçi Köprüsü - Aerial view.jpg"
+ },
  "brandenburg-flach": {
   "file": "brandenburg-flach.jpg",
   "kind": "img",
@@ -189,6 +213,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Zempl%C3%ADn_Museum_in_Michalovce_-_Archaeological_permanent_exhibition_-_Bronze_Age_exhibit_12.jpg",
   "orig": "File:Zemplín Museum in Michalovce - Archaeological permanent exhibition - Bronze Age exhibit 12.jpg"
+ },
+ "buchenwald-grumsin": {
+  "file": "buchenwald-grumsin.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Buchenwald Grumsin in Brandenburg",
+  "author": "TiWi93",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Grumsiner_Forst_02.jpg",
+  "orig": "File:Grumsiner Forst 02.jpg"
  },
  "catalhoeyuek": {
   "file": "catalhoeyuek.jpg",
@@ -322,6 +358,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:View_of_Dresden_Altstadt_from_across_the_Elbe_2010.jpg",
   "orig": "File:View of Dresden Altstadt from across the Elbe 2010.jpg"
  },
+ "elbrus": {
+  "file": "elbrus.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 642,
+  "title": "Der Elbrus im Kaukasus mit seinen zwei Gipfeln",
+  "author": "SKas",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mount_Elbrus_from_the_southeast.JPG",
+  "orig": "File:Mount Elbrus from the southeast.JPG"
+ },
  "elefant": {
   "file": "elefant.mp3",
   "kind": "snd",
@@ -368,6 +416,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Croatian_euro_coins_(10).jpg",
   "orig": "File:Croatian euro coins (10).jpg"
+ },
+ "europaparlament": {
+  "file": "europaparlament.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 565,
+  "title": "Plenarsaal des Europäischen Parlaments in Straßburg",
+  "author": "Diliff",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:European_Parliament_Strasbourg_Hemicycle_-_Diliff.jpg",
+  "orig": "File:European Parliament Strasbourg Hemicycle - Diliff.jpg"
  },
  "faehre-dageboell": {
   "file": "faehre-dageboell.jpg",
@@ -439,6 +499,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Fischkutter_im_Alten_Hafen_Wismar_(2)_-_geo.hlipp.de_-_4792.jpg",
   "orig": "File:Fischkutter im Alten Hafen Wismar (2) - geo.hlipp.de - 4792.jpg"
+ },
+ "fjord-geiranger": {
+  "file": "fjord-geiranger.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 561,
+  "title": "Geirangerfjord in Norwegen",
+  "author": "Ximonic (Simo Räsänen)",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Geirangerfjord_from_%C3%98rnesvingen,_2013_June.jpg",
+  "orig": "File:Geirangerfjord from Ørnesvingen, 2013 June.jpg"
  },
  "floete-schwan": {
   "file": "floete-schwan.jpg",
@@ -582,6 +654,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Berlin_Petrikirche_Grabungen_(2).JPG",
   "orig": "File:Berlin Petrikirche Grabungen (2).JPG"
+ },
+ "grenzturm": {
+  "file": "grenzturm.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Ehemaliger Wachturm am Eisernen Vorhang bei Čížov (Tschechien)",
+  "author": "Olgierd Rudak",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:B%C3%BDval%C3%A1_str%C3%A1%C5%BEn%C3%AD_v%C4%9B%C5%BE_%C4%8C%C3%AD%C5%BEov_(2022-11-05).jpg",
+  "orig": "File:Bývalá strážní věž Čížov (2022-11-05).jpg"
  },
  "gussform-stein": {
   "file": "gussform-stein.jpg",
@@ -749,6 +833,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:00_2586_Husum_(Schleswig-Holstein)_-_Binnenhafen.jpg",
   "orig": "File:00 2586 Husum (Schleswig-Holstein) - Binnenhafen.jpg"
+ },
+ "ice-zug": {
+  "file": "ice-zug.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 594,
+  "title": "ICE 3 der Deutschen Bahn",
+  "author": "Sebastian Terfloth User:Sese_Ingolstadt",
+  "license": "CC BY-SA 2.5",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:ICE_3_Fahlenbach.jpg",
+  "orig": "File:ICE 3 Fahlenbach.jpg"
  },
  "ischtar-drache": {
   "file": "ischtar-drache.jpg",
@@ -950,6 +1046,17 @@
   "source": "https://commons.wikimedia.org/wiki/File:Electric_guide_3%C3%972.5_mm.jpg",
   "orig": "File:Electric guide 3×2.5 mm.jpg"
  },
+ "kutsche": {
+  "file": "kutsche.mp3",
+  "kind": "snd",
+  "dur": 4.0,
+  "title": "Pferdekutsche fährt",
+  "author": "chuckeazay22",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/chuckeazay22/sounds/653091/",
+  "orig": "653091"
+ },
  "lagerfeuer": {
   "file": "lagerfeuer.jpg",
   "kind": "img",
@@ -1116,6 +1223,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Mohenjo-daro.jpg",
   "orig": "File:Mohenjo-daro.jpg"
  },
+ "mont-blanc": {
+  "file": "mont-blanc.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Gipfel des Mont Blanc",
+  "author": "Gabriel from92",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Sommet_du_Mont_Blanc_(zoom).jpg",
+  "orig": "File:Sommet du Mont Blanc (zoom).jpg"
+ },
  "muenze-roemisch": {
   "file": "muenze-roemisch.jpg",
   "kind": "img",
@@ -1139,6 +1258,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
   "source": "https://commons.wikimedia.org/wiki/File:Ovis_orientalis_LC0267.jpg",
   "orig": "File:Ovis orientalis LC0267.jpg"
+ },
+ "nachtzug": {
+  "file": "nachtzug.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "Nachtzug mit Schlafwagen in Wien Hauptbahnhof",
+  "author": "Bahnfrend",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:1116_146-2_in_Wien_Hauptbahnhof,_2019_(03).jpg",
+  "orig": "File:1116 146-2 in Wien Hauptbahnhof, 2019 (03).jpg"
  },
  "nebra-scheibe": {
   "file": "nebra-scheibe.jpg",
@@ -1272,6 +1403,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Obelisk_Eismann_Fundstelle_20090908b.jpg",
   "orig": "File:Obelisk Eismann Fundstelle 20090908b.jpg"
  },
+ "olivenhain": {
+  "file": "olivenhain.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Olivenbäume auf Naxos (Griechenland)",
+  "author": "Bouke ten Cate",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Naxos_Olive_Groves.jpg",
+  "orig": "File:Naxos Olive Groves.jpg"
+ },
  "orakelknochen": {
   "file": "orakelknochen.jpg",
   "kind": "img",
@@ -1353,6 +1496,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:The_Pnyx_plateau_and_the_Acropolis_on_August_14,_2019.jpg",
   "orig": "File:The Pnyx plateau and the Acropolis on August 14, 2019.jpg"
+ },
+ "postkutsche": {
+  "file": "postkutsche.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 683,
+  "title": "Felix Schlesinger: Die Ankunft der Postkutsche",
+  "author": "Felix Schlesinger",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Felix_Schlesinger_-_Die_Ankunft_der_Postkutsche.jpg",
+  "orig": "File:Felix Schlesinger - Die Ankunft der Postkutsche.jpg"
  },
  "priel-hooge": {
   "file": "priel-hooge.jpg",
@@ -1861,6 +2016,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Paleolithic_tent.jpg",
   "orig": "File:Paleolithic tent.jpg"
  },
+ "steppe-ukraine": {
+  "file": "steppe-ukraine.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 601,
+  "title": "Federgras in der Steppe (Ukraine)",
+  "author": "Максим Яковлєв",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%BE%D0%B2%D0%B8%D0%BB%D0%B0,_%D0%A2%D0%B0%D1%80%D1%83%D1%82%D0%B8%D0%BD%D1%81%D1%8C%D0%BA%D0%B8%D0%B9_%D1%81%D1%82%D0%B5%D0%BF,_%D0%A3%D0%BA%D1%80%D0%B0%D1%97%D0%BD%D0%B0.jpg",
+  "orig": "File:Ковила, Тарутинський степ, Україна.jpg"
+ },
  "stimmengewirr": {
   "file": "stimmengewirr.mp3",
   "kind": "snd",
@@ -1942,6 +2109,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Hamburg_Sturmflut_005.jpg",
   "orig": "File:Hamburg Sturmflut 005.jpg"
  },
+ "taiga-finnland": {
+  "file": "taiga-finnland.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 633,
+  "title": "Nadelwald in Lappland (Finnland)",
+  "author": "Ximonic (Simo Räsänen)",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Forest_near_Punainenhiekka_at_Pallasj%C3%A4rvi_in_Pallas-Yll%C3%A4stunturi_National_Park,_Kittil%C3%A4,_Lapland,_Finland,_2021_September.jpg",
+  "orig": "File:Forest near Punainenhiekka at Pallasjärvi in Pallas-Yllästunturi National Park, Kittilä, Lapland, Finland, 2021 September.jpg"
+ },
  "taschenmesser": {
   "file": "taschenmesser.jpg",
   "kind": "img",
@@ -2013,6 +2192,30 @@
   "source": "https://freesound.org/people/soundmary/sounds/194973/",
   "orig": "194973"
  },
+ "tromsoe-hafen": {
+  "file": "tromsoe-hafen.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 669,
+  "title": "Hafen von Tromsø im Winter",
+  "author": "Flying rakkoon",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tromso_harbour_flying_rakkoon.jpg",
+  "orig": "File:Tromso harbour flying rakkoon.jpg"
+ },
+ "tundra-kola": {
+  "file": "tundra-kola.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 618,
+  "title": "Tundra auf der Halbinsel Kola",
+  "author": "Ninaras",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tundra_on_the_Kola_Peninsula,_Russia.jpg",
+  "orig": "File:Tundra on the Kola Peninsula, Russia.jpg"
+ },
  "tut-maske": {
   "file": "tut-maske.jpg",
   "kind": "img",
@@ -2036,6 +2239,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Berlin-U7-U-Bahnhof-Neuk%C3%B6lln-Zugang-Karl-Marx-Stra%C3%9Fe.jpg",
   "orig": "File:Berlin-U7-U-Bahnhof-Neukölln-Zugang-Karl-Marx-Straße.jpg"
+ },
+ "ural-grenze": {
+  "file": "ural-grenze.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 542,
+  "title": "Grenzdenkmal Europa–Asien bei Jekaterinburg im Ural",
+  "author": "Jirka.h23",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Yekaterinburg_Border_Asia_Europe.jpg",
+  "orig": "File:Yekaterinburg Border Asia Europe.jpg"
  },
  "urkunde-siegel": {
   "file": "urkunde-siegel.jpg",
@@ -2216,6 +2431,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin_Wochenmarkt_Maybachufer-20241206-RM-152155.jpg",
   "orig": "File:Berlin Wochenmarkt Maybachufer-20241206-RM-152155.jpg"
  },
+ "wolga": {
+  "file": "wolga.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 582,
+  "title": "Die Wolga in Jaroslawl",
+  "author": "Alexxx1979",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Yaroslavl._Volga_River._Cathedral_of_the_Dormition_P5212715_2200.jpg",
+  "orig": "File:Yaroslavl. Volga River. Cathedral of the Dormition P5212715 2200.jpg"
+ },
  "ziege-meckern": {
   "file": "ziege-meckern.mp3",
   "kind": "snd",
@@ -2238,6 +2465,17 @@
   "license_url": "https://creativecommons.org/licenses/by/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Cassiterite_-_Mt_Bischoff_mine,_Waratah,_Tasmania,_Australia.jpg",
   "orig": "File:Cassiterite - Mt Bischoff mine, Waratah, Tasmania, Australia.jpg"
+ },
+ "zug-vorbei": {
+  "file": "zug-vorbei.mp3",
+  "kind": "snd",
+  "dur": 4.0,
+  "title": "Schnellzug fährt vorbei",
+  "author": "Sandermotions",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/Sandermotions/sounds/530296/",
+  "orig": "530296"
  },
  "zugspitze": {
   "file": "zugspitze.jpg",

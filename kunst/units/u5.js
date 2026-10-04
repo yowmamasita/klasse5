@@ -1,4 +1,5 @@
-/* Kapitel 5 – Drucken (Kunst 5/6, Berlin RLP; Albrecht-Dürer-Gymnasium) */
+/* Kapitel 5 – Drucken und Schrift gestalten (Kunst 5/6, Berlin RLP; Albrecht-Dürer-Gymnasium)
+   Stempel, Materialdruck, Monotypie, Linolschnitt, Gutenberg, Typografie (Serifen, Wirkung, Kalligramm, Plakat), Dürer, Hokusai */
 (() => {
   const UC = "#dc2626";
   const RAD = Math.PI / 180;
@@ -38,6 +39,7 @@
       "Hochdruck erklären: Was hoch steht, druckt",
       "Einen Linolschnitt Schritt für Schritt planen – sicher!",
       "Wissen, warum der Abdruck spiegelverkehrt ist",
+      "Schrift gestalten: Serifen, Wirkung und ein gutes Plakat",
     ],
     icon(svg, el) {
       svg.append(
@@ -614,6 +616,199 @@
           s.add(s.h("div", { style: { display: "flex", flexDirection: "column", gap: "18px", height: "100%", justifyContent: "center" } }, row(a, b, c), row(t1, t2, t3)));
           s.step(async () => { s.sound("druckpresse", { vol: .5, dur: 3 }); s.show(t2, "up"); await s.show(b, "zoom"); s.say("Die Presse drückt das Papier auf die Lettern."); });
           s.step(async () => { s.sfx.success(); s.show(t3, "up"); await s.show(c, "zoom"); s.say("Die Gutenberg-Bibel entstand in Mainz, zwischen 1452 und 1454."); });
+        },
+      },
+      /* 12c – Schrift gestalten (Typografie) ------------------------------ */
+      {
+        title: "Mit oder ohne Serifen?",
+        say: "Schau dir die Enden der Buchstaben an. Manche Schriften haben kleine Füßchen. Die heißen Serifen.",
+        build(s) {
+          const SERIF = 'Georgia, "Times New Roman", serif', SANS = '"Atkinson Hyperlegible", "Avenir Next", system-ui, sans-serif';
+          const svg = s.svg(520, 360);
+          const INKC = "#1b2740";
+          /* a big H drawn from rectangles: stems + crossbar (+ serifs) */
+          const H = (x0, col) => [s.el("rect", { x: x0, y: 40, width: 34, height: 180, fill: col }), s.el("rect", { x: x0 + 116, y: 40, width: 34, height: 180, fill: col }), s.el("rect", { x: x0 + 30, y: 116, width: 90, height: 26, fill: col })];
+          const hL = s.el("g", {}, ...H(55, INKC));
+          const letters = s.el("g", { transform: "translate(0,8)" });
+          const serifs = s.el("g", { class: "later" }, ...[[37, 32], [153, 32], [37, 216], [153, 216]].map(([x, y]) => s.el("rect", { x, y, width: 70, height: 12, rx: 2, fill: UC })));
+          const rings = s.el("g", { class: "later" }, ...[[72, 38], [188, 38], [72, 222], [188, 222]].map(([cx, cy]) => s.el("circle", { cx, cy, r: 34, fill: "none", stroke: UC, "stroke-width": 3, "stroke-dasharray": "7 6" })));
+          const hR = s.el("g", { class: "later" }, ...H(315, INKC));
+          const l1 = lbl(s, 130, 296, "mit Serifen"), l2 = lbl(s, 390, 296, "serifenlos", { class: "lbl later" });
+          const w1 = s.el("text", { x: 130, y: 348, "text-anchor": "middle", "font-size": 40, fill: INKC, text: "Buch", style: { fontFamily: SERIF } });
+          const w2 = s.el("text", { x: 390, y: 348, "text-anchor": "middle", "font-size": 40, fill: INKC, text: "Buch", class: "later", style: { fontFamily: SANS } });
+          letters.append(rings, hL, serifs, hR);
+          svg.append(s.el("line", { x1: 260, y1: 30, x2: 260, y2: 330, stroke: "#c8d3de", "stroke-width": 3, "stroke-dasharray": "8 8" }), letters, l1, l2, w1, w2);
+          const ph = s.photo("trajan-inschrift", { w: 550, h: 168, pos: "50% 40%", caption: "Trajanssäule, Rom (113 n. Chr.)", cls: "later" });
+          const e1 = box(s, "ex", "Uralt", "Die Römer meißelten Buchstaben mit Serifen in Stein. Die Inschrift der <b>Trajanssäule</b> ist bis heute ein Vorbild für Druckschriften.");
+          const m = merk(s, "<b>Serifen</b> sind kleine Querstriche an den Enden der Buchstaben. Schrift <b>ohne</b> sie heißt <b>serifenlos</b>.");
+          const life = box(s, "life", "Im Alltag", "Bücher haben oft Serifen. Verkehrsschilder nutzen die serifenlose Schrift <b>DIN 1451</b>. Und diese App? Serifenlos!");
+          s.add(cols(s, svg, stack(s, 10, ph, e1, m, life), 520));
+          s.show(svg, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sfx.pop(); await s.show(serifs, "pop"); s.sfx.ding(); await s.show(rings, "fade"); s.say("Die roten Füßchen sind die Serifen."); });
+          s.step(async () => { s.sfx.swoosh(); await s.show(hR, "left"); s.show([l2, w2], "up"); s.say("Ohne Füßchen heißt die Schrift serifenlos."); });
+          s.step(async () => { s.sound("meissel", { vol: .6, dur: 2 }); s.show(e1, "up"); await s.show(ph, "zoom"); s.say("Die Römer haben Buchstaben mit Serifen in Stein gemeißelt."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.show(life, "up", 200); });
+        },
+      },
+      /* 12d -------------------------------------------------------------- */
+      {
+        title: "Schrift hat Wirkung",
+        say: "Dasselbe Wort, drei Schriften – und jedes Mal fühlt es sich anders an. Probiere andere Wörter aus.",
+        build(s) {
+          const STY = [
+            { name: "lustig", fit: "Geburtstag, Comic, Kinderfest", ff: '"Caveat", "Chalkboard SE", cursive', fs: 76, w: 700 },
+            { name: "ernst", fit: "Zeugnis, Urkunde, Brief vom Amt", ff: 'Georgia, "Times New Roman", serif', fs: 54, w: 400 },
+            { name: "gruselig", fit: "Halloween, Geisterbahn, Gruselbuch", ff: 'Georgia, "Times New Roman", serif', fs: 60, w: 700 },
+          ];
+          const COLS = ["#e11d48", "#f59e0b", "#16a34a", "#2563eb", "#9333ea"];
+          const jit = i => [((i * 37) % 11 - 5) * 2.2, ((i * 53) % 7 - 3) * 2.4];
+          let word = "Ferien";
+          const cards = STY.map((st, k) => {
+            const v = s.svg(320, 150); v.setAttribute("data-overlap-ok", "");
+            v.append(s.el("rect", { x: 2, y: 2, width: 316, height: 146, rx: 10, fill: k === 2 ? "#e9e6ef" : "#fff", stroke: "#c8d3de", "stroke-width": 3 }));
+            const g = s.el("g", {}); v.append(g);
+            const card = s.h("div", { class: "card later", style: { padding: "10px", display: "flex", flexDirection: "column", gap: "6px" } }, v, P(s, "<b>" + st.name + "</b>", "h2"), P(s, "Passt zu: " + st.fit, "small"));
+            card.st = st; card.g = g; card.letters = []; card.drips = [];
+            return card;
+          });
+          const render = c => {
+            const st = c.st, n = word.length; c.g.textContent = ""; c.letters = []; c.drips = [];
+            const a = Math.min(st.fs * (c === cards[0] ? 0.5 : 0.62), 280 / n), x0 = 160 - a * (n - 1) / 2;
+            if (c === cards[1]) { c.g.append(s.el("text", { x: 160, y: 95, "text-anchor": "middle", "font-size": st.fs, fill: "#1b2740", "letter-spacing": 3, text: word, style: { fontFamily: st.ff } })); }
+            else for (let i = 0; i < n; i++) {
+              const x = x0 + i * a; let y = 95, rot = 0, fill = "#1b2740";
+              if (c === cards[0]) fill = COLS[i % COLS.length];
+              if (c === cards[2]) { const [r, dy] = jit(i); rot = r; y += dy; fill = "#2b0a3d"; }
+              const t = s.el("text", { x: 0, y: 0, "text-anchor": "middle", "font-size": st.fs, "font-weight": st.w, fill, text: word[i], style: { fontFamily: st.ff } });
+              t.setAttribute("transform", `translate(${x},${y}) rotate(${rot})`);
+              c.g.append(t); c.letters.push({ t, x, y, rot });
+              if (c === cards[2] && i % 2 === 0) { const d = s.el("path", { d: `M${x - 4},${y + 4} L${x - 4},${y + 4} Q${x},${y + 4} ${x + 4},${y + 4} Z`, fill: "#9b111e" }); c.g.append(d); c.drips.push({ d, x, y }); }
+            }
+            if (c === cards[1]) c.g.append(s.el("line", { x1: 60, y1: 122, x2: 260, y2: 122, stroke: "#1b2740", "stroke-width": 2 }));
+          };
+          const drip = c => s.tween({ from: 0, to: 1, dur: 900, ease: "out", update: k => c.drips.forEach(({ d, x, y }, j) => { const L = (18 + (j % 3) * 9) * k; d.setAttribute("d", `M${x - 4},${y + 4} L${x - 3},${y + 4 + L} Q${x},${y + 12 + L} ${x + 3},${y + 4 + L} L${x + 4},${y + 4} Z`); }) });
+          cards.forEach(render);
+          /* the playful letters bob gently */
+          s.loop(t => { if (!cards[0].classList.contains("later")) cards[0].letters.forEach((l, i) => l.t.setAttribute("transform", `translate(${l.x},${l.y + Math.sin(t / 260 + i) * 5}) rotate(${Math.sin(t / 330 + i * 1.7) * 7})`)); });
+          const words = ["Ferien", "Gespenst", "Zeugnis"];
+          let busy = false;
+          const setWord = async w => {
+            if (busy) return; busy = true; word = w; s.sfx.click();
+            btns.forEach(b => b.classList.toggle("solid", b.textContent === w));
+            for (const c of cards) { render(c); s.sfx.pop(); if (c === cards[2]) await drip(c); else await s.wait(120); }
+            busy = false;
+          };
+          const btns = words.map(w => s.h("button", { class: "btn" + (w === word ? " solid" : ""), onclick: () => setWord(w) }, w));
+          const ctr = s.h("div", { class: "row later", style: { gap: "10px", alignItems: "center" } }, P(s, "Anderes Wort:", "t"), ...btns);
+          const m = merk(s, "Schrift hat eine <b>Wirkung</b>, wie eine Stimme. Wähle eine Schrift, die zu deinem <b>Inhalt</b> passt.");
+          const life = box(s, "life", "Probier’s aus", "„Gespenst“ in lustiger Schrift? Gar nicht gruselig! „Zeugnis“ in Gruselschrift? Lieber nicht.");
+          s.add(stack(s, 12, P(s, "Dasselbe Wort – drei Schriften. Wie <b>fühlt</b> es sich an?"), s.h("div", { class: "cols3" }, ...cards), ctr, s.h("div", { class: "cols", style: { alignItems: "start" } }, m, life)));
+          s.step(async () => { s.sfx.boing(); await s.show(cards[0], "bounce"); s.say("Lustig: Die Buchstaben hüpfen."); });
+          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(cards[1], "fade"); s.say("Ernst: ruhig, gerade, ordentlich."); });
+          s.step(async () => { s.sound("door-creak", { vol: .5, dur: 2.5 }); await s.show(cards[2], "zoom"); await drip(cards[2]); s.say("Gruselig: Die Buchstaben wackeln und tropfen."); });
+          s.step(async () => { s.sfx.pop(); await s.show(ctr, "up"); s.show(m, "up", 150); s.show(life, "up", 300); });
+        },
+      },
+      /* 12e -------------------------------------------------------------- */
+      {
+        title: "Buchstaben als Bild",
+        say: "Buchstaben können selbst ein Bild sein. Im Mittelalter malten Mönche riesige, bunte Anfangsbuchstaben. Und manche Dichter machen aus Wörtern Bilder.",
+        build(s) {
+          const pic = s.photo("kells-chi-rho", { w: 300, h: 430, fit: "contain", caption: "Book of Kells, um 800", style: { background: "#efe4c8" } });
+          const svg = s.svg(330, 430);
+          const HAND = '"Caveat", "Bradley Hand", cursive';
+          svg.append(s.el("rect", { x: 2, y: 2, width: 326, height: 426, rx: 10, fill: "#fff", stroke: "#c8d3de", "stroke-width": 3 }));
+          /* calligram 1: a sun whose rays are the word "warm" */
+          const sun = s.el("g", { class: "later" });
+          sun.append(s.el("circle", { cx: 165, cy: 112, r: 44, fill: "#ffe27a" }), s.el("text", { x: 165, y: 121, "text-anchor": "middle", "font-size": 26, "font-weight": 800, fill: "#b45309", text: "SONNE" }));
+          const rays = [];
+          for (let i = 0; i < 8; i++) {
+            const a = i * 45, r = s.el("text", { x: 0, y: 0, "text-anchor": "start", "dominant-baseline": "middle", "font-size": 22, "font-weight": 700, fill: "#e09a00", text: "warm", style: { fontFamily: HAND } });
+            r.setAttribute("transform", `translate(165,112) rotate(${a}) translate(52,0)`); rays.push(r); sun.append(r);
+          }
+          /* calligram 2: falling rain made of letters (like Apollinaire's "Il pleut") */
+          const rainTxt = ["es regnet", "Tropfen", "nass und", "kalt"];
+          const rain = [];
+          rainTxt.forEach((line, li) => [...line].forEach((ch, ci) => {
+            const x = 50 + li * 64 + ci * 7, y = 240 + ci * 20;
+            const t = s.el("text", { x, y, "text-anchor": "middle", "font-size": 20, "font-weight": 700, fill: "#1d5bd0", text: ch, opacity: 0, style: { fontFamily: HAND } });
+            rain.push({ t, y }); svg.append(t);
+          }));
+          svg.append(sun);
+          const e1 = box(s, "ex", "Initiale", "Im Mittelalter schrieben Mönche Bücher mit der Hand. Große Anfangsbuchstaben malten sie bunt und verziert. Hier füllen <b>X</b> und <b>P</b> (für „Christus“) fast die ganze Seite.", false);
+          const e2 = box(s, "ex", "Kalligramm", "Die Wörter bilden selbst ein Bild. <b>Guillaume Apollinaire</b> veröffentlichte 1918 solche Bild-Gedichte: <b>„Calligrammes“</b>. In einem regnet es Buchstaben.");
+          const m = merk(s, "Buchstaben als Bild: verziert als <b>Initiale</b> oder angeordnet als <b>Kalligramm</b>.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "300px 330px 1fr", gap: "22px", alignItems: "center", height: "100%" } }, pic, svg, stack(s, 12, e1, e2, m)));
+          s.show(pic, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sfx.whoosh(); await s.show(sun, "zoom"); for (let k = 0; k < 2; k++) await s.tween({ from: 0, to: 1, dur: 500, update: v => rays.forEach((r, i) => r.setAttribute("transform", `translate(165,112) rotate(${i * 45}) translate(${52 + Math.sin(v * Math.PI) * 6},0)`)) }); s.say("Ein Kalligramm: Die Strahlen der Sonne sind Wörter."); });
+          s.step(async () => {
+            s.show(e2, "up"); s.sound("rain", { vol: .4, dur: 3 });
+            s.say("Und hier regnet es Buchstaben.");
+            await Promise.all(rain.map(({ t, y }, i) => s.wait(i * 25).then(() => s.tween({ from: -40, to: 0, dur: 420, ease: "in", update: d => { t.setAttribute("opacity", 1); t.setAttribute("transform", `translate(0,${d})`); } }))));
+          });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 12f -------------------------------------------------------------- */
+      {
+        title: "Ein Plakat gestalten",
+        say: "Ein Plakat muss man schnell lesen können. Wir reparieren dieses Plakat Schritt für Schritt.",
+        build(s) {
+          const DISP = '"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif', SANS = '"Atkinson Hyperlegible", "Avenir Next", system-ui, sans-serif';
+          const svg = s.svg(360, 500);
+          const zoomG = s.el("g", {});
+          const band = s.el("rect", { x: 12, y: 12, width: 336, height: 170, fill: "#ffffff" });
+          zoomG.append(s.el("rect", { x: 10, y: 10, width: 340, height: 480, rx: 6, fill: "#fff", stroke: "#94a3b8", "stroke-width": 3 }), band);
+          /* 5 text lines; states: 0 = messy, 1 = size+order, 2 = +contrast, 3 = +two fonts */
+          const L = [
+            { t: "Schulfest", s0: { x: 196, y: 52, fs: 24, c: "#f3e37c", ff: '"Caveat", cursive' }, s1: { x: 34, y: 120, fs: 58, c: "#f3e37c" }, s2: { c: "#ffffff" }, s3: { ff: DISP } },
+            { t: "12. Juni", s0: { x: 30, y: 250, fs: 24, c: "#a5b4c3", ff: '"Courier New", monospace' }, s1: { x: 34, y: 262, fs: 48, c: "#a5b4c3" }, s2: { c: "#1b2740" }, s3: { ff: DISP } },
+            { t: "15 bis 18 Uhr", s0: { x: 150, y: 420, fs: 24, c: "#f0a8c0", ff: 'Georgia, serif' }, s1: { x: 34, y: 316, fs: 30, c: "#f0a8c0" }, s2: { c: "#1b2740" }, s3: { ff: SANS } },
+            { t: "Schulhof", s0: { x: 40, y: 140, fs: 24, c: "#c7d7a0", ff: DISP }, s1: { x: 34, y: 358, fs: 30, c: "#c7d7a0" }, s2: { c: "#1b2740" }, s3: { ff: SANS } },
+            { t: "Musik · Kuchen · Spiele", s0: { x: 60, y: 330, fs: 24, c: "#b4b4d8", ff: '"Caveat", cursive' }, s1: { x: 34, y: 448, fs: 22, c: "#b4b4d8" }, s2: { c: "#475569" }, s3: { ff: SANS } },
+          ];
+          const stateOf = (l, k) => Object.assign({}, l.s0, k >= 1 ? l.s1 : {}, k >= 2 ? l.s2 : {}, k >= 3 ? l.s3 : {});
+          L.forEach(l => { l.el = s.el("text", { x: 0, y: 0, "font-weight": 700, text: l.t }); zoomG.append(l.el); });
+          svg.append(zoomG);
+          const hex = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16));
+          const mix = (a, b, t) => "rgb(" + hex(a).map((v, i) => Math.round(v + (hex(b)[i] - v) * t)).join(",") + ")";
+          const apply = (l, p) => { l.el.setAttribute("transform", `translate(${p.x},${p.y})`); l.el.setAttribute("font-size", p.fs); l.el.setAttribute("fill", p.c); l.el.style.fontFamily = p.ff; };
+          let level = 0;
+          L.forEach(l => apply(l, stateOf(l, 0)));
+          const bandCol = k => (k >= 2 ? "#dc2626" : "#ffffff");
+          const goTo = async k => {
+            const from = level; level = k;
+            const A = L.map(l => stateOf(l, from)), B = L.map(l => stateOf(l, k)); const b0 = bandCol(from), b1 = bandCol(k);
+            await s.tween({ from: 0, to: 1, dur: 900, ease: "inOut", update: t => {
+              L.forEach((l, i) => apply(l, { x: A[i].x + (B[i].x - A[i].x) * t, y: A[i].y + (B[i].y - A[i].y) * t, fs: A[i].fs + (B[i].fs - A[i].fs) * t, c: mix(A[i].c, B[i].c, t), ff: t < .5 ? A[i].ff : B[i].ff }));
+              band.setAttribute("fill", mix(b0, b1, t));
+            } });
+          };
+          const rule = (n, title, text) => s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, n + " · " + title), s.h("p", { class: "small", html: text }));
+          const r1 = rule(1, "Größe und Ordnung", "Das Wichtigste wird am <b>größten</b>: Was? Wann? Wo? Alles an einer Kante ausgerichtet.");
+          const r2 = rule(2, "Kontrast", "<b>Dunkel auf hell</b> oder hell auf dunkel. Gelb auf Weiß sieht man kaum.");
+          const r3 = rule(3, "Wenige Schriften", "Höchstens <b>zwei</b> Schriften. Sonst wirkt es unruhig.");
+          const r4 = rule(4, "Fern-Test", "Kannst du es auch <b>von Weitem</b> lesen? Ein Plakat liest man im Vorbeigehen.");
+          const vorher = s.h("button", { class: "btn", onclick: async () => { s.sfx.whoosh(); await goTo(0); } }, "Vorher");
+          const nachher = s.h("button", { class: "btn solid", onclick: async () => { s.sfx.whoosh(); await goTo(3); s.sfx.ding(); } }, "Nachher");
+          const ctr = s.h("div", { class: "row later", style: { gap: "10px" } }, vorher, nachher);
+          const ph = s.photo("litfasssaeule", { w: 250, h: 176, pos: "40% 40%", caption: "Litfaßsäule, Berlin" });
+          const life = s.h("div", { class: "life" }, s.h("span", { class: "exlabel" }, "Im Alltag"), s.h("p", { class: "small", html: "In Berlin erfunden: <b>Ernst Litfaß</b> stellte <b>1855</b> die ersten Säulen für Plakate auf. Die Regeln gelten auch für das Titelblatt deiner Mappe!" }));
+          const lifeRow = s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "250px 1fr", gap: "14px", alignItems: "center" } }, ph, life);
+          s.add(cols(s, svg, stack(s, 12, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" } }, r1, r2, r3, r4), lifeRow, ctr), 360));
+          s.show(svg, "zoom"); s.sfx.pop();
+          s.say("Ein Schulfest-Plakat. Kannst du schnell lesen, wann und wo das Fest ist?");
+          s.step(async () => { s.sfx.swoosh(); s.show(r1, "up"); await goTo(1); s.say("Erstens: Das Wichtigste wird groß und alles steht ordentlich untereinander."); });
+          s.step(async () => { s.sfx.zap(); s.show(r2, "up"); await goTo(2); s.say("Zweitens: Kontrast. Jetzt springt der Titel ins Auge."); });
+          s.step(async () => { s.sfx.snap(); s.show(r3, "up"); await goTo(3); s.say("Drittens: nur zwei Schriften. Das wirkt ruhig."); });
+          s.step(async () => {
+            s.sfx.whoosh(); s.show(r4, "up"); s.say("Viertens: der Fern-Test. Das Plakat rückt weit weg – lesbar bleibt es trotzdem.");
+            await s.tween({ from: 1, to: .4, dur: 900, ease: "inOut", update: k => zoomG.setAttribute("transform", `translate(${180 * (1 - k)},${250 * (1 - k)}) scale(${k})`) });
+            await s.wait(700);
+            await s.tween({ from: .4, to: 1, dur: 900, ease: "inOut", update: k => zoomG.setAttribute("transform", `translate(${180 * (1 - k)},${250 * (1 - k)}) scale(${k})`) });
+            zoomG.removeAttribute("transform");
+          });
+          s.step(async () => { s.sfx.success(); await s.show(lifeRow, "up"); s.show(ctr, "pop", 200); s.say("Vergleiche selbst: vorher und nachher."); });
         },
       },
       /* 13 --------------------------------------------------------------- */

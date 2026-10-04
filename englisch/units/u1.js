@@ -1,6 +1,7 @@
 /* Unit 1 – Hello! Me and my school.
    Cast (used again in Unit 2): Lukas (10, Berlin), his sister Julia (8) and her cat Mo,
-   Lukas' pen pal Ruby (11, London, Year 7) and her dog Biscuit. */
+   Lukas' pen pal Ruby (11, London, Year 7) and her dog Biscuit.
+   Slides 6a/6b: Lautschrift (phonetic symbols) as in the Vokabelverzeichnis. */
 (() => {
   "use strict";
   const CSS = `
@@ -166,10 +167,10 @@
   Deck.unit({
     id: "u1", num: 1, title: "Hello! Me and my school", color: "#1d5bd0", soft: "#e4ecfb",
     subtitle: "Say hello – in English!",
-    blurb: "Begrüßen, Alphabet, Zahlen, Farben, Schulsachen, be.",
+    blurb: "Begrüßen, Alphabet, Lautschrift, Zahlen, Farben, be.",
     goals: [
       "Hallo sagen und dich vorstellen: I'm Lukas.",
-      "Das englische Alphabet – und deinen Namen buchstabieren",
+      "Das Alphabet, buchstabieren und Lautschrift lesen",
       "Zahlen bis 100, Farben und Sachen im Federmäppchen",
       "Classroom English: Was sagt die Lehrerin? Was sagst du?",
       "Eine Schule in London – und I am, you are, he is …",
@@ -417,6 +418,102 @@
           s.step(async () => { await s.show(tileBox, "zoom"); await spell("RUBY"); });
           s.step(async () => { s.sfx.whoosh(); s.show(lab, "fade"); await s.show(nameBtns, "up"); s.show(lf, "up"); });
           s.step(async () => { s.show(merk, "up"); s.show(phone, "up", 200); s.sound("phone-ring", { vol: 0.5, dur: 2.4 }); if (!s.fast) await s.wait(2600); await spell("BELLA"); });
+        },
+      },
+      /* 6a ----------------------------------------------------------- */
+      {
+        title: "Lautschrift: θ ð w ʃ",
+        say: "Im Vokabelverzeichnis steht hinter jedem Wort seine Lautschrift. Sie zeigt dir, wie man das Wort spricht – auch wenn es ganz anders geschrieben wird.",
+        build(s) {
+          const IPAF = '"Charis SIL","Doulos SIL","Lucida Grande",-apple-system,"Helvetica Neue",Arial,sans-serif';
+          const ipa = (t, st) => s.h("span", { style: Object.assign({ fontFamily: IPAF, color: "var(--red)", fontWeight: 400 }, st || {}) }, t);
+          const blk = (main, lab) => s.h("div", { class: "stack", style: { gap: "4px", alignItems: "center" } }, main, s.h("span", { class: "small pencil" }, lab));
+          const eWord = blk(s.h("b", { style: { font: "800 34px/1.1 var(--f-display)" } }, "think"), "Wort");
+          const eIpa = blk(ipa("[θɪŋk]", { fontSize: "34px", lineHeight: "1.1" }), "Lautschrift");
+          const eDe = blk(s.h("span", { style: { fontSize: "30px", lineHeight: "1.1" } }, "denken"), "Deutsch");
+          [eIpa, eDe].forEach(e => e.classList.add("later"));
+          const eSpk = spk(s, "think", { label: "Hör mal!", cls: "sm later" });
+          const eTxt = s.h("p", { class: "small later", style: { margin: 0 } }, "Die Lautschrift zeigt, wie man ein Wort spricht. Im Schulbuch steht sie meist in ", s.h("b", null, "[eckigen Klammern]"), ", im Wörterbuch oft zwischen ", s.h("b", null, "/Schrägstrichen/"), ".");
+          const entry = s.h("div", { class: "card", style: { display: "grid", gridTemplateColumns: "auto auto auto auto 1fr", gap: "26px", alignItems: "center", padding: "8px 20px" } }, eWord, eIpa, eDe, eSpk, eTxt);
+          const SYM = [
+            ["θ", "th – ohne Stimme", "Zunge zwischen die Zähne und pusten, wie gelispelt.", [["think", "θɪŋk"], ["three", "θriː"], ["thank you", "ˈθæŋk juː"]]],
+            ["ð", "th – mit Stimme", "Zunge zwischen die Zähne – und dabei summen.", [["this", "ðɪs"], ["mother", "ˈmʌðə"], ["brother", "ˈbrʌðə"]]],
+            ["w", "das runde w", "Lippen rund wie bei „u“ – kein deutsches w!", [["what", "wɒt"], ["window", "ˈwɪndəʊ"], ["water", "ˈwɔːtə"]]],
+            ["ʃ", "wie „sch“", "Klingt wie „sch“ in „Schule“ – nur anders geschrieben.", [["she", "ʃiː"], ["fish", "fɪʃ"], ["shop", "ʃɒp"]]],
+          ];
+          const cards = SYM.map(([sym, name, tip, words]) => {
+            const btns = words.map(([w, p]) => spk(s, w, { de: ipa("[" + p + "]", { fontSize: "21px" }), cls: "sm full" }));
+            const badge = s.h("button", { class: "e1tile", style: { minWidth: "84px", height: "60px", fontFamily: IPAF, fontWeight: 400, fontSize: "46px", border: 0, cursor: "pointer" } }, sym);
+            badge.addEventListener("click", () => { s.sfx.pop(); bump(s, badge, 0.15); playSeq(s, words.map(([w], i) => [btns[i], w])); });
+            const el = s.h("div", { class: "card stack later", style: { gap: "8px", padding: "10px 12px" } },
+              s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap" } }, badge, s.h("b", { style: { font: "700 22px/1.15 var(--f-display)", color: "var(--unit)" } }, name)),
+              s.h("p", { class: "small", style: { margin: 0, minHeight: "50px" } }, tip), ...btns);
+            return { el, badge, btns, words };
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } },
+            s.h("b", null, "th"), ": ", ipa("[θ]"), " ohne, ", ipa("[ð]"), " mit Stimme  ·  ",
+            ipa("[v]"), " = deutsches w (very)  ·  ", ipa("[w]"), " = rundes w (what)");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px" } }, entry, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" } }, cards.map(c => c.el)), merk));
+          s.sfx.whoosh(); s.show(entry, "zoom");
+          s.step(async () => {
+            s.sfx.scribble(); await s.show(eIpa, "down"); s.sfx.pop(); await s.show(eDe, "left");
+            s.show([eSpk, eTxt], "fade"); EN(s, "think");
+          });
+          SYM.forEach(([sym, name], i) => s.step(async () => {
+            s.sfx.note(i * 2, 0.2); await s.show(cards[i].el, "up"); bump(s, cards[i].badge, 0.2);
+            await playSeq(s, cards[i].words.slice(0, 1).map(([w]) => [cards[i].btns[0], w]));
+          }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Das th hat zwei Laute. Und das englische w klingt wie ein kurzes u."); });
+        },
+      },
+      /* 6b ----------------------------------------------------------- */
+      {
+        title: "Lautschrift: Vokale, Betonung",
+        say: "Auch Vokale haben eigene Zeichen. Und ein kleiner Strich oben zeigt dir, welche Silbe du laut und stark sprichst.",
+        build(s) {
+          const IPAF = '"Charis SIL","Doulos SIL","Lucida Grande",-apple-system,"Helvetica Neue",Arial,sans-serif';
+          const ipa = (t, st) => s.h("span", { style: Object.assign({ fontFamily: IPAF, color: "var(--red)", fontWeight: 400 }, st || {}) }, t);
+          const V = [
+            ["æ", "Mund weit auf – ein Laut zwischen a und ä.", [["cat", "kæt"], ["bag", "bæɡ"], ["apple", "ˈæpl"]]],
+            ["ə", "Ganz schwach, wie das e am Ende von „bitte“.", [["sister", "ˈsɪstə"], ["teacher", "ˈtiːtʃə"], ["banana", "bəˈnɑːnə"]]],
+            ["ɪ iː", "ː heißt lang! [ɪ] kurz wie in „Fisch“, [iː] lang wie in „Biene“.", [["ship – sheep", "ʃɪp – ʃiːp", "ship. sheep."], ["sit – seat", "sɪt – siːt", "sit. seat."], ["it – eat", "ɪt – iːt", "it. eat."]]],
+          ];
+          const cards = V.map(([sym, tip, words]) => {
+            const btns = words.map(([w, p, say]) => spk(s, w, { say: say || w, de: ipa("[" + p.replace(" – ", "] – [") + "]", { fontSize: "21px" }), cls: "sm full" }));
+            const badge = s.h("button", { class: "e1tile", style: { minWidth: "96px", height: "54px", fontFamily: IPAF, fontWeight: 400, fontSize: "40px", border: 0, cursor: "pointer", flex: "none" } }, sym);
+            badge.addEventListener("click", () => { s.sfx.pop(); bump(s, badge, 0.15); playSeq(s, words.map(([w, p, say], i) => [btns[i], say || w])); });
+            const el = s.h("div", { class: "card stack later", style: { gap: "8px", padding: "8px 12px 10px" } },
+              s.h("div", { class: "row", style: { gap: "14px", flexWrap: "nowrap" } }, badge, s.h("p", { class: "small", style: { margin: 0 } }, tip)),
+              s.h("div", { style: { display: "grid", gridTemplateColumns: sym.length > 1 ? "1.2fr 1fr 1fr" : "repeat(3, 1fr)", gap: "8px" } }, btns));
+            return { el, badge };
+          });
+          /* stress */
+          const ST = [["sister", "ˈsɪstə", ["sis", "ter"], 0], ["computer", "kəmˈpjuːtə", ["com", "pu", "ter"], 1], ["banana", "bəˈnɑːnə", ["ba", "na", "na"], 1]];
+          const rows = ST.map(([w, p, syl, k]) => {
+            const tiles = syl.map((x, i) => s.h("span", { style: { display: "inline-grid", placeItems: "center", minWidth: "62px", height: "50px", padding: "0 10px", borderRadius: "12px", background: i === k ? "var(--red)" : "#fff", color: i === k ? "#fff" : "var(--pencil)", border: i === k ? "0" : "2px solid var(--line)", font: i === k ? "800 30px/1 var(--f-display)" : "600 22px/1 var(--f-display)" } }, i === k ? x.toUpperCase() : x));
+            const ic = s.h("span", { class: "ic" }); ic.innerHTML = SPK_ICON;
+            const b = s.h("button", { class: "e1spk full later", style: { display: "grid", gridTemplateColumns: "32px 1fr", gap: "12px", padding: "8px 14px 8px 10px" } }, ic,
+              s.h("span", { class: "stack", style: { gap: "6px" } }, s.h("span", null, w, "  ", ipa("[" + p + "]", { fontSize: "24px" })), s.h("span", { class: "row", style: { gap: "6px", flexWrap: "nowrap" } }, tiles)));
+            b.addEventListener("click", () => { EN(s, w); s.sfx.pop(); bump(s, tiles[k], 0.3); });
+            return { b, tiles, k, w };
+          });
+          const stHead = s.h("div", { class: "stack later", style: { gap: "4px" } }, s.h("p", { class: "h2", style: { margin: 0, color: "var(--unit)" } }, "Betonung: ", ipa("[ˈ]")),
+            s.h("p", { class: "small", style: { margin: 0 } }, "Der kleine Strich oben steht ", s.h("b", null, "vor"), " der Silbe, die du stark sprichst."));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 16px 12px" } }, ipa("ː"), " = lang  ·  ", ipa("ˈ"), " = jetzt betonen  ·  ", ipa("ə"), " = ganz schwach");
+          const lf = life(s, "Im Alltag", s.h("p", { class: "small", style: { margin: 0 } }, "Wörterbuch, Vokabel-App, Online-Lexikon: Wenn du ein neues Wort nachschlägst, steht die Lautschrift fast immer daneben."));
+          lf.classList.add("later");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "680px 1fr", gap: "18px", height: "100%" } },
+            s.h("div", { class: "stack", style: { gap: "10px" } }, cards.map(c => c.el), lf),
+            s.h("div", { class: "stack", style: { gap: "10px" } }, stHead, ...rows.map(r => r.b), merk)));
+          s.sfx.whoosh(); s.show(cards[0].el, "left"); s.sfx.note(0, 0.2);
+          s.step(async () => { s.sfx.note(4, 0.2); await s.show(cards[1].el, "left"); s.say("Das Zeichen ə ist der schwächste Laut im Englischen."); });
+          s.step(async () => { s.sfx.note(7, 0.2); await s.show(cards[2].el, "left"); s.say("Die zwei Punkte heißen: lang. Ship ist kurz, sheep ist lang."); });
+          s.step(async () => {
+            s.sfx.whoosh(); await s.show(stHead, "fade");
+            for (const r of rows) { s.sfx.pop(); await s.show(r.b, "right"); s.sfx.drum(); bump(s, r.tiles[r.k], 0.35); await s.wait(250); }
+            s.say("SIS-ter, com-PU-ter, ba-NA-na.");
+          });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(lf, "up"); s.say("Diese Zeichen findest du auch in jedem Wörterbuch und in Vokabel-Apps."); });
         },
       },
       /* 7 ------------------------------------------------------------ */

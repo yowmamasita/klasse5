@@ -22,6 +22,29 @@
   "source": "https://commons.wikimedia.org/wiki/File:Weltzeituhr_mit_Fernsehturm_-_Alexanderplatz.jpg",
   "orig": "File:Weltzeituhr mit Fernsehturm - Alexanderplatz.jpg"
  },
+ "alphorn": {
+  "file": "alphorn.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Alphornbläser im Wallis",
+  "author": "Hans Hillewaert",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Alphorn_player_in_Wallis.jpg",
+  "orig": "File:Alphorn player in Wallis.jpg"
+ },
+ "alphorn-ruf": {
+  "file": "alphorn-ruf.mp3",
+  "kind": "snd",
+  "dur": 7.4,
+  "title": "Zwei Alphörner, Kleine Scheidegg",
+  "author": "DangerLaef",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/DangerLaef/sounds/434061/",
+  "orig": "434061"
+ },
  "altsax-melodie": {
   "file": "altsax-melodie.mp3",
   "kind": "snd",
@@ -366,6 +389,29 @@
   "source": "https://freesound.org/people/Coral_Island_Studios/sounds/277598/",
   "orig": "277598"
  },
+ "didgeridoo": {
+  "file": "didgeridoo.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 704,
+  "title": "Didgeridoo in Australien",
+  "author": "RegionalQueenslander",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Cultural2021gA.jpg",
+  "orig": "File:Cultural2021gA.jpg"
+ },
+ "didgeridoo-drone": {
+  "file": "didgeridoo-drone.mp3",
+  "kind": "snd",
+  "dur": 8.0,
+  "title": "Didgeridoo",
+  "author": "sandyrb",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/sandyrb/sounds/85780/",
+  "orig": "85780"
+ },
  "dirigent-taktstock": {
   "file": "dirigent-taktstock.jpg",
   "kind": "img",
@@ -377,6 +423,29 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Luigi_Von_Kunits_with_conducting_baton_(cropped).jpg",
   "orig": "File:Luigi Von Kunits with conducting baton (cropped).jpg"
+ },
+ "djembe": {
+  "file": "djembe.jpg",
+  "kind": "img",
+  "w": 789,
+  "h": 800,
+  "title": "Djembe",
+  "author": "Niranjan Arminius",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Djembe_Oblique_3rd_20231001.jpg",
+  "orig": "File:Djembe Oblique 3rd 20231001.jpg"
+ },
+ "djembe-groove": {
+  "file": "djembe-groove.mp3",
+  "kind": "snd",
+  "dur": 9.0,
+  "title": "Djembe: Bass, Ton und Slap",
+  "author": "Michi Henning",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Djembe_accompaniment.ogg",
+  "orig": "File:Djembe accompaniment.ogg"
  },
  "doorbell": {
   "file": "doorbell.mp3",
@@ -632,6 +701,29 @@
   "source": "https://commons.wikimedia.org/wiki/File:Game-Boy-Original.jpg",
   "orig": "File:Game-Boy-Original.jpg"
  },
+ "gamelan": {
+  "file": "gamelan.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "Gamelan-Spieler auf Java",
+  "author": "Pnyopoenya",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Penabuh_gamelan.jpg",
+  "orig": "File:Penabuh gamelan.jpg"
+ },
+ "gamelan-bali": {
+  "file": "gamelan-bali.mp3",
+  "kind": "snd",
+  "dur": 4.7,
+  "title": "Gamelan auf Bali",
+  "author": "maghas99",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0/",
+  "source": "https://freesound.org/people/maghas99/sounds/257625/",
+  "orig": "257625"
+ },
  "geige": {
   "file": "geige.jpg",
   "kind": "img",
@@ -860,6 +952,17 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/qubodup/sounds/189446/",
   "orig": "189446"
+ },
+ "jodler": {
+  "file": "jodler.mp3",
+  "kind": "snd",
+  "dur": 10.0,
+  "title": "Jodler aus der Schweiz",
+  "author": "Astounded",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/Astounded/sounds/484841/",
+  "orig": "484841"
  },
  "jugendorchester": {
   "file": "jugendorchester.jpg",
@@ -1740,6 +1843,29 @@
   "source": "https://freesound.org/people/kwahmah_02/sounds/277508/",
   "orig": "277508"
  },
+ "sitar": {
+  "file": "sitar.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 609,
+  "title": "Sitar",
+  "author": "This file was donated to Wikimedia Commons as part of a project by the Metropolitan Museum of Art. See the Image and Dat",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Sitar_MET_C10563_1994.63.jpg",
+  "orig": "File:Sitar MET C10563 1994.63.jpg"
+ },
+ "sitar-raga": {
+  "file": "sitar-raga.mp3",
+  "kind": "snd",
+  "dur": 9.49,
+  "title": "Sitar",
+  "author": "mannhawks",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0/",
+  "source": "https://freesound.org/people/mannhawks/sounds/147896/",
+  "orig": "147896"
+ },
  "smartphone": {
   "file": "smartphone.jpg",
   "kind": "img",
@@ -1821,6 +1947,29 @@
   "source": "https://freesound.org/people/AudioSea/sounds/581120/",
   "orig": "581120"
  },
+ "steelpan": {
+  "file": "steelpan.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Steelband beim Karneval in Trinidad",
+  "author": "Kip1234",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Steelpan_Instruments_at_Trinidad_and_Tobago_Carnival.jpg",
+  "orig": "File:Steelpan Instruments at Trinidad and Tobago Carnival.jpg"
+ },
+ "steelpan-melodie": {
+  "file": "steelpan-melodie.mp3",
+  "kind": "snd",
+  "dur": 6.0,
+  "title": "Steeldrums",
+  "author": "LG",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/LG/sounds/22587/",
+  "orig": "22587"
+ },
  "stethoscope": {
   "file": "stethoscope.jpg",
   "kind": "img",
@@ -1876,6 +2025,29 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/goldkelchen/sounds/371355/",
   "orig": "371355"
+ },
+ "tabla": {
+  "file": "tabla.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 533,
+  "title": "Tabla",
+  "author": "Rounik Ghosh",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Tabla_HD.jpg",
+  "orig": "File:Tabla HD.jpg"
+ },
+ "tabla-rhythmus": {
+  "file": "tabla-rhythmus.mp3",
+  "kind": "snd",
+  "dur": 8.0,
+  "title": "Tabla",
+  "author": "jasonlee3071",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/jasonlee3071/sounds/719950/",
+  "orig": "719950"
  },
  "tenorsax-melodie": {
   "file": "tenorsax-melodie.mp3",
@@ -2142,6 +2314,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Vysehrad_as_seen_over_the_Vltava_from_Cisarska_louka_716.jpg",
   "orig": "File:Vysehrad as seen over the Vltava from Cisarska louka 716.jpg"
+ },
+ "weltkarte": {
+  "file": "weltkarte.jpg",
+  "kind": "img",
+  "w": 1200,
+  "h": 417,
+  "title": "Weltkarte (NASA Blue Marble)",
+  "author": "NASA Earth Observatory (NASA Goddard Space Flight Center)",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Whole_world_-_land_and_oceans.jpg",
+  "orig": "File:Whole world - land and oceans.jpg"
  },
  "westminster-gong": {
   "file": "westminster-gong.mp3",

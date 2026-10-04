@@ -1,5 +1,5 @@
-/* Kapitel 5 – Rechtschreib-Profi (s-Laute, das/dass, Doppelkonsonanten, ck/tz, Großschreibung,
-   wörtliche Rede, Wörterbuch). Regeln geprüft am Amtlichen Regelwerk 2024 (§§ 2, 3, 4, 25, 57; Anführungszeichen E1). */
+/* Kapitel 5 – Rechtschreib-Profi (s-Laute, das/dass, Doppelkonsonanten, ck/tz, Worttrennung, Großschreibung,
+   wörtliche Rede, Wörterbuch). Regeln geprüft am Amtlichen Regelwerk 2024 (§§ 2, 3, 4, 25, 57, 107–111; Anführungszeichen E1). */
 (() => {
   const C = "#dc2626";
   const SPK = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 010 6"/></svg>';
@@ -116,7 +116,7 @@
     id: "u5", num: 5, title: "Rechtschreib-Profi", color: C, soft: "#fde6e3",
     subtitle: "s, ss, ß – das oder dass – groß oder klein",
     blurb: "s-Laute, das/dass, Großschreibung, wörtliche Rede, Wörterbuch",
-    goals: ["s, ss oder ß – hören und begründen", "das oder dass? Die Ersatzprobe", "Doppelte Mitlaute, ck und tz", "Großschreibung und das Begleiter-Signal", "Wörtliche Rede und Wörterbuch wie ein Profi"],
+    goals: ["s, ss oder ß – hören und begründen", "das oder dass? Die Ersatzprobe", "Doppelte Mitlaute, ck, tz und Worttrennung", "Großschreibung und das Begleiter-Signal", "Wörtliche Rede und Wörterbuch wie ein Profi"],
     icon(svg, el) {
       svg.append(el("rect", { x: 6, y: 8, width: 58, height: 54, rx: 12, fill: C, opacity: .14 }),
         el("text", { x: 35, y: 48, "text-anchor": "middle", "font-size": 38, "font-weight": 800, fill: C, text: "ß" }));
@@ -373,6 +373,87 @@
           s.step(async () => { s.sfx.pop(); await s.show(ex, "up"); });
         },
       },
+      /* 9a --------------------------------------------------------------- */
+      {
+        title: "Worttrennung am Zeilenende",
+        say: "Passt ein Wort nicht mehr in die Zeile, trennst du es. Du trennst nach Sprechsilben, so wie du langsam klatschst.",
+        build(s) {
+          const SH = "­";
+          const TXT = `Am Wo${SH}chen${SH}en${SH}de be${SH}su${SH}chen wir die Groß${SH}el${SH}tern in Bran${SH}den${SH}burg. Wir es${SH}sen Ap${SH}fel${SH}ku${SH}chen mit Zu${SH}cker und spie${SH}len drau${SH}ßen im Gar${SH}ten.`;
+          const para = s.h("p", { lang: "de", style: { margin: 0, font: "500 24px/42px var(--f-hand)", hyphens: "manual", WebkitHyphens: "manual", color: "var(--blue)" } }, TXT);
+          const sheet = s.h("div", { style: { width: "300px", padding: "4px 14px 10px 26px", background: "repeating-linear-gradient(#fff 0 41px, #b9c9e6 41px 42px)", borderLeft: "3px solid #e9a3a3", boxSizing: "border-box", minHeight: "296px", overflow: "hidden" } }, para);
+          const box = s.h("div", { style: { height: "300px", display: "flex", alignItems: "flex-start", justifyContent: "center" } }, sheet);
+          const sl = s.slider({ label: "Zeilenbreite", min: 200, max: 460, step: 10, value: 300, fmt: v => v + " px", onInput: v => { sheet.style.width = v + "px"; } });
+          const left = s.h("div", { class: "card stack", style: { gap: "8px", padding: "12px 16px" } }, P(s, "small pencil", "Ein Heft – schieb die Zeile schmaler:"), box, sl.el || sl);
+          /* Silben klatschen */
+          const clapRow = (parts) => {
+            const sp = parts.map((p, i) => s.h("span", { style: { display: "inline-block", padding: "2px 8px", borderRadius: "10px", transition: "background .2s" } }, p));
+            const hy = parts.slice(1).map(() => s.h("span", { class: "later", style: { color: C, fontWeight: 800 } }, "-"));
+            const kids = []; sp.forEach((x, i) => { if (i) kids.push(hy[i - 1]); kids.push(x); });
+            const el = s.h("div", { class: "u5word", style: { display: "flex", alignItems: "center", gap: "2px", fontSize: "32px" } }, ...kids);
+            const run = async () => { for (let i = 0; i < sp.length; i++) { sp[i].style.background = "#ffd94a"; s.sfx.drum(); await s.wait(s.fast ? 0 : 380); sp[i].style.background = ""; } s.sfx.snap(); await s.show(hy, "pop"); };
+            return { el, run };
+          };
+          const words = [["Fens", "ter"], ["Ta", "fel"], ["Ba", "na", "ne"]].map(clapRow);
+          words.concat([]).forEach(w => (w.el.style.fontSize = "30px"));
+          const comp = [["Schul", "hof"], ["Haus", "tür"]].map(clapRow);
+          const c1 = s.h("div", { class: "card later", style: { padding: "12px 18px", display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "u5tag", style: { alignSelf: "flex-start" } }, "1. Silben klatschen"), s.h("div", { class: "row", style: { gap: "14px", flexWrap: "nowrap" } }, ...words.map(w => w.el)));
+          const c2 = s.h("div", { class: "card later", style: { padding: "12px 18px", display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "u5tag b", style: { alignSelf: "flex-start" } }, "2. Zusammengesetzte Wörter: erst die Teile"), s.h("div", { class: "row", style: { gap: "22px" } }, ...comp.map(w => w.el)));
+          const one = s.h("div", { class: "card soft later", style: { padding: "10px 18px" } }, P(s, "t", s.h("b", null, "Einsilbige Wörter"), " trennt man nie: Brot, Schrank, Haus."));
+          const lf = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Im Alltag"), P(s, "small", "In der Zeitung sind die Spalten schmal – da siehst du viele Trennstriche. Im Heft trennst du selbst, mit einem kurzen Strich."));
+          const merk = s.h("div", { class: "merk later" }, "Trenne nach ", s.h("b", null, "Sprechsilben"), ". Der Trennstrich steht am Ende der Zeile, der Rest kommt in die nächste.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "500px 1fr", gap: "18px", height: "100%", alignItems: "start" } }, s.h("div", { class: "stack", style: { gap: "12px" } }, left, lf),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, c1, c2, one, merk)));
+          s.show(left, "left"); s.sfx.whoosh();
+          s.step(async () => { s.sound("pencil-write", { vol: .5, dur: 1.4 }); const set = v => { sheet.style.width = v + "px"; if (sl.set) sl.set(v); }; if (s.fast) set(230); else await s.tween({ from: 300, to: 230, dur: 1200, ease: "inOut", update: v => set(Math.round(v / 10) * 10) }); s.say("Die Zeile wird schmaler. Jetzt werden Wörter getrennt: Wo, chen, en, de."); });
+          s.step(async () => { s.show(c1, "up"); s.sfx.pop(); for (const w of words) await w.run(); s.say("Fens, ter. Ta, fel. Ba, na, ne."); });
+          s.step(async () => { s.show(c2, "up"); s.sfx.pop(); for (const w of comp) await w.run(); s.say("Schul, hof. Haus, tür. Erst die Teile, aus denen das Wort gebaut ist."); });
+          s.step(async () => { s.sfx.boing(); await s.show(one, "up"); });
+          s.step(async () => { s.sound("page-turn-1"); await s.show(lf, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 9b --------------------------------------------------------------- */
+      {
+        title: "Trennen: ck, st und Vokale",
+        say: "Ein paar Sonderfälle: ck bleibt zusammen. st darfst du trennen. Und einen einzelnen Vokal am Wortanfang trennst du nie ab.",
+        build(s) {
+          /* a word that splits apart; bad = forbidden split that snaps back */
+          const splitter = (a, b, bad) => {
+            if (bad) {
+              const w = s.h("span", { class: "u5word", style: { fontSize: "36px", display: "inline-block" } }, a + b);
+              const no = s.h("span", { class: "later", style: { font: "700 21px/1 var(--f-display)", color: C, textDecoration: "line-through", textDecorationThickness: "3px", marginLeft: "8px" } }, a + "-" + b);
+              const el = s.h("span", { style: { display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" } }, w, no);
+              const run = async () => { s.sound("scissors", { vol: .4, dur: .5 }); await s.wait(s.fast ? 0 : 250); s.sfx.error(); await s.show(no, "bounce"); w.classList.remove("a-shake"); void w.offsetWidth; w.classList.add("a-shake"); };
+              return { el, run };
+            }
+            const hy = s.h("span", { class: "later", style: { color: "var(--green)", fontWeight: 800, margin: "0 4px" } }, "-");
+            const el = s.h("span", { class: "u5word", style: { display: "inline-flex", alignItems: "center", fontSize: "38px", whiteSpace: "nowrap" } }, s.h("span", null, a), hy, s.h("span", null, b));
+            const run = async () => { s.sound("scissors", { vol: .4, dur: .6 }); await s.show(hy, "pop"); s.sfx.tick(); };
+            return { el, run };
+          };
+          const card = (tag, cls, rule, items, note) => {
+            const ws = items.map(([a, b, bad]) => splitter(a, b, bad));
+            const el = s.h("div", { class: "card later", style: { padding: "16px 20px", display: "flex", flexDirection: "column", gap: "12px" } },
+              s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } }, s.h("span", { class: "u5tag " + cls }, tag), s.h("b", { style: { fontSize: "22px" } }, rule)),
+              s.h("div", { class: "row", style: { gap: "22px" } }, ...ws.map(w => w.el)), P(s, "small pencil", note));
+            el.ws = ws; return el;
+          };
+          const K = card("ck", "", "bleibt zusammen", [["Zu", "cker"], ["Ja", "cke"], ["ba", "cken"]], "Auch ch und sch bleiben zusammen: la-chen, Ta-sche.");
+          const S = card("st", "b", "wird getrennt", [["Fens", "ter"], ["Kis", "te"], ["meis", "tens"]], "„Trenne nie st“ gilt seit der Reform von 1996 nicht mehr.");
+          const V = card("Vokal", "v", "allein am Anfang? Nie abtrennen!", [["O", "fen", 1], ["A", "bend", 1], ["I", "gel", 1]], "Ofen, Abend und Igel bleiben ganz – sie kommen zusammen in die nächste Zeile.");
+          const pic = s.h("div", { class: "life later", style: { padding: "14px 18px", display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "exlabel" }, "Im Alltag: unsicher?"),
+            P(s, "t", "Schlag nach! Im Wörterbuch und bei Duden online steht bei jedem Wort die ", s.h("b", null, "Worttrennung"), ":"),
+            s.h("div", { class: "row", style: { gap: "18px" } }, ...["Zu|cker", "Fens|ter", "Ofen"].map(w => s.h("span", { class: "u5tag g", style: { fontSize: "26px", padding: "6px 14px" } }, w))));
+          const merk = s.h("div", { class: "merk later" }, s.h("b", null, "ck"), " bleibt zusammen · ", s.h("b", null, "st"), " wird getrennt · ein ", s.h("b", null, "einzelner Vokal"), " am Wortanfang wird nicht abgetrennt.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "18px", height: "100%", alignContent: "center" } }, K, S, V, pic, s.h("div", { style: { gridColumn: "1 / 3" } }, merk)));
+          s.sfx.pop();
+          const go = async (c, txt) => { s.sfx.whoosh(); await s.show(c, "up"); for (const w of c.ws) { await w.run(); await s.wait(s.fast ? 0 : 150); } s.say(txt); };
+          s.step(() => go(K, "Zu, cker. Ja, cke. ba, cken. Das ck bleibt zusammen."));
+          s.step(() => go(S, "Fens, ter. Kis, te. meis, tens. st darfst du trennen."));
+          s.step(() => go(V, "O, fen? Nein! Ein einzelner Vokal wird nicht abgetrennt."));
+          s.step(async () => { s.sound("page-turn-2", { vol: .8 }); await s.show(pic, "up"); s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
       /* 10 --------------------------------------------------------------- */
       {
         title: "Groß schreibt man …",
@@ -387,7 +468,7 @@
           const c2 = s.h("div", { class: "card stack later", style: { gap: "10px" } }, P(s, "h2", "2. Nomen"),
             ...nouns.map(([l, a, ar, b, br]) => s.h("div", null, P(s, "small pencil", l), s.h("p", { class: "u5sent", style: { fontSize: "28px", margin: 0 } }, capWord(a, ar), ", ", capWord(b, br)))));
           const c3 = s.h("div", { class: "card stack later", style: { gap: "12px" } }, P(s, "h2", "3. Namen"),
-            s.h("p", { class: "u5sent", style: { fontSize: "28px", margin: 0 } }, capWord("j", "ulian"), ", ", capWord("l", "ouisa")),
+            s.h("p", { class: "u5sent", style: { fontSize: "28px", margin: 0 } }, capWord("l", "eon"), ", ", capWord("n", "ora")),
             s.h("p", { class: "u5sent", style: { fontSize: "28px", margin: 0 } }, capWord("b", "erlin"), ", ", capWord("s", "pree")));
           const merk = s.h("div", { class: "merk later" }, s.h("b", null, "Artikelprobe:"), " Passt ", s.h("b", null, "der, die"), " oder ", s.h("b", null, "das"), " davor? → Nomen → groß!  der Ball · die Freude · das Fahrrad");
           s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "22px", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { alignItems: "stretch" } }, c1, c2, c3), merk));

@@ -24,6 +24,11 @@
   "spoken": "Mit einer Strichliste zählen wir die Urliste aus. Für jede Antwort ein Strich.",
   "text": "Mit einer Strichliste zählen wir die Urliste aus. Für jede Antwort ein Strich."
  },
+ "0352f64174e5878d": {
+  "lang": "de-DE",
+  "spoken": "Zehn Schichten: tausend Würfel.",
+  "text": "Zehn Schichten: tausend Würfel."
+ },
  "03a643a4b9a451d2": {
   "lang": "de-DE",
   "spoken": "In einem Block sitzen ungefähr tausend Menschen.",
@@ -78,6 +83,11 @@
   "lang": "de-DE",
   "spoken": "Acht geteilt durch vier ist zwei. Kein Rest – fertig!",
   "text": "Acht geteilt durch vier ist zwei. Kein Rest – fertig!"
+ },
+ "08001a61122c84ef": {
+  "lang": "de-DE",
+  "spoken": "Eine Variable ist ein Platzhalter für eine Zahl. Setzt du eine Zahl ein, kannst du den Term ausrechnen.",
+  "text": "Eine Variable ist ein Platzhalter für eine Zahl. Setzt du eine Zahl ein, kannst du den Term ausrechnen."
  },
  "0936c6495ba2a842": {
   "lang": "de-DE",
@@ -149,6 +159,16 @@
   "spoken": "Ein Fußballfeld ist 105 Meter lang und 68 Meter breit.",
   "text": "Ein Fußballfeld ist 105 Meter lang und 68 Meter breit."
  },
+ "0f363ec3b0a9c526": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 7. Umfang, Fläche und Rauminhalt. Zaun rundherum, Rasen innen drin, Kisten füllen",
+  "text": "Kapitel 7. Umfang, Fläche und Rauminhalt. Zaun rundherum, Rasen innen drin, Kisten füllen"
+ },
+ "101b15086d67b3e9": {
+  "lang": "de-DE",
+  "spoken": "Für den Rauminhalt gibt es Einheitswürfel: den Kubikzentimeter, den Kubikdezimeter und den Kubikmeter.",
+  "text": "Für den Rauminhalt gibt es Einheitswürfel: den Kubikzentimeter, den Kubikdezimeter und den Kubikmeter."
+ },
  "10225cb63fd25217": {
   "lang": "de-DE",
   "spoken": "Zehn mal zehn mal zehn mal zehn: zehntausend Möglichkeiten!",
@@ -184,6 +204,11 @@
   "spoken": "Prozent findest du auf dem Handy, im Laden und sogar auf der Schokolade.",
   "text": "Prozent findest du auf dem Handy, im Laden und sogar auf der Schokolade."
  },
+ "16805b505c8410a9": {
+  "lang": "de-DE",
+  "spoken": "Das Boot fährt sechs Kästchen nach rechts und drei nach oben.",
+  "text": "Das Boot fährt sechs Kästchen nach rechts und drei nach oben."
+ },
  "16ae548a5ab63e08": {
   "lang": "de-DE",
   "spoken": "Einmal rundherum sind 346 Meter.",
@@ -218,6 +243,11 @@
   "lang": "de-DE",
   "spoken": "Größen begegnen dir jeden Tag: auf dem Schulweg, im Ranzen und am Fernsehturm.",
   "text": "Größen begegnen dir jeden Tag: auf dem Schulweg, im Ranzen und am Fernsehturm."
+ },
+ "1a1568b12479f30f": {
+  "lang": "de-DE",
+  "spoken": "Alle Pfeile sind gleich lang und zeigen in dieselbe Richtung.",
+  "text": "Alle Pfeile sind gleich lang und zeigen in dieselbe Richtung."
  },
  "1a2b5041cc5a31aa": {
   "lang": "de-DE",
@@ -283,6 +313,11 @@
   "lang": "de-DE",
   "spoken": "Parallel: Die Geraden treffen sich nie.",
   "text": "Parallel: Die Geraden treffen sich nie."
+ },
+ "257f90ea5ef82d7e": {
+  "lang": "de-DE",
+  "spoken": "Ein Umzugskarton fasst etwa siebzig Liter. Ein Minecraft-Block ist ein Kubikmeter.",
+  "text": "Ein Umzugskarton fasst etwa siebzig Liter. Ein Minecraft-Block ist ein Kubikmeter."
  },
  "25dabdfad45d3ee7": {
   "lang": "de-DE",
@@ -368,11 +403,6 @@
   "lang": "de-DE",
   "spoken": "Sechs Meter passen bei beiden genau. Das ist der größte gemeinsame Teiler.",
   "text": "Sechs Meter passen bei beiden genau. Das ist der größte gemeinsame Teiler."
- },
- "2d02bd17b5bbfc1b": {
-  "lang": "de-DE",
-  "spoken": "Im Alltag musst du entscheiden: Brauche ich den Umfang, die Fläche oder die Oberfläche?",
-  "text": "Im Alltag musst du entscheiden: Brauche ich den Umfang, die Fläche oder die Oberfläche?"
  },
  "2e28d40e821df776": {
   "lang": "de-DE",
@@ -519,6 +549,11 @@
   "spoken": "Wir addieren von rechts nach links.",
   "text": "Wir addieren von rechts nach links."
  },
+ "3b6ff42c397d1a98": {
+  "lang": "de-DE",
+  "spoken": "Das Doppelte heißt zwei mal, vermehrt um heißt plus.",
+  "text": "Das Doppelte heißt zwei mal, vermehrt um heißt plus."
+ },
  "3bcac87fa2086a17": {
   "lang": "de-DE",
   "spoken": "Wieder vier geteilt durch vier: eins.",
@@ -539,6 +574,11 @@
   "spoken": "Experiment: 30-mal würfeln und notieren, welche Zahl kommt.",
   "text": "Experiment: 30-mal würfeln und notieren, welche Zahl kommt."
  },
+ "3d57663c23f32b93": {
+  "lang": "de-DE",
+  "spoken": "Ein Kubikdezimeter: zehn Zentimeter Kante. Das ist genau ein Liter.",
+  "text": "Ein Kubikdezimeter: zehn Zentimeter Kante. Das ist genau ein Liter."
+ },
  "3da8e9106904b53c": {
   "lang": "de-DE",
   "spoken": "Fünfundzwanzig mal vier ist hundert. Hundert mal siebzehn ist tausendsiebenhundert.",
@@ -553,6 +593,11 @@
   "lang": "de-DE",
   "spoken": "Beim Runden schauen wir auf die Ziffer rechts neben der Rundungsstelle.",
   "text": "Beim Runden schauen wir auf die Ziffer rechts neben der Rundungsstelle."
+ },
+ "3ea67c7007e233e9": {
+  "lang": "de-DE",
+  "spoken": "Ein Kubikmeter: ein Meter Kante – so groß wie ein Minecraft-Block.",
+  "text": "Ein Kubikmeter: ein Meter Kante – so groß wie ein Minecraft-Block."
  },
  "3eac52dec3ff498c": {
   "lang": "de-DE",
@@ -639,6 +684,11 @@
   "spoken": "Stumpf: zwischen neunzig und hundertachtzig Grad.",
   "text": "Stumpf: zwischen neunzig und hundertachtzig Grad."
  },
+ "465783401a1bb657": {
+  "lang": "de-DE",
+  "spoken": "Wir bauen einen Quader aus Würfeln: erst eine Reihe, dann eine Schicht, dann mehrere Schichten.",
+  "text": "Wir bauen einen Quader aus Würfeln: erst eine Reihe, dann eine Schicht, dann mehrere Schichten."
+ },
  "465d70b069638e70": {
   "lang": "de-DE",
   "spoken": "Wie viele Bahnhöfe hat jede U-Bahn-Linie in Berlin? Geordnet sieht man es sofort.",
@@ -713,6 +763,11 @@
   "lang": "de-DE",
   "spoken": "Beim Wandertag gehen wir zwei ein Viertel Kilometer und dann noch eineinhalb Kilometer. Ganze zu Ganzen, Brüche zu Brüchen.",
   "text": "Beim Wandertag gehen wir zwei ein Viertel Kilometer und dann noch eineinhalb Kilometer. Ganze zu Ganzen, Brüche zu Brüchen."
+ },
+ "4c90b0199557f7f0": {
+  "lang": "de-DE",
+  "spoken": "Eine Reihe: fünf Würfel.",
+  "text": "Eine Reihe: fünf Würfel."
  },
  "4d6c00b289a2ba1d": {
   "lang": "de-DE",
@@ -843,6 +898,11 @@
   "lang": "de-DE",
   "spoken": "Vorderfläche in wahrer Größe zeichnen.",
   "text": "Vorderfläche in wahrer Größe zeichnen."
+ },
+ "58add9998641c4b5": {
+  "lang": "de-DE",
+  "spoken": "Kiste A: 24 Würfel passen hinein.",
+  "text": "Kiste A: 24 Würfel passen hinein."
  },
  "58c6ecf4b5ab1f16": {
   "lang": "de-DE",
@@ -1019,10 +1079,20 @@
   "spoken": "Mit der Lupe teilen wir ein Kästchen noch einmal in zehn. Das sind Tausendstel.",
   "text": "Mit der Lupe teilen wir ein Kästchen noch einmal in zehn. Das sind Tausendstel."
  },
+ "6d63915a008a8890": {
+  "lang": "de-DE",
+  "spoken": "Ein Windrad passt schon nach einer Drittel-Drehung wieder auf sich selbst. Das nennt man drehsymmetrisch.",
+  "text": "Ein Windrad passt schon nach einer Drittel-Drehung wieder auf sich selbst. Das nennt man drehsymmetrisch."
+ },
  "6e1f163f650f77ec": {
   "lang": "de-DE",
   "spoken": "Zwischen 2 und 3 liegen 2 Komma 1, 2 Komma 2 und so weiter.",
   "text": "Zwischen 2 und 3 liegen 2 Komma 1, 2 Komma 2 und so weiter."
+ },
+ "6fd9012d1e091452": {
+  "lang": "de-DE",
+  "spoken": "Eine Schicht: zehn Reihen, also hundert Würfel.",
+  "text": "Eine Schicht: zehn Reihen, also hundert Würfel."
  },
  "70d7698645cb9393": {
   "lang": "de-DE",
@@ -1074,6 +1144,11 @@
   "spoken": "Sieben Drittel Kuchen: Je drei Drittel ergeben einen ganzen Kuchen. Es bleiben zwei Ganze und ein Drittel.",
   "text": "Sieben Drittel Kuchen: Je drei Drittel ergeben einen ganzen Kuchen. Es bleiben zwei Ganze und ein Drittel."
  },
+ "73e6631687d9f2cc": {
+  "lang": "de-DE",
+  "spoken": "Ein Term ist ein Rechenausdruck ohne Gleichheitszeichen. Ein Rechenbaum zeigt, was zuerst gerechnet wird.",
+  "text": "Ein Term ist ein Rechenausdruck ohne Gleichheitszeichen. Ein Rechenbaum zeigt, was zuerst gerechnet wird."
+ },
  "740d330b36178c71": {
   "lang": "de-DE",
   "spoken": "Der Fernsehturm hat 986 Stufen. Ein Hausmeister läuft sie zwölfmal hoch. Wie viele Stufen sind das?",
@@ -1083,6 +1158,11 @@
   "lang": "de-DE",
   "spoken": "Wir malen beide Zahlen in ein Hunderter-Quadrat.",
   "text": "Wir malen beide Zahlen in ein Hunderter-Quadrat."
+ },
+ "753ec81b6bb0cea5": {
+  "lang": "de-DE",
+  "spoken": "Manche Figuren passen nach einer halben Drehung wieder genau auf sich selbst. Sie sind punktsymmetrisch.",
+  "text": "Manche Figuren passen nach einer halben Drehung wieder genau auf sich selbst. Sie sind punktsymmetrisch."
  },
  "7584ea51aef3d36f": {
   "lang": "de-DE",
@@ -1128,11 +1208,6 @@
   "lang": "de-DE",
   "spoken": "Aus der Tabelle wird ein Säulendiagramm. Je höher die Säule, desto häufiger.",
   "text": "Aus der Tabelle wird ein Säulendiagramm. Je höher die Säule, desto häufiger."
- },
- "78e835aeea1161aa": {
-  "lang": "de-DE",
-  "spoken": "Kapitel 7. Umfang und Flächeninhalt. Zaun rundherum – Rasen innen drin",
-  "text": "Kapitel 7. Umfang und Flächeninhalt. Zaun rundherum – Rasen innen drin"
  },
  "795781b3fd7692b3": {
   "lang": "de-DE",
@@ -1269,6 +1344,21 @@
   "spoken": "Dreh die Gerade h. Wenn sie g nie trifft, sind die Geraden parallel. Bilden sie einen rechten Winkel, sind sie senkrecht.",
   "text": "Dreh die Gerade h. Wenn sie g nie trifft, sind die Geraden parallel. Bilden sie einen rechten Winkel, sind sie senkrecht."
  },
+ "83588cd853d39cd8": {
+  "lang": "de-DE",
+  "spoken": "Jünger heißt minus: L minus vier.",
+  "text": "Jünger heißt minus: L minus vier."
+ },
+ "837aa7b9001a54e5": {
+  "lang": "de-DE",
+  "spoken": "Rauminhalte begegnen dir überall: in der Milchtüte, im Aquarium, im Umzugskarton und im Schwimmbad.",
+  "text": "Rauminhalte begegnen dir überall: in der Milchtüte, im Aquarium, im Umzugskarton und im Schwimmbad."
+ },
+ "838242df3e9b11f3": {
+  "lang": "de-DE",
+  "spoken": "Bei einer Verschiebung rutscht die ganze Figur gleich weit in dieselbe Richtung. Ein Pfeil zeigt, wohin.",
+  "text": "Bei einer Verschiebung rutscht die ganze Figur gleich weit in dieselbe Richtung. Ein Pfeil zeigt, wohin."
+ },
  "83a189aff5ccff28": {
   "lang": "de-DE",
   "spoken": "Minuend minus Subtrahend gleich Differenz.",
@@ -1288,6 +1378,11 @@
   "lang": "de-DE",
   "spoken": "Zweitausendsechsundzwanzig im Zehnersystem.",
   "text": "Zweitausendsechsundzwanzig im Zehnersystem."
+ },
+ "867b6b03fd0b6970": {
+  "lang": "de-DE",
+  "spoken": "Symmetrie findest du überall: im Windrad, in der Schneeflocke, in Kirchenfenstern, auf Spielkarten, Schildern und Fliesen.",
+  "text": "Symmetrie findest du überall: im Windrad, in der Schneeflocke, in Kirchenfenstern, auf Spielkarten, Schildern und Fliesen."
  },
  "86875eb544d06639": {
   "lang": "de-DE",
@@ -1354,10 +1449,20 @@
   "spoken": "WM 2009 in Berlin, 100-Meter-Finale. Wer gewinnt? Die kleinste Zeit!",
   "text": "WM 2009 in Berlin, 100-Meter-Finale. Wer gewinnt? Die kleinste Zeit!"
  },
+ "8ec574bf49a94843": {
+  "lang": "de-DE",
+  "spoken": "Drei Reihen sind eine Schicht: fünfzehn Würfel.",
+  "text": "Drei Reihen sind eine Schicht: fünfzehn Würfel."
+ },
  "8f4b4ab786d6e15e": {
   "lang": "de-DE",
   "spoken": "Tippe eine Karte an, dann läuft sie nochmal.",
   "text": "Tippe eine Karte an, dann läuft sie nochmal."
+ },
+ "8fe8688ef20096de": {
+  "lang": "de-DE",
+  "spoken": "Auch Buchstaben können punktsymmetrisch sein.",
+  "text": "Auch Buchstaben können punktsymmetrisch sein."
  },
  "90cec04d329b24af": {
   "lang": "de-DE",
@@ -1434,10 +1539,30 @@
   "spoken": "Schau mal auf die Vier dieser Uhr!",
   "text": "Schau mal auf die Vier dieser Uhr!"
  },
+ "95dd36052bf90694": {
+  "lang": "de-DE",
+  "spoken": "Ein Kubikzentimeter: ein Würfel mit einem Zentimeter Kante.",
+  "text": "Ein Kubikzentimeter: ein Würfel mit einem Zentimeter Kante."
+ },
+ "95e15bdd9d12e057": {
+  "lang": "de-DE",
+  "spoken": "In einen Kubikdezimeter passen tausend Kubikzentimeter. Und genau ein Liter Wasser.",
+  "text": "In einen Kubikdezimeter passen tausend Kubikzentimeter. Und genau ein Liter Wasser."
+ },
+ "96225d04907c2362": {
+  "lang": "de-DE",
+  "spoken": "Eine Reihe: zehn Würfel.",
+  "text": "Eine Reihe: zehn Würfel."
+ },
  "9634d437f6f4e129": {
   "lang": "de-DE",
   "spoken": "Wähle einen anderen Nenner.",
   "text": "Wähle einen anderen Nenner."
+ },
+ "966d06f1f6335118": {
+  "lang": "de-DE",
+  "spoken": "Zu je heißt mal: drei mal a.",
+  "text": "Zu je heißt mal: drei mal a."
  },
  "9713b089fb707f8f": {
   "lang": "de-DE",
@@ -1483,6 +1608,11 @@
   "lang": "de-DE",
   "spoken": "Eine Pizza wird in acht gleich große Stücke geschnitten. Du nimmst drei davon. Das sind drei Achtel.",
   "text": "Eine Pizza wird in acht gleich große Stücke geschnitten. Du nimmst drei davon. Das sind drei Achtel."
+ },
+ "9a7aa3e9185222c0": {
+  "lang": "de-DE",
+  "spoken": "Verteilt auf vier Kinder heißt geteilt durch vier.",
+  "text": "Verteilt auf vier Kinder heißt geteilt durch vier."
  },
  "9acd11db3ee7efda": {
   "lang": "de-DE",
@@ -1554,6 +1684,11 @@
   "spoken": "Sechzig ist sechs mal zehn. Sechs ist zwei mal drei, zehn ist zwei mal fünf.",
   "text": "Sechzig ist sechs mal zehn. Sechs ist zwei mal drei, zehn ist zwei mal fünf."
  },
+ "a11ebc8ddb12516c": {
+  "lang": "de-DE",
+  "spoken": "Statt Würfeln gießen wir Wasser hinein: Es passt genau ein Liter.",
+  "text": "Statt Würfeln gießen wir Wasser hinein: Es passt genau ein Liter."
+ },
  "a1a18e5a1bc2a090": {
   "lang": "de-DE",
   "spoken": "Wir legen die Primfaktoren beider Zahlen in zwei Kreise. Die Mitte ist der ggT, alles zusammen ist das kgV.",
@@ -1578,6 +1713,16 @@
   "lang": "de-DE",
   "spoken": "Drei Viertel der Schokolade.",
   "text": "Drei Viertel der Schokolade."
+ },
+ "a3e1d618204c1481": {
+  "lang": "de-DE",
+  "spoken": "Kante zwei: acht Würfel. Kante drei: siebenundzwanzig Würfel.",
+  "text": "Kante zwei: acht Würfel. Kante drei: siebenundzwanzig Würfel."
+ },
+ "a501539dcb7bb1bd": {
+  "lang": "de-DE",
+  "spoken": "Jeder Punkt hat einen Partner: genau gegenüber, gleich weit von Z entfernt.",
+  "text": "Jeder Punkt hat einen Partner: genau gegenüber, gleich weit von Z entfernt."
  },
  "a5077ac52a5e8b3d": {
   "lang": "de-DE",
@@ -1618,6 +1763,11 @@
   "lang": "de-DE",
   "spoken": "Karton: ein Quader. Fußball: eine Kugel.",
   "text": "Karton: ein Quader. Fußball: eine Kugel."
+ },
+ "a7423531c9f7b2a1": {
+  "lang": "de-DE",
+  "spoken": "Kirchenfenster und Spielkarten.",
+  "text": "Kirchenfenster und Spielkarten."
  },
  "a75912ced82a4e3b": {
   "lang": "de-DE",
@@ -1684,6 +1834,11 @@
   "spoken": "Dieselben Daten kann man als Tabelle, als Diagramm oder als Text zeigen. Jede Darstellung kann etwas besonders gut.",
   "text": "Dieselben Daten kann man als Tabelle, als Diagramm oder als Text zeigen. Jede Darstellung kann etwas besonders gut."
  },
+ "ae4f5435ecbdb134": {
+  "lang": "de-DE",
+  "spoken": "Zwanzig Euro plus fünf Euro pro Woche. Nach sechs Wochen sind es fünfzig Euro.",
+  "text": "Zwanzig Euro plus fünf Euro pro Woche. Nach sechs Wochen sind es fünfzig Euro."
+ },
  "ae5bc75750402bcf": {
   "lang": "de-DE",
   "spoken": "Vier Viertel.",
@@ -1698,6 +1853,11 @@
   "lang": "de-DE",
   "spoken": "Zusammen 26 Quadratmeter. Jetzt rollen wir den Teppich aus.",
   "text": "Zusammen 26 Quadratmeter. Jetzt rollen wir den Teppich aus."
+ },
+ "af7cb7bdec92b587": {
+  "lang": "de-DE",
+  "spoken": "Kiste B: 27 Würfel.",
+  "text": "Kiste B: 27 Würfel."
  },
  "afcaa46775977870": {
   "lang": "de-DE",
@@ -1819,6 +1979,16 @@
   "spoken": "Das sind die Instrumente aus der Umfrage. Tippe auf einen Knopf und hör sie dir an!",
   "text": "Das sind die Instrumente aus der Umfrage. Tippe auf einen Knopf und hör sie dir an!"
  },
+ "b7d173fb9b55a2c6": {
+  "lang": "de-DE",
+  "spoken": "Welche Kiste ist größer? Wir füllen beide mit gleich großen Würfeln und zählen.",
+  "text": "Welche Kiste ist größer? Wir füllen beide mit gleich großen Würfeln und zählen."
+ },
+ "b811de57f3b8871a": {
+  "lang": "de-DE",
+  "spoken": "Die Würfelzahlen wachsen schnell: eins, acht, siebenundzwanzig, vierundsechzig, hundertfünfundzwanzig.",
+  "text": "Die Würfelzahlen wachsen schnell: eins, acht, siebenundzwanzig, vierundsechzig, hundertfünfundzwanzig."
+ },
  "b885e068d9bc3ec8": {
   "lang": "de-DE",
   "spoken": "100 Prozent sind alles – das Ganze.",
@@ -1833,6 +2003,11 @@
   "lang": "de-DE",
   "spoken": "Wir ziehen das Quadrat in die Breite: ein Rechteck.",
   "text": "Wir ziehen das Quadrat in die Breite: ein Rechteck."
+ },
+ "ba462b88d6ce1e90": {
+  "lang": "de-DE",
+  "spoken": "Die Schneeflocke hat sechs Arme. Sie passt schon nach 60 Grad.",
+  "text": "Die Schneeflocke hat sechs Arme. Sie passt schon nach 60 Grad."
  },
  "bb1f7f23e0ab920a": {
   "lang": "de-DE",
@@ -1883,6 +2058,11 @@
   "lang": "de-DE",
   "spoken": "Bus A fährt alle sechs Minuten, Bus B alle acht Minuten. Um acht Uhr fahren beide zusammen ab. Wann wieder?",
   "text": "Bus A fährt alle sechs Minuten, Bus B alle acht Minuten. Um acht Uhr fahren beide zusammen ab. Wann wieder?"
+ },
+ "be3d92fd82fd011b": {
+  "lang": "de-DE",
+  "spoken": "Eine Milchtüte hat einen Liter. Ein Aquarium mit sechzig mal dreißig mal dreißig Zentimetern fasst vierundfünfzig Liter.",
+  "text": "Eine Milchtüte hat einen Liter. Ein Aquarium mit sechzig mal dreißig mal dreißig Zentimetern fasst vierundfünfzig Liter."
  },
  "be7cdc4f570c2650": {
   "lang": "de-DE",
@@ -2004,10 +2184,20 @@
   "spoken": "Auf der Skala ab 0 bis zur Zahl gehen und einen Punkt setzen.",
   "text": "Auf der Skala ab 0 bis zur Zahl gehen und einen Punkt setzen."
  },
+ "c83ab9a95f83e215": {
+  "lang": "de-DE",
+  "spoken": "Ein Schuhkarton: dreißig mal zwanzig mal zehn, also sechstausend Kubikzentimeter.",
+  "text": "Ein Schuhkarton: dreißig mal zwanzig mal zehn, also sechstausend Kubikzentimeter."
+ },
  "c87ad1cbca8935ba": {
   "lang": "de-DE",
   "spoken": "Eine Strecke hat Anfang und Ende. Ein Strahl hat nur einen Anfang. Eine Gerade hat weder Anfang noch Ende.",
   "text": "Eine Strecke hat Anfang und Ende. Ein Strahl hat nur einen Anfang. Eine Gerade hat weder Anfang noch Ende."
+ },
+ "c8ae6611f6e4c173": {
+  "lang": "de-DE",
+  "spoken": "Beim Würfel sind alle Kanten gleich lang. Darum rechnet man a mal a mal a.",
+  "text": "Beim Würfel sind alle Kanten gleich lang. Darum rechnet man a mal a mal a."
  },
  "c90e5df78bd3aded": {
   "lang": "de-DE",
@@ -2044,6 +2234,11 @@
   "spoken": "Ein Geschenk ist ein Quader. Wie viel Papier brauchst du zum Einpacken?",
   "text": "Ein Geschenk ist ein Quader. Wie viel Papier brauchst du zum Einpacken?"
  },
+ "cc977ee339597ba1": {
+  "lang": "de-DE",
+  "spoken": "Das Windrad hat drei gleiche Blätter. Es passt nach 120, 240 und 360 Grad.",
+  "text": "Das Windrad hat drei gleiche Blätter. Es passt nach 120, 240 und 360 Grad."
+ },
  "cd9130c2e13f425f": {
   "lang": "de-DE",
   "spoken": "Das sind 7 Zentimeter und 4 Millimeter.",
@@ -2068,6 +2263,11 @@
   "lang": "de-DE",
   "spoken": "Mit fünf Fingern kannst du bis einunddreißig zählen.",
   "text": "Mit fünf Fingern kannst du bis einunddreißig zählen."
+ },
+ "cf4771224bea57ec": {
+  "lang": "de-DE",
+  "spoken": "Drei Pizzen haben vierundzwanzig Stücke.",
+  "text": "Drei Pizzen haben vierundzwanzig Stücke."
  },
  "cf8a2cbfd9d76aa8": {
   "lang": "de-DE",
@@ -2179,6 +2379,11 @@
   "spoken": "Rechteck: Gegenüber gleich lang, 4 rechte Winkel",
   "text": "Rechteck: Gegenüber gleich lang, 4 rechte Winkel"
  },
+ "d6f2550bf19e6984": {
+  "lang": "de-DE",
+  "spoken": "Vier Schichten übereinander: sechzig Würfel.",
+  "text": "Vier Schichten übereinander: sechzig Würfel."
+ },
  "d74377dcdc0aab44": {
   "lang": "de-DE",
   "spoken": "Würfle hundertmal und sieh, was passiert!",
@@ -2214,6 +2419,11 @@
   "spoken": "Die ganze Wand hat 15 Quadratmeter.",
   "text": "Die ganze Wand hat 15 Quadratmeter."
  },
+ "daf0f2f2bbe28ac9": {
+  "lang": "de-DE",
+  "spoken": "Im Alltag musst du entscheiden: Brauche ich den Umfang, die Fläche, die Oberfläche oder das Volumen?",
+  "text": "Im Alltag musst du entscheiden: Brauche ich den Umfang, die Fläche, die Oberfläche oder das Volumen?"
+ },
  "db7ec2a546c2a748": {
   "lang": "de-DE",
   "spoken": "Welche Zahl ist größer? Wir vergleichen Stelle für Stelle von links.",
@@ -2243,6 +2453,11 @@
   "lang": "de-DE",
   "spoken": "Wir klappen das Geschenk auf. Das ist das Netz.",
   "text": "Wir klappen das Geschenk auf. Das ist das Netz."
+ },
+ "df35692630e1b76d": {
+  "lang": "de-DE",
+  "spoken": "Für x setzen wir eins, zwei, drei, vier ein. Vier Kinder zahlen zweiunddreißig Euro.",
+  "text": "Für x setzen wir eins, zwei, drei, vier ein. Vier Kinder zahlen zweiunddreißig Euro."
  },
  "df5b68f6a62a5d6f": {
   "lang": "de-DE",
@@ -2324,10 +2539,20 @@
   "spoken": "Zwei V sind ein X, zwei L ein C, zwei D ein M.",
   "text": "Zwei V sind ein X, zwei L ein C, zwei D ein M."
  },
+ "e3589a6bb1a56b4f": {
+  "lang": "de-DE",
+  "spoken": "Erst zwei mal drei, dann zwanzig minus sechs. Eine Differenz.",
+  "text": "Erst zwei mal drei, dann zwanzig minus sechs. Eine Differenz."
+ },
  "e4450c5b688e81fa": {
   "lang": "de-DE",
   "spoken": "Welcher Weg von P zur Geraden g ist am kürzesten? Der senkrechte! Diese Strecke heißt Lot.",
   "text": "Welcher Weg von P zur Geraden g ist am kürzesten? Der senkrechte! Diese Strecke heißt Lot."
+ },
+ "e468a971a02d53d0": {
+  "lang": "de-DE",
+  "spoken": "Ein Wettkampfbecken fasst zweieinhalb Millionen Liter Wasser!",
+  "text": "Ein Wettkampfbecken fasst zweieinhalb Millionen Liter Wasser!"
  },
  "e544fdbae5c3e678": {
   "lang": "de-DE",
@@ -2343,6 +2568,11 @@
   "lang": "de-DE",
   "spoken": "Die lange Kante ist ein Lineal mit Zentimetern – von der Mitte aus nach links und rechts.",
   "text": "Die lange Kante ist ein Lineal mit Zentimetern – von der Mitte aus nach links und rechts."
+ },
+ "e68d7e323efd1215": {
+  "lang": "de-DE",
+  "spoken": "Hier zuerst die Klammer, dann mal drei. Das Ergebnis ist ein Produkt.",
+  "text": "Hier zuerst die Klammer, dann mal drei. Das Ergebnis ist ein Produkt."
  },
  "e6cdbbc314520b55": {
   "lang": "de-DE",
@@ -2414,6 +2644,11 @@
   "spoken": "Los geht's! Zähl mit: Wie weit läuft die Ameise?",
   "text": "Los geht's! Zähl mit: Wie weit läuft die Ameise?"
  },
+ "eef2b7706634008c": {
+  "lang": "de-DE",
+  "spoken": "Das Kreisverkehr-Schild und ein Fliesenmuster.",
+  "text": "Das Kreisverkehr-Schild und ein Fliesenmuster."
+ },
  "ef785b55d3d43ff6": {
   "lang": "de-DE",
   "spoken": "Ein Zimmer mit einem Erker. Wie viel Teppich brauchen wir?",
@@ -2449,6 +2684,16 @@
   "spoken": "Gegenüberliegende Seiten ergeben zusammen sieben.",
   "text": "Gegenüberliegende Seiten ergeben zusammen sieben."
  },
+ "f57d8e6e7a58cc15": {
+  "lang": "de-DE",
+  "spoken": "Sieben plus vier mal fünf: Punkt vor Strich. Erst vier mal fünf, dann plus sieben.",
+  "text": "Sieben plus vier mal fünf: Punkt vor Strich. Erst vier mal fünf, dann plus sieben."
+ },
+ "f5ea5cf6ab90c737": {
+  "lang": "de-DE",
+  "spoken": "Wir drehen das Parallelogramm um den Punkt Z – eine halbe Drehung.",
+  "text": "Wir drehen das Parallelogramm um den Punkt Z – eine halbe Drehung."
+ },
  "f7444b845b86799c": {
   "lang": "de-DE",
   "spoken": "Drei Viertel des Schulwegs.",
@@ -2468,6 +2713,11 @@
   "lang": "de-DE",
   "spoken": "Mia hat die meisten Stimmen.",
   "text": "Mia hat die meisten Stimmen."
+ },
+ "f88f563adb72f213": {
+  "lang": "de-DE",
+  "spoken": "Aus einem Satz wird ein Term: Wir suchen die Wörter, die eine Rechnung verraten.",
+  "text": "Aus einem Satz wird ein Term: Wir suchen die Wörter, die eine Rechnung verraten."
  },
  "f8bbf5e2b852291d": {
   "lang": "de-DE",
@@ -2543,6 +2793,11 @@
   "lang": "de-DE",
   "spoken": "Von null bis hunderttausend. Jetzt sieht man drei Stadien.",
   "text": "Von null bis hunderttausend. Jetzt sieht man drei Stadien."
+ },
+ "feff4d0ff9653696": {
+  "lang": "de-DE",
+  "spoken": "Der Rauminhalt heißt auch Volumen.",
+  "text": "Der Rauminhalt heißt auch Volumen."
  },
  "ff2b6f0586bdec7c": {
   "lang": "de-DE",

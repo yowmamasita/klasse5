@@ -771,6 +771,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:00_4218_Residential_houseboats_-_Netherlands.jpg",
   "orig": "File:00 4218 Residential houseboats - Netherlands.jpg"
  },
+ "herakles-mosaik": {
+  "file": "herakles-mosaik.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 638,
+  "title": "Herakles kämpft mit dem Nemeischen Löwen (römisches Mosaik)",
+  "author": "Luis García (Zaqarbal), 12 March 2006.",
+  "license": "CC BY-SA 3.0",
+  "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Mosaico_Trabajos_H%C3%A9rcules_(M.A.N._Madrid)_01.jpg",
+  "orig": "File:Mosaico Trabajos Hércules (M.A.N. Madrid) 01.jpg"
+ },
  "horse-gallop": {
   "file": "horse-gallop.mp3",
   "kind": "snd",
@@ -863,6 +875,18 @@
   "source": "https://freesound.org/people/fthgurdy/sounds/528183/",
   "orig": "528183"
  },
+ "ikarus-bruegel": {
+  "file": "ikarus-bruegel.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 642,
+  "title": "Landschaft mit dem Sturz des Ikarus (Gemälde nach Pieter Bruegel d. Ä.)",
+  "author": "Pieter Brueghel the Elder",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_Landscape_with_the_Fall_of_Icarus_-_WGA03321.jpg",
+  "orig": "File:Pieter Bruegel the Elder - Landscape with the Fall of Icarus - WGA03321.jpg"
+ },
  "kachelofen": {
   "file": "kachelofen.jpg",
   "kind": "img",
@@ -874,6 +898,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Nabburg_Neusath_Freilandmuseum_Kachelofen-20190823-RM-124443.jpg",
   "orig": "File:Nabburg Neusath Freilandmuseum Kachelofen-20190823-RM-124443.jpg"
+ },
+ "kampehl-kirche": {
+  "file": "kampehl-kirche.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Dorfkirche Kampehl mit der Gruft des Ritters Kahlbutz",
+  "author": "Hans G. Oberlack",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Dorfkirche_Kampehl_2024_Gruft.jpg",
+  "orig": "File:Dorfkirche Kampehl 2024 Gruft.jpg"
  },
  "kanzleramt": {
   "file": "kanzleramt.jpg",
@@ -990,6 +1026,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Lion_raring-sound1TamilNadu178.ogg",
   "orig": "File:Lion raring-sound1TamilNadu178.ogg"
+ },
+ "litfasssaeule": {
+  "file": "litfasssaeule.jpg",
+  "kind": "img",
+  "w": 426,
+  "h": 700,
+  "title": "Litfaßsäule mit Plakaten",
+  "author": "Palauenc05",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Hamburg_Litfasss%C3%A4ule_Spielbudenplatz-Reeperbahn.jpg",
+  "orig": "File:Hamburg Litfasssäule Spielbudenplatz-Reeperbahn.jpg"
  },
  "maedchen-liest": {
   "file": "maedchen-liest.jpg",
@@ -1176,6 +1224,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Berlin-Reichstag-Plenarsaal_des_Bundestags-04-2022-gje.jpg",
   "orig": "File:Berlin-Reichstag-Plenarsaal des Bundestags-04-2022-gje.jpg"
+ },
+ "polyphem-boecklin": {
+  "file": "polyphem-boecklin.jpg",
+  "kind": "img",
+  "w": 1100,
+  "h": 476,
+  "title": "Arnold Böcklin: Odysseus und Polyphem (1896)",
+  "author": "Arnold Böcklin",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:B%C3%B6cklin_-_Odysseus_und_Polyphem_(Odysseus_and_Polyphemus),_1896,_lot.8.jpg",
+  "orig": "File:Böcklin - Odysseus und Polyphem (Odysseus and Polyphemus), 1896, lot.8.jpg"
  },
  "raven": {
   "file": "raven.mp3",

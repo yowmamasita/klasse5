@@ -637,7 +637,7 @@
     home.appendChild(h("div", { class: "top" },
       h("div", null, h("h1", { class: "title a-left" }, (Deck.meta.subject || "Mathe") + " ", h("em", null, "Klasse 5")), h("p", { class: "sub a-left", style: { "--d": "120ms" } }, Deck.meta.sub || "")),
       tools));
-    const grid = h("div", { class: Deck.units.length > 8 ? "units many" : "units" });
+    const grid = h("div", { class: Deck.units.length > 9 ? "units many ten" : Deck.units.length > 8 ? "units many" : "units" });
     Deck.units.forEach((u, i) => {
       const total = slidesOf(u).length, done = Math.min(seen[u.id] || 0, total);
       const card = h("button", { class: "ucard a-up", style: { "--uc": u.color, "--d": 80 * i + "ms" }, onclick: () => { Sfx.unlock(); Sfx.whoosh(); go(i, 0, 1); } },

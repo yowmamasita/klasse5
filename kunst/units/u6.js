@@ -1,4 +1,5 @@
-/* Kapitel 6 – Collage, Komposition und Bauen (Kunst 5/6, Berlin RLP; Albrecht-Dürer-Gymnasium) */
+/* Kapitel 6 – Collage, Komposition und Bauen (Kunst 5/6, Berlin RLP; Albrecht-Dürer-Gymnasium)
+   Komposition, Collage, Plastik/Skulptur, Ton, Relief, Pappmodell, Architektur (Grundformen, Form folgt Funktion, Grundriss/Ansicht) */
 (() => {
   const UC = "#2f7d32";
   const RAD = Math.PI / 180;
@@ -35,12 +36,12 @@
   Deck.unit({
     id: "u6", num: 6, title: "Collage, Komposition und Bauen", color: UC, soft: "#e3f2e4",
     subtitle: "Dinge anordnen, kleben und bauen",
-    blurb: "Drittelregel, Goldener Schnitt, Collage, Plastik und Relief",
+    blurb: "Drittelregel, Collage, Plastik, Relief und Architektur",
     goals: [
       "Ein Bild gut aufbauen: Drittelregel, Gleichgewicht, Tiefe",
       "Collagen kennen – von Braque und Picasso bis Schwitters",
       "Additiv und subtraktiv bauen, mit Ton modellieren",
-      "Ein Relief und ein Pappmodell planen",
+      "Ein Relief, ein Pappmodell und ein Haus planen: Grundriss und Ansicht",
     ],
     icon(svg, el) {
       svg.append(el("rect", { x: 10, y: 12, width: 50, height: 46, rx: 4, fill: UC, opacity: .15 }),
@@ -793,6 +794,125 @@
           s.step(async () => { s.sfx.pop(); await s.show(tabs, "pop"); s.say("Die gelben Laschen bekommen Kleber."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(stage, "up"); s.show([slW, tip], "pop"); await s.tween({ from: 0, to: 100, dur: 2600, ease: "inOut", update: v => sl.set(Math.round(v)) }); s.sfx.success(); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+        },
+      },
+      /* 15b – Architektur ------------------------------------------------- */
+      {
+        title: "Grundformen in Bauwerken",
+        say: "Auch große Bauwerke bestehen aus einfachen Grundformen: Säule, Bogen, Kuppel und Kugel. Alle vier findest du in Berlin.",
+        build(s) {
+          const ST = { fill: "none", stroke: UC, "stroke-width": 5, "stroke-linejoin": "round", "stroke-linecap": "round" };
+          const forms = {
+            saeule: "M40,74 H196 M48,74 V66 H188 V74 M60,66 V22 M84,66 V22 M108,66 V22 M128,66 V22 M152,66 V22 M176,66 V22 M48,22 H188 V12 H48 Z",
+            bogen: "M30,74 V34 M206,74 V34 M30,34 H206 M30,74 H64 V58 A22,22 0 0 1 108,58 V74 H128 V58 A22,22 0 0 1 172,58 V74 H206",
+            kuppel: "M50,74 V48 H186 V74 Z M62,48 A56,40 0 0 1 174,48 M118,8 V0",
+            kugel: "M108,74 L112,48 L124,48 L128,74 M118,48 V40 M118,4 A18,18 0 1 1 117.9,4 Z",
+          };
+          const card = (key, id, pos, cap, html) => {
+            const v = s.svg(236, 80); const p = s.el("path", Object.assign({ d: forms[key], class: "later" }, ST)); v.append(p);
+            const c = s.h("div", { class: "card later", style: { padding: "10px", display: "flex", flexDirection: "column", gap: "8px", alignItems: "center" } },
+              v, s.photo(id, { w: 236, h: 178, pos, caption: cap }), P(s, html, "small"));
+            c.path = p; return c;
+          };
+          const c1 = card("saeule", "brandenburger-tor", "50% 45%", "Säule", "<b>Brandenburger Tor</b> (1788–1791): 12 Säulen tragen das Dach. Säulen leiten das Gewicht <b>nach unten</b>.");
+          const c2 = card("bogen", "oberbaumbruecke", "45% 60%", "Bogen", "<b>Oberbaumbrücke</b> (1896): Sieben Bögen tragen die Brücke über die Spree. Ein Bogen lenkt die Last <b>zu den Seiten</b>.");
+          const c3 = card("kuppel", "reichstag-kuppel", "50% 40%", "Kuppel", "<b>Reichstag</b>: Die Glaskuppel (1999) ist rund 40 m breit. Eine Kuppel ist ein Dach wie eine <b>halbe Kugel</b>.");
+          const c4 = card("kugel", "fernsehturm-unten", "50% 6%", "Kugel", "<b>Fernsehturm</b> (1969): 368 m hoch. Oben sitzt eine <b>Kugel</b> mit 32 m Durchmesser.");
+          const m = merk(s, "Bauwerke bestehen aus <b>Grundformen</b>: Säule (Zylinder), Bogen, Kuppel (Halbkugel), Kugel und Quader. Such sie auf deinem Schulweg!");
+          s.add(stack(s, 14, s.h("div", { style: { display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "14px" } }, c1, c2, c3, c4), m));
+          const snd = [() => s.sound("footsteps", { vol: .5, dur: 1.5 }), () => s.sound("waves", { vol: .4, dur: 2.5 }), () => s.sfx.chord([0, 4, 7, 12]), () => s.sfx.zap()];
+          [c1, c2, c3, c4].forEach((c, i) => s.step(async () => { snd[i](); await s.show(c, "up"); await s.show(c.path, "draw"); }));
+          s.step(async () => { s.sfx.success(); await s.show(m, "up"); s.say("Säule, Bogen, Kuppel, Kugel: Such sie auf deinem Schulweg."); });
+        },
+      },
+      /* 15c -------------------------------------------------------------- */
+      {
+        title: "Form folgt Funktion",
+        say: "Ein Haus soll nicht nur schön sein. Es soll gut funktionieren. Am Bauhaus hat man genau so gedacht: Erst die Aufgabe, dann die Form.",
+        build(s) {
+          const pic = s.photo("bauhaus-dessau", { w: 470, h: 330, pos: "50% 55%", caption: "Bauhaus Dessau (1925–1926)", kb: true });
+          const tl = s.svg(470, 130);
+          const pts = [[40, "Weimar", "1919"], [175, "Dessau", "1925"], [310, "Berlin", "1932"], [430, "Ende", "1933"]];
+          const line = s.el("line", { x1: 40, y1: 66, x2: 430, y2: 66, stroke: UC, "stroke-width": 5, "stroke-linecap": "round", class: "later" });
+          tl.append(line);
+          const marks = pts.map(([x, city, yr], i) => s.el("g", { class: "later" }, s.el("circle", { cx: x, cy: 66, r: 12, fill: i === 3 ? "#8b95a5" : UC, stroke: "#fff", "stroke-width": 3 }),
+            lbl(s, x, 38, city), s.el("text", { x, y: 108, "text-anchor": "middle", "font-size": 24, "font-weight": 800, fill: INK, text: yr })));
+          tl.append(...marks);
+          const m = merk(s, "<b>Form folgt Funktion:</b> Erst überlegen, <b>wozu</b> etwas dient. Daraus ergibt sich die Form.", false);
+          const e1 = box(s, "ex", "Wer sagte das?", "Der Architekt <b>Louis Sullivan</b> aus den USA schrieb 1896: „form follows function“. Er baute frühe Hochhäuser.");
+          const e2 = box(s, "ex", "Das Bauhaus", "<b>Walter Gropius</b> gründete 1919 in Weimar die Kunstschule <b>Bauhaus</b>. In Dessau baute er ihr Haus mit einer riesigen <b>Glaswand</b>: viel Licht für die Werkstätten.");
+          const life = box(s, "life", "Im Alltag", "Bahnhof: lange Halle für lange Züge. Turnhalle: hohe Decke für hohe Bälle. Tasse: ein Henkel, damit du dich nicht verbrennst.");
+          s.add(cols(s, stack(s, 8, pic, tl), stack(s, 12, m, e1, e2, life), 470));
+          s.show(pic, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sfx.scribble(); await s.show(e1, "up"); s.say("Der Satz stammt von Louis Sullivan, achtzehnhundertsechsundneunzig."); });
+          s.step(async () => {
+            s.sfx.whoosh(); await s.show(line, "draw");
+            for (let i = 0; i < marks.length; i++) { s.sfx.note([0, 4, 7, -5][i], .2); await s.show(marks[i], "pop"); }
+            s.show(e2, "up"); s.say("Das Bauhaus zog von Weimar nach Dessau und dann nach Berlin. 1933 musste es schließen.");
+          });
+          s.step(async () => { s.sound("ubahn-train", { vol: .45, dur: 3 }); await s.show(life, "up"); s.say("Ein Bahnhof braucht eine lange Halle, weil die Züge lang sind."); });
+        },
+      },
+      /* 15d -------------------------------------------------------------- */
+      {
+        title: "Traumhaus: Grundriss, Ansicht",
+        say: "Architekten zeichnen ein Haus von vorn und von oben. Von vorn heißt das Ansicht. Von oben heißt das Grundriss.",
+        build(s) {
+          const WALL = "#5b6474", HI = "#ffd94a";
+          /* front view */
+          const av = s.svg(500, 290);
+          const roof = s.el("g", {}, s.el("polygon", { points: "60,130 250,24 440,130", fill: "#c0392b", stroke: "#8e2a20", "stroke-width": 5, "stroke-linejoin": "round" }));
+          const aOutline = s.el("path", { d: "M80,276 V130 H420 V276", fill: "none", stroke: WALL, "stroke-width": 5, class: "later" });
+          const wallF = s.el("rect", { x: 80, y: 130, width: 340, height: 146, fill: "#f4e3b0" });
+          const fEl = {
+            wohn: s.el("rect", { x: 110, y: 165, width: 60, height: 60, fill: "#cfeaf7", stroke: WALL, "stroke-width": 4 }),
+            flur: s.el("rect", { x: 225, y: 190, width: 50, height: 86, fill: "#7a4a22", stroke: WALL, "stroke-width": 4 }),
+            kueche: s.el("rect", { x: 330, y: 165, width: 60, height: 60, fill: "#cfeaf7", stroke: WALL, "stroke-width": 4 }),
+          };
+          const fG = s.el("g", { class: "later" }, ...Object.values(fEl), s.el("line", { x1: 140, y1: 165, x2: 140, y2: 225, stroke: WALL, "stroke-width": 3 }), s.el("line", { x1: 360, y1: 165, x2: 360, y2: 225, stroke: WALL, "stroke-width": 3 }));
+          av.append(s.el("line", { x1: 20, y1: 278, x2: 480, y2: 278, stroke: "#4a9d4a", "stroke-width": 6, "stroke-linecap": "round" }), wallF, roof, aOutline, fG);
+          /* plan view (same x positions as the front view) */
+          const gv = s.svg(500, 290);
+          const rooms = {
+            kind: { x: 80, y: 14, w: 180, h: 126, n: "Kinderzimmer" }, bad: { x: 260, y: 14, w: 160, h: 126, n: "Bad" },
+            wohn: { x: 80, y: 140, w: 125, h: 136, n: "Wohnen" }, flur: { x: 205, y: 140, w: 90, h: 136, n: "Flur" }, kueche: { x: 295, y: 140, w: 125, h: 136, n: "Küche" },
+          };
+          const rEl = {};
+          const rG = s.el("g", { class: "later" });
+          Object.entries(rooms).forEach(([k, r]) => {
+            const rect = s.el("rect", { x: r.x, y: r.y, width: r.w, height: r.h, fill: "#fbfaf4", stroke: WALL, "stroke-width": 4, style: { cursor: "pointer" } });
+            const t = s.el("text", { x: r.x + r.w / 2, y: r.y + r.h / 2 + 7, "text-anchor": "middle", class: "lbl", text: r.n, style: { pointerEvents: "none" } });
+            rect.addEventListener("pointerdown", () => pick(k));
+            rEl[k] = rect; rG.append(rect, t);
+          });
+          /* windows and door in the front wall (bottom edge = front) */
+          const openings = s.el("g", { class: "later" },
+            ...[110, 330].map(x => s.el("g", {}, s.el("rect", { x, y: 270, width: 60, height: 12, fill: "#cfeaf7", stroke: WALL, "stroke-width": 2 }))),
+            s.el("rect", { x: 225, y: 270, width: 50, height: 12, fill: "#fff" }), s.el("path", { d: "M225,276 A50,50 0 0 1 275,226 L275,276", fill: "none", stroke: WALL, "stroke-width": 3, "stroke-dasharray": "6 5" }));
+          gv.append(rG, openings);
+          const panel = (title, v, cls = "") => s.h("div", { class: "card" + cls, style: { padding: "8px 10px", display: "flex", flexDirection: "column", alignItems: "center", gap: "2px" } }, P(s, title, "t"), v);
+          const pA = panel("<b>Ansicht</b> – von vorn", av), pG = panel("<b>Grundriss</b> – von oben", gv, " later");
+          const status = s.h("p", { class: "t later", style: { minHeight: "34px", textAlign: "center" }, html: "Tippe im Grundriss auf ein Zimmer." });
+          const m = merk(s, "<b>Grundriss</b> = von oben, als ob das Dach weg wäre. <b>Ansicht</b> = von vorn oder von der Seite. Danach baust du dein <b>Modell</b>.");
+          const life = box(s, "life", "Im Alltag", "Der <b>Fluchtplan</b> an der Tür deines Klassenzimmers ist ein Grundriss. Wohnungsanzeigen zeigen auch Grundrisse.");
+          s.add(stack(s, 10, s.h("div", { class: "cols" }, pA, pG), status, s.h("div", { class: "cols", style: { alignItems: "start" } }, m, life)));
+          let cur = null;
+          const pick = k => {
+            if (cur) { rEl[cur].setAttribute("fill", "#fbfaf4"); if (fEl[cur]) fEl[cur].setAttribute("stroke", WALL); }
+            cur = k; rEl[k].setAttribute("fill", HI);
+            if (fEl[k]) { fEl[k].setAttribute("stroke", UC); s.sfx.ding(); status.innerHTML = { wohn: "Das <b>Wohnzimmer</b> hat sein Fenster vorn – in der Ansicht grün umrandet.", flur: "Der <b>Flur</b> hat vorn die Haustür – in der Ansicht grün umrandet.", kueche: "Die <b>Küche</b> hat ihr Fenster vorn – in der Ansicht grün umrandet." }[k]; }
+            else { s.sfx.boing(); status.innerHTML = `<b>${rooms[k].n}</b> liegt hinten. Von vorn kannst du es nicht sehen!`; }
+          };
+          s.show(pA, "zoom"); s.sfx.pop();
+          s.step(async () => { s.sfx.scribble(); await s.show(aOutline, "draw"); s.sfx.pop(); await s.show(fG, "pop"); s.say("Die Ansicht: So sieht das Haus von vorn aus."); });
+          s.step(async () => {
+            s.say("Jetzt nehmen wir in Gedanken das Dach ab und schauen von oben hinein."); s.sfx.whoosh();
+            await s.tween({ from: 0, to: 1, dur: 700, ease: "inOut", update: t => { roof.setAttribute("transform", `translate(0,${-60 * t})`); roof.setAttribute("opacity", 1 - t); } });
+            await s.show(pG, "up"); s.sound("pencil-write", { vol: .5, dur: 1.5 }); await s.show(rG, "pop"); await s.show(openings, "fade");
+            await s.tween({ from: 1, to: 0, dur: 600, ease: "out", update: t => { roof.setAttribute("transform", `translate(0,${-60 * t})`); roof.setAttribute("opacity", 1 - t); } });
+          });
+          s.step(async () => { await s.show(status, "up"); pick("wohn"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.show(life, "up", 200); });
         },
       },
       /* 16 --------------------------------------------------------------- */
