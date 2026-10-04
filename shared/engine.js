@@ -118,9 +118,20 @@
     return { add, get, load, play, credit, all: () => Object.values(reg) };
   })();
 
-  /* ---------------- voice: German speech synthesis ---------------- */
+  /* ---------------- voice: read-aloud ----------------
+     Pre-recorded clips (Gemini TTS, made by tools/voice.py) live in <deck>/voice/ and are registered by
+     <deck>/voice/index.js via Deck.voiceClips(base, {key: file}). The key is a hash of language + text, so any
+     text without a clip (e.g. computed at runtime) falls back to the browser's speech synthesis. */
   const Voice = {
-    on: false,
+    on: false, clips: {}, bufs: {}, cur: null, seq: 0,
+    key(text, lang = "de-DE") {
+      const str = lang.slice(0, 2).toLowerCase() + "|" + String(text).trim();
+      let h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+      for (let i = 0; i < str.length; i++) { const c = str.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
+      h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+      h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+      return (h2 >>> 0).toString(16).padStart(8, "0") + (h1 >>> 0).toString(16).padStart(8, "0");
+    },
     voice(lang = "de") {
       if (!window.speechSynthesis) return null;
       const want = lang.slice(0, 2).toLowerCase();
@@ -129,22 +140,50 @@
       const pool = exact.length ? exact : vs;
       return pool.find(v => /Anna|Petra|Helena|Daniel|Serena|Kate|Google/i.test(v.name)) || pool[0] || null;
     },
-    speak(text, { lang = "de-DE", rate = 0.95, pitch = 1.05 } = {}) {
-      if (!text || !window.speechSynthesis || Deck.fast) return;
-      speechSynthesis.cancel();
+    /** the text as it should be pronounced (Mathe: "·" → "mal", ":" → "geteilt durch") */
+    spoken(text, lang = "de-DE") {
       let t = String(text);
       const isMath = !Deck.meta || !Deck.meta.subject || Deck.meta.subject === "Mathe";
-      if (isMath && lang.startsWith("de")) t = t.replace(/·/g, " mal ").replace(/:/g, " geteilt durch ");
-      const u = new SpeechSynthesisUtterance(t);
+      if (isMath && lang.startsWith("de")) t = t.replace(/([\d)²³])\s*·\s*(?=[\d(a-z])/g, "$1 mal ").replace(/(\d)\s+:\s+(?=\d)/g, "$1 geteilt durch ");
+      return t;
+    },
+    speak(text, { lang = "de-DE", rate = 0.95, pitch = 1.05 } = {}) {
+      if (Deck.voiceLog && text) Deck.voiceLog.push([lang, String(text)]);
+      if (!text || Deck.fast) return;
+      this.stop();
+      const file = this.clips[this.key(text, lang)];
+      if (file && this.playClip(file)) return;
+      if (!window.speechSynthesis) return;
+      const u = new SpeechSynthesisUtterance(this.spoken(text, lang));
       u.lang = lang; u.rate = rate; u.pitch = pitch;
       const v = this.voice(lang); if (v) u.voice = v;
       speechSynthesis.speak(u);
     },
+    playClip(file) {
+      const a = Sfx.unlock(); if (!a) return false;
+      const my = ++this.seq;
+      if (!this.bufs[file]) this.bufs[file] = fetch(file).then(r => { if (!r.ok) throw new Error("voice: " + r.status + " " + file); return r.arrayBuffer(); })
+        .then(ab => new Promise((res, rej) => a.decodeAudioData(ab, res, rej)))
+        .catch(err => { console.error(String(err)); delete this.bufs[file]; return null; });
+      this.bufs[file].then(buf => {
+        if (!buf || my !== this.seq) return;
+        const src = a.createBufferSource(); src.buffer = buf;
+        const g = a.createGain(); g.gain.value = 1; src.connect(g); g.connect(a.destination);
+        src.start(); this.cur = src;
+        src.onended = () => { if (this.cur === src) this.cur = null; };
+      });
+      return true;
+    },
     say(text, force = false) {
+      if (Deck.voiceLog && text) Deck.voiceLog.push(["de-DE", String(text)]);
       if ((!this.on && !force) || !text) return;
       this.speak(text);
     },
-    stop() { try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {} },
+    stop() {
+      this.seq++;
+      if (this.cur) { try { this.cur.stop(); } catch (e) {} this.cur = null; }
+      try { window.speechSynthesis && speechSynthesis.cancel(); } catch (e) {}
+    },
   };
   if (window.speechSynthesis) speechSynthesis.onvoiceschanged = () => {};
 
@@ -251,7 +290,7 @@
     home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>',
     sound: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 010 6M18.5 6.5a8 8 0 010 11"/></svg>',
     mute: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>',
-    voice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a3 3 0 013 3v6a3 3 0 01-6 0V6a3 3 0 013-3z"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg>',
+    voice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.6"/><path d="M2.5 21a6.5 6.5 0 0113 0"/><path d="M16.5 5.5a4 4 0 010 5"/><path d="M19.5 3a8 8 0 010 10"/></svg>',
     replay: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.4 2.6L3 8"/><path d="M3 3v5h5"/></svg>',
     full: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
     play: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 010 6M18.5 6.5a8 8 0 010 11"/></svg>',
@@ -272,6 +311,9 @@
     units: [], meta: {}, fast: false, Sfx, Voice, ease, lerp, fmt, h, svgEl, toStage, localPoint, confetti, W, H,
     unit(def) { this.units.push(def); this.units.sort((a, b) => a.num - b.num); },
     media(base, map) { Media.add(base, map); },
+    voiceClips(base, map) { for (const [k, f] of Object.entries(map)) Voice.clips[k] = base + f; },
+    voiceKey: (text, lang) => Voice.key(text, lang),
+    voiceSpoken: (text, lang) => Voice.spoken(text, lang),
     Media,
   });
 
@@ -607,7 +649,7 @@
       grid.appendChild(card);
     });
     home.appendChild(grid);
-    home.appendChild(h("p", { class: "hint" }, "Tippe auf ein Kapitel. „Weiter“ zeigt den nächsten Schritt. Wischen geht auch. Mikrofon-Knopf = Vorlesen."));
+    home.appendChild(h("p", { class: "hint" }, "Tippe auf ein Kapitel. „Weiter“ zeigt den nächsten Schritt. Wischen geht auch. Knopf mit dem sprechenden Kopf = Vorlesen."));
     stage.appendChild(home);
     confettiCanvas = h("canvas", { id: "confetti", width: W, height: H });
     stage.appendChild(confettiCanvas);
