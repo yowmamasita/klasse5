@@ -19,10 +19,25 @@
   "spoken": "Wir teilen die Strecke von null bis eins in gleiche Teile und hüpfen Stück für Stück weiter.",
   "text": "Wir teilen die Strecke von null bis eins in gleiche Teile und hüpfen Stück für Stück weiter."
  },
+ "01c33105330564b8": {
+  "lang": "de-DE",
+  "spoken": "Sechs Personen: Faktor eins Komma fünf. Dreihundertfünfundsiebzig Gramm Mehl, drei Viertel Liter Milch und viereinhalb Eier.",
+  "text": "Sechs Personen: Faktor eins Komma fünf. Dreihundertfünfundsiebzig Gramm Mehl, drei Viertel Liter Milch und viereinhalb Eier."
+ },
+ "02564da4fb8823d6": {
+  "lang": "de-DE",
+  "spoken": "Wir drücken von der Seite. Das Viereck kippt um, das Dreieck bleibt stabil.",
+  "text": "Wir drücken von der Seite. Das Viereck kippt um, das Dreieck bleibt stabil."
+ },
  "0279b93fbb40566d": {
   "lang": "de-DE",
   "spoken": "Mit einer Strichliste zählen wir die Urliste aus. Für jede Antwort ein Strich.",
   "text": "Mit einer Strichliste zählen wir die Urliste aus. Für jede Antwort ein Strich."
+ },
+ "02f7021107cf8ce0": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 3. Geraden und Winkel. Linien, Geodreieck, Winkel und Dreiecke",
+  "text": "Kapitel 3. Geraden und Winkel. Linien, Geodreieck, Winkel und Dreiecke"
  },
  "0352f64174e5878d": {
   "lang": "de-DE",
@@ -74,25 +89,65 @@
   "spoken": "Der Radius dreht sich einmal herum und zeichnet den Kreis.",
   "text": "Der Radius dreht sich einmal herum und zeichnet den Kreis."
  },
+ "05afe028fe9ce53f": {
+  "lang": "de-DE",
+  "spoken": "Im Winter wird es in Berlin oft kälter als null Grad. Dann brauchen wir Zahlen unter null: negative Zahlen.",
+  "text": "Im Winter wird es in Berlin oft kälter als null Grad. Dann brauchen wir Zahlen unter null: negative Zahlen."
+ },
+ "06036bd1f713f133": {
+  "lang": "de-DE",
+  "spoken": "Zwei Personen: Faktor ein Halb. Alles halbieren.",
+  "text": "Zwei Personen: Faktor ein Halb. Alles halbieren."
+ },
  "061f1d9b418eb334": {
   "lang": "de-DE",
   "spoken": "Bei 3475 entscheidet nur die 5 am Ende.",
   "text": "Bei 3475 entscheidet nur die 5 am Ende."
+ },
+ "063bad1cf983161d": {
+  "lang": "de-DE",
+  "spoken": "Sieben geteilt durch drei ist zwei, Rest eins.",
+  "text": "Sieben geteilt durch drei ist zwei, Rest eins."
+ },
+ "069347d18de8f7b0": {
+  "lang": "de-DE",
+  "spoken": "Noch einmal mal hundert: zwei Stellen nach links.",
+  "text": "Noch einmal mal hundert: zwei Stellen nach links."
+ },
+ "06dfba061a748c2c": {
+  "lang": "de-DE",
+  "spoken": "Zweiunddreißig Komma fünf mal eins Komma achtzig sind achtundfünfzig Euro fünfzig.",
+  "text": "Zweiunddreißig Komma fünf mal eins Komma achtzig sind achtundfünfzig Euro fünfzig."
  },
  "0721ea67d192c62a": {
   "lang": "de-DE",
   "spoken": "Acht geteilt durch vier ist zwei. Kein Rest – fertig!",
   "text": "Acht geteilt durch vier ist zwei. Kein Rest – fertig!"
  },
+ "07ac681c63270121": {
+  "lang": "de-DE",
+  "spoken": "Ein Heft kostet ein Drittel: vier Euro fünfzig geteilt durch drei sind ein Euro fünfzig.",
+  "text": "Ein Heft kostet ein Drittel: vier Euro fünfzig geteilt durch drei sind ein Euro fünfzig."
+ },
  "08001a61122c84ef": {
   "lang": "de-DE",
   "spoken": "Eine Variable ist ein Platzhalter für eine Zahl. Setzt du eine Zahl ein, kannst du den Term ausrechnen.",
   "text": "Eine Variable ist ein Platzhalter für eine Zahl. Setzt du eine Zahl ein, kannst du den Term ausrechnen."
  },
+ "090fba8bcd5d331c": {
+  "lang": "de-DE",
+  "spoken": "Zweihundert Gramm Käse: null Komma zwei mal achtzehn Euro sind drei Euro sechzig.",
+  "text": "Zweihundert Gramm Käse: null Komma zwei mal achtzehn Euro sind drei Euro sechzig."
+ },
  "0936c6495ba2a842": {
   "lang": "de-DE",
   "spoken": "Immer zwei Flächen sind gleich groß.",
   "text": "Immer zwei Flächen sind gleich groß."
+ },
+ "09d41b029c7b9bdd": {
+  "lang": "de-DE",
+  "spoken": "Sieben Hefte kosten siebenmal so viel: zehn Euro fünfzig.",
+  "text": "Sieben Hefte kosten siebenmal so viel: zehn Euro fünfzig."
  },
  "09fb7919d537b6f6": {
   "lang": "de-DE",
@@ -114,6 +169,11 @@
   "spoken": "Runden brauchst du überall: bei Zeiten, Größen, Preisen und Temperaturen.",
   "text": "Runden brauchst du überall: bei Zeiten, Größen, Preisen und Temperaturen."
  },
+ "0aa9aea18849020d": {
+  "lang": "de-DE",
+  "spoken": "Man kann Dreiecke auch nach ihren Winkeln ordnen. Schieb die Ecke C und schau, wie sich die Winkel ändern.",
+  "text": "Man kann Dreiecke auch nach ihren Winkeln ordnen. Schieb die Ecke C und schau, wie sich die Winkel ändern."
+ },
  "0ac9d58bea80004f": {
   "lang": "de-DE",
   "spoken": "Drei Kinder bekommen je vier. Drei ist ein Teiler von zwölf.",
@@ -124,10 +184,20 @@
   "spoken": "Rechts sieht es aus, als hätte die 5a dreimal so viel verkauft!",
   "text": "Rechts sieht es aus, als hätte die 5a dreimal so viel verkauft!"
  },
+ "0b7447bc9a5ab485": {
+  "lang": "de-DE",
+  "spoken": "Bruch mal Bruch: Zähler mal Zähler, Nenner mal Nenner. Das Rechteck zeigt, warum.",
+  "text": "Bruch mal Bruch: Zähler mal Zähler, Nenner mal Nenner. Das Rechteck zeigt, warum."
+ },
  "0be6cbfccf3c2d1a": {
   "lang": "de-DE",
   "spoken": "Lege die Mittellinie des Geodreiecks genau auf g.",
   "text": "Lege die Mittellinie des Geodreiecks genau auf g."
+ },
+ "0db14ec5fb8edafb": {
+  "lang": "de-DE",
+  "spoken": "Nach hundert Würfen wird die Linie ruhiger.",
+  "text": "Nach hundert Würfen wird die Linie ruhiger."
  },
  "0dca8d8ea76ae55f": {
   "lang": "de-DE",
@@ -138,6 +208,11 @@
   "lang": "de-DE",
   "spoken": "Null, eins oder zwei Euro: Bei einer Ungleichung passen oft mehrere Zahlen.",
   "text": "Null, eins oder zwei Euro: Bei einer Ungleichung passen oft mehrere Zahlen."
+ },
+ "0e16e439fb5848b9": {
+  "lang": "de-DE",
+  "spoken": "Alle drei Seiten sind verschieden lang.",
+  "text": "Alle drei Seiten sind verschieden lang."
  },
  "0e2c15bca6a1e29f": {
   "lang": "de-DE",
@@ -179,15 +254,35 @@
   "spoken": "Vier geteilt durch vier ist eins. Dann wieder malnehmen, abziehen, runterholen.",
   "text": "Vier geteilt durch vier ist eins. Dann wieder malnehmen, abziehen, runterholen."
  },
+ "106d4dcc2d9706b7": {
+  "lang": "de-DE",
+  "spoken": "Zwei minus fünf: Von zwei gehen wir fünf Schritte nach links. Wir landen bei minus drei.",
+  "text": "Zwei minus fünf: Von zwei gehen wir fünf Schritte nach links. Wir landen bei minus drei."
+ },
  "111dac3b63fcbc65": {
   "lang": "de-DE",
   "spoken": "ein halber Liter Milch = 0,5 l",
   "text": "ein halber Liter Milch = 0,5 l"
  },
+ "1194fc97375e8d8a": {
+  "lang": "de-DE",
+  "spoken": "Davon null Komma vier: vier von zehn Zeilen.",
+  "text": "Davon null Komma vier: vier von zehn Zeilen."
+ },
  "1259a9046b0f1cc5": {
   "lang": "de-DE",
   "spoken": "Kapitel 9. Zahlsysteme und Quadratzahlen. Bündeln, römisch, binär, hoch zwei",
   "text": "Kapitel 9. Zahlsysteme und Quadratzahlen. Bündeln, römisch, binär, hoch zwei"
+ },
+ "1398645a127dcc5e": {
+  "lang": "de-DE",
+  "spoken": "Wie wahrscheinlich ist eine Sechs? Wir teilen die günstigen Ergebnisse durch alle möglichen Ergebnisse.",
+  "text": "Wie wahrscheinlich ist eine Sechs? Wir teilen die günstigen Ergebnisse durch alle möglichen Ergebnisse."
+ },
+ "13b0beab9807f968": {
+  "lang": "de-DE",
+  "spoken": "Dreimal vier Euro sind zwölf Euro. Die Tageskarte ist günstiger.",
+  "text": "Dreimal vier Euro sind zwölf Euro. Die Tageskarte ist günstiger."
  },
  "14254b99ba6ac632": {
   "lang": "de-DE",
@@ -239,10 +334,20 @@
   "spoken": "Ganz unten wohnt das Quadrat. Es hat alle Eigenschaften.",
   "text": "Ganz unten wohnt das Quadrat. Es hat alle Eigenschaften."
  },
+ "17d7cb0052603781": {
+  "lang": "de-DE",
+  "spoken": "Vierhundertvierzig Meter bis zum Meeresspiegel, dann achttausendachthundertneunundvierzig Meter hoch: neuntausendzweihundertneunundachtzig Meter!",
+  "text": "Vierhundertvierzig Meter bis zum Meeresspiegel, dann achttausendachthundertneunundvierzig Meter hoch: neuntausendzweihundertneunundachtzig Meter!"
+ },
  "184076169da91cfc": {
   "lang": "de-DE",
   "spoken": "Größen begegnen dir jeden Tag: auf dem Schulweg, im Ranzen und am Fernsehturm.",
   "text": "Größen begegnen dir jeden Tag: auf dem Schulweg, im Ranzen und am Fernsehturm."
+ },
+ "188d0ff90b4fcc18": {
+  "lang": "de-DE",
+  "spoken": "Im Aufzug siehst du oft negative Zahlen: minus eins ist der Keller, minus zwei liegt noch tiefer.",
+  "text": "Im Aufzug siehst du oft negative Zahlen: minus eins ist der Keller, minus zwei liegt noch tiefer."
  },
  "1a1568b12479f30f": {
   "lang": "de-DE",
@@ -254,6 +359,16 @@
   "spoken": "Nimm von den hohen Türmen und gib den niedrigen, bis alle gleich hoch sind.",
   "text": "Nimm von den hohen Türmen und gib den niedrigen, bis alle gleich hoch sind."
  },
+ "1ba062e5d90d2743": {
+  "lang": "de-DE",
+  "spoken": "Sechs Achtel Liter, gekürzt drei Viertel Liter.",
+  "text": "Sechs Achtel Liter, gekürzt drei Viertel Liter."
+ },
+ "1bc503b3e28fbc3a": {
+  "lang": "de-DE",
+  "spoken": "Im zweiten Quadranten ist x negativ und y positiv.",
+  "text": "Im zweiten Quadranten ist x negativ und y positiv."
+ },
  "1bda3292a38896bc": {
   "lang": "de-DE",
   "spoken": "Kölner Dom: 157 Meter.",
@@ -263,6 +378,16 @@
   "lang": "de-DE",
   "spoken": "Das Geodreieck ist Lineal, Winkelmesser und Helfer für Parallelen und Senkrechte – alles in einem.",
   "text": "Das Geodreieck ist Lineal, Winkelmesser und Helfer für Parallelen und Senkrechte – alles in einem."
+ },
+ "1c5c604a07c9565f": {
+  "lang": "de-DE",
+  "spoken": "In Kapitel zwei hatte das Koordinatensystem nur positive Zahlen. Jetzt verlängern wir die Achsen nach links und nach unten.",
+  "text": "In Kapitel zwei hatte das Koordinatensystem nur positive Zahlen. Jetzt verlängern wir die Achsen nach links und nach unten."
+ },
+ "1d2c4793a3d74d92": {
+  "lang": "de-DE",
+  "spoken": "So entstehen vier Viertel: die Quadranten eins bis vier.",
+  "text": "So entstehen vier Viertel: die Quadranten eins bis vier."
  },
  "1d664cfa24440d49": {
   "lang": "de-DE",
@@ -274,6 +399,16 @@
   "spoken": "Die Zahlen sind rechtsbündig geschrieben. Die Kommas stehen nicht untereinander!",
   "text": "Die Zahlen sind rechtsbündig geschrieben. Die Kommas stehen nicht untereinander!"
  },
+ "1dc047f6a9295bdf": {
+  "lang": "de-DE",
+  "spoken": "Minus zwei plus sechs ist vier. Du bist im vierten Stock.",
+  "text": "Minus zwei plus sechs ist vier. Du bist im vierten Stock."
+ },
+ "1e08e9b80dc0ac89": {
+  "lang": "de-DE",
+  "spoken": "Für eine Person: zweihundert Gramm geteilt durch vier sind fünfzig Gramm Mehl.",
+  "text": "Für eine Person: zweihundert Gramm geteilt durch vier sind fünfzig Gramm Mehl."
+ },
  "1e38c7cbd0b273d7": {
   "lang": "de-DE",
   "spoken": "Eine Gerade ist in beide Richtungen unendlich lang.",
@@ -283,6 +418,16 @@
   "lang": "de-DE",
   "spoken": "Zwei geteilt durch vier geht nicht – also eine Null ins Ergebnis. Dreihundertsechs Kilometer pro Tag.",
   "text": "Zwei geteilt durch vier geht nicht – also eine Null ins Ergebnis. Dreihundertsechs Kilometer pro Tag."
+ },
+ "1f06be498f7822c8": {
+  "lang": "de-DE",
+  "spoken": "Jetzt nach unten: am Erdgeschoss vorbei bis minus eins, in die Tiefgarage.",
+  "text": "Jetzt nach unten: am Erdgeschoss vorbei bis minus eins, in die Tiefgarage."
+ },
+ "1f688738e2a29c95": {
+  "lang": "de-DE",
+  "spoken": "In zwei Pizzen passen vier Hälften. Vier Kinder werden satt.",
+  "text": "In zwei Pizzen passen vier Hälften. Vier Kinder werden satt."
  },
  "1fbf05970d852ff6": {
   "lang": "de-DE",
@@ -294,6 +439,26 @@
   "spoken": "Jetzt hat jeder vier. Vier ist der Mittelwert.",
   "text": "Jetzt hat jeder vier. Vier ist der Mittelwert."
  },
+ "20b7f337df7bdeb3": {
+  "lang": "de-DE",
+  "spoken": "Jetzt du: Stell Start und Schritte ein.",
+  "text": "Jetzt du: Stell Start und Schritte ein."
+ },
+ "20caf7c79a26f21e": {
+  "lang": "de-DE",
+  "spoken": "Schritt eins: Lies genau. Markiere, was gegeben ist, und was gesucht ist.",
+  "text": "Schritt eins: Lies genau. Markiere, was gegeben ist, und was gesucht ist."
+ },
+ "21bfb232e73c130f": {
+  "lang": "de-DE",
+  "spoken": "Sechs Städte, sechs Temperaturen. Welche ist am kältesten?",
+  "text": "Sechs Städte, sechs Temperaturen. Welche ist am kältesten?"
+ },
+ "22ed832db990e570": {
+  "lang": "de-DE",
+  "spoken": "Ein Brötchen kostet vierzig Cent, fünf Brötchen zwei Euro.",
+  "text": "Ein Brötchen kostet vierzig Cent, fünf Brötchen zwei Euro."
+ },
  "231997df1357bbe0": {
   "lang": "de-DE",
   "spoken": "Minus 25 Prozent: Ein Viertel vom Preis fällt weg.",
@@ -303,6 +468,11 @@
   "lang": "de-DE",
   "spoken": "Vier gleiche Seiten: u ist 4 mal a.",
   "text": "Vier gleiche Seiten: u ist 4 mal a."
+ },
+ "24940e07b6e207fc": {
+  "lang": "de-DE",
+  "spoken": "Beim Glücksrad und beim Beutel: Rot, Blau oder Gelb.",
+  "text": "Beim Glücksrad und beim Beutel: Rot, Blau oder Gelb."
  },
  "249b22b4b9691ba4": {
   "lang": "de-DE",
@@ -319,6 +489,16 @@
   "spoken": "Ein Umzugskarton fasst etwa siebzig Liter. Ein Minecraft-Block ist ein Kubikmeter.",
   "text": "Ein Umzugskarton fasst etwa siebzig Liter. Ein Minecraft-Block ist ein Kubikmeter."
  },
+ "25ab93ff335f93fe": {
+  "lang": "de-DE",
+  "spoken": "Wir gehen über das Komma. Also kommt auch ins Ergebnis ein Komma.",
+  "text": "Wir gehen über das Komma. Also kommt auch ins Ergebnis ein Komma."
+ },
+ "25c06801234f4736": {
+  "lang": "de-DE",
+  "spoken": "Die Chance auf eine Sechs ist ein Sechstel. Darum dauert es manchmal so lange!",
+  "text": "Die Chance auf eine Sechs ist ein Sechstel. Darum dauert es manchmal so lange!"
+ },
  "25dabdfad45d3ee7": {
   "lang": "de-DE",
   "spoken": "Mit vier rechten Winkeln wird es ein Rechteck, mit vier gleich langen Seiten eine Raute.",
@@ -333,6 +513,11 @@
   "lang": "de-DE",
   "spoken": "Ein Rechteck aus vier Punkten.",
   "text": "Ein Rechteck aus vier Punkten."
+ },
+ "26b3f81e7e3af9b5": {
+  "lang": "de-DE",
+  "spoken": "Zweihundertfünfzig Kilometer sind zweieinhalb mal hundert Kilometer.",
+  "text": "Zweihundertfünfzig Kilometer sind zweieinhalb mal hundert Kilometer."
  },
  "26c14ba12cd7cf9f": {
   "lang": "de-DE",
@@ -354,6 +539,21 @@
   "spoken": "Probiere jetzt selbst mit dem Regler.",
   "text": "Probiere jetzt selbst mit dem Regler."
  },
+ "28776c7171ba1693": {
+  "lang": "de-DE",
+  "spoken": "Beim Taxi zahlst du einen Grundpreis, auch wenn du noch keinen Meter gefahren bist. Darum ist die Zuordnung nicht proportional.",
+  "text": "Beim Taxi zahlst du einen Grundpreis, auch wenn du noch keinen Meter gefahren bist. Darum ist die Zuordnung nicht proportional."
+ },
+ "289c321c6cad40c3": {
+  "lang": "de-DE",
+  "spoken": "Zwei Minuten, vierundzwanzig Liter. Eine Minute, zwölf Liter. Sieben Minuten, vierundachtzig Liter.",
+  "text": "Zwei Minuten, vierundzwanzig Liter. Eine Minute, zwölf Liter. Sieben Minuten, vierundachtzig Liter."
+ },
+ "28bd381eab11cc3e": {
+  "lang": "de-DE",
+  "spoken": "Im Gefrierschrank sind es minus achtzehn Grad. Am elften Februar neunzehnhundertneunundzwanzig wurden in Berlin sogar minus sechsundzwanzig Grad gemessen.",
+  "text": "Im Gefrierschrank sind es minus achtzehn Grad. Am elften Februar neunzehnhundertneunundzwanzig wurden in Berlin sogar minus sechsundzwanzig Grad gemessen."
+ },
  "28e8a9f93c8773b0": {
   "lang": "de-DE",
   "spoken": "Null eins null null null null null eins: Das ist fünfundsechzig, der Buchstabe A.",
@@ -363,6 +563,11 @@
   "lang": "de-DE",
   "spoken": "Das Quadrat hat die größte Fläche.",
   "text": "Das Quadrat hat die größte Fläche."
+ },
+ "2a1b48f40dab2224": {
+  "lang": "de-DE",
+  "spoken": "Nach zehn Würfen schwankt der Anteil noch stark.",
+  "text": "Nach zehn Würfen schwankt der Anteil noch stark."
  },
  "2a5e955dd18fa203": {
   "lang": "de-DE",
@@ -379,10 +584,20 @@
   "spoken": "Es bleiben ein ganzer Kuchen und zwei Viertel, also eineinhalb Kuchen.",
   "text": "Es bleiben ein ganzer Kuchen und zwei Viertel, also eineinhalb Kuchen."
  },
+ "2acd4eea2cd7f69d": {
+  "lang": "de-DE",
+  "spoken": "Dreimal zwei Fünftel.",
+  "text": "Dreimal zwei Fünftel."
+ },
  "2b5d6ccf4f777a78": {
   "lang": "de-DE",
   "spoken": "Zweihunderteinunddreißig volle Tüten, und vier Brötchen bleiben übrig.",
   "text": "Zweihunderteinunddreißig volle Tüten, und vier Brötchen bleiben übrig."
+ },
+ "2bbcc93349156581": {
+  "lang": "de-DE",
+  "spoken": "Wir reißen die drei Ecken ab.",
+  "text": "Wir reißen die drei Ecken ab."
  },
  "2bc177dc80bf710d": {
   "lang": "de-DE",
@@ -404,6 +619,11 @@
   "spoken": "Sechs Meter passen bei beiden genau. Das ist der größte gemeinsame Teiler.",
   "text": "Sechs Meter passen bei beiden genau. Das ist der größte gemeinsame Teiler."
  },
+ "2cd77ac222633a1b": {
+  "lang": "de-DE",
+  "spoken": "Null ist größer als minus fünf.",
+  "text": "Null ist größer als minus fünf."
+ },
  "2e28d40e821df776": {
   "lang": "de-DE",
   "spoken": "Der zweite Schenkel dreht sich auf.",
@@ -423,6 +643,11 @@
   "lang": "de-DE",
   "spoken": "Ein Strahl fängt bei A an und geht durch B immer weiter.",
   "text": "Ein Strahl fängt bei A an und geht durch B immer weiter."
+ },
+ "2eae00507f78641d": {
+  "lang": "de-DE",
+  "spoken": "Minus eins minus sechs: noch weiter nach links, bis minus sieben.",
+  "text": "Minus eins minus sechs: noch weiter nach links, bis minus sieben."
  },
  "2f1591243d6dfaf1": {
   "lang": "de-DE",
@@ -454,6 +679,11 @@
   "spoken": "Und zwischen 2 Komma 3 und 2 Komma 4 liegen 2 Komma 31, 2 Komma 32 und so weiter.",
   "text": "Und zwischen 2 Komma 3 und 2 Komma 4 liegen 2 Komma 31, 2 Komma 32 und so weiter."
  },
+ "30c20de1b8a688a4": {
+  "lang": "de-DE",
+  "spoken": "Fünf mal fünf ist fünfundzwanzig. Zwei Kommastellen: null Komma zwei fünf Liter.",
+  "text": "Fünf mal fünf ist fünfundzwanzig. Zwei Kommastellen: null Komma zwei fünf Liter."
+ },
  "318c919fd68facc1": {
   "lang": "de-DE",
   "spoken": "Schieb den Regler: Wie viele Fliesen braucht ein Quadrat mit zwölf Fliesen Seitenlänge?",
@@ -463,6 +693,11 @@
   "lang": "de-DE",
   "spoken": "Reichstagskuppel: Kuppel aus Glas – fast eine halbe Kugel.",
   "text": "Reichstagskuppel: Kuppel aus Glas – fast eine halbe Kugel."
+ },
+ "335a957febcfff3d": {
+  "lang": "de-DE",
+  "spoken": "Viel zu viel! Überschlag: etwa 130 €. Hier wurde 136 € · 26 gerechnet – das zahlen alle zusammen.",
+  "text": "Viel zu viel! Überschlag: etwa 130 €. Hier wurde 136 € · 26 gerechnet – das zahlen alle zusammen."
  },
  "33b69bbe41f5eb02": {
   "lang": "de-DE",
@@ -514,6 +749,16 @@
   "spoken": "Jeder Hunderter ist 99 plus 1. Jeder Zehner ist 9 plus 1.",
   "text": "Jeder Hunderter ist 99 plus 1. Jeder Zehner ist 9 plus 1."
  },
+ "38d07578cc4b0191": {
+  "lang": "de-DE",
+  "spoken": "Brücken und Dächer.",
+  "text": "Brücken und Dächer."
+ },
+ "39263c39acd75a9e": {
+  "lang": "de-DE",
+  "spoken": "Zwei Drittel von drei Vierteln. Blau sind drei Viertel, davon nehmen wir zwei Drittel.",
+  "text": "Zwei Drittel von drei Vierteln. Blau sind drei Viertel, davon nehmen wir zwei Drittel."
+ },
  "39591aab4bbebbcc": {
   "lang": "de-DE",
   "spoken": "Steht ein kleines Zeichen vor einem größeren, wird es abgezogen. So wird aus V und I die Vier.",
@@ -529,10 +774,20 @@
   "spoken": "Und nochmal: drei Viertel.",
   "text": "Und nochmal: drei Viertel."
  },
+ "39a30f2e65b11e8e": {
+  "lang": "de-DE",
+  "spoken": "Jetzt legen wir sie an einem Punkt nebeneinander.",
+  "text": "Jetzt legen wir sie an einem Punkt nebeneinander."
+ },
  "39ad180a989a67bd": {
   "lang": "de-DE",
   "spoken": "Das ist das Lot von P auf g. F heißt Lotfußpunkt.",
   "text": "Das ist das Lot von P auf g. F heißt Lotfußpunkt."
+ },
+ "39fc5028e5a9bbe8": {
+  "lang": "de-DE",
+  "spoken": "Für sechs Personen: sechsmal fünfzig Gramm, also dreihundert Gramm Mehl.",
+  "text": "Für sechs Personen: sechsmal fünfzig Gramm, also dreihundert Gramm Mehl."
  },
  "3a5204f9a627bd87": {
   "lang": "de-DE",
@@ -559,10 +814,20 @@
   "spoken": "Wieder vier geteilt durch vier: eins.",
   "text": "Wieder vier geteilt durch vier: eins."
  },
+ "3c53c182c3bf50cf": {
+  "lang": "de-DE",
+  "spoken": "Jede Zahl bekommt ein Spiegelbild links von der Null: minus eins, minus zwei, minus drei.",
+  "text": "Jede Zahl bekommt ein Spiegelbild links von der Null: minus eins, minus zwei, minus drei."
+ },
  "3c91fb051f9a3446": {
   "lang": "de-DE",
   "spoken": "Vier Striche und ein Querstrich sind fünf.",
   "text": "Vier Striche und ein Querstrich sind fünf."
+ },
+ "3ca52fb293de7e75": {
+  "lang": "de-DE",
+  "spoken": "Das Ufer des Toten Meeres liegt etwa vierhundertvierzig Meter unter dem Meeresspiegel.",
+  "text": "Das Ufer des Toten Meeres liegt etwa vierhundertvierzig Meter unter dem Meeresspiegel."
  },
  "3cd836aa13ff2798": {
   "lang": "de-DE",
@@ -574,10 +839,20 @@
   "spoken": "Experiment: 30-mal würfeln und notieren, welche Zahl kommt.",
   "text": "Experiment: 30-mal würfeln und notieren, welche Zahl kommt."
  },
+ "3d3473bf44f5a5cf": {
+  "lang": "de-DE",
+  "spoken": "Schritt vier: Schreib einen Antwortsatz und prüfe mit einem Überschlag.",
+  "text": "Schritt vier: Schreib einen Antwortsatz und prüfe mit einem Überschlag."
+ },
  "3d57663c23f32b93": {
   "lang": "de-DE",
   "spoken": "Ein Kubikdezimeter: zehn Zentimeter Kante. Das ist genau ein Liter.",
   "text": "Ein Kubikdezimeter: zehn Zentimeter Kante. Das ist genau ein Liter."
+ },
+ "3d80dfb3261f34d4": {
+  "lang": "de-DE",
+  "spoken": "Eine Sechs: ein günstiges Ergebnis von sechs möglichen. Ein Sechstel.",
+  "text": "Eine Sechs: ein günstiges Ergebnis von sechs möglichen. Ein Sechstel."
  },
  "3da8e9106904b53c": {
   "lang": "de-DE",
@@ -588,6 +863,26 @@
   "lang": "de-DE",
   "spoken": "Die Tausender-Ziffer entscheidet: vier ist kleiner als fünf.",
   "text": "Die Tausender-Ziffer entscheidet: vier ist kleiner als fünf."
+ },
+ "3dae75f2fbd3755c": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 10. Mal und geteilt mit Brüchen und Dezimalzahlen. Ausblick auf Klasse 6: Malnehmen und Teilen",
+  "text": "Kapitel 10. Mal und geteilt mit Brüchen und Dezimalzahlen. Ausblick auf Klasse 6: Malnehmen und Teilen"
+ },
+ "3ddfae8d5ce60356": {
+  "lang": "de-DE",
+  "spoken": "Jedes Wertepaar aus der Tabelle wird ein Punkt im Koordinatensystem. Verbunden ergeben sie den Graphen.",
+  "text": "Jedes Wertepaar aus der Tabelle wird ein Punkt im Koordinatensystem. Verbunden ergeben sie den Graphen."
+ },
+ "3dfbd09e08913928": {
+  "lang": "de-DE",
+  "spoken": "Durch einen Bruch teilst du, indem du mit seinem Kehrwert malnimmst.",
+  "text": "Durch einen Bruch teilst du, indem du mit seinem Kehrwert malnimmst."
+ },
+ "3e61e0f92052785c": {
+  "lang": "de-DE",
+  "spoken": "Probier es selbst! Jedes Mal sieht die Linie anders aus – aber am Ende landet sie bei einem Sechstel.",
+  "text": "Probier es selbst! Jedes Mal sieht die Linie anders aus – aber am Ende landet sie bei einem Sechstel."
  },
  "3e96880c698dbe39": {
   "lang": "de-DE",
@@ -608,6 +903,11 @@
   "lang": "de-DE",
   "spoken": "Beim Kürzen legen wir Stücke zusammen. Es werden weniger, größere Stücke. Der Wert bleibt gleich.",
   "text": "Beim Kürzen legen wir Stücke zusammen. Es werden weniger, größere Stücke. Der Wert bleibt gleich."
+ },
+ "3ec8cc0c3ea2ac8a": {
+  "lang": "de-DE",
+  "spoken": "Jetzt spiegeln wir an der x-Achse: Auch y bekommt ein Minus.",
+  "text": "Jetzt spiegeln wir an der x-Achse: Auch y bekommt ein Minus."
  },
  "3f756e7f13e0a0e6": {
   "lang": "de-DE",
@@ -634,10 +934,20 @@
   "spoken": "Zwei mal sechs: zwölf verschiedene Eis.",
   "text": "Zwei mal sechs: zwölf verschiedene Eis."
  },
+ "4199f1213b5b45f8": {
+  "lang": "de-DE",
+  "spoken": "Stumpfwinklig: Bei B ist der Winkel größer als neunzig Grad.",
+  "text": "Stumpfwinklig: Bei B ist der Winkel größer als neunzig Grad."
+ },
  "41b301f41a88cddb": {
   "lang": "de-DE",
   "spoken": "Alle Primfaktoren zusammen, jeden nur einmal aus der Mitte, ergeben das kgV.",
   "text": "Alle Primfaktoren zusammen, jeden nur einmal aus der Mitte, ergeben das kgV."
+ },
+ "41bfd0835e906d57": {
+  "lang": "de-DE",
+  "spoken": "Irgendeine Zahl von eins bis sechs kommt sicher. Kopf ist möglich.",
+  "text": "Irgendeine Zahl von eins bis sechs kommt sicher. Kopf ist möglich."
  },
  "4248a187cd9eaf6e": {
   "lang": "de-DE",
@@ -669,6 +979,11 @@
   "spoken": "Die x-Achse geht nach rechts, die y-Achse nach oben.",
   "text": "Die x-Achse geht nach rechts, die y-Achse nach oben."
  },
+ "44a4a87dcab4d12b": {
+  "lang": "de-DE",
+  "spoken": "Die Punkte liegen nicht auf einer Geraden. Die Kurve wird immer flacher.",
+  "text": "Die Punkte liegen nicht auf einer Geraden. Die Kurve wird immer flacher."
+ },
  "4508c4af85ff46fe": {
   "lang": "de-DE",
   "spoken": "Mit einem Schrägbild sieht ein Würfel auf Karopapier räumlich aus. Wir zeichnen ihn Schritt für Schritt.",
@@ -698,6 +1013,16 @@
   "lang": "de-DE",
   "spoken": "Erst überschlagen: ungefähr 9 Euro 50.",
   "text": "Erst überschlagen: ungefähr 9 Euro 50."
+ },
+ "474465f4c2c06110": {
+  "lang": "de-DE",
+  "spoken": "Wäre das proportional, wäre man mit zwanzig zwei Meter achtzig groß. Zum Glück nicht!",
+  "text": "Wäre das proportional, wäre man mit zwanzig zwei Meter achtzig groß. Zum Glück nicht!"
+ },
+ "4795593e75ee4c82": {
+  "lang": "de-DE",
+  "spoken": "Auch Geld und Fußball kennen negative Zahlen: Schulden auf dem Konto und eine Tordifferenz unter null.",
+  "text": "Auch Geld und Fußball kennen negative Zahlen: Schulden auf dem Konto und eine Tordifferenz unter null."
  },
  "47b006c1360af9cf": {
   "lang": "de-DE",
@@ -734,6 +1059,11 @@
   "spoken": "Erst wählt er ein T-Shirt: drei Äste.",
   "text": "Erst wählt er ein T-Shirt: drei Äste."
  },
+ "4b604f74d81d973b": {
+  "lang": "de-DE",
+  "spoken": "Eine Sieben gibt es auf dem Würfel nicht: unmöglich. Eine Sechs ist möglich.",
+  "text": "Eine Sieben gibt es auf dem Würfel nicht: unmöglich. Eine Sechs ist möglich."
+ },
  "4b66fcc13d9358c8": {
   "lang": "de-DE",
   "spoken": "Wir zählen am Würfel: Wie viele Ecken, Kanten und Flächen hat er? Du kannst ihn mit dem Finger drehen.",
@@ -743,6 +1073,11 @@
   "lang": "de-DE",
   "spoken": "Auf dem Tempelhofer Feld landeten früher Flugzeuge. Heute ist es ein Park.",
   "text": "Auf dem Tempelhofer Feld landeten früher Flugzeuge. Heute ist es ein Park."
+ },
+ "4ba4c0abf5bc9b2b": {
+  "lang": "de-DE",
+  "spoken": "Jedem Alter ist eine Körpergröße zugeordnet. Aber wer doppelt so alt ist, ist nicht doppelt so groß!",
+  "text": "Jedem Alter ist eine Körpergröße zugeordnet. Aber wer doppelt so alt ist, ist nicht doppelt so groß!"
  },
  "4bac8bccca22c4dc": {
   "lang": "de-DE",
@@ -769,10 +1104,20 @@
   "spoken": "Eine Reihe: fünf Würfel.",
   "text": "Eine Reihe: fünf Würfel."
  },
+ "4d17e528c22b3f43": {
+  "lang": "de-DE",
+  "spoken": "Zwölf Kästchen von hundert. Null Komma drei mal null Komma vier ist null Komma eins zwei.",
+  "text": "Zwölf Kästchen von hundert. Null Komma drei mal null Komma vier ist null Komma eins zwei."
+ },
  "4d6c00b289a2ba1d": {
   "lang": "de-DE",
   "spoken": "Jeder Zehner lässt sich durch 2, 5 und 10 teilen. Darum entscheidet nur die letzte Ziffer.",
   "text": "Jeder Zehner lässt sich durch 2, 5 und 10 teilen. Darum entscheidet nur die letzte Ziffer."
+ },
+ "4db39dba55d2fd64": {
+  "lang": "de-DE",
+  "spoken": "Null Komma drei mal null Komma vier: Im Hunderterfeld siehst du, dass zwölf Hundertstel herauskommen.",
+  "text": "Null Komma drei mal null Komma vier: Im Hunderterfeld siehst du, dass zwölf Hundertstel herauskommen."
  },
  "4db8a8e7463bff0f": {
   "lang": "de-DE",
@@ -794,6 +1139,26 @@
   "spoken": "Jedes Kind sagt sein Instrument. Wir schreiben alles der Reihe nach auf.",
   "text": "Jedes Kind sagt sein Instrument. Wir schreiben alles der Reihe nach auf."
  },
+ "4f85e7f1ec6bf3de": {
+  "lang": "de-DE",
+  "spoken": "Kaufst du doppelt so viele Äpfel, bezahlst du doppelt so viel. So eine Zuordnung heißt proportional.",
+  "text": "Kaufst du doppelt so viele Äpfel, bezahlst du doppelt so viel. So eine Zuordnung heißt proportional."
+ },
+ "4f863619b727486a": {
+  "lang": "de-DE",
+  "spoken": "Zweitausendvierhundertfünfzig Gramm sind zwei Komma vier fünf Kilogramm.",
+  "text": "Zweitausendvierhundertfünfzig Gramm sind zwei Komma vier fünf Kilogramm."
+ },
+ "4faa492c8e6f823c": {
+  "lang": "de-DE",
+  "spoken": "Gegeben und gesucht, dann eine Skizze.",
+  "text": "Gegeben und gesucht, dann eine Skizze."
+ },
+ "4ffe6e79801fe500": {
+  "lang": "de-DE",
+  "spoken": "Schritt drei: Rechne Schritt für Schritt.",
+  "text": "Schritt drei: Rechne Schritt für Schritt."
+ },
  "500c0185fb5e0d9e": {
   "lang": "de-DE",
   "spoken": "Für Flächen gibt es sieben Einheiten. Von einer zur nächsten ist die Umrechnungszahl immer 100.",
@@ -803,6 +1168,11 @@
   "lang": "de-DE",
   "spoken": "Die Treppe – passt sie?",
   "text": "Die Treppe – passt sie?"
+ },
+ "50a0cdc612d1e8a4": {
+  "lang": "de-DE",
+  "spoken": "A ist minus sieben, B minus zwei Komma fünf, C plus vier und D minus neun.",
+  "text": "A ist minus sieben, B minus zwei Komma fünf, C plus vier und D minus neun."
  },
  "50f65cc449eb1c9a": {
   "lang": "de-DE",
@@ -824,6 +1194,11 @@
   "spoken": "Achtundneunzig ist fast hundert. Sechs mal hundert minus sechs mal zwei.",
   "text": "Achtundneunzig ist fast hundert. Sechs mal hundert minus sechs mal zwei."
  },
+ "520a70f1be207d69": {
+  "lang": "de-DE",
+  "spoken": "Lena fährt mit dem Fahrrad immer gleich schnell: alle zehn Minuten zwei Kilometer. Wir schreiben das in eine Wertetabelle.",
+  "text": "Lena fährt mit dem Fahrrad immer gleich schnell: alle zehn Minuten zwei Kilometer. Wir schreiben das in eine Wertetabelle."
+ },
  "522d15079e1c5a7f": {
   "lang": "de-DE",
   "spoken": "Hundert ist fünfundzwanzig mal vier. Darum zählen bei der Vierer-Regel nur die letzten zwei Ziffern.",
@@ -833,6 +1208,16 @@
   "lang": "de-DE",
   "spoken": "Ein Quadratdezimeter ist ein Quadrat mit 10 Zentimeter Seitenlänge. Wie viele Quadratzentimeter passen hinein?",
   "text": "Ein Quadratdezimeter ist ein Quadrat mit 10 Zentimeter Seitenlänge. Wie viele Quadratzentimeter passen hinein?"
+ },
+ "5238a49a226a7efe": {
+  "lang": "de-DE",
+  "spoken": "Fünfundsiebzig Zentimeter sind null Komma sieben fünf Meter. Vorne kommt eine Null dazu.",
+  "text": "Fünfundsiebzig Zentimeter sind null Komma sieben fünf Meter. Vorne kommt eine Null dazu."
+ },
+ "523dd3ae35cffaae": {
+  "lang": "de-DE",
+  "spoken": "Und beim Duschen fließen in jeder Minute gleich viele Liter.",
+  "text": "Und beim Duschen fließen in jeder Minute gleich viele Liter."
  },
  "52c11987863ff194": {
   "lang": "de-DE",
@@ -844,10 +1229,25 @@
   "spoken": "Eine Ameise läuft einmal um das Rechteck herum. Ihr Weg ist der Umfang.",
   "text": "Eine Ameise läuft einmal um das Rechteck herum. Ihr Weg ist der Umfang."
  },
+ "54050d5c73bb8ebc": {
+  "lang": "de-DE",
+  "spoken": "Jede ganze Zahl hat ihren Platz auf der Zahlengeraden. Zieh den Punkt und lies die Zahl ab.",
+  "text": "Jede ganze Zahl hat ihren Platz auf der Zahlengeraden. Zieh den Punkt und lies die Zahl ab."
+ },
  "5437432d27d5b38a": {
   "lang": "de-DE",
   "spoken": "Du bist 6 Zentimeter gewachsen!",
   "text": "Du bist 6 Zentimeter gewachsen!"
+ },
+ "546aea646948908b": {
+  "lang": "de-DE",
+  "spoken": "Drei Viertel von zwei Dritteln ist ein Halb.",
+  "text": "Drei Viertel von zwei Dritteln ist ein Halb."
+ },
+ "549b44cbf3ac13e5": {
+  "lang": "de-DE",
+  "spoken": "Das Rezept ist für vier Personen. Für mehr oder weniger Personen nimmst du alle Zutaten mit demselben Faktor mal.",
+  "text": "Das Rezept ist für vier Personen. Für mehr oder weniger Personen nimmst du alle Zutaten mit demselben Faktor mal."
  },
  "54a34280fb4d3170": {
   "lang": "de-DE",
@@ -864,6 +1264,16 @@
   "spoken": "Jetzt hundert Kästchen. Ein Kästchen ist ein Hundertstel, null Komma null eins.",
   "text": "Jetzt hundert Kästchen. Ein Kästchen ist ein Hundertstel, null Komma null eins."
  },
+ "5608a56714844509": {
+  "lang": "de-DE",
+  "spoken": "Wenn es wärmer wird, steigt die Temperatur. Wenn es kälter wird, fällt sie. Das können wir auf dem Thermometer verfolgen.",
+  "text": "Wenn es wärmer wird, steigt die Temperatur. Wenn es kälter wird, fällt sie. Das können wir auf dem Thermometer verfolgen."
+ },
+ "5670c5f5abdcabb8": {
+  "lang": "de-DE",
+  "spoken": "Den Dreisatz brauchst du ständig: beim Spielen, beim Duschen und bei der Klassenfahrt.",
+  "text": "Den Dreisatz brauchst du ständig: beim Spielen, beim Duschen und bei der Klassenfahrt."
+ },
  "56f2fe0a52a9f750": {
   "lang": "de-DE",
   "spoken": "Die Quersumme ist die Summe aller Ziffern. Ist sie durch drei oder neun teilbar, dann auch die Zahl.",
@@ -879,6 +1289,11 @@
   "spoken": "Zwölf gleiche Stücke. Jedes ist dreißig Grad groß.",
   "text": "Zwölf gleiche Stücke. Jedes ist dreißig Grad groß."
  },
+ "57584c394f9b5db5": {
+  "lang": "de-DE",
+  "spoken": "Reiß die drei Ecken eines Dreiecks ab und leg sie nebeneinander. Sie bilden zusammen einen gestreckten Winkel: hundertachtzig Grad!",
+  "text": "Reiß die drei Ecken eines Dreiecks ab und leg sie nebeneinander. Sie bilden zusammen einen gestreckten Winkel: hundertachtzig Grad!"
+ },
  "579e1e80cbacc0d9": {
   "lang": "de-DE",
   "spoken": "Geodreieck weg – S mit dem Punkt verbinden. Fertig!",
@@ -888,6 +1303,11 @@
   "lang": "de-DE",
   "spoken": "Tim sagt: 0 Komma 45 ist mehr als 0 Komma 5, weil 45 größer ist als 5. Stimmt das?",
   "text": "Tim sagt: 0 Komma 45 ist mehr als 0 Komma 5, weil 45 größer ist als 5. Stimmt das?"
+ },
+ "581fa642c4662789": {
+  "lang": "de-DE",
+  "spoken": "Bruch mal Zahl brauchst du beim Kochen, beim Pizzaessen und beim Laufen.",
+  "text": "Bruch mal Zahl brauchst du beim Kochen, beim Pizzaessen und beim Laufen."
  },
  "5826ae394f01010d": {
   "lang": "de-DE",
@@ -909,10 +1329,20 @@
   "spoken": "Zeichne an der langen Kante entlang.",
   "text": "Zeichne an der langen Kante entlang."
  },
+ "58d28a8776181c75": {
+  "lang": "de-DE",
+  "spoken": "Alle drei Seiten sind gleich lang.",
+  "text": "Alle drei Seiten sind gleich lang."
+ },
  "59160329ac92d3ef": {
   "lang": "de-DE",
   "spoken": "Drei echte Aufgaben aus dem Alltag. Wir rechnen sie Schritt für Schritt.",
   "text": "Drei echte Aufgaben aus dem Alltag. Wir rechnen sie Schritt für Schritt."
+ },
+ "59c660939725d239": {
+  "lang": "de-DE",
+  "spoken": "Berge messen wir vom Meeresspiegel aus. Manche Orte liegen sogar tiefer als das Meer!",
+  "text": "Berge messen wir vom Meeresspiegel aus. Manche Orte liegen sogar tiefer als das Meer!"
  },
  "5a1c83f2c75ef36c": {
   "lang": "de-DE",
@@ -924,6 +1354,11 @@
   "spoken": "Neun ist ungerade, aber trotzdem keine Primzahl.",
   "text": "Neun ist ungerade, aber trotzdem keine Primzahl."
  },
+ "5ace58c8530c2fd6": {
+  "lang": "de-DE",
+  "spoken": "Und rückwärts: Die Gegenzahl von minus sieben ist sieben.",
+  "text": "Und rückwärts: Die Gegenzahl von minus sieben ist sieben."
+ },
  "5ad9da205886a913": {
   "lang": "de-DE",
   "spoken": "Ecken sind die Spitzen. Der Würfel hat 8 Ecken.",
@@ -933,6 +1368,11 @@
   "lang": "de-DE",
   "spoken": "Sieben Punkte passen nur in eine einzige Reihe.",
   "text": "Sieben Punkte passen nur in eine einzige Reihe."
+ },
+ "5bbfea1588315654": {
+  "lang": "de-DE",
+  "spoken": "Drei Fünftel von zwei Dritteln sind sechs Fünfzehntel, also zwei Fünftel.",
+  "text": "Drei Fünftel von zwei Dritteln sind sechs Fünfzehntel, also zwei Fünftel."
  },
  "5d202ef71229c8b0": {
   "lang": "de-DE",
@@ -954,10 +1394,20 @@
   "spoken": "Jetzt rechnen wir von rechts: 0 plus 5 ist 5. 5 plus 7 ist 12 – schreibe 2, merke 1. Komma runter. 2 plus 3 plus 1 ist 6. Dann die 1.",
   "text": "Jetzt rechnen wir von rechts: 0 plus 5 ist 5. 5 plus 7 ist 12 – schreibe 2, merke 1. Komma runter. 2 plus 3 plus 1 ist 6. Dann die 1."
  },
+ "5e9bfa0e6cdbbfef": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 11. Negative Zahlen. Ausblick auf Klasse 6: unter null",
+  "text": "Kapitel 11. Negative Zahlen. Ausblick auf Klasse 6: unter null"
+ },
  "5f2d5857ea6568f2": {
   "lang": "de-DE",
   "spoken": "7 Zehntel, 5 Hundertstel, 2 Tausendstel.",
   "text": "7 Zehntel, 5 Hundertstel, 2 Tausendstel."
+ },
+ "5f3480fe0bdf14b7": {
+  "lang": "de-DE",
+  "spoken": "Einundzwanzig Staffeln, jede läuft zweihundert Meter.",
+  "text": "Einundzwanzig Staffeln, jede läuft zweihundert Meter."
  },
  "5f9193709925cb85": {
   "lang": "de-DE",
@@ -969,20 +1419,50 @@
   "spoken": "Jetzt drehen – und der Kreis ist fertig.",
   "text": "Jetzt drehen – und der Kreis ist fertig."
  },
+ "60532e87df556eeb": {
+  "lang": "de-DE",
+  "spoken": "Ein Stamm gibt vier Bretter. Für sechsunddreißig Bretter brauchst du neun Stämme.",
+  "text": "Ein Stamm gibt vier Bretter. Für sechsunddreißig Bretter brauchst du neun Stämme."
+ },
+ "60dd0e72ac05637a": {
+  "lang": "de-DE",
+  "spoken": "Der Betrag von minus vier ist vier. Der Betrag von vier ist auch vier.",
+  "text": "Der Betrag von minus vier ist vier. Der Betrag von vier ist auch vier."
+ },
  "60efe1f95e94d407": {
   "lang": "de-DE",
   "spoken": "Ein Garten ist 8 Meter lang und 5 Meter breit. Wie viel Zaun brauchen wir – und wie viel Rasen?",
   "text": "Ein Garten ist 8 Meter lang und 5 Meter breit. Wie viel Zaun brauchen wir – und wie viel Rasen?"
+ },
+ "612f3a96cd396ecb": {
+  "lang": "de-DE",
+  "spoken": "Ein Teil von einem Teil begegnet dir bei Schokolade, im Garten und in deiner Klasse.",
+  "text": "Ein Teil von einem Teil begegnet dir bei Schokolade, im Garten und in deiner Klasse."
+ },
+ "622063b80c55c8df": {
+  "lang": "de-DE",
+  "spoken": "Am Marktstand gehört zu jedem Gewicht genau ein Preis. So etwas nennt man eine Zuordnung.",
+  "text": "Am Marktstand gehört zu jedem Gewicht genau ein Preis. So etwas nennt man eine Zuordnung."
  },
  "62602001cb13874d": {
   "lang": "de-DE",
   "spoken": "Zehn Einer sind ein Zehner, zehn Zehner ein Hunderter, zehn Hunderter ein Tausender. Immer mal zehn!",
   "text": "Zehn Einer sind ein Zehner, zehn Zehner ein Hunderter, zehn Hunderter ein Tausender. Immer mal zehn!"
  },
+ "6288e752e5ca453d": {
+  "lang": "de-DE",
+  "spoken": "Auf dem Wochenmarkt steht der Preis pro Kilogramm. Für eineinhalb Kilo rechnest du eins Komma fünf mal den Kilopreis.",
+  "text": "Auf dem Wochenmarkt steht der Preis pro Kilogramm. Für eineinhalb Kilo rechnest du eins Komma fünf mal den Kilopreis."
+ },
  "62cc27edb2bc8cb5": {
   "lang": "de-DE",
   "spoken": "Die Vielfachen von vier: vier, acht, zwölf und immer so weiter.",
   "text": "Die Vielfachen von vier: vier, acht, zwölf und immer so weiter."
+ },
+ "62d17c80b502444a": {
+  "lang": "de-DE",
+  "spoken": "Wir würfeln ganz oft und zählen die Sechsen. Je mehr Würfe, desto näher kommt der Anteil der Sechsen an ein Sechstel.",
+  "text": "Wir würfeln ganz oft und zählen die Sechsen. Je mehr Würfe, desto näher kommt der Anteil der Sechsen an ein Sechstel."
  },
  "63b8787a211e3a7f": {
   "lang": "de-DE",
@@ -1004,6 +1484,11 @@
   "spoken": "Achtung! Mit einer abgeschnittenen Achse sieht ein kleiner Unterschied riesig aus.",
   "text": "Achtung! Mit einer abgeschnittenen Achse sieht ein kleiner Unterschied riesig aus."
  },
+ "649f97cba21e479d": {
+  "lang": "de-DE",
+  "spoken": "Schritt zwei: Ordne die Angaben in einer Tabelle.",
+  "text": "Schritt zwei: Ordne die Angaben in einer Tabelle."
+ },
  "66082d731668ca84": {
   "lang": "de-DE",
   "spoken": "Alle Beete haben 24 Meter Zaun. Aber schau dir die Flächen an!",
@@ -1014,6 +1499,11 @@
   "spoken": "Zuerst öffnen wir den Zirkel am Lineal auf vier Zentimeter.",
   "text": "Zuerst öffnen wir den Zirkel am Lineal auf vier Zentimeter."
  },
+ "66454f780dc501a9": {
+  "lang": "de-DE",
+  "spoken": "Vier Komma acht durch null Komma sechs. Beide Kommas eine Stelle nach rechts: achtundvierzig durch sechs, also acht.",
+  "text": "Vier Komma acht durch null Komma sechs. Beide Kommas eine Stelle nach rechts: achtundvierzig durch sechs, also acht."
+ },
  "6665a95871e13721": {
   "lang": "de-DE",
   "spoken": "Probiere andere Zahlen aus.",
@@ -1023,6 +1513,11 @@
   "lang": "de-DE",
   "spoken": "Fernsehturm: 368 Meter.",
   "text": "Fernsehturm: 368 Meter."
+ },
+ "6789e9f8b78297af": {
+  "lang": "de-DE",
+  "spoken": "Nach dem Kauf: minus fünfzehn Euro. Der Balken rutscht unter die Null.",
+  "text": "Nach dem Kauf: minus fünfzehn Euro. Der Balken rutscht unter die Null."
  },
  "6792b7fc2315c5e4": {
   "lang": "de-DE",
@@ -1039,6 +1534,11 @@
   "spoken": "Ein Fünftel Meter = 0,2 m = 20 cm",
   "text": "Ein Fünftel Meter = 0,2 m = 20 cm"
  },
+ "684690d6f29a1663": {
+  "lang": "de-DE",
+  "spoken": "Hundertfünfundzwanzig mal vier ist fünfhundert. Zwei Kommastellen: fünf Euro.",
+  "text": "Hundertfünfundzwanzig mal vier ist fünfhundert. Zwei Kommastellen: fünf Euro."
+ },
  "68a8a4b3a00ca244": {
   "lang": "de-DE",
   "spoken": "Ungefähr 61 Quadratmeter.",
@@ -1048,11 +1548,6 @@
   "lang": "de-DE",
   "spoken": "Fünf Kinder erzählen, wie viele Bücher sie in den Ferien gelesen haben. Wir machen alle Türme gleich hoch.",
   "text": "Fünf Kinder erzählen, wie viele Bücher sie in den Ferien gelesen haben. Wir machen alle Türme gleich hoch."
- },
- "691b9e7279754c79": {
-  "lang": "de-DE",
-  "spoken": "Kapitel 3. Geraden und Winkel. Linien, Geodreieck und Winkel",
-  "text": "Kapitel 3. Geraden und Winkel. Linien, Geodreieck und Winkel"
  },
  "692c929df595db4b": {
   "lang": "de-DE",
@@ -1064,10 +1559,20 @@
   "spoken": "Spitz: kleiner als ein rechter Winkel.",
   "text": "Spitz: kleiner als ein rechter Winkel."
  },
+ "6a783513b4a85b0b": {
+  "lang": "de-DE",
+  "spoken": "Sieben Cent sind null Komma null sieben Euro. Hier brauchen wir zwei Nullen.",
+  "text": "Sieben Cent sind null Komma null sieben Euro. Hier brauchen wir zwei Nullen."
+ },
  "6ae7f618dfa7c885": {
   "lang": "de-DE",
   "spoken": "Und ein Quadratzentimeter hat wieder 100 Quadratmillimeter.",
   "text": "Und ein Quadratzentimeter hat wieder 100 Quadratmillimeter."
+ },
+ "6bfdedc0f8e1d619": {
+  "lang": "de-DE",
+  "spoken": "Ein Teil der Niederlande liegt unter dem Meeresspiegel: minus sechs Komma sieben sechs Meter.",
+  "text": "Ein Teil der Niederlande liegt unter dem Meeresspiegel: minus sechs Komma sieben sechs Meter."
  },
  "6c1906dad824508b": {
   "lang": "de-DE",
@@ -1078,6 +1583,11 @@
   "lang": "de-DE",
   "spoken": "Mit der Lupe teilen wir ein Kästchen noch einmal in zehn. Das sind Tausendstel.",
   "text": "Mit der Lupe teilen wir ein Kästchen noch einmal in zehn. Das sind Tausendstel."
+ },
+ "6cdab127617dfd83": {
+  "lang": "de-DE",
+  "spoken": "Beim Teilen durch zehn, hundert oder tausend hüpft das Komma nach links. Fehlen Stellen, füllst du mit Nullen auf.",
+  "text": "Beim Teilen durch zehn, hundert oder tausend hüpft das Komma nach links. Fehlen Stellen, füllst du mit Nullen auf."
  },
  "6d63915a008a8890": {
   "lang": "de-DE",
@@ -1093,6 +1603,16 @@
   "lang": "de-DE",
   "spoken": "Eine Schicht: zehn Reihen, also hundert Würfel.",
   "text": "Eine Schicht: zehn Reihen, also hundert Würfel."
+ },
+ "6fe8ac882aadb1a2": {
+  "lang": "de-DE",
+  "spoken": "Beim Malnehmen mit zehn rutschen alle Ziffern eine Stelle nach links. Das Komma bleibt stehen.",
+  "text": "Beim Malnehmen mit zehn rutschen alle Ziffern eine Stelle nach links. Das Komma bleibt stehen."
+ },
+ "70482791890ad860": {
+  "lang": "de-DE",
+  "spoken": "Spiegelst du eine Zahl an der Null, bekommst du ihre Gegenzahl. Aus drei wird minus drei.",
+  "text": "Spiegelst du eine Zahl an der Null, bekommst du ihre Gegenzahl. Aus drei wird minus drei."
  },
  "70d7698645cb9393": {
   "lang": "de-DE",
@@ -1129,6 +1649,11 @@
   "spoken": "Vier Uhr: vier mal dreißig Grad, also hundertzwanzig Grad. Stumpf!",
   "text": "Vier Uhr: vier mal dreißig Grad, also hundertzwanzig Grad. Stumpf!"
  },
+ "727b9acbbe0f1a2b": {
+  "lang": "de-DE",
+  "spoken": "Zwei Euro vierzig geteilt durch sechs sind vierzig Cent.",
+  "text": "Zwei Euro vierzig geteilt durch sechs sind vierzig Cent."
+ },
  "72d1208090e1df7d": {
   "lang": "de-DE",
   "spoken": "50 Prozent sind 50 von 100. Das ist die Hälfte: ein halb, oder 0 Komma 5.",
@@ -1143,6 +1668,11 @@
   "lang": "de-DE",
   "spoken": "Sieben Drittel Kuchen: Je drei Drittel ergeben einen ganzen Kuchen. Es bleiben zwei Ganze und ein Drittel.",
   "text": "Sieben Drittel Kuchen: Je drei Drittel ergeben einen ganzen Kuchen. Es bleiben zwei Ganze und ein Drittel."
+ },
+ "73adbf690fc63684": {
+  "lang": "de-DE",
+  "spoken": "Noch kälter: minus fünf Grad. Die Flüssigkeit sinkt unter die Null.",
+  "text": "Noch kälter: minus fünf Grad. Die Flüssigkeit sinkt unter die Null."
  },
  "73e6631687d9f2cc": {
   "lang": "de-DE",
@@ -1169,6 +1699,11 @@
   "spoken": "eine Viertel Stunde = 0,25 h = 15 Minuten",
   "text": "eine Viertel Stunde = 0,25 h = 15 Minuten"
  },
+ "766ad88d5b244f34": {
+  "lang": "de-DE",
+  "spoken": "Fünf geteilt durch ein Viertel: fünf mal vier, zwanzig Stücke.",
+  "text": "Fünf geteilt durch ein Viertel: fünf mal vier, zwanzig Stücke."
+ },
  "76dcecd7aaf1fc8b": {
   "lang": "de-DE",
   "spoken": "Fünf plus eins plus eins plus eins: acht.",
@@ -1178,6 +1713,11 @@
   "lang": "de-DE",
   "spoken": "Auf der blauen Skala bis 70 zählen.",
   "text": "Auf der blauen Skala bis 70 zählen."
+ },
+ "77529c8edf36326f": {
+  "lang": "de-DE",
+  "spoken": "Auf der Zahlengeraden ist Rechnen wie Wandern: Bei plus gehst du nach rechts, bei minus nach links.",
+  "text": "Auf der Zahlengeraden ist Rechnen wie Wandern: Bei plus gehst du nach rechts, bei minus nach links."
  },
  "7765a52208aed82b": {
   "lang": "de-DE",
@@ -1204,10 +1744,25 @@
   "spoken": "Wir zeichnen einen Winkel von siebzig Grad mit dem Geodreieck. Schritt für Schritt.",
   "text": "Wir zeichnen einen Winkel von siebzig Grad mit dem Geodreieck. Schritt für Schritt."
  },
+ "78146d4251fc5f17": {
+  "lang": "de-DE",
+  "spoken": "Nach sechzig Minuten ist Lena zwölf Kilometer weit gefahren.",
+  "text": "Nach sechzig Minuten ist Lena zwölf Kilometer weit gefahren."
+ },
  "7891d395f6ac551d": {
   "lang": "de-DE",
   "spoken": "Aus der Tabelle wird ein Säulendiagramm. Je höher die Säule, desto häufiger.",
   "text": "Aus der Tabelle wird ein Säulendiagramm. Je höher die Säule, desto häufiger."
+ },
+ "78d76d1b6b1974ad": {
+  "lang": "de-DE",
+  "spoken": "Schieb den Regler und lies ab, wie weit Lena gekommen ist.",
+  "text": "Schieb den Regler und lies ab, wie weit Lena gekommen ist."
+ },
+ "7905722b896dfa84": {
+  "lang": "de-DE",
+  "spoken": "Fünfundzwanzig mal zwölf ist dreihundert. Zwei Kommastellen: drei Quadratmeter.",
+  "text": "Fünfundzwanzig mal zwölf ist dreihundert. Zwei Kommastellen: drei Quadratmeter."
  },
  "795781b3fd7692b3": {
   "lang": "de-DE",
@@ -1224,6 +1779,11 @@
   "spoken": "Geige hat die höchste Säule. Tippe auf eine Säule!",
   "text": "Geige hat die höchste Säule. Tippe auf eine Säule!"
  },
+ "7a9b76ff4af855f0": {
+  "lang": "de-DE",
+  "spoken": "Acht Personen: alles verdoppeln.",
+  "text": "Acht Personen: alles verdoppeln."
+ },
  "7ae086a588bc82d2": {
   "lang": "de-DE",
   "spoken": "Im Zweiersystem bündeln wir nicht zehn, sondern immer nur zwei. Wir sortieren dreizehn Murmeln.",
@@ -1233,6 +1793,11 @@
   "lang": "de-DE",
   "spoken": "Fünfmal die Zwei malnehmen: zweiunddreißig.",
   "text": "Fünfmal die Zwei malnehmen: zweiunddreißig."
+ },
+ "7ba938bd565e7e17": {
+  "lang": "de-DE",
+  "spoken": "Quer halbiert: Das ganze Blech hat jetzt acht gleiche Stücke.",
+  "text": "Quer halbiert: Das ganze Blech hat jetzt acht gleiche Stücke."
  },
  "7bc072249d2d7efc": {
   "lang": "de-DE",
@@ -1249,15 +1814,40 @@
   "spoken": "Welches Instrument gefällt dir am besten?",
   "text": "Welches Instrument gefällt dir am besten?"
  },
+ "7bff3cd5e3e2ee18": {
+  "lang": "de-DE",
+  "spoken": "Doppelt so weit, aber nicht doppelt so teuer. Die gestrichelte Linie wäre proportional.",
+  "text": "Doppelt so weit, aber nicht doppelt so teuer. Die gestrichelte Linie wäre proportional."
+ },
  "7c07c66e6911d040": {
   "lang": "de-DE",
   "spoken": "Beim Minus ergänzen wir von unten nach oben.",
   "text": "Beim Minus ergänzen wir von unten nach oben."
  },
+ "7c0ecf78c82ec486": {
+  "lang": "de-DE",
+  "spoken": "Eine blaue Kugel kann man nicht ziehen, wenn keine drin ist. Und nach Sonntag kommt sicher Montag.",
+  "text": "Eine blaue Kugel kann man nicht ziehen, wenn keine drin ist. Und nach Sonntag kommt sicher Montag."
+ },
+ "7cb1b6a4516e5863": {
+  "lang": "de-DE",
+  "spoken": "Das sind die ganzen Zahlen.",
+  "text": "Das sind die ganzen Zahlen."
+ },
  "7d4098a6e82b4612": {
   "lang": "de-DE",
   "spoken": "Tabellen, Strichlisten und Diagramme begegnen dir jeden Tag.",
   "text": "Tabellen, Strichlisten und Diagramme begegnen dir jeden Tag."
+ },
+ "7d49b47ec8bcf238": {
+  "lang": "de-DE",
+  "spoken": "Fünfzehn Viertel Kilometer, also drei dreiviertel Kilometer.",
+  "text": "Fünfzehn Viertel Kilometer, also drei dreiviertel Kilometer."
+ },
+ "7d717bf3f028037e": {
+  "lang": "de-DE",
+  "spoken": "Dieses Glücksrad hat acht gleich große Felder: vier rote, drei blaue und ein gelbes. Welche Farbe kommt am häufigsten?",
+  "text": "Dieses Glücksrad hat acht gleich große Felder: vier rote, drei blaue und ein gelbes. Welche Farbe kommt am häufigsten?"
  },
  "7dc25afbcfe99d46": {
   "lang": "de-DE",
@@ -1284,6 +1874,11 @@
   "spoken": "Ein Würfel hat sechs gleich große Quadrate.",
   "text": "Ein Würfel hat sechs gleich große Quadrate."
  },
+ "7f40ebb870602a29": {
+  "lang": "de-DE",
+  "spoken": "Gerade Zahlen: zwei, vier und sechs. Drei von sechs, das ist die Hälfte.",
+  "text": "Gerade Zahlen: zwei, vier und sechs. Drei von sechs, das ist die Hälfte."
+ },
  "7f4a02b828190297": {
   "lang": "de-DE",
   "spoken": "Winkel findest du beim Laptop, an der Tür, bei der Pizza, auf der Rampe, an der Skischanze und beim Torschuss.",
@@ -1303,6 +1898,11 @@
   "lang": "de-DE",
   "spoken": "Auf Hunderter gerundet: die Zehner-Ziffer ist sieben, also aufrunden auf vierundsiebzigtausendfünfhundert.",
   "text": "Auf Hunderter gerundet: die Zehner-Ziffer ist sieben, also aufrunden auf vierundsiebzigtausendfünfhundert."
+ },
+ "806c6c5f1765bb44": {
+  "lang": "de-DE",
+  "spoken": "Der Mount Everest ist achttausendachthundertneunundvierzig Meter hoch: plus achttausendachthundertneunundvierzig.",
+  "text": "Der Mount Everest ist achttausendachthundertneunundvierzig Meter hoch: plus achttausendachthundertneunundvierzig."
  },
  "812bd18df24e4937": {
   "lang": "de-DE",
@@ -1369,6 +1969,11 @@
   "spoken": "Die Fläche: 7140 Quadratmeter.",
   "text": "Die Fläche: 7140 Quadratmeter."
  },
+ "85208b36e9e1f8d0": {
+  "lang": "de-DE",
+  "spoken": "Falsche Einheit! 145 m ist höher als ein Hochhaus. Richtig: 145 cm.",
+  "text": "Falsche Einheit! 145 m ist höher als ein Hochhaus. Richtig: 145 cm."
+ },
  "856175fe8c3d65e0": {
   "lang": "de-DE",
   "spoken": "Dreißigmal gewürfelt. Die Säulen sind noch ziemlich unterschiedlich.",
@@ -1389,10 +1994,25 @@
   "spoken": "Dreihundertachtundsechzig Meter sind sechsunddreißigtausendachthundert Zentimeter.",
   "text": "Dreihundertachtundsechzig Meter sind sechsunddreißigtausendachthundert Zentimeter."
  },
+ "86ee333150bf5eae": {
+  "lang": "de-DE",
+  "spoken": "Drei Freunde teilen sich sieben Euro fünfzig. Teile wie gewohnt. Wenn du über das Komma gehst, setzt du auch im Ergebnis ein Komma.",
+  "text": "Drei Freunde teilen sich sieben Euro fünfzig. Teile wie gewohnt. Wenn du über das Komma gehst, setzt du auch im Ergebnis ein Komma."
+ },
+ "874657800a8554e4": {
+  "lang": "de-DE",
+  "spoken": "Minus zwei: Hier fährt die U-Bahn.",
+  "text": "Minus zwei: Hier fährt die U-Bahn."
+ },
  "8774926f3b7f60d1": {
   "lang": "de-DE",
   "spoken": "Kanten sind die Linien, wo zwei Flächen zusammenstoßen. 12 Stück!",
   "text": "Kanten sind die Linien, wo zwei Flächen zusammenstoßen. 12 Stück!"
+ },
+ "885832449db8a0e5": {
+  "lang": "de-DE",
+  "spoken": "Zwei Komma vier fünf mal zehn: Alle Ziffern rutschen eine Stelle nach links. Vierundzwanzig Komma fünf.",
+  "text": "Zwei Komma vier fünf mal zehn: Alle Ziffern rutschen eine Stelle nach links. Vierundzwanzig Komma fünf."
  },
  "8891b19173fa3aa8": {
   "lang": "de-DE",
@@ -1414,10 +2034,20 @@
   "spoken": "Verkehrsschilder: Stopp = Achteck, Vorfahrt gewähren = Dreieck, Vorfahrtstraße = Quadrat auf der Spitze.",
   "text": "Verkehrsschilder: Stopp = Achteck, Vorfahrt gewähren = Dreieck, Vorfahrtstraße = Quadrat auf der Spitze."
  },
+ "8a854faee9cba2cd": {
+  "lang": "de-DE",
+  "spoken": "Mit dem Kehrwert: drei mal vier Drittel ist vier.",
+  "text": "Mit dem Kehrwert: drei mal vier Drittel ist vier."
+ },
  "8c0bc4a6df8ea41d": {
   "lang": "de-DE",
   "spoken": "Überstumpf: mehr als hundertachtzig Grad.",
   "text": "Überstumpf: mehr als hundertachtzig Grad."
+ },
+ "8c401a2059fc26ed": {
+  "lang": "de-DE",
+  "spoken": "Den Kehrwert bekommst du, wenn du einen Bruch auf den Kopf stellst: Zähler und Nenner tauschen den Platz.",
+  "text": "Den Kehrwert bekommst du, wenn du einen Bruch auf den Kopf stellst: Zähler und Nenner tauschen den Platz."
  },
  "8cc7036d379cbb1f": {
   "lang": "de-DE",
@@ -1444,6 +2074,11 @@
   "spoken": "Zehn Streifen. Ein Streifen ist ein Zehntel, also null Komma eins.",
   "text": "Zehn Streifen. Ein Streifen ist ein Zehntel, also null Komma eins."
  },
+ "8db1971b077e5188": {
+  "lang": "de-DE",
+  "spoken": "Fünfzehn geteilt durch drei ist fünf. Jeder bekommt zwei Euro fünfzig.",
+  "text": "Fünfzehn geteilt durch drei ist fünf. Jeder bekommt zwei Euro fünfzig."
+ },
  "8de57ce0157642aa": {
   "lang": "de-DE",
   "spoken": "WM 2009 in Berlin, 100-Meter-Finale. Wer gewinnt? Die kleinste Zeit!",
@@ -1469,6 +2104,11 @@
   "spoken": "70 Prozent Kakao: 7 von 10 Stücken sind Kakao.",
   "text": "70 Prozent Kakao: 7 von 10 Stücken sind Kakao."
  },
+ "90ed857bb92b8c9d": {
+  "lang": "de-DE",
+  "spoken": "B: minus 2 nach links, minus 5 nach unten.",
+  "text": "B: minus 2 nach links, minus 5 nach unten."
+ },
  "9158b4c3ec9abe7b": {
   "lang": "de-DE",
   "spoken": "Die Mittellinie steht senkrecht auf der langen Kante.",
@@ -1483,6 +2123,11 @@
   "lang": "de-DE",
   "spoken": "Säulen stehen, Balken liegen. Wir drehen das Diagramm einfach um!",
   "text": "Säulen stehen, Balken liegen. Wir drehen das Diagramm einfach um!"
+ },
+ "91a9ef826772760a": {
+  "lang": "de-DE",
+  "spoken": "Tippe auf Drehen und zähle mit!",
+  "text": "Tippe auf Drehen und zähle mit!"
  },
  "929626abcfd2ede1": {
   "lang": "de-DE",
@@ -1504,10 +2149,20 @@
   "spoken": "Mit der Probe prüfst du dein Ergebnis: Malnehmen ist das Gegenteil von Teilen.",
   "text": "Mit der Probe prüfst du dein Ergebnis: Malnehmen ist das Gegenteil von Teilen."
  },
+ "9345d543b1833edb": {
+  "lang": "de-DE",
+  "spoken": "Dreißig Prozent Regen: drei von zehn. Den Schirm kannst du vielleicht zu Hause lassen.",
+  "text": "Dreißig Prozent Regen: drei von zehn. Den Schirm kannst du vielleicht zu Hause lassen."
+ },
  "937e557bf50573d8": {
   "lang": "de-DE",
   "spoken": "Es gibt genau sechs solche Paare: vier, neun, vierzig, neunzig, vierhundert, neunhundert.",
   "text": "Es gibt genau sechs solche Paare: vier, neun, vierzig, neunzig, vierhundert, neunhundert."
+ },
+ "93fa7afb0f5bb753": {
+  "lang": "de-DE",
+  "spoken": "An einem heißen Sommertag zeigt das Thermometer dreißig Grad.",
+  "text": "An einem heißen Sommertag zeigt das Thermometer dreißig Grad."
  },
  "9404c0d556592eb7": {
   "lang": "de-DE",
@@ -1519,6 +2174,11 @@
   "spoken": "Jede Zahl aus der Tabelle wird eine Säule.",
   "text": "Jede Zahl aus der Tabelle wird eine Säule."
  },
+ "94d7e8ea2bd40d0e": {
+  "lang": "de-DE",
+  "spoken": "Drei geteilt durch drei Viertel fragt: Wie oft passt drei Viertel in drei? Wir springen auf dem Zahlenstrahl.",
+  "text": "Drei geteilt durch drei Viertel fragt: Wie oft passt drei Viertel in drei? Wir springen auf dem Zahlenstrahl."
+ },
  "9522e37f586397b5": {
   "lang": "de-DE",
   "spoken": "Trapez: ein Paar parallele Seiten. Drachenviereck: symmetrisch zu einer Diagonale.",
@@ -1528,6 +2188,11 @@
   "lang": "de-DE",
   "spoken": "Jede Lampe ist entweder an oder aus: eins oder null. Tippe auf die Lampen!",
   "text": "Jede Lampe ist entweder an oder aus: eins oder null. Tippe auf die Lampen!"
+ },
+ "959be100cc2889a0": {
+  "lang": "de-DE",
+  "spoken": "Zwei Komma vier durch null Komma null acht. Zwei Stellen nach rechts: zweihundertvierzig durch acht, also dreißig.",
+  "text": "Zwei Komma vier durch null Komma null acht. Zwei Stellen nach rechts: zweihundertvierzig durch acht, also dreißig."
  },
  "95b83d2cc00c2691": {
   "lang": "de-DE",
@@ -1564,6 +2229,11 @@
   "spoken": "Zu je heißt mal: drei mal a.",
   "text": "Zu je heißt mal: drei mal a."
  },
+ "96e4085710e18fc5": {
+  "lang": "de-DE",
+  "spoken": "In jeder Sekunde schaffte er etwa zehn Komma vier Meter.",
+  "text": "In jeder Sekunde schaffte er etwa zehn Komma vier Meter."
+ },
  "9713b089fb707f8f": {
   "lang": "de-DE",
   "spoken": "Verbindungsgesetz: Klammern dorthin, wo es leicht ist.",
@@ -1578,6 +2248,11 @@
   "lang": "de-DE",
   "spoken": "Im Mittel war es dreizehn Grad warm.",
   "text": "Im Mittel war es dreizehn Grad warm."
+ },
+ "9817786c3f135bce": {
+  "lang": "de-DE",
+  "spoken": "Eine gerade Linie: ein gestreckter Winkel, hundertachtzig Grad.",
+  "text": "Eine gerade Linie: ein gestreckter Winkel, hundertachtzig Grad."
  },
  "984e1d05d8fab250": {
   "lang": "de-DE",
@@ -1599,6 +2274,16 @@
   "spoken": "Würfel und Quader",
   "text": "Würfel und Quader"
  },
+ "98c40cc0d99cbdae": {
+  "lang": "de-DE",
+  "spoken": "Vorsicht: Minus zwanzig ist kleiner als minus zwölf. Es ist viel kälter!",
+  "text": "Vorsicht: Minus zwanzig ist kleiner als minus zwölf. Es ist viel kälter!"
+ },
+ "98e78b6c2075cd0c": {
+  "lang": "de-DE",
+  "spoken": "Beim Münzwurf haben beide Mannschaften dieselbe Chance: ein Halb.",
+  "text": "Beim Münzwurf haben beide Mannschaften dieselbe Chance: ein Halb."
+ },
  "98ea54197ed0ba02": {
   "lang": "de-DE",
   "spoken": "Kapitel 1. Natürliche Zahlen. Große Zahlen, schlaues Rechnen, Größen",
@@ -1609,15 +2294,30 @@
   "spoken": "Eine Pizza wird in acht gleich große Stücke geschnitten. Du nimmst drei davon. Das sind drei Achtel.",
   "text": "Eine Pizza wird in acht gleich große Stücke geschnitten. Du nimmst drei davon. Das sind drei Achtel."
  },
+ "9a4922627bc94a4c": {
+  "lang": "de-DE",
+  "spoken": "Rechtwinklig: Bei C ist jetzt genau ein rechter Winkel.",
+  "text": "Rechtwinklig: Bei C ist jetzt genau ein rechter Winkel."
+ },
  "9a7aa3e9185222c0": {
   "lang": "de-DE",
   "spoken": "Verteilt auf vier Kinder heißt geteilt durch vier.",
   "text": "Verteilt auf vier Kinder heißt geteilt durch vier."
  },
+ "9a7e8a223e7c28d1": {
+  "lang": "de-DE",
+  "spoken": "Jede Staffel braucht 4 Kinder: 21 mal 4 = 84 Kinder.",
+  "text": "Jede Staffel braucht 4 Kinder: 21 · 4 = 84 Kinder."
+ },
  "9acd11db3ee7efda": {
   "lang": "de-DE",
   "spoken": "Das grüne Quadrat ist voller. Also ist 0 Komma 5 mehr!",
   "text": "Das grüne Quadrat ist voller. Also ist 0 Komma 5 mehr!"
+ },
+ "9b2e2a5a6a713c9c": {
+  "lang": "de-DE",
+  "spoken": "An einem Januarmorgen ist es in Europa sehr unterschiedlich kalt. Wir ordnen die Temperaturen.",
+  "text": "An einem Januarmorgen ist es in Europa sehr unterschiedlich kalt. Wir ordnen die Temperaturen."
  },
  "9b379add343b8f5c": {
   "lang": "de-DE",
@@ -1634,6 +2334,21 @@
   "spoken": "Verschiebe die Zahl und schau, wohin sie rollt.",
   "text": "Verschiebe die Zahl und schau, wohin sie rollt."
  },
+ "9bda96919cca0b05": {
+  "lang": "de-DE",
+  "spoken": "Minus zwei minus sieben: noch weiter nach unten, bis minus neun Grad.",
+  "text": "Minus zwei minus sieben: noch weiter nach unten, bis minus neun Grad."
+ },
+ "9cd73cb8730ad665": {
+  "lang": "de-DE",
+  "spoken": "Jede Karte rutscht an ihren Platz auf der Zahlengeraden.",
+  "text": "Jede Karte rutscht an ihren Platz auf der Zahlengeraden."
+ },
+ "9d591d9e50f6a24b": {
+  "lang": "de-DE",
+  "spoken": "Vier Kilo kosten zwölf Euro, acht Kilo vierundzwanzig Euro.",
+  "text": "Vier Kilo kosten zwölf Euro, acht Kilo vierundzwanzig Euro."
+ },
  "9d905a8fabd09ddb": {
   "lang": "de-DE",
   "spoken": "Mit dem Lineal misst du Zentimeter und Millimeter. Das schreibt man mit Komma.",
@@ -1648,6 +2363,11 @@
   "lang": "de-DE",
   "spoken": "Zwölf Stühle sollen in gleich langen Reihen stehen. Jedes Rechteck zeigt uns zwei Teiler.",
   "text": "Zwölf Stühle sollen in gleich langen Reihen stehen. Jedes Rechteck zeigt uns zwei Teiler."
+ },
+ "9e501b0087cce161": {
+  "lang": "de-DE",
+  "spoken": "Fünf Tore geschossen, zwölf kassiert: Die Tordifferenz ist minus sieben.",
+  "text": "Fünf Tore geschossen, zwölf kassiert: Die Tordifferenz ist minus sieben."
  },
  "9e7846851f84c8ad": {
   "lang": "de-DE",
@@ -1668,6 +2388,11 @@
   "lang": "de-DE",
   "spoken": "Tausend mal tausend ist eine Million. Tausend Millionen sind eine Milliarde.",
   "text": "Tausend mal tausend ist eine Million. Tausend Millionen sind eine Milliarde."
+ },
+ "9f27a74a0d75ba98": {
+  "lang": "de-DE",
+  "spoken": "Beim Münzwurf, beim Würfeln oder am Glücksrad weißt du vorher nicht, was kommt. Aber du kennst alle möglichen Ergebnisse.",
+  "text": "Beim Münzwurf, beim Würfeln oder am Glücksrad weißt du vorher nicht, was kommt. Aber du kennst alle möglichen Ergebnisse."
  },
  "a0731dee14383450": {
   "lang": "de-DE",
@@ -1694,6 +2419,11 @@
   "spoken": "Wir legen die Primfaktoren beider Zahlen in zwei Kreise. Die Mitte ist der ggT, alles zusammen ist das kgV.",
   "text": "Wir legen die Primfaktoren beider Zahlen in zwei Kreise. Die Mitte ist der ggT, alles zusammen ist das kgV."
  },
+ "a1dbb866157b9372": {
+  "lang": "de-DE",
+  "spoken": "Rot: vier von acht Feldern. Blau: drei von acht. Gelb: eins von acht.",
+  "text": "Rot: vier von acht Feldern. Blau: drei von acht. Gelb: eins von acht."
+ },
  "a21141e2afe8b706": {
   "lang": "de-DE",
   "spoken": "So sehen die sechs Körper in echt aus. Schau genau hin: Wo sind Ecken, wo ist es rund?",
@@ -1709,6 +2439,11 @@
   "spoken": "2 Euro 50 für ein Kilo Pflaumen.",
   "text": "2 Euro 50 für ein Kilo Pflaumen."
  },
+ "a39f2c7a91ea8078": {
+  "lang": "de-DE",
+  "spoken": "Die Hälfte von einem Halb ist ein Viertel.",
+  "text": "Die Hälfte von einem Halb ist ein Viertel."
+ },
  "a3c8d38f4abcd87f": {
   "lang": "de-DE",
   "spoken": "Drei Viertel der Schokolade.",
@@ -1718,6 +2453,11 @@
   "lang": "de-DE",
   "spoken": "Kante zwei: acht Würfel. Kante drei: siebenundzwanzig Würfel.",
   "text": "Kante zwei: acht Würfel. Kante drei: siebenundzwanzig Würfel."
+ },
+ "a47136957779bdb6": {
+  "lang": "de-DE",
+  "spoken": "Durch zwei teilen heißt: mal ein Halb. Jedes Kind bekommt ein Drittel.",
+  "text": "Durch zwei teilen heißt: mal ein Halb. Jedes Kind bekommt ein Drittel."
  },
  "a501539dcb7bb1bd": {
   "lang": "de-DE",
@@ -1749,6 +2489,11 @@
   "spoken": "Im Mittel ist das Kind dreihundertfünfzehn Zentimeter weit gesprungen. Die Sprünge liegen siebenunddreißig Zentimeter auseinander.",
   "text": "Im Mittel ist das Kind dreihundertfünfzehn Zentimeter weit gesprungen. Die Sprünge liegen siebenunddreißig Zentimeter auseinander."
  },
+ "a6bf54ed82eb84e7": {
+  "lang": "de-DE",
+  "spoken": "Auch Zeit und Strecke oder Alter und Größe sind Zuordnungen.",
+  "text": "Auch Zeit und Strecke oder Alter und Größe sind Zuordnungen."
+ },
  "a6cd5517e1341648": {
   "lang": "de-DE",
   "spoken": "38 Komma 0 Grad: Das ist Fieber.",
@@ -1769,10 +2514,20 @@
   "spoken": "Kirchenfenster und Spielkarten.",
   "text": "Kirchenfenster und Spielkarten."
  },
+ "a7455fbcea124252": {
+  "lang": "de-DE",
+  "spoken": "Bei proportionalen Zuordnungen liegen alle Punkte auf einer Geraden, die im Nullpunkt beginnt.",
+  "text": "Bei proportionalen Zuordnungen liegen alle Punkte auf einer Geraden, die im Nullpunkt beginnt."
+ },
  "a75912ced82a4e3b": {
   "lang": "de-DE",
   "spoken": "Wir gehen die Urliste durch und machen für jede Antwort einen Strich.",
   "text": "Wir gehen die Urliste durch und machen für jede Antwort einen Strich."
+ },
+ "a78ea26f48c2df9d": {
+  "lang": "de-DE",
+  "spoken": "C: 5 nach rechts, minus 3 nach unten.",
+  "text": "C: 5 nach rechts, minus 3 nach unten."
  },
  "a794e1bc9c6bbb4e": {
   "lang": "de-DE",
@@ -1784,10 +2539,20 @@
   "spoken": "Wir zerlegen eine Zahl so lange, bis nur noch Primzahlen übrig sind. Egal wie man anfängt, es kommen dieselben Primzahlen heraus.",
   "text": "Wir zerlegen eine Zahl so lange, bis nur noch Primzahlen übrig sind. Egal wie man anfängt, es kommen dieselben Primzahlen heraus."
  },
+ "a85d4741985afe82": {
+  "lang": "de-DE",
+  "spoken": "Nach tausend Würfen liegt der Anteil ganz nah bei einem Sechstel.",
+  "text": "Nach tausend Würfen liegt der Anteil ganz nah bei einem Sechstel."
+ },
  "a8d52cbb60873942": {
   "lang": "de-DE",
   "spoken": "Der Mittelwert sagt, wie viel im Durchschnitt. Die Spannweite sagt, wie weit die Werte auseinanderliegen.",
   "text": "Der Mittelwert sagt, wie viel im Durchschnitt. Die Spannweite sagt, wie weit die Werte auseinanderliegen."
+ },
+ "a949a7da3c02115f": {
+  "lang": "de-DE",
+  "spoken": "Drei Viertel mal vier Drittel ist genau eins.",
+  "text": "Drei Viertel mal vier Drittel ist genau eins."
  },
  "a94fb7a04eebcfb0": {
   "lang": "de-DE",
@@ -1819,6 +2584,16 @@
   "spoken": "Wir bündeln in Zehnern. Aber es gibt auch andere Bündel – manche benutzt du jeden Tag!",
   "text": "Wir bündeln in Zehnern. Aber es gibt auch andere Bündel – manche benutzt du jeden Tag!"
  },
+ "aab694aba34bb533": {
+  "lang": "de-DE",
+  "spoken": "Und jetzt geteilt durch tausend: drei Stellen zurück nach rechts.",
+  "text": "Und jetzt geteilt durch tausend: drei Stellen zurück nach rechts."
+ },
+ "ab34236846cb5008": {
+  "lang": "de-DE",
+  "spoken": "Ein Segelboot in Quadrant eins. Wenn wir die x-Werte durch ihre Gegenzahlen ersetzen, wird das Boot an der y-Achse gespiegelt.",
+  "text": "Ein Segelboot in Quadrant eins. Wenn wir die x-Werte durch ihre Gegenzahlen ersetzen, wird das Boot an der y-Achse gespiegelt."
+ },
  "ab4d80b74a56a9ee": {
   "lang": "de-DE",
   "spoken": "Im Koordinatensystem hat jeder Punkt eine Adresse. Erst gehst du nach rechts, dann nach oben.",
@@ -1833,6 +2608,26 @@
   "lang": "de-DE",
   "spoken": "Dieselben Daten kann man als Tabelle, als Diagramm oder als Text zeigen. Jede Darstellung kann etwas besonders gut.",
   "text": "Dieselben Daten kann man als Tabelle, als Diagramm oder als Text zeigen. Jede Darstellung kann etwas besonders gut."
+ },
+ "ac7704ef88d6b6ce": {
+  "lang": "de-DE",
+  "spoken": "Minus drei plus fünf: Wir zählen fünf Striche nach oben und landen bei plus zwei Grad.",
+  "text": "Minus drei plus fünf: Wir zählen fünf Striche nach oben und landen bei plus zwei Grad."
+ },
+ "ad74ad4b230b09a8": {
+  "lang": "de-DE",
+  "spoken": "In Minecraft gibt ein Holzstamm vier Bretter.",
+  "text": "In Minecraft gibt ein Holzstamm vier Bretter."
+ },
+ "adebd6d67dfa8a22": {
+  "lang": "de-DE",
+  "spoken": "Zwölf Achtel – das sind eineinhalb Pizzen.",
+  "text": "Zwölf Achtel – das sind eineinhalb Pizzen."
+ },
+ "ae23731ffe9ce644": {
+  "lang": "de-DE",
+  "spoken": "Null Komma drei: drei von zehn Spalten.",
+  "text": "Null Komma drei: drei von zehn Spalten."
  },
  "ae4f5435ecbdb134": {
   "lang": "de-DE",
@@ -1874,6 +2669,11 @@
   "spoken": "Die leere Stelle füllen wir mit einer Null: 12 Komma 50.",
   "text": "Die leere Stelle füllen wir mit einer Null: 12 Komma 50."
  },
+ "afeebb9bf7b975db": {
+  "lang": "de-DE",
+  "spoken": "Die x-Achse geht jetzt auch nach links, die y-Achse auch nach unten. Dort stehen die negativen Zahlen.",
+  "text": "Die x-Achse geht jetzt auch nach links, die y-Achse auch nach unten. Dort stehen die negativen Zahlen."
+ },
  "b0528c7bf8ce0fcf": {
   "lang": "de-DE",
   "spoken": "Der Durchmesser geht durch den Mittelpunkt von Rand zu Rand. Er ist doppelt so lang wie der Radius.",
@@ -1899,6 +2699,11 @@
   "spoken": "Im Durchschnitt fünfundzwanzig Minuten Lesen am Tag.",
   "text": "Im Durchschnitt fünfundzwanzig Minuten Lesen am Tag."
  },
+ "b117130b8a08528e": {
+  "lang": "de-DE",
+  "spoken": "Unmöglich hat die Wahrscheinlichkeit null, sicher die Wahrscheinlichkeit eins. Alles Mögliche liegt dazwischen.",
+  "text": "Unmöglich hat die Wahrscheinlichkeit null, sicher die Wahrscheinlichkeit eins. Alles Mögliche liegt dazwischen."
+ },
  "b13c740a25fdc8da": {
   "lang": "de-DE",
   "spoken": "Kegel und Pyramide laufen oben spitz zu. Die Pyramiden in Ägypten sind über 4.000 Jahre alt.",
@@ -1908,6 +2713,16 @@
   "lang": "de-DE",
   "spoken": "Schau auf die Zahl: Wann ist der Weg am kürzesten?",
   "text": "Schau auf die Zahl: Wann ist der Weg am kürzesten?"
+ },
+ "b17a3e570114f854": {
+  "lang": "de-DE",
+  "spoken": "Manche Ereignisse treten sicher ein, manche sind nur möglich, und manche sind unmöglich.",
+  "text": "Manche Ereignisse treten sicher ein, manche sind nur möglich, und manche sind unmöglich."
+ },
+ "b1c0f661e9155329": {
+  "lang": "de-DE",
+  "spoken": "Der Fahrradrahmen und dein Geodreieck.",
+  "text": "Der Fahrradrahmen und dein Geodreieck."
  },
  "b1f5d51b9c9ba9bd": {
   "lang": "de-DE",
@@ -1939,6 +2754,11 @@
   "spoken": "Große Zahlen übersetzen wir Stelle für Stelle: Tausender, Hunderter, Zehner, Einer.",
   "text": "Große Zahlen übersetzen wir Stelle für Stelle: Tausender, Hunderter, Zehner, Einer."
  },
+ "b2d657d60080dc68": {
+  "lang": "de-DE",
+  "spoken": "Ein Kilo kostet drei Euro, zwei Kilo sechs Euro. Jeder Pfeil führt zu genau einem Preis.",
+  "text": "Ein Kilo kostet drei Euro, zwei Kilo sechs Euro. Jeder Pfeil führt zu genau einem Preis."
+ },
  "b4899219e653e404": {
   "lang": "de-DE",
   "spoken": "Schiebe durch die Jahre. Wann hat der Februar 29 Tage?",
@@ -1948,6 +2768,11 @@
   "lang": "de-DE",
   "spoken": "Im Stadion, auf dem Markt und beim Fiebermessen: Überall stehen Zahlen mit Komma.",
   "text": "Im Stadion, auf dem Markt und beim Fiebermessen: Überall stehen Zahlen mit Komma."
+ },
+ "b4b671dcfefcdbb0": {
+  "lang": "de-DE",
+  "spoken": "Drei Hefte kosten vier Euro fünfzig. Was kosten sieben Hefte? Mit dem Dreisatz rechnest du zuerst auf eins.",
+  "text": "Drei Hefte kosten vier Euro fünfzig. Was kosten sieben Hefte? Mit dem Dreisatz rechnest du zuerst auf eins."
  },
  "b4ccb1918518d413": {
   "lang": "de-DE",
@@ -1959,15 +2784,35 @@
   "spoken": "Beim Sportfest: Lena 8 Komma 4, Tim 8 Komma 0 4, Ali 8 Komma 45 Sekunden.",
   "text": "Beim Sportfest: Lena 8 Komma 4, Tim 8 Komma 0 4, Ali 8 Komma 45 Sekunden."
  },
+ "b4f8f0a09dfd8fe7": {
+  "lang": "de-DE",
+  "spoken": "Minus acht liegt links von minus drei. Also ist minus acht kleiner.",
+  "text": "Minus acht liegt links von minus drei. Also ist minus acht kleiner."
+ },
  "b595e39bc7d5b46e": {
   "lang": "de-DE",
   "spoken": "Genau: 9 Euro 51.",
   "text": "Genau: 9 Euro 51."
  },
+ "b63d3c9306c6361c": {
+  "lang": "de-DE",
+  "spoken": "Und ein halbes Kilo kostet die Hälfte von drei Euro: einen Euro fünfzig.",
+  "text": "Und ein halbes Kilo kostet die Hälfte von drei Euro: einen Euro fünfzig."
+ },
  "b661e5599ec07e76": {
   "lang": "de-DE",
   "spoken": "Bahngleise",
   "text": "Bahngleise"
+ },
+ "b691202716447c67": {
+  "lang": "de-DE",
+  "spoken": "Sieben Wertepaare, sieben Punkte.",
+  "text": "Sieben Wertepaare, sieben Punkte."
+ },
+ "b691512ca251d439": {
+  "lang": "de-DE",
+  "spoken": "Lena fährt gleichmäßig, darum liegen alle Punkte auf einer Geraden.",
+  "text": "Lena fährt gleichmäßig, darum liegen alle Punkte auf einer Geraden."
  },
  "b73c0d9c4bd4b417": {
   "lang": "de-DE",
@@ -1989,6 +2834,11 @@
   "spoken": "Die Würfelzahlen wachsen schnell: eins, acht, siebenundzwanzig, vierundsechzig, hundertfünfundzwanzig.",
   "text": "Die Würfelzahlen wachsen schnell: eins, acht, siebenundzwanzig, vierundsechzig, hundertfünfundzwanzig."
  },
+ "b82804dddbd587d5": {
+  "lang": "de-DE",
+  "spoken": "Mit dem Aufzug hoch in den dritten Stock.",
+  "text": "Mit dem Aufzug hoch in den dritten Stock."
+ },
  "b885e068d9bc3ec8": {
   "lang": "de-DE",
   "spoken": "100 Prozent sind alles – das Ganze.",
@@ -2009,10 +2859,20 @@
   "spoken": "Die Schneeflocke hat sechs Arme. Sie passt schon nach 60 Grad.",
   "text": "Die Schneeflocke hat sechs Arme. Sie passt schon nach 60 Grad."
  },
+ "ba9059ecf8a5bc35": {
+  "lang": "de-DE",
+  "spoken": "Vier mal acht Komma fünf Sekunden sind vierunddreißig Sekunden.",
+  "text": "Vier mal acht Komma fünf Sekunden sind vierunddreißig Sekunden."
+ },
  "bb1f7f23e0ab920a": {
   "lang": "de-DE",
   "spoken": "Römische Zahlen siehst du heute noch: an Gebäuden, auf Uhren, im Sport und bei Königen.",
   "text": "Römische Zahlen siehst du heute noch: an Gebäuden, auf Uhren, im Sport und bei Königen."
+ },
+ "bb71b693b3488cf3": {
+  "lang": "de-DE",
+  "spoken": "Drei mal zwei Fünftel heißt: dreimal zwei Fünftel zusammenzählen. Das sind sechs Fünftel.",
+  "text": "Drei mal zwei Fünftel heißt: dreimal zwei Fünftel zusammenzählen. Das sind sechs Fünftel."
  },
  "bb91b9fe27719fa0": {
   "lang": "de-DE",
@@ -2039,6 +2899,11 @@
   "spoken": "Die Spannweite ist der Abstand zwischen dem größten und dem kleinsten Wert.",
   "text": "Die Spannweite ist der Abstand zwischen dem größten und dem kleinsten Wert."
  },
+ "bd465aa4b584dc29": {
+  "lang": "de-DE",
+  "spoken": "Der Grundpreis zeigt, was ein Kilo kostet. So kannst du Packungen vergleichen.",
+  "text": "Der Grundpreis zeigt, was ein Kilo kostet. So kannst du Packungen vergleichen."
+ },
  "bd9a925f21ed0f19": {
   "lang": "de-DE",
   "spoken": "Der Bleistift ist 7 Komma 4 Zentimeter lang.",
@@ -2063,6 +2928,11 @@
   "lang": "de-DE",
   "spoken": "Eine Milchtüte hat einen Liter. Ein Aquarium mit sechzig mal dreißig mal dreißig Zentimetern fasst vierundfünfzig Liter.",
   "text": "Eine Milchtüte hat einen Liter. Ein Aquarium mit sechzig mal dreißig mal dreißig Zentimetern fasst vierundfünfzig Liter."
+ },
+ "be6c4a11a8b57d0d": {
+  "lang": "de-DE",
+  "spoken": "Vierundachtzig Kinder, je vier in einer Staffel.",
+  "text": "Vierundachtzig Kinder, je vier in einer Staffel."
  },
  "be7cdc4f570c2650": {
   "lang": "de-DE",
@@ -2094,6 +2964,16 @@
   "spoken": "Ein Schuhkarton ist ein Quader. Auch er hat ein Netz.",
   "text": "Ein Schuhkarton ist ein Quader. Auch er hat ein Netz."
  },
+ "c11d928a8d883fc9": {
+  "lang": "de-DE",
+  "spoken": "Mit negativen Zahlen rechnest du öfter, als du denkst: im Aufzug, mit Geld, in der Küche und auf Reisen.",
+  "text": "Mit negativen Zahlen rechnest du öfter, als du denkst: im Aufzug, mit Geld, in der Küche und auf Reisen."
+ },
+ "c138c60b2b581432": {
+  "lang": "de-DE",
+  "spoken": "Zwei Fünftel von einem Halb ist ein Fünftel.",
+  "text": "Zwei Fünftel von einem Halb ist ein Fünftel."
+ },
  "c202398d7591aaad": {
   "lang": "de-DE",
   "spoken": "Nicht jedes Netz aus sechs Quadraten wird ein Würfel. Probier es aus: Tippe ein Netz an.",
@@ -2108,6 +2988,21 @@
   "lang": "de-DE",
   "spoken": "Je zwei Stücke zusammen: sechs Achtel.",
   "text": "Je zwei Stücke zusammen: sechs Achtel."
+ },
+ "c3121ee0758469c0": {
+  "lang": "de-DE",
+  "spoken": "Drei springt über die Null und landet bei minus drei.",
+  "text": "Drei springt über die Null und landet bei minus drei."
+ },
+ "c38c1d3b13d04ee4": {
+  "lang": "de-DE",
+  "spoken": "Dreiecke kann man nach ihren Seiten ordnen: gleichseitig, gleichschenklig oder unregelmäßig.",
+  "text": "Dreiecke kann man nach ihren Seiten ordnen: gleichseitig, gleichschenklig oder unregelmäßig."
+ },
+ "c3f28b543cbc0f4c": {
+  "lang": "de-DE",
+  "spoken": "Wir legen alle gefärbten Stücke zusammen. Sechs Fünftel – das ist ein Ganzes und ein Fünftel.",
+  "text": "Wir legen alle gefärbten Stücke zusammen. Sechs Fünftel – das ist ein Ganzes und ein Fünftel."
  },
  "c460d08564269ff4": {
   "lang": "de-DE",
@@ -2124,10 +3019,30 @@
   "spoken": "Kugel und Zylinder",
   "text": "Kugel und Zylinder"
  },
+ "c4734765317d4d66": {
+  "lang": "de-DE",
+  "spoken": "Auch an der Tankstelle und im Stadion wird mit Kommazahlen malgenommen und geteilt.",
+  "text": "Auch an der Tankstelle und im Stadion wird mit Kommazahlen malgenommen und geteilt."
+ },
  "c4861f8a154da2b2": {
   "lang": "de-DE",
   "spoken": "Probier es auch mit den Toren aus!",
   "text": "Probier es auch mit den Toren aus!"
+ },
+ "c49ad07307515ada": {
+  "lang": "de-DE",
+  "spoken": "Auch mit negativen Zahlen gilt: erst x, dann y. Minus bei x heißt nach links, minus bei y heißt nach unten.",
+  "text": "Auch mit negativen Zahlen gilt: erst x, dann y. Minus bei x heißt nach links, minus bei y heißt nach unten."
+ },
+ "c4aba9d581876d68": {
+  "lang": "de-DE",
+  "spoken": "Auf der Zahlengeraden gilt: Je weiter rechts eine Zahl liegt, desto größer ist sie.",
+  "text": "Auf der Zahlengeraden gilt: Je weiter rechts eine Zahl liegt, desto größer ist sie."
+ },
+ "c4c9f0a2b5664056": {
+  "lang": "de-DE",
+  "spoken": "Bei der Münze gibt es zwei Ergebnisse: Kopf oder Zahl.",
+  "text": "Bei der Münze gibt es zwei Ergebnisse: Kopf oder Zahl."
  },
  "c50afc388be2bcd0": {
   "lang": "de-DE",
@@ -2164,6 +3079,11 @@
   "spoken": "Die Spitze kommt in den Mittelpunkt M.",
   "text": "Die Spitze kommt in den Mittelpunkt M."
  },
+ "c6ed74fa57a17fbc": {
+  "lang": "de-DE",
+  "spoken": "Sechs Zwölftel – gekürzt ein Halb.",
+  "text": "Sechs Zwölftel – gekürzt ein Halb."
+ },
  "c7250e13c859d812": {
   "lang": "de-DE",
   "spoken": "Scheitel, erster Schenkel, zweiter Schenkel – und der Winkel Alpha.",
@@ -2184,10 +3104,25 @@
   "spoken": "Auf der Skala ab 0 bis zur Zahl gehen und einen Punkt setzen.",
   "text": "Auf der Skala ab 0 bis zur Zahl gehen und einen Punkt setzen."
  },
+ "c7ed832676569e91": {
+  "lang": "de-DE",
+  "spoken": "Sechs Richtige im Lotto: eins zu fast vierzehn Millionen. Das ist sehr, sehr unwahrscheinlich.",
+  "text": "Sechs Richtige im Lotto: eins zu fast vierzehn Millionen. Das ist sehr, sehr unwahrscheinlich."
+ },
+ "c8258372b07a4c1f": {
+  "lang": "de-DE",
+  "spoken": "Der Zahlenstrahl hört bei null auf. Spiegeln wir ihn nach links, entsteht die Zahlengerade mit den negativen Zahlen.",
+  "text": "Der Zahlenstrahl hört bei null auf. Spiegeln wir ihn nach links, entsteht die Zahlengerade mit den negativen Zahlen."
+ },
  "c83ab9a95f83e215": {
   "lang": "de-DE",
   "spoken": "Ein Schuhkarton: dreißig mal zwanzig mal zehn, also sechstausend Kubikzentimeter.",
   "text": "Ein Schuhkarton: dreißig mal zwanzig mal zehn, also sechstausend Kubikzentimeter."
+ },
+ "c84d6af6e9e45178": {
+  "lang": "de-DE",
+  "spoken": "Mehr als vier: fünf und sechs. Zwei Sechstel, also ein Drittel.",
+  "text": "Mehr als vier: fünf und sechs. Zwei Sechstel, also ein Drittel."
  },
  "c87ad1cbca8935ba": {
   "lang": "de-DE",
@@ -2204,6 +3139,11 @@
   "spoken": "Wir zählen von null bis zum zweiten Schenkel.",
   "text": "Wir zählen von null bis zum zweiten Schenkel."
  },
+ "c9ba2e54a841925b": {
+  "lang": "de-DE",
+  "spoken": "Drei Viertel sind blau.",
+  "text": "Drei Viertel sind blau."
+ },
  "c9d376f65ae17fcf": {
   "lang": "de-DE",
   "spoken": "Im Diagramm sieht man sofort: Samstag ist die höchste Säule.",
@@ -2214,15 +3154,40 @@
   "spoken": "x plus sieben gleich fünfzehn. x ist der Platzhalter.",
   "text": "x plus sieben gleich fünfzehn. x ist der Platzhalter."
  },
+ "caa5c2eed07e9731": {
+  "lang": "de-DE",
+  "spoken": "Die Hälfte von drei Vierteln sind drei Achtel.",
+  "text": "Die Hälfte von drei Vierteln sind drei Achtel."
+ },
  "cacab3de8de81151": {
   "lang": "de-DE",
   "spoken": "Dieses Säulendiagramm zeigt, wie warm es in Berlin im Durchschnitt in jedem Monat ist.",
   "text": "Dieses Säulendiagramm zeigt, wie warm es in Berlin im Durchschnitt in jedem Monat ist."
  },
+ "caedef2344897fe7": {
+  "lang": "de-DE",
+  "spoken": "Minus vier und plus vier sind beide vier Schritte von der Null entfernt.",
+  "text": "Minus vier und plus vier sind beide vier Schritte von der Null entfernt."
+ },
  "cb7550ef98933173": {
   "lang": "de-DE",
   "spoken": "Bei Plus und Mal darf man tauschen und Klammern verschieben. Das macht Rechnen leichter.",
   "text": "Bei Plus und Mal darf man tauschen und Klammern verschieben. Das macht Rechnen leichter."
+ },
+ "cb80f19c6fe1cf99": {
+  "lang": "de-DE",
+  "spoken": "Und das vierte Boot: x positiv, y negativ, im Quadranten vier.",
+  "text": "Und das vierte Boot: x positiv, y negativ, im Quadranten vier."
+ },
+ "cbaa3dd5110baf16": {
+  "lang": "de-DE",
+  "spoken": "Teilst du durch eine Kommazahl, verschiebst du bei beiden Zahlen das Komma gleich weit nach rechts. Dann rechnest du ganz normal.",
+  "text": "Teilst du durch eine Kommazahl, verschiebst du bei beiden Zahlen das Komma gleich weit nach rechts. Dann rechnest du ganz normal."
+ },
+ "cbb0f30e23bf071a": {
+  "lang": "de-DE",
+  "spoken": "Dreiecke sind besonders stabil. Darum findest du sie in Brücken, Dächern, Fahrradrahmen – und dein Geodreieck ist selbst eins.",
+  "text": "Dreiecke sind besonders stabil. Darum findest du sie in Brücken, Dächern, Fahrradrahmen – und dein Geodreieck ist selbst eins."
  },
  "cbda7ccbd4f7136b": {
   "lang": "de-DE",
@@ -2238,6 +3203,11 @@
   "lang": "de-DE",
   "spoken": "Das Windrad hat drei gleiche Blätter. Es passt nach 120, 240 und 360 Grad.",
   "text": "Das Windrad hat drei gleiche Blätter. Es passt nach 120, 240 und 360 Grad."
+ },
+ "ccddc935bad1e9ba": {
+  "lang": "de-DE",
+  "spoken": "Die gestrichelte Linie ist der Meeresspiegel. Er ist die Null.",
+  "text": "Die gestrichelte Linie ist der Meeresspiegel. Er ist die Null."
  },
  "cd9130c2e13f425f": {
   "lang": "de-DE",
@@ -2258,6 +3228,11 @@
   "lang": "de-DE",
   "spoken": "Zu jedem T-Shirt passen zwei Hosen.",
   "text": "Zu jedem T-Shirt passen zwei Hosen."
+ },
+ "ce84889a58aeb7e4": {
+  "lang": "de-DE",
+  "spoken": "Ziehen, anschauen, zurücklegen. Tippe und zieh noch öfter!",
+  "text": "Ziehen, anschauen, zurücklegen. Tippe und zieh noch öfter!"
  },
  "cf206e16b380ddbd": {
   "lang": "de-DE",
@@ -2329,6 +3304,11 @@
   "spoken": "Vier Meter: beim langen Band bleiben zwei Meter übrig.",
   "text": "Vier Meter: beim langen Band bleiben zwei Meter übrig."
  },
+ "d2dfe9021f69fb26": {
+  "lang": "de-DE",
+  "spoken": "Minus eins ist kleiner als plus eins.",
+  "text": "Minus eins ist kleiner als plus eins."
+ },
  "d2f985c509988b74": {
   "lang": "de-DE",
   "spoken": "Verdeckte Kanten zeichnest du gestrichelt.",
@@ -2374,6 +3354,11 @@
   "spoken": "Geige achtmal, Trompete sechsmal, Querflöte fünfmal, Cello viermal, Klarinette dreimal, Schlagzeug zweimal.",
   "text": "Geige achtmal, Trompete sechsmal, Querflöte fünfmal, Cello viermal, Klarinette dreimal, Schlagzeug zweimal."
  },
+ "d6b5bcbf6c6f5cd2": {
+  "lang": "de-DE",
+  "spoken": "Ein Tag kostet fünfundvierzig Euro, fünf Tage zweihundertfünfundzwanzig Euro.",
+  "text": "Ein Tag kostet fünfundvierzig Euro, fünf Tage zweihundertfünfundzwanzig Euro."
+ },
  "d6cc74e13d0cef60": {
   "lang": "de-DE",
   "spoken": "Rechteck: Gegenüber gleich lang, 4 rechte Winkel",
@@ -2399,10 +3384,25 @@
   "spoken": "Und ein Drachen!",
   "text": "Und ein Drachen!"
  },
+ "d857360f02767eee": {
+  "lang": "de-DE",
+  "spoken": "Zum Malnehmen von Kommazahlen: Rechne ohne Komma und zähle dann die Kommastellen zusammen.",
+  "text": "Zum Malnehmen von Kommazahlen: Rechne ohne Komma und zähle dann die Kommastellen zusammen."
+ },
+ "d87c9d1b2ff157e8": {
+  "lang": "de-DE",
+  "spoken": "Bei null Grad gefriert Wasser zu Eis.",
+  "text": "Bei null Grad gefriert Wasser zu Eis."
+ },
  "d890252264199f79": {
   "lang": "de-DE",
   "spoken": "Zwei plus eins sind drei. Ein Viertel plus zwei Viertel sind drei Viertel.",
   "text": "Zwei plus eins sind drei. Ein Viertel plus zwei Viertel sind drei Viertel."
+ },
+ "d92608ef875e0aef": {
+  "lang": "de-DE",
+  "spoken": "Im Beutel liegen zehn Kugeln: fünf rote, drei blaue und zwei gelbe. Du ziehst eine, ohne hinzusehen.",
+  "text": "Im Beutel liegen zehn Kugeln: fünf rote, drei blaue und zwei gelbe. Du ziehst eine, ohne hinzusehen."
  },
  "d9a0742128428290": {
   "lang": "de-DE",
@@ -2424,6 +3424,11 @@
   "spoken": "Im Alltag musst du entscheiden: Brauche ich den Umfang, die Fläche, die Oberfläche oder das Volumen?",
   "text": "Im Alltag musst du entscheiden: Brauche ich den Umfang, die Fläche, die Oberfläche oder das Volumen?"
  },
+ "db7e365a7e412efc": {
+  "lang": "de-DE",
+  "spoken": "Ein Drittel von drei Vierteln ist ein Viertel.",
+  "text": "Ein Drittel von drei Vierteln ist ein Viertel."
+ },
  "db7ec2a546c2a748": {
   "lang": "de-DE",
   "spoken": "Welche Zahl ist größer? Wir vergleichen Stelle für Stelle von links.",
@@ -2433,6 +3438,11 @@
   "lang": "de-DE",
   "spoken": "Rückwärts: zwei mal drei plus eins sind sieben Drittel.",
   "text": "Rückwärts: zwei mal drei plus eins sind sieben Drittel."
+ },
+ "dd023b4bda2b1fbd": {
+  "lang": "de-DE",
+  "spoken": "A: minus 4 nach links, 3 nach oben.",
+  "text": "A: minus 4 nach links, 3 nach oben."
  },
  "de0bc0ba3643e9f4": {
   "lang": "de-DE",
@@ -2494,6 +3504,11 @@
   "spoken": "Nur noch ein Paar parallele Seiten: ein Trapez.",
   "text": "Nur noch ein Paar parallele Seiten: ein Trapez."
  },
+ "e1353f3aa62d18bd": {
+  "lang": "de-DE",
+  "spoken": "Zwei Seiten (die Schenkel) sind gleich lang. Die dritte heißt Basis.",
+  "text": "Zwei Seiten (die Schenkel) sind gleich lang. Die dritte heißt Basis."
+ },
  "e1429d4f9df1cf04": {
   "lang": "de-DE",
   "spoken": "Aus kleinen Würfeln bauen wir große Würfel: eins, acht, siebenundzwanzig, vierundsechzig.",
@@ -2544,25 +3559,55 @@
   "spoken": "Erst zwei mal drei, dann zwanzig minus sechs. Eine Differenz.",
   "text": "Erst zwei mal drei, dann zwanzig minus sechs. Eine Differenz."
  },
+ "e39e3e010f41a469": {
+  "lang": "de-DE",
+  "spoken": "Drei Viertel geteilt durch ein Achtel: drei Viertel mal acht. Das sind sechs Gläser.",
+  "text": "Drei Viertel geteilt durch ein Achtel: drei Viertel mal acht. Das sind sechs Gläser."
+ },
+ "e3bc47c2984366a4": {
+  "lang": "de-DE",
+  "spoken": "Von minus achtzehn bis null sind es achtzehn Grad, dann noch einundzwanzig. Zusammen neununddreißig Grad.",
+  "text": "Von minus achtzehn bis null sind es achtzehn Grad, dann noch einundzwanzig. Zusammen neununddreißig Grad."
+ },
  "e4450c5b688e81fa": {
   "lang": "de-DE",
   "spoken": "Welcher Weg von P zur Geraden g ist am kürzesten? Der senkrechte! Diese Strecke heißt Lot.",
   "text": "Welcher Weg von P zur Geraden g ist am kürzesten? Der senkrechte! Diese Strecke heißt Lot."
+ },
+ "e464ac07745633ba": {
+  "lang": "de-DE",
+  "spoken": "Rot: fünf von zehn, also die Hälfte. Blau: drei Zehntel. Gelb: zwei Zehntel, also ein Fünftel.",
+  "text": "Rot: fünf von zehn, also die Hälfte. Blau: drei Zehntel. Gelb: zwei Zehntel, also ein Fünftel."
  },
  "e468a971a02d53d0": {
   "lang": "de-DE",
   "spoken": "Ein Wettkampfbecken fasst zweieinhalb Millionen Liter Wasser!",
   "text": "Ein Wettkampfbecken fasst zweieinhalb Millionen Liter Wasser!"
  },
+ "e4bda6e3d71b1443": {
+  "lang": "de-DE",
+  "spoken": "Jetzt du: Zieh den Punkt herum.",
+  "text": "Jetzt du: Zieh den Punkt herum."
+ },
  "e544fdbae5c3e678": {
   "lang": "de-DE",
   "spoken": "Vier Schritte, immer im Kreis: teilen, malnehmen, abziehen, runterholen.",
   "text": "Vier Schritte, immer im Kreis: teilen, malnehmen, abziehen, runterholen."
  },
+ "e5c1e2efd5313b53": {
+  "lang": "de-DE",
+  "spoken": "Aus drei Vierteln wird vier Drittel.",
+  "text": "Aus drei Vierteln wird vier Drittel."
+ },
  "e5ccd4c60c988cc5": {
   "lang": "de-DE",
   "spoken": "Der Trick: Die Achse beginnt erst bei sechsundvierzig. Schieb den Regler auf null!",
   "text": "Der Trick: Die Achse beginnt erst bei sechsundvierzig. Schieb den Regler auf null!"
+ },
+ "e5eb620863692134": {
+  "lang": "de-DE",
+  "spoken": "Beim Würfel gibt es sechs Ergebnisse: eins bis sechs.",
+  "text": "Beim Würfel gibt es sechs Ergebnisse: eins bis sechs."
  },
  "e5f1bb994746cc80": {
   "lang": "de-DE",
@@ -2589,6 +3634,11 @@
   "spoken": "Probiere: Erweitere und kürze drei Viertel.",
   "text": "Probiere: Erweitere und kürze drei Viertel."
  },
+ "e7822f1b97353c4e": {
+  "lang": "de-DE",
+  "spoken": "Jeder Kilometer kostet zwei Euro dazu. Zwei Kilometer: acht Euro. Vier Kilometer: zwölf Euro.",
+  "text": "Jeder Kilometer kostet zwei Euro dazu. Zwei Kilometer: acht Euro. Vier Kilometer: zwölf Euro."
+ },
  "e7de86905eea07bd": {
   "lang": "de-DE",
   "spoken": "Fünf Tonnen sind fünftausend Kilogramm, das sind fünf Millionen Gramm!",
@@ -2604,6 +3654,16 @@
   "spoken": "Fertig: h steht senkrecht auf g. Rechter Winkel!",
   "text": "Fertig: h steht senkrecht auf g. Rechter Winkel!"
  },
+ "e8aaf5d51989a70d": {
+  "lang": "de-DE",
+  "spoken": "Doppelt so viel Äpfel: doppelt so teuer. Links mal zwei, rechts mal zwei.",
+  "text": "Doppelt so viel Äpfel: doppelt so teuer. Links mal zwei, rechts mal zwei."
+ },
+ "e8ca8c13e0b1a852": {
+  "lang": "de-DE",
+  "spoken": "Je weiter links, desto weiter ist die Zahl von der Null weg ins Minus.",
+  "text": "Je weiter links, desto weiter ist die Zahl von der Null weg ins Minus."
+ },
  "e97acfb35a5862ab": {
   "lang": "de-DE",
   "spoken": "Welches Instrument ist am beliebtesten? Das sieht man hier noch nicht auf einen Blick.",
@@ -2614,10 +3674,30 @@
   "spoken": "Aufklappen: sechs gleiche Quadrate.",
   "text": "Aufklappen: sechs gleiche Quadrate."
  },
+ "ea13215857819b72": {
+  "lang": "de-DE",
+  "spoken": "Eine ganze Zahl schreibst du als Bruch mit Nenner eins. Fünf wird zu einem Fünftel.",
+  "text": "Eine ganze Zahl schreibst du als Bruch mit Nenner eins. Fünf wird zu einem Fünftel."
+ },
  "ea571ae76d1ab1d0": {
   "lang": "de-DE",
   "spoken": "Hier falten wir.",
   "text": "Hier falten wir."
+ },
+ "eacda00fa1103b5e": {
+  "lang": "de-DE",
+  "spoken": "Minus vier plus sechs: sechs Schritte nach rechts. Ergebnis: zwei.",
+  "text": "Minus vier plus sechs: sechs Schritte nach rechts. Ergebnis: zwei."
+ },
+ "eafbdd13f1f0b583": {
+  "lang": "de-DE",
+  "spoken": "Kann stimmen: 300 km : 3 h = 100 km in jeder Stunde. Auf der Autobahn darf ein Reisebus bis zu 100 km/h fahren.",
+  "text": "Kann stimmen: 300 km : 3 h = 100 km in jeder Stunde. Auf der Autobahn darf ein Reisebus bis zu 100 km/h fahren."
+ },
+ "eb5794a95ddaf64b": {
+  "lang": "de-DE",
+  "spoken": "Aus drei, sechs wird minus drei, sechs. Das Boot fährt jetzt nach links.",
+  "text": "Aus drei, sechs wird minus drei, sechs. Das Boot fährt jetzt nach links."
  },
  "eba4745a7f582aca": {
   "lang": "de-DE",
@@ -2638,6 +3718,11 @@
   "lang": "de-DE",
   "spoken": "Der Größe nach geordnet: achtundneunzig, hundertsiebenundfünfzig, dreihundertdreißig, dreihundertachtundsechzig Meter.",
   "text": "Der Größe nach geordnet: achtundneunzig, hundertsiebenundfünfzig, dreihundertdreißig, dreihundertachtundsechzig Meter."
+ },
+ "ee8a6e7f52e99c99": {
+  "lang": "de-DE",
+  "spoken": "Auf dem Blech liegt noch drei Viertel Kuchen. Leon isst die Hälfte davon. Wie viel vom ganzen Blech ist das?",
+  "text": "Auf dem Blech liegt noch drei Viertel Kuchen. Leon isst die Hälfte davon. Wie viel vom ganzen Blech ist das?"
  },
  "eeae14ddf783abf5": {
   "lang": "de-DE",
@@ -2674,6 +3759,11 @@
   "spoken": "Je nachdem, wie weit ein Winkel geöffnet ist, hat er einen anderen Namen. Dreh den Schenkel und hör genau hin!",
   "text": "Je nachdem, wie weit ein Winkel geöffnet ist, hat er einen anderen Namen. Dreh den Schenkel und hör genau hin!"
  },
+ "f2ee8e9512518496": {
+  "lang": "de-DE",
+  "spoken": "Mit den vier Schritten lösen wir zwei Aufgaben aus dem Alltag: eine BVG-Fahrt und ein Sportfest.",
+  "text": "Mit den vier Schritten lösen wir zwei Aufgaben aus dem Alltag: eine BVG-Fahrt und ein Sportfest."
+ },
  "f3044e8cc8d13037": {
   "lang": "de-DE",
   "spoken": "P vier drei: vier nach rechts, drei nach oben.",
@@ -2684,6 +3774,21 @@
   "spoken": "Gegenüberliegende Seiten ergeben zusammen sieben.",
   "text": "Gegenüberliegende Seiten ergeben zusammen sieben."
  },
+ "f3f195364b7f741f": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 12. Zuordnungen und Zufall. Ausblick auf Klasse 6: Dreisatz und Wahrscheinlichkeit",
+  "text": "Kapitel 12. Zuordnungen und Zufall. Ausblick auf Klasse 6: Dreisatz und Wahrscheinlichkeit"
+ },
+ "f45b00e5b414435c": {
+  "lang": "de-DE",
+  "spoken": "Ein Sprung ist drei Viertel lang. Wir zählen die Sprünge bis drei.",
+  "text": "Ein Sprung ist drei Viertel lang. Wir zählen die Sprünge bis drei."
+ },
+ "f4db8741fafa2a1f": {
+  "lang": "de-DE",
+  "spoken": "Vier minus sechs: sechs Striche nach unten. Ergebnis: minus zwei Grad.",
+  "text": "Vier minus sechs: sechs Striche nach unten. Ergebnis: minus zwei Grad."
+ },
  "f57d8e6e7a58cc15": {
   "lang": "de-DE",
   "spoken": "Sieben plus vier mal fünf: Punkt vor Strich. Erst vier mal fünf, dann plus sieben.",
@@ -2693,6 +3798,16 @@
   "lang": "de-DE",
   "spoken": "Wir drehen das Parallelogramm um den Punkt Z – eine halbe Drehung.",
   "text": "Wir drehen das Parallelogramm um den Punkt Z – eine halbe Drehung."
+ },
+ "f5f03fe57dc765ab": {
+  "lang": "de-DE",
+  "spoken": "Du hast zwanzig Euro auf dem Konto.",
+  "text": "Du hast zwanzig Euro auf dem Konto."
+ },
+ "f6b8dbd86c8b99bd": {
+  "lang": "de-DE",
+  "spoken": "Wahrscheinlichkeiten begegnen dir beim Spielen, beim Fußball, in der Wetter-App und beim Lotto.",
+  "text": "Wahrscheinlichkeiten begegnen dir beim Spielen, beim Fußball, in der Wetter-App und beim Lotto."
  },
  "f7444b845b86799c": {
   "lang": "de-DE",
@@ -2709,6 +3824,11 @@
   "spoken": "Vierundsiebzig mal tausend ist vierundsiebzigtausend. Fast genau richtig!",
   "text": "Vierundsiebzig mal tausend ist vierundsiebzigtausend. Fast genau richtig!"
  },
+ "f8349503e9a36205": {
+  "lang": "de-DE",
+  "spoken": "Mit zehn Jahren ist ein Kind etwa einhundertvierzig Zentimeter groß.",
+  "text": "Mit zehn Jahren ist ein Kind etwa einhundertvierzig Zentimeter groß."
+ },
  "f871b7832e5f2c8f": {
   "lang": "de-DE",
   "spoken": "Mia hat die meisten Stimmen.",
@@ -2723,6 +3843,11 @@
   "lang": "de-DE",
   "spoken": "Auf Ganze runden: Die 4 ist kleiner als 5 – also abrunden auf 2.",
   "text": "Auf Ganze runden: Die 4 ist kleiner als 5 – also abrunden auf 2."
+ },
+ "f8dd2a6007b984cf": {
+  "lang": "de-DE",
+  "spoken": "Ein Ergebnis muss zur Geschichte passen. Ein schneller Überschlag zeigt dir, ob du dich verrechnet hast.",
+  "text": "Ein Ergebnis muss zur Geschichte passen. Ein schneller Überschlag zeigt dir, ob du dich verrechnet hast."
  },
  "f9271ae1343c99be": {
   "lang": "de-DE",
@@ -2744,6 +3869,11 @@
   "spoken": "Zehn hoch drei ist tausend. Fünf hoch zwei ist fünfundzwanzig. Drei hoch vier ist einundachtzig.",
   "text": "Zehn hoch drei ist tausend. Fünf hoch zwei ist fünfundzwanzig. Drei hoch vier ist einundachtzig."
  },
+ "fa436491198fcf61": {
+  "lang": "de-DE",
+  "spoken": "Wir stellen einen Spiegel an die Null.",
+  "text": "Wir stellen einen Spiegel an die Null."
+ },
  "faad2e5f3683dd28": {
   "lang": "de-DE",
   "spoken": "Schieb den Regler oder zieh an den Ecken. Der Name des Vierecks ändert sich, sobald sich seine Eigenschaften ändern.",
@@ -2759,20 +3889,50 @@
   "spoken": "Zehn plus zehn plus fünf plus eins plus eins: siebenundzwanzig.",
   "text": "Zehn plus zehn plus fünf plus eins plus eins: siebenundzwanzig."
  },
+ "fb6960980a70e26d": {
+  "lang": "de-DE",
+  "spoken": "Von kalt nach warm: minus fünfzehn, minus neun, minus vier, null, zwei, sechs.",
+  "text": "Von kalt nach warm: minus fünfzehn, minus neun, minus vier, null, zwei, sechs."
+ },
  "fb7297f7f41c25a3": {
   "lang": "de-DE",
   "spoken": "Quadrat: 4 gleich lange Seiten, 4 rechte Winkel",
   "text": "Quadrat: 4 gleich lange Seiten, 4 rechte Winkel"
+ },
+ "fb979db63f9f0d98": {
+  "lang": "de-DE",
+  "spoken": "Schon beim Einsteigen kostet es vier Euro.",
+  "text": "Schon beim Einsteigen kostet es vier Euro."
  },
  "fc3a371fc3e3ec10": {
   "lang": "de-DE",
   "spoken": "Und tausend Tausender sind eine Million!",
   "text": "Und tausend Tausender sind eine Million!"
  },
+ "fce4fdb93c2f985e": {
+  "lang": "de-DE",
+  "spoken": "Spitzwinklig: Alle drei Winkel sind kleiner als neunzig Grad.",
+  "text": "Spitzwinklig: Alle drei Winkel sind kleiner als neunzig Grad."
+ },
+ "fd196dbcce05494c": {
+  "lang": "de-DE",
+  "spoken": "Probier den Regler: Wie viel Milch brauchen zwölf Personen?",
+  "text": "Probier den Regler: Wie viel Milch brauchen zwölf Personen?"
+ },
  "fd5d28d73cf3ce08": {
   "lang": "de-DE",
   "spoken": "Die Kasse druckt: Milch, Brot, Äpfel, Bananen, Schokolade.",
   "text": "Die Kasse druckt: Milch, Brot, Äpfel, Bananen, Schokolade."
+ },
+ "fd690b008da72fb3": {
+  "lang": "de-DE",
+  "spoken": "Das Pfannkuchen-Rezept ist für vier Personen. Ihr seid aber sechs! Mit dem Dreisatz rechnest du das Rezept um.",
+  "text": "Das Pfannkuchen-Rezept ist für vier Personen. Ihr seid aber sechs! Mit dem Dreisatz rechnest du das Rezept um."
+ },
+ "fda61a6f5886c574": {
+  "lang": "de-DE",
+  "spoken": "Minus fünfzehn plus fünfundzwanzig: Jetzt hast du zehn Euro Guthaben.",
+  "text": "Minus fünfzehn plus fünfundzwanzig: Jetzt hast du zehn Euro Guthaben."
  },
  "fdb3fd28817de07a": {
   "lang": "de-DE",
@@ -2784,6 +3944,11 @@
   "spoken": "Sieben mal zwanzig plus sieben mal drei. Hundertvierzig plus einundzwanzig ist hunderteinundsechzig.",
   "text": "Sieben mal zwanzig plus sieben mal drei. Hundertvierzig plus einundzwanzig ist hunderteinundsechzig."
  },
+ "fe8e2394d1d2f864": {
+  "lang": "de-DE",
+  "spoken": "Der Betrag einer Zahl ist ihr Abstand zur Null. Er ist nie negativ.",
+  "text": "Der Betrag einer Zahl ist ihr Abstand zur Null. Er ist nie negativ."
+ },
  "fe97b0add8471939": {
   "lang": "de-DE",
   "spoken": "Eine Gleichung ist wie eine Waage im Gleichgewicht. Was links und rechts liegt, ist gleich viel.",
@@ -2793,6 +3958,11 @@
   "lang": "de-DE",
   "spoken": "Von null bis hunderttausend. Jetzt sieht man drei Stadien.",
   "text": "Von null bis hunderttausend. Jetzt sieht man drei Stadien."
+ },
+ "fee46468b9e5b945": {
+  "lang": "de-DE",
+  "spoken": "Bei einer Sachaufgabe steckt die Rechnung in einer Geschichte. Mit vier Schritten findest du sie.",
+  "text": "Bei einer Sachaufgabe steckt die Rechnung in einer Geschichte. Mit vier Schritten findest du sie."
  },
  "feff4d0ff9653696": {
   "lang": "de-DE",

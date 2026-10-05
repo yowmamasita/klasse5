@@ -1,4 +1,5 @@
-/* Kapitel 3 – Rhythmus und Takt (Berliner Rahmenlehrplan Musik, Klasse 5–6) */
+/* Kapitel 3 – Rhythmus und Takt (Berliner Rahmenlehrplan Musik, Klasse 5–6)
+   Ergänzt 2026-10-05: „Musik und Bewegung“ (Puls gehen, Tänze und Taktarten, Choreografie in Achtern, Tänze der Welt) */
 (() => {
   "use strict";
   const C = "#7b4fd6", SOFT = "#ece5fb", RED = "#dc3b2a", ORANGE = "#ee7a1a", INK = "#1b2740", PENCIL = "#5d6678", GREEN = "#138a5a", BLUE = "#1d5bd0";
@@ -133,11 +134,49 @@
   const btn = (s, label, onclick, solid = false) => s.h("button", { class: "btn" + (solid ? " solid" : ""), onclick }, label);
   const flash = (s, el, attr, from, to, dur = 260) => s.tween({ from, to, dur, ease: "out", update: v => el.setAttribute(attr, v) });
 
+  /* ---------- stick-figure dancer (front view). Hip at local 0/0, feet on y = 70. Pose = hand/foot points + dx/dy/sc/flip ---------- */
+  const STAND = { dx: 0, dy: 0, sc: 1, flip: 1, hL: [-30, -6], hR: [30, -6], fL: [-14, 70], fR: [14, 70] };
+  const pose = o => Object.assign({}, STAND, { hL: STAND.hL.slice(), hR: STAND.hR.slice(), fL: STAND.fL.slice(), fR: STAND.fR.slice() }, o);
+  const ARMS = { up: { hL: [-42, -112], hR: [42, -112] }, high: { hL: [-14, -134], hR: [14, -134] }, clap: { hL: [-3, -62], hR: [3, -62] }, out: { hL: [-62, -58], hR: [62, -58] }, hip: { hL: [-24, -18], hR: [24, -18] } };
+  function dancer(s, color, { x = 0, y = 0, k = 1 } = {}) {
+    const g = s.el("g"), body = s.el("g");
+    const limb = w => s.el("path", { fill: "none", stroke: INK, "stroke-width": w, "stroke-linecap": "round", "stroke-linejoin": "round" });
+    const legL = limb(8), legR = limb(8), armL = limb(7), armR = limb(7);
+    const torso = s.el("line", { x1: 0, y1: 0, x2: 0, y2: -58, stroke: color, "stroke-width": 20, "stroke-linecap": "round" });
+    const head = s.el("circle", { cx: 0, cy: -84, r: 17, fill: "#f6d2b0", stroke: INK, "stroke-width": 3.5 });
+    const hair = s.el("path", { d: "M-17,-86 Q-16,-104 0,-103 Q16,-104 17,-86 Q8,-96 0,-95 Q-8,-96 -17,-86 Z", fill: "#4a3222" });
+    body.append(legL, legR, torso, armL, armR, head, hair);
+    g.append(body);
+    let cur = pose({}), tgt = pose({}), speed = 14;
+    const draw = p => {
+      const sh = -54;
+      armL.setAttribute("d", `M-8,${sh} Q${(p.hL[0] - 8) / 2 - 16},${(sh + p.hL[1]) / 2 + 4} ${p.hL[0]},${p.hL[1]}`);
+      armR.setAttribute("d", `M8,${sh} Q${(p.hR[0] + 8) / 2 + 16},${(sh + p.hR[1]) / 2 + 4} ${p.hR[0]},${p.hR[1]}`);
+      legL.setAttribute("d", `M-7,2 Q${(p.fL[0] - 7) / 2 - 8},${(p.fL[1] + 2) / 2} ${p.fL[0]},${p.fL[1]} l-9,0`);
+      legR.setAttribute("d", `M7,2 Q${(p.fR[0] + 7) / 2 + 8},${(p.fR[1] + 2) / 2} ${p.fR[0]},${p.fR[1]} l9,0`);
+      const f = Math.abs(p.flip) < 0.08 ? 0.08 * Math.sign(p.flip || 1) : p.flip;
+      g.setAttribute("transform", `translate(${x + p.dx * k},${y + p.dy * k}) scale(${f * k * p.sc},${k * p.sc})`);
+      hair.setAttribute("opacity", p.flip < 0 ? 1 : 0.95);
+      head.setAttribute("fill", p.flip < 0 ? "#4a3222" : "#f6d2b0");
+    };
+    const mix = (a, b, t) => ({ dx: s.lerp(a.dx, b.dx, t), dy: s.lerp(a.dy, b.dy, t), sc: s.lerp(a.sc, b.sc, t), flip: s.lerp(a.flip, b.flip, t),
+      hL: [s.lerp(a.hL[0], b.hL[0], t), s.lerp(a.hL[1], b.hL[1], t)], hR: [s.lerp(a.hR[0], b.hR[0], t), s.lerp(a.hR[1], b.hR[1], t)],
+      fL: [s.lerp(a.fL[0], b.fL[0], t), s.lerp(a.fL[1], b.fL[1], t)], fR: [s.lerp(a.fR[0], b.fR[0], t), s.lerp(a.fR[1], b.fR[1], t)] });
+    draw(cur);
+    return {
+      g,
+      /** move smoothly to a pose (the slide's loop calls tick) */
+      go(p, sp = 14) { tgt = p; speed = sp; if (s.fast) { cur = p; draw(cur); } },
+      set(p) { cur = tgt = p; draw(cur); },
+      tick(dt) { cur = mix(cur, tgt, Math.min(1, dt * speed)); draw(cur); },
+    };
+  }
+
   Deck.unit({
     id: "u3", num: 3, title: "Rhythmus und Takt", color: C, soft: SOFT,
     subtitle: "Musik hat einen Herzschlag",
-    blurb: "Puls, Notenwerte, Takt – und dein eigener Beat.",
-    goals: ["Den Puls fühlen und das Tempo erkennen", "Notenwerte und Pausen lesen", "2/4-, 3/4- und 4/4-Takt unterscheiden", "Punktierte Noten, Auftakt und Synkope verstehen", "Eigene Rhythmen bauen – mit Drums und Körper"],
+    blurb: "Puls, Notenwerte, Takt, Tanz – und dein eigener Beat.",
+    goals: ["Den Puls fühlen und das Tempo erkennen", "Notenwerte und Pausen lesen", "2/4-, 3/4- und 4/4-Takt unterscheiden", "Punktierte Noten, Auftakt und Synkope verstehen", "Eigene Rhythmen bauen – mit Drums und Körper", "Sich zur Musik bewegen: Walzer, Marsch, Polka und eine Choreografie"],
     icon(svg, el) {
       svg.append(el("circle", { cx: 35, cy: 35, r: 30, fill: C, opacity: .14 }));
       [16, 30, 44, 58].forEach((x, i) => svg.append(el("rect", { x: x - 5, y: i === 0 ? 14 : 26, width: 10, height: i === 0 ? 42 : 30, rx: 4, fill: i === 0 ? RED : C })));
@@ -714,6 +753,239 @@
           s.step(async () => { for (const n of ["stampfen", "patschen", "klatschen", "schnipsen"]) { hit(n); await s.wait(380); } s.say("Je höher am Körper, desto heller der Klang."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(lane, "up"); play.click(); });
           s.step(async () => { s.sfx.pop(); await s.show(life, "up"); });
+        },
+      },
+      /* 11b ---------------------------------------------------------------- */
+      {
+        title: "Im Puls gehen, auf 1 klatschen",
+        say: "Bewegung hilft dir, den Puls zu fühlen. Geh bei jedem Schlag einen Schritt. Und klatsch nur auf die Eins.",
+        build(s) {
+          const K = kit(s), P = Player(s);
+          const svg = s.svg(480, 400);
+          const dots = [];
+          for (let i = 0; i < 4; i++) {
+            const x = 240 + (i - 1.5) * 84, c = s.el("circle", { cx: x, cy: 34, r: i === 0 ? 28 : 20, fill: i === 0 ? RED : C, opacity: .3 });
+            svg.append(c, s.el("text", { x, y: i === 0 ? 43 : 41, "text-anchor": "middle", "font-size": i === 0 ? 26 : 21, "font-weight": 800, fill: "#fff", text: i + 1 }));
+            dots.push(c);
+          }
+          svg.append(s.el("rect", { x: 0, y: 352, width: 480, height: 44, rx: 10, fill: SOFT }));
+          const stripes = s.el("g");
+          for (let k = 0; k < 14; k++) stripes.append(s.el("rect", { x: k * 40, y: 366, width: 18, height: 16, rx: 4, fill: "#cdbcf3" }));
+          svg.append(stripes);
+          const D = dancer(s, C, { x: 240, y: 262, k: 1.45 });
+          const burst = s.el("g", { opacity: 0 });
+          [[-1, -1], [1, -1], [-1.3, 0], [1.3, 0], [0, -1.4]].forEach(([dx, dy]) => burst.append(s.el("line", { x1: 240 + dx * 30, y1: 172 + dy * 26, x2: 240 + dx * 52, y2: 172 + dy * 44, stroke: ORANGE, "stroke-width": 5, "stroke-linecap": "round" })));
+          svg.append(D.g, burst);
+          const cap = s.el("text", { x: 240, y: 90, "text-anchor": "middle", "font-size": 22, "font-weight": 700, fill: PENCIL, text: "Drück auf ▶" });
+          svg.append(cap);
+          let mode = "listen", foot = 0, bpm = 96, off = 0;
+          s.loop((t, dt) => { D.tick(dt); if (P.playing && mode !== "listen") { off = (off + dt * 46 * bpm / 60) % 40; stripes.setAttribute("transform", `translate(${-off} 0)`); } });
+          const beat = i => {
+            dots.forEach((d, j) => d.setAttribute("opacity", j === i ? 1 : .3)); flash(s, dots[i], "r", (i === 0 ? 28 : 20) * 1.3, i === 0 ? 28 : 20, 260);
+            if (mode === "listen") { D.go(pose({ dy: 5 }), 22); s.wait(120).then(() => s.alive && D.go(pose({}), 8)); return; }
+            foot = 1 - foot;
+            const step = foot ? { fL: [-12, 50], hL: [-24, -24], hR: [34, 4] } : { fR: [12, 50], hR: [24, -24], hL: [-34, 4] };
+            if (mode === "clap" && i === 0) { D.go(pose(Object.assign({}, step, ARMS.clap)), 26); burst.setAttribute("opacity", 1); s.tween({ from: 1, to: 0, dur: 380, update: v => burst.setAttribute("opacity", v) }); }
+            else D.go(pose(step), 12);
+          };
+          const start = m => {
+            mode = m; foot = 0;
+            cap.textContent = { listen: "Hör den Puls", walk: "Ein Schritt pro Schlag", clap: "Klatschen auf die 1" }[m];
+            P.play([0, 1, 2, 3].map(i => ({ b: i, d: 1, snd: w => {
+              K.kick(w, i === 0 ? .8 : .55); if (i === 0) K.note(-24, .35, w, .22); if (i === 2) K.note(-17, .35, w, .2);
+              if (mode !== "listen") K.step(w); if (mode === "clap" && i === 0) K.clap(w, .45);
+            }, vis: () => beat(i) })).concat([0, 1, 2, 3].map(i => ({ b: i + .5, d: .5, snd: w => K.hat(w) }))), { bpm, length: 4, loop: true, end: () => { dots.forEach(d => d.setAttribute("opacity", .3)); D.go(pose({}), 8); } });
+          };
+          const bW = btn(s, "▶ Gehen", () => start("walk"), true), bC = btn(s, "▶ + Klatschen", () => start("clap")), bS = btn(s, "■", () => { P.stop(); s.sfx.click(); });
+          const sl = s.slider({ label: "Tempo", min: 70, max: 130, step: 2, value: 96, fmt: v => v + " BPM", onInput: v => { bpm = v; P.setBpm(v); } });
+          const left = s.h("div", { class: "stack", style: { gap: "8px" } }, svg, s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "10px" } }, bW, bC, bS), sl);
+          const card = (lab, txt) => s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, lab), s.h("p", { class: "small" }, txt));
+          const c1 = card("1 · Hören", "Hör auf die Bassdrum: Sie spielt den Puls. Nick mit dem Kopf mit.");
+          const c2 = card("2 · Gehen", "Bei jedem Schlag ein Schritt: links, rechts, links, rechts. Schneller Puls = schnelle Schritte.");
+          const c3 = card("3 · Klatschen", "Jetzt klatschst du nur auf die 1. So spürst du, wo jeder Takt anfängt.");
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.h("p", { class: "small" }, "Beim Umzug läuft die Blaskapelle im Gleichschritt. Beim Seilspringen gibt das Seil den Puls vor. Und beim Joggen mit Musik kannst du deine Schritte dem Beat anpassen."));
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "480px 1fr", alignItems: "center", gap: "30px", height: "100%" } }, left,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("p", { class: "big a-up" }, "Der Körper fühlt den Puls"), c1, c2, c3, life)));
+          s.show(svg, "up"); s.sfx.pop();
+          s.step(async () => { s.sfx.pop(); await s.show(c1, "left"); start("listen"); s.say("Hör erst nur zu."); });
+          s.step(async () => { s.sfx.pop(); await s.show(c2, "left"); start("walk"); s.say("Jetzt gehst du im Puls."); });
+          s.step(async () => { s.sfx.pop(); await s.show(c3, "left"); start("clap"); s.say("Und auf die Eins wird geklatscht."); });
+          s.step(async () => { P.stop(); s.sfx.ding(); await s.show(life, "up"); });
+        },
+      },
+      /* 11c ---------------------------------------------------------------- */
+      {
+        title: "Tänze und ihre Takte",
+        say: "Jeder Tanz hat seinen Takt. Der Walzer hat drei Schläge, Marsch und Polka haben zwei.",
+        build(s) {
+          const K = kit(s), P = Player(s);
+          const ticks = [];
+          s.loop((t, dt) => ticks.forEach(f => f(dt)));
+          const mk = (n, name, html, bpm, events, len, moves, label, lead = 0) => {
+            const sig = s.h("div", { style: { display: "flex", flexDirection: "column", alignItems: "center", font: "800 36px/1 var(--f-display)", color: C } }, s.h("span", null, String(n)), s.h("span", { style: { borderTop: "4px solid " + C, paddingTop: "3px" } }, "4"));
+            const svg = s.svg(300, 170);
+            svg.append(s.el("ellipse", { cx: 150, cy: 160, rx: 120, ry: 10, fill: SOFT }));
+            const D = dancer(s, n === 3 ? C : n === 2 && name === "Marsch" ? BLUE : ORANGE, { x: 150, y: 100, k: .9 });
+            ticks.push(dt => D.tick(dt));
+            const ds = [];
+            for (let i = 0; i < n; i++) { const c = s.el("circle", { cx: 260 - (n - 1 - i) * 30, cy: 20, r: i === 0 ? 12 : 9, fill: i === 0 ? RED : C, opacity: .3 }); svg.append(c); ds.push(c); }
+            svg.append(D.g);
+            const b = btn(s, "▶ " + label, () => {
+              const ev = events(K).slice();
+              let bar = 0;
+              for (let q = 0; q < len; q++) ev.push({ b: q, d: 1, vis: () => { const i = (q + lead) % n; if (i === 0) bar++; ds.forEach((d, j) => d.setAttribute("opacity", j === i ? 1 : .3)); D.go(moves(i, bar, q), n === 3 ? 9 : 14); } });
+              P.play(ev, { bpm, length: len, end: () => { ds.forEach(d => d.setAttribute("opacity", .3)); D.go(pose({}), 8); } });
+            }, true);
+            b.style.alignSelf = "center";
+            return s.h("div", { class: "card", style: { display: "flex", flexDirection: "column", alignItems: "stretch", gap: "6px", padding: "12px 16px" } },
+              s.h("div", { class: "row", style: { flexWrap: "nowrap", justifyContent: "center", gap: "18px" } }, sig, s.h("p", { class: "h2" }, name)), svg,
+              s.h("p", { class: "small", style: { flex: 1 }, html }), b);
+          };
+          // Walzer: Anfang des Donauwalzers (Johann Strauss Sohn, 1867 – gemeinfrei), vereinfacht, D-Dur. Takt 1 beginnt auf Schlag 3 (Auftakt auf 2).
+          const D4 = -10, FIS4 = -6, A4 = -3, A5 = 9, FIS5 = 6;
+          const walzer = K => {
+            const ev = [[2, D4, 1], [3, D4, 1], [4, FIS4, 1], [5, A4, 1], [6, A4, 3], [10, A5, 1], [11, A5, 1], [13, FIS5, 1], [14, FIS5, 1]]
+              .map(([b, n, d]) => ({ b, d, snd: (w, sec) => K.note(n, sec * .9, w, .24) }));
+            for (let bar = 0; bar < 5; bar++) { const b0 = 3 + bar * 3; ev.push({ b: b0, d: 1, snd: w => K.note(-22, .4, w, .22) }, { b: b0 + 1, d: 1, snd: w => { K.note(-6, .14, w, .08); K.note(-3, .14, w, .08); } }, { b: b0 + 2, d: 1, snd: w => { K.note(-6, .14, w, .08); K.note(-3, .14, w, .08); } }); }
+            return ev.map(e => Object.assign({}, e, { b: e.b - 2 }));
+          };
+          const walzerMove = (i, bar) => i === 0 ? pose(Object.assign({ dy: 6, flip: bar % 2 ? -1 : 1, fL: [-20, 66], fR: [20, 66] }, ARMS.out)) : pose(Object.assign({ dy: -5, flip: bar % 2 ? -1 : 1 }, ARMS.out));
+          const marsch = K => {
+            const mel = [[0, -5, .5], [.5, 0, .5], [1, 4, .5], [1.5, 0, .5], [2, 7, 1], [3, 4, 1], [4, 5, .5], [4.5, 4, .5], [5, 2, .5], [5.5, -1, .5], [6, 0, 1]];
+            const ev = mel.map(([b, n, d]) => ({ b, d, snd: (w, sec) => K.note(n, sec * .8, w, .2) }));
+            for (let b = 0; b < 8; b++) ev.push({ b, d: 1, snd: w => { if (b % 2 === 0) { K.kick(w, .8); K.note(b % 4 === 0 ? -24 : -29, .3, w, .2); } else K.snare(w); } });
+            return ev;
+          };
+          const marschMove = i => i === 0 ? pose({ fL: [-12, 40], hL: [-20, -40], hR: [34, 0] }) : pose({ fR: [12, 40], hR: [20, -40], hL: [-34, 0] });
+          const polka = K => {
+            const mel = [[0, 4, .5], [.5, 5, .5], [1, 7, .5], [1.5, 7, .5], [2, 9, .5], [2.5, 7, .5], [3, 4, 1], [4, 2, .5], [4.5, 4, .5], [5, 5, .5], [5.5, 5, .5], [6, 7, .5], [6.5, 5, .5], [7, 2, 1]];
+            const ev = mel.map(([b, n, d]) => ({ b, d, snd: (w, sec) => K.note(n, sec * .8, w, .2) }));
+            for (let b = 0; b < 8; b++) ev.push({ b, d: 1, snd: w => { if (b % 2 === 0) K.note(b < 4 ? -24 : -29, .25, w, .22); else { K.note(-8, .12, w, .09); K.note(-5, .12, w, .09); } } });
+            return ev;
+          };
+          const polkaMove = (i, bar, q) => pose(Object.assign({ dy: -14, dx: q % 4 < 2 ? -10 : 10 }, i === 0 ? { fL: [-18, 58], fR: [14, 70] } : { fR: [18, 58], fL: [-14, 70] }, ARMS.hip));
+          const cW = mk(3, "Walzer", "<b>Um – pa – pa.</b> Paare drehen sich im Kreis. Johann Strauss (Sohn) schrieb 1867 in Wien den Walzer „An der schönen blauen Donau“. Hier: der Anfang, vereinfacht.", 168, walzer, 16, walzerMove, "Donauwalzer", 2);
+          const cM = mk(2, "Marsch", "<b>Links – rechts.</b> Zwei Schläge, wie zwei Füße. Beim „Radetzky-Marsch“ (1848) von Johann Strauss (Vater) klatscht das Publikum im Wiener Neujahrskonzert mit.", 112, marsch, 8, marschMove, "Marsch");
+          const cP = mk(2, "Polka", "<b>Hopsen im 2/4-Takt.</b> Die Polka kommt aus Böhmen (um 1830). Johann Strauss (Sohn) schrieb zum Beispiel die „Tritsch-Tratsch-Polka“ (1858).", 120, polka, 8, polkaMove, "Polka");
+          cM.classList.add("later"); cP.classList.add("later");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Der Takt verrät den Tanz: ", s.h("b", null, "3 Schläge"), " → Walzer. ", s.h("b", null, "2 Schläge"), " → Marsch oder Polka. Die Musik zeigt den Füßen, was sie tun sollen.");
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3" }, cW, cM, cP), merk));
+          s.show(cW, "up"); s.sfx.pop();
+          s.step(async () => { cW.querySelector("button").click(); s.say("Der Donauwalzer: Um pa pa."); });
+          s.step(async () => { s.sfx.pop(); await s.show(cM, "up"); cM.querySelector("button").click(); s.say("Der Marsch: links, rechts."); });
+          s.step(async () => { s.sfx.pop(); await s.show(cP, "up"); cP.querySelector("button").click(); s.say("Die Polka hüpft im Zweivierteltakt."); });
+          s.step(async () => { P.stop(); s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 11d ---------------------------------------------------------------- */
+      {
+        title: "Eine Choreografie in Achtern",
+        say: "Tänzer zählen in Achtern: acht Schläge sind ein Block. Aus vier Blöcken baut ihr eine Klassen-Choreografie.",
+        build(s) {
+          const K = kit(s), P = Player(s);
+          const cells = Array.from({ length: 8 }, (_, i) => s.h("div", { style: { height: "50px", borderRadius: "12px", border: "3px solid " + (i % 2 ? "#c8d3de" : C), display: "grid", placeItems: "center", font: "800 28px/1 var(--f-display)", color: i % 2 ? PENCIL : C, background: "#fff", transition: "transform .08s" } }, String(i + 1)));
+          const cntLab = s.h("span", { class: "t", style: { fontWeight: 700, width: "190px", color: RED } }, "Ein Achter:");
+          const counter = s.h("div", { style: { display: "grid", gridTemplateColumns: "190px repeat(8, 1fr)", gap: "8px", alignItems: "center" } }, cntLab, ...cells);
+          const svg = s.svg(1100, 236);
+          svg.append(s.el("rect", { x: 0, y: 180, width: 1100, height: 56, rx: 14, fill: SOFT }));
+          const cols = [C, ORANGE, GREEN, BLUE];
+          const ds = [170, 423, 676, 930].map((x, i) => dancer(s, cols[i], { x, y: 112, k: 1.05 }));
+          ds.forEach(d => svg.append(d.g));
+          s.loop((t, dt) => ds.forEach(d => d.tick(dt)));
+          const A = c => { const f = c % 2 ? { fR: [12, 52] } : { fL: [-12, 52] }; const k = c < 4 ? c + 1 : 7 - c; return pose(Object.assign({ dy: k * 7, sc: 1 + k * .045 }, f)); };
+          const B = c => { const xs = [34, 34, 68, 68, 34, 34, 0, 0], wide = c % 2 === 0; const dir = c < 4 ? 1 : -1; return pose(Object.assign({ dx: xs[c] }, ARMS.out, wide ? (dir > 0 ? { fR: [44, 70], fL: [-14, 70] } : { fL: [-44, 70], fR: [14, 70] }) : { fL: [-8, 70], fR: [8, 70] })); };
+          const C_ = c => pose(c % 2 === 0 ? ARMS.clap : c === 1 || c === 5 ? ARMS.up : c === 3 ? ARMS.out : ARMS.high);
+          const D_ = c => c < 4 ? pose({ flip: c % 2 ? 1 : -1, fL: [-8, 70], fR: [8, 70], hL: [-18, -30], hR: [18, -30] }) : c === 4 ? pose({ dy: 14, fL: [-24, 58], fR: [24, 58], hL: [-30, -30], hR: [30, -30] }) : c === 5 ? pose({}) : c === 6 ? pose(ARMS.up) : pose({ hR: [30, -130], hL: [-24, -18], fL: [6, 70], fR: [22, 70] });
+          const blocks = [
+            ["A", "Vor und zurück", "4 Schritte nach vorn, 4 zurück", A],
+            ["B", "Seit-ran", "2× nach rechts, 2× nach links", B],
+            ["C", "Klatschen und Arme", "Klatschen auf 1, 3, 5, 7", C_],
+            ["D", "Drehen und Pose", "Drehung, Knie wippen, Pose!", D_],
+          ];
+          const hasClap = (bi, c) => bi === 2 && c % 2 === 0;
+          const mark = (c, red) => cells.forEach((e, j) => { e.style.background = j === c ? (red ? RED : C) : "#fff"; e.style.color = j === c ? "#fff" : (j % 2 ? PENCIL : C); e.style.transform = j === c ? "scale(1.08)" : ""; });
+          const cards = blocks.map(([L, nm, txt], bi) => {
+            const b = s.h("button", { class: "card later", style: { font: "inherit", color: INK, textAlign: "left", cursor: "pointer", padding: "10px 14px", display: "flex", flexDirection: "column", gap: "2px", borderLeft: "8px solid " + cols[bi] }, onclick: () => run([bi]) },
+              s.h("span", { class: "t", style: { fontWeight: 800, color: cols[bi] } }, "▶ " + L + " · " + nm), s.h("span", { class: "small" }, txt));
+            return b;
+          });
+          const run = (list, intro = false) => {
+            const ev = []; let off = 0;
+            if (intro) {
+              for (let c = 4; c < 8; c++) ev.push({ b: c - 4, d: 1, snd: w => K.click(w, c === 4), vis: () => { cntLab.textContent = "Einzählen …"; mark(c, true); } });
+              off = 4;
+            }
+            list.forEach((bi, n) => {
+              for (let c = 0; c < 8; c++) {
+                const b = off + n * 8 + c;
+                ev.push({ b, d: 1, snd: w => {
+                  if (c % 2 === 0) K.kick(w, c % 4 === 0 ? .8 : .6); else K.snare(w);
+                  if (c % 4 === 0) K.note([-24, -19, -17, -24][(n * 2 + c / 4) % 4], .5, w, .2);
+                  if (hasClap(bi, c)) K.clap(w, .45);
+                }, vis: () => { cntLab.textContent = "Block " + blocks[bi][0] + ":"; cards.forEach((k, j) => k.style.background = j === bi ? SOFT : "#fff"); mark(c); ds.forEach(d => d.go(blocks[bi][3](c), 12)); } });
+                ev.push({ b: b + .5, d: .5, snd: w => K.hat(w) });
+              }
+            });
+            P.play(ev, { bpm: 108, length: off + list.length * 8, end: () => { mark(-1); cntLab.textContent = "Ein Achter:"; cards.forEach(k => k.style.background = "#fff"); ds.forEach(d => d.go(pose({}), 8)); } });
+          };
+          const all = btn(s, "▶ Ganze Choreo", () => run([0, 1, 2, 3], true), true);
+          all.classList.add("later");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px", flex: 1 } }, s.h("b", null, "1 Achter = 8 Schläge = 2 Takte"), " im 4/4-Takt. Vor dem Start zählt einer laut ein: „5, 6, 7, 8!“");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%", justifyContent: "center" } }, counter, svg, s.h("div", { class: "cols4", style: { gap: "12px" } }, cards), s.h("div", { class: "row", style: { flexWrap: "nowrap", alignItems: "stretch" } }, all, merk)));
+          s.show(svg, "fade"); s.sfx.whoosh();
+          blocks.forEach((_, bi) => s.step(async () => { s.sfx.pop(); await s.show(cards[bi], "up"); run([bi]); s.say(["Block A: vor und zurück.", "Block B: seit ran.", "Block C: klatschen.", "Block D: drehen und Pose."][bi]); }));
+          s.step(async () => { s.sfx.ding(); s.show(all, "pop"); await s.show(merk, "up"); s.say("Jetzt alles hintereinander. Fünf, sechs, sieben, acht!"); run([0, 1, 2, 3], true); });
+        },
+      },
+      /* 11e ---------------------------------------------------------------- */
+      {
+        title: "Tänze aus aller Welt",
+        say: "Überall auf der Welt tanzen Menschen. Jeder Tanz hat seinen eigenen Rhythmus.",
+        build(s) {
+          const K = kit(s), P = Player(s);
+          const card = (ph, pos, name, where, html, label, play) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "12px" } },
+            s.photo(ph, { w: 322, h: 186, pos }),
+            s.h("div", { class: "row", style: { flexWrap: "nowrap", justifyContent: "space-between", gap: "8px" } }, s.h("p", { class: "h2" }, name), s.h("span", { class: "chip" }, where)),
+            s.h("p", { class: "small", style: { minHeight: "160px" }, html }), (() => { const b = btn(s, "▶ " + label, play, true); b.style.alignSelf = "flex-start"; return b; })());
+          // eigene Rhythmus-Beispiele (keine Originalmusik)
+          const sirtaki = () => {
+            const ev = []; let b = 0, d = 1;
+            for (let i = 0; i < 28; i++) { const bb = b; ev.push({ b: bb, d, snd: w => { K.note(i % 2 ? -17 : -24, .2, w, .2); K.note([0, 2, 4, 2][i % 4], .16, w, .14); if (i % 2 === 0) K.stomp(w); } }); b += d; d = Math.max(.32, d * .94); }
+            P.play(ev, { bpm: 92, length: b + .5 });
+          };
+          const samba = () => {
+            const ev = [];
+            for (let bar = 0; bar < 4; bar++) {
+              const o = bar * 2;
+              ev.push({ b: o, d: 1, snd: w => K.note(-29, .2, w, .14) }, { b: o + 1, d: 1, snd: w => { K.kick(w, .9); K.note(-24, .35, w, .24); } });
+              for (let k = 0; k < 8; k++) ev.push({ b: o + k * .25, d: .25, snd: w => K.hat(w) });
+              [0, .5, .75, 1.25, 1.5].forEach(x => ev.push({ b: o + x, d: .25, snd: w => K.clap(w, .22) }));
+            }
+            P.play(ev, { bpm: 100, length: 8 });
+          };
+          const hiphop = () => {
+            const ev = [];
+            for (let bar = 0; bar < 2; bar++) {
+              const o = bar * 4;
+              [0, 1.75, 2.5].forEach(x => ev.push({ b: o + x, d: .5, snd: w => K.kick(w, .9) }));
+              [1, 3].forEach(x => ev.push({ b: o + x, d: 1, snd: w => { K.snare(w); K.clap(w, .25); } }));
+              for (let k = 0; k < 8; k++) ev.push({ b: o + k * .5, d: .5, snd: w => K.hat(w) });
+              ev.push({ b: o, d: 2, snd: w => K.note(-27, .8, w, .22) }, { b: o + 2.5, d: 1.5, snd: w => K.note(-24, .6, w, .2) });
+            }
+            P.play(ev, { bpm: 90, length: 8 });
+          };
+          const c1 = card("sirtaki-reihe", "50% 60%", "Sirtaki", "Griechenland", "Erfunden <b>1964</b> für den Film „Alexis Sorbas“ (Musik: Mikis Theodorakis). Alle tanzen in einer Reihe, die Arme auf den Schultern der Nachbarn. Die Musik wird <b>immer schneller</b>.", "immer schneller", sirtaki);
+          const c2 = card("samba-rio", "50% 50%", "Samba", "Brasilien", "Im <b>2/4-Takt</b>, mit vielen Trommeln. Die Wurzeln liegen in afrikanischen Rhythmen. Seit etwa 1920 ist Samba der wichtigste Tanz beim <b>Karneval in Rio</b>.", "Samba-Rhythmus", samba);
+          const c3 = card("breakdance", "50% 40%", "Hip-Hop", "USA", "Entstand in den <b>1970er-Jahren</b> in der Bronx in New York. Dazu gehören Rap, DJing, Breakdance und Graffiti. Meist <b>4/4-Takt</b> mit hartem Beat.", "Hip-Hop-Beat", hiphop);
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "In Berlin"),
+            s.h("p", { class: "small" }, "Beim Karneval der Kulturen (seit 1996, jedes Jahr zu Pfingsten) ziehen Sambagruppen, Blaskapellen und viele andere Tanzgruppen durch die Stadt. Die Beispiele hier sind selbst gebaute Rhythmen, keine Originalmusik."));
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { gap: "16px" } }, c1, c2, c3), life));
+          s.sfx.whoosh();
+          s.step(async () => { s.sfx.pop(); await s.show(c1, "up"); sirtaki(); s.say("Sirtaki aus Griechenland. Hör, wie es immer schneller wird."); });
+          s.step(async () => { s.sfx.pop(); await s.show(c2, "up"); samba(); s.say("Samba aus Brasilien."); });
+          s.step(async () => { s.sfx.pop(); await s.show(c3, "up"); hiphop(); s.say("Hip-Hop aus New York."); });
+          s.step(async () => { P.stop(); s.sfx.ding(); await s.show(life, "up"); });
         },
       },
       /* 12 ----------------------------------------------------------------- */

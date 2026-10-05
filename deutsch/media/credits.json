@@ -128,6 +128,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Duisburg_(DE),_Landschaftspark_Nord,_Schild_%22Baden_verboten%22_--_2022_--_0036.jpg",
   "orig": "File:Duisburg (DE), Landschaftspark Nord, Schild \"Baden verboten\" -- 2022 -- 0036.jpg"
  },
+ "bahnhof-zoo": {
+  "file": "bahnhof-zoo.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 563,
+  "title": "Bahnhof Zoologischer Garten, Berlin",
+  "author": "Wolfgang Pehlemann Wiesbaden Germany",
+  "license": "CC BY-SA 3.0 de",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Berlin_Bahnhof_Zoo_Zoologischer_Garten_2007.jpg",
+  "orig": "File:Berlin Bahnhof Zoo Zoologischer Garten 2007.jpg"
+ },
  "ball-aufprall": {
   "file": "ball-aufprall.mp3",
   "kind": "snd",
@@ -185,6 +197,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Threave_Gardens,_Vegetable_bed_-_geograph.org.uk_-_7571933.jpg",
   "orig": "File:Threave Gardens, Vegetable bed - geograph.org.uk - 7571933.jpg"
+ },
+ "berliner-pfannkuchen": {
+  "file": "berliner-pfannkuchen.jpg",
+  "kind": "img",
+  "w": 600,
+  "h": 400,
+  "title": "Berliner Pfannkuchen",
+  "author": "Sebastian Koppehel",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Berliner_Pfannkuchen_5.jpg",
+  "orig": "File:Berliner Pfannkuchen 5.jpg"
  },
  "besteck": {
   "file": "besteck.mp3",
@@ -290,6 +314,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Brandenburger_Tor_morgens.jpg",
   "orig": "File:Brandenburger Tor morgens.jpg"
+ },
+ "broetchen-korb": {
+  "file": "broetchen-korb.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Korb mit Brötchen",
+  "author": "3268zauber",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Korb_mit_Br%C3%B6tchen.JPG",
+  "orig": "File:Korb mit Brötchen.JPG"
  },
  "brotdose": {
   "file": "brotdose.jpg",
@@ -1075,6 +1111,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Max_und_Moritz_(Busch)_007.png",
   "orig": "File:Max und Moritz (Busch) 007.png"
  },
+ "nikolsburger-platz": {
+  "file": "nikolsburger-platz.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Nikolsburger Platz, Berlin-Wilmersdorf",
+  "author": "Fridolin freudenfett (Peter Kuley)",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:WilmersdorfNikolsburgerPlatz.jpg",
+  "orig": "File:WilmersdorfNikolsburgerPlatz.jpg"
+ },
  "notausgang": {
   "file": "notausgang.jpg",
   "kind": "img",
@@ -1447,6 +1495,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin_Tempelhofer_Feld_noerdl_Bahn_85_P1050855_20200801.jpg",
   "orig": "File:Berlin Tempelhofer Feld noerdl Bahn 85 P1050855 20200801.jpg"
  },
+ "theater-vorhang": {
+  "file": "theater-vorhang.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Theatersaal mit rotem Vorhang",
+  "author": "Kurt Kaiser",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Theater_Show.jpg",
+  "orig": "File:Theater Show.jpg"
+ },
  "tiger": {
   "file": "tiger.jpg",
   "kind": "img",
@@ -1597,6 +1657,18 @@
   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://commons.wikimedia.org/wiki/File:NYCSub_7_car_exterior.jpg",
   "orig": "File:NYCSub 7 car exterior.jpg"
+ },
+ "wegweiser-schoenefeld": {
+  "file": "wegweiser-schoenefeld.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Wegweiser in Berlin-Prenzlauer Berg (Kniprodestraße)",
+  "author": "Boonekamp das ist Günter Haase",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:PrenzlBerg_Kniprode_20092017_(48).jpg",
+  "orig": "File:PrenzlBerg Kniprode 20092017 (48).jpg"
  },
  "wolf-howl": {
   "file": "wolf-howl.mp3",

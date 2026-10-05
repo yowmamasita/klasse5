@@ -1,7 +1,9 @@
 /* Kapitel 10 – Europa (Berliner Rahmenlehrplan GeWi 5/6, Themenfeld 3.4 „Europa“, dazu ein Stück 3.5 „Mobilität“):
    Lage und Grenzen, Großlandschaften, höchste Berge, große Flüsse, Staaten und Hauptstädte, Deutschlands Nachbarn,
    Klimadiagramme (Berlin, Lissabon, Tromsø, Moskau), See- und Landklima, Golfstrom, Vegetationszonen,
-   EU (Idee, Erweiterung, Flagge, Parlament, Euro, Schengen), geteiltes Europa und Berlin, Reisen früher und heute, Europa im Alltag.
+   EU (Idee, Erweiterung, Flagge, Parlament, Euro, Schengen), geteiltes Europa und Berlin, Reisen früher und heute,
+   Tourismus und Mobilität (RLP 3.5: Reiseziele der Deutschen, Verkehrsmittel und CO₂, Tourismus in Berlin und Venedig), Europa im Alltag.
+   Reisedaten: Reiseanalyse 2026 (FUR), UBA TREMOD 2024, Amt für Statistik Berlin-Brandenburg.
    Kartendaten selbst projiziert und vereinfacht aus Natural Earth 1:50m (gemeinfrei).
    Klimawerte: Mittel 1991–2020 (Wikipedia-Klimatabellen nach DWD, IPMA, MET Norway, Pogoda.ru.net).
    Fakten geprüft 2026-10-05, Quellen im Abschlussbericht. */
@@ -131,8 +133,8 @@
   Deck.unit({
     id: "u10", num: 10, title: "Europa", color: C, soft: SOFT,
     subtitle: "Unser Kontinent: Länder, Klima und die EU",
-    blurb: "Länder und Hauptstädte, Klima, Vegetation, die EU und Reisen.",
-    goals: ["Europas Grenzen, Gebirge und Flüsse kennen", "Staaten, Hauptstädte und Deutschlands Nachbarn finden", "Klimadiagramme lesen: Seeklima und Landklima", "Vegetationszonen von der Tundra bis zum Mittelmeer", "Verstehen, was die EU ist und was sie mit deinem Alltag zu tun hat"],
+    blurb: "Länder, Klima, Vegetation, die EU, Reisen und Tourismus.",
+    goals: ["Europas Grenzen, Gebirge und Flüsse kennen", "Staaten, Hauptstädte und Deutschlands Nachbarn finden", "Klimadiagramme lesen: Seeklima und Landklima", "Vegetationszonen von der Tundra bis zum Mittelmeer", "Verstehen, was die EU ist und was sie mit deinem Alltag zu tun hat", "Verkehrsmittel vergleichen und Folgen des Tourismus erklären"],
     icon(svg, el) {
       svg.append(el("rect", { x: 6, y: 12, width: 58, height: 46, rx: 8, fill: "#1f3c96" }));
       for (let i = 0; i < 12; i++) { const a = i / 12 * Math.PI * 2; svg.append(el("circle", { cx: 35 + 15 * Math.sin(a), cy: 35 - 15 * Math.cos(a), r: 2.8, fill: "#ffcc00" })); }
@@ -750,6 +752,112 @@
           s.step(async () => { s.show(icePh, "zoom"); await run(rws[2], () => s.sound("zug-vorbei", { vol: .5 })); s.say("Heute fährt der ICE in knapp vier Stunden."); });
           s.step(async () => { await run(rws[3], () => s.sfx.whoosh()); s.say("Der Flug dauert etwas über eine Stunde."); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 17a -------------------------------------------------------------- */
+      {
+        title: "Wohin reisen die Deutschen?",
+        say: "Die meisten Menschen in Deutschland machen jedes Jahr Urlaub. Viele fahren ans Mittelmeer, wo es warm und sonnig ist.",
+        build(s) {
+          const vb = vbox([[-10, 36], [34, 36], [30, 56], [-10, 56]], 540, 470, 6);
+          const m = euroMap(s, 540, 470, vb);
+          const k = m.k;
+          m.paths.DEU.setAttribute("fill", "#f2c94c");
+          const TOP = [["ESP", -3.7, 40.2, "Spanien"], ["TUR", 32.5, 38.6, "Türkei"], ["ITA", 12.5, 42.6, "Italien"], ["GRC", 22, 39.3, "Griechenland"], ["AUT", 14.5, 47.5, "Österreich"]];
+          const [bx, by] = prj(13.4, 52.52);
+          const pins = TOP.map(([c, lo, la, n], i) => {
+            const [x, y] = prj(lo, la), g = later(s.el("g"));
+            if (m.paths[c]) g.append(s.el("path", { d: m.paths[c].getAttribute("d"), fill: "#e7714f", stroke: "#fff", "stroke-width": 1.3 * k }));
+            g.append(s.el("path", { d: `M${bx} ${by} Q${(bx + x) / 2} ${Math.min(by, y) - 60 * k} ${x} ${y}`, fill: "none", stroke: RED, "stroke-width": 2.5 * k, "stroke-dasharray": `${6 * k} ${5 * k}` }));
+            g.append(s.el("circle", { cx: x, cy: y, r: 15 * k, fill: "#fff", stroke: RED, "stroke-width": 3 * k }), s.el("text", { x, y: y + 7 * k, "text-anchor": "middle", "font-size": 20 * k, "font-weight": 800, fill: RED, text: String(i + 1) }));
+            m.top.append(g); return g;
+          });
+          m.top.append(m.dot(13.4, 52.52, 7, INK), m.t(13.4, 54.1, "Berlin"));
+          // donut 22 % / 78 %
+          const D = s.svg(150, 150), R = 56, CIRC = 2 * Math.PI * R;
+          D.append(s.el("circle", { cx: 75, cy: 75, r: R, fill: "none", stroke: "#e7714f", "stroke-width": 26 }));
+          const inl = s.el("circle", { cx: 75, cy: 75, r: R, fill: "none", stroke: "#f2c94c", "stroke-width": 26, "stroke-dasharray": `0 ${CIRC}`, transform: "rotate(-90 75 75)" });
+          D.append(inl);
+          const pct = s.el("text", { x: 75, y: 84, "text-anchor": "middle", "font-size": 26, "font-weight": 800, fill: INK, text: "" }); D.append(pct);
+          const donut = later(s.h("div", { class: "card", style: { padding: "8px 14px", display: "grid", gridTemplateColumns: "150px 1fr", gap: "12px", alignItems: "center" } }, D,
+            s.h("div", null, p(s, "small", B(s, "22 %"), " der Urlaubsreisen blieben 2025 in Deutschland (gelb), ", B(s, "78 %"), " gingen ins Ausland."))));
+          const big = s.h("span", { class: "big", style: { color: C } }, "0");
+          const c0 = s.h("div", { class: "card", style: { padding: "8px 14px", borderLeft: `8px solid ${C}` } }, s.h("div", { class: "row", style: { gap: "10px", alignItems: "baseline", flexWrap: "nowrap" } }, big, p(s, "t", "Millionen")), p(s, "small", "Menschen in Deutschland machten 2025 mindestens eine Urlaubsreise. So viele wie noch nie!"));
+          const c1 = card(s, RED, "Beliebt im Ausland", "1 Spanien, 2 Türkei, 3 Italien, 4 Griechenland, 5 Österreich. Der wichtigste Grund: Sonne und Wärme.");
+          const c2 = card(s, BLUE, "Wie kommt man hin?", "Das Flugzeug ist das beliebteste Verkehrsmittel für den Urlaub, danach das Auto.");
+          s.add(grid(s, "540px 1fr", m.svg, stack(s, 10, c0, donut, c1, c2)));
+          s.show(m.svg, "fade"); s.sfx.whoosh();
+          s.step(async () => { await countUp(s, big, 57.1, { dur: 900, dec: 1 }); s.say("Siebenundfünfzig Millionen Menschen sind 2025 in den Urlaub gefahren."); });
+          s.step(async () => { await s.show(donut, "up"); s.sfx.pop(); await s.tween({ from: 0, to: 22, dur: 900, ease: "out", update: v => { inl.setAttribute("stroke-dasharray", `${CIRC * v / 100} ${CIRC}`); pct.textContent = Math.round(v) + " %"; } }); s.say("Nur gut jede fünfte Reise blieb in Deutschland."); });
+          s.step(async () => { s.sound("strand-moewen", { vol: .3, dur: 3 }); for (let i = 0; i < pins.length; i++) { if (!s.alive) return; s.sfx.note([0, 2, 4, 5, 7][i], 0.15); s.show(pins[i], "pop"); await s.wait(s.fast ? 0 : 280); } await s.show(c1, "left"); s.say("Am beliebtesten ist Spanien, dann die Türkei und Italien."); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(c2, "left"); });
+        },
+      },
+      /* 17b -------------------------------------------------------------- */
+      {
+        title: "Zug, Auto, Bus oder Flugzeug?",
+        say: "Von Berlin nach München: Welches Verkehrsmittel ist am schnellsten? Und welches schadet dem Klima am wenigsten?",
+        build(s) {
+          const MODES = [
+            ["Zug (ICE)", "🚆", 3 + 55 / 60, "ab 3 Std. 55 Min.", 2.6, "#1f8a4c"],
+            ["Fernbus", "🚌", 7.5, "etwa 7½ Std.", 3.0, "#0e7490"],
+            ["Auto", "🚗", 5.5, "5½ Std. ohne Stau", 16.4, "#e0a800"],
+            ["Flugzeug", "✈️", 7 / 6, "1 Std. 10 Min. Flug", 29, RED],
+          ];
+          const W = 640, RH = 62, svg = s.svg(W, MODES.length * RH + 6), X0 = 190, XM = W - 10;
+          const rows = MODES.map(([n, ic, h, hl, co, col], i) => {
+            const y = 4 + i * RH;
+            svg.append(s.el("text", { x: 4, y: y + 36, "font-size": 30, text: ic }), s.el("text", { x: 46, y: y + 34, "font-size": 21, "font-weight": 700, fill: INK, text: n }));
+            const bar = s.el("rect", { x: X0, y: y + 8, width: 0, height: 40, rx: 8, fill: col });
+            const t = s.el("text", { x: X0 + 10, y: y + 35, "font-size": 20, "font-weight": 800, fill: INK, text: "" });
+            svg.append(bar, t); return { bar, t, h, hl, co, y };
+          });
+          let mode = "", km = 600;
+          const show = async (what) => {
+            mode = what; s.sfx.whoosh();
+            Object.entries(btns).forEach(([k2, b]) => { b.style.background = k2 === what ? C : ""; b.style.color = k2 === what ? "#fff" : ""; });
+            await s.tween({ from: 0, to: 1, dur: 800, ease: "out", update: v => rows.forEach(r => {
+              const val = what === "zeit" ? r.h / 8 : r.co * km / 100 / (29 * 10);
+              const w = Math.max(6, (XM - X0 - 200) * Math.min(1, val) * v);
+              r.bar.setAttribute("width", w); r.t.setAttribute("x", X0 + w + 10);
+              r.t.textContent = what === "zeit" ? r.hl : s.fmt(Math.round(r.co * km / 100)) + " kg CO₂";
+            }) });
+          };
+          const sl = later(s.slider({ label: "Gleiche Strecke für alle", min: 100, max: 1000, step: 50, value: 600, fmt: v => s.fmt(v) + " km", onInput: v => { km = v; if (mode === "co2") rows.forEach(r => { const val = r.co * km / 100 / 290; const w = Math.max(6, (XM - X0 - 200) * Math.min(1, val)); r.bar.setAttribute("width", w); r.t.setAttribute("x", X0 + w + 10); r.t.textContent = s.fmt(Math.round(r.co * km / 100)) + " kg CO₂"; }); } }));
+          const btns = {};
+          const mk = (key, label) => { const b = later(s.h("button", { class: "btn", style: { minWidth: "200px" } }, label)); b.addEventListener("click", () => { s.sfx.click(); show(key); }); btns[key] = b; return b; };
+          const bar = s.h("div", { class: "row", style: { gap: "12px" } }, mk("zeit", "Reisezeit"), mk("co2", "CO₂ pro Person"));
+          const c1 = card(s, BLUE, "Pro Person und 100 km", "Flugzeug 29 kg, Auto 16,4 kg (mit 1,4 Personen im Auto), Fernbus 3 kg, Fernzug 2,6 kg CO₂ und andere Treibhausgase.");
+          const c2 = card(s, "#3b2f80", "Schlafen statt fliegen", "Seit März 2026 fährt wieder ein Nachtzug von Berlin über Brüssel nach Paris, dreimal pro Woche. Mit Interrail fährst du mit einem Ticket durch bis zu 33 Länder.");
+          const m = later(s.h("div", { class: "merk", style: { fontSize: "20px", padding: "8px 14px" } }, "Das Flugzeug ist am schnellsten, aber am schlechtesten fürs Klima. ", B(s, "Zug und Bus"), " sind die klimafreundlichsten."));
+          s.add(grid(s, "640px 1fr", stack(s, 12, s.h("p", { class: "t", style: { fontWeight: 700, color: C } }, "Von Berlin nach München …"), bar, svg, sl), stack(s, 10, c1, m, c2)));
+          s.sfx.pop();
+          s.step(async () => { s.show(btns.zeit, "pop"); s.sound("zug-vorbei", { vol: .4 }); await show("zeit"); s.say("Der Zug braucht knapp vier Stunden, der Flug etwas über eine Stunde. Aber zum Flughafen fahren und warten muss man auch noch."); });
+          s.step(async () => { s.show(btns.co2, "pop"); s.show(sl, "up"); await show("co2"); await s.show(c1, "left"); s.say("Pro Person stößt das Flugzeug viel mehr Treibhausgase aus als Zug oder Bus. Schieb den Regler!"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sound("zug-vorbei", { vol: .35 }); await s.show(c2, "left"); });
+        },
+      },
+      /* 17c -------------------------------------------------------------- */
+      {
+        title: "Tourismus: Segen und Last",
+        say: "Touristen bringen Geld und Arbeit in eine Stadt. Aber zu viele Touristen können auch Probleme machen.",
+        build(s) {
+          const gN = s.h("span", { class: "big", style: { color: C } }, "0"), oN = s.h("span", { class: "big", style: { color: C } }, "0");
+          const stat = (el, t) => s.h("div", { class: "row", style: { gap: "10px", alignItems: "baseline", flexWrap: "nowrap" } }, el, p(s, "t", t));
+          const top = s.h("div", { class: "card", style: { padding: "8px 16px", borderLeft: `8px solid ${C}` } }, head(s, "Touristenstadt Berlin 2025"), s.h("div", { class: "row", style: { gap: "34px" } }, stat(gN, "Mio. Gäste"), stat(oN, "Mio. Übernachtungen")), p(s, "small", "Aus dem Ausland kamen die meisten Übernachtungen aus den USA und Großbritannien."));
+          const plus = later(s.h("div", { class: "card", style: { padding: "8px 14px", background: "#e7f6ec", borderLeft: `8px solid #2f9a6a` } }, head(s, "Gut für die Stadt", "#2f9a6a"), p(s, "small", "Geld für Hotels, Restaurants, Museen und Läden. Viele Menschen haben dort Arbeit. Gäste lernen die Stadt kennen.")));
+          const minus = later(s.h("div", { class: "card", style: { padding: "8px 14px", background: "#fdeceb", borderLeft: `8px solid ${RED}` } }, head(s, "Schwierig", RED), p(s, "small", "Volle Plätze und Busse, Lärm und Müll. Manche Wohnungen werden zu Ferienwohnungen und fehlen den Menschen, die hier wohnen.")));
+          const ph = s.photo("venedig-kanal", { w: "100%", h: 230, caption: "Der Canal Grande in Venedig", cls: "later" });
+          const ven = card(s, "#0e7490", "Beispiel Venedig", "In der Altstadt wohnen weniger als 50.000 Menschen, aber jedes Jahr kommen Millionen Touristen. 2026 müssen Tagesgäste an 60 Tagen 5 bis 10 € Eintritt zahlen.");
+          const lf = later(lifeBox(s, "", p(s, "small", "In Berlin darf man eine Wohnung seit 2014 nur mit Erlaubnis an Feriengäste vermieten. So sollen genug Wohnungen für die Berliner bleiben.")));
+          s.add(grid(s, "1fr 430px", stack(s, 10, top, s.h("div", { class: "cols", style: { gap: "12px", alignItems: "stretch" } }, plus, minus), lf), stack(s, 10, ph, ven)));
+          s.sfx.pop();
+          s.step(async () => { s.sound("stimmengewirr", { vol: .3, dur: 3 }); countUp(s, gN, 12.4, { dur: 900, dec: 1 }); await countUp(s, oN, 29.4, { dur: 1100, dec: 1 }); s.say("Zwölf Komma vier Millionen Gäste kamen 2025 nach Berlin."); });
+          s.step(async () => { s.sound("cash-register", { vol: .4 }); await s.show(plus, "up"); });
+          s.step(async () => { s.sound("traffic", { vol: .3, dur: 2 }); await s.show(minus, "up"); });
+          s.step(async () => { s.sound("waves", { vol: .3, dur: 3 }); await s.show(ph, "zoom"); await s.show(ven, "left"); s.say("Venedig verlangt an manchen Tagen Eintritt von Tagesgästen."); });
+          s.step(async () => { s.sfx.ding(); await s.show(lf, "up"); });
         },
       },
       /* 18 --------------------------------------------------------------- */

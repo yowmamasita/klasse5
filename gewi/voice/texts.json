@@ -44,6 +44,11 @@
   "spoken": "Alle unterschreiben. Jetzt gelten die Regeln für alle.",
   "text": "Alle unterschreiben. Jetzt gelten die Regeln für alle."
  },
+ "022d851795985252": {
+  "lang": "de-DE",
+  "spoken": "Athen hatte etwa zweihundert- bis dreihunderttausend Einwohner.",
+  "text": "Athen hatte etwa zweihundert- bis dreihunderttausend Einwohner."
+ },
  "0239d2aa0324c56a": {
   "lang": "de-DE",
   "spoken": "In Mitteleuropa bauten die ersten Bauern lange Holzhäuser. In Çatalhöyük in der Türkei standen die Häuser so dicht, dass man über die Dächer ging.",
@@ -59,20 +64,25 @@
   "spoken": "Jede Großlandschaft fühlt sich anders an: beim Radfahren, auf Klassenfahrt oder im Urlaub.",
   "text": "Jede Großlandschaft fühlt sich anders an: beim Radfahren, auf Klassenfahrt oder im Urlaub."
  },
+ "033b20808181f6c9": {
+  "lang": "de-DE",
+  "spoken": "Pompeji wurde vom Vesuv verschüttet und so erhalten.",
+  "text": "Pompeji wurde vom Vesuv verschüttet und so erhalten."
+ },
  "03f3bad3af8d99b8": {
   "lang": "de-DE",
   "spoken": "Ein Deich ist ein langer Wall aus Erde. Er hält das Meer vom Land fern.",
   "text": "Ein Deich ist ein langer Wall aus Erde. Er hält das Meer vom Land fern."
  },
+ "03f957b51d6ecc94": {
+  "lang": "de-DE",
+  "spoken": "Touristen bringen Geld und Arbeit in eine Stadt. Aber zu viele Touristen können auch Probleme machen.",
+  "text": "Touristen bringen Geld und Arbeit in eine Stadt. Aber zu viele Touristen können auch Probleme machen."
+ },
  "040cef172f80b7ec": {
   "lang": "de-DE",
   "spoken": "Im Norden Dänemark, im Osten Polen und Tschechien.",
   "text": "Im Norden Dänemark, im Osten Polen und Tschechien."
- },
- "044a692ae1ce4b0e": {
-  "lang": "cs-CZ",
-  "spoken": "Ahoj!",
-  "text": "Ahoj!"
  },
  "04d7199eec0110a6": {
   "lang": "de-DE",
@@ -129,6 +139,11 @@
   "spoken": "Eine Liege, ein riesiger Kessel und ein Wagen.",
   "text": "Eine Liege, ein riesiger Kessel und ein Wagen."
  },
+ "0932f58a72585d6e": {
+  "lang": "de-DE",
+  "spoken": "Heute sind fast vier Millionen Menschen in Berlin gemeldet.",
+  "text": "Heute sind fast vier Millionen Menschen in Berlin gemeldet."
+ },
  "09b9cbcffb13b436": {
   "lang": "de-DE",
   "spoken": "1989 wurde in Berlin die Mauer geöffnet.",
@@ -154,10 +169,25 @@
   "spoken": "Dann kommt der Nadelwald.",
   "text": "Dann kommt der Nadelwald."
  },
+ "0bbaaa4417220776": {
+  "lang": "de-DE",
+  "spoken": "Wer ein Handwerk lernen wollte, ging als Lehrling zu einem Meister. Danach wurde er Geselle – und vielleicht einmal selbst Meister.",
+  "text": "Wer ein Handwerk lernen wollte, ging als Lehrling zu einem Meister. Danach wurde er Geselle – und vielleicht einmal selbst Meister."
+ },
  "0bf0e660ba5f4ec5": {
   "lang": "de-DE",
   "spoken": "Moskau: kalter Winter, warmer Sommer.",
   "text": "Moskau: kalter Winter, warmer Sommer."
+ },
+ "0c17df0bb15c75dc": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 11. Die Stadt – damals und heute. Vom alten Rom bis nach Berlin",
+  "text": "Kapitel 11. Die Stadt – damals und heute. Vom alten Rom bis nach Berlin"
+ },
+ "0ccb2227556c06d9": {
+  "lang": "de-DE",
+  "spoken": "Hier saß der Senat, und hier hielt man Reden.",
+  "text": "Hier saß der Senat, und hier hielt man Reden."
  },
  "0cfa90c8f46fde09": {
   "lang": "de-DE",
@@ -194,6 +224,11 @@
   "spoken": "Achtung, Falle: Ein Jahr null gibt es nicht. Auf das Jahr 1 vor Christus folgt sofort das Jahr 1 nach Christus.",
   "text": "Achtung, Falle: Ein Jahr null gibt es nicht. Auf das Jahr 1 vor Christus folgt sofort das Jahr 1 nach Christus."
  },
+ "1248bbf25e8f91b0": {
+  "lang": "de-DE",
+  "spoken": "Die Römer erzählten sich eine spannende Geschichte, wie ihre Stadt entstanden ist: die Sage von Romulus und Remus.",
+  "text": "Die Römer erzählten sich eine spannende Geschichte, wie ihre Stadt entstanden ist: die Sage von Romulus und Remus."
+ },
  "1284a31a69cd6810": {
   "lang": "de-DE",
   "spoken": "Die Nadel im Kompass zeigt immer nach Norden. Dreh die Kompassdose ruhig herum!",
@@ -213,6 +248,11 @@
   "lang": "de-DE",
   "spoken": "Vor 1,75 Millionen Jahren gab es schon Faustkeile. Feuer nutzten Menschen sicher seit etwa einer Million Jahren.",
   "text": "Vor 1,75 Millionen Jahren gab es schon Faustkeile. Feuer nutzten Menschen sicher seit etwa einer Million Jahren."
+ },
+ "140db2b483a83b1a": {
+  "lang": "de-DE",
+  "spoken": "Im Mittelalter mussten die meisten Kinder früh mitarbeiten. In die Schule gingen nur wenige.",
+  "text": "Im Mittelalter mussten die meisten Kinder früh mitarbeiten. In die Schule gingen nur wenige."
  },
  "148e4b6fd10d016d": {
   "lang": "de-DE",
@@ -309,6 +349,11 @@
   "spoken": "Ägypten war nicht allein. Auch an anderen großen Flüssen entstanden früh Hochkulturen: in Mesopotamien, am Indus und am Gelben Fluss in China.",
   "text": "Ägypten war nicht allein. Auch an anderen großen Flüssen entstanden früh Hochkulturen: in Mesopotamien, am Indus und am Gelben Fluss in China."
  },
+ "1f0fa510511b5072": {
+  "lang": "de-DE",
+  "spoken": "Andere Piloten machten mit. Zusammen warfen sie rund 20 Tonnen Süßigkeiten ab.",
+  "text": "Andere Piloten machten mit. Zusammen warfen sie rund 20 Tonnen Süßigkeiten ab."
+ },
  "1f1c2e535c0fe9e0": {
   "lang": "de-DE",
   "spoken": "Das EU-Bio-Logo findest du auf Bio-Lebensmitteln.",
@@ -358,6 +403,11 @@
   "lang": "de-DE",
   "spoken": "Lissabon: milder Winter, heißer und trockener Sommer.",
   "text": "Lissabon: milder Winter, heißer und trockener Sommer."
+ },
+ "22cac103471626ab": {
+  "lang": "de-DE",
+  "spoken": "Der Maler Pieter Bruegel malte 1560 ein Bild voller spielender Kinder. Tippe auf die Nummern und schau genau hin!",
+  "text": "Der Maler Pieter Bruegel malte 1560 ein Bild voller spielender Kinder. Tippe auf die Nummern und schau genau hin!"
  },
  "22efd8fc75b45686": {
   "lang": "de-DE",
@@ -409,6 +459,16 @@
   "spoken": "Vor den Pyramiden liegt die große Sphinx.",
   "text": "Vor den Pyramiden liegt die große Sphinx."
  },
+ "26c04ee50287cb12": {
+  "lang": "de-DE",
+  "spoken": "Von beiden Hausarten gibt es noch Reste. Eine Insula steht mitten in Rom, eine Domus kannst du in Pompeji besuchen.",
+  "text": "Von beiden Hausarten gibt es noch Reste. Eine Insula steht mitten in Rom, eine Domus kannst du in Pompeji besuchen."
+ },
+ "271530083a64b864": {
+  "lang": "de-DE",
+  "spoken": "Über Täler führten Brücken mit Bögen. Das Wasser floss ganz leicht bergab.",
+  "text": "Über Täler führten Brücken mit Bögen. Das Wasser floss ganz leicht bergab."
+ },
  "27a81c9e429666cb": {
   "lang": "de-DE",
   "spoken": "Und in den Alpen ist es richtig hoch.",
@@ -434,6 +494,11 @@
   "spoken": "Tippe auf die Buchstaben. So schreibst du deinen Namen in einer Kartusche – wie ein Pharao.",
   "text": "Tippe auf die Buchstaben. So schreibst du deinen Namen in einer Kartusche – wie ein Pharao."
  },
+ "2857f59bc29e5972": {
+  "lang": "de-DE",
+  "spoken": "Viele Bögen der Aquädukte stehen noch heute. Und eine Leitung bringt sogar heute noch Wasser in die Stadt.",
+  "text": "Viele Bögen der Aquädukte stehen noch heute. Und eine Leitung bringt sogar heute noch Wasser in die Stadt."
+ },
  "2910eed176d47566": {
   "lang": "de-DE",
   "spoken": "Im Boden liegen Schichten übereinander. Was tiefer liegt, ist älter.",
@@ -449,10 +514,20 @@
   "spoken": "Die Dose dreht sich, die Nadel bleibt im Norden.",
   "text": "Die Dose dreht sich, die Nadel bleibt im Norden."
  },
+ "29bc0284efde3374": {
+  "lang": "de-DE",
+  "spoken": "Auf Roms Straßen war viel los: Gedränge am Tag, und in der Nacht rumpelten die Wagen. Tippe auf Tag und Nacht.",
+  "text": "Auf Roms Straßen war viel los: Gedränge am Tag, und in der Nacht rumpelten die Wagen. Tippe auf Tag und Nacht."
+ },
  "2a31c36154669b7c": {
   "lang": "de-DE",
   "spoken": "Kupfer war das erste Metall, das Menschen bearbeiteten. Es glänzt rötlich und ist ziemlich weich.",
   "text": "Kupfer war das erste Metall, das Menschen bearbeiteten. Es glänzt rötlich und ist ziemlich weich."
+ },
+ "2a431d919ef03cce": {
+  "lang": "de-DE",
+  "spoken": "Der Zug braucht knapp vier Stunden, der Flug etwas über eine Stunde. Aber zum Flughafen fahren und warten muss man auch noch.",
+  "text": "Der Zug braucht knapp vier Stunden, der Flug etwas über eine Stunde. Aber zum Flughafen fahren und warten muss man auch noch."
  },
  "2ac3682e7ae96e60": {
   "lang": "de-DE",
@@ -469,10 +544,30 @@
   "spoken": "Nordamerika und Südamerika.",
   "text": "Nordamerika und Südamerika."
  },
+ "2bb35b48e77f7e47": {
+  "lang": "de-DE",
+  "spoken": "Wo sich Handelswege kreuzen, entsteht ein Markt.",
+  "text": "Wo sich Handelswege kreuzen, entsteht ein Markt."
+ },
+ "2bbae77f318dca3b": {
+  "lang": "de-DE",
+  "spoken": "Und ein Hügel oder eine Mauer gibt Schutz.",
+  "text": "Und ein Hügel oder eine Mauer gibt Schutz."
+ },
  "2bdffd4ac4fc7eb6": {
   "lang": "de-DE",
   "spoken": "21 davon bezahlen mit dem Euro.",
   "text": "21 davon bezahlen mit dem Euro."
+ },
+ "2d494efb5f57a442": {
+  "lang": "de-DE",
+  "spoken": "Städte entstehen nicht irgendwo. Meist gibt es gute Gründe: Wasser, einen Übergang über den Fluss, Handelswege und Schutz.",
+  "text": "Städte entstehen nicht irgendwo. Meist gibt es gute Gründe: Wasser, einen Übergang über den Fluss, Handelswege und Schutz."
+ },
+ "2d8fe801c7eafc29": {
+  "lang": "de-DE",
+  "spoken": "Woher kam das Wasser für so viele Menschen? Aus Quellen in den Bergen, durch lange Leitungen: die Aquädukte.",
+  "text": "Woher kam das Wasser für so viele Menschen? Aus Quellen in den Bergen, durch lange Leitungen: die Aquädukte."
  },
  "2dbdfcc00d436125": {
   "lang": "de-DE",
@@ -483,6 +578,11 @@
   "lang": "de-DE",
   "spoken": "Deutschland hat zwei Meere: im Nordwesten die Nordsee und im Nordosten die Ostsee.",
   "text": "Deutschland hat zwei Meere: im Nordwesten die Nordsee und im Nordosten die Ostsee."
+ },
+ "2dd6ee216d30b6a6": {
+  "lang": "de-DE",
+  "spoken": "Tagsüber durften kaum Wagen fahren. Nachts war es laut.",
+  "text": "Tagsüber durften kaum Wagen fahren. Nachts war es laut."
  },
  "2e0bee7a84de3561": {
   "lang": "de-DE",
@@ -504,6 +604,11 @@
   "spoken": "Auf einem Zeitstrahl steht früher links und später rechts. Hier ist dein eigenes Leben.",
   "text": "Auf einem Zeitstrahl steht früher links und später rechts. Hier ist dein eigenes Leben."
  },
+ "30af2c4b8e23e456": {
+  "lang": "de-DE",
+  "spoken": "Siebenundfünfzig Millionen Menschen sind 2025 in den Urlaub gefahren.",
+  "text": "Siebenundfünfzig Millionen Menschen sind 2025 in den Urlaub gefahren."
+ },
  "328b29fe784f5d34": {
   "lang": "de-DE",
   "spoken": "Foto vom Mauerfall 1989 ist eine Quelle.",
@@ -523,6 +628,16 @@
   "lang": "de-DE",
   "spoken": "Die Steinzeit steckt auch in deinem Alltag: beim Lagerfeuer, beim Beerensammeln, im Museum und in deinem Taschenmesser.",
   "text": "Die Steinzeit steckt auch in deinem Alltag: beim Lagerfeuer, beim Beerensammeln, im Museum und in deinem Taschenmesser."
+ },
+ "33b17775aa57e6bd": {
+  "lang": "de-DE",
+  "spoken": "Es gab etwa fünfundzwanzig Mal so viele Mietshäuser wie Stadthäuser.",
+  "text": "Es gab etwa fünfundzwanzig Mal so viele Mietshäuser wie Stadthäuser."
+ },
+ "34e7204d563939a5": {
+  "lang": "de-DE",
+  "spoken": "Rom liegt auf sieben Hügeln am Tiber.",
+  "text": "Rom liegt auf sieben Hügeln am Tiber."
  },
  "34ef547c3a156558": {
   "lang": "de-DE",
@@ -548,6 +663,11 @@
   "lang": "de-DE",
   "spoken": "So sehen die Höhenfarben in echt aus: flaches Land in Brandenburg, der Harz und die Zugspitze.",
   "text": "So sehen die Höhenfarben in echt aus: flaches Land in Brandenburg, der Harz und die Zugspitze."
+ },
+ "3730b8fd4b7de649": {
+  "lang": "de-DE",
+  "spoken": "Schritt für Schritt bekamen Kinder mehr Schutz. Seit 1989 haben sie eigene Rechte: die UN-Kinderrechtskonvention.",
+  "text": "Schritt für Schritt bekamen Kinder mehr Schutz. Seit 1989 haben sie eigene Rechte: die UN-Kinderrechtskonvention."
  },
  "3782e8675400a066": {
   "lang": "de-DE",
@@ -629,15 +749,15 @@
   "spoken": "Welcher Berg ist der höchste in Europa? Das kommt darauf an, wo man die Grenze zieht.",
   "text": "Welcher Berg ist der höchste in Europa? Das kommt darauf an, wo man die Grenze zieht."
  },
+ "3ce425975e860266": {
+  "lang": "de-DE",
+  "spoken": "Achtzehnhundertsiebenundsiebzig wird Berlin Millionenstadt.",
+  "text": "Achtzehnhundertsiebenundsiebzig wird Berlin Millionenstadt."
+ },
  "3d2c751f2d916f2a": {
   "lang": "de-DE",
   "spoken": "Warum fehlt das linke Auge? Das weiß niemand sicher. Auch offene Fragen gehören zur Geschichte!",
   "text": "Warum fehlt das linke Auge? Das weiß niemand sicher. Auch offene Fragen gehören zur Geschichte!"
- },
- "3d89d8df5e0f4046": {
-  "lang": "da-DK",
-  "spoken": "Hej!",
-  "text": "Hej!"
  },
  "3dc291a0b4673d3a": {
   "lang": "de-DE",
@@ -648,6 +768,11 @@
   "lang": "de-DE",
   "spoken": "Ins Grab packten die Ägypter alles, was man im Jenseits brauchen könnte.",
   "text": "Ins Grab packten die Ägypter alles, was man im Jenseits brauchen könnte."
+ },
+ "3feedcbeda264a16": {
+  "lang": "de-DE",
+  "spoken": "Fünfzigtausend Zuschauer.",
+  "text": "Fünfzigtausend Zuschauer."
  },
  "40f6e5f4122d2930": {
   "lang": "de-DE",
@@ -663,6 +788,11 @@
   "lang": "de-DE",
   "spoken": "Darum sind die Häfen in Nordnorwegen im Winter offen.",
   "text": "Darum sind die Häfen in Nordnorwegen im Winter offen."
+ },
+ "45524c8a3977faf3": {
+  "lang": "de-DE",
+  "spoken": "Am beliebtesten ist Spanien, dann die Türkei und Italien.",
+  "text": "Am beliebtesten ist Spanien, dann die Türkei und Italien."
  },
  "45ffeaafb381a716": {
   "lang": "de-DE",
@@ -689,6 +819,16 @@
   "spoken": "Auf jede Scherbe ritzte jemand einen Namen.",
   "text": "Auf jede Scherbe ritzte jemand einen Namen."
  },
+ "46cdf30bfba1e7d7": {
+  "lang": "de-DE",
+  "spoken": "Kinder gab es zu allen Zeiten. Aber ihr Leben sah ganz verschieden aus. Wir reisen durch die Zeit – von der Steinzeit bis heute.",
+  "text": "Kinder gab es zu allen Zeiten. Aber ihr Leben sah ganz verschieden aus. Wir reisen durch die Zeit – von der Steinzeit bis heute."
+ },
+ "471334085b7abb76": {
+  "lang": "de-DE",
+  "spoken": "Im alten Ägypten bekamen Tote Dinge mit ins Grab – auch Spielzeug. Darum kennen wir es heute noch.",
+  "text": "Im alten Ägypten bekamen Tote Dinge mit ins Grab – auch Spielzeug. Darum kennen wir es heute noch."
+ },
  "47c1eb09b8550bdd": {
   "lang": "de-DE",
   "spoken": "Zwei Schätze aus Ägypten sind weltberühmt: die Büste der Nofretete und das Grab von Tutanchamun.",
@@ -698,6 +838,11 @@
   "lang": "de-DE",
   "spoken": "Im Alpenvorland gibt es viele Seen.",
   "text": "Im Alpenvorland gibt es viele Seen."
+ },
+ "48f2497bb7fdb31c": {
+  "lang": "de-DE",
+  "spoken": "Seit dem Jahr 2000 hat sich die Zahl fast halbiert. Aber 138 Millionen Kinder sind immer noch sehr viele.",
+  "text": "Seit dem Jahr 2000 hat sich die Zahl fast halbiert. Aber 138 Millionen Kinder sind immer noch sehr viele."
  },
  "4916d4310da3f593": {
   "lang": "de-DE",
@@ -719,15 +864,15 @@
   "spoken": "Über diese Studie streiten die Forscher noch.",
   "text": "Über diese Studie streiten die Forscher noch."
  },
- "4b18cf65fdd10fc6": {
-  "lang": "fr-FR",
-  "spoken": "Bonjour!",
-  "text": "Bonjour!"
- },
  "4d01efefde0f6bcb": {
   "lang": "de-DE",
   "spoken": "Bis ein Brötchen auf deinem Frühstückstisch liegt, arbeiten viele Menschen zusammen: Bauern, Müller, Bäcker und Verkäufer.",
   "text": "Bis ein Brötchen auf deinem Frühstückstisch liegt, arbeiten viele Menschen zusammen: Bauern, Müller, Bäcker und Verkäufer."
+ },
+ "4d21c45ca7f3243e": {
+  "lang": "de-DE",
+  "spoken": "In der Steinzeit gab es keine Schule. Kinder lernten, indem sie zuschauten und mithalfen.",
+  "text": "In der Steinzeit gab es keine Schule. Kinder lernten, indem sie zuschauten und mithalfen."
  },
  "4d58689373320c67": {
   "lang": "de-DE",
@@ -739,6 +884,11 @@
   "spoken": "Die Bilder in der Chauvet-Höhle sind etwa 36.000 Jahre alt.",
   "text": "Die Bilder in der Chauvet-Höhle sind etwa 36.000 Jahre alt."
  },
+ "4dff5a1382f5e3cd": {
+  "lang": "de-DE",
+  "spoken": "Mehr Wohnungen bauen.",
+  "text": "Mehr Wohnungen bauen."
+ },
  "4e4ea48179856a40": {
   "lang": "de-DE",
   "spoken": "Senkrecht von oben sieht es fast aus wie eine Karte.",
@@ -748,6 +898,11 @@
   "lang": "de-DE",
   "spoken": "Rampe außen herum. Ein Weg windet sich wie eine Spirale um die Pyramide.",
   "text": "Rampe außen herum. Ein Weg windet sich wie eine Spirale um die Pyramide."
+ },
+ "4e7ad5107c5e684e": {
+  "lang": "de-DE",
+  "spoken": "Zwölf Komma vier Millionen Gäste kamen 2025 nach Berlin.",
+  "text": "Zwölf Komma vier Millionen Gäste kamen 2025 nach Berlin."
  },
  "4e7e2c6b029e42e4": {
   "lang": "de-DE",
@@ -783,6 +938,11 @@
   "lang": "de-DE",
   "spoken": "Weit im Osten, weit weg vom Atlantik: Landklima.",
   "text": "Weit im Osten, weit weg vom Atlantik: Landklima."
+ },
+ "50b77e6a22860251": {
+  "lang": "de-DE",
+  "spoken": "Am 20. November 1989 beschlossen die Vereinten Nationen die Kinderrechte.",
+  "text": "Am 20. November 1989 beschlossen die Vereinten Nationen die Kinderrechte."
  },
  "516cc1e86fa4e2ce": {
   "lang": "de-DE",
@@ -844,6 +1004,16 @@
   "spoken": "Nie ohne Seife waschen: Norden, Osten, Süden, Westen.",
   "text": "Nie ohne Seife waschen: Norden, Osten, Süden, Westen."
  },
+ "56f14c70dc345ee5": {
+  "lang": "de-DE",
+  "spoken": "Freie römische Kinder trugen ein Amulett um den Hals: die Bulla. Sie sollte vor bösen Geistern schützen.",
+  "text": "Freie römische Kinder trugen ein Amulett um den Hals: die Bulla. Sie sollte vor bösen Geistern schützen."
+ },
+ "574d1e867fc2b5a0": {
+  "lang": "de-DE",
+  "spoken": "Schiebe den Regler: Das Kind wird älter.",
+  "text": "Schiebe den Regler: Das Kind wird älter."
+ },
  "5757bfb396fc5814": {
   "lang": "de-DE",
   "spoken": "Auch in Berlin kannst du Schätze aus der Bronzezeit sehen: im Neuen Museum auf der Museumsinsel.",
@@ -884,10 +1054,20 @@
   "spoken": "Bei Ebbe fällt vor der Nordseeküste der Meeresboden trocken. Das ist das Wattenmeer.",
   "text": "Bei Ebbe fällt vor der Nordseeküste der Meeresboden trocken. Das ist das Wattenmeer."
  },
+ "5a7196a4844939c5": {
+  "lang": "de-DE",
+  "spoken": "Und in Berlin sind heute fast vier Millionen Menschen gemeldet.",
+  "text": "Und in Berlin sind heute fast vier Millionen Menschen gemeldet."
+ },
  "5a9cfe8852def135": {
   "lang": "de-DE",
   "spoken": "Am Rand: Horizontbögen. Einer ging verloren.",
   "text": "Am Rand: Horizontbögen. Einer ging verloren."
+ },
+ "5af7e3903faa4128": {
+  "lang": "de-DE",
+  "spoken": "Römische Kinder spielten mit Puppen, Nüssen, Knöchelchen, Reifen und Kreiseln.",
+  "text": "Römische Kinder spielten mit Puppen, Nüssen, Knöchelchen, Reifen und Kreiseln."
  },
  "5b0803c33c6e14a2": {
   "lang": "de-DE",
@@ -908,6 +1088,11 @@
   "lang": "de-DE",
   "spoken": "So sieht die Ostseeküste in echt aus: weiße Kreidefelsen, Strandkörbe und stille Bodden.",
   "text": "So sieht die Ostseeküste in echt aus: weiße Kreidefelsen, Strandkörbe und stille Bodden."
+ },
+ "5e7388e36f88451c": {
+  "lang": "de-DE",
+  "spoken": "Heute ist Kinderarbeit in Deutschland verboten.",
+  "text": "Heute ist Kinderarbeit in Deutschland verboten."
  },
  "5fdfd505d60959ad": {
   "lang": "de-DE",
@@ -1009,6 +1194,11 @@
   "spoken": "Der Speer aus Schöningen ist etwa 300.000 Jahre alt.",
   "text": "Der Speer aus Schöningen ist etwa 300.000 Jahre alt."
  },
+ "6730b66b77b58b5b": {
+  "lang": "de-DE",
+  "spoken": "Das Kolosseum war das größte Amphitheater der Römer. Rund fünfzigtausend Menschen sahen hier zu.",
+  "text": "Das Kolosseum war das größte Amphitheater der Römer. Rund fünfzigtausend Menschen sahen hier zu."
+ },
  "676c74bf1e52f696": {
   "lang": "de-DE",
   "spoken": "In Beelitz bei Berlin wächst seit 1861 Spargel. Weißer Spargel wächst im Dunkeln unter einem Erdwall.",
@@ -1038,6 +1228,11 @@
   "lang": "de-DE",
   "spoken": "Vor Christus zählen wir rückwärts.",
   "text": "Vor Christus zählen wir rückwärts."
+ },
+ "6b4d380a97d1912c": {
+  "lang": "de-DE",
+  "spoken": "Nach dem Zweiten Weltkrieg lag Berlin in Trümmern. 1948 kamen sogar Süßigkeiten vom Himmel.",
+  "text": "Nach dem Zweiten Weltkrieg lag Berlin in Trümmern. 1948 kamen sogar Süßigkeiten vom Himmel."
  },
  "6c0d534fc44c0280": {
   "lang": "de-DE",
@@ -1084,6 +1279,16 @@
   "spoken": "Russland und die Türkei liegen auf zwei Kontinenten.",
   "text": "Russland und die Türkei liegen auf zwei Kontinenten."
  },
+ "6f97eefa953fe09e": {
+  "lang": "de-DE",
+  "spoken": "Venedig verlangt an manchen Tagen Eintritt von Tagesgästen.",
+  "text": "Venedig verlangt an manchen Tagen Eintritt von Tagesgästen."
+ },
+ "7004aafbddfe4a25": {
+  "lang": "de-DE",
+  "spoken": "Das ist eine Sage. Was wirklich geschah, wissen wir von Archäologen.",
+  "text": "Das ist eine Sage. Was wirklich geschah, wissen wir von Archäologen."
+ },
  "70aca73545752b38": {
   "lang": "de-DE",
   "spoken": "Der Main fließt in den Rhein.",
@@ -1098,6 +1303,16 @@
   "lang": "de-DE",
   "spoken": "Hieroglyphen sind Bildzeichen. Manche bedeuten, was sie zeigen. Andere stehen nur für einen Laut.",
   "text": "Hieroglyphen sind Bildzeichen. Manche bedeuten, was sie zeigen. Andere stehen nur für einen Laut."
+ },
+ "72147b615b0b8c7e": {
+  "lang": "de-DE",
+  "spoken": "Römische Kinder schrieben mit einem Griffel auf Wachstafeln. Mit dem breiten Ende konnte man alles wieder glatt streichen.",
+  "text": "Römische Kinder schrieben mit einem Griffel auf Wachstafeln. Mit dem breiten Ende konnte man alles wieder glatt streichen."
+ },
+ "727a1a51fb84696a": {
+  "lang": "de-DE",
+  "spoken": "Von Berlin nach München: Welches Verkehrsmittel ist am schnellsten? Und welches schadet dem Klima am wenigsten?",
+  "text": "Von Berlin nach München: Welches Verkehrsmittel ist am schnellsten? Und welches schadet dem Klima am wenigsten?"
  },
  "72fb37f99bb5fa3a": {
   "lang": "de-DE",
@@ -1138,11 +1353,6 @@
   "lang": "de-DE",
   "spoken": "Zwischen Euphrat und Tigris liegt Mesopotamien, das Zweistromland. Dort lebten die Sumerer, zum Beispiel in der Stadt Uruk.",
   "text": "Zwischen Euphrat und Tigris liegt Mesopotamien, das Zweistromland. Dort lebten die Sumerer, zum Beispiel in der Stadt Uruk."
- },
- "775d4c6c3b4cebdc": {
-  "lang": "nl-BE",
-  "spoken": "Hallo!",
-  "text": "Hallo!"
  },
  "7846193ca46d06d5": {
   "lang": "de-DE",
@@ -1189,6 +1399,11 @@
   "spoken": "Ägypten liegt in der Wüste. Nur am Nil kann man leben – der Fluss ist die Lebensader.",
   "text": "Ägypten liegt in der Wüste. Nur am Nil kann man leben – der Fluss ist die Lebensader."
  },
+ "7bb8c69f5da74afb": {
+  "lang": "de-DE",
+  "spoken": "Auch heute müssen viele Kinder auf der Welt arbeiten, statt zur Schule zu gehen. Aber es werden weniger.",
+  "text": "Auch heute müssen viele Kinder auf der Welt arbeiten, statt zur Schule zu gehen. Aber es werden weniger."
+ },
  "7bcec66fbc553ef3": {
   "lang": "de-DE",
   "spoken": "Kinder haben eigene Rechte. Sie stehen in der UN-Kinderrechtskonvention von 1989.",
@@ -1198,6 +1413,11 @@
   "lang": "de-DE",
   "spoken": "Tutanchamun. Wurde schon mit 8 bis 10 Jahren König. Sein Grab fand man 1922.",
   "text": "Tutanchamun. Wurde schon mit 8 bis 10 Jahren König. Sein Grab fand man 1922."
+ },
+ "7beb4a1123e854af": {
+  "lang": "de-DE",
+  "spoken": "Die meisten Menschen in Deutschland machen jedes Jahr Urlaub. Viele fahren ans Mittelmeer, wo es warm und sonnig ist.",
+  "text": "Die meisten Menschen in Deutschland machen jedes Jahr Urlaub. Viele fahren ans Mittelmeer, wo es warm und sonnig ist."
  },
  "7c14698fa1017432": {
   "lang": "de-DE",
@@ -1229,6 +1449,11 @@
   "spoken": "ein Kinofilm über Ötzi ist eine Darstellung.",
   "text": "ein Kinofilm über Ötzi ist eine Darstellung."
  },
+ "7e38e7361ec5888a": {
+  "lang": "de-DE",
+  "spoken": "Gerichte, und der goldene Meilenstein.",
+  "text": "Gerichte, und der goldene Meilenstein."
+ },
  "7eac0fa07b23dfab": {
   "lang": "de-DE",
   "spoken": "Am Ufer wachsen Palmen und Felder. Dahinter: Sand.",
@@ -1239,10 +1464,20 @@
   "spoken": "In einem Gefäß aus Birkenrinde trug Ötzi Glut mit sich.",
   "text": "In einem Gefäß aus Birkenrinde trug Ötzi Glut mit sich."
  },
+ "7f53239e2032c10f": {
+  "lang": "de-DE",
+  "spoken": "Und Parks erhalten, wie das Tempelhofer Feld.",
+  "text": "Und Parks erhalten, wie das Tempelhofer Feld."
+ },
  "7f9b32b184b19e34": {
   "lang": "de-DE",
   "spoken": "In der Jungsteinzeit benutzte man vor allem Stein. Aber Ötzi hatte schon ein Beil aus Kupfer.",
   "text": "In der Jungsteinzeit benutzte man vor allem Stein. Aber Ötzi hatte schon ein Beil aus Kupfer."
+ },
+ "806981ecd3a8d681": {
+  "lang": "de-DE",
+  "spoken": "Nur gut jede fünfte Reise blieb in Deutschland.",
+  "text": "Nur gut jede fünfte Reise blieb in Deutschland."
  },
  "8090dccb7c2b0ecb": {
   "lang": "de-DE",
@@ -1264,6 +1499,11 @@
   "spoken": "So sieht die Museumsinsel in echt aus. Mit der U5 fährst du bis zum Bahnhof Museumsinsel.",
   "text": "So sieht die Museumsinsel in echt aus. Mit der U5 fährst du bis zum Bahnhof Museumsinsel."
  },
+ "825cf80bfa41d114": {
+  "lang": "de-DE",
+  "spoken": "Rom wurde riesig. Um Christi Geburt lebten dort wohl rund eine Million Menschen. Vergleiche mit Athen und mit Berlin heute.",
+  "text": "Rom wurde riesig. Um Christi Geburt lebten dort wohl rund eine Million Menschen. Vergleiche mit Athen und mit Berlin heute."
+ },
  "82aa929e1da24083": {
   "lang": "de-DE",
   "spoken": "Dann gießt man sie in die Form.",
@@ -1283,6 +1523,11 @@
   "lang": "de-DE",
   "spoken": "Jäger und Sammler waren Nomaden. Sie hatten kein festes Zuhause und zogen dorthin, wo es gerade Essen gab.",
   "text": "Jäger und Sammler waren Nomaden. Sie hatten kein festes Zuhause und zogen dorthin, wo es gerade Essen gab."
+ },
+ "8349252151d10ada": {
+  "lang": "de-DE",
+  "spoken": "Lange war Berlin klein: um vierzehnhundert lebten hier etwa siebentausend Menschen.",
+  "text": "Lange war Berlin klein: um vierzehnhundert lebten hier etwa siebentausend Menschen."
  },
  "834d892961cf32e2": {
   "lang": "de-DE",
@@ -1308,6 +1553,11 @@
   "lang": "de-DE",
   "spoken": "So sieht das in echt aus: der Hafen von Husum an der Nordsee. Einmal bei Flut, einmal bei Ebbe.",
   "text": "So sieht das in echt aus: der Hafen von Husum an der Nordsee. Einmal bei Flut, einmal bei Ebbe."
+ },
+ "851819bf66a5a7ff": {
+  "lang": "de-DE",
+  "spoken": "Tippe auf den Knopf: Der Hund schnappt zu!",
+  "text": "Tippe auf den Knopf: Der Hund schnappt zu!"
  },
  "8525adc43fb238f2": {
   "lang": "de-DE",
@@ -1369,6 +1619,11 @@
   "spoken": "Über die Erde legen wir ein Netz aus gedachten Linien. Damit kann man jeden Ort genau finden.",
   "text": "Über die Erde legen wir ein Netz aus gedachten Linien. Damit kann man jeden Ort genau finden."
  },
+ "89d8692fe9450d9b": {
+  "lang": "de-DE",
+  "spoken": "ROMA – geritzt ins Wachs.",
+  "text": "ROMA – geritzt ins Wachs."
+ },
  "8a077fbad6d7c84d": {
   "lang": "de-DE",
   "spoken": "Zehn Jahre sind ein Jahrzehnt, hundert Jahre ein Jahrhundert und tausend Jahre ein Jahrtausend.",
@@ -1398,6 +1653,11 @@
   "lang": "de-DE",
   "spoken": "Eine Quelle stammt aus der Zeit selbst. Eine Darstellung wurde später darüber gemacht, zum Beispiel ein Schulbuch oder ein Film.",
   "text": "Eine Quelle stammt aus der Zeit selbst. Eine Darstellung wurde später darüber gemacht, zum Beispiel ein Schulbuch oder ein Film."
+ },
+ "8e7ebc69a56f1803": {
+  "lang": "de-DE",
+  "spoken": "Und heute? Eine große Umfrage, die KIM-Studie 2024, hat Kinder von 6 bis 13 Jahren gefragt, was sie in ihrer Freizeit machen.",
+  "text": "Und heute? Eine große Umfrage, die KIM-Studie 2024, hat Kinder von 6 bis 13 Jahren gefragt, was sie in ihrer Freizeit machen."
  },
  "8ea95d166c67481b": {
   "lang": "de-DE",
@@ -1444,6 +1704,11 @@
   "spoken": "Fünfzehn ist mehr als die Hälfte. Ja gewinnt.",
   "text": "Fünfzehn ist mehr als die Hälfte. Ja gewinnt."
  },
+ "92b1aca6bf2e8a0b": {
+  "lang": "de-DE",
+  "spoken": "Deine Großeltern sind Zeitzeugen. Frag sie, wie ihre Kindheit war – das ist eine echte Quelle!",
+  "text": "Deine Großeltern sind Zeitzeugen. Frag sie, wie ihre Kindheit war – das ist eine echte Quelle!"
+ },
  "93c1a014e81b4d55": {
   "lang": "de-DE",
   "spoken": "Drei große Flüsse: die Wolga, die Donau und der Rhein. Tippe auf einen Fluss.",
@@ -1464,6 +1729,11 @@
   "spoken": "Land unter! Nur die Warften bleiben trocken.",
   "text": "Land unter! Nur die Warften bleiben trocken."
  },
+ "95628b078d3c723e": {
+  "lang": "de-DE",
+  "spoken": "Zuerst braucht man Wasser.",
+  "text": "Zuerst braucht man Wasser."
+ },
  "95b8ebdaac770bb1": {
   "lang": "de-DE",
   "spoken": "2026 liegt im 21. Jahrhundert. Schiebe den Regler und finde das Jahrhundert für jedes Jahr.",
@@ -1479,15 +1749,15 @@
   "spoken": "Servus!",
   "text": "Servus!"
  },
- "9709fd3d1df1e492": {
-  "lang": "pl-PL",
-  "spoken": "Cześć!",
-  "text": "Cześć!"
- },
  "973287d650048d48": {
   "lang": "de-DE",
   "spoken": "Gold! Hinter der Tür lag ein unglaublicher Schatz.",
   "text": "Gold! Hinter der Tür lag ein unglaublicher Schatz."
+ },
+ "981aeb64b8e9e67d": {
+  "lang": "de-DE",
+  "spoken": "Ein Kind lief mit einer Fackel durch die Höhle. Es putzte die Fackel an der Wand ab.",
+  "text": "Ein Kind lief mit einer Fackel durch die Höhle. Es putzte die Fackel an der Wand ab."
  },
  "98b57421f7149e57": {
   "lang": "de-DE",
@@ -1508,6 +1778,11 @@
   "lang": "de-DE",
   "spoken": "Wir zoomen heraus: von deinem Leben bis zur Steinzeit. Tippe auf die Knöpfe.",
   "text": "Wir zoomen heraus: von deinem Leben bis zur Steinzeit. Tippe auf die Knöpfe."
+ },
+ "9949ad236d7282bf": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 12. Kindheit früher und heute. Eine Zeitreise: Wie lebten, lernten und spielten Kinder?",
+  "text": "Kapitel 12. Kindheit früher und heute. Eine Zeitreise: Wie lebten, lernten und spielten Kinder?"
  },
  "999afa338990ea50": {
   "lang": "de-DE",
@@ -1539,10 +1814,20 @@
   "spoken": "Moien!",
   "text": "Moien!"
  },
+ "9c3c40e4cfbb8e88": {
+  "lang": "de-DE",
+  "spoken": "Im Wasserschloss wurde das Wasser verteilt: an Brunnen, Thermen und Häuser.",
+  "text": "Im Wasserschloss wurde das Wasser verteilt: an Brunnen, Thermen und Häuser."
+ },
  "9c5456bd68720ab3": {
   "lang": "de-DE",
   "spoken": "Ein senkrechter Keil bedeutet eins. Zusammen: dreiundzwanzig.",
   "text": "Ein senkrechter Keil bedeutet eins. Zusammen: dreiundzwanzig."
+ },
+ "9cb3b938c1589419": {
+  "lang": "de-DE",
+  "spoken": "Pro Person stößt das Flugzeug viel mehr Treibhausgase aus als Zug oder Bus. Schieb den Regler!",
+  "text": "Pro Person stößt das Flugzeug viel mehr Treibhausgase aus als Zug oder Bus. Schieb den Regler!"
  },
  "9d02a92ba6fc8a4f": {
   "lang": "de-DE",
@@ -1584,6 +1869,11 @@
   "spoken": "Und mit dem Zug kommst du quer durch Europa.",
   "text": "Und mit dem Zug kommst du quer durch Europa."
  },
+ "a1c2b0ea215fe35f": {
+  "lang": "de-DE",
+  "spoken": "Auf dem Land haben viel mehr Menschen ein Auto.",
+  "text": "Auf dem Land haben viel mehr Menschen ein Auto."
+ },
  "a275d99ebfdbd1a7": {
   "lang": "de-DE",
   "spoken": "Jedes Häufchen hat ein Wattwurm nach oben gedrückt.",
@@ -1604,10 +1894,20 @@
   "spoken": "Nach Süden mit Segel: Der Wind weht meist von Norden.",
   "text": "Nach Süden mit Segel: Der Wind weht meist von Norden."
  },
+ "a3f97a27839b6479": {
+  "lang": "de-DE",
+  "spoken": "Erst lauwarm, dann heiß, zum Schluss kalt.",
+  "text": "Erst lauwarm, dann heiß, zum Schluss kalt."
+ },
  "a4c8d0dfe969f1c7": {
   "lang": "de-DE",
   "spoken": "Der Berliner Fernsehturm ist mit 368 Metern höher – aber 4.500 Jahre jünger.",
   "text": "Der Berliner Fernsehturm ist mit 368 Metern höher – aber 4.500 Jahre jünger."
+ },
+ "a528f2987c20f329": {
+  "lang": "de-DE",
+  "spoken": "Viele Kinder armer Familien mussten um 1900 Geld dazuverdienen. Nach und nach wurde Kinderarbeit durch Gesetze verboten.",
+  "text": "Viele Kinder armer Familien mussten um 1900 Geld dazuverdienen. Nach und nach wurde Kinderarbeit durch Gesetze verboten."
  },
  "a6230e613e27d51f": {
   "lang": "de-DE",
@@ -1629,10 +1929,20 @@
   "spoken": "Letztes Mal haben wir beschlossen: …",
   "text": "Letztes Mal haben wir beschlossen: …"
  },
+ "a8c3ccaaf9d116a5": {
+  "lang": "de-DE",
+  "spoken": "Eine große Stadt hat auch Probleme: Verkehr, zu wenige Wohnungen und zu wenig Grün. Was kann man tun?",
+  "text": "Eine große Stadt hat auch Probleme: Verkehr, zu wenige Wohnungen und zu wenig Grün. Was kann man tun?"
+ },
  "a91625831a4bdfb1": {
   "lang": "de-DE",
   "spoken": "Mit dem Metall kamen neue Berufe. Nicht mehr jeder machte alles selbst. Und es gab jetzt große Unterschiede zwischen Arm und Reich.",
   "text": "Mit dem Metall kamen neue Berufe. Nicht mehr jeder machte alles selbst. Und es gab jetzt große Unterschiede zwischen Arm und Reich."
+ },
+ "a9dce0dcc67ed3c4": {
+  "lang": "de-DE",
+  "spoken": "Berlin ist eine Großstadt, rundherum liegt Brandenburg mit vielen Dörfern. Wie unterscheidet sich das Leben?",
+  "text": "Berlin ist eine Großstadt, rundherum liegt Brandenburg mit vielen Dörfern. Wie unterscheidet sich das Leben?"
  },
  "aa054a90dda302a7": {
   "lang": "de-DE",
@@ -1653,6 +1963,16 @@
   "lang": "de-DE",
   "spoken": "Die Klasse wählt ihre Klassensprecherinnen und Klassensprecher – geheim und fair.",
   "text": "Die Klasse wählt ihre Klassensprecherinnen und Klassensprecher – geheim und fair."
+ },
+ "abf03282e389428d": {
+  "lang": "de-DE",
+  "spoken": "Wie viele Kinder seid ihr in deiner Klasse? Stell es mit dem Regler ein.",
+  "text": "Wie viele Kinder seid ihr in deiner Klasse? Stell es mit dem Regler ein."
+ },
+ "ac4ed14f1a2045db": {
+  "lang": "de-DE",
+  "spoken": "Am Mühlendamm kreuzte ein wichtiger Handelsweg die Spree.",
+  "text": "Am Mühlendamm kreuzte ein wichtiger Handelsweg die Spree."
  },
  "ac7cae6aa6fb4006": {
   "lang": "de-DE",
@@ -1769,6 +2089,11 @@
   "spoken": "Frauen, Sklaven und Zugezogene durften nicht abstimmen.",
   "text": "Frauen, Sklaven und Zugezogene durften nicht abstimmen."
  },
+ "b6e37a4412f2149d": {
+  "lang": "de-DE",
+  "spoken": "Sieben, fünf, drei – Rom schlüpft aus dem Ei.",
+  "text": "Sieben, fünf, drei – Rom schlüpft aus dem Ei."
+ },
  "b72f244cfbd1d787": {
   "lang": "de-DE",
   "spoken": "Eine Wattwanderung ist toll. Aber das Wasser kommt zurück. Darum gibt es Regeln.",
@@ -1778,11 +2103,6 @@
   "lang": "de-DE",
   "spoken": "Ganz im Süden: die Alpen mit der Zugspitze.",
   "text": "Ganz im Süden: die Alpen mit der Zugspitze."
- },
- "b96296d08119713a": {
-  "lang": "nl-NL",
-  "spoken": "Hoi!",
-  "text": "Hoi!"
  },
  "b9b2543d62e9d759": {
   "lang": "de-DE",
@@ -1799,15 +2119,30 @@
   "spoken": "Die Ägypter wollten den Körper für das Leben nach dem Tod erhalten. Darum machten sie Mumien.",
   "text": "Die Ägypter wollten den Körper für das Leben nach dem Tod erhalten. Darum machten sie Mumien."
  },
+ "badd2f4e6e996fec": {
+  "lang": "de-DE",
+  "spoken": "In den Thermen trafen sich die Römer zum Baden, zum Sport und zum Plaudern. Man ging von Raum zu Raum: lauwarm, heiß, kalt.",
+  "text": "In den Thermen trafen sich die Römer zum Baden, zum Sport und zum Plaudern. Man ging von Raum zu Raum: lauwarm, heiß, kalt."
+ },
  "bc3fe9fef8653e3f": {
   "lang": "de-DE",
   "spoken": "Der Schlamm war das Geschenk: Er machte die Felder fruchtbar.",
   "text": "Der Schlamm war das Geschenk: Er machte die Felder fruchtbar."
  },
+ "bd55f4599f9ae6f9": {
+  "lang": "de-DE",
+  "spoken": "Unter dem Boden strömte heiße Luft vom Ofen.",
+  "text": "Unter dem Boden strömte heiße Luft vom Ofen."
+ },
  "bd901393dd00ee8f": {
   "lang": "de-DE",
   "spoken": "In Europa gibt es mehr als vierzig Staaten. Tippe auf ein Land, dann siehst du seine Hauptstadt.",
   "text": "In Europa gibt es mehr als vierzig Staaten. Tippe auf ein Land, dann siehst du seine Hauptstadt."
+ },
+ "be194f7db75483ff": {
+  "lang": "de-DE",
+  "spoken": "Mehr Bus, Bahn und Fahrrad.",
+  "text": "Mehr Bus, Bahn und Fahrrad."
  },
  "bee9610a8311955c": {
   "lang": "de-DE",
@@ -1838,6 +2173,11 @@
   "lang": "de-DE",
   "spoken": "Es gibt viele Arten von Karten. Jede zeigt etwas anderes.",
   "text": "Es gibt viele Arten von Karten. Jede zeigt etwas anderes."
+ },
+ "c105764ecb0a3769": {
+  "lang": "de-DE",
+  "spoken": "Archäologen haben herausgefunden: Am Anfang gab es kleine Dörfer auf den Hügeln am Tiber. Der Ort war günstig.",
+  "text": "Archäologen haben herausgefunden: Am Anfang gab es kleine Dörfer auf den Hügeln am Tiber. Der Ort war günstig."
  },
  "c21480a70ce7312b": {
   "lang": "de-DE",
@@ -1874,6 +2214,11 @@
   "spoken": "Demokratie braucht Menschen, die gut informiert sind und ihre Meinung sagen.",
   "text": "Demokratie braucht Menschen, die gut informiert sind und ihre Meinung sagen."
  },
+ "c4f49b900acf7ff7": {
+  "lang": "de-DE",
+  "spoken": "In Preußen gab es schon lange eine Schulpflicht. Um 1900 saßen oft über fünfzig Kinder in einer Klasse.",
+  "text": "In Preußen gab es schon lange eine Schulpflicht. Um 1900 saßen oft über fünfzig Kinder in einer Klasse."
+ },
  "c4f81ecf2ad53f15": {
   "lang": "de-DE",
   "spoken": "Die große Scheibe ist die Sonne oder der Vollmond.",
@@ -1888,6 +2233,16 @@
   "lang": "de-DE",
   "spoken": "Die Himmelsscheibe wurde nicht von Archäologen gefunden, sondern von Raubgräbern. Ihre Geschichte ist ein echter Krimi.",
   "text": "Die Himmelsscheibe wurde nicht von Archäologen gefunden, sondern von Raubgräbern. Ihre Geschichte ist ein echter Krimi."
+ },
+ "c5e81369cbcff975": {
+  "lang": "de-DE",
+  "spoken": "Das Berliner Olympiastadion hat heute etwa vierundsiebzigtausend Plätze.",
+  "text": "Das Berliner Olympiastadion hat heute etwa vierundsiebzigtausend Plätze."
+ },
+ "c6039209fb379982": {
+  "lang": "de-DE",
+  "spoken": "Viel Spaß beim Interview!",
+  "text": "Viel Spaß beim Interview!"
  },
  "c66340ca43796159": {
   "lang": "de-DE",
@@ -1924,6 +2279,11 @@
   "spoken": "Ein Langhaus war meistens etwa 20 Meter lang.",
   "text": "Ein Langhaus war meistens etwa 20 Meter lang."
  },
+ "c95c2e23e8657be6": {
+  "lang": "de-DE",
+  "spoken": "Kreisel und Reifen kennst du vielleicht auch.",
+  "text": "Kreisel und Reifen kennst du vielleicht auch."
+ },
  "c9a2c65c05976706": {
   "lang": "de-DE",
   "spoken": "Am Indus, im heutigen Pakistan, bauten Menschen große Städte wie Mohenjo-Daro.",
@@ -1949,10 +2309,20 @@
   "spoken": "Auf der Schwäbischen Alb wurden die ältesten Figuren der Welt gefunden: die Venus vom Hohle Fels und der Löwenmensch.",
   "text": "Auf der Schwäbischen Alb wurden die ältesten Figuren der Welt gefunden: die Venus vom Hohle Fels und der Löwenmensch."
  },
+ "cbf0eb08148a9d89": {
+  "lang": "de-DE",
+  "spoken": "Rom hatte wohl rund eine Million.",
+  "text": "Rom hatte wohl rund eine Million."
+ },
  "cc597ca2c9789a91": {
   "lang": "de-DE",
   "spoken": "Ganz oben steht der Pharao.",
   "text": "Ganz oben steht der Pharao."
+ },
+ "cc94b9e488fe88ee": {
+  "lang": "de-DE",
+  "spoken": "In Berlin wohnen auf einem Quadratkilometer über viertausend Menschen, in Brandenburg nur etwa sechsundachtzig.",
+  "text": "In Berlin wohnen auf einem Quadratkilometer über viertausend Menschen, in Brandenburg nur etwa sechsundachtzig."
  },
  "ccf51d5bcd9d4463": {
   "lang": "de-DE",
@@ -1968,6 +2338,26 @@
   "lang": "de-DE",
   "spoken": "In der Ukraine fand man Hütten aus Mammutknochen.",
   "text": "In der Ukraine fand man Hütten aus Mammutknochen."
+ },
+ "cd7eeff8127f5fe5": {
+  "lang": "de-DE",
+  "spoken": "Reiche wohnten in einer Domus mit Innenhof und Garten.",
+  "text": "Reiche wohnten in einer Domus mit Innenhof und Garten."
+ },
+ "cdc5df7da2c92d5a": {
+  "lang": "de-DE",
+  "spoken": "Je höher die Wohnung, desto billiger und gefährlicher.",
+  "text": "Je höher die Wohnung, desto billiger und gefährlicher."
+ },
+ "ce558ed8662ab1d4": {
+  "lang": "de-DE",
+  "spoken": "Auch Berlin begann an einem Fluss: Zwei kleine Kaufmannsstädte entstanden an der Spree, Berlin und Cölln.",
+  "text": "Auch Berlin begann an einem Fluss: Zwei kleine Kaufmannsstädte entstanden an der Spree, Berlin und Cölln."
+ },
+ "ce86bc819a6a199e": {
+  "lang": "de-DE",
+  "spoken": "Das Forum Romanum war der wichtigste Platz in Rom. Hier wurde gehandelt, regiert, gerichtet und gebetet.",
+  "text": "Das Forum Romanum war der wichtigste Platz in Rom. Hier wurde gehandelt, regiert, gerichtet und gebetet."
  },
  "ceb185cebd66163e": {
   "lang": "de-DE",
@@ -1994,6 +2384,11 @@
   "spoken": "Die Pnyx gibt es noch heute. Und im Museum liegen echte Tonscherben, mit denen die Athener abgestimmt haben.",
   "text": "Die Pnyx gibt es noch heute. Und im Museum liegen echte Tonscherben, mit denen die Athener abgestimmt haben."
  },
+ "d052b566512f327e": {
+  "lang": "de-DE",
+  "spoken": "Die meisten Römer wohnten zur Miete in hohen Häusern, den Insulae. Nur Reiche hatten ein eigenes Stadthaus, eine Domus.",
+  "text": "Die meisten Römer wohnten zur Miete in hohen Häusern, den Insulae. Nur Reiche hatten ein eigenes Stadthaus, eine Domus."
+ },
  "d05c525f96fadd09": {
   "lang": "de-DE",
   "spoken": "Thematische Karte: zeigt ein Thema, z. B. das Wetter, Radwege oder Tiere.",
@@ -2014,10 +2409,20 @@
   "spoken": "Schlag für Schlag fliegen Abschläge weg.",
   "text": "Schlag für Schlag fliegen Abschläge weg."
  },
+ "d33bf9cd1fa3fa2c": {
+  "lang": "de-DE",
+  "spoken": "Der Trevi-Brunnen bekommt sein Wasser bis heute aus einem römischen Aquädukt.",
+  "text": "Der Trevi-Brunnen bekommt sein Wasser bis heute aus einem römischen Aquädukt."
+ },
  "d357c46036a99e7b": {
   "lang": "de-DE",
   "spoken": "Keine Sklaven: Die Arbeiter hatten eine eigene Stadt.",
   "text": "Keine Sklaven: Die Arbeiter hatten eine eigene Stadt."
+ },
+ "d3c8d2adfe55f15d": {
+  "lang": "de-DE",
+  "spoken": "Mit zehn oder elf Jahren haben schon fast zwei von drei Kindern ein eigenes Smartphone.",
+  "text": "Mit zehn oder elf Jahren haben schon fast zwei von drei Kindern ein eigenes Smartphone."
  },
  "d3df233a8e15b713": {
   "lang": "de-DE",
@@ -2079,10 +2484,20 @@
   "spoken": "Quer durch Berlin sind es über zwanzig Kilometer.",
   "text": "Quer durch Berlin sind es über zwanzig Kilometer."
  },
+ "d9ef7b0bbd895789": {
+  "lang": "de-DE",
+  "spoken": "Schicht für Schicht: große Steine, Schotter, Mörtel und oben Pflaster.",
+  "text": "Schicht für Schicht: große Steine, Schotter, Mörtel und oben Pflaster."
+ },
  "da2ca341b3fdcd25": {
   "lang": "de-DE",
   "spoken": "Die Ägypter glaubten an viele Götter. Viele sehen aus wie Menschen mit einem Tierkopf.",
   "text": "Die Ägypter glaubten an viele Götter. Viele sehen aus wie Menschen mit einem Tierkopf."
+ },
+ "da5f66975c6ec3a8": {
+  "lang": "de-DE",
+  "spoken": "Über achtzigtausend Kilometer gepflasterte Straßen.",
+  "text": "Über achtzigtausend Kilometer gepflasterte Straßen."
  },
  "dab2760c5a4fb4ac": {
   "lang": "de-DE",
@@ -2098,6 +2513,11 @@
   "lang": "de-DE",
   "spoken": "Kupfer, Bronze und Eisen begegnen dir jeden Tag – von der Kirchenglocke bis zum Kleingeld.",
   "text": "Kupfer, Bronze und Eisen begegnen dir jeden Tag – von der Kirchenglocke bis zum Kleingeld."
+ },
+ "dc57ad75d9c70365": {
+  "lang": "de-DE",
+  "spoken": "Aus der kleinen Doppelstadt wurde eine Millionenstadt. Schau, wie die Zahl der Einwohner wächst.",
+  "text": "Aus der kleinen Doppelstadt wurde eine Millionenstadt. Schau, wie die Zahl der Einwohner wächst."
  },
  "dc76d7c16d803978": {
   "lang": "de-DE",
@@ -2139,6 +2559,11 @@
   "spoken": "Ein Containerschiff ist länger, als der Fernsehturm hoch ist!",
   "text": "Ein Containerschiff ist länger, als der Fernsehturm hoch ist!"
  },
+ "e030f060897c538f": {
+  "lang": "de-DE",
+  "spoken": "An einer Furt kommt man über den Fluss.",
+  "text": "An einer Furt kommt man über den Fluss."
+ },
  "e04a668a58811284": {
   "lang": "de-DE",
   "spoken": "Die Flöten aus dem Geißenklösterle sind 42.000 bis 43.000 Jahre alt.",
@@ -2148,6 +2573,11 @@
   "lang": "de-DE",
   "spoken": "Europa hat hohe Gebirge, alte Gebirge und riesige flache Tiefländer. Tippe auf die Knöpfe rechts.",
   "text": "Europa hat hohe Gebirge, alte Gebirge und riesige flache Tiefländer. Tippe auf die Knöpfe rechts."
+ },
+ "e11dee728aadc264": {
+  "lang": "de-DE",
+  "spoken": "Markt und Tempel.",
+  "text": "Markt und Tempel."
  },
  "e13067aeb72f485e": {
   "lang": "de-DE",
@@ -2189,6 +2619,11 @@
   "spoken": "Der Mont Blanc in den Alpen ist rund 4806 Meter hoch.",
   "text": "Der Mont Blanc in den Alpen ist rund 4806 Meter hoch."
  },
+ "e64f5209ca4a6311": {
+  "lang": "de-DE",
+  "spoken": "Die Römer bauten Straßen durch ihr ganzes Reich. Sie waren so gut, dass manche noch heute zu sehen sind.",
+  "text": "Die Römer bauten Straßen durch ihr ganzes Reich. Sie waren so gut, dass manche noch heute zu sehen sind."
+ },
  "e74b62a16ebc131d": {
   "lang": "de-DE",
   "spoken": "Nach dem Zweiten Weltkrieg wollten die Länder Europas nie wieder Krieg gegeneinander führen. So entstand die Europäische Union.",
@@ -2208,6 +2643,16 @@
   "lang": "de-DE",
   "spoken": "Solche Dinge fand man wirklich in ägyptischen Gräbern. Heute stehen sie in Museen.",
   "text": "Solche Dinge fand man wirklich in ägyptischen Gräbern. Heute stehen sie in Museen."
+ },
+ "e875a04dcea1e712": {
+  "lang": "de-DE",
+  "spoken": "Auf jeder Station fragen wir: Wohnen, Lernen, Arbeiten, Spielen.",
+  "text": "Auf jeder Station fragen wir: Wohnen, Lernen, Arbeiten, Spielen."
+ },
+ "e8a74831e277287b": {
+  "lang": "de-DE",
+  "spoken": "Unten im Haus waren Läden und Imbisse.",
+  "text": "Unten im Haus waren Läden und Imbisse."
  },
  "e9594a4ddabd415e": {
   "lang": "de-DE",
@@ -2239,6 +2684,16 @@
   "spoken": "Seit 1970 staut ein riesiger Damm bei Assuan den Nil. Seitdem gibt es keine Nilschwemme mehr.",
   "text": "Seit 1970 staut ein riesiger Damm bei Assuan den Nil. Seitdem gibt es keine Nilschwemme mehr."
  },
+ "ec3e160c5f8c263e": {
+  "lang": "de-DE",
+  "spoken": "Dieses Bild aus Stein zeigt einen Lehrer mit seinen Schülern.",
+  "text": "Dieses Bild aus Stein zeigt einen Lehrer mit seinen Schülern."
+ },
+ "ecb12197dd586661": {
+  "lang": "de-DE",
+  "spoken": "Cölln wird zwölfhundertsiebenunddreißig erwähnt, Berlin zwölfhundertvierundvierzig.",
+  "text": "Cölln wird zwölfhundertsiebenunddreißig erwähnt, Berlin zwölfhundertvierundvierzig."
+ },
  "ecb8c5792abebada": {
   "lang": "de-DE",
   "spoken": "Stadtplan: zeigt Straßen, Parks, Haltestellen – sehr genau.",
@@ -2258,6 +2713,11 @@
   "lang": "de-DE",
   "spoken": "Plumps! Das Kliff wird jedes Jahr ein bisschen kleiner.",
   "text": "Plumps! Das Kliff wird jedes Jahr ein bisschen kleiner."
+ },
+ "ef0aa1cc0822a5b2": {
+  "lang": "de-DE",
+  "spoken": "Athen kennst du schon aus dem Kapitel über Demokratie. Wie unterscheidet sich die Stadt Athen von Rom?",
+  "text": "Athen kennst du schon aus dem Kapitel über Demokratie. Wie unterscheidet sich die Stadt Athen von Rom?"
  },
  "f0a07764627ecdad": {
   "lang": "de-DE",
@@ -2324,6 +2784,11 @@
   "spoken": "Schieb den Regler durch das Jahr. Du siehst, welches Obst und Gemüse gerade bei uns geerntet wird.",
   "text": "Schieb den Regler durch das Jahr. Du siehst, welches Obst und Gemüse gerade bei uns geerntet wird."
  },
+ "f76bfdb08207aaad": {
+  "lang": "de-DE",
+  "spoken": "Ab 1949 gab es zwei deutsche Staaten. Berlin war geteilt. Auch die Schule war in Ost und West verschieden.",
+  "text": "Ab 1949 gab es zwei deutsche Staaten. Berlin war geteilt. Auch die Schule war in Ost und West verschieden."
+ },
  "f7ab194aee3f39f1": {
   "lang": "de-DE",
   "spoken": "Was war diese Woche gut?",
@@ -2343,6 +2808,11 @@
   "lang": "de-DE",
   "spoken": "Kapitel 7. Ägypten: Pharaonen und Pyramiden. Ein Reich am Nil – vor über 4.500 Jahren",
   "text": "Kapitel 7. Ägypten: Pharaonen und Pyramiden. Ein Reich am Nil – vor über 4.500 Jahren"
+ },
+ "fa6125f6853b0bb1": {
+  "lang": "de-DE",
+  "spoken": "Um 1900 wuchs Berlin rasant. Viele Familien wohnten in Mietskasernen: Vorne hell und teuer, hinten dunkel und eng.",
+  "text": "Um 1900 wuchs Berlin rasant. Viele Familien wohnten in Mietskasernen: Vorne hell und teuer, hinten dunkel und eng."
  },
  "fb068e4b187fe5d6": {
   "lang": "de-DE",
@@ -2368,6 +2838,11 @@
   "lang": "de-DE",
   "spoken": "Welche Ideen habt ihr?",
   "text": "Welche Ideen habt ihr?"
+ },
+ "fdc484f863166673": {
+  "lang": "de-DE",
+  "spoken": "Meist lief der Kanal unter der Erde.",
+  "text": "Meist lief der Kanal unter der Erde."
  },
  "fddf5d3af292680b": {
   "lang": "de-DE",

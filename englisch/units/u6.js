@@ -1,4 +1,4 @@
-/* Unit 6 – At home and in town (Englisch Klasse 5) */
+/* Unit 6 – At home and in town (Englisch Klasse 5). Gap-fill 2026-10-05: the UK (4 countries, Union Jack, GB/UK/British Isles, Welsh + Gaelic). */
 (() => {
   const EN = { lang: "en-GB", rate: 0.85 };
   const SPK = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 010 6"/></svg>';
@@ -108,11 +108,77 @@
     return { r, t, g: s.el("g", null, r, t) };
   };
 
+  /* ---- simplified map of the British Isles (lon/lat → px, viewBox 420 × 540) ---- */
+  const UKP = ([lo, la]) => [+((lo + 11) * 0.574 * 56).toFixed(1), +((59.4 - la) * 56).toFixed(1)];
+  const ukD = pts => "M" + pts.map(p => UKP(p).join(" ")).join(" L") + " Z";
+  const SB = [[-3.05, 54.98], [-2.6, 55.1], [-2.2, 55.35], [-2.0, 55.77]];               // Scotland | England
+  const WB = [[-3.05, 53.3], [-3.05, 52.85], [-3.15, 52.5], [-3.0, 52.1], [-2.7, 51.85], [-2.65, 51.6]]; // Wales | England
+  const NB = [[-6.2, 54.05], [-6.65, 54.05], [-7.25, 54.2], [-7.6, 54.15], [-8.15, 54.45], [-7.9, 54.7], [-7.55, 54.75], [-7.25, 55.0]]; // NI | Ireland
+  const UKMAP = {
+    scotland: [[[-2.0, 55.77], [-2.13, 55.9], [-2.5, 56.0], [-3.3, 55.98], [-3.0, 56.08], [-2.58, 56.28], [-3.0, 56.45], [-2.47, 56.71], [-2.08, 57.15], [-1.78, 57.5], [-2.0, 57.69], [-3.28, 57.72], [-3.87, 57.59], [-4.22, 57.48], [-3.77, 57.86], [-3.65, 58.12], [-3.09, 58.44], [-3.03, 58.64], [-3.37, 58.67], [-3.52, 58.6], [-4.7, 58.57], [-5.0, 58.62], [-5.35, 58.1], [-5.16, 57.9], [-5.7, 57.73], [-5.85, 57.6], [-5.7, 57.28], [-5.83, 57.0], [-6.22, 56.73], [-5.9, 56.6], [-5.47, 56.41], [-5.6, 56.0], [-5.8, 55.3], [-5.5, 55.4], [-5.3, 55.9], [-4.85, 55.85], [-4.63, 55.46], [-5.15, 55.0], [-5.15, 54.85], [-4.86, 54.64], [-4.4, 54.85], [-3.6, 54.88], ...SB],
+      [[-6.2, 58.5], [-6.9, 58.2], [-7.1, 57.85], [-6.4, 57.85], [-6.2, 58.2]], [[-7.2, 57.7], [-7.45, 57.4], [-7.35, 57.05], [-7.2, 57.1], [-7.25, 57.6]],
+      [[-5.75, 57.25], [-6.3, 57.7], [-6.75, 57.45], [-6.2, 57.15], [-5.9, 57.1]], [[-5.7, 56.45], [-6.3, 56.3], [-6.15, 56.6], [-5.85, 56.55]],
+      [[-6.1, 55.9], [-6.5, 55.7], [-6.15, 55.6]], [[-3.4, 59.1], [-2.75, 59.15], [-2.85, 58.85], [-3.3, 58.9]]],
+    england: [[[-2.0, 55.77], [-1.42, 55.0], [-0.61, 54.49], [-0.08, 54.12], [0.11, 53.58], [0.34, 53.14], [0.2, 52.9], [0.5, 52.95], [1.3, 52.93], [1.75, 52.48], [1.35, 51.95], [0.9, 51.75], [0.7, 51.54], [1.38, 51.39], [1.32, 51.13], [0.97, 50.91], [0.25, 50.73], [-0.14, 50.82], [-1.1, 50.78], [-1.9, 50.71], [-2.45, 50.6], [-3.4, 50.62], [-3.64, 50.22], [-4.14, 50.36], [-5.2, 49.96], [-5.71, 50.07], [-5.48, 50.21], [-5.08, 50.42], [-4.53, 51.02], [-4.12, 51.21], [-3.48, 51.2], [-2.9, 51.3], [-2.7, 51.45], ...WB.slice().reverse(), [-3.05, 53.5], [-3.0, 53.65], [-3.05, 53.82], [-2.9, 54.07], [-3.23, 54.1], [-3.64, 54.5], [-3.55, 54.65], [-3.3, 54.95], ...SB],
+      [[-1.55, 50.68], [-1.1, 50.72], [-1.2, 50.58]]],
+    wales: [[[-2.65, 51.6], [-3.0, 51.55], [-3.17, 51.45], [-3.6, 51.4], [-3.85, 51.6], [-4.3, 51.56], [-4.7, 51.67], [-5.1, 51.7], [-5.3, 51.9], [-4.98, 52.01], [-4.5, 52.15], [-4.08, 52.41], [-4.06, 52.72], [-4.41, 52.89], [-4.72, 52.8], [-4.6, 52.95], [-4.3, 53.14], [-4.2, 53.22], [-3.83, 53.33], [-3.3, 53.35], ...WB],
+      [[-4.2, 53.22], [-4.6, 53.2], [-4.65, 53.4], [-4.3, 53.43], [-4.05, 53.3]]],
+    ni: [[[-7.1, 55.1], [-6.65, 55.21], [-6.15, 55.23], [-5.8, 54.85], [-5.9, 54.65], [-5.45, 54.5], [-5.55, 54.3], [-5.88, 54.2], ...NB]],
+    ireland: [[[-7.1, 55.1], [-7.0, 55.25], [-7.37, 55.38], [-7.6, 55.27], [-8.3, 55.13], [-8.8, 54.68], [-8.4, 54.6], [-8.6, 54.3], [-10.0, 54.25], [-10.2, 53.95], [-9.6, 53.8], [-10.1, 53.45], [-9.0, 53.27], [-9.4, 52.9], [-9.93, 52.56], [-9.8, 52.3], [-10.45, 52.12], [-10.2, 51.8], [-9.8, 51.45], [-8.3, 51.8], [-7.0, 52.15], [-6.36, 52.17], [-6.35, 52.33], [-6.0, 52.98], [-6.1, 53.35], [-6.25, 53.72], [-6.35, 54.0], ...NB.slice(1)]],
+  };
+  const UKCOL = { england: "#f2a7a0", scotland: "#8fb3ea", wales: "#9fd08f", ni: "#f6c46a", ireland: "#cdb8ee" };
+  /** draws the map; returns {svg, grey:{key:path}, col:{key:path(later)}} */
+  function ukMap(s, w, h) {
+    const svg = s.svg(420, 540, { width: w, height: h });
+    svg.append(s.el("rect", { x: 0, y: 0, width: 420, height: 540, rx: 16, fill: "#dcecf8" }));
+    const grey = {}, col = {};
+    Object.entries(UKMAP).forEach(([k, polys]) => {
+      const d = polys.map(ukD).join(" ");
+      grey[k] = s.el("path", { d, fill: "#eef1f6", stroke: "#8a94a6", "stroke-width": 1.5, "stroke-linejoin": "round" });
+      col[k] = s.el("path", { d, fill: UKCOL[k], stroke: "#5d6678", "stroke-width": 2, "stroke-linejoin": "round", class: "later" });
+      svg.append(grey[k]);
+    });
+    Object.values(col).forEach(p => svg.append(p));
+    return { svg, grey, col };
+  }
+  /** a capital: dot + label; side "l" | "r" */
+  function ukCity(s, name, lonlat, side, dy = 6, colr = "#1b2740") {
+    const [x, y] = UKP(lonlat);
+    return s.el("g", { class: "later" },
+      s.el("circle", { cx: x, cy: y, r: 7, fill: "#dc2626", stroke: "#fff", "stroke-width": 3 }),
+      s.el("text", { x: side === "l" ? x - 11 : x + 11, y: y + dy, "text-anchor": side === "l" ? "end" : "start", "font-size": 19, "font-weight": 800, fill: colr, stroke: "#fff", "stroke-width": 4, "paint-order": "stroke", text: name }));
+  }
+  /** Union Flag (60 × 30); parts: "andrew" | "george" | "patrick" toggled with s.show */
+  let ujN = 0;
+  function unionJack(s, w, h) {
+    const id = "u6uj" + (++ujN);
+    const svg = s.svg(60, 30, { width: w, height: h });
+    const clipT = s.el("clipPath", { id: id + "t" }, s.el("path", { d: "M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z" }));
+    const clipS = s.el("clipPath", { id: id + "s" }, s.el("rect", { x: 0, y: 0, width: 60, height: 30 }));
+    const X = "M0,0 L60,30 M60,0 L0,30", P = "M30,0 v30 M0,15 h60";
+    const andrew = s.el("g", { class: "later" }, s.el("rect", { x: 0, y: 0, width: 60, height: 30, fill: "#012169" }), s.el("path", { d: X, stroke: "#fff", "stroke-width": 6 }));
+    const patrick = s.el("g", { class: "later" }, s.el("path", { d: X, stroke: "#C8102E", "stroke-width": 4, "clip-path": `url(#${id}t)` }));
+    const george = s.el("g", { class: "later" }, s.el("path", { d: P, stroke: "#fff", "stroke-width": 10 }), s.el("path", { d: P, stroke: "#C8102E", "stroke-width": 6 }));
+    const base = s.el("rect", { x: 0, y: 0, width: 60, height: 30, fill: "#fff" });
+    svg.append(s.el("defs", null, clipT, clipS), s.el("g", { "clip-path": `url(#${id}s)` }, base, andrew, patrick, george),
+      s.el("rect", { x: 0.2, y: 0.2, width: 59.6, height: 29.6, fill: "none", stroke: "#8a94a6", "stroke-width": 0.4 }));
+    return { svg, andrew, patrick, george };
+  }
+  /** single national flags of the crosses (60 × 36) */
+  function crossFlag(s, kind, w) {
+    const svg = s.svg(60, 36, { width: w, height: w * 0.6 });
+    if (kind === "george") svg.append(s.el("rect", { x: 0, y: 0, width: 60, height: 36, fill: "#fff" }), s.el("path", { d: "M30,0 v36 M0,18 h60", stroke: "#C8102E", "stroke-width": 7 }));
+    if (kind === "andrew") svg.append(s.el("rect", { x: 0, y: 0, width: 60, height: 36, fill: "#005EB8" }), s.el("path", { d: "M0,0 L60,36 M60,0 L0,36", stroke: "#fff", "stroke-width": 7 }));
+    if (kind === "patrick") svg.append(s.el("rect", { x: 0, y: 0, width: 60, height: 36, fill: "#fff" }), s.el("path", { d: "M0,0 L60,36 M60,0 L0,36", stroke: "#C8102E", "stroke-width": 5 }));
+    svg.append(s.el("rect", { x: 0.3, y: 0.3, width: 59.4, height: 35.4, fill: "none", stroke: "#8a94a6", "stroke-width": 0.6 }));
+    return svg;
+  }
+
   Deck.unit({
     id: "u6", num: 6, title: "At home and in town", color: "#2f7d32", soft: "#e3f2e4",
     subtitle: "Where do you live? How do I get to …?",
-    blurb: "Zimmer, Möbel, Präpositionen, Wege beschreiben, London",
-    goals: ["Dein Zuhause beschreiben: rooms, furniture, there is / there are", "Sagen, wo etwas ist: in, on, under, next to, behind …", "a, an, the richtig benutzen", "Nach dem Weg fragen und den Weg erklären", "London kennenlernen: the Tube, Big Ben, Tower Bridge"],
+    blurb: "Zimmer, Präpositionen, Wege beschreiben, London und das UK",
+    goals: ["Dein Zuhause beschreiben: rooms, furniture, there is / there are", "Sagen, wo etwas ist: in, on, under, next to, behind …", "a, an, the richtig benutzen", "Nach dem Weg fragen und den Weg erklären", "London kennenlernen: the Tube, Big Ben, Tower Bridge", "Das UK: vier Länder, Union Jack, Welsh und Gaelic"],
     icon(svg, el) {
       svg.append(el("circle", { cx: 35, cy: 35, r: 27, fill: "#2f7d32", opacity: .14 }),
         el("path", { d: "M16 36 L35 18 L54 36 L54 54 L16 54 Z", fill: "#fff", stroke: "#2f7d32", "stroke-width": 3, "stroke-linejoin": "round" }),
@@ -815,6 +881,137 @@
           s.step(async () => { await grow(bars[0]); s.speak("The Fernsehturm is 368 metres tall.", EN); });
           s.step(async () => { await grow(bars[1]); await grow(bars[2]); s.show(sents[0], "left"); });
           s.step(async () => { for (let i = 0; i < rows.length; i++) { s.sfx.count(i); await s.show(rows[i], "left", 0); } s.show(sents[1], "left"); s.sfx.success(); });
+        },
+      },
+      /* 15b – the UK */
+      {
+        title: "The UK: four countries",
+        say: "London ist die Hauptstadt des Vereinigten Königreichs, auf Englisch the United Kingdom. Es besteht aus vier Ländern: England, Schottland, Wales und Nordirland.",
+        build(s) {
+          const m = ukMap(s, 440, 566);
+          const lab = (t, lonlat, fill = "#1b2740") => { const [x, y] = UKP(lonlat); return s.el("text", { x, y, "text-anchor": "middle", "font-size": 21, "font-weight": 800, fill, class: "later", text: t }); };
+          const L = { england: lab("England", [-1.4, 52.7]), scotland: lab("Scotland", [-4.3, 57.15]), wales: lab("Wales", [-3.65, 52.25]), ni: lab("N. Ireland", [-8.3, 55.75]) };
+          const C = { england: ukCity(s, "London", [-0.13, 51.51], "l", 22), scotland: ukCity(s, "Edinburgh", [-3.19, 55.95], "r"), wales: ukCity(s, "Cardiff", [-3.18, 51.48], "l", 20), ni: ukCity(s, "Belfast", [-5.93, 54.6], "r") };
+          const irl = s.el("text", { x: UKP([-8.2, 53.0])[0], y: UKP([-8.2, 53.0])[1], "text-anchor": "middle", "font-size": 19, "font-weight": 700, "font-style": "italic", fill: "#5d6678", text: "Ireland" });
+          const [nx, ny] = UKP([-6.6, 54.85]);
+          const lead = s.el("path", { d: `M105 212 L${nx} ${ny}`, stroke: "#1b2740", "stroke-width": 2, class: "later" });
+          m.svg.append(irl, lead, ...Object.values(L), ...Object.values(C));
+          const D = [
+            ["england", "England", "capital: London", "England. The capital is London."],
+            ["scotland", "Scotland", "capital: Edinburgh", "Scotland. The capital is Edinburgh."],
+            ["wales", "Wales", "capital: Cardiff", "Wales. The capital is Cardiff."],
+            ["ni", "Northern Ireland", "capital: Belfast", "Northern Ireland. The capital is Belfast."],
+          ];
+          const rows = D.map(([k, en, sub, sp]) => {
+            const b = s.h("button", { class: "u6-hear later", style: { width: "100%" }, onclick: () => { s.sfx.click(); s.speak(sp, EN); } });
+            b.innerHTML = SPK;
+            b.append(s.h("span", { style: { width: "26px", height: "26px", borderRadius: "50%", background: UKCOL[k], border: "2px solid #5d6678", flex: "none" } }), s.h("span", null, en, s.h("small", null, sub)));
+            b.k = k; b.sp = sp; return b;
+          });
+          const head = s.h("p", { class: "h2", style: { margin: 0 } }, "the United Kingdom (UK)");
+          const sub = s.h("p", { class: "small pencil", style: { margin: 0 } }, "= das Vereinigte Königreich");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, s.h("b", null, "4 countries"), " – eine gemeinsame Hauptstadt: ", s.h("b", null, "London"), ". Jedes Land hat aber seine eigene ", s.h("b", null, "capital"), " (Hauptstadt). Das grau gezeichnete ", s.h("b", null, "Ireland"), " ist ein eigener Staat.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "440px 1fr", gap: "30px", height: "100%", alignItems: "center" } }, m.svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, head, sub, rows, merk)));
+          s.show(m.svg, "zoom"); s.sfx.whoosh();
+          const snd = { england: () => s.sound("big-ben-chimes", { vol: .5, dur: 3, fade: .8 }), scotland: () => s.sound("bagpipes", { vol: .6, dur: 4, fade: .8 }), wales: () => s.sfx.chord([0, 4, 7]), ni: () => s.sound("waves", { vol: .4, dur: 3, fade: .8 }) };
+          rows.forEach(r => s.step(async () => {
+            snd[r.k](); s.show(m.col[r.k], "fade"); s.show(L[r.k], "pop", 200); if (r.k === "ni") s.show(lead, "draw", 200);
+            await s.show(r, "left"); s.sfx.pop(); await s.show(C[r.k], "pop"); s.speak(r.sp, EN);
+          }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 15c */
+      {
+        title: "The Union Jack",
+        say: "Die Flagge des Vereinigten Königreichs heißt Union Jack. Sie ist aus drei Kreuzen zusammengesetzt: für England, Schottland und Irland.",
+        build(s) {
+          const uj = unionJack(s, 520, 260);
+          const frame = s.h("div", { class: "card", style: { padding: "14px", display: "flex", justifyContent: "center", background: "#f6f8fb" } }, uj.svg);
+          const year = s.h("p", { class: "big", style: { margin: 0, textAlign: "center", color: "var(--unit)", minHeight: "48px" } }, "");
+          const parts = [
+            ["andrew", "St Andrew's Cross", "Scotland", "weiß auf blau, schräg"],
+            ["george", "St George's Cross", "England", "rot auf weiß, gerade"],
+            ["patrick", "St Patrick's Cross", "Ireland", "rot, schräg – für Irland"],
+          ];
+          const cards = parts.map(([k, en, land, de]) => s.h("div", { class: "card later", style: { display: "grid", gridTemplateColumns: "110px 1fr", gap: "14px", alignItems: "center", padding: "8px 14px", cursor: "pointer" }, onclick: () => { s.sfx.click(); s.speak(en + ". " + land, EN); } },
+            crossFlag(s, k, 110), s.h("div", null, s.h("p", { class: "t", style: { margin: 0, fontWeight: 800 } }, land), s.h("p", { class: "small", style: { margin: 0 } }, en), s.h("p", { class: "small pencil", style: { margin: 0 } }, de))));
+          const wales = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "14px", alignItems: "center" } },
+            s.photo("welsh-flag", { w: 150, h: 120, pos: "45% 40%" }),
+            s.h("div", null, s.h("span", { class: "exlabel" }, "Und Wales?"), s.h("p", { class: "small" }, "Wales fehlt! Es gehörte schon zu England, als die Flagge entstand. Wales hat eine eigene Flagge: ", s.h("b", null, "the Red Dragon"), " (der rote Drache).")));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, s.h("b", null, "Union Jack"), " oder ", s.h("b", null, "Union Flag"), ": union = Vereinigung. Drei Kreuze übereinander – drei Länder in einer Flagge.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "380px 1fr", gap: "26px", height: "100%", alignItems: "center" } },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, cards, merk),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, frame, year, wales)));
+          s.show(frame, "zoom"); s.sfx.whoosh();
+          s.step(async () => { s.sfx.pop(); await s.show(cards[0], "left"); s.sound("bagpipes", { vol: .5, dur: 3, fade: .8 }); await s.show(uj.andrew, "fade"); s.speak("St Andrew's Cross. Scotland.", EN); });
+          s.step(async () => { s.sfx.pop(); await s.show(cards[1], "left"); s.sfx.swoosh(); await s.show(uj.george, "zoom"); year.textContent = "1606: England + Scotland"; s.sfx.ding(); await s.show(year, "pop"); s.speak("St George's Cross. England.", EN); });
+          s.step(async () => { s.sfx.pop(); await s.show(cards[2], "left"); s.sfx.swoosh(); await s.show(uj.patrick, "draw"); year.textContent = "1801: + Ireland = today's flag"; s.sfx.fanfare(); await s.show(year, "pop"); s.speak("St Patrick's Cross. Ireland. This is the Union Jack.", EN); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(wales, "up"); s.say("Wales ist nicht in der Flagge. Es hat seinen eigenen roten Drachen."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 15d */
+      {
+        title: "GB, UK or British Isles?",
+        say: "Great Britain, United Kingdom, British Isles: Das klingt gleich, ist aber nicht dasselbe. Tippe auf einen Namen und sieh auf der Karte, was dazugehört.",
+        build(s) {
+          const m = ukMap(s, 420, 540);
+          const SETS = {
+            gb: ["england", "scotland", "wales"],
+            uk: ["england", "scotland", "wales", "ni"],
+            bi: ["england", "scotland", "wales", "ni", "ireland"],
+          };
+          const info = [
+            ["gb", "Great Britain", "die größte Insel: England, Scotland, Wales", "Great Britain is an island. England, Scotland and Wales are on it."],
+            ["uk", "the United Kingdom (UK)", "der Staat: Great Britain + Northern Ireland", "The United Kingdom is Great Britain and Northern Ireland."],
+            ["bi", "the British Isles", "nur Erdkunde: Great Britain, Ireland und über 6000 kleine Inseln", "The British Isles are Great Britain, Ireland and many small islands."],
+          ];
+          const btns = {};
+          const mode = k => {
+            Object.entries(btns).forEach(([kk, b]) => b.classList.toggle("on", kk === k));
+            Object.keys(m.col).forEach(c => { const on = SETS[k].includes(c), p = m.col[c]; if (on && p.classList.contains("later")) s.show(p, "fade"); if (!on) s.hide(p); });
+          };
+          info.forEach(([k, en, de, sp]) => {
+            const b = s.h("button", { class: "u6-hear later", style: { width: "100%" }, onclick: () => { s.sfx.click(); mode(k); s.speak(sp, EN); } });
+            b.innerHTML = SPK; b.append(s.h("span", null, en, s.h("small", null, de))); b.sp = sp; btns[k] = b;
+          });
+          const life = s.h("div", { class: "life later" }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            s.h("p", { class: "small" }, "Ein Kind aus ", s.h("b", null, "Belfast"), " wohnt im UK, aber nicht auf Great Britain. Ein Kind aus ", s.h("b", null, "Dublin"), " wohnt in Ireland – das ist ein eigener Staat, nicht im UK. Dort zahlt man mit Euro."));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Der volle Name: ", s.h("b", null, "the United Kingdom of Great Britain and Northern Ireland"), ".");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "420px 1fr", gap: "28px", height: "100%", alignItems: "center" } }, m.svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, Object.values(btns), life, merk)));
+          s.show(m.svg, "zoom"); s.sfx.whoosh();
+          info.forEach(([k]) => s.step(async () => { s.sfx.pop(); await s.show(btns[k], "left"); mode(k); s.speak(btns[k].sp, EN); }));
+          s.step(async () => { s.sfx.whoosh(); await s.show(life, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.speak("the United Kingdom of Great Britain and Northern Ireland", EN); });
+        },
+      },
+      /* 15e */
+      {
+        title: "Welsh and Gaelic – in echt",
+        say: "Im ganzen UK spricht man Englisch. In Wales spricht man auch Walisisch, und in Schottland sprechen manche Menschen Gälisch. Tippe auf die Sätze.",
+        build(s) {
+          const col = (cls, lab, photos, phr, fact) => s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "10px", padding: "12px 16px" } },
+            s.h("span", { class: "exlabel" }, lab),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: `repeat(${photos.length}, 1fr)`, gap: "10px" } }, photos),
+            s.h("div", { class: "stack", style: { gap: "8px" } }, phr.map(([en, de]) => hear(s, en, de))),
+            s.h("p", { class: "small pencil", style: { margin: 0 } }, fact));
+          const cy = col("cy", "Wales: Welsh (Cymraeg)",
+            [s.photo("welsh-sign", { w: "100%", h: 200, pos: "60% 28%", caption: "Slow down" }), s.photo("welsh-sign-cycling", { w: "100%", h: 200, pos: "50% 50%", caption: "No cycling" })],
+            [["Bore da!", "Guten Morgen! (sprich: bo-re da)"], ["Croeso i Gymru!", "Willkommen in Wales!"]],
+            "Schilder sind in Wales zweisprachig: Walisisch und Englisch.");
+          const gd = col("gd", "Scotland: Gaelic (Gàidhlig)",
+            [s.photo("edinburgh-castle", { w: "100%", h: 200, pos: "50% 45%", caption: "Edinburgh Castle" })],
+            [["Madainn mhath!", "Guten Morgen! (sprich: ma-tin wa)"], ["Fàilte!", "Willkommen! (sprich: fal-tsche)"]],
+            "Die Burg in Edinburgh steht auf einem erloschenen Vulkan.");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Englisch sprechen alle. ", s.h("b", null, "Welsh"), ": 17,8 % der Menschen in Wales (2021). ", s.h("b", null, "Gaelic"), ": rund 70.000 Menschen in Schottland (2022).");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px", justifyContent: "center" } }, s.h("div", { class: "cols", style: { gap: "20px" } }, cy, gd), merk));
+          s.sfx.whoosh();
+          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(cy, "up"); s.speak("Bore da! Croeso i Gymru!", EN); });
+          s.step(async () => { s.sound("bagpipes", { vol: .6, dur: 5, fade: 1 }); await s.show(gd, "up"); s.speak("Madainn mhath! Fàilte!", EN); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },
       /* 16 */

@@ -222,6 +222,42 @@
   "source": "https://commons.wikimedia.org/wiki/File:Eratosthenes.jpg",
   "orig": "File:Eratosthenes.jpg"
  },
+ "everest": {
+  "file": "everest.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 533,
+  "title": "Mount Everest",
+  "author": "Luca Galuzzi (Lucag)",
+  "license": "CC BY-SA 2.5",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Everest_North_Face_toward_Base_Camp_Tibet_Luca_Galuzzi_2006.jpg",
+  "orig": "File:Everest North Face toward Base Camp Tibet Luca Galuzzi 2006.jpg"
+ },
+ "fachwerkbruecke": {
+  "file": "fachwerkbruecke.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 604,
+  "title": "Fachwerkbrücke aus Stahl: lauter Dreiecke",
+  "author": "Ximonic (Simo Räsänen)",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Steel_truss_bridge_over_Fiskelva_river_in_Nordreisa,_Troms_og_Finnmark,_Norway,_2022_August.jpg",
+  "orig": "File:Steel truss bridge over Fiskelva river in Nordreisa, Troms og Finnmark, Norway, 2022 August.jpg"
+ },
+ "fahrrad-rahmen": {
+  "file": "fahrrad-rahmen.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Fahrrad mit Diamantrahmen (zwei Dreiecke)",
+  "author": "User:Javier Carro",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Sporting_bicycle_side_view.JPG",
+  "orig": "File:Sporting bicycle side view.JPG"
+ },
  "fahrradrad": {
   "file": "fahrradrad.jpg",
   "kind": "img",
@@ -363,6 +399,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Can_of_Diet_Sierra_Mist_lemon-lime_soda,_2011.jpg",
   "orig": "File:Can of Diet Sierra Mist lemon-lime soda, 2011.jpg"
  },
+ "giebel-dach": {
+  "file": "giebel-dach.jpg",
+  "kind": "img",
+  "w": 400,
+  "h": 600,
+  "title": "Hausgiebel: das Dach bildet ein Dreieck",
+  "author": "SteveK",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:%C3%96tisheim_-_Sch%C3%B6nenberger_Stra%C3%9Fe_9_-_Giebel_-_2020-07-18.jpg",
+  "orig": "File:Ötisheim - Schönenberger Straße 9 - Giebel - 2020-07-18.jpg"
+ },
  "gleis-gerade": {
   "file": "gleis-gerade.jpg",
   "kind": "img",
@@ -374,6 +422,17 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Railroad-Tracks-Perspective.jpg",
   "orig": "File:Railroad-Tracks-Perspective.jpg"
+ },
+ "gluecksrad": {
+  "file": "gluecksrad.mp3",
+  "kind": "snd",
+  "dur": 3.94,
+  "title": "Glücksrad dreht sich",
+  "author": "tec_studio",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/tec_studio/sounds/442098/",
+  "orig": "442098"
  },
  "hammer": {
   "file": "hammer.mp3",
@@ -689,6 +748,17 @@
   "source": "https://commons.wikimedia.org/wiki/File:M%C3%BCggelsee_Berlin.jpg",
   "orig": "File:Müggelsee Berlin.jpg"
  },
+ "muenzwurf": {
+  "file": "muenzwurf.mp3",
+  "kind": "snd",
+  "dur": 2.44,
+  "title": "Münze wird geworfen",
+  "author": "EricsSoundschmiede",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/EricsSoundschmiede/sounds/709261/",
+  "orig": "709261"
+ },
  "murmeln": {
   "file": "murmeln.jpg",
   "kind": "img",
@@ -711,6 +781,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/InspectorJ/sounds/429104/",
   "orig": "429104"
+ },
+ "nap-monument": {
+  "file": "nap-monument.jpg",
+  "kind": "img",
+  "w": 450,
+  "h": 600,
+  "title": "Denkmal am tiefsten Punkt der Niederlande",
+  "author": "Richardw",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Monument_laagste_punt_van_Nederland.jpg",
+  "orig": "File:Monument laagste punt van Nederland.jpg"
  },
  "notenblatt": {
   "file": "notenblatt.jpg",
@@ -960,6 +1042,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Aglais_io_top_MichaD.jpg",
   "orig": "File:Aglais io top MichaD.jpg"
  },
+ "taxi-berlin": {
+  "file": "taxi-berlin.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 444,
+  "title": "Berliner Taxi",
+  "author": "Dirk Ingo Franke",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mercedes-Benz_E-Class_taxicab_(B_IS_1185).JPG",
+  "orig": "File:Mercedes-Benz E-Class taxicab (B IS 1185).JPG"
+ },
  "tempelhofer-feld": {
   "file": "tempelhofer-feld.jpg",
   "kind": "img",
@@ -971,6 +1065,30 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Tempelhofer_Feld.jpg",
   "orig": "File:Aerial view of Tempelhofer Feld.jpg"
+ },
+ "thermometer-frost": {
+  "file": "thermometer-frost.jpg",
+  "kind": "img",
+  "w": 329,
+  "h": 600,
+  "title": "Thermometer mit Raureif",
+  "author": "Jacek Halicki",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:2015_Szron_na_termometrze.jpg",
+  "orig": "File:2015 Szron na termometrze.jpg"
+ },
+ "totes-meer": {
+  "file": "totes-meer.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Totes Meer, Ufer mit Salzkrusten",
+  "author": "Anagoria",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:20211122_Landscape_at_the_Dead_Sea,_Ein_Bokek,_Israel_anagoria.jpg",
+  "orig": "File:20211122 Landscape at the Dead Sea, Ein Bokek, Israel anagoria.jpg"
  },
  "ubahn-u5": {
   "file": "ubahn-u5.jpg",

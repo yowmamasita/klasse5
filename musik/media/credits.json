@@ -276,6 +276,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Viola-walshimprov.ogg",
   "orig": "File:Viola-walshimprov.ogg"
  },
+ "breakdance": {
+  "file": "breakdance.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 469,
+  "title": "Breakdance-Show",
+  "author": "Christopher Schmid from Erfurt, germany",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Breakdance_(663722417).jpg",
+  "orig": "File:Breakdance (663722417).jpg"
+ },
  "cello": {
   "file": "cello.jpg",
   "kind": "img",
@@ -1773,6 +1785,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Camille_Saint-Sa%C3%ABns_in_1900_by_Pierre_Petit.jpg",
   "orig": "File:Camille Saint-Saëns in 1900 by Pierre Petit.jpg"
  },
+ "samba-rio": {
+  "file": "samba-rio.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 465,
+  "title": "Sambaschulen beim Karneval in Rio de Janeiro",
+  "author": "Alan Betensley (Abetens at en.wikipedia)",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Samba_school_parades_2004.jpg",
+  "orig": "File:Samba school parades 2004.jpg"
+ },
  "schildkroete": {
   "file": "schildkroete.jpg",
   "kind": "img",
@@ -1842,6 +1866,18 @@
   "license_url": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://freesound.org/people/kwahmah_02/sounds/277508/",
   "orig": "277508"
+ },
+ "sirtaki-reihe": {
+  "file": "sirtaki-reihe.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 468,
+  "title": "Sirtaki in einer langen Reihe",
+  "author": "Simon Bonaventure",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Sirtaki_at_Accroches_coeurs.jpg",
+  "orig": "File:Sirtaki at Accroches coeurs.jpg"
  },
  "sitar": {
   "file": "sitar.jpg",

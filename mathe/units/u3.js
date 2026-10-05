@@ -1,4 +1,4 @@
-/* Kapitel 3 – Geraden und Winkel (Berliner Rahmenlehrplan, Niveau C–D) */
+/* Kapitel 3 – Geraden und Winkel (Berliner Rahmenlehrplan, Niveau C–D): Linien, Geodreieck, Winkel, Dreiecksarten, Winkelsumme, Zirkel */
 (() => {
   "use strict";
   const U = "#7b4fd6", INK = "#1b2740", BLUE = "#1d5bd0", RED = "#dc3b2a", GREEN = "#138a5a", ORANGE = "#ee7a1a", PENCIL = "#5d6678", SOFT = "#ece5fb";
@@ -108,9 +108,9 @@
 
   Deck.unit({
     id: "u3", num: 3, title: "Geraden und Winkel", color: U, soft: SOFT,
-    subtitle: "Linien, Geodreieck und Winkel",
-    blurb: "Parallel, senkrecht, Winkelarten, messen und zeichnen.",
-    goals: ["Strecke, Strahl und Gerade unterscheiden", "Parallele und senkrechte Geraden erkennen und zeichnen", "Abstand und Lot verstehen", "Winkel benennen, messen und zeichnen", "Mit Geodreieck und Zirkel umgehen"],
+    subtitle: "Linien, Geodreieck, Winkel und Dreiecke",
+    blurb: "Parallel, senkrecht, Winkel messen und zeichnen, Dreiecke.",
+    goals: ["Strecke, Strahl und Gerade unterscheiden", "Parallele und senkrechte Geraden erkennen und zeichnen", "Abstand und Lot verstehen", "Winkel benennen, messen und zeichnen", "Dreiecke nach Seiten und Winkeln ordnen – Winkelsumme 180°", "Mit Geodreieck und Zirkel umgehen"],
     icon(svg, el) {
       svg.append(el("path", { d: "M14,56 L40,56 A26,26 0 0 0 33.4,38.6 Z", fill: "#ece5fb" }),
         el("line", { x1: 14, y1: 56, x2: 62, y2: 56, stroke: U, "stroke-width": 4, "stroke-linecap": "round" }),
@@ -797,6 +797,218 @@
             s.h("div", { class: "stack", style: { gap: "12px" } }, ...items, sl, s.h("div", { class: "row" }, btn))));
           s.show(svg, "zoom"); s.sfx.whoosh();
           D.forEach((f, i) => s.step(async () => { busy = true; s.show(items[i], "left"); s.say(items[i].textContent.slice(1)); await f(); doneN = i + 1; busy = false; }));
+        },
+      },
+      /* 13a ─────────────────────────────── Dreiecke nach Seiten */
+      {
+        title: "Dreiecke nach Seiten",
+        say: "Dreiecke kann man nach ihren Seiten ordnen: gleichseitig, gleichschenklig oder unregelmäßig.",
+        build(s) {
+          /* tick marks on a side: n small strokes across the midpoint */
+          const ticks = (p, q, n, col) => {
+            const g = s.el("g"), mx = (p[0] + q[0]) / 2, my = (p[1] + q[1]) / 2, l = Math.hypot(q[0] - p[0], q[1] - p[1]);
+            const u = [(q[0] - p[0]) / l, (q[1] - p[1]) / l], nn = [-u[1], u[0]];
+            for (let i = 0; i < n; i++) { const o = (i - (n - 1) / 2) * 8; const c = [mx + u[0] * o, my + u[1] * o]; g.append(ln(s, c[0] - nn[0] * 11, c[1] - nn[1] * 11, c[0] + nn[0] * 11, c[1] + nn[1] * 11, { stroke: col, "stroke-width": 3.5 })); }
+            return g;
+          };
+          const TYPES = [
+            { name: "gleichseitig", col: RED, pts: [[50, 190], [250, 190], [150, 16.8]], same: [1, 1, 1], cols: [RED, RED, RED],
+              text: "Alle drei Seiten sind gleich lang.", life: "Das Schild „Vorfahrt gewähren“ ist ein gleichseitiges Dreieck.", snd: () => s.sound("tram-bell", { vol: .4, dur: 2 }) },
+            { name: "gleichschenklig", col: BLUE, pts: [[75, 190], [225, 190], [150, 22]], same: [0, 1, 1], cols: [ORANGE, BLUE, BLUE],
+              text: "Zwei Seiten (die Schenkel) sind gleich lang. Die dritte heißt Basis.", life: "Ein Hausgiebel und das Geodreieck sind gleichschenklig.", snd: () => s.sound("hammer", { vol: .45 }) },
+            { name: "unregelmäßig", col: GREEN, pts: [[22, 190], [278, 190], [205, 40]], same: [0, 0, 0], cols: [GREEN, ORANGE, U],
+              text: "Alle drei Seiten sind verschieden lang.", life: "Ein schräg abgeschnittenes Stück Brot – jede Seite anders.", snd: () => s.sound("scissors", { vol: .5 }) },
+          ];
+          const cards = TYPES.map(T => {
+            const svg = s.svg(300, 210), [A, B, C] = T.pts;
+            const fillT = pg(s, T.pts, { fill: T.col, "fill-opacity": .1, stroke: "none" });
+            const sides = [[A, B], [B, C], [C, A]].map(([p, q], i) => ln(s, p[0], p[1], q[0], q[1], { stroke: T.cols[i], "stroke-width": 5, class: "later" }));
+            const tk = [[A, B], [B, C], [C, A]].map(([p, q], i) => { const n = T.name === "gleichseitig" ? 1 : T.same[i] ? 1 : 0; return n ? ticks(p, q, n, INK) : null; }).filter(Boolean);
+            const tkG = s.el("g", { class: "later" }); tkG.append(...tk);
+            svg.append(fillT, ...sides, tkG);
+            if (T.name === "gleichschenklig") { const bl = tx(s, 150, 186, "Basis", { fill: ORANGE, "font-weight": 700, class: "lbl later" }); svg.append(bl); tkG.append(bl); }
+            const card = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "12px 16px" } }, svg,
+              s.h("p", { class: "h2", style: { color: T.col } }, T.name), s.h("p", { class: "t", style: { fontSize: "21px", minHeight: "60px" } }, T.text),
+              s.h("p", { class: "small pencil", style: { minHeight: "54px" } }, T.life));
+            return { card, sides, tkG, T };
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "Gleich lange Seiten markiert man mit kleinen ", s.h("b", null, "Strichen"), ". Jedes gleichseitige Dreieck ist auch gleichschenklig!");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", justifyContent: "center", gap: "16px" } }, s.h("div", { class: "cols3", style: { gap: "18px" } }, cards.map(c => c.card)), merk));
+          const reveal = async c => {
+            c.T.snd(); await s.show(c.card, "up");
+            for (const l of c.sides) { s.sfx.zap(); await s.show(l, "draw"); undraw(l); }
+            s.sfx.pop(); await s.show(c.tkG, "pop");
+            s.say(c.T.text);
+          };
+          reveal(cards[0]);
+          s.step(async () => { await reveal(cards[1]); });
+          s.step(async () => { await reveal(cards[2]); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 13b ─────────────────────────────── Dreiecke nach Winkeln */
+      {
+        title: "Dreiecke nach Winkeln",
+        say: "Man kann Dreiecke auch nach ihren Winkeln ordnen. Schieb die Ecke C und schau, wie sich die Winkel ändern.",
+        build(s) {
+          const svg = box(s, 560, 470), A = [100, 400], B = [460, 400], CY = 220;
+          let cx = 230, lastK = "";
+          const dir = (p, q) => Math.atan2(p[1] - q[1], q[0] - p[0]) / D2R;
+          const tri = pg(s, [A, B, [cx, CY]], { fill: "#f6f2ff", stroke: INK, "stroke-width": 4 });
+          const guide = ln(s, 16, CY, 544, CY, { stroke: PENCIL, "stroke-width": 2, "stroke-dasharray": "6 8" });
+          const mk = col => ({ sec: pth(s, "", { fill: col, "fill-opacity": .22, stroke: col, "stroke-width": 3 }), rm: pth(s, "", { stroke: col, "stroke-width": 3 }), lab: grk(tx(s, 0, 0, "", { fill: col, "font-weight": 700, style: { fontSize: "26px" } })) });
+          const parts = [mk(RED), mk(BLUE), mk(GREEN)];
+          const names = [tx(s, A[0] - 8, A[1] + 34, "A", { "font-weight": 700 }), tx(s, B[0] + 8, B[1] + 34, "B", { "font-weight": 700 }), tx(s, 0, 0, "C", { "font-weight": 700 })];
+          const hd = s.el("circle", { r: 15, fill: U, stroke: "#fff", "stroke-width": 3 }), hh = s.el("circle", { r: 34, fill: "transparent" });
+          svg.append(guide, tri, ...parts.flatMap(p => [p.sec, p.rm]), ...parts.map(p => p.lab), ...names, hd, hh);
+          const name = s.h("p", { class: "big", style: { color: U } });
+          const vals = s.h("p", { class: "h2 mono" });
+          const ROWS = [["spitzwinklig", "alle drei Winkel kleiner als 90°"], ["rechtwinklig", "ein Winkel genau 90°"], ["stumpfwinklig", "ein Winkel größer als 90°"]];
+          const rows = ROWS.map(([k, r]) => s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap", padding: "6px 12px", borderRadius: "12px", transition: "background .2s" } },
+            s.h("span", { class: "t", style: { fontWeight: 700, minWidth: "180px" } }, k), s.h("span", { class: "small" }, r)));
+          function render() {
+            const C = [cx, CY];
+            tri.setAttribute("points", P([A, B, C]));
+            const V = [[A, B, C], [B, C, A], [C, A, B]];
+            const ang = V.map(([p, q, r]) => {
+              let a1 = dir(p, q), a2 = dir(p, r); let d = ((a2 - a1) % 360 + 360) % 360; if (d > 180) { const t = a1; a1 = a2; a2 = t; d = 360 - d; }
+              return { p, a1, a2: a1 + d, d };
+            });
+            const deg = ang.map(a => Math.round(a.d)); deg[2] = 180 - deg[0] - deg[1];
+            ang.forEach((a, i) => {
+              const pt = parts[i], right = deg[i] === 90, r = 44;
+              pt.sec.setAttribute("d", right ? "" : arcD(a.p[0], a.p[1], r, a.a1, a.a2, true));
+              if (right) { const u = [Math.cos(a.a1 * D2R), -Math.sin(a.a1 * D2R)], w = [Math.cos(a.a2 * D2R), -Math.sin(a.a2 * D2R)], k = 26; pt.rm.setAttribute("d", `M${a.p[0] + u[0] * k},${a.p[1] + u[1] * k} L${a.p[0] + (u[0] + w[0]) * k},${a.p[1] + (u[1] + w[1]) * k} L${a.p[0] + w[0] * k},${a.p[1] + w[1] * k}`); }
+              else pt.rm.setAttribute("d", "");
+              const m = (a.a1 + a.a2) / 2 * D2R, rr = deg[i] < 40 ? 80 : 66;
+              pt.lab.setAttribute("x", a.p[0] + rr * Math.cos(m)); pt.lab.setAttribute("y", a.p[1] - rr * Math.sin(m) + 9);
+              pt.lab.textContent = "αβγ"[i];
+            });
+            names[2].setAttribute("x", cx); names[2].setAttribute("y", CY - 22);
+            hd.setAttribute("cx", cx); hd.setAttribute("cy", CY); hh.setAttribute("cx", cx); hh.setAttribute("cy", CY);
+            const mx = Math.max(...deg), k = mx < 90 ? 0 : mx === 90 ? 1 : 2;
+            name.textContent = ROWS[k][0];
+            vals.innerHTML = gk(`α = ${deg[0]}°   β = ${deg[1]}°   γ = ${deg[2]}°`);
+            rows.forEach((row, i) => { row.style.background = i === k ? U : "transparent"; row.style.color = i === k ? "#fff" : ""; });
+            if (ROWS[k][0] !== lastK) { if (lastK) { k === 1 ? s.sfx.ding() : s.sfx.chord(k ? [-3, 0, 4] : [0, 4, 7]); } lastK = ROWS[k][0]; name.classList.remove("a-pop"); void name.offsetWidth; name.classList.add("a-pop"); }
+          }
+          const snapX = x => { for (const t of [A[0], 280, B[0]]) if (Math.abs(x - t) <= 7) return t; return x; };
+          const sl = s.slider({ label: "Ecke C verschieben", min: 20, max: 540, step: 2, value: cx, fmt: () => "", onInput: v => { cx = snapX(v); render(); } });
+          s.drag(hh, { space: svg, onMove: p => { const x = snapX(clamp(Math.round(p.x), 20, 540)); if (x !== cx) { cx = x; sl.input.value = x; render(); s.sfx.tick(); } } });
+          render();
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, "Ein Dreieck hat ", s.h("b", null, "höchstens einen"), " rechten oder stumpfen Winkel. Die anderen beiden sind immer spitz.");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", alignItems: "center", height: "100%", gap: "24px" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "10px" } }, name, vals, sl, s.h("div", { class: "stack", style: { gap: "4px" } }, rows), merk)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          const goC = async (to, txt) => { s.say(txt); const from = cx; await s.tween({ from, to, dur: 1200, ease: "inOut", update: v => { cx = Math.round(v); sl.input.value = cx; render(); } }); cx = to; sl.input.value = to; render(); };
+          s.step(() => goC(380, "Spitzwinklig: Alle drei Winkel sind kleiner als neunzig Grad."));
+          s.step(() => goC(280, "Rechtwinklig: Bei C ist jetzt genau ein rechter Winkel."));
+          s.step(() => goC(520, "Stumpfwinklig: Bei B ist der Winkel größer als neunzig Grad."));
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+        },
+      },
+      /* 13c ─────────────────────────────── Winkelsumme */
+      {
+        title: "Winkelsumme: immer 180°",
+        say: "Reiß die drei Ecken eines Dreiecks ab und leg sie nebeneinander. Sie bilden zusammen einen gestreckten Winkel: hundertachtzig Grad!",
+        build(s) {
+          const svg = box(s, 600, 520), A = [70, 300], B = [530, 300], C = [380, 50], R = 84, Pt = [300, 480];
+          const dir = (p, q) => Math.atan2(p[1] - q[1], q[0] - p[0]) / D2R;
+          const cols = [RED, BLUE, GREEN], greek = ["α", "β", "γ"];
+          svg.append(pg(s, [A, B, C], { fill: "#f6f2ff", stroke: INK, "stroke-width": 4 }));
+          const baseLine = ln(s, 60, Pt[1], 540, Pt[1], { stroke: INK, "stroke-width": 4, class: "later" });
+          const dot = s.el("circle", { cx: Pt[0], cy: Pt[1], r: 6, fill: INK, class: "later" });
+          svg.append(baseLine, dot);
+          const V = [[A, B, C], [B, C, A], [C, A, B]].map(([p, q, r], i) => {
+            let a1 = dir(p, q), a2 = dir(p, r); let d = ((a2 - a1) % 360 + 360) % 360; if (d > 180) { const t = a1; a1 = a2; a2 = t; d = 360 - d; }
+            const g = s.el("g"), m = (a1 + d / 2) * D2R;
+            g.append(pth(s, arcD(0, 0, R, a1, a1 + d, true), { fill: cols[i], "fill-opacity": .55, stroke: cols[i], "stroke-width": 3, "stroke-dasharray": "5 4" }));
+            const lab = grk(tx(s, 0, 0, greek[i], { fill: INK, "font-weight": 700, style: { fontSize: "28px" } }));
+            svg.append(g, lab);
+            return { g, lab, p, a1, d, st: { x: p[0], y: p[1], r: 0 } };
+          });
+          const put = (v, x, y, r) => {
+            v.st = { x, y, r }; v.g.setAttribute("transform", `translate(${x.toFixed(1)},${y.toFixed(1)}) rotate(${r.toFixed(2)})`);
+            const m = (v.a1 + v.d / 2 - r) * D2R, rr = v.d < 45 ? 62 : 50;
+            v.lab.setAttribute("x", x + rr * Math.cos(m)); v.lab.setAttribute("y", y - rr * Math.sin(m) + 9);
+          };
+          V.forEach(v => put(v, v.p[0], v.p[1], 0));
+          const go = (v, x, y, r, dur) => { const a = v.st; return s.tween({ dur, ease: "inOut", update: k => put(v, a.x + (x - a.x) * k, a.y + (y - a.y) * k - Math.sin(Math.PI * k) * 40, a.r + (r - a.r) * k) }); };
+          // target start angles on the line: β from 0°, γ next, α last
+          const deg = V.map(v => v.d), tgt = [deg[1] + deg[2], 0, deg[1]];
+          const arc180 = pth(s, arcD(Pt[0], Pt[1], R + 14, 0, 180), { stroke: U, "stroke-width": 4, class: "later" });
+          const l180 = tx(s, Pt[0] + R + 60, Pt[1] - 14, "180°", { fill: U, "font-weight": 800, class: "lbl later", style: { fontSize: "28px" } });
+          svg.append(arc180, l180);
+          const sum = s.h("p", { class: "big later", style: { color: U }, html: gk("α + β + γ = 180°") });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "22px" } }, "In ", s.h("b", null, "jedem"), " Dreieck sind die drei Winkel zusammen ", s.h("b", null, "180°"), " groß – egal wie das Dreieck aussieht.");
+          const exs = s.h("div", { class: "ex later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "So rechnest du damit"),
+            s.h("p", { class: "small", html: gk("α = 50°, β = 70°  →  γ = 180° − 50° − 70° = <b>60°</b>") }),
+            s.h("p", { class: "small" }, "Gleichseitig: 60° + 60° + 60° = 180°"),
+            s.h("p", { class: "small" }, "Geodreieck: 90° + 45° + 45° = 180°"));
+          let busy = false;
+          const tear = async () => {
+            s.sfx.zap(); s.sound("paper-crumple", { vol: .45, dur: 1 });
+            await Promise.all(V.map((v, i) => { const c = [(A[0] + B[0] + C[0]) / 3, (A[1] + B[1] + C[1]) / 3], dx = v.p[0] - c[0], dy = v.p[1] - c[1], l = Math.hypot(dx, dy); return go(v, v.p[0] + dx / l * 30, v.p[1] + dy / l * 30, 0, 500); }));
+          };
+          const place = async () => {
+            for (const i of [1, 2, 0]) { s.sfx.whoosh(); let r = -(tgt[i] - V[i].a1); r = ((r + 180) % 360 + 360) % 360 - 180; await go(V[i], Pt[0], Pt[1], r, 900); s.sfx.snap(); }
+          };
+          const again = async () => {
+            if (busy) return; busy = true; s.sfx.click();
+            V.forEach(v => put(v, v.p[0], v.p[1], 0)); s.hide([arc180, l180]);
+            await s.wait(300); await tear(); await place(); s.sfx.ding(); s.show([arc180, l180], "pop"); busy = false;
+          };
+          const btn = s.h("button", { class: "btn later", style: { alignSelf: "flex-start" }, onclick: again }, "Nochmal abreißen");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "600px 1fr", alignItems: "center", height: "100%", gap: "24px" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "14px" } }, sum, merk, exs, btn)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.step(async () => { busy = true; s.say("Wir reißen die drei Ecken ab."); await tear(); busy = false; });
+          s.step(async () => { busy = true; s.show(baseLine, "draw"); s.show(dot, "pop"); s.say("Jetzt legen wir sie an einem Punkt nebeneinander."); await place(); busy = false; });
+          s.step(async () => { s.sfx.ding(); s.show([arc180, l180], "pop"); await s.show(sum, "zoom"); s.sfx.fanfare(); s.say("Eine gerade Linie: ein gestreckter Winkel, hundertachtzig Grad."); });
+          s.step(async () => { s.sfx.pop(); await s.show(merk, "up"); await s.show(exs, "up"); s.show(btn, "pop"); });
+        },
+      },
+      /* 13d ─────────────────────────────── Dreiecke im Alltag */
+      {
+        title: "Im Alltag: Dreiecke überall",
+        say: "Dreiecke sind besonders stabil. Darum findest du sie in Brücken, Dächern, Fahrradrahmen – und dein Geodreieck ist selbst eins.",
+        build(s) {
+          /* stability demo: a square frame folds over, a triangle frame keeps its shape */
+          const demo = s.svg(300, 400);
+          const sqL = [0, 1, 2, 3].map(() => ln(s, 0, 0, 0, 0, { stroke: ORANGE, "stroke-width": 7 }));
+          const trL = [0, 1, 2].map(() => ln(s, 0, 0, 0, 0, { stroke: GREEN, "stroke-width": 7 }));
+          const joints = Array.from({ length: 7 }, () => s.el("circle", { r: 7, fill: INK }));
+          const arrows = [0, 1].map(() => s.el("g", { class: "later" }));
+          const capS = tx(s, 150, 186, "", { fill: ORANGE, "font-weight": 700, style: { fontSize: "21px" } }), capT = tx(s, 150, 388, "", { fill: GREEN, "font-weight": 700, style: { fontSize: "21px" } });
+          demo.append(ln(s, 20, 160, 280, 160, { stroke: PENCIL, "stroke-width": 3 }), ln(s, 20, 360, 280, 360, { stroke: PENCIL, "stroke-width": 3 }), ...sqL, ...trL, ...joints, ...arrows, capS, capT);
+          arrows.forEach((g, i) => { const y = i ? 250 : 50; g.append(ln(s, 10, y, 56, y, { stroke: RED, "stroke-width": 5 }), pg(s, [[68, y], [52, y - 9], [52, y + 9]], { fill: RED, stroke: RED, "stroke-width": 2 })); });
+          const drawSq = v => { const th = (90 - 50 * v) * D2R, o = [120 * Math.cos(th), -120 * Math.sin(th)], a = [60, 160], b = [180, 160], c = [180 + o[0], 160 + o[1]], d = [60 + o[0], 160 + o[1]]; [[a, b], [b, c], [c, d], [d, a]].forEach(([p, q], i) => setL(sqL[i], p[0], p[1], q[0], q[1])); [a, b, c, d].forEach((p, i) => { joints[i].setAttribute("cx", p[0]); joints[i].setAttribute("cy", p[1]); }); };
+          const drawTr = w => { const a = [80, 360], b = [220, 360], c = [150 + w, 236]; [[a, b], [b, c], [c, a]].forEach(([p, q], i) => setL(trL[i], p[0], p[1], q[0], q[1])); [a, b, c].forEach((p, i) => { joints[4 + i].setAttribute("cx", p[0]); joints[4 + i].setAttribute("cy", p[1]); }); };
+          drawSq(0); drawTr(0); capS.textContent = "Viereck"; capT.textContent = "Dreieck";
+          let busy = false;
+          const push = async () => {
+            if (busy) return; busy = true; s.sfx.click(); drawSq(0); drawTr(0); capS.textContent = "Viereck"; capT.textContent = "Dreieck";
+            s.show(arrows, "left"); s.sfx.whoosh();
+            await s.tween({ dur: 900, ease: "out", update: v => { drawSq(v); drawTr(Math.sin(v * Math.PI * 3) * 3 * (1 - v)); } });
+            s.sfx.boing(); capS.textContent = "kippt um!"; capT.textContent = "bleibt stabil!"; s.sfx.ding(); s.hide(arrows); busy = false;
+          };
+          const left = s.h("div", { class: "ex", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "10px 12px" } }, s.h("span", { class: "exlabel" }, "Warum Dreiecke?"), demo,
+            s.h("button", { class: "btn", onclick: push }, "Drücken!"));
+          const card = (id, pos, title, text) => s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "150px 1fr", gap: "12px", alignItems: "center", padding: "10px 12px" } },
+            s.photo(id, { w: 150, h: 170, pos }), s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("p", { class: "t", style: { fontWeight: 700, fontSize: "22px" } }, title), s.h("p", { class: "small" }, text)));
+          const cards = [
+            card("fachwerkbruecke", "50% 45%", "Brücke", "Eine Fachwerkbrücke besteht aus vielen Dreiecken. So trägt sie schwere Lasten."),
+            card("giebel-dach", "50% 25%", "Dach", "Der Giebel eines Satteldachs ist ein Dreieck – meist gleichschenklig."),
+            card("fahrrad-rahmen", "50% 50%", "Fahrrad", "Der Rahmen besteht aus zwei Dreiecken: vorne und hinten."),
+            card("geodreieck-foto", "50% 50%", "Geodreieck", "Rechtwinklig und gleichschenklig: 90°\u00a0+\u00a045°\u00a0+\u00a045°\u00a0=\u00a0180°."),
+          ];
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "330px 1fr", gap: "20px", alignItems: "center", height: "100%" } }, left,
+            s.h("div", { class: "cols", style: { gap: "14px" } }, cards)));
+          s.sfx.pop();
+          s.step(async () => { s.say("Wir drücken von der Seite. Das Viereck kippt um, das Dreieck bleibt stabil."); await push(); });
+          const snd = [() => s.sound("ubahn-train", { vol: .35, dur: 2.5 }), () => s.sound("hammer", { vol: .45 }), () => s.sound("bike-bell", { vol: .5 }), () => s.sound("pencil-write", { vol: .45, dur: 1.2 })];
+          s.step(async () => { snd[0](); await s.show(cards[0], "up"); snd[1](); await s.show(cards[1], "up"); s.say("Brücken und Dächer."); });
+          s.step(async () => { snd[2](); await s.show(cards[2], "up"); snd[3](); await s.show(cards[3], "up"); s.say("Der Fahrradrahmen und dein Geodreieck."); s.sfx.success(); });
         },
       },
       /* 14 ─────────────────────────────── */

@@ -22,6 +22,17 @@
   "source": "https://commons.wikimedia.org/wiki/File:Phrase_de_Neil_Armstrong.oga",
   "orig": "File:Phrase de Neil Armstrong.oga"
  },
+ "atemzug": {
+  "file": "atemzug.mp3",
+  "kind": "snd",
+  "dur": 3.34,
+  "title": "Tiefer Atemzug",
+  "author": "rrehl",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/rrehl/sounds/717167/",
+  "orig": "717167"
+ },
  "auge-dunkel": {
   "file": "auge-dunkel.jpg",
   "kind": "img",
@@ -247,6 +258,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Glasses_black.jpg",
   "orig": "File:Glasses black.jpg"
  },
+ "christbaumkerzen": {
+  "file": "christbaumkerzen.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 697,
+  "title": "Ersatz-Kerzen für eine Lichterkette",
+  "author": "Langläufer22",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Christbaumkerzen_Narva.jpg",
+  "orig": "File:Christbaumkerzen Narva.jpg"
+ },
  "chromatografie": {
   "file": "chromatografie.jpg",
   "kind": "img",
@@ -342,6 +365,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Polar_Bear_AdF.jpg",
   "orig": "File:Polar Bear AdF.jpg"
  },
+ "eisbahn": {
+  "file": "eisbahn.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Eisbahn",
+  "author": "Jetam2",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Ice_skating_at_Moravsk%C3%A9_n%C3%A1m%C4%9Bst%C3%AD.jpg",
+  "orig": "File:Ice skating at Moravské náměstí.jpg"
+ },
  "eisberg": {
   "file": "eisberg.jpg",
   "kind": "img",
@@ -423,6 +458,18 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/Gerent/sounds/558397/",
   "orig": "558397"
+ },
+ "federwaage": {
+  "file": "federwaage.jpg",
+  "kind": "img",
+  "w": 185,
+  "h": 700,
+  "title": "Federwaage",
+  "author": "Amada44",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Spring_scale_-_3241.jpg",
+  "orig": "File:Spring scale - 3241.jpg"
  },
  "feldhase": {
   "file": "feldhase.jpg",
@@ -601,6 +648,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Gas_stove_blue_flames.jpg",
   "orig": "File:Gas stove blue flames.jpg"
  },
+ "gemuesestand": {
+  "file": "gemuesestand.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "Gemüsestand auf dem Markt",
+  "author": "Kritzolina",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Gem%C3%BCsestand_am_Viktualienmarkt_M%C3%BCnchen_03.jpg",
+  "orig": "File:Gemüsestand am Viktualienmarkt München 03.jpg"
+ },
  "gespraech": {
   "file": "gespraech.mp3",
   "kind": "snd",
@@ -776,6 +835,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Dog%27s_Nose.jpg",
   "orig": "File:Dog's Nose.jpg"
+ },
+ "ice-stromabnehmer": {
+  "file": "ice-stromabnehmer.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "Stromabnehmer eines ICE an der Oberleitung",
+  "author": "S. Terfloth User:Sese_Ingolstadt",
+  "license": "CC BY-SA 2.5",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:ICE_S_Messstromabnehmer.jpg",
+  "orig": "File:ICE S Messstromabnehmer.jpg"
  },
  "igel": {
   "file": "igel.jpg",
@@ -1168,6 +1239,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Oatmeal_porridge_with_m%C3%BCsli_at_night.jpg",
   "orig": "File:Oatmeal porridge with müsli at night.jpg"
  },
+ "muybridge-pferd": {
+  "file": "muybridge-pferd.jpg",
+  "kind": "img",
+  "w": 1200,
+  "h": 744,
+  "title": "The Horse in Motion (Muybridge, 1878)",
+  "author": "Eadweard Muybridge",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Horse_in_Motion.jpg",
+  "orig": "File:The Horse in Motion.jpg"
+ },
  "naegel": {
   "file": "naegel.jpg",
   "kind": "img",
@@ -1239,6 +1322,17 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Paramecium_caudatum_Ehrenberg,_1833.jpg",
   "orig": "File:Paramecium caudatum Ehrenberg, 1833.jpg"
+ },
+ "pferd-galopp": {
+  "file": "pferd-galopp.mp3",
+  "kind": "snd",
+  "dur": 3.45,
+  "title": "Pferd galoppiert",
+  "author": "Max_Headroom",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/Max_Headroom/sounds/175356/",
+  "orig": "175356"
  },
  "pflanze-fenster": {
   "file": "pflanze-fenster.jpg",
@@ -1395,6 +1489,30 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:2019-07-27-Archenhold-Sternwarte-Treptow-Riesenfernrohr-1.jpg",
   "orig": "File:2019-07-27-Archenhold-Sternwarte-Treptow-Riesenfernrohr-1.jpg"
+ },
+ "ringelnatter": {
+  "file": "ringelnatter.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 397,
+  "title": "Ringelnatter",
+  "author": "George Chernilevsky",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Natrix_Natrix_bog_2009_G1.jpg",
+  "orig": "File:Natrix Natrix bog 2009 G1.jpg"
+ },
+ "roentgen-hand-1895": {
+  "file": "roentgen-hand-1895.jpg",
+  "kind": "img",
+  "w": 559,
+  "h": 800,
+  "title": "Röntgenbild einer Hand mit Ring (W. C. Röntgen, 1895)",
+  "author": "Wilhelm Röntgen",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:X-ray_of_the_bones_of_a_hand_with_a_ring_on_one_finger_Wellcome_V0029523.jpg",
+  "orig": "File:X-ray of the bones of a hand with a ring on one finger Wellcome V0029523.jpg"
  },
  "rost-kette": {
   "file": "rost-kette.jpg",
@@ -1573,6 +1691,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Harbour_Seal_(Phoca_vitulina),_Nords%C3%B8en_Oceanarium_02.jpg",
   "orig": "File:Harbour Seal (Phoca vitulina), Nordsøen Oceanarium 02.jpg"
  },
+ "solarzellen-dach": {
+  "file": "solarzellen-dach.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Solarmodule auf einem Dach",
+  "author": "Smaack",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Solar_panels_on_window_-_Smaack_-_201206.jpg",
+  "orig": "File:Solar panels on window - Smaack - 201206.jpg"
+ },
  "sonne-nasa": {
   "file": "sonne-nasa.jpg",
   "kind": "img",
@@ -1739,6 +1869,29 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin-Sch%C3%B6neberg_Keithstra%C3%9Fe.jpg",
   "orig": "File:Berlin-Schöneberg Keithstraße.jpg"
  },
+ "strom-summen": {
+  "file": "strom-summen.mp3",
+  "kind": "snd",
+  "dur": 1.82,
+  "title": "Elektrisches Summen",
+  "author": "jjhouse4",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/jjhouse4/sounds/197993/",
+  "orig": "197993"
+ },
+ "stromschiene-sbahn": {
+  "file": "stromschiene-sbahn.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Stromschiene der Berliner S-Bahn",
+  "author": "IITHiNII",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Stromschiene_der_Berliner_S-Bahn.jpg",
+  "orig": "File:Stromschiene der Berliner S-Bahn.jpg"
+ },
  "tag-nacht-grenze": {
   "file": "tag-nacht-grenze.jpg",
   "kind": "img",
@@ -1842,6 +1995,17 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/EminYILDIRIM/sounds/536113/",
   "orig": "536113"
+ },
+ "tuerklingel": {
+  "file": "tuerklingel.mp3",
+  "kind": "snd",
+  "dur": 2.4,
+  "title": "Türklingel ding-dong",
+  "author": "kwahmah_02",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0/",
+  "source": "https://freesound.org/people/kwahmah_02/sounds/319041/",
+  "orig": "319041"
  },
  "ubahn-tunnel": {
   "file": "ubahn-tunnel.jpg",
@@ -2056,6 +2220,29 @@
   "source": "https://freesound.org/people/Sacha.Julien/sounds/753896/",
   "orig": "753896"
  },
+ "zaehneputzen": {
+  "file": "zaehneputzen.mp3",
+  "kind": "snd",
+  "dur": 3.0,
+  "title": "Zähneputzen",
+  "author": "ryanharding95",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/ryanharding95/sounds/272422/",
+  "orig": "272422"
+ },
+ "zahnbuerste": {
+  "file": "zahnbuerste.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 572,
+  "title": "Zahnbürste mit Zahnpasta",
+  "author": "Steve Buissinne, South Africa",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Toothbrush,_Toothpaste,_Dental_Care_(571741)_(cropped).jpg",
+  "orig": "File:Toothbrush, Toothpaste, Dental Care (571741) (cropped).jpg"
+ },
  "zauneidechse": {
   "file": "zauneidechse.jpg",
   "kind": "img",
@@ -2079,6 +2266,18 @@
   "license_url": "https://creativecommons.org/licenses/by/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Closeup_of_goat_eye.jpg",
   "orig": "File:Closeup of goat eye.jpg"
+ },
+ "zikade-haeutung": {
+  "file": "zikade-haeutung.jpg",
+  "kind": "img",
+  "w": 467,
+  "h": 700,
+  "title": "Zikade direkt nach der Häutung",
+  "author": "Basile Morin",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Cicadidae_with_exuvia,_immediately_after_moulting,_in_Laos,_side_view.jpg",
+  "orig": "File:Cicadidae with exuvia, immediately after moulting, in Laos, side view.jpg"
  },
  "zischen": {
   "file": "zischen.mp3",

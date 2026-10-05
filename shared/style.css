@@ -197,6 +197,11 @@ table.tafel td { width: 64px; height: 64px; text-align: center; border: 2px soli
 /* 10 chapters: 5 × 2 grid */
 .units.ten { grid-template-columns: repeat(5, 1fr); }
 .units.ten .ud { -webkit-line-clamp: 4; }
+/* 11–12 chapters: 4 × 3 grid */
+.units.twelve { grid-template-columns: repeat(4, 1fr); }
+.units.twelve .num { font-size: 34px; }
+.units.twelve .ut { font-size: 20px; padding-right: 50px; }
+.units.twelve .ico { width: 46px; height: 46px; }
 
 .home .hint { font-size: 18px; color: var(--pencil); margin: 0; }
 

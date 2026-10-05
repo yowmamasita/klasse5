@@ -1,5 +1,6 @@
-/* Kapitel 5 – Rechtschreib-Profi (s-Laute, das/dass, Doppelkonsonanten, ck/tz, Worttrennung, Großschreibung,
-   wörtliche Rede, Wörterbuch). Regeln geprüft am Amtlichen Regelwerk 2024 (§§ 2, 3, 4, 25, 57, 107–111; Anführungszeichen E1). */
+/* Kapitel 5 – Rechtschreib-Profi (s-Laute, Auslautverhärtung b/d/g + Verlängern, ä/äu + Ableiten, das/dass,
+   Doppelkonsonanten, ck/tz, Worttrennung, Großschreibung, wörtliche Rede, Wörterbuch).
+   Regeln geprüft am Amtlichen Regelwerk 2024 (§§ 2, 3, 4, 25, 57, 107–111; Anführungszeichen E1). */
 (() => {
   const C = "#dc2626";
   const SPK = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16 9a4 4 0 010 6"/></svg>';
@@ -93,7 +94,7 @@
     const b = s.h("button", { class: "btn u5say " + (o.cls || "") });
     b.innerHTML = SPK;
     b.append(W(s, str, o.mk === false ? "" : "mk"));
-    b.addEventListener("click", () => { s.sfx.pop(); bump(b); speak(o.speak || plain(str), o.rate || 0.7); });
+    b.addEventListener("click", () => { s.sfx.pop(); bump(b); const t = o.speak || plain(str); if (o.ss) s.speak(t, { rate: o.rate || 0.7 }); else speak(t, o.rate || 0.7); });
     return b;
   }
   const P = (s, cls, ...k) => s.h("p", { class: cls }, ...k);
@@ -114,9 +115,9 @@
 
   Deck.unit({
     id: "u5", num: 5, title: "Rechtschreib-Profi", color: C, soft: "#fde6e3",
-    subtitle: "s, ss, ß – das oder dass – groß oder klein",
-    blurb: "s-Laute, das/dass, Großschreibung, wörtliche Rede, Wörterbuch",
-    goals: ["s, ss oder ß – hören und begründen", "das oder dass? Die Ersatzprobe", "Doppelte Mitlaute, ck, tz und Worttrennung", "Großschreibung und das Begleiter-Signal", "Wörtliche Rede und Wörterbuch wie ein Profi"],
+    subtitle: "s, ss, ß – d oder t – ä oder e – groß oder klein",
+    blurb: "s-Laute, verlängern, ableiten, das/dass, Großschreibung",
+    goals: ["s, ss oder ß – hören und begründen", "d oder t? Verlängern! · ä oder e? Ableiten!", "das oder dass? Die Ersatzprobe", "Doppelte Mitlaute, ck, tz und Worttrennung", "Großschreibung und das Begleiter-Signal", "Wörtliche Rede und Wörterbuch wie ein Profi"],
     icon(svg, el) {
       svg.append(el("rect", { x: 6, y: 8, width: 58, height: 54, rx: 12, fill: C, opacity: .14 }),
         el("text", { x: 35, y: 48, "text-anchor": "middle", "font-size": 38, "font-weight": 800, fill: C, text: "ß" }));
@@ -263,6 +264,181 @@
             s.say(fams[i].map(plain).join(", ").replace(/\[|\]/g, ""));
             for (const it of x.items) { s.show(it, "right"); /ß/.test(it.textContent) ? s.sfx.note(7, 0.45) : s.sfx.note(0, 0.1); await s.wait(260); }
           }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5a --------------------------------------------------------------- */
+      {
+        title: "Hund oder Hunt? Verlängern!",
+        say: "Am Wortende klingen b, d und g hart, fast wie p, t und k. Verlängere das Wort, dann hörst du den richtigen Buchstaben.",
+        build(s) {
+          const hear = [["Hun<d>", "Hund"], ["R{a}<d>", "Rad"], ["Z{u}<g>", "Zug"], ["Kor<b>", "Korb"]].map(([w, t]) => sayBtn(s, w, { cls: "sm", ss: true, speak: t, rate: 0.6 }));
+          const ear = s.h("span", { class: "u5tag later" }, "klingt wie t, t, k, p!");
+          const top = s.h("div", { class: "card", style: { display: "flex", alignItems: "center", gap: "12px", padding: "10px 18px", flexWrap: "nowrap" } },
+            P(s, "t", "Hör aufs Ende:"), ...hear, ear);
+          const rows = [["Hun", "Hun·de", "Hunde", "d", "Hun", "Hund"], ["R{a}", "R{ä}·der", "Räder", "d", "Ra", "Rad"], ["Z{u}", "Z{ü}·ge", "Züge", "g", "Zu", "Zug"],
+            ["Kor", "Kör·be", "Körbe", "b", "Kor", "Korb"], ["Ber", "Ber·ge", "Berge", "g", "Ber", "Berg"]];
+          const grid = s.h("div", { style: { display: "grid", gridTemplateColumns: "150px 36px 210px 250px 160px", columnGap: "14px", rowGap: "12px", alignItems: "center", justifyContent: "center" } });
+          const parts = rows.map(([a, b, bs, ch, st, fin]) => {
+            const q = s.h("span", { class: "u5word" }, W(s, a, "mk"), s.h("span", { class: "u5c" }, "?"));
+            const ar = s.h("span", { class: "u5word pencil later" }, "→");
+            const lf = sayBtn(s, b, { cls: "sm later", speak: bs, ss: true, rate: 0.6 });
+            const hw = s.h("span", { class: "later" }, s.h("span", { class: "u5tag b" }, "jetzt hörst du: ", s.h("b", null, ch)));
+            const fi = s.h("span", { class: "u5word later" }, "= " + st, s.h("span", { class: "u5c" }, ch));
+            grid.append(q, ar, lf, hw, fi);
+            return [ar, lf, hw, fi];
+          });
+          const merk = s.h("div", { class: "merk later" }, "b, d oder g am Wortende? Hör nicht aufs Ende – ", s.h("b", null, "verlängere"), " das Wort: ", s.h("b", null, "Hund → Hunde"), ", ", s.h("b", null, "Zug → Züge"), ", ", s.h("b", null, "Korb → Körbe"), ".");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "16px", justifyContent: "center" } }, top, grid, merk));
+          s.show(top, "down"); s.sfx.whoosh();
+          s.step(async () => { s.say("Hund, Rad, Zug, Korb. Am Ende klingt es hart."); for (const b of hear) { bump(b); s.sfx.drum(); await s.wait(260); } s.sfx.boing(); await s.show(ear, "pop"); });
+          parts.forEach((p, i) => s.step(async () => {
+            s.say(rows[i][2] + ". Also " + rows[i][5] + " mit " + rows[i][3] + ".");
+            s.show(p[0], "left"); s.sfx.swoosh(); await s.wait(200);
+            s.show(p[1], "pop"); s.sfx.pop(); await s.wait(350);
+            s.show(p[2], "fade"); s.sfx.note(4 + i, 0.15); await s.wait(350);
+            s.show(p[3], "zoom"); s.sfx.ding();
+          }));
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5b --------------------------------------------------------------- */
+      {
+        title: "Verlängern klappt fast immer",
+        say: "Verlängern klappt auch bei Adjektiven und Verben. Und es hilft bei Wörtern, die genau gleich klingen.",
+        build(s) {
+          const pair = (a, at, b, bt) => {
+            const x = sayBtn(s, a, { cls: "sm", ss: true, speak: at, rate: 0.6 });
+            const ar = s.h("span", { class: "u5word pencil later" }, "→");
+            const y = sayBtn(s, b, { cls: "sm later", ss: true, speak: bt, rate: 0.6 });
+            return { el: s.h("div", { style: { display: "grid", gridTemplateColumns: "170px 36px 1fr", alignItems: "center", columnGap: "10px" } }, x, ar, y), ar, y };
+          };
+          const adj = [["gel<b>", "gelb", "gel·<b>e Jacke", "gelbe Jacke"], ["run<d>", "rund", "run·<d>er Ball", "runder Ball"], ["kl{u}<g>", "klug", "kl{u}·<g>e Eule", "kluge Eule"]].map(a => pair(...a));
+          const verb = [["er gi<b>t", "er gibt", "g{e}·<b>en", "geben"], ["sie l{o}<b>t", "sie lobt", "l{o}·<b>en", "loben"], ["es kle<b>t", "es klebt", "kle·<b>en", "kleben"]].map(a => pair(...a));
+          const card = (tag, cls, rule, list) => s.h("div", { class: "card stack later", style: { gap: "10px", padding: "12px 18px" } },
+            s.h("div", { class: "row", style: { gap: "10px", flexWrap: "nowrap" } }, s.h("span", { class: "u5tag " + cls }, tag), s.h("b", { style: { fontSize: "22px" } }, rule)), ...list.map(p => p.el));
+          const cA = card("Adjektive", "g", "ein e anhängen", adj), cV = card("Verben", "v", "die Grundform bilden", verb);
+          const rad = sayBtn(s, "das Ra<d>", { ss: true, speak: "das Rad", rate: 0.6 }), rat = sayBtn(s, "der Ra<t>", { ss: true, speak: "der Rat", rate: 0.6 });
+          const same = s.h("span", { class: "u5tag", style: { gridRow: "1 / 3", gridColumn: "4", alignSelf: "center", marginLeft: "12px" } }, "klingen genau gleich!");
+          const radL = sayBtn(s, "die R{ä}·<d>er", { cls: "sm later", ss: true, speak: "die Räder", rate: 0.6 }), ratL = sayBtn(s, "r{a}·<t>en", { cls: "sm later", ss: true, speak: "raten", rate: 0.6 });
+          const twin = s.h("div", { class: "life later", style: { padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Gleich gesprochen, anders geschrieben"),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "auto auto auto auto", gap: "10px 14px", alignItems: "center", justifyContent: "start" } },
+              rad, s.h("span", { class: "u5word pencil" }, "→"), radL, same,
+              rat, s.h("span", { class: "u5word pencil" }, "→"), ratL));
+          const merk = s.h("div", { class: "merk later" }, "Nomen → ", s.h("b", null, "Mehrzahl"), ".  Adjektiv → ", s.h("b", null, "e anhängen"), ".  Verb → ", s.h("b", null, "Grundform"), ". Dann hörst du b, d oder g!");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px", justifyContent: "center" } }, s.h("div", { class: "cols", style: { gap: "20px" } }, cA, cV), twin, merk));
+          const run = async (c, list, txt) => { s.sfx.whoosh(); await s.show(c, "up"); for (const p of list) { s.show(p.ar, "left"); s.sfx.swoosh(); await s.wait(150); s.show(p.y, "pop"); s.sfx.pop(); await s.wait(220); } s.say(txt); };
+          s.step(() => run(cA, adj, "gelb, gelbe Jacke. rund, runder Ball. klug, kluge Eule."));
+          s.step(() => run(cV, verb, "er gibt, geben. sie lobt, loben. es klebt, kleben."));
+          s.step(async () => { s.sfx.pop(); await s.show(twin, "up"); s.say("das Rad, der Rat. Die beiden klingen gleich."); bump(same); s.sfx.boing(); });
+          s.step(async () => { s.show(radL, "pop"); s.sfx.pop(); await s.wait(300); s.show(ratL, "pop"); s.sfx.pop(); s.say("die Räder, mit d. raten, mit t."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5c --------------------------------------------------------------- */
+      {
+        title: "Im Alltag: Schilder in Berlin",
+        say: "Auf Berliner Schildern stecken viele b, d und g am Wortende. Tippe auf ein Schild und verlängere!",
+        build(s) {
+          const bike = () => {
+            const v = s.svg(64, 64); v.style.flex = "none";
+            v.append(s.el("circle", { cx: 32, cy: 32, r: 30, fill: "#1d5bd0", stroke: "#fff", "stroke-width": 3 }),
+              s.el("circle", { cx: 20, cy: 40, r: 9, fill: "none", stroke: "#fff", "stroke-width": 3 }), s.el("circle", { cx: 44, cy: 40, r: 9, fill: "none", stroke: "#fff", "stroke-width": 3 }),
+              s.el("path", { d: "M20 40 L28 26 L40 26 L44 40 M28 26 L33 40 L40 26 M26 22 L31 22", fill: "none", stroke: "#fff", "stroke-width": 3, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+            return v;
+          };
+          const signs = [
+            { kind: "plate", word: ["Kreuzber", "g"], fix: "Ber·ge → g" },
+            { kind: "plate", word: ["Grunewal", "d"], fix: "Wäl·der → d" },
+            { kind: "bike", word: ["Ra", "d", "we", "g"], fix: "Rä·der → d · We·ge → g" },
+            { kind: "led", word: ["Zu", "g", " fällt aus"], fix: "Zü·ge → g" },
+          ];
+          const cards = signs.map(g => {
+            const letters = [];
+            const word = s.h("span", null, ...g.word.map((p, i) => { if (i % 2 === 1 && p.length === 1) { const e = s.h("span", { style: { transition: "color .3s" } }, p); letters.push(e); return e; } return p; }));
+            const fix = s.h("div", { class: "later", style: { font: "700 24px/1.1 var(--f-hand)", color: "var(--green)" } }, "✎ " + g.fix);
+            let face;
+            if (g.kind === "plate") face = s.h("div", { style: { background: "#fff", border: "4px solid #1b2740", borderRadius: "8px", padding: "8px 16px", font: "700 30px/1.1 var(--f-display)", color: "#1b2740", textAlign: "center" } }, word);
+            else if (g.kind === "bike") face = s.h("div", { style: { display: "flex", alignItems: "center", gap: "12px", justifyContent: "center" } }, bike(), s.h("span", { style: { background: "#fff", border: "4px solid #1b2740", borderRadius: "8px", padding: "6px 14px", font: "700 30px/1.1 var(--f-display)" } }, word));
+            else face = s.h("div", { style: { background: "#111", borderRadius: "8px", padding: "10px 16px", font: "700 28px/1.1 ui-monospace, Menlo, monospace", color: "#ffb21a", textAlign: "center", whiteSpace: "nowrap" } }, word);
+            const el = s.h("div", { class: "card stack", style: { gap: "10px", alignItems: "center", padding: "14px 14px", cursor: "pointer", justifyContent: "center" } }, face, fix);
+            let done = false;
+            const go = async () => { if (done) return; done = true; s.sfx.zap(); letters.forEach(l => { l.style.color = C; bump(l); }); await s.wait(250); s.sound("pencil-write", { vol: .5, dur: 1 }); await s.show(fix, "pop"); };
+            el.addEventListener("click", go);
+            return { el, go };
+          });
+          const photo = s.photo("wegweiser-schoenefeld", { w: 470, h: 330, pos: "50% 40%", caption: "Echter Wegweiser in Berlin", cls: "later" });
+          const pfix = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            P(s, "t", "Schönefel", s.h("span", { class: "u5c" }, "d"), " → die Fel·", s.h("span", { class: "u5c" }, "d"), "er. Und in Weißensee steckt ein ß!"));
+          const merk = s.h("div", { class: "merk later" }, "Stadtteile, Straßen, Anzeigen: Mit ", s.h("b", null, "Verlängern"), " findest du überall das richtige b, d oder g.");
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "470px 1fr", gap: "22px", height: "100%", alignContent: "center" } },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, photo, pfix),
+            s.h("div", { class: "stack", style: { gap: "14px" } }, s.h("div", { class: "cols", style: { gap: "14px" } }, ...cards.map(c => c.el)), merk)));
+          s.show(cards.map(c => c.el), "pop"); s.sfx.whoosh();
+          s.step(async () => { s.sound("traffic", { vol: .35, dur: 2.5 }); await s.show(photo, "zoom"); await s.show(pfix, "up"); s.say("Schönefeld, die Felder. Also d."); });
+          cards.forEach(c => s.step(() => c.go()));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5d --------------------------------------------------------------- */
+      {
+        title: "ä oder e? Ableiten!",
+        say: "ä und e klingen oft gleich. Gibt es in der Wortfamilie ein Wort mit a, dann schreibst du ä.",
+        build(s) {
+          const A = (pre, v, post, col) => s.h("span", { class: "u5word", style: { fontSize: "30px", whiteSpace: "nowrap" } }, pre, s.h("span", { style: { color: col } }, v), post);
+          const hear = s.h("div", { class: "card", style: { display: "flex", alignItems: "center", gap: "12px", padding: "10px 16px", justifyContent: "center" } }, P(s, "t", "Hör mal:"),
+            sayBtn(s, "H<ä>nde", { cls: "sm", ss: true, speak: "Hände", rate: 0.6 }), sayBtn(s, "<E>nde", { cls: "sm", ss: true, speak: "Ende", rate: 0.6 }), s.h("span", { class: "u5tag" }, "gleicher Laut!"));
+          const fam = [["H", "a", "nd", "H", "ä", "nde"], ["G", "a", "st", "G", "ä", "ste"], ["W", "a", "ld", "W", "ä", "lder"], ["k", "a", "lt", "K", "ä", "lte"], ["Kr", "a", "ft", "kr", "ä", "ftig"]];
+          const grid = s.h("div", { style: { display: "grid", gridTemplateColumns: "110px 40px 140px", gap: "6px 10px", alignItems: "center", justifyContent: "center" } });
+          const fr = fam.map(([a, b, c, d, e, f]) => {
+            const base = A(a, b, c, "var(--blue)"), ar = s.h("span", { class: "u5word pencil later" }, "→"), der = s.h("span", { class: "later" }, A(d, e, f, C));
+            grid.append(base, ar, der); return [ar, der];
+          });
+          const left = s.h("div", { class: "card stack", style: { gap: "10px", padding: "12px 18px" } }, s.h("span", { class: "u5tag b", style: { alignSelf: "flex-start" } }, "a in der Familie → ä"), grid);
+          const eCard = s.h("div", { class: "card later", style: { padding: "12px 18px" } }, s.h("span", { class: "u5tag v" }, "kein a in der Familie → e"),
+            P(s, "t", "Bett, Held, Ende, fest, Pferd"));
+          const mw = s.h("div", { class: "card soft later", style: { padding: "12px 18px" } }, P(s, "t", s.h("b", null, "Merkwörter mit ä:"), " Käse, Bär, Mädchen, März, Ärger, Käfig"));
+          const ausn = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Ausnahme"),
+            P(s, "t", s.h("b", null, "Eltern"), " kommt von ", s.h("i", null, "alt"), " – „die Älteren“. Früher schrieb man auch „Ältern“. Heute nur noch mit ", s.h("b", null, "E"), "!"));
+          const merk = s.h("div", { class: "merk later" }, "ä oder e? ", s.h("b", null, "Ableiten:"), " Findest du ein verwandtes Wort mit ", s.h("b", null, "a"), "? → ", s.h("b", null, "ä"), ". Sonst meistens ", s.h("b", null, "e"), ".");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px", justifyContent: "center" } },
+            hear, s.h("div", { style: { display: "grid", gridTemplateColumns: "430px 1fr", gap: "20px", alignItems: "start" } },
+              left, s.h("div", { class: "stack", style: { gap: "12px" } }, eCard, mw, ausn)), merk));
+          s.sfx.pop();
+          s.step(async () => { s.say("Hand, Hände. Gast, Gäste. Wald, Wälder. kalt, Kälte. Kraft, kräftig."); for (const [ar, d] of fr) { s.show(ar, "left"); s.sfx.swoosh(); await s.wait(150); s.show(d, "pop"); s.sfx.coin(); await s.wait(260); } });
+          s.step(async () => { s.say("Bett, Held, Ende: Hier gibt es kein Wort mit a. Also e."); s.sfx.whoosh(); await s.show(eCard, "right"); });
+          s.step(async () => { s.sfx.pop(); await s.show(mw, "right"); s.say("Ein paar Wörter musst du dir einfach merken."); });
+          s.step(async () => { s.sfx.boing(); await s.show(ausn, "up"); s.say("Eltern kommt von alt, wird aber mit e geschrieben."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 5e --------------------------------------------------------------- */
+      {
+        title: "äu oder eu?",
+        say: "äu und eu klingen gleich. Gibt es ein verwandtes Wort mit au, dann schreibst du äu.",
+        build(s) {
+          const A = (pre, v, post, col) => s.h("span", { class: "u5word", style: { fontSize: "30px", whiteSpace: "nowrap" } }, pre, s.h("span", { style: { color: col } }, v), post);
+          const hear = s.h("div", { class: "card", style: { display: "flex", alignItems: "center", gap: "12px", padding: "10px 16px", justifyContent: "center" } }, P(s, "t", "Hör mal:"),
+            sayBtn(s, "H<äu>ser", { cls: "sm", ss: true, speak: "Häuser", rate: 0.6 }), sayBtn(s, "h<eu>te", { cls: "sm", ss: true, speak: "heute", rate: 0.6 }), s.h("span", { class: "u5tag" }, "gleicher Laut: „oi“!"));
+          const fam = [["H", "au", "s", "H", "äu", "ser"], ["B", "au", "m", "B", "äu", "me"], ["M", "au", "s", "M", "äu", "se"], ["l", "au", "t", "l", "äu", "ten"], ["Tr", "au", "m", "tr", "äu", "men"]];
+          const grid = s.h("div", { style: { display: "grid", gridTemplateColumns: "120px 40px 160px", gap: "6px 10px", alignItems: "center", justifyContent: "center" } });
+          const fr = fam.map(([a, b, c, d, e, f]) => {
+            const base = A(a, b, c, "var(--blue)"), ar = s.h("span", { class: "u5word pencil later" }, "→"), der = s.h("span", { class: "later" }, A(d, e, f, C));
+            grid.append(base, ar, der); return [ar, der];
+          });
+          const left = s.h("div", { class: "card stack later", style: { gap: "10px", padding: "12px 18px" } }, s.h("span", { class: "u5tag b", style: { alignSelf: "flex-start" } }, "au in der Familie → äu"), grid);
+          const eu = ["h<eu>te", "L<eu>te", "F<eu>er", "n<eu>", "Fr<eu>nd", "D<eu>tsch"].map(w => sayBtn(s, w, { cls: "sm", ss: true, rate: 0.6 }));
+          const right = s.h("div", { class: "card stack later", style: { gap: "10px", padding: "12px 18px" } }, s.h("span", { class: "u5tag v", style: { alignSelf: "flex-start" } }, "kein au in der Familie → eu"),
+            s.h("div", { class: "cols3", style: { gap: "10px" } }, ...eu), P(s, "t pencil", "Hier findest du kein Wort mit au. Also: eu!"));
+          const lf = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Im Alltag"),
+            P(s, "t", "Die Glocken l", s.h("b", null, "äu"), "ten – sie sind l", s.h("b", null, "au"), "t. Im Tiergarten stehen viele B", s.h("b", null, "äu"), "me. Meine Fr", s.h("b", null, "eu"), "nde treffe ich h", s.h("b", null, "eu"), "te."));
+          const merk = s.h("div", { class: "merk later" }, "äu oder eu? Gibt es ein verwandtes Wort mit ", s.h("b", null, "au"), "? → ", s.h("b", null, "äu"), ". Sonst ", s.h("b", null, "eu"), ".");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px", justifyContent: "center" } }, hear,
+            s.h("div", { class: "cols", style: { gap: "20px", alignItems: "stretch" } }, left, right), lf, merk));
+          s.sfx.pop();
+          s.step(async () => { s.sfx.whoosh(); await s.show(left, "left"); s.say("Haus, Häuser. Baum, Bäume. Maus, Mäuse. laut, läuten. Traum, träumen."); for (const [ar, d] of fr) { s.show(ar, "left"); s.sfx.swoosh(); await s.wait(150); s.show(d, "pop"); s.sfx.coin(); await s.wait(260); } });
+          s.step(async () => { s.sfx.whoosh(); await s.show(right, "right"); s.say("heute, Leute, Feuer, neu, Freund, deutsch. Kein au in Sicht, also eu."); });
+          s.step(async () => { s.sound("church-bells", { vol: .4, dur: 3 }); await s.show(lf, "up"); });
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); });
         },
       },

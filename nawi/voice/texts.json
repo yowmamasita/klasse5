@@ -1,4 +1,14 @@
 {
+ "011b89bf2ed2ddd1": {
+  "lang": "de-DE",
+  "spoken": "Der Bizeps zieht sich zusammen und wird dick. Der Trizeps wird lang gezogen.",
+  "text": "Der Bizeps zieht sich zusammen und wird dick. Der Trizeps wird lang gezogen."
+ },
+ "015e09ce3e16a9d8": {
+  "lang": "de-DE",
+  "spoken": "Drei Stromkreise, in denen die Lampe nicht leuchtet. Schau genau hin, was jeweils passiert.",
+  "text": "Drei Stromkreise, in denen die Lampe nicht leuchtet. Schau genau hin, was jeweils passiert."
+ },
  "017523ad84935707": {
   "lang": "de-DE",
   "spoken": "Beide sind gleich lang!",
@@ -14,6 +24,11 @@
   "spoken": "Drei Gläser Wasser. In das erste kommt Salz, in das zweite Erde, in das dritte Öl.",
   "text": "Drei Gläser Wasser. In das erste kommt Salz, in das zweite Erde, in das dritte Öl."
  },
+ "01e05884f26a0389": {
+  "lang": "de-DE",
+  "spoken": "Tippe auf Lebensmittel und packe deine Brotdose. Welche Nährstoffe hast du dabei?",
+  "text": "Tippe auf Lebensmittel und packe deine Brotdose. Welche Nährstoffe hast du dabei?"
+ },
  "023eb2375875bd7b": {
   "lang": "de-DE",
   "spoken": "So sehen Trennverfahren in echt aus: im Labor, auf dem Schrottplatz und im Klärwerk.",
@@ -24,10 +39,20 @@
   "spoken": "Über die Flüsse fließt das Wasser zurück ins Meer. Der Kreis ist geschlossen.",
   "text": "Über die Flüsse fließt das Wasser zurück ins Meer. Der Kreis ist geschlossen."
  },
+ "0303adf98855e656": {
+  "lang": "de-DE",
+  "spoken": "Dein Dünndarm ist fünf bis sechs Meter lang. Ausgerollt wäre er viel länger als du groß bist. Er passt nur hinein, weil er in Schlingen liegt.",
+  "text": "Dein Dünndarm ist fünf bis sechs Meter lang. Ausgerollt wäre er viel länger als du groß bist. Er passt nur hinein, weil er in Schlingen liegt."
+ },
  "032abbc99fefdf9b": {
   "lang": "de-DE",
   "spoken": "Wirbeltiere haben innen eine Wirbelsäule aus Knochen. Wirbellose haben keine. Zu ihnen gehören die Insekten mit sechs Beinen.",
   "text": "Wirbeltiere haben innen eine Wirbelsäule aus Knochen. Wirbellose haben keine. Zu ihnen gehören die Insekten mit sechs Beinen."
+ },
+ "0499c9b429fb83f3": {
+  "lang": "de-DE",
+  "spoken": "Tiere bewegen sich ganz verschieden. Der Fisch schlängelt im Wasser, die Schlange auf dem Boden und der Vogel schlägt mit den Flügeln.",
+  "text": "Tiere bewegen sich ganz verschieden. Der Fisch schlängelt im Wasser, die Schlange auf dem Boden und der Vogel schlägt mit den Flügeln."
  },
  "04b722367ad8e87b": {
   "lang": "de-DE",
@@ -49,6 +74,11 @@
   "spoken": "Bakterien sind so klein, dass du sie nicht siehst. Darum Hände waschen: mit Seife, 20 bis 30 Sekunden lang.",
   "text": "Bakterien sind so klein, dass du sie nicht siehst. Darum Hände waschen: mit Seife, 20 bis 30 Sekunden lang."
  },
+ "06c463db3f47e281": {
+  "lang": "de-DE",
+  "spoken": "Das Blut fließt im Kreis: vom Herzen zur Lunge, wo es Sauerstoff holt, zurück zum Herzen und dann in den ganzen Körper. Dort gibt es den Sauerstoff ab.",
+  "text": "Das Blut fließt im Kreis: vom Herzen zur Lunge, wo es Sauerstoff holt, zurück zum Herzen und dann in den ganzen Körper. Dort gibt es den Sauerstoff ab."
+ },
  "06f1898c52f74d7d": {
   "lang": "de-DE",
   "spoken": "Bei einem fairen Versuch veränderst du nur eine einzige Sache. Hier ist es das Licht.",
@@ -59,15 +89,30 @@
   "spoken": "So sehen die Sicherheits-Sachen im Fachraum in echt aus. Schau nach, wo sie in deinem NaWi-Raum hängen!",
   "text": "So sehen die Sicherheits-Sachen im Fachraum in echt aus. Schau nach, wo sie in deinem NaWi-Raum hängen!"
  },
+ "07e7328f687d827d": {
+  "lang": "de-DE",
+  "spoken": "Nur Schalter A ist zu. Die Maschine bleibt aus.",
+  "text": "Nur Schalter A ist zu. Die Maschine bleibt aus."
+ },
  "086c6f017fb85078": {
   "lang": "de-DE",
   "spoken": "Ohne Ringe sieht man: Beide sind gleich groß.",
   "text": "Ohne Ringe sieht man: Beide sind gleich groß."
  },
+ "08812df352189a40": {
+  "lang": "de-DE",
+  "spoken": "Der Dünndarm ist fast viermal so lang wie ein Kind groß ist.",
+  "text": "Der Dünndarm ist fast viermal so lang wie ein Kind groß ist."
+ },
  "08a26de1888553ae": {
   "lang": "de-DE",
   "spoken": "Mit dicker Dämmung bleibt die Wärme im Haus.",
   "text": "Mit dicker Dämmung bleibt die Wärme im Haus."
+ },
+ "08b7eda42f8c35ce": {
+  "lang": "de-DE",
+  "spoken": "So sieht ein Federkraftmesser in echt aus. Man nennt ihn auch Federwaage.",
+  "text": "So sieht ein Federkraftmesser in echt aus. Man nennt ihn auch Federwaage."
  },
  "095898eea1cdc340": {
   "lang": "de-DE",
@@ -109,10 +154,20 @@
   "spoken": "So sieht ein echtes Pantoffeltierchen unter dem Mikroskop aus.",
   "text": "So sieht ein echtes Pantoffeltierchen unter dem Mikroskop aus."
  },
+ "0f315d90c94badfb": {
+  "lang": "de-DE",
+  "spoken": "Fünfzehntausend Volt. Der Strom springt sogar durch die Luft.",
+  "text": "Fünfzehntausend Volt. Der Strom springt sogar durch die Luft."
+ },
  "10134b4c1b738452": {
   "lang": "de-DE",
   "spoken": "Anfang Januar ist die Erde der Sonne am nächsten – und trotzdem ist bei uns Winter. Es liegt am Winkel, mit dem das Sonnenlicht ankommt.",
   "text": "Anfang Januar ist die Erde der Sonne am nächsten – und trotzdem ist bei uns Winter. Es liegt am Winkel, mit dem das Sonnenlicht ankommt."
+ },
+ "10322e59f183d892": {
+  "lang": "de-DE",
+  "spoken": "Eine Kraft zeichnet man als Pfeil. Die Länge zeigt, wie stark sie ist, die Spitze zeigt die Richtung. Probiere das Tauziehen aus.",
+  "text": "Eine Kraft zeichnet man als Pfeil. Die Länge zeigt, wie stark sie ist, die Spitze zeigt die Richtung. Probiere das Tauziehen aus."
  },
  "105428495f903938": {
   "lang": "de-DE",
@@ -123,6 +178,11 @@
   "lang": "de-DE",
   "spoken": "Tippe auf einen Sinn!",
   "text": "Tippe auf einen Sinn!"
+ },
+ "120421f48b9a57f7": {
+  "lang": "de-DE",
+  "spoken": "Durch eine Lücke kommt kein Strom.",
+  "text": "Durch eine Lücke kommt kein Strom."
  },
  "14669684d0d985ec": {
   "lang": "de-DE",
@@ -179,15 +239,30 @@
   "spoken": "Zieh das Auge hoch und runter.",
   "text": "Zieh das Auge hoch und runter."
  },
+ "1afa5ff0d6dc780c": {
+  "lang": "de-DE",
+  "spoken": "Zähle deine Atemzüge eine Minute lang. In Ruhe atmen Kinder in deinem Alter etwa sechzehn bis zwanzig Mal pro Minute.",
+  "text": "Zähle deine Atemzüge eine Minute lang. In Ruhe atmen Kinder in deinem Alter etwa sechzehn bis zwanzig Mal pro Minute."
+ },
  "1c3fc999b71b7a7e": {
   "lang": "de-DE",
   "spoken": "Wärme und Wind machen das Trocknen schneller.",
   "text": "Wärme und Wind machen das Trocknen schneller."
  },
+ "1cecdade1fec2cb9": {
+  "lang": "de-DE",
+  "spoken": "Strom wird immer aus einer anderen Energie gemacht: in der Batterie, in der Solarzelle, im Fahrraddynamo und im Kraftwerk.",
+  "text": "Strom wird immer aus einer anderen Energie gemacht: in der Batterie, in der Solarzelle, im Fahrraddynamo und im Kraftwerk."
+ },
  "1dd48a2b94ee6afb": {
   "lang": "de-DE",
   "spoken": "Licht fällt durch die Pupille, die Linse bündelt es, und auf der Netzhaut entsteht ein Bild.",
   "text": "Licht fällt durch die Pupille, die Linse bündelt es, und auf der Netzhaut entsteht ein Bild."
+ },
+ "1dfb3a5d10e69495": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 10. Bewegung: Knochen, Muskeln, Kräfte. Wie Skelett und Muskeln dich bewegen – und was Kräfte tun",
+  "text": "Kapitel 10. Bewegung: Knochen, Muskeln, Kräfte. Wie Skelett und Muskeln dich bewegen – und was Kräfte tun"
  },
  "1e1f5035ca49d424": {
   "lang": "de-DE",
@@ -228,6 +303,11 @@
   "lang": "de-DE",
   "spoken": "Fest, flüssig und gasförmig.",
   "text": "Fest, flüssig und gasförmig."
+ },
+ "22ebb63aac211c12": {
+  "lang": "de-DE",
+  "spoken": "Reibung bremst Bewegungen. Auf glattem Eis rutscht ein Klotz weit, auf rauem Teppich bleibt er schnell stehen.",
+  "text": "Reibung bremst Bewegungen. Auf glattem Eis rutscht ein Klotz weit, auf rauem Teppich bleibt er schnell stehen."
  },
  "23366c151eab67aa": {
   "lang": "de-DE",
@@ -314,10 +394,20 @@
   "spoken": "Teilchen bewegen sich ständig. Darum verteilt sich Tinte von allein im Wasser – im warmen Wasser schneller.",
   "text": "Teilchen bewegen sich ständig. Darum verteilt sich Tinte von allein im Wasser – im warmen Wasser schneller."
  },
+ "2a69844925bbf4e2": {
+  "lang": "de-DE",
+  "spoken": "Muskeln können nur ziehen, nie schieben. Darum arbeiten sie als Gegenspieler: Der Bizeps beugt den Arm, der Trizeps streckt ihn.",
+  "text": "Muskeln können nur ziehen, nie schieben. Darum arbeiten sie als Gegenspieler: Der Bizeps beugt den Arm, der Trizeps streckt ihn."
+ },
  "2d180e8968b66d6d": {
   "lang": "de-DE",
   "spoken": "Die Hälfte, die von der Sonne weg zeigt, hat Nacht.",
   "text": "Die Hälfte, die von der Sonne weg zeigt, hat Nacht."
+ },
+ "2d2597fc061c0002": {
+  "lang": "de-DE",
+  "spoken": "Strom ist überall. Elektrogeräte machen aus Strom Licht, Wärme, Bewegung oder Ton und Bild. Tippe auf ein Gerät.",
+  "text": "Strom ist überall. Elektrogeräte machen aus Strom Licht, Wärme, Bewegung oder Ton und Bild. Tippe auf ein Gerät."
  },
  "2d89369cc977aad6": {
   "lang": "de-DE",
@@ -338,6 +428,11 @@
   "lang": "de-DE",
   "spoken": "Probiere die anderen Sinne aus!",
   "text": "Probiere die anderen Sinne aus!"
+ },
+ "2e276e8936645a47": {
+  "lang": "de-DE",
+  "spoken": "Kinder in deinem Alter brauchen neun bis zwölf Stunden Schlaf und jeden Tag mindestens eine Stunde Bewegung. Probiere aus, wann du ins Bett gehen solltest.",
+  "text": "Kinder in deinem Alter brauchen neun bis zwölf Stunden Schlaf und jeden Tag mindestens eine Stunde Bewegung. Probiere aus, wann du ins Bett gehen solltest."
  },
  "2e4898f8a735d179": {
   "lang": "de-DE",
@@ -383,6 +478,11 @@
   "lang": "de-DE",
   "spoken": "Im Winter steht die Sonne in Berlin sehr tief. Die Schatten sind lang.",
   "text": "Im Winter steht die Sonne in Berlin sehr tief. Die Schatten sind lang."
+ },
+ "30953d2d15da7728": {
+  "lang": "de-DE",
+  "spoken": "Der Zähler dreht sich schon langsamer.",
+  "text": "Der Zähler dreht sich schon langsamer."
  },
  "31024929eb4c8003": {
   "lang": "de-DE",
@@ -439,10 +539,20 @@
   "spoken": "Wäschetrockner, Mülltrennung und Meersalz.",
   "text": "Wäschetrockner, Mülltrennung und Meersalz."
  },
+ "35e94068f7930233": {
+  "lang": "de-DE",
+  "spoken": "Innen leitet das Kupfer. Außen schützt der Kunststoff.",
+  "text": "Innen leitet das Kupfer. Außen schützt der Kunststoff."
+ },
  "36e99bafd27690ee": {
   "lang": "de-DE",
   "spoken": "Temperaturen begegnen dir überall: im Gefrierfach, im Kühlschrank, in deinem Körper und im Kochtopf.",
   "text": "Temperaturen begegnen dir überall: im Gefrierfach, im Kühlschrank, in deinem Körper und im Kochtopf."
+ },
+ "36fad9a112d7fcef": {
+  "lang": "de-DE",
+  "spoken": "Menschen laufen auf der ganzen Sohle, Katzen auf den Zehen. Das Pferd läuft nur auf der Spitze einer einzigen Zehe: dem Huf.",
+  "text": "Menschen laufen auf der ganzen Sohle, Katzen auf den Zehen. Das Pferd läuft nur auf der Spitze einer einzigen Zehe: dem Huf."
  },
  "372df0da37dfd7c3": {
   "lang": "de-DE",
@@ -454,10 +564,20 @@
   "spoken": "Kapitel 9. Pflanzen und Tiere. Was lebt – und wie es zu seinem Lebensraum passt",
   "text": "Kapitel 9. Pflanzen und Tiere. Was lebt – und wie es zu seinem Lebensraum passt"
  },
+ "38e5139beb2ef97a": {
+  "lang": "de-DE",
+  "spoken": "Beim Rennen schlägt das Herz viel schneller. So bekommen die Muskeln mehr Sauerstoff.",
+  "text": "Beim Rennen schlägt das Herz viel schneller. So bekommen die Muskeln mehr Sauerstoff."
+ },
  "39b65127e74bcf8c": {
   "lang": "de-DE",
   "spoken": "Auf der Nachtseite leuchten die Lichter der Städte.",
   "text": "Auf der Nachtseite leuchten die Lichter der Städte."
+ },
+ "39b876b232338b1c": {
+  "lang": "de-DE",
+  "spoken": "Jetzt zieht der Trizeps. Der Bizeps wird wieder lang.",
+  "text": "Jetzt zieht der Trizeps. Der Bizeps wird wieder lang."
  },
  "39ba6f89d7da3479": {
   "lang": "de-DE",
@@ -473,6 +593,11 @@
   "lang": "de-DE",
   "spoken": "Drei Löffel – derselbe Körper, aber aus verschiedenen Stoffen.",
   "text": "Drei Löffel – derselbe Körper, aber aus verschiedenen Stoffen."
+ },
+ "3ac14ea8650f335e": {
+  "lang": "de-DE",
+  "spoken": "Ein Erwachsener hat 206 Knochen, ein Baby sogar über 300 Knochen und Knorpel. Viele davon wachsen später zusammen.",
+  "text": "Ein Erwachsener hat 206 Knochen, ein Baby sogar über 300 Knochen und Knorpel. Viele davon wachsen später zusammen."
  },
  "3add1fa88d9ee7ad": {
   "lang": "de-DE",
@@ -498,6 +623,16 @@
   "lang": "de-DE",
   "spoken": "Die Sonne ist riesig. 109 Erden passen nebeneinander quer durch die Sonne.",
   "text": "Die Sonne ist riesig. 109 Erden passen nebeneinander quer durch die Sonne."
+ },
+ "3d754abca54aac79": {
+  "lang": "de-DE",
+  "spoken": "Metalle leiten den Strom. Kunststoff, Gummi und Glas leiten ihn nicht. Sie isolieren. Ein Kabel braucht beides.",
+  "text": "Metalle leiten den Strom. Kunststoff, Gummi und Glas leiten ihn nicht. Sie isolieren. Ein Kabel braucht beides."
+ },
+ "3e852056b9f800b4": {
+  "lang": "de-DE",
+  "spoken": "Zwei Schalter hintereinander: Die Lampe leuchtet nur, wenn Schalter A und Schalter B geschlossen sind.",
+  "text": "Zwei Schalter hintereinander: Die Lampe leuchtet nur, wenn Schalter A und Schalter B geschlossen sind."
  },
  "3f2a05cef7d59ce9": {
   "lang": "de-DE",
@@ -539,6 +674,11 @@
   "spoken": "Bei der Destillation wird eine Flüssigkeit verdampft und der Dampf wieder abgekühlt. So bekommt man reines Wasser.",
   "text": "Bei der Destillation wird eine Flüssigkeit verdampft und der Dampf wieder abgekühlt. So bekommt man reines Wasser."
  },
+ "432da127535972de": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 12. Strom und Stromkreis. Wie Strom fließt – und warum du vorsichtig sein musst",
+  "text": "Kapitel 12. Strom und Stromkreis. Wie Strom fließt – und warum du vorsichtig sein musst"
+ },
  "4370f7300e08e0e3": {
   "lang": "de-DE",
   "spoken": "Bei der Wärmeströmung nimmt strömende Luft die Wärme mit. So heizt die Heizung das ganze Zimmer.",
@@ -554,6 +694,11 @@
   "spoken": "Unten tropft klares Wasser heraus.",
   "text": "Unten tropft klares Wasser heraus."
  },
+ "44b6184dcc53641a": {
+  "lang": "de-DE",
+  "spoken": "Kinder haben zuerst zwanzig Milchzähne. Ab etwa sechs Jahren kommen die bleibenden Zähne: am Ende sind es zweiunddreißig.",
+  "text": "Kinder haben zuerst zwanzig Milchzähne. Ab etwa sechs Jahren kommen die bleibenden Zähne: am Ende sind es zweiunddreißig."
+ },
  "45384b480a9b74c1": {
   "lang": "de-DE",
   "spoken": "Auch Menschen und Tiere bestehen aus Zellen. Eine Zelle aus der Mundschleimhaut hat Zellmembran, Zellplasma und Zellkern, aber keine Zellwand.",
@@ -563,6 +708,11 @@
   "lang": "de-DE",
   "spoken": "Ein Filter ist wie ein Sieb mit winzigen Löchern. Wasser kommt durch, Schmutz bleibt hängen.",
   "text": "Ein Filter ist wie ein Sieb mit winzigen Löchern. Wasser kommt durch, Schmutz bleibt hängen."
+ },
+ "45cac8246d477162": {
+  "lang": "de-DE",
+  "spoken": "Zwei Lampen hintereinander in einem Kreis: Das ist eine Reihenschaltung. Dreh eine Lampe heraus – dann gehen beide aus.",
+  "text": "Zwei Lampen hintereinander in einem Kreis: Das ist eine Reihenschaltung. Dreh eine Lampe heraus – dann gehen beide aus."
  },
  "4616e5f3aa92ee0d": {
   "lang": "de-DE",
@@ -574,6 +724,11 @@
   "spoken": "In flachen Becken verdunstet das Meerwasser. Übrig bleibt das Salz.",
   "text": "In flachen Becken verdunstet das Meerwasser. Übrig bleibt das Salz."
  },
+ "46eb1ab65d6a6f59": {
+  "lang": "de-DE",
+  "spoken": "Beide Lampen leuchten, aber etwas schwächer.",
+  "text": "Beide Lampen leuchten, aber etwas schwächer."
+ },
  "47e5e408e2ae74b2": {
   "lang": "de-DE",
   "spoken": "Trifft Licht schräg auf Wasser, ändert es an der Grenze seine Richtung. Das heißt Brechung.",
@@ -583,6 +738,11 @@
   "lang": "de-DE",
   "spoken": "Im Fachraum gelten Regeln. Sie schützen dich und die anderen.",
   "text": "Im Fachraum gelten Regeln. Sie schützen dich und die anderen."
+ },
+ "48907b9def53b403": {
+  "lang": "de-DE",
+  "spoken": "In den Lungenbläschen geht Sauerstoff aus der Luft ins Blut. Kohlenstoffdioxid geht aus dem Blut in die Luft und wird ausgeatmet.",
+  "text": "In den Lungenbläschen geht Sauerstoff aus der Luft ins Blut. Kohlenstoffdioxid geht aus dem Blut in die Luft und wird ausgeatmet."
  },
  "48f82826a7db09b9": {
   "lang": "de-DE",
@@ -649,6 +809,11 @@
   "spoken": "Öl ist leichter als Wasser und schwimmt oben.",
   "text": "Öl ist leichter als Wasser und schwimmt oben."
  },
+ "4fe0b756c1ec9432": {
+  "lang": "de-DE",
+  "spoken": "So sehen die Teile in echt aus.",
+  "text": "So sehen die Teile in echt aus."
+ },
  "5057961b60d45a66": {
   "lang": "de-DE",
   "spoken": "Eine Sonnenuhr nutzt den wandernden Schatten.",
@@ -663,6 +828,11 @@
   "lang": "de-DE",
   "spoken": "Wir zoomen in Zehnerschritten hinein: von ganz Berlin bis zu einer winzigen Bakterie.",
   "text": "Wir zoomen in Zehnerschritten hinein: von ganz Berlin bis zu einer winzigen Bakterie."
+ },
+ "51fb081e1ee779b2": {
+  "lang": "de-DE",
+  "spoken": "Beim Einatmen zieht sich das Zwerchfell nach unten. Der Brustkorb wird weiter, und Luft strömt in die Lunge. Beim Ausatmen wird alles wieder kleiner.",
+  "text": "Beim Einatmen zieht sich das Zwerchfell nach unten. Der Brustkorb wird weiter, und Luft strömt in die Lunge. Beim Ausatmen wird alles wieder kleiner."
  },
  "521e5bebb71e2e38": {
   "lang": "de-DE",
@@ -749,6 +919,21 @@
   "spoken": "Die Lufthülle wirkt wie eine Decke. Treibhausgase halten Wärme auf der Erde zurück.",
   "text": "Die Lufthülle wirkt wie eine Decke. Treibhausgase halten Wärme auf der Erde zurück."
  },
+ "5a3032e1d1d79652": {
+  "lang": "de-DE",
+  "spoken": "Gartentür: Es klingelt auch.",
+  "text": "Gartentür: Es klingelt auch."
+ },
+ "5a451a21dd079efe": {
+  "lang": "de-DE",
+  "spoken": "Haustür: Es klingelt.",
+  "text": "Haustür: Es klingelt."
+ },
+ "5ad0c8cb2993b3b2": {
+  "lang": "de-DE",
+  "spoken": "Fachleute zeichnen Stromkreise mit einfachen Zeichen: den Schaltzeichen. Tippe auf eine Karte, dann wechselt das Bild.",
+  "text": "Fachleute zeichnen Stromkreise mit einfachen Zeichen: den Schaltzeichen. Tippe auf eine Karte, dann wechselt das Bild."
+ },
  "5b078aa7a24df3d8": {
   "lang": "de-DE",
   "spoken": "So sehen Mars, Jupiter und Saturn wirklich aus. Die Fotos kommen vom Weltraumteleskop Hubble und von der Raumsonde Cassini.",
@@ -794,6 +979,11 @@
   "spoken": "Erst beobachten, dann eine Frage stellen.",
   "text": "Erst beobachten, dann eine Frage stellen."
  },
+ "5de8b78a2f7298ba": {
+  "lang": "de-DE",
+  "spoken": "Muskeln hängen mit Sehnen an den Knochen. Die Muskeln für deine Finger sitzen sogar im Unterarm und ziehen an langen Sehnen.",
+  "text": "Muskeln hängen mit Sehnen an den Knochen. Die Muskeln für deine Finger sitzen sogar im Unterarm und ziehen an langen Sehnen."
+ },
  "5e8d1d5bcd43c7d3": {
   "lang": "de-DE",
   "spoken": "Schutzbrille und Augendusche schützen deine Augen.",
@@ -824,6 +1014,11 @@
   "spoken": "Sterne leuchten selbst, wie unsere Sonne. Planeten werden nur angestrahlt. Mit dem Großen Wagen findest du den Polarstern und damit Norden.",
   "text": "Sterne leuchten selbst, wie unsere Sonne. Planeten werden nur angestrahlt. Mit dem Großen Wagen findest du den Polarstern und damit Norden."
  },
+ "6048130b01648188": {
+  "lang": "de-DE",
+  "spoken": "Die Erde zieht alles zu sich hin. Das ist die Gewichtskraft. Wir messen sie mit dem Federkraftmesser in Newton. Eine Tafel Schokolade wiegt hundert Gramm und zieht mit etwa einem Newton.",
+  "text": "Die Erde zieht alles zu sich hin. Das ist die Gewichtskraft. Wir messen sie mit dem Federkraftmesser in Newton. Eine Tafel Schokolade wiegt hundert Gramm und zieht mit etwa einem Newton."
+ },
  "60e27231970f63d0": {
   "lang": "de-DE",
   "spoken": "Und beim Sonnenuntergang wird der Himmel rot.",
@@ -853,6 +1048,11 @@
   "lang": "de-DE",
   "spoken": "Lösung, Suspension, Emulsion und Gemenge.",
   "text": "Lösung, Suspension, Emulsion und Gemenge."
+ },
+ "653f95b934a82b47": {
+  "lang": "de-DE",
+  "spoken": "Batterie, Lampe und Schalter werden zu Schaltzeichen. Die Kabel werden gerade Linien.",
+  "text": "Batterie, Lampe und Schalter werden zu Schaltzeichen. Die Kabel werden gerade Linien."
  },
  "65d65c75d8c06d8b": {
   "lang": "de-DE",
@@ -893,6 +1093,21 @@
   "lang": "de-DE",
   "spoken": "Damit du etwas siehst, muss Licht von dem Gegenstand in dein Auge fallen.",
   "text": "Damit du etwas siehst, muss Licht von dem Gegenstand in dein Auge fallen."
+ },
+ "6a1a0b3431ae472c": {
+  "lang": "de-DE",
+  "spoken": "Die Spannung misst man in Volt. Von der Solarzelle bis zur Oberleitung der Bahn ist der Unterschied riesig.",
+  "text": "Die Spannung misst man in Volt. Von der Solarzelle bis zur Oberleitung der Bahn ist der Unterschied riesig."
+ },
+ "6caa632c677a8dfe": {
+  "lang": "de-DE",
+  "spoken": "Wickle einen Draht um einen Eisennagel und schicke Strom hindurch. Dann wird der Nagel zum Magneten. Mehr Windungen machen ihn stärker.",
+  "text": "Wickle einen Draht um einen Eisennagel und schicke Strom hindurch. Dann wird der Nagel zum Magneten. Mehr Windungen machen ihn stärker."
+ },
+ "6cb22c9130e88b03": {
+  "lang": "de-DE",
+  "spoken": "Der Nagel zieht die Büroklammern an.",
+  "text": "Der Nagel zieht die Büroklammern an."
  },
  "6e208f4b57c463b3": {
   "lang": "de-DE",
@@ -1059,6 +1274,11 @@
   "spoken": "Wir legen drei Eisennägel in drei Reagenzgläser und warten eine Woche. Nur einer rostet.",
   "text": "Wir legen drei Eisennägel in drei Reagenzgläser und warten eine Woche. Nur einer rostet."
  },
+ "834fdd2e4c249943": {
+  "lang": "de-DE",
+  "spoken": "Und das sind ihre Schaltzeichen.",
+  "text": "Und das sind ihre Schaltzeichen."
+ },
  "836f85e8027fe9fa": {
   "lang": "de-DE",
   "spoken": "Die Zauneidechse lebt auch in Berlin, zum Beispiel an sonnigen Bahndämmen.",
@@ -1079,10 +1299,25 @@
   "spoken": "Im Hauptbogen ist Rot außen und Violett innen.",
   "text": "Im Hauptbogen ist Rot außen und Violett innen."
  },
+ "85f6ccffc8a11699": {
+  "lang": "de-DE",
+  "spoken": "Ein Bissen reist durch deinen Körper: Mund, Speiseröhre, Magen, Dünndarm und Dickdarm. Das dauert ein bis drei Tage.",
+  "text": "Ein Bissen reist durch deinen Körper: Mund, Speiseröhre, Magen, Dünndarm und Dickdarm. Das dauert ein bis drei Tage."
+ },
+ "86412fad71e3b29f": {
+  "lang": "de-DE",
+  "spoken": "Lampe eins ist heraus. Jetzt ist auch Lampe zwei aus.",
+  "text": "Lampe eins ist heraus. Jetzt ist auch Lampe zwei aus."
+ },
  "8644e94402287580": {
   "lang": "de-DE",
   "spoken": "Der Kontrollversuch läuft ganz normal. Nur so kannst du vergleichen. Ändert man zwei Dinge, weiß man nicht, woran es lag.",
   "text": "Der Kontrollversuch läuft ganz normal. Nur so kannst du vergleichen. Ändert man zwei Dinge, weiß man nicht, woran es lag."
+ },
+ "872a0cf164304086": {
+  "lang": "de-DE",
+  "spoken": "Dein Skelett ist das Gerüst deines Körpers. Es stützt dich, schützt deine Organe und macht Bewegung möglich.",
+  "text": "Dein Skelett ist das Gerüst deines Körpers. Es stützt dich, schützt deine Organe und macht Bewegung möglich."
  },
  "8777477afa2a79b3": {
   "lang": "de-DE",
@@ -1149,6 +1384,11 @@
   "spoken": "So machst du ein Präparat von der Zwiebelhaut. Wichtig: Das Deckgläschen schräg ansetzen und langsam absenken.",
   "text": "So machst du ein Präparat von der Zwiebelhaut. Wichtig: Das Deckgläschen schräg ansetzen und langsam absenken."
  },
+ "8e8e9a41681007cb": {
+  "lang": "de-DE",
+  "spoken": "Steckdose, S-Bahn und Oberleitung: viel, viel mehr.",
+  "text": "Steckdose, S-Bahn und Oberleitung: viel, viel mehr."
+ },
  "8e91381d538e4fb6": {
   "lang": "de-DE",
   "spoken": "Eine Bohne keimt. Ziehe am Regler und sieh zu, wie aus dem Samen eine junge Pflanze wird.",
@@ -1178,6 +1418,16 @@
   "lang": "de-DE",
   "spoken": "Sonnenbrille und Brille.",
   "text": "Sonnenbrille und Brille."
+ },
+ "914752c68afb1ede": {
+  "lang": "de-DE",
+  "spoken": "Lampen machen Licht. Wasserkocher und Herd machen Wärme.",
+  "text": "Lampen machen Licht. Wasserkocher und Herd machen Wärme."
+ },
+ "9160e58235ae913f": {
+  "lang": "de-DE",
+  "spoken": "Putze zweimal am Tag zwei Minuten lang: morgens und abends. Mit der KAI-Regel vergisst du keine Fläche: Kauflächen, Außenflächen, Innenflächen.",
+  "text": "Putze zweimal am Tag zwei Minuten lang: morgens und abends. Mit der KAI-Regel vergisst du keine Fläche: Kauflächen, Außenflächen, Innenflächen."
  },
  "91cec3d11ef52a42": {
   "lang": "de-DE",
@@ -1239,6 +1489,11 @@
   "spoken": "Gerüche nur zufächeln. Anleitung lesen. Ordnung halten. Unfälle sofort melden.",
   "text": "Gerüche nur zufächeln. Anleitung lesen. Ordnung halten. Unfälle sofort melden."
  },
+ "9b0388bd9320df83": {
+  "lang": "de-DE",
+  "spoken": "Wie du den Ranzen trägst, ist wichtiger als jedes Gramm. Beide Gurte, eng am Rücken und nicht zu tief.",
+  "text": "Wie du den Ranzen trägst, ist wichtiger als jedes Gramm. Beide Gurte, eng am Rücken und nicht zu tief."
+ },
  "9b56163003f906af": {
   "lang": "de-DE",
   "spoken": "Licht breitet sich geradlinig aus. Es läuft immer geradeaus, bis es auf etwas trifft.",
@@ -1269,6 +1524,16 @@
   "spoken": "Das Licht wird zweimal umgelenkt.",
   "text": "Das Licht wird zweimal umgelenkt."
  },
+ "9d3b2815c7850d9a": {
+  "lang": "de-DE",
+  "spoken": "Links der echte Stromkreis, rechts sein Schaltplan. Beide zeigen dasselbe. Tippe auf den Schalter.",
+  "text": "Links der echte Stromkreis, rechts sein Schaltplan. Beide zeigen dasselbe. Tippe auf den Schalter."
+ },
+ "9d8b149cfc49cced": {
+  "lang": "de-DE",
+  "spoken": "Es gibt verschiedene Gelenkarten. Sie bewegen sich unterschiedlich: in alle Richtungen, wie eine Tür, in zwei Richtungen oder im Kreis.",
+  "text": "Es gibt verschiedene Gelenkarten. Sie bewegen sich unterschiedlich: in alle Richtungen, wie eine Tür, in zwei Richtungen oder im Kreis."
+ },
  "9db410c7d9ef4b74": {
   "lang": "de-DE",
   "spoken": "Dann arbeiten die Bakterien.",
@@ -1278,6 +1543,21 @@
   "lang": "de-DE",
   "spoken": "Mit Luft wird die Flamme blau und rauscht. Probier den Regler aus!",
   "text": "Mit Luft wird die Flamme blau und rauscht. Probier den Regler aus!"
+ },
+ "9ea8a308e4dd6033": {
+  "lang": "de-DE",
+  "spoken": "Der Stromzähler dreht sich, solange Strom gebraucht wird. Tippe auf die Geräte und spare Strom.",
+  "text": "Der Stromzähler dreht sich, solange Strom gebraucht wird. Tippe auf die Geräte und spare Strom."
+ },
+ "9ed3060224d7f91b": {
+  "lang": "de-DE",
+  "spoken": "Eine Kraft kann einen Körper in Bewegung setzen, ihn bremsen, seine Richtung ändern oder ihn verformen. Die Kraft selbst sieht man nicht, nur ihre Wirkung.",
+  "text": "Eine Kraft kann einen Körper in Bewegung setzen, ihn bremsen, seine Richtung ändern oder ihn verformen. Die Kraft selbst sieht man nicht, nur ihre Wirkung."
+ },
+ "9f2fa25c3bdd7379": {
+  "lang": "de-DE",
+  "spoken": "Die Oberleitung der Bahn hat fünfzehntausend Volt, die Stromschiene der Berliner S-Bahn siebenhundertfünfzig Volt. Halte Abstand! Und bei Gewitter gilt: ab ins Haus oder ins Auto.",
+  "text": "Die Oberleitung der Bahn hat fünfzehntausend Volt, die Stromschiene der Berliner S-Bahn siebenhundertfünfzig Volt. Halte Abstand! Und bei Gewitter gilt: ab ins Haus oder ins Auto."
  },
  "9f9c1fb839b0bed3": {
   "lang": "de-DE",
@@ -1364,6 +1644,11 @@
   "spoken": "Gleiche Temperatur, aber die Badewanne hat viel mehr Wärme.",
   "text": "Gleiche Temperatur, aber die Badewanne hat viel mehr Wärme."
  },
+ "a881101efaec36e7": {
+  "lang": "de-DE",
+  "spoken": "Im Schaltplan fließt der Strom genauso.",
+  "text": "Im Schaltplan fließt der Strom genauso."
+ },
  "a9c128a33021b3fc": {
   "lang": "de-DE",
   "spoken": "Beim Erhitzen im Reagenzglas: schräg halten, Öffnung weg von allen Menschen, leicht schwenken.",
@@ -1444,6 +1729,16 @@
   "spoken": "Der Feldhase frisst Gras und Kräuter.",
   "text": "Der Feldhase frisst Gras und Kräuter."
  },
+ "b3d2c4264787b7de": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 11. Körper und Gesundheit. Essen, Verdauung, Zähne, Atmung, Herz – und was dir guttut",
+  "text": "Kapitel 11. Körper und Gesundheit. Essen, Verdauung, Zähne, Atmung, Herz – und was dir guttut"
+ },
+ "b4d2c48f5baba814": {
+  "lang": "de-DE",
+  "spoken": "Zwei Klingelknöpfe, an der Haustür und an der Gartentür. Die Klingel läutet, wenn du den einen oder den anderen drückst.",
+  "text": "Zwei Klingelknöpfe, an der Haustür und an der Gartentür. Die Klingel läutet, wenn du den einen oder den anderen drückst."
+ },
  "b6e6ada17fbd53e0": {
   "lang": "de-DE",
   "spoken": "Holz",
@@ -1474,6 +1769,11 @@
   "spoken": "Schaum: Gasbläschen in einer Flüssigkeit.",
   "text": "Schaum: Gasbläschen in einer Flüssigkeit."
  },
+ "b8f77c998d55189c": {
+  "lang": "de-DE",
+  "spoken": "Der Kreis ist geschlossen. Die Elektronen fließen und die Lampe leuchtet.",
+  "text": "Der Kreis ist geschlossen. Die Elektronen fließen und die Lampe leuchtet."
+ },
  "bad437be46d4b3e4": {
   "lang": "de-DE",
   "spoken": "Dunkle Flächen schlucken viel Licht und werden warm. Helle Flächen werfen viel Licht zurück.",
@@ -1488,6 +1788,11 @@
   "lang": "de-DE",
   "spoken": "Neun Zeichen, alle als rote Raute.",
   "text": "Neun Zeichen, alle als rote Raute."
+ },
+ "bd4058b99a65de52": {
+  "lang": "de-DE",
+  "spoken": "Batterie, Kabel, Lampe und Schalter bilden einen Stromkreis. Tippe auf den Schalter. Nur wenn der Kreis geschlossen ist, leuchtet die Lampe.",
+  "text": "Batterie, Kabel, Lampe und Schalter bilden einen Stromkreis. Tippe auf den Schalter. Nur wenn der Kreis geschlossen ist, leuchtet die Lampe."
  },
  "bd43b89284659227": {
   "lang": "de-DE",
@@ -1544,6 +1849,16 @@
   "spoken": "Die Vermutung stimmt: An der Heizung ging es schnell. Aber im Wind auch! Daraus entsteht eine neue Frage.",
   "text": "Die Vermutung stimmt: An der Heizung ging es schnell. Aber im Wind auch! Daraus entsteht eine neue Frage."
  },
+ "c17ce5012029fd41": {
+  "lang": "de-DE",
+  "spoken": "Kohlenhydrate und Fette sind Brennstoffe.",
+  "text": "Kohlenhydrate und Fette sind Brennstoffe."
+ },
+ "c1beae54d3e2f1b5": {
+  "lang": "de-DE",
+  "spoken": "Licht in der Küche. Die anderen Räume bleiben dunkel.",
+  "text": "Licht in der Küche. Die anderen Räume bleiben dunkel."
+ },
  "c1c2e2599384449e": {
   "lang": "de-DE",
   "spoken": "Ein Feuer brennt nur, wenn Brennstoff, Sauerstoff und genug Hitze da sind. Fehlt eins, geht es aus.",
@@ -1584,30 +1899,60 @@
   "spoken": "Die Sonne scheint immer nur auf eine Hälfte der Erde. Weil sich die Erde dreht, wird es bei uns abwechselnd Tag und Nacht.",
   "text": "Die Sonne scheint immer nur auf eine Hälfte der Erde. Weil sich die Erde dreht, wird es bei uns abwechselnd Tag und Nacht."
  },
+ "c56ecbdbfb9e90f4": {
+  "lang": "de-DE",
+  "spoken": "Kurzschluss! Der Strom nimmt den kürzesten Weg. Das kann sogar einen Brand auslösen.",
+  "text": "Kurzschluss! Der Strom nimmt den kürzesten Weg. Das kann sogar einen Brand auslösen."
+ },
  "c5bf7f1e380c31dc": {
   "lang": "de-DE",
   "spoken": "Die Erdachse ist schief, um etwa 23 Grad. Im Sommer ist der Norden zur Sonne geneigt, im Winter von ihr weg.",
   "text": "Die Erdachse ist schief, um etwa 23 Grad. Im Sommer ist der Norden zur Sonne geneigt, im Winter von ihr weg."
+ },
+ "c62c1762f02eb378": {
+  "lang": "de-DE",
+  "spoken": "Dein Herz ist ein Muskel, etwa so groß wie deine Faust. Es pumpt Tag und Nacht Blut durch deinen Körper.",
+  "text": "Dein Herz ist ein Muskel, etwa so groß wie deine Faust. Es pumpt Tag und Nacht Blut durch deinen Körper."
  },
  "c6aa9b8409e5fcf1": {
   "lang": "de-DE",
   "spoken": "Vom Mond aus sieht man die Erde aufgehen.",
   "text": "Vom Mond aus sieht man die Erde aufgehen."
  },
+ "c6ee63e63ff417bc": {
+  "lang": "de-DE",
+  "spoken": "Eine Taschenlampe ist ein Stromkreis in einem Rohr. Drei Batterien liegen hintereinander. Schalte sie ein.",
+  "text": "Eine Taschenlampe ist ein Stromkreis in einem Rohr. Drei Batterien liegen hintereinander. Schalte sie ein."
+ },
  "c6ff90ee292d2303": {
   "lang": "de-DE",
   "spoken": "Der Apfel wirft das Licht in alle Richtungen zurück. Ein Teil fällt in dein Auge.",
   "text": "Der Apfel wirft das Licht in alle Richtungen zurück. Ein Teil fällt in dein Auge."
+ },
+ "c74667de07bab46b": {
+  "lang": "de-DE",
+  "spoken": "Jetzt sind beide zu. Die Maschine läuft.",
+  "text": "Jetzt sind beide zu. Die Maschine läuft."
  },
  "c83161b561935212": {
   "lang": "de-DE",
   "spoken": "Im Notfall hilft der Giftnotruf Berlin.",
   "text": "Im Notfall hilft der Giftnotruf Berlin."
  },
+ "c8384bdb213d15f6": {
+  "lang": "de-DE",
+  "spoken": "Ein Gelenk verbindet zwei Knochen beweglich. Der Gelenkkopf passt in die Gelenkpfanne. Knorpel und Gelenkschmiere machen alles glatt.",
+  "text": "Ein Gelenk verbindet zwei Knochen beweglich. Der Gelenkkopf passt in die Gelenkpfanne. Knorpel und Gelenkschmiere machen alles glatt."
+ },
  "c94bf174c37e4e44": {
   "lang": "de-DE",
   "spoken": "Ein Metalllöffel wird schnell heiß.",
   "text": "Ein Metalllöffel wird schnell heiß."
+ },
+ "ca4b5a315c0a5d7c": {
+  "lang": "de-DE",
+  "spoken": "Der Ernährungskreis der Deutschen Gesellschaft für Ernährung zeigt: Je größer ein Feld, desto mehr davon darfst du essen. In der Mitte stehen die Getränke.",
+  "text": "Der Ernährungskreis der Deutschen Gesellschaft für Ernährung zeigt: Je größer ein Feld, desto mehr davon darfst du essen. In der Mitte stehen die Getränke."
  },
  "ca8f481ea6709158": {
   "lang": "de-DE",
@@ -1619,6 +1964,11 @@
   "spoken": "Darum wird Nudelwasser nicht heißer als hundert Grad, auch wenn der Herd auf voller Stufe steht.",
   "text": "Darum wird Nudelwasser nicht heißer als hundert Grad, auch wenn der Herd auf voller Stufe steht."
  },
+ "cb34f0ff7975b764": {
+  "lang": "de-DE",
+  "spoken": "Bei jedem Herzschlag spürst du eine Welle im Blutgefäß: den Puls. Fühle ihn am Handgelenk oder am Hals und zähle fünfzehn Sekunden. Dann mal vier.",
+  "text": "Bei jedem Herzschlag spürst du eine Welle im Blutgefäß: den Puls. Fühle ihn am Handgelenk oder am Hals und zähle fünfzehn Sekunden. Dann mal vier."
+ },
  "cd2ac9677113dbf9": {
   "lang": "de-DE",
   "spoken": "Bei uns gilt: Ist der Mond rechts hell, nimmt er zu. Ist er links hell, nimmt er ab.",
@@ -1628,6 +1978,16 @@
   "lang": "de-DE",
   "spoken": "So sehen die Dinge aus dem Zoom wirklich aus: der Fernsehturm, eine Ameise, ein Haar und Bakterien.",
   "text": "So sehen die Dinge aus dem Zoom wirklich aus: der Fernsehturm, eine Ameise, ein Haar und Bakterien."
+ },
+ "cecc03896afc5c07": {
+  "lang": "de-DE",
+  "spoken": "Dreht sich das Rad, leuchtet das Licht.",
+  "text": "Dreht sich das Rad, leuchtet das Licht."
+ },
+ "cee57a9060e946b3": {
+  "lang": "de-DE",
+  "spoken": "Eiweiße und Mineralstoffe sind Baustoffe.",
+  "text": "Eiweiße und Mineralstoffe sind Baustoffe."
  },
  "cf1b16b104c0013f": {
   "lang": "de-DE",
@@ -1754,10 +2114,30 @@
   "spoken": "Die Durchführung, mit einer Skizze.",
   "text": "Die Durchführung, mit einer Skizze."
  },
+ "dc1baec4a60f05a2": {
+  "lang": "de-DE",
+  "spoken": "Jetzt hat jede Lampe ihren eigenen Weg. Das ist eine Parallelschaltung. Dreh eine Lampe heraus – die andere leuchtet weiter.",
+  "text": "Jetzt hat jede Lampe ihren eigenen Weg. Das ist eine Parallelschaltung. Dreh eine Lampe heraus – die andere leuchtet weiter."
+ },
+ "dc7341d4e1162454": {
+  "lang": "de-DE",
+  "spoken": "Lampe eins ist heraus. Lampe zwei leuchtet weiter.",
+  "text": "Lampe eins ist heraus. Lampe zwei leuchtet weiter."
+ },
  "dc7d86a71614eb0f": {
   "lang": "de-DE",
   "spoken": "Das Wasser auf der Erde ist immer unterwegs – im Kreis.",
   "text": "Das Wasser auf der Erde ist immer unterwegs – im Kreis."
+ },
+ "dccd180c41737507": {
+  "lang": "de-DE",
+  "spoken": "Unser Essen enthält Nährstoffe. Manche geben Energie, manche bauen den Körper auf, manche halten ihn gesund.",
+  "text": "Unser Essen enthält Nährstoffe. Manche geben Energie, manche bauen den Körper auf, manche halten ihn gesund."
+ },
+ "ddae492dcdfd71ce": {
+  "lang": "de-DE",
+  "spoken": "Ein Liter Milch wiegt etwa ein Kilogramm. Er zieht mit fast zehn Newton.",
+  "text": "Ein Liter Milch wiegt etwa ein Kilogramm. Er zieht mit fast zehn Newton."
  },
  "de97540d8f9fe20d": {
   "lang": "de-DE",
@@ -1784,6 +2164,16 @@
   "spoken": "Wir erhitzen Eis von minus zwanzig Grad, bis Wasserdampf entsteht. Achte auf die flachen Stücke.",
   "text": "Wir erhitzen Eis von minus zwanzig Grad, bis Wasserdampf entsteht. Achte auf die flachen Stücke."
  },
+ "df3bb486f6abc739": {
+  "lang": "de-DE",
+  "spoken": "Von der Seite sieht die Wirbelsäule aus wie ein doppeltes S. So federt sie Stöße ab – wie eine Sprungfeder.",
+  "text": "Von der Seite sieht die Wirbelsäule aus wie ein doppeltes S. So federt sie Stöße ab – wie eine Sprungfeder."
+ },
+ "dfc244d30d93844d": {
+  "lang": "de-DE",
+  "spoken": "In der Steckdose sind 230 Volt. Das ist rund fünfzigmal so viel wie bei einer Flachbatterie und kann tödlich sein.",
+  "text": "In der Steckdose sind 230 Volt. Das ist rund fünfzigmal so viel wie bei einer Flachbatterie und kann tödlich sein."
+ },
  "e02020b26c7af85a": {
   "lang": "de-DE",
   "spoken": "Lag es am Licht oder am Wasser? Man weiß es nicht.",
@@ -1794,10 +2184,20 @@
   "spoken": "Ein Glasprisma macht dasselbe wie die Regentropfen.",
   "text": "Ein Glasprisma macht dasselbe wie die Regentropfen."
  },
+ "e0c96bc87b6a5972": {
+  "lang": "de-DE",
+  "spoken": "Motoren machen Bewegung. Fernseher und Handy machen Ton und Bild.",
+  "text": "Motoren machen Bewegung. Fernseher und Handy machen Ton und Bild."
+ },
  "e11bcf60bd785979": {
   "lang": "de-DE",
   "spoken": "Schmelzen und Erstarren.",
   "text": "Schmelzen und Erstarren."
+ },
+ "e1d8c5c674dd6172": {
+  "lang": "de-DE",
+  "spoken": "Batterien haben nur wenige Volt.",
+  "text": "Batterien haben nur wenige Volt."
  },
  "e2ea05a1586defee": {
   "lang": "de-DE",
@@ -1809,10 +2209,25 @@
   "spoken": "Tippe auf einen Gegenstand. Wird er vom Magneten angezogen?",
   "text": "Tippe auf einen Gegenstand. Wird er vom Magneten angezogen?"
  },
+ "e4ee8837aa989e8e": {
+  "lang": "de-DE",
+  "spoken": "Im Zahnbelag leben Bakterien. Sie fressen Zucker und machen daraus Säure. Die Säure greift den Zahnschmelz an: Es entsteht Karies.",
+  "text": "Im Zahnbelag leben Bakterien. Sie fressen Zucker und machen daraus Säure. Die Säure greift den Zahnschmelz an: Es entsteht Karies."
+ },
+ "e53fca48bfdcfc77": {
+  "lang": "de-DE",
+  "spoken": "In der Wohnung hat jeder Raum seinen eigenen Zweig. Tippe auf einen Raum und schalte das Licht an oder aus.",
+  "text": "In der Wohnung hat jeder Raum seinen eigenen Zweig. Tippe auf einen Raum und schalte das Licht an oder aus."
+ },
  "e5558cf2518517ab": {
   "lang": "de-DE",
   "spoken": "Niederschlag: Es regnet.",
   "text": "Niederschlag: Es regnet."
+ },
+ "e69ec1425c3bce0f": {
+  "lang": "de-DE",
+  "spoken": "Außen schützt der Zahnschmelz. Er ist der härteste Stoff im ganzen Körper. Innen liegt das Zahnmark mit Nerven und Blutgefäßen.",
+  "text": "Außen schützt der Zahnschmelz. Er ist der härteste Stoff im ganzen Körper. Innen liegt das Zahnmark mit Nerven und Blutgefäßen."
  },
  "e72f93d4238dd10d": {
   "lang": "de-DE",
@@ -1823,6 +2238,11 @@
   "lang": "de-DE",
   "spoken": "Mond, Buch und Fahrrad leuchten nicht selbst. Sie werden beleuchtet.",
   "text": "Mond, Buch und Fahrrad leuchten nicht selbst. Sie werden beleuchtet."
+ },
+ "e867e8ad35f3ae5e": {
+  "lang": "de-DE",
+  "spoken": "Eine Ringelnatter. Sie lebt auch in Berlin und Brandenburg und kann gut schwimmen.",
+  "text": "Eine Ringelnatter. Sie lebt auch in Berlin und Brandenburg und kann gut schwimmen."
  },
  "e9bebe1dfa08d2ca": {
   "lang": "de-DE",
@@ -1874,6 +2294,11 @@
   "spoken": "Kernschatten: kein Licht. Halbschatten: Licht von nur einer Lampe.",
   "text": "Kernschatten: kein Licht. Halbschatten: Licht von nur einer Lampe."
  },
+ "f0c075fc01dad926": {
+  "lang": "de-DE",
+  "spoken": "Vor dem Sport wärmst du dich auf. Dann werden die Muskeln warm und gut durchblutet, und die Gelenke machen mehr Gelenkschmiere.",
+  "text": "Vor dem Sport wärmst du dich auf. Dann werden die Muskeln warm und gut durchblutet, und die Gelenke machen mehr Gelenkschmiere."
+ },
  "f11cb2f808f791d6": {
   "lang": "de-DE",
   "spoken": "Der Eisennagel springt zum Magneten.",
@@ -1888,6 +2313,11 @@
   "lang": "de-DE",
   "spoken": "Kapitel 6. Sonne, Wärme und Wetter. Wie die Sonne unser Wetter macht",
   "text": "Kapitel 6. Sonne, Wärme und Wetter. Wie die Sonne unser Wetter macht"
+ },
+ "f212f26e15dd6f44": {
+  "lang": "de-DE",
+  "spoken": "Mehr Windungen, stärkerer Magnet.",
+  "text": "Mehr Windungen, stärkerer Magnet."
  },
  "f2528bab206feeb9": {
   "lang": "de-DE",
@@ -1954,6 +2384,11 @@
   "spoken": "Im Januar sind wir der Sonne am nächsten. Und trotzdem ist Winter!",
   "text": "Im Januar sind wir der Sonne am nächsten. Und trotzdem ist Winter!"
  },
+ "f8f1115f402d840e": {
+  "lang": "de-DE",
+  "spoken": "Wirbeltiere haben ein Innenskelett aus Knochen. Insekten tragen ihr Skelett außen, wie eine Ritterrüstung. Darum müssen sie sich häuten, wenn sie wachsen.",
+  "text": "Wirbeltiere haben ein Innenskelett aus Knochen. Insekten tragen ihr Skelett außen, wie eine Ritterrüstung. Darum müssen sie sich häuten, wenn sie wachsen."
+ },
  "f98bbeea92f49417": {
   "lang": "de-DE",
   "spoken": "Scheiben beschlagen, und die Wetter-App zeigt Bilder.",
@@ -1978,6 +2413,11 @@
   "lang": "de-DE",
   "spoken": "Die Energie wandert vom Gras zum Hasen und zum Fuchs.",
   "text": "Die Energie wandert vom Gras zum Hasen und zum Fuchs."
+ },
+ "fb91be946f87d107": {
+  "lang": "de-DE",
+  "spoken": "Rechts hängt die alte, leere Hülle. Daneben sitzt die frisch gehäutete Zikade.",
+  "text": "Rechts hängt die alte, leere Hülle. Daneben sitzt die frisch gehäutete Zikade."
  },
  "fd1242cae7c503d0": {
   "lang": "de-DE",

@@ -1,4 +1,6 @@
-"""Step through every slide at real speed (animations, sounds, loops running) and report JS errors."""
+"""Step through every slide at real speed (animations, sounds, loops running) and report JS errors.
+
+Optional args: unit ids (u3 u10 …) to limit the run; default = every unit of DECK_SUBJECT."""
 import sys, os
 sys.path.insert(0, os.path.dirname(__file__))
 from check import HOOK, URL
@@ -8,7 +10,10 @@ page = Browser(URL.rstrip('/') + '/?v=' + str(int(_t.time()*1000)))
 page.run(HOOK)
 units = page.run("() => __deck.list()")
 bad = 0
+only = [a for a in sys.argv[1:] if not a.startswith("-")]
 for ui, u in enumerate(units):
+    if only and u["id"] not in only:
+        continue
     for si in range(len(u["slides"])):
         page.run(f"""async () => {{
           __deck.setFast(false);

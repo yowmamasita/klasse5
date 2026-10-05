@@ -1,4 +1,4 @@
-/* Kapitel 1 – Natürliche Zahlen (große Zahlen, Runden, Rechnen, Rechengesetze, Größen, Terme und Variablen, Gleichungen) */
+/* Kapitel 1 – Natürliche Zahlen (große Zahlen, Runden, Rechnen, Rechengesetze, Größen, Sachaufgaben, Terme und Variablen, Gleichungen) */
 (() => {
   const P = { blue: "#1d5bd0", red: "#dc3b2a", green: "#138a5a", violet: "#7b4fd6", orange: "#ee7a1a", ink: "#1b2740", pencil: "#5d6678", yellow: "#ffd94a", line: "#c8d3de", soft: "#e4ecfb" };
   const LBL = { font: "700 14px/1 var(--f-display)", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: "8px", color: "var(--green)" };
@@ -152,7 +152,7 @@
     id: "u1", num: 1, title: "Natürliche Zahlen", color: "#1d5bd0", soft: "#e4ecfb",
     subtitle: "Große Zahlen, schlaues Rechnen, Größen",
     blurb: "Millionen lesen, runden, schriftlich rechnen, Größen umrechnen.",
-    goals: ["Große Zahlen bis zur Million lesen und ordnen", "Runden und klug schätzen", "Schriftlich rechnen und Rechengesetze nutzen", "Längen, Gewichte und Zeiten umrechnen", "Terme aufstellen und Gleichungen wie eine Waage lösen"],
+    goals: ["Große Zahlen bis zur Million lesen und ordnen", "Runden und klug schätzen", "Schriftlich rechnen und Rechengesetze nutzen", "Längen, Gewichte und Zeiten umrechnen", "Sachaufgaben in 4 Schritten lösen und prüfen", "Terme aufstellen und Gleichungen wie eine Waage lösen"],
     icon(svg, el) {
       svg.append(el("rect", { x: 6, y: 20, width: 58, height: 30, rx: 8, fill: "#1d5bd0", opacity: .15 }),
         el("text", { x: 35, y: 44, "text-anchor": "middle", "font-size": 22, "font-weight": 800, fill: "#1d5bd0", text: "1.000" }));
@@ -1007,6 +1007,130 @@
           anims[0]();
           const snd15 = [null, () => s.sound("zipper"), () => s.sound("school-bell", { vol: .45, dur: 3 }), () => s.sound("ubahn-train", { vol: .45, dur: 5 })];
           [1, 2, 3].forEach(i => s.step(async () => { snd15[i](); await s.show(cards[i], i % 2 ? "right" : "left"); await anims[i](); }));
+        },
+      },
+      /* 15s -------------------------------------------------------------- Sachaufgaben */
+      {
+        title: "Sachaufgaben in 4 Schritten",
+        say: "Bei einer Sachaufgabe steckt die Rechnung in einer Geschichte. Mit vier Schritten findest du sie.",
+        build(s) {
+          const mark = (t, kind) => s.h("span", { style: { borderRadius: "6px", padding: "0 3px", transition: "background .4s, box-shadow .4s" }, "data-k": kind }, t);
+          const marks = [];
+          const M = (t, k) => { const m = mark(t, k); marks.push(m); return m; };
+          const story = ex(s, "Die Aufgabe: Klassenfahrt", { class: "ex a-left", style: { padding: "12px 18px" } },
+            s.h("p", { class: "t", style: { fontSize: "22px", lineHeight: "1.5" } }, "Die 5a fährt auf Klassenfahrt. ", M("26 Kinder", "g"), " fahren mit. Der Bus kostet für alle zusammen ", M("1.040 €", "g"), ". Die Jugendherberge kostet ", M("32 € pro Kind und Nacht", "g"), ". Die Klasse bleibt ", M("3 Nächte", "g"), ". ", M("Wie viel muss jedes Kind bezahlen?", "q")));
+          const STEPS = [["Lesen und markieren", "Was ist gegeben? Was ist gesucht?", P.orange], ["Skizze oder Tabelle", "Ordne die Angaben übersichtlich.", P.violet], ["Rechnen", "Schritt für Schritt – mit Einheiten.", P.blue], ["Antwortsatz und prüfen", "Kann das Ergebnis stimmen?", P.green]];
+          const stepEls = STEPS.map(([t, sub, c], i) => s.h("div", { class: "card", style: { display: "flex", alignItems: "center", gap: "12px", padding: "6px 14px", transition: "background .25s, box-shadow .25s" } },
+            s.h("span", { style: { flex: "none", width: "40px", height: "40px", borderRadius: "50%", background: c, color: "#fff", display: "grid", placeItems: "center", font: "800 22px/1 var(--f-display)" } }, String(i + 1)),
+            s.h("div", null, s.h("b", { style: { color: c, fontSize: "22px" } }, t), s.h("p", { class: "small pencil" }, sub))));
+          const light = i => stepEls.forEach((c, j) => { c.style.background = j === i ? "#fff6c9" : ""; c.style.boxShadow = j === i ? "0 0 0 3px #ffd94a" : ""; });
+          const gg = s.h("div", { class: "card later", style: { padding: "10px 16px", display: "flex", flexDirection: "column", gap: "4px" } },
+            s.h("p", { class: "small" }, s.h("b", { class: "orange" }, "Gegeben: "), "26 Kinder · Bus 1.040 € (alle) · 32 € pro Kind und Nacht · 3 Nächte"),
+            s.h("p", { class: "small" }, s.h("b", { class: "red" }, "Gesucht: "), "Kosten für ein Kind"));
+          const tab = s.h("table", { class: "tafel later", style: { fontSize: "22px", alignSelf: "center" } },
+            s.h("tr", null, s.h("th", null, ""), s.h("th", null, "für alle"), s.h("th", null, "für 1 Kind")),
+            s.h("tr", null, s.h("th", null, "Bus"), s.h("td", { style: { width: "150px", height: "48px" } }, "1.040 €"), s.h("td", { style: { width: "170px", height: "48px", color: P.violet } }, "1.040 € : 26")),
+            s.h("tr", null, s.h("th", null, "Herberge"), s.h("td", { style: { height: "48px", color: P.pencil } }, "–"), s.h("td", { style: { height: "48px", color: P.violet } }, "3 · 32 €")));
+          const calc = [
+            s.h("p", { class: "t mono later" }, "Bus: 1.040 € : 26 = ", s.h("b", { class: "blue" }, "40 €")),
+            s.h("p", { class: "t mono later" }, "Herberge: 3 · 32 € = ", s.h("b", { class: "blue" }, "96 €")),
+            s.h("p", { class: "t mono later" }, "Zusammen: 40 € + 96 € = ", s.h("b", { class: "blue" }, "136 €")),
+          ];
+          const ans = s.h("div", { class: "card later", style: { fontSize: "21px", padding: "8px 18px 10px", borderColor: P.green, borderWidth: "3px", background: "#e6f6ee" } }, s.h("b", { class: "green" }, "Antwort: Jedes Kind bezahlt 136 €."), s.h("br"), "Prüfen: Überschlag 1.000 € : 25 = 40 €, 3 · 30 € = 90 € → etwa 130 €. Passt!");
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "560px 1fr", gap: "22px", alignItems: "center" },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, story, gg, tab),
+            s.h("div", { class: "stack", style: { gap: "8px" } }, ...stepEls, ...calc, ans)));
+          s.sfx.whoosh();
+          s.step(async () => {
+            light(0); s.say("Schritt eins: Lies genau. Markiere, was gegeben ist, und was gesucht ist.");
+            for (const m of marks) { m.style.background = m.dataset.k === "q" ? "#ffd0c9" : "var(--yellow)"; s.sfx.scribble(); await s.wait(380); }
+            s.sfx.pop(); await s.show(gg, "up");
+          });
+          s.step(async () => { light(1); s.say("Schritt zwei: Ordne die Angaben in einer Tabelle."); s.sound("pencil-write", { vol: .45, dur: 1.2 }); await s.show(tab, "zoom"); });
+          s.step(async () => { light(2); s.say("Schritt drei: Rechne Schritt für Schritt."); for (let i = 0; i < calc.length; i++) { s.sfx.count(i * 2); await s.show(calc[i], "left"); await s.wait(250); } s.sound("coins", { vol: .5 }); });
+          s.step(async () => { light(3); s.say("Schritt vier: Schreib einen Antwortsatz und prüfe mit einem Überschlag."); s.sfx.success(); await s.show(ans, "up"); });
+        },
+      },
+      /* 15t -------------------------------------------------------------- */
+      {
+        title: "Sachaufgaben im Alltag",
+        say: "Mit den vier Schritten lösen wir zwei Aufgaben aus dem Alltag: eine BVG-Fahrt und ein Sportfest.",
+        build(s) {
+          const ROW = [["1", P.orange], ["2", P.violet], ["3", P.blue], ["4", P.green]];
+          const line = (i, ...kids) => s.h("div", { class: "row later", style: { flexWrap: "nowrap", gap: "10px", alignItems: "center" } },
+            s.h("span", { style: { flex: "none", width: "34px", height: "34px", borderRadius: "50%", background: ROW[i][1], color: "#fff", display: "grid", placeItems: "center", font: "800 19px/1 var(--f-display)" } }, ROW[i][0]), ...kids);
+          // Skizze BVG: 3 tickets vs one day ticket
+          const sk1 = s.svg(440, 64);
+          const tix = [0, 1, 2].map(i => { const g = fb(later(s.el("g"))); g.append(s.el("rect", { x: 4 + i * 74, y: 8, width: 66, height: 46, rx: 8, fill: "#ffd94a", stroke: P.ink, "stroke-width": 2 }), T(s, 37 + i * 74, 39, "4 €", { "font-size": 20 })); sk1.append(g); return g; });
+          const day = fb(later(s.el("g"))); day.append(T(s, 248, 39, "oder", { "font-size": 19, fill: P.pencil }), s.el("rect", { x: 290, y: 8, width: 146, height: 46, rx: 8, fill: "#e4ecfb", stroke: P.blue, "stroke-width": 2 }), T(s, 363, 39, "24 h: 11,20 €", { "font-size": 19, fill: P.blue }));
+          sk1.append(day);
+          // Skizze Sportfest: 4 runners × 50 m
+          const sk2 = s.svg(440, 64);
+          const legs = [0, 1, 2, 3].map(i => { const r = s.el("rect", { x: 4 + i * 108, y: 10, width: 0, height: 24, rx: 5, fill: [P.red, P.blue, P.green, P.orange][i] }); sk2.append(r, T(s, 58 + i * 108, 58, "50 m", { "font-size": 19 })); return r; });
+          const mk = (label, photo, story, rows) => {
+            const c = s.h("div", { class: "life", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "12px 16px" } }, s.h("span", { style: LBL }, label),
+              s.h("div", { class: "row", style: { flexWrap: "nowrap", gap: "12px", alignItems: "center" } }, photo, s.h("p", { class: "small" }, story)), ...rows);
+            c.rows = rows; return c;
+          };
+          const A = mk("Im Alltag · BVG", s.photo("bvg-bus", { w: 130, h: 100 }), "Mama fährt heute dreimal mit der BVG (Tarif AB). Ein Einzelfahrschein kostet 4 €, eine 24-Stunden-Karte 11,20 €. Was ist günstiger?", [
+            line(0, s.h("p", { class: "small" }, s.h("b", null, "Gegeben: "), "3 Fahrten, je 4 €, oder 11,20 €. ", s.h("b", null, "Gesucht: "), "das günstigere Ticket")),
+            line(1, sk1),
+            line(2, s.h("p", { class: "t mono" }, s.h("span", null, "3 · 4 € = 12 €"), s.h("span", { style: { marginLeft: "28px" } }, "12 € > 11,20 €"))),
+            line(3, s.h("p", { class: "small" }, s.h("b", null, "Die 24-Stunden-Karte ist 80 Cent günstiger."), " Probe: 11,20 € + 0,80 € = 12 € ✓")),
+          ]);
+          const B = mk("Im Alltag · Sportfest", s.photo("stoppuhr", { w: 130, h: 100, pos: "50% 40%" }), "Beim Sportfest laufen 84 Kinder in Staffeln. In jeder Staffel laufen 4 Kinder je 50 m. Wie viele Staffeln gibt es? Wie lang ist eine Staffel?", [
+            line(0, s.h("p", { class: "small" }, s.h("b", null, "Gegeben: "), "84 Kinder, 4 pro Staffel, je 50 m. ", s.h("b", null, "Gesucht: "), "Anzahl und Länge")),
+            line(1, sk2),
+            line(2, s.h("p", { class: "t mono" }, s.h("span", null, "84 : 4 = 21"), s.h("span", { style: { marginLeft: "28px" } }, "4 · 50 m = 200 m"))),
+            line(3, s.h("p", { class: "small" }, s.h("b", null, "Es gibt 21 Staffeln. Jede läuft 200 m."), " Probe: 21 · 4 = 84 ✓")),
+          ]);
+          s.add(root(s, "cols", { gap: "22px", alignItems: "center" }, A, B));
+          s.sound("ubahn-announce", { vol: .4, dur: 3 });
+          const anim = [
+            [null, async () => { for (const t of tix) { s.sfx.coin(); await s.show(t, "pop"); await s.wait(150); } s.sfx.pop(); await s.show(day, "left"); }, null, null],
+            [null, async () => { for (const r of legs) { s.sfx.drum(); await s.tween({ from: 0, to: 100, dur: 380, update: v => r.setAttribute("width", v) }); } }, null, null],
+          ];
+          const snd = [[() => s.sfx.scribble(), () => {}, () => s.sound("cash-register", { vol: .5 }), () => s.sfx.success()], [() => s.sfx.scribble(), () => s.sound("startschuss", { vol: .4 }), () => s.sfx.count(5), () => s.sound("kids-cheer", { vol: .4, dur: 2.5 })]];
+          [A, B].forEach((c, k) => {
+            c.rows.forEach((r, i) => {
+              if (i % 2) return;
+              s.step(async () => {
+                if (k === 1 && i === 0) s.sound("whistle", { vol: .45 });
+                for (const j of [i, i + 1]) { snd[k][j](); await s.show(c.rows[j], "left"); if (anim[k][j]) await anim[k][j](); await s.wait(200); }
+                s.say([["Gegeben und gesucht, dann eine Skizze.", "Dreimal vier Euro sind zwölf Euro. Die Tageskarte ist günstiger."], ["Vierundachtzig Kinder, je vier in einer Staffel.", "Einundzwanzig Staffeln, jede läuft zweihundert Meter."]][k][i / 2]);
+              });
+            });
+          });
+        },
+      },
+      /* 15u -------------------------------------------------------------- */
+      {
+        title: "Kann das stimmen?",
+        say: "Ein Ergebnis muss zur Geschichte passen. Ein schneller Überschlag zeigt dir, ob du dich verrechnet hast.",
+        build(s) {
+          const C = [
+            { claim: "„Jedes Kind zahlt 3.536 € für die Klassenfahrt.“", ok: false, why: "Viel zu viel! Überschlag: etwa 130 €. Hier wurde 136 € · 26 gerechnet – das zahlen alle zusammen.", snd: () => s.sfx.error() },
+            { claim: "„Leon ist 145 m groß.“", ok: false, why: "Falsche Einheit! 145 m ist höher als ein Hochhaus. Richtig: 145 cm.", snd: () => s.sfx.boing() },
+            { claim: "„Der Bus fährt 300 km in etwa 3 Stunden.“", ok: true, why: "Kann stimmen: 300 km : 3 h = 100 km in jeder Stunde. Auf der Autobahn darf ein Reisebus bis zu 100 km/h fahren.", snd: () => s.sound("bus-faehrt", { vol: .35, dur: 2 }) },
+            { claim: "„Für 21 Staffeln reichen 21 Kinder.“", ok: false, why: "Jede Staffel braucht 4 Kinder: 21 · 4 = 84 Kinder.", snd: () => s.sfx.error() },
+          ];
+          const cards = C.map(c => {
+            const stamp = s.h("span", { class: "hand later", style: { fontSize: "44px", lineHeight: "1", color: c.ok ? P.green : P.red, flex: "none", fontWeight: 700 } }, c.ok ? "✓ passt" : "✗ falsch");
+            const why = s.h("p", { class: "small later" }, c.why);
+            const card = s.h("div", { class: "card later", style: { display: "flex", flexDirection: "column", gap: "8px", padding: "12px 18px", borderColor: P.line } },
+              s.h("div", { class: "row", style: { flexWrap: "nowrap", justifyContent: "space-between", gap: "12px", alignItems: "center" } }, s.h("p", { class: "t", style: { fontWeight: 700 } }, c.claim), stamp), why);
+            return { card, stamp, why, c };
+          });
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, s.h("b", null, "Kann das stimmen?"), " Mach einen ", s.h("b", null, "Überschlag"), " mit gerundeten Zahlen und prüfe die ", s.h("b", null, "Einheit"), ". Ist das Ergebnis viel zu groß oder viel zu klein, rechne nochmal nach.");
+          s.add(root(s, "stack", { justifyContent: "center", gap: "16px" }, s.h("div", { class: "cols", style: { gap: "16px 22px" } }, cards.map(c => c.card)), merk));
+          s.sfx.whoosh();
+          cards.forEach((k, i) => s.step(async () => {
+            s.sfx.pop(); await s.show(k.card, i % 2 ? "right" : "left"); await s.wait(500);
+            k.c.snd(); await s.show(k.stamp, "zoom"); await s.show(k.why, "up");
+            s.say(k.c.why);
+            if (k.c.ok) { k.card.style.borderColor = P.green; s.sfx.ding(); } else { k.card.style.borderColor = P.red; k.card.classList.add("a-shake"); }
+          }));
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); });
         },
       },
       /* 15a -------------------------------------------------------------- */

@@ -22,6 +22,17 @@
   "source": "https://commons.wikimedia.org/wiki/File:Inside_the_Olympics_aquatics_centre,_view_to_finish_and_diving_areas_-_geograph.org.uk_-_3122233.jpg",
   "orig": "File:Inside the Olympics aquatics centre, view to finish and diving areas - geograph.org.uk - 3122233.jpg"
  },
+ "bagpipes": {
+  "file": "bagpipes.mp3",
+  "kind": "snd",
+  "dur": 6.0,
+  "title": "Highland bagpipes",
+  "author": "iainmccurdy",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/iainmccurdy/sounds/697813/",
+  "orig": "697813"
+ },
  "berlin-flats": {
   "file": "berlin-flats.jpg",
   "kind": "img",
@@ -310,6 +321,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/qubodup/sounds/442820/",
   "orig": "442820"
+ },
+ "edinburgh-castle": {
+  "file": "edinburgh-castle.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 584,
+  "title": "Edinburgh Castle",
+  "author": "Mat Fascione",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Edinburgh_Castle_and_West_Princes_Street_Gardens_-_geograph.org.uk_-_4979535.jpg",
+  "orig": "File:Edinburgh Castle and West Princes Street Gardens - geograph.org.uk - 4979535.jpg"
  },
  "fireworks": {
   "file": "fireworks.jpg",
@@ -1011,6 +1034,42 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Rain_boots_on_Stairs.jpg",
   "orig": "File:Rain boots on Stairs.jpg"
+ },
+ "welsh-flag": {
+  "file": "welsh-flag.jpg",
+  "kind": "img",
+  "w": 576,
+  "h": 461,
+  "title": "Welsh flag, Bangor",
+  "author": "Meirion",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Welsh_dragon_flying_over_the_pier,_Bangor_-_geograph.org.uk_-_2539251.jpg",
+  "orig": "File:The Welsh dragon flying over the pier, Bangor - geograph.org.uk - 2539251.jpg"
+ },
+ "welsh-sign": {
+  "file": "welsh-sign.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 850,
+  "title": "Arafwch – Slow down",
+  "author": "Jaggery",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Welsh-English_sign_alongside_the_A472,_Little_Mill,_Monmouthshire_-_geograph.org.uk_-_6861835.jpg",
+  "orig": "File:Welsh-English sign alongside the A472, Little Mill, Monmouthshire - geograph.org.uk - 6861835.jpg"
+ },
+ "welsh-sign-cycling": {
+  "file": "welsh-sign-cycling.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 491,
+  "title": "Dim beicio – No cycling",
+  "author": "No machine-readable author provided. Man vyi assumed (based on copyright claims).",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Welsh_bilingual_cycling_sign.jpg",
+  "orig": "File:Welsh bilingual cycling sign.jpg"
  },
  "wembley": {
   "file": "wembley.jpg",

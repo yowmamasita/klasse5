@@ -23,6 +23,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Templo_de_Rams%C3%A9s_II,_Abu_Simbel,_Egipto,_2022-04-02,_DD_03.jpg",
   "orig": "File:Templo de Ramsés II, Abu Simbel, Egipto, 2022-04-02, DD 03.jpg"
  },
+ "akropolis": {
+  "file": "akropolis.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 625,
+  "title": "Attica 06-13 Athens 50 View from Philopappos - Acropolis Hill",
+  "author": "A.Savin",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Attica_06-13_Athens_50_View_from_Philopappos_-_Acropolis_Hill.jpg",
+  "orig": "File:Attica 06-13 Athens 50 View from Philopappos - Acropolis Hill.jpg"
+ },
  "alpenvorland-isar": {
   "file": "alpenvorland-isar.jpg",
   "kind": "img",
@@ -45,6 +57,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/MrAuralization/sounds/274846/",
   "orig": "274846"
+ },
+ "aquaedukt-claudia": {
+  "file": "aquaedukt-claudia.jpg",
+  "kind": "img",
+  "w": 1100,
+  "h": 736,
+  "title": "2 - Parco degli Acquedotti",
+  "author": "DonZaucker",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:2_-_Parco_degli_Acquedotti.jpg",
+  "orig": "File:2 - Parco degli Acquedotti.jpg"
  },
  "assuan-staudamm": {
   "file": "assuan-staudamm.jpg",
@@ -117,6 +141,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
   "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_204-012,_Berlin,_Alexanderplatz,_Georgenkirche.jpg",
   "orig": "File:Bundesarchiv Bild 204-012, Berlin, Alexanderplatz, Georgenkirche.jpg"
+ },
+ "berlin-luftbild": {
+  "file": "berlin-luftbild.jpg",
+  "kind": "img",
+  "w": 1100,
+  "h": 732,
+  "title": "Aerial view of Berlin (32881394137)",
+  "author": "dronepicr",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_Berlin_(32881394137).jpg",
+  "orig": "File:Aerial view of Berlin (32881394137).jpg"
  },
  "berliner-goldhut": {
   "file": "berliner-goldhut.jpg",
@@ -214,6 +250,30 @@
   "source": "https://commons.wikimedia.org/wiki/File:Zempl%C3%ADn_Museum_in_Michalovce_-_Archaeological_permanent_exhibition_-_Bronze_Age_exhibit_12.jpg",
   "orig": "File:Zemplín Museum in Michalovce - Archaeological permanent exhibition - Bronze Age exhibit 12.jpg"
  },
+ "bruegel-kinderspiele": {
+  "file": "bruegel-kinderspiele.jpg",
+  "kind": "img",
+  "w": 1200,
+  "h": 872,
+  "title": "Pieter Bruegel d. Ä.: Die Kinderspiele (1560), Kunsthistorisches Museum Wien",
+  "author": "Pieter Brueghel the Elder",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_Children%E2%80%99s_Games_-_Google_Art_Project.jpg",
+  "orig": "File:Pieter Bruegel the Elder - Children’s Games - Google Art Project.jpg"
+ },
+ "bruegel-knoechel": {
+  "file": "bruegel-knoechel.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 665,
+  "title": "Bruegel, Kinderspiele (Ausschnitt): Knöchelspiel",
+  "author": "Pieter Bruegel the Elder",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_the_Elder_-_Children%E2%80%99s_Games_-_Google_Art_Project_-_(part)_-_Knucklebones.jpg",
+  "orig": "File:Pieter Bruegel the Elder - Children’s Games - Google Art Project - (part) - Knucklebones.jpg"
+ },
  "buchenwald-grumsin": {
   "file": "buchenwald-grumsin.jpg",
   "kind": "img",
@@ -225,6 +285,30 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Grumsiner_Forst_02.jpg",
   "orig": "File:Grumsiner Forst 02.jpg"
+ },
+ "bulla-ostia": {
+  "file": "bulla-ostia.jpg",
+  "kind": "img",
+  "w": 697,
+  "h": 900,
+  "title": "Goldene Bulla an einer Kette, Ostia, Zeit des Augustus",
+  "author": "Daderot",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Necklace_with_lenticular_bulla,_Ostia,_Augustan_age,_gold,_inv._13379_-_Museo_Gregoriano_Etrusco_-_Vatican_Museums_-_DSC01141.jpg",
+  "orig": "File:Necklace with lenticular bulla, Ostia, Augustan age, gold, inv. 13379 - Museo Gregoriano Etrusco - Vatican Museums - DSC01141.jpg"
+ },
+ "caracalla-thermen": {
+  "file": "caracalla-thermen.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 720,
+  "title": "Terme Caracalla Roma 09feb08 02",
+  "author": "Marcok - it.wikipedia.org",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Terme_Caracalla_Roma_09feb08_02.jpg",
+  "orig": "File:Terme Caracalla Roma 09feb08 02.jpg"
  },
  "catalhoeyuek": {
   "file": "catalhoeyuek.jpg",
@@ -298,6 +382,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Reu%C3%9Fenk%C3%B6ge;_Schafe_am_Deich-2.jpg",
   "orig": "File:Reußenköge; Schafe am Deich-2.jpg"
  },
+ "domus-atrium": {
+  "file": "domus-atrium.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 608,
+  "title": "I08 159 Haus des Menander, Atrium",
+  "author": "Falk2",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:I08_159_Haus_des_Menander,_Atrium.jpg",
+  "orig": "File:I08 159 Haus des Menander, Atrium.jpg"
+ },
  "donau-weltenburg": {
   "file": "donau-weltenburg.jpg",
   "kind": "img",
@@ -309,6 +405,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Donaudurchbruch_bei_Kloster_Weltenburg_(Weltenburger_Enge).JPG",
   "orig": "File:Donaudurchbruch bei Kloster Weltenburg (Weltenburger Enge).JPG"
+ },
+ "dorf-uckermark": {
+  "file": "dorf-uckermark.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Wismar (Uckermark) 2017 SW",
+  "author": "Hans G. Oberlack",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Wismar_(Uckermark)_2017_SW.jpg",
+  "orig": "File:Wismar (Uckermark) 2017 SW.jpg"
  },
  "eberswalder-gold": {
   "file": "eberswalder-gold.jpg",
@@ -534,6 +642,18 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/JoelMcDaniel/sounds/832490/",
   "orig": "832490"
+ },
+ "forum-romanum": {
+  "file": "forum-romanum.jpg",
+  "kind": "img",
+  "w": 1200,
+  "h": 502,
+  "title": "Forum Romanum panorama",
+  "author": "Hans E C Johansson",
+  "license": "CC BY-SA 3.0",
+  "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Forum_Romanum_panorama.jpg",
+  "orig": "File:Forum Romanum panorama.jpg"
  },
  "fund-depot": {
   "file": "fund-depot.jpg",
@@ -846,6 +966,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:ICE_3_Fahlenbach.jpg",
   "orig": "File:ICE 3 Fahlenbach.jpg"
  },
+ "insula-rom": {
+  "file": "insula-rom.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Insula dell'Ara Coeli 01",
+  "author": "Hugo DK",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Insula_dell%27Ara_Coeli_01.jpg",
+  "orig": "File:Insula dell'Ara Coeli 01.jpg"
+ },
  "ischtar-drache": {
   "file": "ischtar-drache.jpg",
   "kind": "img",
@@ -918,6 +1050,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berliner_Stra%C3%9Fe_Karl-Marx-Stra%C3%9Fe_Rixdorf_Neuk%C3%B6lln_Berlin_circa_1910.jpg",
   "orig": "File:Berliner Straße Karl-Marx-Straße Rixdorf Neukölln Berlin circa 1910.jpg"
  },
+ "kegeljungen-zille": {
+  "file": "kegeljungen-zille.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 771,
+  "title": "Heinrich Zille: Kegeljungen in Berlin (Foto)",
+  "author": "Zille, Heinrich",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Zille,_Heinrich_-_Kinder_und_Kinderspielpl%C3%A4tze,_Kegeljungen_(Zeno_Fotografie).jpg",
+  "orig": "File:Zille, Heinrich - Kinder und Kinderspielplätze, Kegeljungen (Zeno Fotografie).jpg"
+ },
  "keilschrift-uruk": {
   "file": "keilschrift-uruk.jpg",
   "kind": "img",
@@ -940,6 +1084,30 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/RUncELL/sounds/349456/",
   "orig": "349456"
+ },
+ "klassenzimmer-1900": {
+  "file": "klassenzimmer-1900.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 750,
+  "title": "Klassenzimmer um 1900, Schulmuseum Leipzig",
+  "author": "Geisler Martin",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Schulmuseum_Leipzig_Klassenzimmer_1900.jpg",
+  "orig": "File:Schulmuseum Leipzig Klassenzimmer 1900.jpg"
+ },
+ "klassenzimmer-ddr": {
+  "file": "klassenzimmer-ddr.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 750,
+  "title": "DDR-Klassenzimmer um 1970, Schulmuseum Leipzig",
+  "author": "Geisler Martin",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Schulmuseum_Leipzig_Klassenzimmer_1970.jpg",
+  "orig": "File:Schulmuseum Leipzig Klassenzimmer 1970.jpg"
  },
  "knochenfloete": {
   "file": "knochenfloete.mp3",
@@ -975,6 +1143,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:K%C3%B6nigsstuhl_und_Viktoria-Sicht.jpg",
   "orig": "File:Königsstuhl und Viktoria-Sicht.jpg"
+ },
+ "kolosseum": {
+  "file": "kolosseum.jpg",
+  "kind": "img",
+  "w": 1200,
+  "h": 563,
+  "title": "Rome Colosseum exterior panorama",
+  "author": "Nicholas Hartmann",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Rome_Colosseum_exterior_panorama.jpg",
+  "orig": "File:Rome Colosseum exterior panorama.jpg"
  },
  "kompass": {
   "file": "kompass.jpg",
@@ -1200,6 +1380,18 @@
   "source": "https://freesound.org/people/dheming/sounds/240982/",
   "orig": "240982"
  },
+ "memhardt-plan": {
+  "file": "memhardt-plan.jpg",
+  "kind": "img",
+  "w": 1200,
+  "h": 896,
+  "title": "Memhardt Grundriß der Beyden Churf. Residentz Stätte Berlin und Cölln 1652 (1888)",
+  "author": "Johann Gregor Memhardt",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Memhardt_Grundri%C3%9F_der_Beyden_Churf._Residentz_St%C3%A4tte_Berlin_und_C%C3%B6lln_1652_(1888).jpg",
+  "orig": "File:Memhardt Grundriß der Beyden Churf. Residentz Stätte Berlin und Cölln 1652 (1888).jpg"
+ },
  "moewen": {
   "file": "moewen.mp3",
   "kind": "snd",
@@ -1294,6 +1486,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Berlin,_Neues_Museum_2014-07_(2).jpg",
   "orig": "File:Berlin, Neues Museum 2014-07 (2).jpg"
+ },
+ "nikolaiviertel": {
+  "file": "nikolaiviertel.jpg",
+  "kind": "img",
+  "w": 600,
+  "h": 450,
+  "title": "Berlin, Nikolaiviertel, Spreeufer 2014-07",
+  "author": "HerrAdams",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Berlin,_Nikolaiviertel,_Spreeufer_2014-07.jpg",
+  "orig": "File:Berlin, Nikolaiviertel, Spreeufer 2014-07.jpg"
  },
  "nil-assuan": {
   "file": "nil-assuan.jpg",
@@ -1473,6 +1677,18 @@
   "source": "https://freesound.org/people/InspectorJ/sounds/419231/",
   "orig": "419231"
  },
+ "plattenbau-marzahn": {
+  "file": "plattenbau-marzahn.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 594,
+  "title": "Aussicht Skywalk Marzahn Plattenbau Fassendekoration Jan-Petersen-Straße Berlin-Marzahn 02",
+  "author": "Singlespeedfahrer",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Aussicht_Skywalk_Marzahn_Plattenbau_Fassendekoration_Jan-Petersen-Stra%C3%9Fe_Berlin-Marzahn_02.jpg",
+  "orig": "File:Aussicht Skywalk Marzahn Plattenbau Fassendekoration Jan-Petersen-Straße Berlin-Marzahn 02.jpg"
+ },
  "plenarsaal-agh": {
   "file": "plenarsaal-agh.jpg",
   "kind": "img",
@@ -1520,6 +1736,29 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Priel_im_Watt_bei_Hallig_Hooge.jpg",
   "orig": "File:Priel im Watt bei Hallig Hooge.jpg"
+ },
+ "propeller": {
+  "file": "propeller.mp3",
+  "kind": "snd",
+  "dur": 3.28,
+  "title": "Propellerflugzeug fliegt vorbei",
+  "author": "YuriNikolai",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/YuriNikolai/sounds/347973/",
+  "orig": "347973"
+ },
+ "puppe-rom": {
+  "file": "puppe-rom.jpg",
+  "kind": "img",
+  "w": 519,
+  "h": 900,
+  "title": "Römische Puppe aus Elfenbein, Mitte 2. Jh. n. Chr., Rom",
+  "author": "Carole Raddato from FRANKFURT, Germany",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Roman_ivory_doll_from_the_mid-2nd_century_AD,_from_the_%27Grottarossa_Mummy%27_sarcophagus,_Palazzo_Massimo_alle_Terme,_Rome_(15725663442).jpg",
+  "orig": "File:Roman ivory doll from the mid-2nd century AD, from the 'Grottarossa Mummy' sarcophagus, Palazzo Massimo alle Terme, Rome (15725663442).jpg"
  },
  "pyramiden-gizeh": {
   "file": "pyramiden-gizeh.jpg",
@@ -1628,6 +1867,30 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Wernberg_Kantnig_Kantniger_Stra%C3%9Fe_Roggenfeld_30052018_5849.jpg",
   "orig": "File:Wernberg Kantnig Kantniger Straße Roggenfeld 30052018 5849.jpg"
+ },
+ "rom-woelfin": {
+  "file": "rom-woelfin.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 586,
+  "title": "Lupa Capitolina, Rome",
+  "author": "Wilfredor",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Lupa_Capitolina,_Rome.jpg",
+  "orig": "File:Lupa Capitolina, Rome.jpg"
+ },
+ "rosinenbomber": {
+  "file": "rosinenbomber.jpg",
+  "kind": "img",
+  "w": 766,
+  "h": 729,
+  "title": "Kinder beobachten ein Flugzeug der Luftbrücke, Tempelhof 1948",
+  "author": "Henry Ries / USAF",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:C-54_landing_at_Tempelhof.jpg",
+  "orig": "File:C-54 landing at Tempelhof.jpg"
  },
  "ruder": {
   "file": "ruder.mp3",
@@ -1806,6 +2069,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Schrippe_01.jpg",
   "orig": "File:Schrippe 01.jpg"
  },
+ "schulrelief-neumagen": {
+  "file": "schulrelief-neumagen.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 858,
+  "title": "Schulrelief aus Neumagen: Lehrer mit Schülern, um 180–185 n. Chr., Trier",
+  "author": "Carole Raddato from Frankfurt, Germany",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Funerary_relief_found_in_Neumagen_near_Trier,_a_teacher_with_three_discipuli,_around_180-185_AD,_Rheinisches_Landesmuseum_Trier,_Germany_(29029881804).jpg",
+  "orig": "File:Funerary relief found in Neumagen near Trier, a teacher with three discipuli, around 180-185 AD, Rheinisches Landesmuseum Trier, Germany (29029881804).jpg"
+ },
  "schwein-grunzen": {
   "file": "schwein-grunzen.mp3",
   "kind": "snd",
@@ -1924,6 +2199,30 @@
   "source": "https://commons.wikimedia.org/wiki/File:Sphinx_and_pyramids_of_Giza_panorama.jpg",
   "orig": "File:Sphinx and pyramids of Giza panorama.jpg"
  },
+ "spielbaelle-aegypten": {
+  "file": "spielbaelle-aegypten.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 704,
+  "title": "Bälle aus Fayence, Neues Reich, Ägyptisches Museum Turin",
+  "author": "Maksim Sokolov (maxergon.com)",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Egyptian_faience_balls.jpg",
+  "orig": "File:Egyptian faience balls.jpg"
+ },
+ "spielzeug-hund": {
+  "file": "spielzeug-hund.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 683,
+  "title": "Spielzeughund aus Ägypten, Walters Art Museum",
+  "author": "Anonymous (Egypt)Unknown author",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Egyptian_-_Toy_Dog_-_Walters_222.jpg",
+  "orig": "File:Egyptian - Toy Dog - Walters 222.jpg"
+ },
  "spitzhacke": {
   "file": "spitzhacke.mp3",
   "kind": "snd",
@@ -1946,6 +2245,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Museumsinsel_in_Berlin.jpg",
   "orig": "File:Museumsinsel in Berlin.jpg"
+ },
+ "stau-a100": {
+  "file": "stau-a100.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 600,
+  "title": "Berlin Mathilde-Rathenau-Brücke lub 2025-08-30 img02 Aussicht",
+  "author": "Lukas Beck",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Berlin_Mathilde-Rathenau-Br%C3%BCcke_lub_2025-08-30_img02_Aussicht.jpg",
+  "orig": "File:Berlin Mathilde-Rathenau-Brücke lub 2025-08-30 img02 Aussicht.jpg"
  },
  "stein-rosette": {
   "file": "stein-rosette.jpg",
@@ -2192,6 +2503,18 @@
   "source": "https://freesound.org/people/soundmary/sounds/194973/",
   "orig": "194973"
  },
+ "trevi-brunnen": {
+  "file": "trevi-brunnen.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 547,
+  "title": "Fontaine Trevi - Rome",
+  "author": "Wilfredor",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Fontaine_Trevi_-_Rome.jpg",
+  "orig": "File:Fontaine Trevi - Rome.jpg"
+ },
  "tromsoe-hafen": {
   "file": "tromsoe-hafen.jpg",
   "kind": "img",
@@ -2203,6 +2526,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Tromso_harbour_flying_rakkoon.jpg",
   "orig": "File:Tromso harbour flying rakkoon.jpg"
+ },
+ "truemmerkinder": {
+  "file": "truemmerkinder.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 532,
+  "title": "Kinder spielen in den Trümmern von Berlin (Bundesarchiv)",
+  "author": "Krueger, Erich O.",
+  "license": "CC BY-SA 3.0 de",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-0822-520,_Berlin,_Kinder_spielen_in_Tr%C3%BCmmern.jpg",
+  "orig": "File:Bundesarchiv Bild 183-0822-520, Berlin, Kinder spielen in Trümmern.jpg"
  },
  "tundra-kola": {
   "file": "tundra-kola.jpg",
@@ -2264,6 +2599,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Urkunde_Philipps_von_Heinsberg_mit_Siegel-DSC2231.jpg",
   "orig": "File:Urkunde Philipps von Heinsberg mit Siegel-DSC2231.jpg"
  },
+ "venedig-kanal": {
+  "file": "venedig-kanal.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 597,
+  "title": "Hotel Ca Sagredo - Grand Canal - Venice Italy Venezia - photo by gnuckx and HDR processing by Mike G. K. (4715151316)",
+  "author": "gnuckx",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Hotel_Ca_Sagredo_-_Grand_Canal_-_Venice_Italy_Venezia_-_photo_by_gnuckx_and_HDR_processing_by_Mike_G._K._(4715151316).jpg",
+  "orig": "File:Hotel Ca Sagredo - Grand Canal - Venice Italy Venezia - photo by gnuckx and HDR processing by Mike G. K. (4715151316).jpg"
+ },
  "venus-hohle-fels": {
   "file": "venus-hohle-fels.jpg",
   "kind": "img",
@@ -2275,6 +2622,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Venus_vom_Hohle_Fels-01.JPG",
   "orig": "File:Venus vom Hohle Fels-01.JPG"
+ },
+ "via-appia": {
+  "file": "via-appia.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 599,
+  "title": "Appian Way",
+  "author": "Livioandronico2013",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Appian_Way.jpg",
+  "orig": "File:Appian Way.jpg"
  },
  "vogelherd-hoehle": {
   "file": "vogelherd-hoehle.jpg",
@@ -2431,6 +2790,17 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berlin_Wochenmarkt_Maybachufer-20241206-RM-152155.jpg",
   "orig": "File:Berlin Wochenmarkt Maybachufer-20241206-RM-152155.jpg"
  },
+ "wolf-heulen": {
+  "file": "wolf-heulen.mp3",
+  "kind": "snd",
+  "dur": 3.91,
+  "title": "Wolf heult",
+  "author": "JoseAgudelo",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/JoseAgudelo/sounds/472402/",
+  "orig": "472402"
+ },
  "wolga": {
   "file": "wolga.jpg",
   "kind": "img",
@@ -2453,6 +2823,18 @@
   "license_url": "https://creativecommons.org/licenses/by/4.0/",
   "source": "https://freesound.org/people/OBXJohn/sounds/266616/",
   "orig": "266616"
+ },
+ "zille-handstand": {
+  "file": "zille-handstand.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 755,
+  "title": "Heinrich Zille: Jungen üben Handstand (Foto)",
+  "author": "Heinrich Zille",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Zille,_Heinrich_-_Kinder_und_Kinderspielpl%C3%A4tze,_acht_Jungen_%C3%BCben_Handstand_(Zeno_Fotografie).jpg",
+  "orig": "File:Zille, Heinrich - Kinder und Kinderspielplätze, acht Jungen üben Handstand (Zeno Fotografie).jpg"
  },
  "zinnstein": {
   "file": "zinnstein.jpg",

@@ -1,4 +1,4 @@
-/* Unit 8 – Yesterday: the simple past (Englisch Klasse 5).
+/* Unit 8 – Yesterday: the simple past (Englisch Klasse 5). Gap-fill 2026-10-05: writing an email (parts + German vs English).
    Cast: Ruby (11, London, Year 7) and Lukas (10, Berlin, Klasse 5). */
 (() => {
   const EN = { lang: "en-GB", rate: 0.85 };
@@ -72,8 +72,8 @@
   Deck.unit({
     id: "u8", num: 8, title: "Yesterday: the simple past", color: "#0e7490", soft: "#dff3f7",
     subtitle: "Was gestern passiert ist – erzählen, fragen, schreiben",
-    blurb: "was/were, -ed, unregelmäßige Verben, did – und Geschichten erzählen.",
-    goals: ["was und were richtig benutzen", "Verben mit -ed: Schreibung und Aussprache", "Unregelmäßige Verben: go – went, see – saw …", "Verneinen und fragen mit did / didn't", "Von gestern erzählen: Tagebuch, Postkarte, Chat"],
+    blurb: "was/were, -ed, unregelmäßige Verben, did – erzählen und E-Mails",
+    goals: ["was und were richtig benutzen", "Verben mit -ed: Schreibung und Aussprache", "Unregelmäßige Verben: go – went, see – saw …", "Verneinen und fragen mit did / didn't", "Von gestern erzählen: Tagebuch, Postkarte, E-Mail, Chat"],
     icon(svg, el) {
       svg.append(el("circle", { cx: 35, cy: 35, r: 28, fill: "#0e7490", opacity: .14 }),
         el("circle", { cx: 35, cy: 35, r: 20, fill: "#fff", stroke: "#0e7490", "stroke-width": 4 }),
@@ -496,6 +496,91 @@
           s.step(async () => { s.sound("waves", { vol: .4, dur: 4, fade: 1 }); s.show(front, "zoom"); await write(2, 4); s.say("Gestern war Lukas am Strand und bei den weißen Kreidefelsen."); });
           s.step(async () => { await write(4, 6); s.sfx.snap(); await s.show(stampWrap, "zoom"); s.sound("pencil-write", { vol: .5 }); await seq(s, addr, "left", 200, () => {}); });
           s.step(async () => { s.sfx.ding(); await s.show(ph, "up"); });
+        },
+      },
+      /* 14b -------------------------------------------------------------- */
+      {
+        title: "Writing an email",
+        say: "Lukas schreibt seiner Brieffreundin Ruby in London eine E-Mail über sein Wochenende. Jeder Teil der E-Mail hat eine eigene Farbe.",
+        build(s) {
+          const C = { subj: "#ee7a1a", greet: "#7b4fd6", body: "#0e7490", q: "#138a5a", close: "#dc3b2a", name: "#1d5bd0" };
+          const part = (k, kids, st = {}) => s.h("div", { class: "later", style: Object.assign({ borderLeft: `6px solid ${C[k]}`, background: C[k] + "1a", borderRadius: "6px", padding: "3px 10px", fontSize: "21px", lineHeight: "1.35", fontFamily: "var(--f-body)", color: "var(--ink)" }, st) }, ...kids);
+          const V = t => s.h("b", { style: { color: C.body } }, t);
+          const P = {
+            subj: part("subj", [s.h("span", { class: "pencil" }, "Subject: "), s.h("b", null, "My weekend in Berlin")]),
+            greet: part("greet", ["Hi Ruby,"]),
+            body1: part("body", ["Thanks for your email! I had a great weekend. On Saturday, I ", V("went"), " to the cinema with my cousin. We ", V("watched"), " a funny film and ", V("ate"), " popcorn."]),
+            body2: part("body", ["On Sunday, it ", V("was"), " sunny, so we ", V("had"), " a picnic at Tempelhofer Feld. I ", V("rode"), " my bike on the old runway!"]),
+            q: part("q", ["What did you do at the weekend? Write soon!"]),
+            close: part("close", ["Best wishes,"]),
+            name: part("name", [s.h("b", null, "Lukas")]),
+          };
+          const text = "Hi Ruby, thanks for your email! I had a great weekend. On Saturday, I went to the cinema with my cousin. We watched a funny film and ate popcorn. On Sunday, it was sunny, so we had a picnic at Tempelhofer Feld. I rode my bike on the old runway! What did you do at the weekend? Write soon! Best wishes, Lukas";
+          const sendBtn = s.h("span", { style: { background: "var(--unit)", color: "#fff", font: "800 19px/1 var(--f-display)", padding: "8px 16px", borderRadius: "10px" } }, "Send");
+          const sent = s.h("span", { class: "later", style: { font: "800 19px/1 var(--f-display)", color: "var(--green)" } }, "✓ sent!");
+          const bar = s.h("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", background: "#eef1f6", padding: "8px 14px", borderBottom: "2px solid var(--line)" } },
+            s.h("span", { class: "ek-tag" }, "New message"), s.h("div", { class: "row", style: { gap: "12px", flexWrap: "nowrap" } }, sent, sendBtn));
+          const to = s.h("p", { style: { margin: 0, fontSize: "20px", padding: "6px 14px 0", fontFamily: "var(--f-body)" } }, s.h("span", { class: "pencil" }, "To: "), "Ruby (London)");
+          const mail = s.h("div", { class: "card", style: { padding: 0, overflow: "hidden", display: "flex", flexDirection: "column" } }, bar, to,
+            s.h("div", { style: { padding: "6px 14px 0" } }, P.subj),
+            s.h("div", { class: "stack", style: { gap: "8px", padding: "12px 14px 14px" } }, P.greet, P.body1, P.body2, P.q, P.close, P.name));
+          const LG = [["subj", "Subject line", "Betreff: kurz, worum es geht"], ["greet", "Greeting", "Anrede: Hi Ruby, / Dear Ruby,"], ["body", "What you did", "Absätze im simple past"], ["q", "Question", "eine Frage an Ruby"], ["close", "Closing", "Grußformel mit Komma"], ["name", "Sign-off", "dein Name"]];
+          const leg = {};
+          LG.forEach(([k, en, de], i) => { leg[k] = s.h("div", { class: "later", style: { display: "grid", gridTemplateColumns: "38px 1fr", gap: "10px", alignItems: "center" } },
+            s.h("span", { style: { width: "38px", height: "38px", borderRadius: "10px", background: C[k], color: "#fff", display: "grid", placeItems: "center", font: "800 21px/1 var(--f-display)" } }, String(i + 1)),
+            s.h("div", null, s.h("p", { class: "ek-en", style: { fontSize: "21px", lineHeight: "1.15" } }, en), s.h("p", { class: "small pencil", style: { margin: 0, lineHeight: "1.15" } }, de))); });
+          const closings = s.h("div", { class: "life later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Closings – zum Anhören"),
+            s.h("div", { class: "row", style: { gap: "8px" } }, ["Love,", "Best wishes,", "See you soon,"].map(w => s.h("button", { class: "btn", style: { fontSize: "20px", padding: "0 14px" }, onclick: () => { s.sfx.click(); s.speak(w.replace(",", ""), EN); } }, w))),
+            s.h("p", { class: "small", style: { margin: "6px 0 0" } }, B(s, "Love,"), " nur für Familie und gute Freunde."));
+          s.add(s.h("div", { style: { display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: "22px", height: "100%", alignItems: "center" } }, mail,
+            s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("div", { class: "ek-line", style: { justifyContent: "space-between" } }, s.h("span", { class: "exlabel", style: { margin: 0 } }, "Die Teile"), hear(s, text, "Vorlesen")), Object.values(leg), closings)));
+          s.sfx.whoosh(); s.show(mail, "zoom");
+          const type = async (keys, lk) => { s.sound("keyboard", { vol: .5, dur: 1.6 }); for (const k of keys) await s.show(P[k], "left"); for (const l of lk) { s.sfx.pop(); await s.show(leg[l], "right"); } };
+          s.step(async () => { await type(["subj", "greet"], ["subj", "greet"]); s.speak("Subject: My weekend in Berlin. Hi Ruby,", EN); });
+          s.step(async () => { await type(["body1", "body2"], ["body"]); s.say("Im Hauptteil erzählt Lukas im simple past: went, watched, ate, was, had, rode."); });
+          s.step(async () => { await type(["q"], ["q"]); s.speak("What did you do at the weekend? Write soon!", EN); });
+          s.step(async () => { await type(["close", "name"], ["close", "name"]); s.speak("Best wishes, Lukas", EN); });
+          s.step(async () => { s.sound("mouse-click", { vol: .6 }); sendBtn.classList.add("ek-ping"); s.sfx.whoosh(); await s.show(sent, "pop"); s.sfx.success(); await s.show(closings, "up"); });
+        },
+      },
+      /* 14c -------------------------------------------------------------- */
+      {
+        title: "E-Mail: Deutsch – Englisch",
+        say: "Eine E-Mail auf Deutsch und auf Englisch sieht fast gleich aus. Aber es gibt drei kleine Unterschiede. Achte auf die roten Zahlen.",
+        build(s) {
+          const badge = n => s.h("span", { class: "later", style: { display: "inline-grid", placeItems: "center", width: "28px", height: "28px", borderRadius: "50%", background: "var(--red)", color: "#fff", font: "800 18px/1 var(--f-display)", marginLeft: "6px", verticalAlign: "middle" } }, String(n));
+          const mk = (lab, rows, sp) => {
+            const c = s.h("div", { class: "card", style: { padding: "12px 18px", display: "flex", flexDirection: "column", gap: "6px" } },
+              s.h("div", { class: "ek-line", style: { justifyContent: "space-between" } }, s.h("span", { class: "exlabel", style: { margin: 0 } }, lab), sp ? hear(s, sp) : s.h("span", { style: { height: "56px" } })),
+              rows.map(r => s.h("p", { style: { margin: 0, fontSize: "21px", lineHeight: "1.3", fontFamily: "var(--f-body)" } }, ...r)));
+            return c;
+          };
+          const bd = [[badge(1), badge(1)], [badge(2), badge(2)], [badge(3), badge(3)]];
+          const hi = t => s.h("b", { style: { color: "var(--red)" } }, t);
+          const de = mk("Deutsch", [
+            [s.h("span", { class: "pencil" }, "Betreff: "), "Mein Wochenende"],
+            ["Hallo Ruby,"],
+            [hi("w"), "ie geht's?", bd[0][0], " Am Samstag war ", hi("ich"), bd[2][0], " im Zoo."],
+            ["Viele Grüße", bd[1][0]],
+            ["Lukas"]]);
+          const en = mk("English", [
+            [s.h("span", { class: "pencil" }, "Subject: "), "My weekend"],
+            ["Hi Ruby,"],
+            [hi("H"), "ow are you?", bd[0][1], " On Saturday, ", hi("I"), bd[2][1], " was at the zoo."],
+            ["Best wishes", hi(","), bd[1][1]],
+            ["Lukas"]], "Hi Ruby, how are you? On Saturday, I was at the zoo. Best wishes, Lukas");
+          const ex = [
+            ["1", "Nach der Anrede", ["Deutsch: klein weiter (", B(s, "wie"), "). Englisch: groß weiter (", B(s, "How"), ")."]],
+            ["2", "Am Ende", ["Deutsch: ", B(s, "Viele Grüße"), " ohne Komma. Englisch: ", B(s, "Best wishes,"), " mit Komma."]],
+            ["3", "ich = I", ["Das englische ", B(s, "I"), " schreibt man immer groß – auch mitten im Satz."]],
+          ].map(([n, h, t]) => s.h("div", { class: "card later", style: { padding: "10px 14px", borderColor: "var(--red)" } },
+            s.h("div", { class: "ek-line", style: { gap: "10px" } }, s.h("span", { style: { display: "grid", placeItems: "center", width: "32px", height: "32px", borderRadius: "50%", background: "var(--red)", color: "#fff", font: "800 19px/1 var(--f-display)", flex: "none" } }, n), s.h("p", { class: "t", style: { margin: 0, fontWeight: 800, fontSize: "22px" } }, h)),
+            s.h("p", { class: "small", style: { margin: "6px 0 0" } }, ...t)));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px" } }, B(s, "Hi Ruby,"), " = locker, für Freunde. ", B(s, "Dear Ruby,"), " = Brief oder höflich. An Erwachsene: ", B(s, "Dear Ms Weber,"), " … ", B(s, "Kind regards,"), " (= Sehr geehrte Frau Weber … Mit freundlichen Grüßen).");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px", justifyContent: "center" } }, s.h("div", { class: "cols", style: { gap: "20px" } }, de, en), s.h("div", { class: "cols3", style: { gap: "14px" } }, ex), merk));
+          s.sfx.whoosh();
+          bd.forEach((pair, i) => s.step(async () => { s.sfx.pop(); s.show(pair[0], "pop"); await s.show(pair[1], "pop"); s.sfx.ding(); await s.show(ex[i], "up"); if (i === 1) s.speak("Best wishes,", EN); }));
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.speak("Dear Ms Weber. Kind regards.", EN); });
         },
       },
       /* 15 --------------------------------------------------------------- */

@@ -1,4 +1,5 @@
-/* Kapitel 7 – Erzählen und Schreiben (Spannungsbogen, Erzählen, Bildergeschichte, Nacherzählen, Bericht, Beschreibung, Brief/E-Mail, Überarbeiten) */
+/* Kapitel 7 – Erzählen und Schreiben (Spannungsbogen, Erzählen, Märchen weiterschreiben/erfinden, Bildergeschichte, Nacherzählen, Bericht,
+   Beschreibung von Gegenstand/Person/Tier/Weg, Vorgangsbeschreibung, Brief/E-Mail, Überarbeiten) */
 (() => {
   const P = { blue: "#1d5bd0", red: "#dc3b2a", green: "#138a5a", violet: "#7b4fd6", orange: "#ee7a1a", ink: "#1b2740", pencil: "#5d6678", yellow: "#ffd94a", line: "#c8d3de", unit: "#a21caf", soft: "#f7e3f9", paper: "#fbfcf7" };
   const later = el => { el.classList.add("later"); return el; };
@@ -55,8 +56,8 @@
   Deck.unit({
     id: "u7", num: 7, title: "Erzählen und Schreiben", color: "#a21caf", soft: "#f7e3f9",
     subtitle: "Spannend erzählen, sachlich berichten",
-    blurb: "Spannungsbogen, Bildergeschichte, Bericht, Beschreibung, E-Mail.",
-    goals: ["Eine Geschichte mit Spannungsbogen erzählen", "Wörtliche Rede, Gefühle und treffende Wörter nutzen", "Bildergeschichten und Nacherzählungen schreiben", "Sachlich berichten und genau beschreiben", "Briefe und E-Mails richtig aufbauen und überarbeiten"],
+    blurb: "Spannungsbogen, Märchen, Bericht, Beschreibungen, Anleitung, E-Mail",
+    goals: ["Eine Geschichte mit Spannungsbogen erzählen", "Wörtliche Rede, Gefühle und treffende Wörter nutzen", "Märchen weiterschreiben und selbst erfinden", "Bildergeschichten und Nacherzählungen schreiben", "Sachlich berichten; Personen, Tiere und Vorgänge beschreiben", "Briefe und E-Mails richtig aufbauen und überarbeiten"],
     icon(svg, el) {
       svg.append(el("path", { d: "M6 58 C 20 56, 30 20, 44 14 S 60 40, 66 56", fill: "none", stroke: "#a21caf", "stroke-width": 5, "stroke-linecap": "round" }),
         el("circle", { cx: 44, cy: 14, r: 6, fill: "#dc3b2a" }),
@@ -372,6 +373,76 @@
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
+      /* 8a -------------------------------------------------------------- */
+      {
+        title: "Ein Märchen weiterschreiben",
+        say: "Der Anfang eines Märchens ist schon da. Du schreibst weiter und benutzt dabei die typischen Märchen-Merkmale.",
+        build(s) {
+          const start = ex(s, "Der Anfang ist gegeben", null, s.h("p", { style: { fontSize: "21px", lineHeight: 1.45, margin: 0 } },
+            "Es war einmal eine arme Müllerstochter, die hieß Marie. Eines Tages fiel ihr der goldene Ring ihrer Mutter in einen tiefen Brunnen. Marie weinte bitterlich. Da landete ein schwarzer Rabe auf dem Brunnenrand und sprach: „Warum weinst du?“"));
+          const conts = [
+            ["„Ich hole dir den Ring“, krächzte der Rabe, „wenn du mir dreimal hilfst.“", [1, 4]],
+            ["Drei Tage lang brachte Marie ihm Brot. Am dritten Abend tauchte der Rabe tief in den Brunnen hinab.", [2]],
+            ["Da trat ein böser Zauberer aus dem Wald und wollte den Ring für sich. Doch der Rabe flog hoch hinauf und ließ ihn in Maries Hand fallen.", [3]],
+            ["Im selben Augenblick wurde aus dem Raben ein junger Prinz. Er heiratete Marie, und wenn sie nicht gestorben sind, dann leben sie noch heute.", [5]],
+          ].map(([t, k]) => { const el = later(s.h("p", { style: { font: "500 25px/1.25 var(--f-hand)", color: P.blue, margin: 0 } }, t)); el.k = k; return el; });
+          const sheet = s.h("div", { style: { background: "repeating-linear-gradient(#fff 0 30px, #c9d6ee 30px 31px)", borderLeft: "3px solid #e9a3a3", borderRadius: "10px", padding: "6px 16px 10px 22px", display: "flex", flexDirection: "column", gap: "4px", border: `2px solid ${P.line}` } },
+            s.h("span", { class: "exlabel", style: { color: P.unit, marginBottom: "2px" } }, "Deine Fortsetzung"), ...conts);
+          const feats = [["Es war einmal …", P.blue], ["sprechende Tiere", P.green], ["Zauberzahl 3", P.orange], ["Gut gegen Böse", P.red], ["magischer Helfer", P.violet], ["glückliches Ende", P.unit]];
+          const chips = feats.map(([t, c]) => s.h("div", { style: { display: "flex", alignItems: "center", gap: "10px", border: `3px solid ${c}`, borderRadius: "14px", padding: "8px 12px", background: "#fff", opacity: .3, transition: "opacity .4s" } },
+            s.h("span", { style: { width: "28px", height: "28px", borderRadius: "8px", border: `3px solid ${c}`, display: "grid", placeItems: "center", color: c, font: "800 20px/1 var(--f-display)", flex: "none" } }, ""),
+            s.h("b", { style: { color: c, fontSize: "21px" } }, t)));
+          const on = i => { const c = chips[i]; c.style.opacity = 1; c.firstChild.textContent = "✓"; c.classList.remove("a-pop"); void c.offsetWidth; c.classList.add("a-pop"); };
+          const side = s.h("div", { class: "stack", style: { gap: "10px" } }, s.h("p", { class: "h2", style: { fontSize: "24px" } }, "Märchen-Merkmale"), ...chips);
+          const m = later(merk(s, { style: { fontSize: "21px" } }, "Beim Weiterschreiben bleiben ", B(s, "Figuren und Ort"), " gleich. Erzähle im ", B(s, "Präteritum"), ", nutze die ", B(s, "Märchen-Merkmale"), " – und am Ende siegt das Gute."));
+          s.add(root(s, "stack", { gap: "12px" }, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 290px", gap: "20px", alignItems: "start" } },
+            s.h("div", { class: "stack", style: { gap: "10px" } }, start, sheet), side), m));
+          s.sfx.pop(); on(0);
+          conts.forEach((c, i) => s.step(async () => {
+            if (i === 0) s.sound("raven", { vol: .5, dur: 1.5 }); else if (i === 2) s.sound("thunder", { vol: .4, dur: 2 }); else if (i === 3) s.sound("magic-chime", { vol: .5 }); else s.sound("pencil-write", { vol: .5, dur: 1.2 });
+            await s.show(c, "left"); for (const k of c.k) { on(k); s.sfx.ding(); await s.wait(220); } s.say(c.textContent);
+          }));
+          s.step(async () => { s.sfx.success(); await s.show(m, "up"); });
+        },
+      },
+      /* 8b -------------------------------------------------------------- */
+      {
+        title: "Der Märchen-Baukasten",
+        say: "Erfinde dein eigenes Märchen! Tippe in jeder Spalte auf einen Baustein. Daraus entsteht ein Märchenanfang.",
+        build(s) {
+          const H = [{ l: "mutiges Mädchen", t: "ein mutiges Mädchen namens Lina", n: "Lina", p: "ihr" }, { l: "armer Schneider", t: "ein armer Schneider namens Paul", n: "Paul", p: "ihm" }, { l: "jüngster Königssohn", t: "der jüngste von drei Königssöhnen", n: "der Königssohn", p: "ihm" }];
+          const Pr = [{ l: "böse Hexe", t: p => `Eine böse Hexe verwandelte ${p === "ihr" ? "ihr" : "sein"} Dorf in Stein.` }, { l: "Drache am Brunnen", t: () => "Ein Drache bewachte den einzigen Brunnen im ganzen Land." }, { l: "Riese stiehlt Krone", t: () => "Ein Riese hatte die goldene Krone des Königs gestohlen." }];
+          const He = [{ l: "sprechender Fuchs", t: "ein sprechender Fuchs", v: ["kam", "half"] }, { l: "weise Frau mit Ring", t: "eine weise alte Frau mit einem Zauberring", v: ["kam", "half"] }, { l: "drei weiße Tauben", t: "drei weiße Tauben", v: ["kamen", "halfen"] }];
+          const En = [{ l: "großes Fest", t: () => "Am Ende war der Zauber gebrochen, und alle feierten ein großes Fest." }, { l: "halbes Königreich", t: h => `Zum Dank bekam ${h.n} das halbe Königreich.` }, { l: "Bösewicht flieht", t: () => "Der Bösewicht floh und kam nie wieder." }];
+          const sel = [0, 0, 0, 0];
+          const cols = [["Held", P.blue, H], ["Problem", P.red, Pr], ["Helfer", P.violet, He], ["Ende", P.green, En]];
+          const story = s.h("p", { style: { fontSize: "23px", lineHeight: 1.45, margin: 0 } });
+          const render = () => {
+            const h = H[sel[0]], pr = Pr[sel[1]], he = He[sel[2]], en = En[sel[3]];
+            const S = (t, c) => s.h("span", { style: { color: c, fontWeight: 700 } }, t);
+            story.replaceChildren("Es war einmal ", S(h.t, P.blue), ". ", S(pr.t(h.p), P.red), " Da ", he.v[0], " ", S(he.t, P.violet), " und ", he.v[1], " " + h.p + " ", S("dreimal", P.orange), ". ", S(en.t(h), P.green), " Und wenn sie nicht gestorben sind, dann leben sie noch heute.");
+          };
+          const btnSets = [];
+          const colEls = cols.map(([name, c, opts], ci) => {
+            const btns = opts.map((o, oi) => s.h("button", { class: "btn", style: { minHeight: "56px", whiteSpace: "normal", lineHeight: 1.15, fontSize: "20px", padding: "6px 10px", borderColor: c, color: c, width: "100%" }, onclick: () => pick(ci, oi) }, o.l));
+            btnSets.push(btns);
+            return later(s.h("div", { class: "card stack", style: { gap: "10px", padding: "12px 14px", borderColor: c } }, s.h("span", { class: "chip", style: { background: c + "22", color: c, alignSelf: "flex-start" } }, (ci + 1) + " " + name), ...btns));
+          });
+          const paint = () => btnSets.forEach((bs, ci) => bs.forEach((b, oi) => { const on = sel[ci] === oi, c = cols[ci][1]; b.style.background = on ? c : "#fff"; b.style.color = on ? "#fff" : c; }));
+          const box = later(s.h("div", { class: "card", style: { borderColor: P.unit, borderWidth: "3px", padding: "14px 20px", minHeight: "174px" } }, s.h("span", { class: "exlabel" }, "Dein Märchenanfang"), story));
+          async function pick(ci, oi) { sel[ci] = oi; paint(); s.sfx.note([0, 4, 7, 12][ci], 0.2); await flip(s, story, render); }
+          const dice = s.h("button", { class: "btn solid", style: { minHeight: "56px" }, onclick: async () => { s.sound("drumroll", { vol: .4, dur: 1 }); for (let k = 0; k < 4; k++) sel[k] = Math.floor(Math.random() * 3); paint(); await flip(s, story, render); s.sfx.fanfare(); } }, "🎲 Zufall!");
+          const m = later(merk(s, { style: { fontSize: "21px", flex: 1 } }, "Dein eigenes Märchen: ", B(s, "Held"), " + ", B(s, "Problem"), " + ", B(s, "Helfer"), " + ", B(s, "Ende"), ". Dazu „Es war einmal“, eine Zauberzahl und eine Schlussformel."));
+          render(); paint();
+          s.add(root(s, "stack", { gap: "14px" }, s.h("div", { class: "cols4", style: { gap: "14px" } }, ...colEls), box,
+            s.h("div", { style: { display: "flex", gap: "18px", alignItems: "center" } }, m, dice)));
+          s.sfx.pop();
+          const auto = [1, 0, 2, 1];
+          colEls.forEach((c, i) => s.step(async () => { s.sfx.whoosh(); await s.show(c, "up"); sel[i] = auto[i]; paint(); s.sfx.note([0, 4, 7, 12][i], 0.25); s.say(cols[i][0] + ": " + cols[i][2][auto[i]].l); }));
+          s.step(async () => { render(); s.sound("magic-chime", { vol: .5 }); await s.show(box, "zoom"); s.say(story.textContent); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
       /* 9 ---------------------------------------------------------------- */
       {
         title: "Die Bildergeschichte",
@@ -559,6 +630,122 @@
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lf, "up"); });
         },
       },
+      /* 13a ------------------------------------------------------------- */
+      {
+        title: "Eine Person beschreiben",
+        say: "Leon soll Tante Rosa am Hauptbahnhof abholen. Er hat sie noch nie gesehen. Mama beschreibt sie ganz genau, von oben nach unten.",
+        build(s) {
+          const svg = s.svg(380, 420);
+          const hair = [[160, 78, 16], [176, 64, 17], [196, 60, 17], [215, 70, 16], [226, 90, 14], [154, 98, 14], [229, 110, 12], [151, 118, 12]].map(([x, y, r]) => s.el("circle", { cx: x, cy: y, r, fill: "#9c3d1c" }));
+          svg.append(
+            s.el("rect", { x: 166, y: 330, width: 20, height: 62, fill: "#f3c9a0" }), s.el("rect", { x: 196, y: 330, width: 20, height: 62, fill: "#f3c9a0" }),
+            s.el("path", { d: "M162 360 h28 v40 h-36 q-2 -10 8 -12 z M194 360 h28 v28 q10 2 8 12 h-36 z", fill: "#7a4a1f" }),
+            s.el("path", { d: "M150 160 L232 160 L262 340 L120 340 Z", fill: "#2f6b4f" }),
+            s.el("path", { d: "M191 166 V336", stroke: "#1f4a36", "stroke-width": 3 }),
+            ...[200, 240, 280].map(y => s.el("circle", { cx: 199, cy: y, r: 4, fill: "#f2e6c8" })),
+            s.el("path", { d: "M152 168 L124 290", stroke: "#2f6b4f", "stroke-width": 20, "stroke-linecap": "round" }),
+            s.el("path", { d: "M230 168 L262 282", stroke: "#2f6b4f", "stroke-width": 20, "stroke-linecap": "round" }),
+            s.el("circle", { cx: 122, cy: 298, r: 9, fill: "#f3c9a0" }), s.el("circle", { cx: 264, cy: 290, r: 9, fill: "#f3c9a0" }),
+            s.el("rect", { x: 266, y: 300, width: 92, height: 92, rx: 12, fill: "#d63a2a" }),
+            s.el("path", { d: "M268 286 h22 v16", stroke: "#555", "stroke-width": 5, fill: "none", "stroke-linecap": "round" }),
+            s.el("circle", { cx: 282, cy: 396, r: 7, fill: "#333" }), s.el("circle", { cx: 342, cy: 396, r: 7, fill: "#333" }),
+            s.el("circle", { cx: 292, cy: 330, r: 10, fill: P.yellow }), s.el("rect", { x: 312, y: 344, width: 30, height: 18, rx: 4, fill: "#5ab0e8", transform: "rotate(-12 327 353)" }),
+            s.el("path", { d: "M292 368 l6 10 l11 -2 l-8 8 l3 11 l-10 -6 l-10 6 l3 -11 l-8 -8 l11 2 z", fill: "#fff", opacity: .9 }),
+            s.el("rect", { x: 180, y: 128, width: 22, height: 24, fill: "#f3c9a0" }),
+            ...hair,
+            s.el("circle", { cx: 191, cy: 104, r: 34, fill: "#f3c9a0" }),
+            s.el("circle", { cx: 178, cy: 104, r: 10, fill: "#fff", "fill-opacity": .5, stroke: P.ink, "stroke-width": 3 }), s.el("circle", { cx: 204, cy: 104, r: 10, fill: "#fff", "fill-opacity": .5, stroke: P.ink, "stroke-width": 3 }),
+            s.el("path", { d: "M188 104 h6", stroke: P.ink, "stroke-width": 3 }),
+            s.el("circle", { cx: 178, cy: 104, r: 3, fill: "#2e7d32" }), s.el("circle", { cx: 204, cy: 104, r: 3, fill: "#2e7d32" }),
+            s.el("path", { d: "M181 122 Q191 130 201 122", stroke: P.ink, "stroke-width": 3, fill: "none", "stroke-linecap": "round" }),
+            s.el("path", { d: "M160 150 Q191 166 222 150 L222 164 Q191 178 160 164 Z", fill: "#e3b23c" }), s.el("path", { d: "M206 166 L214 226 L200 228 L196 168 Z", fill: "#e3b23c" }));
+          const bracket = later(s.el("path", { d: "M100 58 h-14 v336 h14", stroke: P.blue, "stroke-width": 3, fill: "none" }));
+          svg.append(bracket);
+          const marks = [[66, 226, 1], [246, 66, 2], [146, 378, 3], [170, 250, 4], [312, 290, 5]].map(([x, y, n]) => {
+            const g = later(s.el("g", null, s.el("circle", { cx: x, cy: y, r: 17, fill: P.yellow, stroke: P.ink, "stroke-width": 2 }), T(s, x, y + 7, String(n), { "font-size": 19 })));
+            svg.append(g); return g;
+          });
+          const lines = [
+            ["Gesamteindruck", "Tante Rosa ist etwa 40 Jahre alt, groß und schlank.", P.blue],
+            ["Kopf", "Sie hat lockige, rotbraune Haare, grüne Augen und eine runde Brille.", P.green],
+            ["Körper", "Sie hat lange Beine und macht große Schritte.", P.green],
+            ["Kleidung", "Sie trägt einen dunkelgrünen Mantel, einen senfgelben Schal und braune Stiefel.", P.violet],
+            ["Besonderes", "Sie zieht einen roten Koffer mit bunten Aufklebern hinter sich her.", P.red],
+          ];
+          const items = lines.map(([tag, t, c], i) => later(s.h("div", { style: { display: "grid", gridTemplateColumns: "34px 1fr", gap: "10px", alignItems: "start" } },
+            s.h("span", { style: { width: "32px", height: "32px", borderRadius: "50%", background: P.yellow, border: `2px solid ${P.ink}`, display: "grid", placeItems: "center", font: "700 18px var(--f-display)" } }, String(i + 1)),
+            s.h("p", { class: "small", style: { fontSize: "21px" } }, B(s, tag + ": ", c), t))));
+          const chain = s.h("div", { class: "row", style: { gap: "6px", flexWrap: "nowrap" } }, ...["Gesamteindruck", "Kopf", "Körper", "Kleidung", "Besonderes"].flatMap((t, i) => {
+            const c = s.h("span", { class: "chip", style: { fontSize: "17px", padding: "6px 10px", background: P.soft } }, t);
+            return i ? [s.h("b", { style: { color: P.unit } }, "→"), c] : [c];
+          }));
+          const m = later(merk(s, { style: { fontSize: "20px" } }, "Personenbeschreibung: ", B(s, "von oben nach unten"), ", im ", B(s, "Präsens"), ", mit genauen Adjektiven (", B(s, "rotbraun, lockig"), " statt „komisch“). Keine Meinung!"));
+          const lf = later(life(s, null, s.h("p", { class: "small" }, "Jemanden am Bahnhof abholen, ein verlorenes Kind beim Ausrufen beschreiben, eine Figur aus einem Buch vorstellen.")));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "380px 1fr", gap: "22px", alignItems: "center" }, svg,
+            s.h("div", { class: "stack", style: { gap: "11px" } }, chain, ...items, m, lf)));
+          s.sfx.pop();
+          s.step(async () => { s.sound("ubahn-announce", { vol: .35, dur: 2.5 }); s.show(bracket, "draw"); s.show(marks[0], "pop"); await s.show(items[0], "left"); s.say(lines[0][1]); });
+          items.slice(1).forEach((it, k) => s.step(async () => { const i = k + 1; i === 4 ? s.sound("footsteps", { vol: .45, dur: 1.5 }) : s.sfx.count(i); s.show(marks[i], "pop"); await s.show(it, "left"); s.say(lines[i][1]); }));
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* 13b ------------------------------------------------------------- */
+      {
+        title: "Ein Tier beschreiben",
+        say: "Die Katze Mimi ist weggelaufen. Mit einer ungenauen Beschreibung findet sie niemand. Mit genauen Adjektiven schon!",
+        build(s) {
+          const svg = s.svg(400, 250); svg.style.width = "390px"; svg.style.height = "auto";
+          const fur = "#d9822b", dark = "#9a4f12";
+          svg.append(
+            s.el("path", { d: "M262 214 C 330 220, 360 170, 340 120 C 330 96, 352 80, 366 92", stroke: fur, "stroke-width": 16, fill: "none", "stroke-linecap": "round" }),
+            ...[[300, 214], [334, 186], [344, 140]].map(([x, y]) => s.el("circle", { cx: x, cy: y, r: 9, fill: "none", stroke: dark, "stroke-width": 5, "stroke-dasharray": "12 40" })),
+            s.el("ellipse", { cx: 210, cy: 170, rx: 72, ry: 62, fill: fur }),
+            ...[[170, 130, 168, 200], [200, 118, 204, 214], [232, 124, 238, 206], [258, 142, 264, 196]].map(([a, b, c, d]) => s.el("path", { d: `M${a} ${b} Q${(a + c) / 2 - 10} ${(b + d) / 2} ${c} ${d}`, stroke: dark, "stroke-width": 7, fill: "none", "stroke-linecap": "round" })),
+            ...[160, 192, 228, 258].map(x => s.el("ellipse", { cx: x, cy: 232, rx: 16, ry: 10, fill: "#fff", stroke: "#e5d6c4", "stroke-width": 2 })),
+            s.el("path", { d: "M112 52 L122 16 L146 44 Z M172 44 L196 16 L204 52 Z", fill: fur }),
+            s.el("path", { d: "M120 46 L124 28 L136 42 Z M182 42 L194 28 L197 46 Z", fill: "#f4b6a6" }),
+            s.el("circle", { cx: 158, cy: 76, r: 48, fill: fur }),
+            s.el("path", { d: "M140 40 l4 14 M158 34 v16 M176 40 l-4 14", stroke: dark, "stroke-width": 5, "stroke-linecap": "round" }),
+            s.el("ellipse", { cx: 140, cy: 74, rx: 10, ry: 11, fill: "#f2b01e" }), s.el("ellipse", { cx: 176, cy: 74, rx: 10, ry: 11, fill: "#f2b01e" }),
+            s.el("ellipse", { cx: 140, cy: 74, rx: 3, ry: 9, fill: "#111" }), s.el("ellipse", { cx: 176, cy: 74, rx: 3, ry: 9, fill: "#111" }),
+            s.el("path", { d: "M150 88 Q158 82 166 88 L158 104 Z", fill: "#fff" }), s.el("path", { d: "M153 92 L163 92 L158 98 Z", fill: "#e07a8a" }),
+            s.el("path", { d: "M150 106 Q158 112 166 106 M118 92 h-30 M118 100 l-28 8 M198 92 h30 M198 100 l28 8", stroke: P.ink, "stroke-width": 2, fill: "none", "stroke-linecap": "round" }),
+            s.el("path", { d: "M122 120 Q158 136 196 120", stroke: "#1d5bd0", "stroke-width": 9, fill: "none", "stroke-linecap": "round" }),
+            s.el("circle", { cx: 158, cy: 138, r: 8, fill: P.yellow, stroke: "#b8862a", "stroke-width": 2 }));
+          const marks = [[60, 150, 1], [222, 40, 2], [300, 120, 3], [100, 226, 4], [108, 140, 5]].map(([x, y, n]) => {
+            const g = later(s.el("g", null, s.el("circle", { cx: x, cy: y, r: 16, fill: P.yellow, stroke: P.ink, "stroke-width": 2 }), T(s, x, y + 7, String(n), { "font-size": 18 })));
+            svg.append(g); return g;
+          });
+          const poster = s.h("div", { style: { background: "#fffbe6", border: "2px solid #e2d6a8", borderRadius: "6px", padding: "12px 14px", boxShadow: "4px 6px 0 rgba(0,0,0,.08)", display: "flex", flexDirection: "column", alignItems: "center", gap: "4px", transform: "rotate(-1deg)", margin: "0 6px" } },
+            s.h("p", { style: { margin: 0, font: "800 36px/1 var(--f-display)", color: P.red, letterSpacing: ".02em" } }, "KATZE ENTLAUFEN!"), svg,
+            s.h("p", { style: { margin: 0, font: "700 26px/1.1 var(--f-hand)", color: P.ink } }, "Wer hat Mimi gesehen?"));
+          const V = [
+            ["Tierart", "Mimi ist eine Katze.", "Mimi ist eine junge, schlanke Katze, etwa zwei Jahre alt."],
+            ["Kopf", "Sie hat Augen und Ohren.", "Sie hat bernsteingelbe Augen und einen weißen Fleck auf der Nase."],
+            ["Fell", "Ihr Fell ist braun.", "Ihr Fell ist rotbraun getigert und sehr weich."],
+            ["Pfoten, Schwanz", "Sie hat Pfoten und einen Schwanz.", "Alle vier Pfoten sind weiß. Der lange Schwanz hat dunkle Ringe."],
+            ["Besonderes", "Sie hat ein Halsband.", "Sie trägt ein blaues Halsband mit einem gelben Glöckchen."],
+          ];
+          const rows = V.map(([tag, a], i) => {
+            const txt = s.h("span", null, a);
+            const p = s.h("p", { class: "small", style: { fontSize: "21px", color: P.pencil } }, B(s, tag + ": ", P.unit), txt);
+            const r = s.h("div", { style: { display: "grid", gridTemplateColumns: "34px 1fr", gap: "10px", alignItems: "start" } },
+              s.h("span", { style: { width: "32px", height: "32px", borderRadius: "50%", background: P.yellow, border: `2px solid ${P.ink}`, display: "grid", placeItems: "center", font: "700 18px var(--f-display)" } }, String(i + 1)), p);
+            r.set = g => { txt.textContent = V[i][g ? 2 : 1]; p.style.color = g ? P.ink : P.pencil; };
+            return r;
+          });
+          let mode = 0;
+          const setMode = async g => { if (g === mode) return; mode = g; bU.classList.toggle("solid", !g); bG.classList.toggle("solid", !!g); s.sfx.whoosh(); for (const [i, r] of rows.entries()) { await flip(s, r, () => r.set(g)); if (g) s.show(marks[i], "pop"); } };
+          const bU = s.h("button", { class: "btn solid", onclick: () => setMode(0) }, "ungenau"), bG = s.h("button", { class: "btn", onclick: () => setMode(1) }, "genau");
+          const list = later(s.h("div", { class: "card stack", style: { gap: "10px", padding: "12px 16px" } }, s.h("div", { class: "row", style: { gap: "10px" } }, s.h("b", { style: { fontSize: "21px" } }, "Beschreibung:"), bU, bG), ...rows));
+          const m = later(merk(s, { style: { fontSize: "20px" } }, "Tierbeschreibung: ", B(s, "Tierart"), " → ", B(s, "Kopf"), " → ", B(s, "Körper und Fell"), " → ", B(s, "Beine und Schwanz"), " → ", B(s, "Besonderes"), ". Im Präsens, mit genauen Adjektiven."));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "440px 1fr", gap: "20px", alignItems: "center" }, poster, s.h("div", { class: "stack", style: { gap: "12px" } }, list, m)));
+          s.sfx.pop(); s.sound("cat-meow", { vol: .5 });
+          s.step(async () => { s.sfx.whoosh(); await s.show(list, "right"); s.sfx.boing(); s.say("So ungenau findet niemand Mimi. Jede Katze hat Augen und Ohren!"); });
+          s.step(async () => { await setMode(1); s.sfx.ding(); s.say("Rotbraun getigert, weiße Pfoten, blaues Halsband. So erkennt man Mimi sofort."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
       /* 14 --------------------------------------------------------------- */
       {
         title: "Einen Weg beschreiben",
@@ -607,6 +794,104 @@
           s.step(async () => { s.show(items[2], "left"); await walk(route[3]); s.sfx.pop(); });
           s.step(async () => { s.show(items[3], "left"); s.sound("ubahn-train", { vol: .4, dur: 3 }); s.show(uPhoto, "zoom"); await s.show(uSign, "pop"); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 14a ------------------------------------------------------------- */
+      {
+        title: "Vorgangsbeschreibung: Eierkuchen",
+        say: "Bei einer Vorgangsbeschreibung erklärst du Schritt für Schritt, wie etwas gemacht wird. Zum Beispiel Eierkuchen backen.",
+        build(s) {
+          const zut = ["250 g Mehl", "500 ml Milch", "3 Eier", "1 Prise Salz", "Butter für die Pfanne"];
+          const ger = "Schüssel, Schneebesen, Pfanne, Kelle, Pfannenwender";
+          const zEls = zut.map(z => later(s.h("p", { class: "small", style: { fontSize: "21px" } }, "☐ " + z)));
+          const safe = s.h("p", { class: "small", style: { color: P.red, fontWeight: 700 } }, "Herd nur mit einem Erwachsenen!");
+          const card = ex(s, "1. Du brauchst …", { style: { display: "flex", flexDirection: "column", gap: "4px" } }, ...zEls,
+            s.h("p", { class: "small pencil", style: { marginTop: "4px" } }, B(s, "Geräte: "), ger), safe);
+          const berl = later(s.h("div", { class: "life", style: { padding: "10px 14px", display: "grid", gridTemplateColumns: "120px 1fr", gap: "12px", alignItems: "center" } },
+            s.photo("berliner-pfannkuchen", { w: 120, h: 86 }),
+            s.h("p", { class: "small" }, B(s, "Berlinerisch: "), "Hier heißen sie ", B(s, "Eierkuchen"), ". Ein Berliner „Pfannkuchen“ ist das Gebäck links!")));
+          /* pan animation */
+          const pan = s.svg(660, 120);
+          const cake = s.el("ellipse", { cx: 300, cy: 92, rx: 0, ry: 0, fill: "#f2c45a", stroke: "#c98b1c", "stroke-width": 3 });
+          const steam = later(s.el("path", { d: "M270 46 q8 -14 0 -28 M300 42 q8 -14 0 -28 M330 46 q8 -14 0 -28", stroke: "#9aa3b5", "stroke-width": 3, fill: "none", "stroke-linecap": "round" }));
+          pan.append(s.el("path", { d: "M180 96 Q300 132 420 96 L414 106 Q300 142 186 106 Z", fill: "#3b4256" }), s.el("rect", { x: 420, y: 92, width: 170, height: 14, rx: 7, fill: "#2a2f3d" }), cake, steam);
+          const steps = [
+            ["Zuerst", " verrührst du Milch und Mehl mit dem Schneebesen."],
+            ["Dann", " rührst du die Eier und eine Prise Salz unter."],
+            ["Danach", " lässt du den Teig 15 bis 20 Minuten ruhen."],
+            ["Nun", " gibst du eine Kelle Teig in die heiße Pfanne mit Butter."],
+            ["Wenn", " die Unterseite goldbraun ist, wendest du den Eierkuchen."],
+            ["Zum Schluss", " backst du die zweite Seite noch 2 bis 3 Minuten."],
+          ];
+          const sEls = steps.map(([a, b], i) => later(s.h("div", { style: { display: "grid", gridTemplateColumns: "34px 1fr", gap: "10px", alignItems: "center" } },
+            s.h("span", { style: { width: "32px", height: "32px", borderRadius: "50%", background: P.unit, color: "#fff", display: "grid", placeItems: "center", font: "700 18px var(--f-display)" } }, String(i + 1)),
+            s.h("p", { class: "small", style: { fontSize: "21px" } }, s.h("span", { class: "hl" }, a), b))));
+          const right = s.h("div", { class: "stack", style: { gap: "8px" } }, s.h("p", { class: "h2", style: { fontSize: "24px" } }, "2. Schritt für Schritt"), pan, ...sEls);
+          const m = later(merk(s, { style: { fontSize: "20px" } }, "Erst die ", B(s, "Materialliste"), ", dann die ", B(s, "Schritte in der richtigen Reihenfolge"), ". Verbindungswörter: ", B(s, "zuerst, dann, danach, zum Schluss"), ". Zeitform: ", B(s, "Präsens"), "."));
+          right.append(m);
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "330px 1fr", gap: "22px", alignItems: "start" },
+            s.h("div", { class: "stack", style: { gap: "12px" } }, card, berl), right));
+          s.sfx.pop();
+          const pour = async () => { s.sfx.whoosh(); await s.tween({ from: 0, to: 1, dur: 700, ease: "back", update: v => { cake.setAttribute("rx", 100 * v); cake.setAttribute("ry", 14 * v); } }); };
+          const flipCake = async () => { s.sfx.boing(); await s.tween({ from: 0, to: 1, dur: 800, update: v => { const y = 92 - Math.sin(v * Math.PI) * 70; cake.setAttribute("cy", y); cake.setAttribute("ry", 14 * Math.abs(Math.cos(v * Math.PI))); cake.setAttribute("fill", v > .5 ? "#e0a63a" : "#f2c45a"); } }); cake.setAttribute("ry", 14); s.sfx.snap(); };
+          s.step(async () => { for (const [i, z] of zEls.entries()) { s.sfx.count(i); await s.show(z, "left"); } s.say("Zuerst die Materialliste: Mehl, Milch, Eier, Salz und Butter."); });
+          s.step(async () => { s.sound("ei-aufschlagen", { vol: .5 }); await s.show(sEls[0], "left"); await s.show(sEls[1], "left"); s.say(steps[0].join("") + " " + steps[1].join("")); });
+          s.step(async () => { s.sound("clock-tick", { vol: .4, dur: 2 }); await s.show(sEls[2], "left"); s.say(steps[2].join("")); });
+          s.step(async () => { s.sound("sizzle", { vol: .45, dur: 2.5 }); s.show(sEls[3], "left"); await pour(); s.show(steam, "fade"); s.say(steps[3].join("")); });
+          s.step(async () => { s.show(sEls[4], "left"); await flipCake(); s.say(steps[4].join("")); });
+          s.step(async () => { await s.show(sEls[5], "left"); s.sfx.success(); s.say(steps[5].join("")); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(berl, "up"); });
+        },
+      },
+      /* 14b ------------------------------------------------------------- */
+      {
+        title: "Anleitungen im Alltag",
+        say: "Auch eine Bastelanleitung und eine Reparaturanleitung sind Vorgangsbeschreibungen. Du kannst mit du oder mit man schreiben, aber bleib dabei!",
+        build(s) {
+          /* paper plane: 4 fold stages */
+          const pv = s.svg(300, 230); pv.style.height = "160px"; pv.style.width = "209px";
+          const shapes = [
+            "150,10 150,10 230,10 230,220 70,220 70,10 150,10",
+            "150,10 150,10 230,90 230,220 70,220 70,90 150,10",
+            "150,10 150,10 190,130 190,220 110,220 110,130 150,10",
+            "150,10 150,10 150,10 150,220 110,220 110,130 150,10",
+          ];
+          const paper = s.el("polygon", { points: shapes[0], fill: "#fff", stroke: P.blue, "stroke-width": 3, "stroke-linejoin": "round" });
+          const mid = s.el("line", { x1: 150, y1: 10, x2: 150, y2: 220, stroke: P.blue, "stroke-width": 2, "stroke-dasharray": "6 6" });
+          const plane = s.el("g", { opacity: 0 }, s.el("path", { d: "M0 0 L-100 -26 L-72 0 L-100 26 Z", fill: "#fff", stroke: P.blue, "stroke-width": 3, "stroke-linejoin": "round" }), s.el("path", { d: "M0 0 L-72 0", stroke: P.blue, "stroke-width": 2 }));
+          pv.append(paper, mid, plane);
+          const nums = s => s.split(" ").map(p => p.split(",").map(Number));
+          const morph = async (a, b) => { const A = nums(shapes[a]), Bq = nums(shapes[b]); await s.tween({ from: 0, to: 1, dur: 600, ease: "inOut", update: v => paper.setAttribute("points", A.map((p, i) => [p[0] + (Bq[i][0] - p[0]) * v, p[1] + (Bq[i][1] - p[1]) * v].join(",")).join(" ")) }); s.sfx.snap(); };
+          const fold = [["Zuerst", " faltest du das Blatt längs und öffnest es wieder."], ["Dann", " faltest du die oberen Ecken zur Mittellinie."], ["Danach", " faltest du die neuen Kanten noch einmal zur Mitte."], ["Zum Schluss", " klappst du alles zusammen und faltest die Flügel nach außen."]];
+          const fEls = fold.map(([a, b]) => later(s.h("p", { class: "small", style: { fontSize: "20px" } }, s.h("span", { class: "hl" }, a), b)));
+          const left = ex(s, "Bastelanleitung: Papierflieger", { style: { display: "flex", flexDirection: "column", gap: "6px" } }, s.h("div", { class: "center" }, pv), ...fEls);
+          /* bike tube: du / man */
+          const R = [
+            ["Zuerst", "baust du das Rad aus und hebelst den Reifen ab.", "baut man das Rad aus und hebelt den Reifen ab."],
+            ["Dann", "pumpst du den Schlauch auf und hältst ihn ins Wasser. Wo Bläschen kommen, ist das Loch.", "pumpt man den Schlauch auf und hält ihn ins Wasser. Wo Bläschen kommen, ist das Loch."],
+            ["Danach", "raust du die Stelle mit Schleifpapier auf und streichst Kleber darauf.", "raut man die Stelle mit Schleifpapier auf und streicht Kleber darauf."],
+            ["Nach kurzer Wartezeit", "drückst du den Flicken fest auf.", "drückt man den Flicken fest auf."],
+            ["Zum Schluss", "legst du den Schlauch ein, ziehst den Reifen auf und pumpst.", "legt man den Schlauch ein, zieht den Reifen auf und pumpt."],
+          ];
+          const rEls = R.map(([a, du]) => { const t = s.h("span", null, " " + du); const p = later(s.h("p", { class: "small", style: { fontSize: "20px" } }, s.h("span", { class: "hl" }, a), t)); p.t = t; return p; });
+          let mode = "du";
+          const setMode = async md => { if (md === mode) return; mode = md; bD.classList.toggle("solid", md === "du"); bM.classList.toggle("solid", md === "man"); s.sfx.whoosh(); for (const [i, p] of rEls.entries()) await flip(s, p, () => { p.t.textContent = " " + R[i][md === "du" ? 1 : 2]; }); };
+          const bD = s.h("button", { class: "btn solid", onclick: () => setMode("du") }, "du-Form"), bM = s.h("button", { class: "btn", onclick: () => setMode("man") }, "man-Form");
+          const lfA = later(life(s, { style: { padding: "8px 14px" } }, s.h("p", { class: "small" }, "Auch Rezepte, Spielregeln und Bauanleitungen für Klemmbausteine sind Vorgangsbeschreibungen.")));
+          const right = ex(s, "Reparaturanleitung: Fahrradschlauch flicken", { style: { display: "flex", flexDirection: "column", gap: "8px" } },
+            s.h("p", { class: "small pencil" }, B(s, "Material: "), "Flickzeug, Reifenheber, Pumpe, Schüssel mit Wasser"),
+            s.h("div", { class: "row", style: { gap: "10px" } }, bD, bM), ...rEls, lfA);
+          const m = later(merk(s, { style: { fontSize: "20px" } }, "Schreibe entweder mit ", B(s, "du"), " oder mit ", B(s, "man"), " – aber nicht gemischt!"));
+          s.add(root(s, "stack", { gap: "10px" }, s.h("div", { style: { display: "grid", gridTemplateColumns: "390px 1fr", gap: "20px", alignItems: "start" } }, left, right), m));
+          s.sfx.pop();
+          s.step(async () => { s.sound("paper-crumple", { vol: .3, dur: .6 }); await s.show(fEls[0], "left"); mid.classList.add("a-pulse"); s.say("Zuerst faltest du das Blatt längs."); });
+          s.step(async () => { s.show(fEls[1], "left"); await morph(0, 1); });
+          s.step(async () => { s.show(fEls[2], "left"); await morph(1, 2); });
+          s.step(async () => { s.show(fEls[3], "left"); await morph(2, 3); mid.setAttribute("opacity", 0); paper.setAttribute("opacity", 0); plane.setAttribute("opacity", 1); s.sfx.swoosh();
+            await s.tween({ from: 0, to: 1, dur: 1200, ease: "out", update: v => plane.setAttribute("transform", `translate(${90 + v * 150} ${200 - v * 90}) rotate(${-14 * v}) scale(${1 + .4 * v})`) }); });
+          s.step(async () => { for (const [i, p] of rEls.entries()) { i === 1 ? s.sound("bubbles", { vol: .4, dur: 1.5 }) : s.sfx.count(i); await s.show(p, "left"); } s.say("Fünf Schritte, alle mit du."); });
+          s.step(async () => { await setMode("man"); s.say("Jetzt alles mit man. Auch das ist richtig."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lfA, "up"); });
         },
       },
       /* 15 --------------------------------------------------------------- */

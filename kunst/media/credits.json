@@ -1,4 +1,28 @@
 {
+ "alexandermosaik": {
+  "file": "alexandermosaik.jpg",
+  "kind": "img",
+  "w": 1100,
+  "h": 684,
+  "title": "Alexandermosaik aus Pompeji, Neapel",
+  "author": "Lucas",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Alexander_Mosaic_(6000_x_3730).jpg",
+  "orig": "File:Alexander Mosaic (6000 x 3730).jpg"
+ },
+ "alexandermosaik-detail": {
+  "file": "alexandermosaik-detail.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 638,
+  "title": "Alexandermosaik, Detail: Alexander",
+  "author": "Unknown creatorUnknown creator",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Alexander_and_Bucephalus_-_Battle_of_Issus_mosaic_-_Museo_Archeologico_Nazionale_-_Naples_BW.jpg",
+  "orig": "File:Alexander and Bucephalus - Battle of Issus mosaic - Museo Archeologico Nazionale - Naples BW.jpg"
+ },
  "allee-baeume": {
   "file": "allee-baeume.jpg",
   "kind": "img",
@@ -10,6 +34,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Bruno-Baum-Stra%C3%9Fe_-_Gr%C3%BCnzug_(8).jpg",
   "orig": "File:Bruno-Baum-Straße - Grünzug (8).jpg"
+ },
+ "altes-museum": {
+  "file": "altes-museum.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 662,
+  "title": "Altes Museum Berlin mit 18 ionischen Säulen",
+  "author": "Carole Raddato from FRANKFURT, Germany",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Altes_Museum,_Berlin_(13510741004).jpg",
+  "orig": "File:Altes Museum, Berlin (13510741004).jpg"
  },
  "amphore": {
   "file": "amphore.jpg",
@@ -237,6 +273,18 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Pinch_Pot_Workshop_at_Rancho_Sierra_Vista_(38539310952).jpg",
   "orig": "File:Pinch Pot Workshop at Rancho Sierra Vista (38539310952).jpg"
+ },
+ "doryphoros": {
+  "file": "doryphoros.jpg",
+  "kind": "img",
+  "w": 415,
+  "h": 900,
+  "title": "Doryphoros (Speerträger), römische Marmorkopie, Neapel",
+  "author": "Yair-haklai",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Doryphoros_from_Pompeii_(Naples).jpg",
+  "orig": "File:Doryphoros from Pompeii (Naples).jpg"
  },
  "druckerpatronen": {
   "file": "druckerpatronen.jpg",
@@ -572,6 +620,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Beilstein_-_Billensbach_-_Kirchstra%C3%9Fe_3_-_Holzstruktur_-_Fuchsgesicht_1.jpg",
   "orig": "File:Beilstein - Billensbach - Kirchstraße 3 - Holzstruktur - Fuchsgesicht 1.jpg"
  },
+ "hydria": {
+  "file": "hydria.jpg",
+  "kind": "img",
+  "w": 683,
+  "h": 800,
+  "title": "Rotfigurige Hydria (Wasserkrug), Athen",
+  "author": "Attributed to Leningrad Painter",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Attic_red-figure_hydria_(Chicago_Art_Institute_191.456).jpg",
+  "orig": "File:Attic red-figure hydria (Chicago Art Institute 191.456).jpg"
+ },
  "kandinsky-komposition8": {
   "file": "kandinsky-komposition8.jpg",
   "kind": "img",
@@ -691,6 +751,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Toyota_Hiace_Ambulance_front_view.JPG",
   "orig": "File:Toyota Hiace Ambulance front view.JPG"
  },
+ "krater": {
+  "file": "krater.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 762,
+  "title": "Rotfiguriger Kelchkrater, um 400 v. Chr.",
+  "author": "Gary Todd from Xinzheng, China",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Attic_Red-figure_Calyx_Krater_with_Nike_adorning_a_Tripod,_Unknown_provenance,_c._400_BC_(28432110036).jpg",
+  "orig": "File:Attic Red-figure Calyx Krater with Nike adorning a Tripod, Unknown provenance, c. 400 BC (28432110036).jpg"
+ },
  "kuehe-wiese": {
   "file": "kuehe-wiese.jpg",
   "kind": "img",
@@ -702,6 +774,30 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
   "source": "https://commons.wikimedia.org/wiki/File:Herd_of_cows_on_the_water_meadows_-_June_2013_-_panoramio.jpg",
   "orig": "File:Herd of cows on the water meadows - June 2013 - panoramio.jpg"
+ },
+ "kylix-innenbild": {
+  "file": "kylix-innenbild.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 700,
+  "title": "Innenbild einer rotfigurigen Kylix",
+  "author": "J. Paul Getty Museum",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Attic_red-figure_kylix_by_Brygos_Painter,_tondo_-_Getty_Museum_(86.AE.286).jpg",
+  "orig": "File:Attic red-figure kylix by Brygos Painter, tondo - Getty Museum (86.AE.286).jpg"
+ },
+ "kylix-rotfigurig": {
+  "file": "kylix-rotfigurig.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 488,
+  "title": "Rotfigurige Kylix (Trinkschale), Brygos-Maler",
+  "author": "J. Paul Getty Museum",
+  "license": "CC0",
+  "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Attic_red-figure_kylix_by_Brygos_Painter,_front_-_Getty_Museum_(86.AE.286).jpg",
+  "orig": "File:Attic red-figure kylix by Brygos Painter, front - Getty Museum (86.AE.286).jpg"
  },
  "laubfrosch": {
   "file": "laubfrosch.jpg",
@@ -1118,6 +1214,18 @@
   "source": "https://freesound.org/people/thecityrings/sounds/207310/",
   "orig": "207310"
  },
+ "parthenon": {
+  "file": "parthenon.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 703,
+  "title": "Der Parthenon auf der Akropolis in Athen",
+  "author": "Steve Swayne",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Parthenon_in_Athens.jpg",
+  "orig": "File:The Parthenon in Athens.jpg"
+ },
  "pergamon-relief": {
   "file": "pergamon-relief.jpg",
   "kind": "img",
@@ -1129,6 +1237,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Phoebe_%26_Asteria,_South_Frieze,_Gigantomachy_Frieze,_Pergamon_Altar,_Pergamon_Museum,_Berlin_(5902793948).jpg",
   "orig": "File:Phoebe & Asteria, South Frieze, Gigantomachy Frieze, Pergamon Altar, Pergamon Museum, Berlin (5902793948).jpg"
+ },
+ "pergamonaltar": {
+  "file": "pergamonaltar.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 667,
+  "title": "Pergamonaltar im Pergamonmuseum Berlin",
+  "author": "Lestat (Jan Mehlich)",
+  "license": "CC BY-SA 3.0",
+  "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "source": "https://commons.wikimedia.org/wiki/File:Berlin_-_Pergamonmuseum_-_Altar_02.jpg",
+  "orig": "File:Berlin - Pergamonmuseum - Altar 02.jpg"
  },
  "pigmente": {
   "file": "pigmente.jpg",

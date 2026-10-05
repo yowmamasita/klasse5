@@ -34,6 +34,11 @@
   "spoken": "Häuser, Kuppel und Palme aus ganz flachen Farbflächen.",
   "text": "Häuser, Kuppel und Palme aus ganz flachen Farbflächen."
  },
+ "02f7980f29039e36": {
+  "lang": "de-DE",
+  "spoken": "Griechische Säulen erkennst du am Kapitell, dem Kopf der Säule. Dorisch ist schlicht, ionisch hat Schnecken, korinthisch hat Blätter.",
+  "text": "Griechische Säulen erkennst du am Kapitell, dem Kopf der Säule. Dorisch ist schlicht, ionisch hat Schnecken, korinthisch hat Blätter."
+ },
  "0344fdf6c684c1d7": {
   "lang": "de-DE",
   "spoken": "Tippe ein Stück im Farbkreis an. Dann siehst du, woraus die Farbe gemischt ist.",
@@ -58,6 +63,11 @@
   "lang": "de-DE",
   "spoken": "Erst der Würfel ohne Fluchtpunkt.",
   "text": "Erst der Würfel ohne Fluchtpunkt."
+ },
+ "06afc4fcf3435872": {
+  "lang": "de-DE",
+  "spoken": "Amphore",
+  "text": "Amphore"
  },
  "06e31bc1d1f6504e": {
   "lang": "de-DE",
@@ -174,10 +184,20 @@
   "spoken": "Mit diesen Wörtern kannst du genau sagen, wo etwas im Bild ist. Tippe ein Wort, der Zeiger zeigt die Stelle.",
   "text": "Mit diesen Wörtern kannst du genau sagen, wo etwas im Bild ist. Tippe ein Wort, der Zeiger zeigt die Stelle."
  },
+ "0ecbd1d03c365043": {
+  "lang": "de-DE",
+  "spoken": "Zuerst zwei Randlinien.",
+  "text": "Zuerst zwei Randlinien."
+ },
  "0f0a3c592c1c8055": {
   "lang": "de-DE",
   "spoken": "Zieh die Sonne hin und her. Der Schatten wandert immer auf die andere Seite.",
   "text": "Zieh die Sonne hin und her. Der Schatten wandert immer auf die andere Seite."
+ },
+ "0f3708701decdc10": {
+  "lang": "de-DE",
+  "spoken": "Jetzt legst du ein Mosaik. Wähle eine Farbe und tippe auf die Steinchen – oder streiche mit dem Finger darüber.",
+  "text": "Jetzt legst du ein Mosaik. Wähle eine Farbe und tippe auf die Steinchen – oder streiche mit dem Finger darüber."
  },
  "10605e6c8f7b5ea9": {
   "lang": "de-DE",
@@ -203,6 +223,11 @@
   "lang": "de-DE",
   "spoken": "In Venedig ist Karneval ohne Masken nicht denkbar.",
   "text": "In Venedig ist Karneval ohne Masken nicht denkbar."
+ },
+ "139aecf2930c45ab": {
+  "lang": "de-DE",
+  "spoken": "ionisch",
+  "text": "ionisch"
  },
  "139df28065e8c043": {
   "lang": "de-DE",
@@ -324,6 +349,16 @@
   "spoken": "Im Drucker heißen sie Gelb, Magenta und Cyan.",
   "text": "Im Drucker heißen sie Gelb, Magenta und Cyan."
  },
+ "1e88b3459a17f82e": {
+  "lang": "de-DE",
+  "spoken": "Zickzack",
+  "text": "Zickzack"
+ },
+ "1f08d509d01f1f93": {
+  "lang": "de-DE",
+  "spoken": "Die rote Hüftlinie und die blaue Schulterlinie kippen gegeneinander.",
+  "text": "Die rote Hüftlinie und die blaue Schulterlinie kippen gegeneinander."
+ },
  "1f36afd41bbc200d": {
   "lang": "de-DE",
   "spoken": "Kunst begegnet dir im Museum, in der Schule und im eigenen Zimmer.",
@@ -368,6 +403,11 @@
   "lang": "de-DE",
   "spoken": "Jetzt ist alles geordnet. Probiere es selbst aus.",
   "text": "Jetzt ist alles geordnet. Probiere es selbst aus."
+ },
+ "2400c3a68707b2d7": {
+  "lang": "de-DE",
+  "spoken": "Palmetten",
+  "text": "Palmetten"
  },
  "2430ec45859d0809": {
   "lang": "de-DE",
@@ -414,10 +454,20 @@
   "spoken": "Wir zählen die Köpfe.",
   "text": "Wir zählen die Köpfe."
  },
+ "27973ff580989201": {
+  "lang": "de-DE",
+  "spoken": "Es gibt zwei Arten, Vasen zu bemalen. Schwarzfigurig: Die Figur ist schwarz. Rotfigurig: Der Hintergrund ist schwarz, die Figur bleibt tonrot.",
+  "text": "Es gibt zwei Arten, Vasen zu bemalen. Schwarzfigurig: Die Figur ist schwarz. Rotfigurig: Der Hintergrund ist schwarz, die Figur bleibt tonrot."
+ },
  "2810af6b38b2c519": {
   "lang": "de-DE",
   "spoken": "Dazwischen die drei Mischfarben zweiter Ordnung.",
   "text": "Dazwischen die drei Mischfarben zweiter Ordnung."
+ },
+ "28134f42b4f55fd6": {
+  "lang": "de-DE",
+  "spoken": "Darauf das Gebälk.",
+  "text": "Darauf das Gebälk."
  },
  "2886db60e47a51c0": {
   "lang": "de-DE",
@@ -464,6 +514,11 @@
   "spoken": "Probiere alle Farben aus.",
   "text": "Probiere alle Farben aus."
  },
+ "30ac57c80db34cc9": {
+  "lang": "de-DE",
+  "spoken": "Das Alte Museum: ionisch.",
+  "text": "Das Alte Museum: ionisch."
+ },
  "30ae93524596e83d": {
   "lang": "de-DE",
   "spoken": "Bei einem Standbild spricht niemand. Nur der Körper erzählt: Haltung, Gestik, Mimik und Blick.",
@@ -494,6 +549,11 @@
   "spoken": "Ein kleiner orangefarbener Streifen leuchtet auf dem großen Blau.",
   "text": "Ein kleiner orangefarbener Streifen leuchtet auf dem großen Blau."
  },
+ "323b8393b5e76982": {
+  "lang": "de-DE",
+  "spoken": "Im Pergamonmuseum auf der Museumsinsel steht ein riesiger griechischer Altar aus der Stadt Pergamon. Sein Fries ist hundertdreizehn Meter lang.",
+  "text": "Im Pergamonmuseum auf der Museumsinsel steht ein riesiger griechischer Altar aus der Stadt Pergamon. Sein Fries ist hundertdreizehn Meter lang."
+ },
  "32463b604dfc602c": {
   "lang": "de-DE",
   "spoken": "Und im Baumarkt kommen ein paar Tropfen Farbe in weiße Wandfarbe. Drücke auf Farbe mischen.",
@@ -523,6 +583,16 @@
   "lang": "de-DE",
   "spoken": "Beim Fußball hilft der Kontrast der Trikots.",
   "text": "Beim Fußball hilft der Kontrast der Trikots."
+ },
+ "359ba66731fdfeec": {
+  "lang": "de-DE",
+  "spoken": "Rotfigurig kann man viel feinere Linien malen.",
+  "text": "Rotfigurig kann man viel feinere Linien malen."
+ },
+ "36a4083e03dc4c1c": {
+  "lang": "de-DE",
+  "spoken": "Geh auf Entdeckungstour. Im Alten Museum und überall in der Stadt findest du die Kunst der Griechen und Römer.",
+  "text": "Geh auf Entdeckungstour. Im Alten Museum und überall in der Stadt findest du die Kunst der Griechen und Römer."
  },
  "37169b684336b7ce": {
   "lang": "de-DE",
@@ -584,10 +654,20 @@
   "spoken": "Vor rund fünfhundert Jahren haben Künstler die Perspektive erforscht. Auch Albrecht Dürer hat darüber ein Buch geschrieben.",
   "text": "Vor rund fünfhundert Jahren haben Künstler die Perspektive erforscht. Auch Albrecht Dürer hat darüber ein Buch geschrieben."
  },
+ "3baa7f77147c2951": {
+  "lang": "de-DE",
+  "spoken": "korinthisch",
+  "text": "korinthisch"
+ },
  "3cae5f8dd4a41649": {
   "lang": "de-DE",
   "spoken": "Wespe, Stoppschild und Ampel.",
   "text": "Wespe, Stoppschild und Ampel."
+ },
+ "3d7170af0c03f74b": {
+  "lang": "de-DE",
+  "spoken": "Krater",
+  "text": "Krater"
  },
  "3e1108c05de9b4f7": {
   "lang": "de-DE",
@@ -598,6 +678,11 @@
   "lang": "de-DE",
   "spoken": "Van Gogh malte die Sternennacht 1889.",
   "text": "Van Gogh malte die Sternennacht 1889."
+ },
+ "3f793be62647c683": {
+  "lang": "de-DE",
+  "spoken": "dorisch",
+  "text": "dorisch"
  },
  "3fcf1527abd4655d": {
   "lang": "de-DE",
@@ -658,6 +743,11 @@
   "lang": "de-DE",
   "spoken": "Tippe die Bausteine und lies den Satz.",
   "text": "Tippe die Bausteine und lies den Satz."
+ },
+ "449947c5265678da": {
+  "lang": "de-DE",
+  "spoken": "Vor über zweitausendfünfhundert Jahren haben die Griechen Vasen bemalt, Tempel gebaut und Statuen gemeißelt. Die Römer haben vieles davon übernommen.",
+  "text": "Vor über zweitausendfünfhundert Jahren haben die Griechen Vasen bemalt, Tempel gebaut und Statuen gemeißelt. Die Römer haben vieles davon übernommen."
  },
  "44a70dd4316851b3": {
   "lang": "de-DE",
@@ -733,6 +823,11 @@
   "lang": "de-DE",
   "spoken": "Das Licht kommt von der Seite. So wirft das Relief Schatten.",
   "text": "Das Licht kommt von der Seite. So wirft das Relief Schatten."
+ },
+ "4bac98d402a6bba3": {
+  "lang": "de-DE",
+  "spoken": "Dann die Säulen.",
+  "text": "Dann die Säulen."
  },
  "4bca9867202ec4d1": {
   "lang": "de-DE",
@@ -834,6 +929,11 @@
   "spoken": "Hier steht alles durcheinander. Das wirkt unruhig.",
   "text": "Hier steht alles durcheinander. Das wirkt unruhig."
  },
+ "54bfed4d8de9e546": {
+  "lang": "de-DE",
+  "spoken": "Die Römer legten Bilder aus vielen kleinen Steinchen. Das nennt man Mosaik. Das größte Beispiel aus Pompeji hat rund eine Million Steinchen.",
+  "text": "Die Römer legten Bilder aus vielen kleinen Steinchen. Das nennt man Mosaik. Das größte Beispiel aus Pompeji hat rund eine Million Steinchen."
+ },
  "54d7a5041f8a6326": {
   "lang": "de-DE",
   "spoken": "Beim Trocknen verdunstet das Wasser. Der Ton wird heller und etwas kleiner.",
@@ -924,6 +1024,11 @@
   "spoken": "Zuerst der Kopf.",
   "text": "Zuerst der Kopf."
  },
+ "5d0dbc59701c9143": {
+  "lang": "de-DE",
+  "spoken": "Mäander",
+  "text": "Mäander"
+ },
  "5d2533e5fcb4275f": {
   "lang": "de-DE",
   "spoken": "Drittens: nur zwei Schriften. Das wirkt ruhig.",
@@ -993,6 +1098,11 @@
   "lang": "de-DE",
   "spoken": "Dahinter und davor: der Mittelgrund.",
   "text": "Dahinter und davor: der Mittelgrund."
+ },
+ "64147603b2772a5e": {
+  "lang": "de-DE",
+  "spoken": "Ein Ornamentband ist ein Muster, das sich immer wiederholt. Es läuft wie ein Gürtel rund um die Vase.",
+  "text": "Ein Ornamentband ist ein Muster, das sich immer wiederholt. Es läuft wie ein Gürtel rund um die Vase."
  },
  "64dff53ca9d3903b": {
   "lang": "de-DE",
@@ -1083,6 +1193,11 @@
   "lang": "de-DE",
   "spoken": "Der Bleistift.",
   "text": "Der Bleistift."
+ },
+ "6eb332027e58ea63": {
+  "lang": "de-DE",
+  "spoken": "Kylix",
+  "text": "Kylix"
  },
  "6eb512800c957b8f": {
   "lang": "de-DE",
@@ -1244,6 +1359,11 @@
   "spoken": "Du findest die Drittelregel in Handykameras, in Fotos und auf Plakaten.",
   "text": "Du findest die Drittelregel in Handykameras, in Fotos und auf Plakaten."
  },
+ "7c23b06f07f30eed": {
+  "lang": "de-DE",
+  "spoken": "Vasen, Säulen, Statuen und Mosaike.",
+  "text": "Vasen, Säulen, Statuen und Mosaike."
+ },
  "7cc6102ae61e404e": {
   "lang": "de-DE",
   "spoken": "Drehe das Licht und schau, wo die Schatten wandern.",
@@ -1253,6 +1373,11 @@
   "lang": "de-DE",
   "spoken": "Verändere den Abstand der Striche.",
   "text": "Verändere den Abstand der Striche."
+ },
+ "7fc85dbbf469dc69": {
+  "lang": "de-DE",
+  "spoken": "Hydria",
+  "text": "Hydria"
  },
  "7fe822ab57824911": {
   "lang": "de-DE",
@@ -1439,6 +1564,11 @@
   "spoken": "Kapitel 9. Inszenieren: Standbild, Maske, Foto und Film. Du bist Regisseur: Körper, Licht, Bild und Bewegung",
   "text": "Kapitel 9. Inszenieren: Standbild, Maske, Foto und Film. Du bist Regisseur: Körper, Licht, Bild und Bewegung"
  },
+ "92cf5d2efc6ba726": {
+  "lang": "de-DE",
+  "spoken": "Der Mäander ist das berühmteste griechische Muster. Mit Kästchen-Papier kannst du ihn ganz leicht zeichnen.",
+  "text": "Der Mäander ist das berühmteste griechische Muster. Mit Kästchen-Papier kannst du ihn ganz leicht zeichnen."
+ },
  "943288252d92534a": {
   "lang": "de-DE",
   "spoken": "Lege ein Blatt unter das Papier und rubble mit dem Stift darüber. Das Muster erscheint wie von selbst.",
@@ -1579,6 +1709,11 @@
   "spoken": "Schiebe den Regler. Die Schultern drehen sich nach vorn, und das Auge auch.",
   "text": "Schiebe den Regler. Die Schultern drehen sich nach vorn, und das Auge auch."
  },
+ "a1bb777354309756": {
+  "lang": "de-DE",
+  "spoken": "In Berlin findest du griechische Säulen an vielen Gebäuden. Das Brandenburger Tor hat dorische Säulen, das Alte Museum ionische.",
+  "text": "In Berlin findest du griechische Säulen an vielen Gebäuden. Das Brandenburger Tor hat dorische Säulen, das Alte Museum ionische."
+ },
  "a20d68be27200a6a": {
   "lang": "de-DE",
   "spoken": "Jetzt du: Tippe und verändere den Ausdruck.",
@@ -1593,6 +1728,11 @@
   "lang": "de-DE",
   "spoken": "Der Ball wirft einen Schatten auf den Boden.",
   "text": "Der Ball wirft einen Schatten auf den Boden."
+ },
+ "a35e5887a54751e7": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 10. Kunst der Griechen und Römer. Vasen, Säulen, Statuen und Mosaike",
+  "text": "Kapitel 10. Kunst der Griechen und Römer. Vasen, Säulen, Statuen und Mosaike"
  },
  "a381db452a7ce512": {
   "lang": "de-DE",
@@ -1648,6 +1788,11 @@
   "lang": "de-DE",
   "spoken": "So sieht ein goldenes Rechteck aus. Es ist ein Quadrat plus ein kleineres Rechteck mit demselben Verhältnis.",
   "text": "So sieht ein goldenes Rechteck aus. Es ist ein Quadrat plus ein kleineres Rechteck mit demselben Verhältnis."
+ },
+ "a895f03542708716": {
+  "lang": "de-DE",
+  "spoken": "Jetzt bist du der Vasenmaler. Wähle Form, Technik, Ornamentband und Bild.",
+  "text": "Jetzt bist du der Vasenmaler. Wähle Form, Technik, Ornamentband und Bild."
  },
  "a8baf5666967e570": {
   "lang": "de-DE",
@@ -1724,6 +1869,11 @@
   "spoken": "Auf seiner Reise nach Venedig malte er die Stadt Innsbruck.",
   "text": "Auf seiner Reise nach Venedig malte er die Stadt Innsbruck."
  },
+ "b091cc5c459bcc72": {
+  "lang": "de-DE",
+  "spoken": "Der berühmteste Kontrapost ist der Doryphoros, der Speerträger. Ihn hat der griechische Bildhauer Polyklet im fünften Jahrhundert vor Christus geschaffen.",
+  "text": "Der berühmteste Kontrapost ist der Doryphoros, der Speerträger. Ihn hat der griechische Bildhauer Polyklet im fünften Jahrhundert vor Christus geschaffen."
+ },
  "b1772b9b322ea269": {
   "lang": "de-DE",
   "spoken": "Drücke mehr oder weniger fest auf.",
@@ -1778,6 +1928,11 @@
   "lang": "de-DE",
   "spoken": "So wurde Papyrus gemacht. Und so kannst du selbst einen Brief gestalten.",
   "text": "So wurde Papyrus gemacht. Und so kannst du selbst einen Brief gestalten."
+ },
+ "b4c4d03bc6e7a457": {
+  "lang": "de-DE",
+  "spoken": "So sehen echte griechische Vasen aus. Sie sind aus gebranntem Ton und viele hundert Jahre vor Christus entstanden.",
+  "text": "So sehen echte griechische Vasen aus. Sie sind aus gebranntem Ton und viele hundert Jahre vor Christus entstanden."
  },
  "b57523d27fbad5a6": {
   "lang": "de-DE",
@@ -1878,6 +2033,11 @@
   "lang": "de-DE",
   "spoken": "Manche Tiere wollen nicht auffallen. Ihre Farbe passt zum Untergrund. Das nennt man Tarnung.",
   "text": "Manche Tiere wollen nicht auffallen. Ihre Farbe passt zum Untergrund. Das nennt man Tarnung."
+ },
+ "bfe2fa1a5dc447ab": {
+  "lang": "de-DE",
+  "spoken": "Das Brandenburger Tor: dorisch.",
+  "text": "Das Brandenburger Tor: dorisch."
  },
  "c0371fca372992f0": {
   "lang": "de-DE",
@@ -1984,6 +2144,11 @@
   "spoken": "Alte japanische Bildrollen zeigen Häuser schräg von oben, mit parallelen Kanten. Minecraft-Blöcke werden oft genauso gezeichnet.",
   "text": "Alte japanische Bildrollen zeigen Häuser schräg von oben, mit parallelen Kanten. Minecraft-Blöcke werden oft genauso gezeichnet."
  },
+ "ccc4c056dc920197": {
+  "lang": "de-DE",
+  "spoken": "Und oben der Giebel.",
+  "text": "Und oben der Giebel."
+ },
  "cd065020679b6e08": {
   "lang": "de-DE",
   "spoken": "Früher gab es keine Tuben. Maler zermahlten Steine zu Pulver. Und eine Farbe wurde sogar künstlich gemischt.",
@@ -2044,10 +2209,20 @@
   "spoken": "Male mit dem Finger. Wähle Farbe und Technik.",
   "text": "Male mit dem Finger. Wähle Farbe und Technik."
  },
+ "d3c3f6003f3a87b6": {
+  "lang": "de-DE",
+  "spoken": "Die schwarzfigurige Malerei ist älter. Um fünfhundertdreißig vor Christus wurde in Athen die rotfigurige Malerei erfunden.",
+  "text": "Die schwarzfigurige Malerei ist älter. Um fünfhundertdreißig vor Christus wurde in Athen die rotfigurige Malerei erfunden."
+ },
  "d43776fcc31166e1": {
   "lang": "de-DE",
   "spoken": "Probiere einen Trick zum Üben.",
   "text": "Probiere einen Trick zum Üben."
+ },
+ "d4c4e4c54a0ec3d1": {
+  "lang": "de-DE",
+  "spoken": "Hoch, rechts, runter, links, runter, rechts.",
+  "text": "Hoch, rechts, runter, links, runter, rechts."
  },
  "d54b6b8632eace15": {
   "lang": "de-DE",
@@ -2104,6 +2279,11 @@
   "spoken": "Das war viel Farbe! Hier ist alles auf einen Blick.",
   "text": "Das war viel Farbe! Hier ist alles auf einen Blick."
  },
+ "dac53cf6b1edc74e": {
+  "lang": "de-DE",
+  "spoken": "Ein griechischer Tempel ist wie aus Bausteinen gebaut: unten Stufen, dann Säulen, darauf das Gebälk und oben der Giebel.",
+  "text": "Ein griechischer Tempel ist wie aus Bausteinen gebaut: unten Stufen, dann Säulen, darauf das Gebälk und oben der Giebel."
+ },
  "db675848861ef741": {
   "lang": "de-DE",
   "spoken": "Additiv heißt: Du fügst Material dazu. Subtraktiv heißt: Du nimmst Material weg.",
@@ -2128,6 +2308,11 @@
   "lang": "de-DE",
   "spoken": "Ein Schulfest-Plakat. Kannst du schnell lesen, wann und wo das Fest ist?",
   "text": "Ein Schulfest-Plakat. Kannst du schnell lesen, wann und wo das Fest ist?"
+ },
+ "de44e91ff8d7561f": {
+  "lang": "de-DE",
+  "spoken": "Probier zuerst die Technik aus.",
+  "text": "Probier zuerst die Technik aus."
  },
  "def4b8467f8c5fad": {
   "lang": "de-DE",
@@ -2219,6 +2404,11 @@
   "spoken": "Ganz hinten die Berge, blass wie im Nebel.",
   "text": "Ganz hinten die Berge, blass wie im Nebel."
  },
+ "e72991c989716118": {
+  "lang": "de-DE",
+  "spoken": "Wellenband",
+  "text": "Wellenband"
+ },
  "e72f30c485b102f2": {
   "lang": "de-DE",
   "spoken": "Albrecht Dürer, nach dem deine Schule heißt, hat schon vor über fünfhundert Jahren mit Wasserfarben gemalt.",
@@ -2304,6 +2494,11 @@
   "spoken": "Papier drauf, reiben, abziehen.",
   "text": "Papier drauf, reiben, abziehen."
  },
+ "ebf0bd1ee72b7a1f": {
+  "lang": "de-DE",
+  "spoken": "So sieht ein Delfin aus Steinchen aus. Jetzt bist du dran.",
+  "text": "So sieht ein Delfin aus Steinchen aus. Jetzt bist du dran."
+ },
  "ebfc4c37fc5767e6": {
   "lang": "de-DE",
   "spoken": "Nur die hohen Stellen haben Farbe.",
@@ -2379,6 +2574,11 @@
   "spoken": "Und wer ist die Figur?",
   "text": "Und wer ist die Figur?"
  },
+ "f3a7985a20244a81": {
+  "lang": "de-DE",
+  "spoken": "Zuerst die Stufen.",
+  "text": "Zuerst die Stufen."
+ },
  "f3e24547e0b8f93a": {
   "lang": "de-DE",
   "spoken": "Auch Figuren, die nach rechts laufen, wirken oft, als gingen sie voran.",
@@ -2449,6 +2649,11 @@
   "spoken": "Der Fluchtpunkt kommt dazu.",
   "text": "Der Fluchtpunkt kommt dazu."
  },
+ "fa8756fa4b4d7f88": {
+  "lang": "de-DE",
+  "spoken": "Ältere Statuen stehen steif. Später haben griechische Bildhauer den Kontrapost erfunden: Ein Bein trägt, das andere ist locker. Zieh am Regler.",
+  "text": "Ältere Statuen stehen steif. Später haben griechische Bildhauer den Kontrapost erfunden: Ein Bein trägt, das andere ist locker. Zieh am Regler."
+ },
  "fac6940879c9cc91": {
   "lang": "de-DE",
   "spoken": "Für ein Schattentheater brauchst du eine Lampe, eine Figur und eine Leinwand. Je näher die Figur an der Lampe ist, desto größer wird der Schatten.",
@@ -2478,6 +2683,11 @@
   "lang": "de-DE",
   "spoken": "Wir schnitzen einen Stempel. Alles, was nicht drucken soll, wird weggeschnitten.",
   "text": "Wir schnitzen einen Stempel. Alles, was nicht drucken soll, wird weggeschnitten."
+ },
+ "fbf614ae434c4c0e": {
+  "lang": "de-DE",
+  "spoken": "Griechische Vasen waren Alltagsgeschirr. An der Form erkennst du, wofür man sie benutzt hat. Tippe auf eine Vase.",
+  "text": "Griechische Vasen waren Alltagsgeschirr. An der Form erkennst du, wofür man sie benutzt hat. Tippe auf eine Vase."
  },
  "fc39d1e51b4d5a63": {
   "lang": "de-DE",

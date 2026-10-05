@@ -95,6 +95,8 @@ def collect(subject):
             text = text.strip()
             if not text or not re.search(r"[A-Za-zÄÖÜäöüß0-9]", text):
                 continue
+            if not (lang or "de").lower().startswith(("de", "en")):  # other languages use the browser voice
+                continue
             key = page.run(f"() => Deck.voiceKey({json.dumps(text)}, {json.dumps(lang)})")
             if key not in uniq:
                 spoken = page.run(f"() => Deck.voiceSpoken({json.dumps(text)}, {json.dumps(lang)})")

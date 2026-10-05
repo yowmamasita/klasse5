@@ -147,11 +147,15 @@
       if (isMath && lang.startsWith("de")) t = t.replace(/([\d)²³])\s*·\s*(?=[\d(a-z])/g, "$1 mal ").replace(/(\d)\s+:\s+(?=\d)/g, "$1 geteilt durch ");
       return t;
     },
-    speak(text, { lang = "de-DE", rate = 0.95, pitch = 1.05 } = {}) {
-      if (Deck.voiceLog && text) Deck.voiceLog.push([lang, String(text)]);
+    speak(text, opts = {}) {
+      const { lang = "de-DE", rate = 0.95, pitch = 1.05 } = opts;
+      /* clips exist only for German/English in the default voice; other languages and explicit pitch (character
+         voices) always use the browser's speech synthesis */
+      const clipOk = /^(de|en)/i.test(lang) && !("pitch" in opts);
+      if (Deck.voiceLog && text && clipOk) Deck.voiceLog.push([lang, String(text)]);
       if (!text || Deck.fast) return;
       this.stop();
-      const file = this.clips[this.key(text, lang)];
+      const file = clipOk && this.clips[this.key(text, lang)];
       if (file && this.playClip(file)) return;
       if (!window.speechSynthesis) return;
       const u = new SpeechSynthesisUtterance(this.spoken(text, lang));
@@ -637,7 +641,7 @@
     home.appendChild(h("div", { class: "top" },
       h("div", null, h("h1", { class: "title a-left" }, (Deck.meta.subject || "Mathe") + " ", h("em", null, "Klasse 5")), h("p", { class: "sub a-left", style: { "--d": "120ms" } }, Deck.meta.sub || "")),
       tools));
-    const grid = h("div", { class: Deck.units.length > 9 ? "units many ten" : Deck.units.length > 8 ? "units many" : "units" });
+    const grid = h("div", { class: Deck.units.length > 10 ? "units many twelve" : Deck.units.length > 9 ? "units many ten" : Deck.units.length > 8 ? "units many" : "units" });
     Deck.units.forEach((u, i) => {
       const total = slidesOf(u).length, done = Math.min(seen[u.id] || 0, total);
       const card = h("button", { class: "ucard a-up", style: { "--uc": u.color, "--d": 80 * i + "ms" }, onclick: () => { Sfx.unlock(); Sfx.whoosh(); go(i, 0, 1); } },
