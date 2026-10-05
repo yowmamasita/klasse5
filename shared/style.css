@@ -74,6 +74,9 @@ body {
 .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--line); flex: none; }
 .dot.done { background: var(--unit); opacity: .45; }
 .dot.cur { background: var(--unit); width: 30px; border-radius: 6px; }
+.dots:has(.dot:nth-child(25)) { gap: 5px; }
+.dots:has(.dot:nth-child(25)) .dot { width: 10px; height: 10px; }
+.dots:has(.dot:nth-child(25)) .dot.cur { width: 24px; }
 .stepinfo { font: 600 24px/1 var(--f-hand); color: var(--pencil); white-space: nowrap; min-width: 110px; text-align: right; }
 
 /* ---------- content area ---------- */

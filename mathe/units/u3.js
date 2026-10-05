@@ -1,4 +1,4 @@
-/* Kapitel 3 – Geraden und Winkel (Berliner Rahmenlehrplan, Niveau C–D): Linien, Geodreieck, Winkel, Dreiecksarten, Winkelsumme, Zirkel */
+/* Kapitel 3 – Geraden und Winkel (Berliner Rahmenlehrplan, Niveau C–D): Linien, Geodreieck, Winkel, Winkel an Geradenkreuzungen (Ausblick Kl. 6), Dreiecksarten, Winkelsumme, Zirkel */
 (() => {
   "use strict";
   const U = "#7b4fd6", INK = "#1b2740", BLUE = "#1d5bd0", RED = "#dc3b2a", GREEN = "#138a5a", ORANGE = "#ee7a1a", PENCIL = "#5d6678", SOFT = "#ece5fb";
@@ -110,7 +110,7 @@
     id: "u3", num: 3, title: "Geraden und Winkel", color: U, soft: SOFT,
     subtitle: "Linien, Geodreieck, Winkel und Dreiecke",
     blurb: "Parallel, senkrecht, Winkel messen und zeichnen, Dreiecke.",
-    goals: ["Strecke, Strahl und Gerade unterscheiden", "Parallele und senkrechte Geraden erkennen und zeichnen", "Abstand und Lot verstehen", "Winkel benennen, messen und zeichnen", "Dreiecke nach Seiten und Winkeln ordnen – Winkelsumme 180°", "Mit Geodreieck und Zirkel umgehen"],
+    goals: ["Strecke, Strahl und Gerade unterscheiden", "Parallele und senkrechte Geraden erkennen und zeichnen", "Abstand und Lot verstehen", "Winkel benennen, messen und zeichnen", "Ausblick: Neben-, Scheitel-, Stufen- und Wechselwinkel", "Dreiecke nach Seiten und Winkeln ordnen – Winkelsumme 180°", "Mit Geodreieck und Zirkel umgehen"],
     icon(svg, el) {
       svg.append(el("path", { d: "M14,56 L40,56 A26,26 0 0 0 33.4,38.6 Z", fill: "#ece5fb" }),
         el("line", { x1: 14, y1: 56, x2: 62, y2: 56, stroke: U, "stroke-width": 4, "stroke-linecap": "round" }),
@@ -797,6 +797,275 @@
             s.h("div", { class: "stack", style: { gap: "12px" } }, ...items, sl, s.h("div", { class: "row" }, btn))));
           s.show(svg, "zoom"); s.sfx.whoosh();
           D.forEach((f, i) => s.step(async () => { busy = true; s.show(items[i], "left"); s.say(items[i].textContent.slice(1)); await f(); doneN = i + 1; busy = false; }));
+        },
+      },
+      /* 13e ─────────────────────────────── Nebenwinkel (Ausblick Klasse 6) */
+      {
+        title: "Nebenwinkel: zusammen 180°",
+        say: "Zwei Geraden kreuzen sich. Die beiden Winkel, die nebeneinander an einer Geraden liegen, heißen Nebenwinkel.",
+        build(s) {
+          const svg = box(s, 560, 480), S = [280, 290], RH = 205;
+          let th = 55;
+          const secA = pth(s, "", { fill: "rgba(220,59,42,.22)", stroke: RED, "stroke-width": 3.5, class: "later" });
+          const secB = pth(s, "", { fill: "rgba(29,91,208,.18)", stroke: BLUE, "stroke-width": 3.5, class: "later" });
+          const g = ln(s, 20, S[1], 540, S[1], { stroke: INK, "stroke-width": 5 });
+          const h = ln(s, 0, 0, 0, 0, { stroke: U, "stroke-width": 5 });
+          const aL = grk(tx(s, 0, 0, "α", { fill: RED, "font-weight": 700, class: "lbl later", style: { fontSize: "30px" } }));
+          const bL = grk(tx(s, 0, 0, "β", { fill: BLUE, "font-weight": 700, class: "lbl later", style: { fontSize: "30px" } }));
+          const gL = tx(s, 525, S[1] + 34, "g", { class: "hlbl", fill: INK });
+          const hd = s.el("circle", { r: 15, fill: U, stroke: "#fff", "stroke-width": 3 }), hh = s.el("circle", { r: 36, fill: "transparent" });
+          svg.append(secA, secB, g, h, s.el("circle", { cx: S[0], cy: S[1], r: 7, fill: INK }), aL, bL, gL, hd, hh);
+          const vA = s.h("span", { style: { color: RED, marginRight: "28px" } }), vB = s.h("span", { style: { color: BLUE } });
+          const valRow = s.h("p", { class: "h2 mono later" }, vA, "   ", vB);
+          const sum = s.h("p", { class: "big later", style: { color: U }, html: gk("α + β = 180°") });
+          function render() {
+            const t = th * D2R, d = [Math.cos(t), -Math.sin(t)];
+            setL(h, S[0] - 330 * d[0], S[1] - 330 * d[1], S[0] + 330 * d[0], S[1] + 330 * d[1]);
+            hd.setAttribute("cx", S[0] + RH * d[0]); hd.setAttribute("cy", S[1] + RH * d[1]); hh.setAttribute("cx", S[0] + RH * d[0]); hh.setAttribute("cy", S[1] + RH * d[1]);
+            secA.setAttribute("d", arcD(S[0], S[1], 64, 0, th, true)); secB.setAttribute("d", arcD(S[0], S[1], 56, th, 180, true));
+            const ra = th < 35 ? 120 : 98, rb = th > 145 ? 120 : 98;
+            aL.setAttribute("x", S[0] + ra * Math.cos(t / 2)); aL.setAttribute("y", S[1] - ra * Math.sin(t / 2) + 10);
+            const mb = (th + 180) / 2 * D2R; bL.setAttribute("x", S[0] + rb * Math.cos(mb)); bL.setAttribute("y", S[1] - rb * Math.sin(mb) + 10);
+            vA.innerHTML = gk(`α = ${th}°`); vB.innerHTML = gk(`β = ${180 - th}°`);
+          }
+          let prev = th;
+          s.drag(hh, { space: svg, onMove: p => {
+            let na = Math.atan2(S[1] - p.y, p.x - S[0]) / D2R; if (na < 0) na += 180;
+            na = clamp(Math.round(na), 15, 165);
+            if (na !== th) { th = na; render(); if (Math.abs(na - prev) >= 5) { prev = na; s.sfx.tick(); } }
+          } });
+          render();
+          const chip = s.h("span", { class: "chip", style: { background: SOFT, color: U, fontSize: "19px", alignSelf: "flex-start" } }, "Ausblick Klasse 6");
+          const hint = s.h("p", { class: "small pencil" }, "Zieh am lila Punkt: Die Gerade h dreht sich.");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "Nebenwinkel"), " liegen nebeneinander an einer Geraden. Zusammen bilden sie einen gestreckten Winkel: ", s.h("b", null, "180°"), ".");
+          const exb = s.h("div", { class: "ex later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "So rechnest du"), s.h("p", { class: "small", html: gk("α = 40°  →  β = 180° − 40° = <b>140°</b>") }));
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", alignItems: "center", height: "100%", gap: "24px" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, chip, hint, valRow, sum, merk, exb)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          const turn = async to => { const from = th; await s.tween({ from, to, dur: 1300, update: v => { th = Math.round(v); render(); } }); th = to; render(); };
+          s.step(async () => { s.sfx.pop(); s.show(secA, "pop"); await s.show(aL, "pop"); s.show(valRow, "up"); s.say("Hier ist der Winkel Alpha."); });
+          s.step(async () => { s.sfx.pop(); s.show(secB, "pop"); await s.show(bL, "pop"); s.sfx.chord([0, 4, 7]); await s.show(sum, "zoom"); s.say("Daneben liegt Beta. Zusammen ergeben sie eine gerade Linie: hundertachtzig Grad."); });
+          s.step(async () => { s.say("Wir drehen die Gerade. Alpha wird größer, Beta kleiner – zusammen bleiben es hundertachtzig Grad."); await turn(120); s.sfx.ding(); await turn(40); s.sfx.ding(); });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); await s.show(exb, "up"); });
+        },
+      },
+      /* 13f ─────────────────────────────── Scheitelwinkel (Ausblick Klasse 6) */
+      {
+        title: "Scheitelwinkel: gleich groß",
+        say: "An einer Kreuzung entstehen vier Winkel. Die Winkel, die sich am Scheitel gegenüberliegen, heißen Scheitelwinkel. Sie sind gleich groß.",
+        build(s) {
+          const svg = box(s, 560, 480), S = [280, 245], RH = 205;
+          let th = 50;
+          const C1 = ["rgba(220,59,42,.24)", RED], C2 = ["rgba(29,91,208,.18)", BLUE];
+          const sec = [C1, C2, C1, C2].map(([f, c], i) => pth(s, "", { fill: f, stroke: c, "stroke-width": 3.5 }));
+          const ghost = pth(s, "", { fill: "rgba(220,59,42,.45)", stroke: RED, "stroke-width": 3, "stroke-dasharray": "6 5", class: "later" });
+          const g = ln(s, 20, S[1], 540, S[1], { stroke: INK, "stroke-width": 5 });
+          const h = ln(s, 0, 0, 0, 0, { stroke: U, "stroke-width": 5 });
+          const labs = ["α", "β", "γ", "δ"].map((n, i) => grk(tx(s, 0, 0, n, { fill: i % 2 ? BLUE : RED, "font-weight": 700, style: { fontSize: "30px" } })));
+          const hd = s.el("circle", { r: 15, fill: U, stroke: "#fff", "stroke-width": 3 }), hh = s.el("circle", { r: 36, fill: "transparent" });
+          svg.append(...sec, g, h, ghost, s.el("circle", { cx: S[0], cy: S[1], r: 7, fill: INK }), ...labs, hd, hh);
+          const vals = [0, 1, 2, 3].map(i => s.h("span", { class: "h2 mono", style: { color: i % 2 ? BLUE : RED } }));
+          const grid = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 20px" } }, vals[0], vals[2], vals[1], vals[3]);
+          function render() {
+            const t = th * D2R, d = [Math.cos(t), -Math.sin(t)];
+            setL(h, S[0] - 330 * d[0], S[1] - 330 * d[1], S[0] + 330 * d[0], S[1] + 330 * d[1]);
+            hd.setAttribute("cx", S[0] + RH * d[0]); hd.setAttribute("cy", S[1] + RH * d[1]); hh.setAttribute("cx", S[0] + RH * d[0]); hh.setAttribute("cy", S[1] + RH * d[1]);
+            const b = [0, th, 180, 180 + th, 360];
+            sec.forEach((p, i) => p.setAttribute("d", arcD(S[0], S[1], i % 2 ? 54 : 62, b[i], b[i + 1], true)));
+            labs.forEach((l, i) => { const w = b[i + 1] - b[i], m = (b[i] + w / 2) * D2R, r = w < 35 ? 122 : 96; l.setAttribute("x", S[0] + r * Math.cos(m)); l.setAttribute("y", S[1] - r * Math.sin(m) + 10); });
+            ["α", "β", "γ", "δ"].forEach((n, i) => (vals[i].innerHTML = gk(`${n} = ${i % 2 ? 180 - th : th}°`)));
+          }
+          s.drag(hh, { space: svg, onMove: p => {
+            let na = Math.atan2(S[1] - p.y, p.x - S[0]) / D2R; if (na < 0) na += 180;
+            na = clamp(Math.round(na), 15, 165);
+            if (na !== th) { th = na; render(); if (na % 5 === 0) s.sfx.tick(); }
+          } });
+          render();
+          const chip = s.h("span", { class: "chip", style: { background: SOFT, color: U, fontSize: "19px", alignSelf: "flex-start" } }, "Ausblick Klasse 6");
+          const res = s.h("p", { class: "big later", style: { color: U }, html: gk("α = γ&nbsp;&nbsp;&nbsp;&nbsp;β = δ") });
+          const why = s.h("div", { class: "ex later", style: { padding: "10px 16px" } }, s.h("span", { class: "exlabel" }, "Warum?"),
+            s.h("p", { class: "small", html: gk("α + β = 180° und γ + β = 180° (Nebenwinkel).") }), s.h("p", { class: "small", html: gk("Also müssen α und γ gleich groß sein.") }));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "Scheitelwinkel"), " liegen sich am Scheitel gegenüber. Sie sind immer ", s.h("b", null, "gleich groß"), ".");
+          const life = s.h("div", { class: "life later", style: { padding: "8px 16px" } }, s.h("p", { class: "small" }, s.h("b", null, "Schere: "), "So weit die Klingen offen sind, so weit sind auch die Griffe offen."));
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", alignItems: "center", height: "100%", gap: "24px" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, chip, grid, res, why, merk, life)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          s.step(async () => {
+            s.say("Gegenüber von Alpha liegt Gamma. Wir drehen eine Kopie von Alpha einmal halb herum.");
+            ghost.setAttribute("d", arcD(S[0], S[1], 62, 0, th, true));             ghost.classList.remove("later"); ghost.setAttribute("transform", ""); s.sfx.whoosh();
+            await s.tween({ from: 0, to: 180, dur: 1500, ease: "inOut", update: v => ghost.setAttribute("transform", `rotate(${-v} ${S[0]} ${S[1]})`) });
+            s.sfx.snap(); s.sfx.chord([0, 4, 7]); await s.show(res, "zoom"); s.say("Sie passt genau auf Gamma! Alpha und Gamma sind gleich groß.");
+          });
+          s.step(async () => { s.hide(ghost); s.sfx.pop(); await s.show(why, "up"); s.say("Alpha und Beta sind zusammen hundertachtzig Grad. Gamma und Beta auch. Also sind Alpha und Gamma gleich."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.sound("scissors", { vol: .5, dur: 1.5 }); await s.show(life, "up"); s.say("Zieh am lila Punkt und probier es aus!"); });
+        },
+      },
+      /* 13g ─────────────────────────────── Stufen- und Wechselwinkel (Ausblick Klasse 6) */
+      {
+        title: "Stufen- und Wechselwinkel",
+        say: "Jetzt schneidet eine Gerade zwei Parallelen. An beiden Kreuzungen entstehen die gleichen Winkel.",
+        build(s) {
+          const svg = box(s, 560, 500), M = [280, 255], Y1 = 150, Q = [280, 360], RH = 225;
+          let th = 60, phi = 0, mode = "stufen";
+          const g1 = ln(s, 20, Y1, 540, Y1, { stroke: BLUE, "stroke-width": 5 }), g2 = ln(s, 0, 0, 0, 0, { stroke: BLUE, "stroke-width": 5 });
+          const h = ln(s, 0, 0, 0, 0, { stroke: U, "stroke-width": 5 });
+          const hl = pth(s, "", { stroke: "#ffd94a", "stroke-width": 16, opacity: .75, class: "later" });
+          const sa = pth(s, "", { fill: "rgba(220,59,42,.28)", stroke: RED, "stroke-width": 3.5, class: "later" });
+          const sb = pth(s, "", { fill: "rgba(19,138,90,.26)", stroke: GREEN, "stroke-width": 3.5, class: "later" });
+          const ghost = pth(s, "", { fill: "rgba(19,138,90,.45)", stroke: GREEN, "stroke-width": 3, "stroke-dasharray": "6 5", class: "later" });
+          const aL = grk(tx(s, 0, 0, "α", { fill: RED, "font-weight": 700, class: "lbl later", style: { fontSize: "28px" } }));
+          const bL = grk(tx(s, 0, 0, "β", { fill: GREEN, "font-weight": 700, class: "lbl later", style: { fontSize: "28px" } }));
+          const g1L = tx(s, 528, Y1 - 14, "g", { class: "hlbl", fill: BLUE }), g2L = tx(s, 528, Q[1] + 36, "k", { class: "hlbl", fill: BLUE });
+          const d1 = s.el("circle", { r: 6, fill: INK }), d2 = s.el("circle", { r: 6, fill: INK });
+          const hd = s.el("circle", { r: 15, fill: U, stroke: "#fff", "stroke-width": 3 }), hh = s.el("circle", { r: 36, fill: "transparent" });
+          svg.append(hl, sa, sb, g1, g2, h, ghost, d1, d2, aL, bL, g1L, g2L, hd, hh);
+          const vA = s.h("span", { style: { color: RED, marginRight: "28px" } }), vB = s.h("span", { style: { color: GREEN } });
+          const valRow = s.h("p", { class: "h2 mono" }, vA, "   ", vB);
+          const verdict = s.h("p", { class: "t", style: { fontWeight: 700, minHeight: "32px" } });
+          let S1, S2;
+          function geo() {
+            const d = [Math.cos(th * D2R), -Math.sin(th * D2R)], e = [Math.cos(phi * D2R), -Math.sin(phi * D2R)];
+            S1 = [M[0] + d[0] * (M[1] - Y1) / Math.sin(th * D2R), Y1];
+            const det = -d[0] * e[1] + e[0] * d[1], qx = Q[0] - M[0], qy = Q[1] - M[1];
+            const t = (-qx * e[1] + e[0] * qy) / det;
+            S2 = [M[0] + t * d[0], M[1] + t * d[1]];
+            return { d, e };
+          }
+          function render() {
+            const { d, e } = geo();
+            setL(h, M[0] - 360 * d[0], M[1] - 360 * d[1], M[0] + 360 * d[0], M[1] + 360 * d[1]);
+            setL(g2, Q[0] - 280 * e[0], Q[1] - 280 * e[1], Q[0] + 280 * e[0], Q[1] + 280 * e[1]);
+            g2L.setAttribute("y", Q[1] + 36 - 248 * Math.sin(phi * D2R));
+            d1.setAttribute("cx", S1[0]); d1.setAttribute("cy", S1[1]); d2.setAttribute("cx", S2[0]); d2.setAttribute("cy", S2[1]);
+            const H = [M[0] + RH * d[0], M[1] + RH * d[1]];
+            hd.setAttribute("cx", H[0]); hd.setAttribute("cy", H[1]); hh.setAttribute("cx", H[0]); hh.setAttribute("cy", H[1]);
+            const R = 54;
+            const a0 = mode === "stufen" ? 0 : 180, a1 = mode === "stufen" ? th : 180 + th;
+            sa.setAttribute("d", arcD(S1[0], S1[1], R, a0, a1, true));
+            sb.setAttribute("d", arcD(S2[0], S2[1], R, phi, th, true));
+            const ma = (a0 + a1) / 2 * D2R, mb = (phi + th) / 2 * D2R, rl = th < 50 ? 112 : 84;
+            aL.setAttribute("x", S1[0] + rl * Math.cos(ma)); aL.setAttribute("y", S1[1] - rl * Math.sin(ma) + 9);
+            bL.setAttribute("x", S2[0] + rl * Math.cos(mb)); bL.setAttribute("y", S2[1] - rl * Math.sin(mb) + 9);
+            const L = 120, ub = [S1[0] + 70 * d[0], S1[1] + 70 * d[1]];
+            hl.setAttribute("d", mode === "stufen"
+              ? `M${ub[0]},${ub[1]} L${S2[0]},${S2[1]} M${S1[0]},${S1[1]} L${S1[0] + L},${S1[1]} M${S2[0]},${S2[1]} L${S2[0] + L * e[0]},${S2[1] + L * e[1]}`
+              : `M${S1[0] - L},${S1[1]} L${S1[0]},${S1[1]} L${S2[0]},${S2[1]} L${S2[0] + L * e[0]},${S2[1] + L * e[1]}`);
+            const b = th - phi;
+            vA.innerHTML = gk(`α = ${th}°`); vB.innerHTML = gk(`β = ${Math.round(b)}°`);
+            verdict.innerHTML = "";
+            if (phi === 0) verdict.append(s.h("span", { style: { color: GREEN } }, mode === "stufen" ? "Stufenwinkel (F): gleich groß" : "Wechselwinkel (Z): gleich groß"));
+            else verdict.append(s.h("span", { style: { color: RED } }, "g und k nicht parallel: nicht gleich!"));
+          }
+          s.drag(hh, { space: svg, onMove: p => {
+            let na = Math.atan2(M[1] - p.y, p.x - M[0]) / D2R; if (na < 0) na += 180;
+            na = clamp(Math.round(na), 40, 140);
+            if (na !== th) { th = na; render(); if (na % 5 === 0) s.sfx.tick(); }
+          } });
+          render();
+          const setMode = m => { mode = m; bS.classList.toggle("solid", m === "stufen"); bW.classList.toggle("solid", m === "wechsel"); render(); };
+          let busy = false;
+          const tilt = async to => { const f = phi; await s.tween({ from: f, to, dur: 900, update: v => { phi = Math.round(v); render(); } }); phi = to; render(); bT.textContent = phi ? "k wieder parallel" : "k schief stellen"; };
+          const bS = s.h("button", { class: "btn solid", onclick: () => { s.sfx.click(); setMode("stufen"); } }, "Stufenwinkel");
+          const bW = s.h("button", { class: "btn", onclick: () => { s.sfx.click(); setMode("wechsel"); } }, "Wechselwinkel");
+          const bT = s.h("button", { class: "btn", onclick: async () => { if (busy) return; busy = true; s.sfx.whoosh(); await tilt(phi ? 0 : 14); s.sfx.snap(); busy = false; } }, "k schief stellen");
+          const btns = s.h("div", { class: "row later", style: { gap: "10px" } }, bS, bW, bT);
+          const chip = s.h("span", { class: "chip", style: { background: SOFT, color: U, fontSize: "19px", alignSelf: "flex-start" } }, "Ausblick Klasse 6");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "8px 16px 10px" } }, "Werden zwei ", s.h("b", null, "Parallelen"), " geschnitten, sind ", s.h("b", null, "Stufenwinkel"), " (F-Form) und ", s.h("b", null, "Wechselwinkel"), " (Z-Form) gleich groß.");
+          s.add(s.h("div", { class: "cols", style: { gridTemplateColumns: "560px 1fr", alignItems: "center", height: "100%", gap: "24px" } }, svg,
+            s.h("div", { class: "stack", style: { gap: "12px" } }, chip, valRow, verdict, merk, btns)));
+          s.show(svg, "zoom"); s.sfx.whoosh();
+          const fly = async kind => {
+            geo(); ghost.setAttribute("d", arcD(S2[0], S2[1], 54, phi, th, true)); ghost.setAttribute("transform", ""); ghost.classList.remove("later"); s.sfx.whoosh();
+            if (kind === "stufen") await s.tween({ dur: 1300, ease: "inOut", update: v => ghost.setAttribute("transform", `translate(${(S1[0] - S2[0]) * v},${(S1[1] - S2[1]) * v})`) });
+            else { const C = [(S1[0] + S2[0]) / 2, (S1[1] + S2[1]) / 2]; await s.tween({ dur: 1500, ease: "inOut", update: v => ghost.setAttribute("transform", `rotate(${180 * v} ${C[0]} ${C[1]})`) }); }
+            s.sfx.snap(); s.sfx.chord([0, 4, 7]); await s.wait(500); s.hide(ghost);
+          };
+          s.step(async () => {
+            busy = true; s.show(hl, "fade"); s.show(sa, "pop"); s.show(aL, "pop"); s.show(sb, "pop"); await s.show(bL, "pop");
+            s.say("Stufenwinkel liegen an beiden Kreuzungen an der gleichen Stelle, wie bei einem F. Wir schieben Beta nach oben."); await fly("stufen"); busy = false;
+          });
+          s.step(async () => { busy = true; setMode("wechsel"); s.sfx.zap(); s.say("Wechselwinkel liegen über Kreuz, wie bei einem Z. Wir drehen Beta halb herum."); await fly("wechsel"); busy = false; });
+          s.step(async () => { busy = true; s.say("Ist die Gerade k nicht parallel zu g, stimmt es nicht mehr!"); s.sfx.boing(); await tilt(14); await s.wait(700); s.sfx.whoosh(); await tilt(0); s.sfx.ding(); busy = false; });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); await s.show(btns, "up"); s.say("Zieh am lila Punkt und probier beide Winkel aus."); });
+        },
+      },
+      /* 13h ─────────────────────────────── Geradenkreuzungen im Alltag */
+      {
+        title: "Im Alltag: Kreuzungen",
+        say: "Neben-, Scheitel- und Stufenwinkel findest du an der Schere, an der Leiter, an Straßenbahngleisen und im Straßennetz.",
+        build(s) {
+          const card = (title, chip, text, mk) => {
+            const svg = s.svg(480, 180); const play = mk(svg);
+            const c = s.h("div", { class: "life later", style: { display: "flex", flexDirection: "column", gap: "6px", padding: "10px 16px", cursor: "pointer" }, onclick: () => { s.sfx.click(); play(); } },
+              svg, s.h("div", { class: "row", style: { justifyContent: "space-between", flexWrap: "nowrap" } }, s.h("span", { class: "t", style: { fontWeight: 700 } }, title), s.h("span", { class: "chip", style: { background: SOFT, color: U, fontSize: "19px" } }, chip)), s.h("p", { class: "small" }, text));
+            return { c, play };
+          };
+          const cards = [
+            card("Schere", "Scheitelwinkel", "Klingen und Griffe öffnen sich immer gleich weit.", svg => {
+              const P0 = [240, 85], g = s.el("g"); svg.append(g);
+              const set = o => {
+                g.innerHTML = "";
+                const u = (a, r) => [P0[0] + r * Math.cos(a * D2R), P0[1] - r * Math.sin(a * D2R)];
+                const b1 = u(o / 2, 190), b2 = u(-o / 2, 190), h1 = u(180 + o / 2, 120), h2 = u(180 - o / 2, 120);
+                g.append(pth(s, arcD(P0[0], P0[1], 64, -o / 2, o / 2, true), { fill: "rgba(220,59,42,.25)", stroke: RED, "stroke-width": 3 }), pth(s, arcD(P0[0], P0[1], 64, 180 - o / 2, 180 + o / 2, true), { fill: "rgba(220,59,42,.25)", stroke: RED, "stroke-width": 3 }));
+                g.append(ln(s, P0[0], P0[1], b1[0], b1[1], { stroke: "#8d96a3", "stroke-width": 9 }), ln(s, P0[0], P0[1], b2[0], b2[1], { stroke: "#a7b0bc", "stroke-width": 9 }));
+                g.append(ln(s, P0[0], P0[1], h1[0], h1[1], { stroke: U, "stroke-width": 10 }), ln(s, P0[0], P0[1], h2[0], h2[1], { stroke: U, "stroke-width": 10 }));
+                [h1, h2].forEach(p => g.append(s.el("circle", { cx: p[0], cy: p[1], r: 16, fill: "#fff", stroke: U, "stroke-width": 7 })));
+                g.append(s.el("circle", { cx: P0[0], cy: P0[1], r: 6, fill: INK }), tx(s, P0[0] + 96, P0[1] + 8, Math.round(o) + "°", { fill: RED, "font-weight": 700, "text-anchor": "start" }), tx(s, P0[0] - 96, P0[1] + 8, Math.round(o) + "°", { fill: RED, "font-weight": 700, "text-anchor": "end" }));
+              };
+              set(30);
+              return async () => { s.sound("scissors", { vol: .5, dur: 1.2 }); await s.tween({ from: 30, to: 6, dur: 500, update: set }); await s.tween({ from: 6, to: 40, dur: 900, update: set }); await s.tween({ from: 40, to: 30, dur: 500, update: set }); };
+            }),
+            card("Leiter", "Nebenwinkel", "Sicher steht sie mit 65° bis 75° zum Boden. Auf der anderen Seite: 180° − 70° = 110°.", svg => {
+              const F = [300, 140], L = 130, g = s.el("g");
+              svg.append(s.el("rect", { x: 20, y: 142, width: 440, height: 38, fill: "#eadfc6" }), s.el("rect", { x: 352, y: 0, width: 20, height: 140, fill: "#c9b79c" }), ln(s, 20, 141, 460, 141, { stroke: "#8a6d3b", "stroke-width": 5 }), g,
+                tx(s, F[0] + 34, 170, "70°", { fill: RED, "font-weight": 700 }), tx(s, F[0] - 50, 170, "110°", { fill: BLUE, "font-weight": 700 }));
+              const set = a => {
+                g.innerHTML = ""; const t = a * D2R, T2 = [F[0] + L * Math.cos(t), F[1] - L * Math.sin(t)];
+                g.append(pth(s, arcD(F[0], F[1], 46, 0, a, true), { fill: "rgba(220,59,42,.25)", stroke: RED, "stroke-width": 3 }), pth(s, arcD(F[0], F[1], 38, a, 180, true), { fill: "rgba(29,91,208,.18)", stroke: BLUE, "stroke-width": 3 }));
+                const n = [Math.sin(t) * 9, Math.cos(t) * 9];
+                g.append(ln(s, F[0] - n[0], F[1] - n[1], T2[0] - n[0], T2[1] - n[1], { stroke: ORANGE, "stroke-width": 5 }), ln(s, F[0] + n[0], F[1] + n[1], T2[0] + n[0], T2[1] + n[1], { stroke: ORANGE, "stroke-width": 5 }));
+                for (let k = 1; k < 6; k++) { const q = [F[0] + L * k / 6 * Math.cos(t), F[1] - L * k / 6 * Math.sin(t)]; g.append(ln(s, q[0] - n[0], q[1] - n[1], q[0] + n[0], q[1] + n[1], { stroke: ORANGE, "stroke-width": 4 })); }
+              };
+              set(70);
+              return async () => { s.sfx.whoosh(); await s.tween({ from: 88, to: 70, dur: 1100, ease: "out", update: set }); s.sound("holzblock", { vol: .5 }); };
+            }),
+            card("Straßenbahngleise", "Stufenwinkel", "Eine Straße kreuzt beide Schienen unter dem gleichen Winkel.", svg => {
+              const ys = [62, 112], a = 55, t = a * D2R, cx = 240;
+              const xAt = y => cx - 40 + (87 - y) / Math.tan(t);
+              svg.append(s.el("polygon", { points: P([[xAt(185) - 50, 185], [xAt(185) + 50, 185], [xAt(-5) + 50, -5], [xAt(-5) - 50, -5]]), fill: "#c9ced6" }));
+              const ax = [xAt(ys[0]), xAt(ys[1])];
+              svg.append(ln(s, xAt(185), 185, xAt(-5), -5, { stroke: "#fff", "stroke-width": 3, "stroke-dasharray": "14 12" }));
+              ys.forEach((y, i) => svg.append(ln(s, 0, y, 480, y, { stroke: "#5d6678", "stroke-width": 6 }), pth(s, arcD(ax[i], y, 34, 0, a, true), { fill: "rgba(220,59,42,.3)", stroke: RED, "stroke-width": 3 }), tx(s, ax[i] + 64, y - 8, a + "°", { fill: RED, "font-weight": 700, "text-anchor": "start" })));
+              const tram = s.el("g");
+              tram.append(s.el("rect", { x: 0, y: 66, width: 130, height: 42, rx: 10, fill: "#f0d722", stroke: INK, "stroke-width": 2 }));
+              for (let k = 0; k < 4; k++) tram.append(s.el("rect", { x: 10 + k * 30, y: 72, width: 22, height: 16, rx: 3, fill: "#cfe8f5" }));
+              svg.append(tram);
+              const set = v => tram.setAttribute("transform", `translate(${-140 + v * 760},0)`);
+              set(0);
+              return async () => { s.sound("tram-bell", { vol: .45, dur: 2 }); await s.tween({ from: 0, to: 1, dur: 2400, ease: "linear", update: set }); set(0); };
+            }),
+            card("Stadtplan von Mannheim", "überall 90°", "Die Innenstadt ist wie ein Schachbrett: Parallele Straßen kreuzen sich rechtwinklig.", svg => {
+              svg.append(s.el("rect", { x: 40, y: 4, width: 400, height: 162, rx: 8, fill: "#e9e2cf" }));
+              const xs = [100, 180, 260, 340, 420].map(x => x - 20), ys2 = [30, 85, 140];
+              xs.forEach(x => svg.append(ln(s, x, 4, x, 166, { stroke: "#fff", "stroke-width": 12, "stroke-linecap": "butt" })));
+              ys2.forEach(y => svg.append(ln(s, 40, y, 440, y, { stroke: "#fff", "stroke-width": 12, "stroke-linecap": "butt" })));
+              const marks = s.el("g", { class: "later" });
+              xs.forEach(x => marks.append(pth(s, `M${x + 8},${85 - 6} L${x + 8 + 18},${85 - 6} L${x + 8 + 18},${85 - 24}`, { stroke: RED, "stroke-width": 3 })));
+              svg.append(marks);
+              const car = s.el("circle", { r: 8, fill: RED, stroke: "#fff", "stroke-width": 2 }); svg.append(car);
+              const path = [[40, 85], [240, 85], [240, 140], [440, 140]];
+              const set = v => { const segs = path.slice(1).map((p, i) => Math.hypot(p[0] - path[i][0], p[1] - path[i][1])); let d = v * segs.reduce((a, b) => a + b, 0), i = 0; while (i < segs.length - 1 && d > segs[i]) { d -= segs[i]; i++; } const k = Math.min(1, d / segs[i]); car.setAttribute("cx", path[i][0] + (path[i + 1][0] - path[i][0]) * k); car.setAttribute("cy", path[i][1] + (path[i + 1][1] - path[i][1]) * k); };
+              set(0); s.show(marks, "fade");
+              return async () => { s.hide(marks); s.sound("traffic", { vol: .35, dur: 2 }); await s.tween({ from: 0, to: 1, dur: 2000, ease: "linear", update: set }); s.sfx.ding(); s.show(marks, "fade"); };
+            }),
+          ];
+          s.add(s.h("div", { class: "cols", style: { height: "100%", gap: "16px 20px", gridTemplateRows: "1fr 1fr" } }, cards.map(c => c.c)));
+          const reveal = async i => { s.sfx.pop(); await s.show(cards[i].c, "up"); await cards[i].play(); };
+          reveal(0);
+          s.step(async () => { await reveal(1); s.say("Leiter und Boden: Nebenwinkel, zusammen hundertachtzig Grad."); });
+          s.step(async () => { await reveal(2); s.say("Die Schienen sind parallel. Darum kreuzt die Straße beide unter dem gleichen Winkel."); });
+          s.step(async () => { await reveal(3); s.say("In Mannheim sind die Straßen wie ein Schachbrett angelegt. Tippe eine Karte an, dann läuft sie nochmal."); });
         },
       },
       /* 13a ─────────────────────────────── Dreiecke nach Seiten */

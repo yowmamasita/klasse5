@@ -1,4 +1,4 @@
-/* Kapitel 3 – Zeitformen (Berliner Rahmenlehrplan Deutsch, Klasse 5) */
+/* Kapitel 3 – Zeitformen (Berliner Rahmenlehrplan Deutsch, Klasse 5) + Ausblick Klasse 6: Aktiv und Passiv */
 (() => {
   "use strict";
   const U = "#7b4fd6", SOFT = "#ece5fb", INK = "#1b2740", BLUE = "#1d5bd0", RED = "#dc3b2a", GREEN = "#138a5a",
@@ -92,8 +92,8 @@
   Deck.unit({
     id: "u3", num: 3, title: "Zeitformen", color: U, soft: SOFT,
     subtitle: "Gestern, heute, morgen – das Verb verrät es",
-    blurb: "Präsens, Präteritum, Perfekt, Plusquamperfekt und Futur.",
-    goals: ["Auf der Zeitleiste zeigen, wann etwas passiert", "Präsens, Präteritum und Perfekt bilden", "Starke Verben und ihre Stammformen kennen", "Plusquamperfekt und Futur verstehen", "Wissen, wann man welche Zeitform benutzt"],
+    blurb: "Alle Zeitformen – und als Ausblick das Passiv.",
+    goals: ["Auf der Zeitleiste zeigen, wann etwas passiert", "Präsens, Präteritum und Perfekt bilden", "Starke Verben und ihre Stammformen kennen", "Plusquamperfekt, Futur – und als Ausblick das Passiv – verstehen", "Wissen, wann man welche Zeitform benutzt"],
     icon(svg, el) {
       svg.append(el("line", { x1: 6, y1: 40, x2: 58, y2: 40, stroke: U, "stroke-width": 5, "stroke-linecap": "round" }),
         el("polygon", { points: "66,40 54,32 54,48", fill: U }),
@@ -670,6 +670,126 @@
           s.step(async () => { for (let i = 0; i < 2; i++) { s.sfx.count(i * 2); await s.show(rows[i], "left"); marksOn(s, rows[i]); } });
           s.step(async () => { for (let i = 2; i < 5; i++) { s.sfx.count(i * 2); await s.show(rows[i], "left"); marksOn(s, rows[i]); } });
           s.step(async () => { s.sfx.success(); await s.show(m, "up"); s.confetti(590, 400, 80); });
+        },
+      },
+      /* 16 ─────────────── Ausblick: Aktiv und Passiv */
+      {
+        title: "Ausblick: Aktiv und Passiv",
+        say: "Ein Blick in Klasse sechs. Im Aktiv ist wichtig, wer etwas tut. Im Passiv ist wichtig, was passiert.",
+        build(s) {
+          const PZ = ORANGE, DO = BLUE, VB = RED;
+          const w = (t, col, extra) => s.h("span", { class: "z3-w", style: Object.assign({ fontSize: "25px", padding: "5px 11px" }, col ? { color: col, borderColor: col } : {}, extra || {}) }, t);
+          // kitchen picture
+          const v = s.svg(440, 300);
+          v.append(s.el("rect", { x: 0, y: 0, width: 440, height: 300, rx: 16, fill: "#fdf6ec" }), s.el("rect", { x: 0, y: 240, width: 440, height: 60, fill: "#e9dcc6" }),
+            s.el("rect", { x: 250, y: 80, width: 170, height: 160, rx: 10, fill: "#8a5a2b" }), s.el("path", { d: "M262 92 h146 v60 q-73 -40 -146 0 Z", fill: "#5a3a1b" }),
+            s.el("rect", { x: 270, y: 160, width: 130, height: 60, rx: 8, fill: "#3b2410" }));
+          const fire = s.el("path", { d: "M300 214 q10 -26 20 -6 q8 -24 18 0 q10 -22 20 6 Z", fill: ORANGE, opacity: .9 });
+          v.append(fire);
+          const baker = s.el("g", null,
+            s.el("path", { d: "M70 240 L64 290 M100 240 L106 290", stroke: INK, "stroke-width": 9, "stroke-linecap": "round" }),
+            s.el("path", { d: "M50 246 Q48 160 85 156 Q122 160 120 246 Z", fill: "#fff", stroke: "#c8d3de", "stroke-width": 2 }),
+            s.el("path", { d: "M114 180 L176 196", stroke: "#fff", "stroke-width": 12, "stroke-linecap": "round" }),
+            s.el("circle", { cx: 85, cy: 130, r: 26, fill: "#f3c9a0", stroke: INK, "stroke-width": 1.5 }),
+            s.el("path", { d: "M60 110 Q56 74 74 82 Q85 62 96 82 Q114 74 110 110 Z", fill: "#fff", stroke: "#c8d3de", "stroke-width": 2 }),
+            s.el("circle", { cx: 77, cy: 130, r: 3, fill: INK }), s.el("circle", { cx: 93, cy: 130, r: 3, fill: INK }), s.el("path", { d: "M76 142 Q85 149 94 142", stroke: INK, "stroke-width": 2.5, fill: "none" }));
+          const peel = s.el("path", { d: "M172 200 L240 186", stroke: "#b0874f", "stroke-width": 6, "stroke-linecap": "round" });
+          const pizza = s.el("g", null, s.el("ellipse", { cx: 210, cy: 186, rx: 40, ry: 13, fill: "#f2c27a", stroke: "#c98b3a", "stroke-width": 3 }), s.el("ellipse", { cx: 210, cy: 185, rx: 31, ry: 9, fill: RED }),
+            ...[[198, 183], [216, 188], [224, 182]].map(([x, y]) => s.el("ellipse", { cx: x, cy: y, rx: 6, ry: 2.6, fill: "#fff8d0" })));
+          const glowB = s.el("ellipse", { cx: 88, cy: 200, rx: 74, ry: 110, fill: "#ffe066", opacity: 0 });
+          const glowP = s.el("ellipse", { cx: 210, cy: 186, rx: 58, ry: 28, fill: "#ffe066", opacity: 0 });
+          const who = s.el("g", { opacity: 0 }, s.el("circle", { cx: 85, cy: 60, r: 22, fill: "#fff", stroke: PENCIL, "stroke-width": 2 }), T(s, 85, 69, "?", { fill: PENCIL, "font-size": 26 }));
+          v.prepend(glowB); v.append(glowP, baker, peel, pizza, who);
+          const fade = (el, to) => s.tween({ from: +el.getAttribute("opacity"), to, dur: s.fast ? 1 : 500, update: x => el.setAttribute("opacity", x) });
+          const tag = s.h("span", { class: "chip", style: { background: U, color: "#fff", fontSize: "19px" } }, "Ausblick Klasse 6");
+          const aRow = s.h("div", { class: "row", style: { gap: "10px" } }, w("Der Bäcker", DO), w("backt", VB), w("die Pizza.", PZ));
+          const vom = w("(vom Bäcker)", PENCIL, { borderStyle: "dashed", fontWeight: 400 });
+          vom.classList.add("later");
+          const kl = s.h("span", { class: "z3-kl", style: { gap: "8px", padding: "0 8px 12px" } }, w("wird", VB), vom, w("gebacken.", VB));
+          const pRow = s.h("div", { class: "row", style: { gap: "8px", alignItems: "flex-start", flexWrap: "nowrap" } }, w("Die Pizza", PZ), kl);
+          const aCard = s.h("div", { class: "card later", style: { padding: "10px 16px", display: "flex", flexDirection: "column", gap: "8px", borderColor: DO } },
+            s.h("p", { class: "h2", style: { fontSize: "26px", color: DO } }, "Aktiv: Wer tut etwas?"), aRow);
+          const pCard = s.h("div", { class: "card later", style: { padding: "10px 16px", display: "flex", flexDirection: "column", gap: "8px", borderColor: PZ } },
+            s.h("p", { class: "h2", style: { fontSize: "26px", color: PZ } }, "Passiv: Was passiert?"), pRow);
+          const note = s.h("p", { class: "small later", style: { fontSize: "20px" } }, "Wer es tut, ist im Passiv oft egal oder unbekannt. Man kann es weglassen – oder mit ", s.h("b", null, "von"), " dazusagen.");
+          const m = merk(s, "Im ", s.h("b", { style: { color: DO } }, "Aktiv"), " steht im Mittelpunkt, ", s.h("b", null, "wer"), " etwas tut. Im ", s.h("b", { style: { color: PZ } }, "Passiv"), " steht im Mittelpunkt, ", s.h("b", null, "was"), " passiert.");
+          const lfP = life(s, s.h("p", { class: "small" }, "Im Kochbuch: „Die Nudeln werden in Salzwasser gekocht.“ Wer kocht? Egal – wichtig sind die Nudeln!"));
+          lfP.classList.add("later");
+          s.add(s.h("div", { style: { height: "100%", display: "grid", gridTemplateColumns: "440px 1fr", gap: "20px", alignItems: "start" } },
+            s.h("div", { class: "stack", style: { gap: "10px" } }, v, note, lfP),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, s.h("div", { class: "row", style: { justifyContent: "flex-end" } }, tag), aCard, pCard, m)));
+          s.sfx.pop();
+          s.step(async () => { s.sfx.pop(); await s.show(aCard, "left"); fade(glowB, .7); s.say("Der Bäcker backt die Pizza. Wichtig ist der Bäcker."); });
+          s.step(async () => {
+            s.sound("ofen-ping", { vol: .5 }); fade(glowB, 0); fade(who, 1); fade(baker, .25); fade(glowP, .8);
+            await s.show(pCard, "right"); kl.classList.add("on"); s.say("Die Pizza wird gebacken. Wichtig ist die Pizza.");
+          });
+          s.step(async () => { s.sfx.scribble(); await s.show(vom, "pop"); await s.show(note, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lfP, "up"); });
+        },
+      },
+      /* 17 ─────────────── Passiv: werden + Partizip II */
+      {
+        title: "Passiv: werden + Partizip II",
+        say: "Das Passiv baust du mit werden und dem Partizip zwei. Das Partizip steht am Ende des Satzes.",
+        build(s) {
+          const blk = (t, bg) => s.h("span", { class: "z3-blk", style: { background: bg } }, t);
+          const plan = s.h("div", { class: "row", style: { gap: "12px", justifyContent: "center" } }, blk("eine Form von werden", RED), s.h("span", { class: "big" }, "+"), blk("Partizip II", TEAL), s.h("span", { class: "small pencil" }, "(am Satzende)"));
+          const ROWS = [
+            ["ich", "werde", "vom Bus", "abgeholt."], ["du", "wirst", "zum Essen", "gerufen."], ["die Pizza", "wird", "im Ofen", "gebacken."],
+            ["wir", "werden", "von der Trainerin", "gelobt."], ["ihr", "werdet", "nach dem Weg", "gefragt."], ["die Brötchen", "werden", "beim Bäcker", "verkauft."],
+          ];
+          const rows = ROWS.map(([p, w, mid, pp]) => s.h("tr", { class: "later" }, s.h("td", null, p), s.h("td", null, s.h("b", { style: { color: RED } }, w)), s.h("td", { class: "pencil" }, mid), s.h("td", null, s.h("b", { style: { color: TEAL } }, pp))));
+          const tab = s.h("table", { class: "z3-tab" }, s.h("thead", null, s.h("tr", null, ...["Wer/Was?", "werden", "…", "Partizip II"].map(h => s.h("th", null, h)))), s.h("tbody", null, ...rows));
+          const cmp = s.h("div", { class: "card later", style: { padding: "10px 16px", display: "flex", flexDirection: "column", gap: "8px" } },
+            s.h("span", { class: "exlabel" }, "Nicht verwechseln!"),
+            s.h("p", { class: "t", style: { fontSize: "22px" } }, s.h("b", { style: { color: GREEN } }, "Futur: "), "Ich ", s.h("b", { style: { color: GREEN } }, "werde"), " Leon ", s.h("b", { style: { color: GREEN } }, "fotografieren"), ". ", s.h("span", { class: "pencil" }, "– ich mache das Foto.")),
+            s.h("p", { class: "t", style: { fontSize: "22px" } }, s.h("b", { style: { color: TEAL } }, "Passiv: "), "Ich ", s.h("b", { style: { color: RED } }, "werde"), " ", s.h("b", { style: { color: TEAL } }, "fotografiert"), ". ", s.h("span", { class: "pencil" }, "– jemand macht ein Foto von mir.")));
+          const m = merk(s, s.h("b", null, "Passiv"), " = werden + Partizip II. Vergangenheit mit ", s.h("b", null, "wurde"), ": ", s.h("i", null, "Die Pizza wurde gebacken."));
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "10px" } }, plan, s.h("div", { class: "card", style: { padding: "6px 14px" } }, tab), cmp, m));
+          s.show(plan, "down"); s.sfx.pop();
+          s.step(async () => { for (let i = 0; i < 3; i++) { s.sfx.count(i * 2); await s.show(rows[i], "left"); } s.say("Ich werde abgeholt. Du wirst gerufen. Die Pizza wird gebacken."); });
+          s.step(async () => { for (let i = 3; i < 6; i++) { s.sfx.count(i * 2); await s.show(rows[i], "left"); } });
+          s.step(async () => { s.sound("camera-shutter", { vol: .5 }); await s.show(cmp, "up"); s.say("Ich werde fotografieren: Futur. Ich werde fotografiert: Passiv."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* 18 ─────────────── Passiv im Alltag */
+      {
+        title: "Im Alltag: Passiv überall",
+        say: "Das Passiv findest du überall dort, wo es nicht so wichtig ist, wer etwas tut: im Rezept, in den Nachrichten und in der Schule.",
+        build(s) {
+          // recipe with a pizza that gets its toppings step by step
+          const pv = s.svg(200, 130); pv.style.alignSelf = "center";
+          const dough = s.el("ellipse", { cx: 100, cy: 70, rx: 20, ry: 14, fill: "#f2d29b", stroke: "#c98b3a", "stroke-width": 3 });
+          const sauce = s.el("ellipse", { cx: 100, cy: 70, rx: 72, ry: 44, fill: RED, opacity: 0 });
+          const cheese = s.el("g", { opacity: 0 }, ...[[78, 56], [118, 58], [96, 80], [128, 84], [70, 84], [104, 48]].map(([x, y]) => s.el("ellipse", { cx: x, cy: y, rx: 13, ry: 8, fill: "#fff8d0" })));
+          const baked = s.el("ellipse", { cx: 100, cy: 70, rx: 86, ry: 54, fill: "none", stroke: "#a8641c", "stroke-width": 6, opacity: 0 });
+          pv.append(dough, sauce, cheese, baked);
+          const R = ["Der Teig [wird] [ausgerollt].", "Die Soße [wird] [verteilt].", "Der Käse [wird] [darübergestreut].", "Die Pizza [wird] [gebacken]."];
+          const rl = R.map(t => s.h("p", { class: "small later", style: { fontSize: "20px" } }, rt(s, t, RED)));
+          const c1 = s.h("div", { class: "card", style: { padding: "10px 14px", display: "flex", flexDirection: "column", gap: "6px" } }, s.h("span", { class: "exlabel" }, "Im Rezept"), pv, ...rl);
+          const c2 = s.h("div", { class: "card later", style: { padding: "10px 14px", display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "exlabel" }, "In den Nachrichten"),
+            s.photo("fernsehturm-bau", { w: "100%", h: 150, pos: "50% 35%", caption: "Fernsehturm im Bau, 1968" }),
+            s.h("p", { class: "small", style: { fontSize: "20px" } }, rt(s, "Der Berliner Fernsehturm [wurde] von 1965 bis 1969 [gebaut].", RED)),
+            s.h("p", { class: "small", style: { fontSize: "20px" } }, rt(s, "Heute [wird] er jedes Jahr von über einer Million Menschen [besucht].", RED)),
+            s.h("p", { class: "small pencil", style: { fontSize: "19px" } }, "wurde = Passiv in der Vergangenheit"));
+          const c3 = s.h("div", { class: "card later", style: { padding: "10px 14px", display: "flex", flexDirection: "column", gap: "8px" } }, s.h("span", { class: "exlabel" }, "In der Schule"),
+            ...["Die Hefte [werden] [eingesammelt].", "Die Klassenarbeit [wird] morgen [zurückgegeben].", "Um 8 Uhr [wird] die Tür [geöffnet]."].map(t => s.h("p", { class: "small", style: { fontSize: "20px" } }, rt(s, t, RED))));
+          const lf = life(s, s.h("p", { class: "small" }, "Passiv steht oft in Rezepten, Anleitungen, Nachrichten und auf Schildern – überall dort, wo es egal oder unbekannt ist, wer etwas tut."));
+          lf.classList.add("later");
+          const m18 = merk(s, "Frag dich: Ist wichtig, ", s.h("b", null, "wer"), " es tut? Dann Aktiv. Ist wichtig, ", s.h("b", null, "was"), " passiert? Dann Passiv.");
+          s.add(s.h("div", { class: "stack", style: { height: "100%", gap: "14px" } }, s.h("div", { class: "cols3", style: { alignItems: "start" } }, c1, c2, c3), lf, m18));
+          s.show(c1, "up"); s.sfx.pop();
+          const fadeIn = (el, to = 1) => s.tween({ from: 0, to, dur: s.fast ? 1 : 500, update: x => el.setAttribute("opacity", x) });
+          s.step(async () => {
+            s.sfx.whoosh(); await s.tween({ from: 20, to: 86, dur: s.fast ? 1 : 700, ease: "out", update: x => { dough.setAttribute("rx", x); dough.setAttribute("ry", x * .63); } }); await s.show(rl[0], "left"); marksOn(s, rl[0]);
+            s.sfx.pop(); await fadeIn(sauce, .9); await s.show(rl[1], "left"); marksOn(s, rl[1]);
+          });
+          s.step(async () => { s.sfx.scribble(); await fadeIn(cheese); await s.show(rl[2], "left"); marksOn(s, rl[2]); s.sound("ofen-ping", { vol: .5 }); await fadeIn(baked); await s.show(rl[3], "left"); marksOn(s, rl[3]); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(c2, "up"); marksOn(s, c2); s.say("Der Fernsehturm wurde von 1965 bis 1969 gebaut."); });
+          s.step(async () => { s.sound("school-bell", { vol: .3, dur: 2 }); await s.show(c3, "up"); marksOn(s, c3); });
+          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); s.sfx.ding(); await s.show(m18, "up"); });
         },
       },
     ],

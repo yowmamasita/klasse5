@@ -29,6 +29,11 @@
   "spoken": "Ruby's room is upstairs.",
   "text": "Ruby's room is upstairs."
  },
+ "00d1397945ccd488": {
+  "lang": "en-GB",
+  "spoken": "I'm going to play football with Max.",
+  "text": "I'm going to play football with Max."
+ },
  "00d1a7f1d7d51bc9": {
   "lang": "en-GB",
   "spoken": "Lukas reads a comic every evening.",
@@ -59,10 +64,20 @@
   "spoken": "read. reading",
   "text": "read. reading"
  },
+ "018d7d1e318c3b2c": {
+  "lang": "en-GB",
+  "spoken": "What will the weather be like?",
+  "text": "What will the weather be like?"
+ },
  "01cbc90898ee5fff": {
   "lang": "de-DE",
   "spoken": "Schick mir – send me. Ich liebe ihn – I love him.",
   "text": "Schick mir – send me. Ich liebe ihn – I love him."
+ },
+ "02255fed01cb4eac": {
+  "lang": "en-GB",
+  "spoken": "happy. happier. the happiest.",
+  "text": "happy. happier. the happiest."
  },
  "027398bf14232e59": {
   "lang": "en-GB",
@@ -73,6 +88,11 @@
   "lang": "en-GB",
   "spoken": "bread",
   "text": "bread"
+ },
+ "02e3747c27fe25a8": {
+  "lang": "en-GB",
+  "spoken": "Is the Shard taller than the London Eye?",
+  "text": "Is the Shard taller than the London Eye?"
  },
  "02faa55c25eed912": {
   "lang": "de-DE",
@@ -109,6 +129,11 @@
   "spoken": "my grandpa, Ken",
   "text": "my grandpa, Ken"
  },
+ "03ea7ffb291d1377": {
+  "lang": "en-GB",
+  "spoken": "Whose football is this? It's Sam and Tom's. It's theirs.",
+  "text": "Whose football is this? It's Sam and Tom's. It's theirs."
+ },
  "03f9d056de26e9bb": {
   "lang": "de-DE",
   "spoken": "Viertel nach drei: quarter past three.",
@@ -133,6 +158,11 @@
   "lang": "en-GB",
   "spoken": "third",
   "text": "third"
+ },
+ "0464a004f38b6eea": {
+  "lang": "en-GB",
+  "spoken": "Dad is going to make a chocolate cake.",
+  "text": "Dad is going to make a chocolate cake."
  },
  "047a71720e7dda3b": {
   "lang": "en-GB",
@@ -159,6 +189,11 @@
   "spoken": "Lukas usually watches one episode after dinner.",
   "text": "Lukas usually watches one episode after dinner."
  },
+ "04d0d18c560afdd4": {
+  "lang": "en-GB",
+  "spoken": "Day 2: We're going to go up the Shard.",
+  "text": "Day 2: We're going to go up the Shard."
+ },
  "050526a384aa5524": {
   "lang": "en-GB",
   "spoken": "one sheep, two sheep",
@@ -183,6 +218,11 @@
   "lang": "de-DE",
   "spoken": "Rechte Hälfte der Uhr: past, also nach. Linke Hälfte: to, also vor.",
   "text": "Rechte Hälfte der Uhr: past, also nach. Linke Hälfte: to, also vor."
+ },
+ "055bbb76a18831ec": {
+  "lang": "en-GB",
+  "spoken": "Day 1: We're going to take the Tube.",
+  "text": "Day 1: We're going to take the Tube."
  },
  "05673e2fe34f5226": {
   "lang": "de-DE",
@@ -209,6 +249,11 @@
   "spoken": "She's playing with Mo. Look!",
   "text": "She's playing with Mo. Look!"
  },
+ "05f682f3f0db64af": {
+  "lang": "en-GB",
+  "spoken": "On Saturday it will be windy, but it won't rain.",
+  "text": "On Saturday it will be windy, but it won't rain."
+ },
  "062bca070e713b2c": {
   "lang": "de-DE",
   "spoken": "Wer jemand ist, hängt davon ab, von wem aus du schaust. Für Ruby ist Lucy die Tante – für Maya ist Lucy die Mama!",
@@ -233,6 +278,16 @@
   "lang": "de-DE",
   "spoken": "Am Bahnhof King's Cross in London fragt eine Touristin nach dem Weg zur British Library. Ruby hilft ihr.",
   "text": "Am Bahnhof King's Cross in London fragt eine Touristin nach dem Weg zur British Library. Ruby hilft ihr."
+ },
+ "06d3ae0dce9c37a3": {
+  "lang": "en-GB",
+  "spoken": "We're going to have a picnic at Tempelhofer Feld.",
+  "text": "We're going to have a picnic at Tempelhofer Feld."
+ },
+ "06e62d79eeb352fd": {
+  "lang": "en-GB",
+  "spoken": "Maybe it will snow at Christmas.",
+  "text": "Maybe it will snow at Christmas."
  },
  "07011b9f48fe33c2": {
   "lang": "de-DE",
@@ -299,6 +354,11 @@
   "spoken": "Lukas ist in den Ferien auf Rügen und schreibt Ruby eine Postkarte auf Englisch.",
   "text": "Lukas ist in den Ferien auf Rügen und schreibt Ruby eine Postkarte auf Englisch."
  },
+ "08d3254db1de4101": {
+  "lang": "en-GB",
+  "spoken": "A taxi is more expensive than the bus.",
+  "text": "A taxi is more expensive than the bus."
+ },
  "08d370472cf3cbc1": {
   "lang": "en-GB",
   "spoken": "a poster",
@@ -348,6 +408,11 @@
   "lang": "en-GB",
   "spoken": "Can you play the piano?",
   "text": "Can you play the piano?"
+ },
+ "0a035391d1a5f2f2": {
+  "lang": "en-GB",
+  "spoken": "I'm going to invite eight friends.",
+  "text": "I'm going to invite eight friends."
  },
  "0a2739f0a05ff3c3": {
   "lang": "en-GB",
@@ -454,6 +519,11 @@
   "spoken": "I play the violin.",
   "text": "I play the violin."
  },
+ "0ccf3df881a94399": {
+  "lang": "de-DE",
+  "spoken": "Lukas' Klasse plant eine Fahrt nach London. Im Chat mit Ruby steckt alles aus diesem Kapitel: Vergleiche, going to, will und mine.",
+  "text": "Lukas' Klasse plant eine Fahrt nach London. Im Chat mit Ruby steckt alles aus diesem Kapitel: Vergleiche, going to, will und mine."
+ },
  "0cee3669310ca678": {
   "lang": "de-DE",
   "spoken": "Rubys Klasse hat einen Ausflug durch London gemacht. Die Geschichte steht im simple past, Bild für Bild.",
@@ -479,6 +549,11 @@
   "spoken": "washes",
   "text": "washes"
  },
+ "0e29b4c81d235894": {
+  "lang": "en-GB",
+  "spoken": "Oh no! The glass is going to fall!",
+  "text": "Oh no! The glass is going to fall!"
+ },
  "0e2cc87aea8d4cac": {
   "lang": "en-GB",
   "spoken": "cat",
@@ -488,6 +563,11 @@
   "lang": "en-GB",
   "spoken": "blue",
   "text": "blue"
+ },
+ "0e5eea8220e1bb3a": {
+  "lang": "en-GB",
+  "spoken": "I'm going to buy milk after school.",
+  "text": "I'm going to buy milk after school."
  },
  "0e94d42eb8d2ae2a": {
   "lang": "en-GB",
@@ -568,6 +648,11 @@
   "lang": "en-GB",
   "spoken": "I can swim.",
   "text": "I can swim."
+ },
+ "10ff150cee77c57b": {
+  "lang": "en-GB",
+  "spoken": "Big Ben is one of the most famous clocks in the world.",
+  "text": "Big Ben is one of the most famous clocks in the world."
  },
  "10ff9b7d4bb2f66e": {
   "lang": "en-GB",
@@ -864,6 +949,11 @@
   "spoken": "May",
   "text": "May"
  },
+ "1a336afe195d4d3e": {
+  "lang": "en-GB",
+  "spoken": "Ruby is taller than Julia.",
+  "text": "Ruby is taller than Julia."
+ },
  "1a36508dd2f43535": {
   "lang": "en-GB",
   "spoken": "one mouse, two mice",
@@ -889,10 +979,20 @@
   "spoken": "Heute ist Lukas' Geburtstag – er wird elf! Puste die Kerzen aus und sing mit.",
   "text": "Heute ist Lukas' Geburtstag – er wird elf! Puste die Kerzen aus und sing mit."
  },
+ "1b02d3a75b2a2fde": {
+  "lang": "en-GB",
+  "spoken": "Mum: Oh no, there's no milk! – Lukas: I'll go to the shop!",
+  "text": "Mum: Oh no, there's no milk! – Lukas: I'll go to the shop!"
+ },
  "1b12fcf703db3b55": {
   "lang": "en-GB",
   "spoken": "dance",
   "text": "dance"
+ },
+ "1b50895e5fcc2801": {
+  "lang": "en-GB",
+  "spoken": "Day 3: We're going to see Big Ben.",
+  "text": "Day 3: We're going to see Big Ben."
  },
  "1b58f8f12269d885": {
   "lang": "en-GB",
@@ -908,6 +1008,11 @@
   "lang": "en-GB",
   "spoken": "fixes",
   "text": "fixes"
+ },
+ "1bba4b1a647d324d": {
+  "lang": "en-GB",
+  "spoken": "your, yours",
+  "text": "your, yours"
  },
  "1bc709a838e62576": {
   "lang": "en-GB",
@@ -944,6 +1049,11 @@
   "spoken": "an apple",
   "text": "an apple"
  },
+ "1cd83a0055b39686": {
+  "lang": "en-GB",
+  "spoken": "Wednesday was the worst day of the week!",
+  "text": "Wednesday was the worst day of the week!"
+ },
  "1d18974767c26228": {
   "lang": "en-GB",
   "spoken": "Feed him at eight a.m. and at six p.m..",
@@ -968,6 +1078,11 @@
   "lang": "en-GB",
   "spoken": "It's three o'clock.",
   "text": "It's three o'clock."
+ },
+ "1e050275d8ee158f": {
+  "lang": "en-GB",
+  "spoken": "I'm going to play football.",
+  "text": "I'm going to play football."
  },
  "1e423d9e05f237d3": {
   "lang": "en-GB",
@@ -1059,6 +1174,11 @@
   "spoken": "On Sunday morning I practise the guitar.",
   "text": "On Sunday morning I practise the guitar."
  },
+ "20d04f45d8d18af2": {
+  "lang": "de-DE",
+  "spoken": "Für Pläne, die du schon gemacht hast, benutzt du going to. Am, is oder are, dann going to, dann die Grundform.",
+  "text": "Für Pläne, die du schon gemacht hast, benutzt du going to. Am, is oder are, dann going to, dann die Grundform."
+ },
  "20da52ebd24ebe41": {
   "lang": "en-GB",
   "spoken": "a book",
@@ -1073,6 +1193,16 @@
   "lang": "en-GB",
   "spoken": "He's sleeping under the table. And what's Julia doing?",
   "text": "He's sleeping under the table. And what's Julia doing?"
+ },
+ "214d349d3b9405a8": {
+  "lang": "en-GB",
+  "spoken": "This is the funniest film ever!",
+  "text": "This is the funniest film ever!"
+ },
+ "217c1dd8c48e46da": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 10. Looking ahead: bigger, better, tomorrow. Ausblick auf Klasse 6: vergleichen, Pläne und die Zukunft",
+  "text": "Kapitel 10. Looking ahead: bigger, better, tomorrow. Ausblick auf Klasse 6: vergleichen, Pläne und die Zukunft"
  },
  "217ddbd5b8d2a87a": {
   "lang": "en-GB",
@@ -1129,6 +1259,11 @@
   "spoken": "Ab halb zählen wir rückwärts bis zur nächsten vollen Stunde: to.",
   "text": "Ab halb zählen wir rückwärts bis zur nächsten vollen Stunde: to."
  },
+ "22bb59da02322632": {
+  "lang": "en-GB",
+  "spoken": "Mo is smaller than Biscuit.",
+  "text": "Mo is smaller than Biscuit."
+ },
  "22bd55555b46f31d": {
   "lang": "de-DE",
   "spoken": "Ruby kauft beim Bäcker ein. Hör dir das Gespräch an. Tippe auf die Lautsprecher.",
@@ -1138,6 +1273,11 @@
   "lang": "en-GB",
   "spoken": "Grandma's house",
   "text": "Grandma's house"
+ },
+ "233527b0810f9afa": {
+  "lang": "en-GB",
+  "spoken": "What are you going to do in the holidays?",
+  "text": "What are you going to do in the holidays?"
  },
  "233fc0685323a915": {
   "lang": "en-GB",
@@ -1158,6 +1298,11 @@
   "lang": "en-GB",
   "spoken": "I have breakfast at quarter past seven.",
   "text": "I have breakfast at quarter past seven."
+ },
+ "238b63226c1d5272": {
+  "lang": "en-GB",
+  "spoken": "I'll close the window.",
+  "text": "I'll close the window."
  },
  "23927e6cc16a1b21": {
   "lang": "en-GB",
@@ -1198,6 +1343,11 @@
   "lang": "en-GB",
   "spoken": "Do your friends live near you? – No, they don't.",
   "text": "Do your friends live near you? – No, they don't."
+ },
+ "245e52d5e785e941": {
+  "lang": "en-GB",
+  "spoken": "Lukas is taller than Julia.",
+  "text": "Lukas is taller than Julia."
  },
  "2462a34d7465fcdc": {
   "lang": "en-GB",
@@ -1269,6 +1419,11 @@
   "spoken": "Which colour do you like?",
   "text": "Which colour do you like?"
  },
+ "25da91548446203b": {
+  "lang": "de-DE",
+  "spoken": "Aber der Fernsehturm in Berlin ist noch höher: 368 Meter!",
+  "text": "Aber der Fernsehturm in Berlin ist noch höher: 368 Meter!"
+ },
  "25e6d964690e0cd1": {
   "lang": "en-GB",
   "spoken": "Twelve pupils have a pet. Sixteen pupils don't.",
@@ -1313,6 +1468,11 @@
   "lang": "en-GB",
   "spoken": "purple",
   "text": "purple"
+ },
+ "26c72b4f7a177c68": {
+  "lang": "en-GB",
+  "spoken": "The London Eye is taller than Big Ben.",
+  "text": "The London Eye is taller than Big Ben."
  },
  "26eb47b9070a3bda": {
   "lang": "en-GB",
@@ -1439,10 +1599,25 @@
   "spoken": "Yes, I have. No, I haven't. Ohne got!",
   "text": "Yes, I have. No, I haven't. Ohne got!"
  },
+ "2b1c3c0a2449fd8a": {
+  "lang": "de-DE",
+  "spoken": "It won't rain heißt: Es wird nicht regnen.",
+  "text": "It won't rain heißt: Es wird nicht regnen."
+ },
  "2b26d4a7e53f45bc": {
   "lang": "en-GB",
   "spoken": "it. eat.",
   "text": "it. eat."
+ },
+ "2b2cd442eb89fbcf": {
+  "lang": "en-GB",
+  "spoken": "I'll call you – I promise!",
+  "text": "I'll call you – I promise!"
+ },
+ "2b42650a9106d6be": {
+  "lang": "en-GB",
+  "spoken": "Mo isn't as big as Biscuit.",
+  "text": "Mo isn't as big as Biscuit."
  },
  "2b6d325c110f57dd": {
   "lang": "en-GB",
@@ -1474,6 +1649,11 @@
   "spoken": "fourteen",
   "text": "fourteen"
  },
+ "2bac8b9f1efe5a8d": {
+  "lang": "de-DE",
+  "spoken": "Echte Rekorde aus Großbritannien und Deutschland: Stadien, Wetter und Flüsse. Vergleiche mit e r und e s t.",
+  "text": "Echte Rekorde aus Großbritannien und Deutschland: Stadien, Wetter und Flüsse. Vergleiche mit e r und e s t."
+ },
  "2bc1515462c8fd77": {
   "lang": "de-DE",
   "spoken": "Aus Mayas Sicht: Lucy ist ihre Mama, Ruby ist ihre Cousine.",
@@ -1484,6 +1664,11 @@
   "spoken": "How much is this T-shirt?",
   "text": "How much is this T-shirt?"
  },
+ "2c01c39a61379cf9": {
+  "lang": "de-DE",
+  "spoken": "Tiere mit Rekorden: das schnellste, das höchste und das größte Tier. Echte Fotos, echte Zahlen.",
+  "text": "Tiere mit Rekorden: das schnellste, das höchste und das größte Tier. Echte Fotos, echte Zahlen."
+ },
  "2c34e8b52d67e1ff": {
   "lang": "en-GB",
   "spoken": "it has got. it's got.",
@@ -1493,6 +1678,11 @@
   "lang": "en-GB",
   "spoken": "go straight on",
   "text": "go straight on"
+ },
+ "2cb24d5cbaf0e5d9": {
+  "lang": "en-GB",
+  "spoken": "Whose cap is this? It's mine! Thank you!",
+  "text": "Whose cap is this? It's mine! Thank you!"
  },
  "2cd85542c0e7bb3d": {
   "lang": "en-GB",
@@ -1629,6 +1819,11 @@
   "spoken": "Bei Fragen springt did nach vorne. Die Antwort ist kurz: Yes, I did, oder No, I didn't.",
   "text": "Bei Fragen springt did nach vorne. Die Antwort ist kurz: Yes, I did, oder No, I didn't."
  },
+ "30d87e9d27151884": {
+  "lang": "en-GB",
+  "spoken": "Wait, I'll help you!",
+  "text": "Wait, I'll help you!"
+ },
  "3175600af3fca6af": {
   "lang": "en-GB",
   "spoken": "on the fifth of December",
@@ -1709,10 +1904,20 @@
   "spoken": "Sam and Leo are twins.",
   "text": "Sam and Leo are twins."
  },
+ "344ddf0e061a28f2": {
+  "lang": "en-GB",
+  "spoken": "Will it be sunny tomorrow? – Yes, it will.",
+  "text": "Will it be sunny tomorrow? – Yes, it will."
+ },
  "344ed485026259d3": {
   "lang": "de-DE",
   "spoken": "Fischstäbchen, Erbsen und Kartoffeln.",
   "text": "Fischstäbchen, Erbsen und Kartoffeln."
+ },
+ "34918cc3eadb1863": {
+  "lang": "en-GB",
+  "spoken": "Ruby is older than Lukas.",
+  "text": "Ruby is older than Lukas."
  },
  "34a95e5f9085a002": {
   "lang": "en-GB",
@@ -1759,6 +1964,11 @@
   "spoken": "Two days ago, Lukas cleaned his bike.",
   "text": "Two days ago, Lukas cleaned his bike."
  },
+ "35f5ffc4e9587a4d": {
+  "lang": "de-DE",
+  "spoken": "Fragen mit going to: Am, is oder are kommt nach vorne. Und nein heißt: I'm not going to.",
+  "text": "Fragen mit going to: Am, is oder are kommt nach vorne. Und nein heißt: I'm not going to."
+ },
  "3621bf46c4541b01": {
   "lang": "de-DE",
   "spoken": "So fragst du nach dem Weg, und so erklärst du ihn. Tippe auf ein Bild, dann siehst du die Bewegung noch einmal.",
@@ -1799,6 +2009,11 @@
   "spoken": "Do you want to come …?",
   "text": "Do you want to come …?"
  },
+ "36d70d7139f6a593": {
+  "lang": "en-GB",
+  "spoken": "This box is so heavy!",
+  "text": "This box is so heavy!"
+ },
  "36f34d18fe735ffd": {
   "lang": "en-GB",
   "spoken": "There's a kitchen, a bathroom, a living room and two bedrooms. My room is small, but I love it. There's a bed under the window and there are two posters on the wall. Our cat Mo often sleeps on my bed!",
@@ -1823,6 +2038,11 @@
   "lang": "de-DE",
   "spoken": "Für das Datum brauchst du Ordnungszahlen: first, second, third. Schiebe den Regler!",
   "text": "Für das Datum brauchst du Ordnungszahlen: first, second, third. Schiebe den Regler!"
+ },
+ "37d5897bd2dd1273": {
+  "lang": "en-GB",
+  "spoken": "In ten years, I'll be twenty.",
+  "text": "In ten years, I'll be twenty."
  },
  "37da83cf8492ec0e": {
   "lang": "en-GB",
@@ -1859,6 +2079,11 @@
   "spoken": "I can play the guitar.",
   "text": "I can play the guitar."
  },
+ "3979134cb9e3cb27": {
+  "lang": "de-DE",
+  "spoken": "We aren't going to watch a film.",
+  "text": "We aren't going to watch a film."
+ },
  "3992c1476e7bacf2": {
   "lang": "en-GB",
   "spoken": "Madainn mhath! Fàilte!",
@@ -1883,6 +2108,11 @@
   "lang": "en-GB",
   "spoken": "Big Ben",
   "text": "Big Ben"
+ },
+ "3a923b8595153686": {
+  "lang": "en-GB",
+  "spoken": "My bag is heavier than yours!",
+  "text": "My bag is heavier than yours!"
  },
  "3a9c9583b854d9b7": {
   "lang": "en-GB",
@@ -1944,6 +2174,11 @@
   "spoken": "Here you are. Thank you!",
   "text": "Here you are. Thank you!"
  },
+ "3cd3924b612a8cf5": {
+  "lang": "de-DE",
+  "spoken": "Der heißeste Tag in Großbritannien: 40,3 Grad im Juli 2022.",
+  "text": "Der heißeste Tag in Großbritannien: 40,3 Grad im Juli 2022."
+ },
  "3cf4f4462e30a681": {
   "lang": "en-GB",
   "spoken": "C.",
@@ -1958,6 +2193,16 @@
   "lang": "de-DE",
   "spoken": "E klingt wie ein deutsches I, und I klingt wie ai.",
   "text": "E klingt wie ein deutsches I, und I klingt wie ai."
+ },
+ "3d25b343cc3b617d": {
+  "lang": "de-DE",
+  "spoken": "This ball is mine.",
+  "text": "This ball is mine."
+ },
+ "3d321c246be4bd53": {
+  "lang": "en-GB",
+  "spoken": "Are you going to swim in the sea?",
+  "text": "Are you going to swim in the sea?"
  },
  "3d53a5c5f45a2866": {
   "lang": "en-GB",
@@ -2124,6 +2369,16 @@
   "spoken": "It starts at six.",
   "text": "It starts at six."
  },
+ "4421ce06c6281a29": {
+  "lang": "de-DE",
+  "spoken": "Im Englischen vergleichst du mit e r und e s t. Lukas ist größer als Julia – und Ruby ist die Größte.",
+  "text": "Im Englischen vergleichst du mit e r und e s t. Lukas ist größer als Julia – und Ruby ist die Größte."
+ },
+ "445ed8e431d7233c": {
+  "lang": "en-GB",
+  "spoken": "Is Biscuit going to come with you?",
+  "text": "Is Biscuit going to come with you?"
+ },
  "44834e46ee8556ef": {
   "lang": "en-GB",
   "spoken": "Lessons: maths, English …",
@@ -2154,6 +2409,11 @@
   "spoken": "Vergleiche: thirteen und thirty.",
   "text": "Vergleiche: thirteen und thirty."
  },
+ "4586630ad5ac240b": {
+  "lang": "de-DE",
+  "spoken": "Oh no! The glass is going to fall!",
+  "text": "Oh no! The glass is going to fall!"
+ },
  "45aa9aec7da11a09": {
   "lang": "de-DE",
   "spoken": "Jetzt wird es echt: ein Familienfoto beschreiben, einen Steckbrief schreiben und eine Notiz für den Hundesitter.",
@@ -2174,10 +2434,20 @@
   "spoken": "Who is your teacher?",
   "text": "Who is your teacher?"
  },
+ "467357499c2f7f94": {
+  "lang": "en-GB",
+  "spoken": "I'll tidy my room – I promise!",
+  "text": "I'll tidy my room – I promise!"
+ },
  "46c009db6ac5f20d": {
   "lang": "en-GB",
   "spoken": "Listen! The birds are singing.",
   "text": "Listen! The birds are singing."
+ },
+ "46c108d50614ecd2": {
+  "lang": "en-GB",
+  "spoken": "I think it will rain tomorrow.",
+  "text": "I think it will rain tomorrow."
  },
  "46cab1000fee763d": {
   "lang": "en-GB",
@@ -2188,6 +2458,11 @@
   "lang": "en-GB",
   "spoken": "fish and chips",
   "text": "fish and chips"
+ },
+ "46f604071bc527ac": {
+  "lang": "de-DE",
+  "spoken": "The Lions are the best!",
+  "text": "The Lions are the best!"
  },
  "46feedfe60a33041": {
   "lang": "en-GB",
@@ -2208,6 +2483,11 @@
   "lang": "en-GB",
   "spoken": "the bedroom, the bathroom, Ruby's room",
   "text": "the bedroom, the bathroom, Ruby's room"
+ },
+ "47b8112acdc99043": {
+  "lang": "de-DE",
+  "spoken": "Will benutzt du auch, wenn du dich gerade spontan entscheidest – oder wenn du etwas versprichst.",
+  "text": "Will benutzt du auch, wenn du dich gerade spontan entscheidest – oder wenn du etwas versprichst."
  },
  "47cce286101e87f7": {
   "lang": "en-GB",
@@ -2324,6 +2604,11 @@
   "spoken": "I don't like spinach.",
   "text": "I don't like spinach."
  },
+ "4b17097f83b8cfdb": {
+  "lang": "en-GB",
+  "spoken": "Look at the clouds! It's going to rain.",
+  "text": "Look at the clouds! It's going to rain."
+ },
  "4b207682c710f7c5": {
   "lang": "de-DE",
   "spoken": "Hier siehst du in Rubys Haus hinein. Unten sind Küche, Flur und Wohnzimmer. Oben sind die Schlafzimmer und das Bad. Tippe auf ein Zimmer!",
@@ -2364,6 +2649,11 @@
   "spoken": "There's a bed under the window.",
   "text": "There's a bed under the window."
  },
+ "4c350e3940702e49": {
+  "lang": "en-GB",
+  "spoken": "Yes, much taller! It's the tallest building in the UK.",
+  "text": "Yes, much taller! It's the tallest building in the UK."
+ },
  "4ca4644b69316850": {
   "lang": "en-GB",
   "spoken": "December",
@@ -2373,6 +2663,11 @@
   "lang": "de-DE",
   "spoken": "Brot, Eier und Milch sind im Korb.",
   "text": "Brot, Eier und Milch sind im Korb."
+ },
+ "4cbf73a4cd3b73ae": {
+  "lang": "en-GB",
+  "spoken": "Amazing! I'll show you my school.",
+  "text": "Amazing! I'll show you my school."
  },
  "4d60823169b43089": {
   "lang": "en-GB",
@@ -2394,10 +2689,20 @@
   "spoken": "Take the second street on the left.",
   "text": "Take the second street on the left."
  },
+ "4e42b2e0eba36ed2": {
+  "lang": "en-GB",
+  "spoken": "Yes, he is.",
+  "text": "Yes, he is."
+ },
  "4e52004cd06f7da5": {
   "lang": "en-GB",
   "spoken": "summer",
   "text": "summer"
+ },
+ "4ed6c4a4a06ab0b9": {
+  "lang": "en-GB",
+  "spoken": "The coldest temperature was minus twenty-seven point two degrees.",
+  "text": "The coldest temperature was minus twenty-seven point two degrees."
  },
  "4edb4e52119b5e00": {
   "lang": "en-GB",
@@ -2524,6 +2829,11 @@
   "spoken": "Water!",
   "text": "Water!"
  },
+ "52a24ae94c35c4f1": {
+  "lang": "en-GB",
+  "spoken": "The Shard is the tallest building in the UK.",
+  "text": "The Shard is the tallest building in the UK."
+ },
  "52a56fc39384c5c9": {
   "lang": "de-DE",
   "spoken": "Gehört etwas zwei Leuten zusammen, bekommt nur der letzte Name das 's.",
@@ -2574,10 +2884,20 @@
   "spoken": "T.",
   "text": "T."
  },
+ "54b36d8f95a98b84": {
+  "lang": "en-GB",
+  "spoken": "Your joke is funnier than mine.",
+  "text": "Your joke is funnier than mine."
+ },
  "54e9355be8022c91": {
   "lang": "en-GB",
   "spoken": "maths",
   "text": "maths"
+ },
+ "54fb807b765143d9": {
+  "lang": "en-GB",
+  "spoken": "My cold is worse today.",
+  "text": "My cold is worse today."
  },
  "5507bf9680c7f515": {
   "lang": "en-GB",
@@ -2618,6 +2938,11 @@
   "lang": "en-GB",
   "spoken": "a lamp",
   "text": "a lamp"
+ },
+ "566411cd930a7615": {
+  "lang": "de-DE",
+  "spoken": "I'm going to buy milk after school.",
+  "text": "I'm going to buy milk after school."
  },
  "5688fa00644b9b10": {
   "lang": "en-GB",
@@ -2718,6 +3043,11 @@
   "lang": "en-GB",
   "spoken": "Hi! I'm Lukas. I'm from Berlin.",
   "text": "Hi! I'm Lukas. I'm from Berlin."
+ },
+ "59260db2b8f783fe": {
+  "lang": "en-GB",
+  "spoken": "She's going to be eleven next week.",
+  "text": "She's going to be eleven next week."
  },
  "5928ab800c10ac37": {
   "lang": "de-DE",
@@ -2854,6 +3184,11 @@
   "spoken": "Zwei Mädchen: Das s ist schon da, also kommt der Apostroph dahinter.",
   "text": "Zwei Mädchen: Das s ist schon da, also kommt der Apostroph dahinter."
  },
+ "5dec7de008903b98": {
+  "lang": "de-DE",
+  "spoken": "Mit will sagst du, was in der Zukunft passieren wird – zum Beispiel im Wetterbericht. Will plus Grundform, für alle Personen gleich.",
+  "text": "Mit will sagst du, was in der Zukunft passieren wird – zum Beispiel im Wetterbericht. Will plus Grundform, für alle Personen gleich."
+ },
  "5e060528731e469f": {
   "lang": "en-GB",
   "spoken": "Saturday, the third of October 2026. Dear Diary, today was a great day! In the morning, I played football with my friends. We won three two! In the afternoon, I visited my grandma. We made a cake. In the evening, I watched a film. I was very tired. Lukas",
@@ -2863,6 +3198,11 @@
   "lang": "en-GB",
   "spoken": "a rubber",
   "text": "a rubber"
+ },
+ "5e130e68ea1166e8": {
+  "lang": "en-GB",
+  "spoken": "The phone's ringing!",
+  "text": "The phone's ringing!"
  },
  "5e3c6108cca9a987": {
   "lang": "en-GB",
@@ -2924,6 +3264,11 @@
   "spoken": "Heat a little oil in a pan.",
   "text": "Heat a little oil in a pan."
  },
+ "600cc24409d60b31": {
+  "lang": "en-GB",
+  "spoken": "This ball is mine.",
+  "text": "This ball is mine."
+ },
  "6034d0b401cf4c35": {
   "lang": "en-GB",
   "spoken": "Come on, Lukas! Assembly is at nine.",
@@ -2944,10 +3289,25 @@
   "spoken": "Look at the board.",
   "text": "Look at the board."
  },
+ "61491e1ae9ef9dde": {
+  "lang": "de-DE",
+  "spoken": "Will I be rich? No, you won't.",
+  "text": "Will I be rich? No, you won't."
+ },
+ "616d4dc03809e2fb": {
+  "lang": "en-GB",
+  "spoken": "I'm going to visit my cousins in Hamburg.",
+  "text": "I'm going to visit my cousins in Hamburg."
+ },
  "61bcf4d341fac278": {
   "lang": "en-GB",
   "spoken": "one cat, two cats",
   "text": "one cat, two cats"
+ },
+ "61e71647707206a2": {
+  "lang": "en-GB",
+  "spoken": "Will I be rich? – No, you won't.",
+  "text": "Will I be rich? – No, you won't."
  },
  "62461ad8bba01ec8": {
   "lang": "en-GB",
@@ -3099,6 +3459,11 @@
   "spoken": "an orange",
   "text": "an orange"
  },
+ "661d66888d1c638a": {
+  "lang": "en-GB",
+  "spoken": "But the Fernsehturm in Berlin is even taller!",
+  "text": "But the Fernsehturm in Berlin is even taller!"
+ },
  "667104c7562d79a9": {
   "lang": "en-GB",
   "spoken": "You can go swimming in the Serpentine.",
@@ -3118,6 +3483,11 @@
   "lang": "de-DE",
   "spoken": "Am Pancake Day backt man in Großbritannien dünne Pfannkuchen. Ein Rezept benutzt den Imperativ: Mix! Pour! Flip!",
   "text": "Am Pancake Day backt man in Großbritannien dünne Pfannkuchen. Ein Rezept benutzt den Imperativ: Mix! Pour! Flip!"
+ },
+ "6709c3214e7cf0bc": {
+  "lang": "de-DE",
+  "spoken": "Fußball, Kuchen backen, Picknick: alles schon geplant.",
+  "text": "Fußball, Kuchen backen, Picknick: alles schon geplant."
  },
  "674fc408052905c8": {
   "lang": "en-GB",
@@ -3404,6 +3774,11 @@
   "spoken": "Love",
   "text": "Love"
  },
+ "6faf0c14caaf92fa": {
+  "lang": "de-DE",
+  "spoken": "Echte Höhen aus London und Berlin. Schau, wie die Türme wachsen – und vergleiche!",
+  "text": "Echte Höhen aus London und Berlin. Schau, wie die Türme wachsen – und vergleiche!"
+ },
  "6ff64aac0e80dbae": {
   "lang": "en-GB",
   "spoken": "the boys' toilets",
@@ -3469,6 +3844,11 @@
   "spoken": "Lots of people!",
   "text": "Lots of people!"
  },
+ "723e6b2aef786b9b": {
+  "lang": "en-GB",
+  "spoken": "The giraffe is the tallest animal on land.",
+  "text": "The giraffe is the tallest animal on land."
+ },
  "724df20609df473a": {
   "lang": "en-GB",
   "spoken": "Yes, I can.",
@@ -3509,15 +3889,30 @@
   "spoken": "they have got. they've got.",
   "text": "they have got. they've got."
  },
+ "735666d1b60efbc8": {
+  "lang": "de-DE",
+  "spoken": "Julia ist nicht so groß wie Ruby. Ruby ist größer als Julia.",
+  "text": "Julia ist nicht so groß wie Ruby. Ruby ist größer als Julia."
+ },
  "73817cb7a7b28b51": {
   "lang": "en-GB",
   "spoken": "How are you? Please write soon!",
   "text": "How are you? Please write soon!"
  },
+ "73af2f0361ac1492": {
+  "lang": "en-GB",
+  "spoken": "Wembley is bigger than the Olympiastadion in Berlin.",
+  "text": "Wembley is bigger than the Olympiastadion in Berlin."
+ },
  "73c7145971109f2e": {
   "lang": "de-DE",
   "spoken": "So sehen Halloween und Bonfire Night in echt aus. Früher schnitzte man Laternen aus Rüben, heute aus Kürbissen. Und am fünften November brennen Lagerfeuer.",
   "text": "So sehen Halloween und Bonfire Night in echt aus. Früher schnitzte man Laternen aus Rüben, heute aus Kürbissen. Und am fünften November brennen Lagerfeuer."
+ },
+ "742405f80db1bdfc": {
+  "lang": "en-GB",
+  "spoken": "London is about as rainy as Berlin.",
+  "text": "London is about as rainy as Berlin."
  },
  "7449d7c92be0befc": {
   "lang": "en-GB",
@@ -3604,6 +3999,11 @@
   "spoken": "history",
   "text": "history"
  },
+ "76861aeec7f33515": {
+  "lang": "en-GB",
+  "spoken": "Are these gloves yours, Ruby? No, they aren't mine. I think they're Ellie's. Yes! They're mine.",
+  "text": "Are these gloves yours, Ruby? No, they aren't mine. I think they're Ellie's. Yes! They're mine."
+ },
  "769a3953bbc0d471": {
   "lang": "en-GB",
   "spoken": "Where did you go?",
@@ -3628,6 +4028,11 @@
   "lang": "en-GB",
   "spoken": "That one is two pounds fifty.",
   "text": "That one is two pounds fifty."
+ },
+ "774dfab9502cd62b": {
+  "lang": "en-GB",
+  "spoken": "The blue whale is the biggest animal in the world.",
+  "text": "The blue whale is the biggest animal in the world."
  },
  "775a8e69b5a96dd8": {
   "lang": "en-GB",
@@ -3684,6 +4089,11 @@
   "spoken": "Excuse me, how do I get to the library?",
   "text": "Excuse me, how do I get to the library?"
  },
+ "78b42789187eba2b": {
+  "lang": "en-GB",
+  "spoken": "Ellie is my best friend.",
+  "text": "Ellie is my best friend."
+ },
  "78b8f7ab1d4094a8": {
   "lang": "en-GB",
   "spoken": "It's got four legs.",
@@ -3699,6 +4109,11 @@
   "spoken": "Das Olympiastadion in Berlin hat 73.877 Plätze.",
   "text": "Das Olympiastadion in Berlin hat 73.877 Plätze."
  },
+ "791cf081e3f8fb83": {
+  "lang": "de-DE",
+  "spoken": "Der Blauwal ist das größte Tier, das es je gab.",
+  "text": "Der Blauwal ist das größte Tier, das es je gab."
+ },
  "7929a5265a0d6017": {
   "lang": "en-GB",
   "spoken": "one book, two books",
@@ -3709,10 +4124,20 @@
   "spoken": "Yes, she is.",
   "text": "Yes, she is."
  },
+ "7938b54ac30ee415": {
+  "lang": "en-GB",
+  "spoken": "A blue whale is longer than a tennis court.",
+  "text": "A blue whale is longer than a tennis court."
+ },
  "7954aba36c4e0786": {
   "lang": "en-GB",
   "spoken": "The cat is under the table.",
   "text": "The cat is under the table."
+ },
+ "797fabc75279bb3f": {
+  "lang": "en-GB",
+  "spoken": "Ruby is as tall as Ellie.",
+  "text": "Ruby is as tall as Ellie."
  },
  "7995ec2247d5fdea": {
   "lang": "en-GB",
@@ -3723,6 +4148,11 @@
   "lang": "en-GB",
   "spoken": "Yes, there are some.",
   "text": "Yes, there are some."
+ },
+ "79dc46c8f9be37a9": {
+  "lang": "en-GB",
+  "spoken": "No, I'm not. I'm not going to do homework!",
+  "text": "No, I'm not. I'm not going to do homework!"
  },
  "79e6690411435f51": {
   "lang": "en-GB",
@@ -3738,6 +4168,11 @@
   "lang": "en-GB",
   "spoken": "I've got a paper crown!",
   "text": "I've got a paper crown!"
+ },
+ "7a6a39d3948b4fe7": {
+  "lang": "en-GB",
+  "spoken": "Julia is tall.",
+  "text": "Julia is tall."
  },
  "7a7ec71d6303374d": {
   "lang": "en-GB",
@@ -3804,6 +4239,11 @@
   "spoken": "Halloween is on the thirty-first of October.",
   "text": "Halloween is on the thirty-first of October."
  },
+ "7d412c9e4361f20e": {
+  "lang": "de-DE",
+  "spoken": "Der Shard ist das höchste Gebäude in Großbritannien: 310 Meter.",
+  "text": "Der Shard ist das höchste Gebäude in Großbritannien: 310 Meter."
+ },
  "7d8543a45ff518e7": {
   "lang": "en-GB",
   "spoken": "Ruby lives at number 72.",
@@ -3853,6 +4293,11 @@
   "lang": "en-GB",
   "spoken": "I live in Brighton, by the sea.",
   "text": "I live in Brighton, by the sea."
+ },
+ "7e916ed62100bce4": {
+  "lang": "en-GB",
+  "spoken": "My new bike is as fast as yours.",
+  "text": "My new bike is as fast as yours."
  },
  "7eb63c470df7fc88": {
   "lang": "en-GB",
@@ -3913,6 +4358,11 @@
   "lang": "de-DE",
   "spoken": "Der große Zeiger steht oben auf der Zwölf: o'clock.",
   "text": "Der große Zeiger steht oben auf der Zwölf: o'clock."
+ },
+ "7fa45b4e72483558": {
+  "lang": "de-DE",
+  "spoken": "Look at the clouds! It's going to rain.",
+  "text": "Look at the clouds! It's going to rain."
  },
  "7fd0f53f542fbee9": {
   "lang": "en-GB",
@@ -4024,15 +4474,30 @@
   "spoken": "I play computer games.",
   "text": "I play computer games."
  },
+ "82bdbc361e602274": {
+  "lang": "en-GB",
+  "spoken": "his, his",
+  "text": "his, his"
+ },
  "82fe051ec3b59353": {
   "lang": "en-GB",
   "spoken": "Go straight on.",
   "text": "Go straight on."
  },
+ "830a2d562170f805": {
+  "lang": "en-GB",
+  "spoken": "And this violin? Is it Mr Brown's? Yes, it's his. He's the music teacher.",
+  "text": "And this violin? Is it Mr Brown's? Yes, it's his. He's the music teacher."
+ },
  "831e35a4194b9191": {
   "lang": "en-GB",
   "spoken": "You aren't listening!",
   "text": "You aren't listening!"
+ },
+ "8330d1559d9523d1": {
+  "lang": "de-DE",
+  "spoken": "Lange Adjektive bekommen kein e r. Davor kommt more, und für das Größte the most. Klatsch die Silben mit!",
+  "text": "Lange Adjektive bekommen kein e r. Davor kommt more, und für das Größte the most. Klatsch die Silben mit!"
  },
  "83547768f53219aa": {
   "lang": "en-GB",
@@ -4074,6 +4539,11 @@
   "spoken": "He plays.",
   "text": "He plays."
  },
+ "84d97ced6689b1cd": {
+  "lang": "en-GB",
+  "spoken": "It will probably rain. Bring an umbrella – or you can borrow mine!",
+  "text": "It will probably rain. Bring an umbrella – or you can borrow mine!"
+ },
  "85234b75cf154951": {
   "lang": "en-GB",
   "spoken": "Excuse me, how do I get to the post office?",
@@ -4108,6 +4578,11 @@
   "lang": "en-GB",
   "spoken": "a jacket",
   "text": "a jacket"
+ },
+ "86329679833369d6": {
+  "lang": "de-DE",
+  "spoken": "Going to oder will? Entscheidend ist: Wann hast du dich entschieden – vorher oder genau jetzt?",
+  "text": "Going to oder will? Entscheidend ist: Wann hast du dich entschieden – vorher oder genau jetzt?"
  },
  "8665f67336f1caa5": {
   "lang": "en-GB",
@@ -4163,6 +4638,11 @@
   "lang": "en-GB",
   "spoken": "I live in a flat in Berlin. It's on the third floor.",
   "text": "I live in a flat in Berlin. It's on the third floor."
+ },
+ "88376845d60f6f38": {
+  "lang": "en-GB",
+  "spoken": "Whose pencil case is this? – It's Lukas's. It's his.",
+  "text": "Whose pencil case is this? – It's Lukas's. It's his."
  },
  "886d0beb39b6a8fe": {
   "lang": "en-GB",
@@ -4304,6 +4784,11 @@
   "spoken": "the London Eye",
   "text": "the London Eye"
  },
+ "8be2cba7f1cef449": {
+  "lang": "en-GB",
+  "spoken": "These bikes aren't ours. They're theirs.",
+  "text": "These bikes aren't ours. They're theirs."
+ },
  "8be9fb262abce163": {
   "lang": "en-GB",
   "spoken": "And I'm in the choir on Thursdays.",
@@ -4379,6 +4864,11 @@
   "spoken": "That's £6.80, please.",
   "text": "That's £6.80, please."
  },
+ "8d1bcb3d165838ea": {
+  "lang": "de-DE",
+  "spoken": "Nein, ich werde keine Hausaufgaben machen!",
+  "text": "Nein, ich werde keine Hausaufgaben machen!"
+ },
  "8d1ff0f07b32862a": {
   "lang": "en-GB",
   "spoken": "Can you say that again, please?",
@@ -4413,6 +4903,11 @@
   "lang": "de-DE",
   "spoken": "Für die Frage tauschen Person und am, is, are den Platz. Die Kurzantwort: Yes, I am. No, I'm not.",
   "text": "Für die Frage tauschen Person und am, is, are den Platz. Die Kurzantwort: Yes, I am. No, I'm not."
+ },
+ "8e325d4518cc104d": {
+  "lang": "en-GB",
+  "spoken": "Look at the sky! It's going to rain.",
+  "text": "Look at the sky! It's going to rain."
  },
  "8e5efb83e06ee3f9": {
   "lang": "en-GB",
@@ -4499,6 +4994,11 @@
   "spoken": "Is Ruby wearing her wellies?",
   "text": "Is Ruby wearing her wellies?"
  },
+ "90cb180bdc3ffc7e": {
+  "lang": "de-DE",
+  "spoken": "Expensive hat drei Silben: more expensive, the most expensive.",
+  "text": "Expensive hat drei Silben: more expensive, the most expensive."
+ },
  "90fc71d378087d32": {
   "lang": "en-GB",
   "spoken": "sun. It's sunny.",
@@ -4513,6 +5013,11 @@
   "lang": "en-GB",
   "spoken": "my parents' car",
   "text": "my parents' car"
+ },
+ "9197ca4c58031c54": {
+  "lang": "en-GB",
+  "spoken": "An elephant is bigger than a horse.",
+  "text": "An elephant is bigger than a horse."
  },
  "91adca45011cf7ea": {
   "lang": "en-GB",
@@ -4569,6 +5074,11 @@
   "spoken": "In spring it's often sunny and warm. The trees are green again.",
   "text": "In spring it's often sunny and warm. The trees are green again."
  },
+ "934d96b53ce57cca": {
+  "lang": "de-DE",
+  "spoken": "Die Wahrsagerin schaut in ihre Kristallkugel und sagt dir die Zukunft voraus – natürlich mit will! Tippe auf die Kugel.",
+  "text": "Die Wahrsagerin schaut in ihre Kristallkugel und sagt dir die Zukunft voraus – natürlich mit will! Tippe auf die Kugel."
+ },
  "93588a40d5c28f1e": {
   "lang": "en-GB",
   "spoken": "Are they playing football?",
@@ -4598,6 +5108,11 @@
   "lang": "en-GB",
   "spoken": "a cap",
   "text": "a cap"
+ },
+ "947f9a6cff593777": {
+  "lang": "de-DE",
+  "spoken": "Hurry up! We're going to miss the bus!",
+  "text": "Hurry up! We're going to miss the bus!"
  },
  "94b1c7f23f3c242f": {
   "lang": "en-GB",
@@ -4633,6 +5148,11 @@
   "lang": "en-GB",
   "spoken": "wanted",
   "text": "wanted"
+ },
+ "958c2b3e964eaf67": {
+  "lang": "en-GB",
+  "spoken": "I won't forget your birthday.",
+  "text": "I won't forget your birthday."
  },
  "95929eaf48643c17": {
   "lang": "de-DE",
@@ -4713,6 +5233,11 @@
   "lang": "en-GB",
   "spoken": "Listen! It's raining right now.",
   "text": "Listen! It's raining right now."
+ },
+ "97f6e450f675d0d8": {
+  "lang": "de-DE",
+  "spoken": "Lukas ist größer als Julia: taller than.",
+  "text": "Lukas ist größer als Julia: taller than."
  },
  "9814075710864afc": {
   "lang": "en-GB",
@@ -4854,6 +5379,11 @@
   "spoken": "Das s klingt nicht immer gleich. Es gibt drei Varianten. Tippe auf die Wörter und hör genau hin.",
   "text": "Das s klingt nicht immer gleich. Es gibt drei Varianten. Tippe auf die Wörter und hör genau hin."
  },
+ "9b206160f5d7daef": {
+  "lang": "de-DE",
+  "spoken": "I'll ist die Kurzform von I will.",
+  "text": "I'll ist die Kurzform von I will."
+ },
  "9b3524147faee2f8": {
   "lang": "en-GB",
   "spoken": "one watch, two watches",
@@ -4904,6 +5434,11 @@
   "spoken": "Visitor . Year 3",
   "text": "Visitor . Year 3"
  },
+ "9c7ba69e97cb3e7b": {
+  "lang": "en-GB",
+  "spoken": "The Lions are the best!",
+  "text": "The Lions are the best!"
+ },
  "9cae2536fe7b7368": {
   "lang": "en-GB",
   "spoken": "six eggs",
@@ -4953,6 +5488,21 @@
   "lang": "en-GB",
   "spoken": "Don't stop – keep going!",
   "text": "Don't stop – keep going!"
+ },
+ "9db12eb37d3402ab": {
+  "lang": "en-GB",
+  "spoken": "A bike is faster than a scooter.",
+  "text": "A bike is faster than a scooter."
+ },
+ "9dd36dd162d4d15a": {
+  "lang": "en-GB",
+  "spoken": "Thanks! I'll bring you some Berlin chocolate.",
+  "text": "Thanks! I'll bring you some Berlin chocolate."
+ },
+ "9dd76ce68da1c8e9": {
+  "lang": "en-GB",
+  "spoken": "tall. taller. the tallest.",
+  "text": "tall. taller. the tallest."
  },
  "9df72d2477452ff1": {
   "lang": "en-GB",
@@ -5038,6 +5588,11 @@
   "lang": "en-GB",
   "spoken": "Ruby plays football in Hyde Park.",
   "text": "Ruby plays football in Hyde Park."
+ },
+ "a0812faa017183ba": {
+  "lang": "en-GB",
+  "spoken": "her, hers",
+  "text": "her, hers"
  },
  "a091103541b55782": {
   "lang": "en-GB",
@@ -5229,6 +5784,16 @@
   "spoken": "by train, by bike, on foot",
   "text": "by train, by bike, on foot"
  },
+ "a694f2399f4eab84": {
+  "lang": "en-GB",
+  "spoken": "The Bears are better than the Bees.",
+  "text": "The Bears are better than the Bees."
+ },
+ "a6bd4ed4c4be7e29": {
+  "lang": "en-GB",
+  "spoken": "Are you going to take your laptop?",
+  "text": "Are you going to take your laptop?"
+ },
  "a6ce55870c598a8e": {
   "lang": "en-GB",
   "spoken": "a door",
@@ -5238,6 +5803,11 @@
   "lang": "de-DE",
   "spoken": "Es ist ein Uhr: It's one o'clock.",
   "text": "Es ist ein Uhr: It's one o'clock."
+ },
+ "a76d09cbccdfb1ef": {
+  "lang": "en-GB",
+  "spoken": "my, mine",
+  "text": "my, mine"
  },
  "a7b465020e066c3b": {
   "lang": "de-DE",
@@ -5263,6 +5833,11 @@
   "lang": "en-GB",
   "spoken": "It plays.",
   "text": "It plays."
+ },
+ "a8f49a810b3a6c5f": {
+  "lang": "en-GB",
+  "spoken": "It's the longest river in Great Britain.",
+  "text": "It's the longest river in Great Britain."
  },
  "a90246bb14f65323": {
   "lang": "en-GB",
@@ -5298,6 +5873,11 @@
   "lang": "en-GB",
   "spoken": "the girl's room",
   "text": "the girl's room"
+ },
+ "aa2b833c9054e41d": {
+  "lang": "en-GB",
+  "spoken": "Julia isn't as tall as Ruby.",
+  "text": "Julia isn't as tall as Ruby."
  },
  "aa5f4be5838683b3": {
   "lang": "en-GB",
@@ -5404,6 +5984,11 @@
   "spoken": "Yesterday we",
   "text": "Yesterday we"
  },
+ "ae390626868ab175": {
+  "lang": "en-GB",
+  "spoken": "It's really cold in here.",
+  "text": "It's really cold in here."
+ },
  "ae650af027793508": {
   "lang": "de-DE",
   "spoken": "I wird zu me, he zu him, we zu us, they zu them.",
@@ -5443,6 +6028,11 @@
   "lang": "en-GB",
   "spoken": "R. U. B. Y.",
   "text": "R. U. B. Y."
+ },
+ "aefe4d71b25e8df3": {
+  "lang": "en-GB",
+  "spoken": "Will Biscuit find his ball? – I think he will.",
+  "text": "Will Biscuit find his ball? – I think he will."
  },
  "af04ba897ce0c840": {
   "lang": "de-DE",
@@ -5489,6 +6079,11 @@
   "spoken": "SIS-ter, com-PU-ter, ba-NA-na.",
   "text": "SIS-ter, com-PU-ter, ba-NA-na."
  },
+ "b05cb232ed8c776a": {
+  "lang": "de-DE",
+  "spoken": "I'm going to play football.",
+  "text": "I'm going to play football."
+ },
  "b06ef758dd13e307": {
   "lang": "de-DE",
   "spoken": "Manche Sachen kann man zählen, zum Beispiel Äpfel. Andere nicht, zum Beispiel Brot oder Milch. Dann sagt man some.",
@@ -5508,6 +6103,11 @@
   "lang": "en-GB",
   "spoken": "Ruby is from London. She's from London.",
   "text": "Ruby is from London. She's from London."
+ },
+ "b1fa97e95e68df08": {
+  "lang": "en-GB",
+  "spoken": "A cheetah is faster than a car in town.",
+  "text": "A cheetah is faster than a car in town."
  },
  "b21a788fefd68899": {
   "lang": "en-GB",
@@ -5709,10 +6309,25 @@
   "spoken": "Does this bus go to the station? – Yes, it does.",
   "text": "Does this bus go to the station? – Yes, it does."
  },
+ "b826bf674ac3492a": {
+  "lang": "en-GB",
+  "spoken": "their, theirs",
+  "text": "their, theirs"
+ },
+ "b86b07b04a423b05": {
+  "lang": "en-GB",
+  "spoken": "Today is the hottest day of the year!",
+  "text": "Today is the hottest day of the year!"
+ },
  "b8ac3ff73a3eb23b": {
   "lang": "en-GB",
   "spoken": "Close the door, please.",
   "text": "Close the door, please."
+ },
+ "b8d438099786490a": {
+  "lang": "en-GB",
+  "spoken": "A giraffe is taller than an elephant.",
+  "text": "A giraffe is taller than an elephant."
  },
  "b947e8dfd20f3fd8": {
   "lang": "en-GB",
@@ -5839,6 +6454,11 @@
   "spoken": "Hi Ruby, thanks for your email! I had a great weekend. On Saturday, I went to the cinema with my cousin. We watched a funny film and ate popcorn. On Sunday, it was sunny, so we had a picnic at Tempelhofer Feld. I rode my bike on the old runway! What did you do at the weekend? Write soon! Best wishes, Lukas",
   "text": "Hi Ruby, thanks for your email! I had a great weekend. On Saturday, I went to the cinema with my cousin. We watched a funny film and ate popcorn. On Sunday, it was sunny, so we had a picnic at Tempelhofer Feld. I rode my bike on the old runway! What did you do at the weekend? Write soon! Best wishes, Lukas"
  },
+ "bbb74b8850a8031e": {
+  "lang": "de-DE",
+  "spoken": "In englischen Schulen gibt es eine Fundkiste: lost property. Ms Clark fragt: Wem gehört das? Tippe auf die Sachen.",
+  "text": "In englischen Schulen gibt es eine Fundkiste: lost property. Ms Clark fragt: Wem gehört das? Tippe auf die Sachen."
+ },
  "bbba6ce059f41956": {
   "lang": "de-DE",
   "spoken": "Ruby aus London zeigt dir ihre Fähigkeiten-Karten. Mit can sagst du, was du kannst. Mit can't, was du nicht kannst.",
@@ -5859,6 +6479,11 @@
   "spoken": "Mit Fragewörtern fragst du nach Personen, Dingen, Orten und Zeiten. Tippe auf ein Wort oder eine Frage.",
   "text": "Mit Fragewörtern fragst du nach Personen, Dingen, Orten und Zeiten. Tippe auf ein Wort oder eine Frage."
  },
+ "bc36ce0c003a813d": {
+  "lang": "de-DE",
+  "spoken": "Wenn zwei gleich sind, sagst du as, Adjektiv, as. Wenn nicht: not as … as, oder e r plus than.",
+  "text": "Wenn zwei gleich sind, sagst du as, Adjektiv, as. Wenn nicht: not as … as, oder e r plus than."
+ },
  "bc84cb67b500762a": {
   "lang": "en-GB",
   "spoken": "dances",
@@ -5878,6 +6503,11 @@
   "lang": "de-DE",
   "spoken": "Das kleine 's kann drei verschiedene Dinge bedeuten: Etwas gehört jemandem. Oder es ist die Kurzform von is. Oder die Kurzform von has.",
   "text": "Das kleine 's kann drei verschiedene Dinge bedeuten: Etwas gehört jemandem. Oder es ist die Kurzform von is. Oder die Kurzform von has."
+ },
+ "bd4df516779ddace": {
+  "lang": "de-DE",
+  "spoken": "Big wird zu bigger, mit zwei g.",
+  "text": "Big wird zu bigger, mit zwei g."
  },
  "bd6ad874530e8b0e": {
   "lang": "en-GB",
@@ -5969,6 +6599,11 @@
   "spoken": "There aren't any sweets.",
   "text": "There aren't any sweets."
  },
+ "c0204c1acdb5649e": {
+  "lang": "en-GB",
+  "spoken": "I'm going to buy milk after school. It's on my list.",
+  "text": "I'm going to buy milk after school. It's on my list."
+ },
  "c020b840e5b1347e": {
   "lang": "en-GB",
   "spoken": "I go swimming.",
@@ -6044,6 +6679,11 @@
   "spoken": "a mouse",
   "text": "a mouse"
  },
+ "c3f43a7e25ee8bc6": {
+  "lang": "en-GB",
+  "spoken": "Is this your cap? – Yes, it's mine!",
+  "text": "Is this your cap? – Yes, it's mine!"
+ },
  "c40b6f0dc9eac383": {
   "lang": "en-GB",
   "spoken": "We play football in the park.",
@@ -6063,6 +6703,11 @@
   "lang": "en-GB",
   "spoken": "Love, Ruby",
   "text": "Love, Ruby"
+ },
+ "c47fe3cb276c4da8": {
+  "lang": "de-DE",
+  "spoken": "Beim Anhängen von e r und e s t ändert sich manchmal die Schreibung. Die Regeln kennst du schon von e d und i n g.",
+  "text": "Beim Anhängen von e r und e s t ändert sich manchmal die Schreibung. Die Regeln kennst du schon von e d und i n g."
  },
  "c48a5e6bea6e00a4": {
   "lang": "en-GB",
@@ -6093,6 +6738,11 @@
   "lang": "en-GB",
   "spoken": "It's foggy.",
   "text": "It's foggy."
+ },
+ "c5ca7ce7d44d4fc9": {
+  "lang": "en-GB",
+  "spoken": "The Bees are good.",
+  "text": "The Bees are good."
  },
  "c5f7706708061b2c": {
   "lang": "en-GB",
@@ -6164,6 +6814,11 @@
   "spoken": "eighty",
   "text": "eighty"
  },
+ "c7f67a5d313a7175": {
+  "lang": "en-GB",
+  "spoken": "Ruby is the tallest.",
+  "text": "Ruby is the tallest."
+ },
  "c8415a70b6bfe092": {
   "lang": "de-DE",
   "spoken": "Weihnachten ist in Großbritannien ein bisschen anders als bei uns. Zieh am Christmas cracker!",
@@ -6173,6 +6828,11 @@
   "lang": "en-GB",
   "spoken": "Look! Mum is cooking today.",
   "text": "Look! Mum is cooking today."
+ },
+ "c863592efa10eaa0": {
+  "lang": "de-DE",
+  "spoken": "Ruby is the tallest.",
+  "text": "Ruby is the tallest."
  },
  "c8797e7b00a11ea2": {
   "lang": "en-GB",
@@ -6339,6 +6999,11 @@
   "spoken": "You're invited! Come to Ruby's 12th birthday party! When: Saturday, the fourteenth of November, from three to six p m. Where: 72 Rose Street, London. What: pizza, games and a big cake! Please tell me by the seventh of November.",
   "text": "You're invited! Come to Ruby's 12th birthday party! When: Saturday, the fourteenth of November, from three to six p m. Where: 72 Rose Street, London. What: pizza, games and a big cake! Please tell me by the seventh of November."
  },
+ "cd6e01eb175c0fee": {
+  "lang": "de-DE",
+  "spoken": "Links schon geplant oder sichtbar, rechts Vermutung, spontane Idee oder Versprechen.",
+  "text": "Links schon geplant oder sichtbar, rechts Vermutung, spontane Idee oder Versprechen."
+ },
  "cdad4dfe112cd056": {
   "lang": "en-GB",
   "spoken": "We aren't watching TV. We're doing our homework.",
@@ -6369,6 +7034,16 @@
   "spoken": "Kleidung auf Englisch. Tippe auf ein Kleidungsstück – Lukas zieht es an.",
   "text": "Kleidung auf Englisch. Tippe auf ein Kleidungsstück – Lukas zieht es an."
  },
+ "ce8defeb7b3512cb": {
+  "lang": "en-GB",
+  "spoken": "I'll text you when I get home.",
+  "text": "I'll text you when I get home."
+ },
+ "ce9a53ee47b0a00b": {
+  "lang": "en-GB",
+  "spoken": "We aren't going to watch a film – we're going to play games!",
+  "text": "We aren't going to watch a film – we're going to play games!"
+ },
  "ceb480122150c100": {
   "lang": "en-GB",
   "spoken": "eleven",
@@ -6378,6 +7053,11 @@
   "lang": "en-GB",
   "spoken": "Take him for a walk after lunch. His lead is in the kitchen.",
   "text": "Take him for a walk after lunch. His lead is in the kitchen."
+ },
+ "cefc7ce8b4f06641": {
+  "lang": "en-GB",
+  "spoken": "interesting. more interesting. the most interesting.",
+  "text": "interesting. more interesting. the most interesting."
  },
  "cf018cdfe57728c1": {
   "lang": "de-DE",
@@ -6443,6 +7123,11 @@
   "lang": "en-GB",
   "spoken": "winter. In winter it's cold. Sometimes it snows.",
   "text": "winter. In winter it's cold. Sometimes it snows."
+ },
+ "d09b2c9704b4d9ce": {
+  "lang": "de-DE",
+  "spoken": "Going to benutzt du auch, wenn du jetzt schon siehst, was gleich passiert. Schau genau hin!",
+  "text": "Going to benutzt du auch, wenn du jetzt schon siehst, was gleich passiert. Schau genau hin!"
  },
  "d0bb5ce0458b6027": {
   "lang": "en-GB",
@@ -6529,6 +7214,11 @@
   "spoken": "Sam and Leo's room",
   "text": "Sam and Leo's room"
  },
+ "d2ee97ace324ec5c": {
+  "lang": "en-GB",
+  "spoken": "Big news! My class is going to visit London next spring!",
+  "text": "Big news! My class is going to visit London next spring!"
+ },
  "d31947f42226f6be": {
   "lang": "en-GB",
   "spoken": "What can you play?",
@@ -6588,6 +7278,11 @@
   "lang": "en-GB",
   "spoken": "Mo is not sleeping.",
   "text": "Mo is not sleeping."
+ },
+ "d500974edb331cf7": {
+  "lang": "de-DE",
+  "spoken": "Zwei wichtige Adjektive sind unregelmäßig: good, better, the best und bad, worse, the worst.",
+  "text": "Zwei wichtige Adjektive sind unregelmäßig: good, better, the best und bad, worse, the worst."
  },
  "d545dc49ac7a1a69": {
   "lang": "de-DE",
@@ -6724,6 +7419,11 @@
   "spoken": "What do you do in your free time?",
   "text": "What do you do in your free time?"
  },
+ "d9a4c2a02e20f8a2": {
+  "lang": "en-GB",
+  "spoken": "We aren't going to watch a film.",
+  "text": "We aren't going to watch a film."
+ },
  "d9bfa37baea759ee": {
   "lang": "de-DE",
   "spoken": "Was bei I, he, she und it. Were bei you, we und they.",
@@ -6764,6 +7464,11 @@
   "spoken": "thirteen",
   "text": "thirteen"
  },
+ "db131e416d248603": {
+  "lang": "en-GB",
+  "spoken": "Today is colder than yesterday.",
+  "text": "Today is colder than yesterday."
+ },
  "db7cc1256ab60709": {
   "lang": "en-GB",
   "spoken": "pink",
@@ -6778,6 +7483,11 @@
   "lang": "en-GB",
   "spoken": "The London Eye opened to the public in March two thousand. It is one hundred and thirty-five metres tall.",
   "text": "The London Eye opened to the public in March two thousand. It is one hundred and thirty-five metres tall."
+ },
+ "dbd6708a02b276f0": {
+  "lang": "en-GB",
+  "spoken": "We're going to visit London in May.",
+  "text": "We're going to visit London in May."
  },
  "dc0dfe1bd1e2331c": {
   "lang": "en-GB",
@@ -6849,6 +7559,11 @@
   "spoken": "watched",
   "text": "watched"
  },
+ "dde1b6d690ddea72": {
+  "lang": "de-DE",
+  "spoken": "Die Handschuhe gehören Ellie: They're hers.",
+  "text": "Die Handschuhe gehören Ellie: They're hers."
+ },
  "dde375e327fc2ffa": {
   "lang": "de-DE",
   "spoken": "I am wird zu I'm. Der Apostroph ersetzt den fehlenden Buchstaben.",
@@ -6883,6 +7598,11 @@
   "lang": "de-DE",
   "spoken": "Ruby und Lukas schreiben sich am Montag. Sie erzählen, was sie am Wochenende gemacht haben.",
   "text": "Ruby und Lukas schreiben sich am Montag. Sie erzählen, was sie am Wochenende gemacht haben."
+ },
+ "dea64a4e00e55b4c": {
+  "lang": "en-GB",
+  "spoken": "I am going to play football.",
+  "text": "I am going to play football."
  },
  "debb5473216d0ad5": {
   "lang": "de-DE",
@@ -6919,10 +7639,20 @@
   "spoken": "they are. they're.",
   "text": "they are. they're."
  },
+ "e093e83e7fb8cb34": {
+  "lang": "en-GB",
+  "spoken": "The Severn is longer than the Thames.",
+  "text": "The Severn is longer than the Thames."
+ },
  "e0a75ac3b167cda0": {
   "lang": "de-DE",
   "spoken": "Tower Bridge",
   "text": "Tower Bridge"
+ },
+ "e0aee07b874dca4e": {
+  "lang": "en-GB",
+  "spoken": "beautiful. more beautiful. the most beautiful.",
+  "text": "beautiful. more beautiful. the most beautiful."
  },
  "e135e2ba3b4a6cde": {
   "lang": "de-DE",
@@ -7024,6 +7754,11 @@
   "spoken": "Das Zeichen ə ist der schwächste Laut im Englischen.",
   "text": "Das Zeichen ə ist der schwächste Laut im Englischen."
  },
+ "e4ad4775e51a098e": {
+  "lang": "en-GB",
+  "spoken": "famous. more famous. the most famous.",
+  "text": "famous. more famous. the most famous."
+ },
  "e51e494f58d13d2a": {
   "lang": "en-GB",
   "spoken": "There are two posters on the wall.",
@@ -7073,6 +7808,11 @@
   "lang": "en-GB",
   "spoken": "She's passing the ball to Maya!",
   "text": "She's passing the ball to Maya!"
+ },
+ "e6bc329121dc00b0": {
+  "lang": "en-GB",
+  "spoken": "I think Ellie will win the race.",
+  "text": "I think Ellie will win the race."
  },
  "e7027d4fde488c6c": {
   "lang": "en-GB",
@@ -7138,6 +7878,11 @@
   "lang": "en-GB",
   "spoken": "Are there any pools? – Yes, there are.",
   "text": "Are there any pools? – Yes, there are."
+ },
+ "e8ca0df019fcabbd": {
+  "lang": "en-GB",
+  "spoken": "The hottest day in the UK was the nineteenth of July, twenty twenty-two.",
+  "text": "The hottest day in the UK was the nineteenth of July, twenty twenty-two."
  },
  "e8e93c5cff23a28e": {
   "lang": "en-GB",
@@ -7264,6 +8009,11 @@
   "spoken": "Ich besuche sie – her. Mit ihnen – with them.",
   "text": "Ich besuche sie – her. Mit ihnen – with them."
  },
+ "ec1ffca69f95ce6a": {
+  "lang": "en-GB",
+  "spoken": "our, ours",
+  "text": "our, ours"
+ },
  "ec3b5472670bb0c5": {
   "lang": "de-DE",
   "spoken": "the London Eye",
@@ -7278,6 +8028,11 @@
   "lang": "en-GB",
   "spoken": "Listen!",
   "text": "Listen!"
+ },
+ "ecd57eb7a624cfd4": {
+  "lang": "en-GB",
+  "spoken": "Hurry up! We're going to miss the bus!",
+  "text": "Hurry up! We're going to miss the bus!"
  },
  "ecffd3be70f118e3": {
   "lang": "en-GB",
@@ -7414,6 +8169,11 @@
   "spoken": "What does Lukas eat for breakfast?",
   "text": "What does Lukas eat for breakfast?"
  },
+ "f0a2cd256f1b2b9c": {
+  "lang": "de-DE",
+  "spoken": "Mine, yours, his, hers, ours, theirs.",
+  "text": "Mine, yours, his, hers, ours, theirs."
+ },
  "f0eab13cd28c1559": {
   "lang": "en-GB",
   "spoken": "play football, play tennis, play the piano, play the violin",
@@ -7448,6 +8208,11 @@
   "lang": "en-GB",
   "spoken": "That's two pounds forty, please.",
   "text": "That's two pounds forty, please."
+ },
+ "f22380ed79da05f1": {
+  "lang": "de-DE",
+  "spoken": "Happy wird zu happier: aus y wird i.",
+  "text": "Happy wird zu happier: aus y wird i."
  },
  "f25126e5f10e268f": {
   "lang": "en-GB",
@@ -7489,10 +8254,25 @@
   "spoken": "Und welches Hobby hast du?",
   "text": "Und welches Hobby hast du?"
  },
+ "f38199c4aaccec00": {
+  "lang": "en-GB",
+  "spoken": "Don't worry, I'll get it.",
+  "text": "Don't worry, I'll get it."
+ },
  "f38b4443779dd129": {
   "lang": "en-GB",
   "spoken": "a bottle of water: eighty-five p",
   "text": "a bottle of water: eighty-five p"
+ },
+ "f3d174dcb794d5b5": {
+  "lang": "de-DE",
+  "spoken": "I am going to play football.",
+  "text": "I am going to play football."
+ },
+ "f437a8f6f9e6ce3c": {
+  "lang": "en-GB",
+  "spoken": "Julia is going to bake a cake with Grandma.",
+  "text": "Julia is going to bake a cake with Grandma."
  },
  "f4a5b9fc6f227a58": {
   "lang": "de-DE",
@@ -7624,6 +8404,11 @@
   "spoken": "Excuse me, how do I get to",
   "text": "Excuse me, how do I get to"
  },
+ "f8ecfbd246f669b1": {
+  "lang": "en-GB",
+  "spoken": "This is my ball.",
+  "text": "This is my ball."
+ },
  "f8f5a57d8f0a692d": {
   "lang": "en-GB",
   "spoken": "Tower Bridge opened on the thirtieth of June, eighteen ninety-four. The Prince and Princess of Wales opened it.",
@@ -7633,6 +8418,11 @@
   "lang": "en-GB",
   "spoken": "watches",
   "text": "watches"
+ },
+ "f927912a045bc646": {
+  "lang": "en-GB",
+  "spoken": "Your dog is nicer than mine!",
+  "text": "Your dog is nicer than mine!"
  },
  "f92dd8b7d98b26c4": {
   "lang": "en-GB",
@@ -7658,6 +8448,11 @@
   "lang": "en-GB",
   "spoken": "Can you swim fast?",
   "text": "Can you swim fast?"
+ },
+ "f9fa69981fc68b2b": {
+  "lang": "en-GB",
+  "spoken": "expensive. more expensive. the most expensive.",
+  "text": "expensive. more expensive. the most expensive."
  },
  "fa1870ee6f5b4615": {
   "lang": "en-GB",
@@ -7693,6 +8488,11 @@
   "lang": "en-GB",
   "spoken": "It's foggy in London.",
   "text": "It's foggy in London."
+ },
+ "fad116ad315f2d48": {
+  "lang": "de-DE",
+  "spoken": "Wem gehört das? Statt my bag kannst du einfach mine sagen. Mine steht allein, ohne Nomen danach.",
+  "text": "Wem gehört das? Statt my bag kannst du einfach mine sagen. Mine steht allein, ohne Nomen danach."
  },
  "fb24e933d42483ae": {
   "lang": "de-DE",
@@ -7749,6 +8549,11 @@
   "spoken": "where",
   "text": "where"
  },
+ "fc75effc92a7a438": {
+  "lang": "en-GB",
+  "spoken": "Oh no, there's no milk! I'll go to the shop!",
+  "text": "Oh no, there's no milk! I'll go to the shop!"
+ },
  "fc9e0530290a11ca": {
   "lang": "de-DE",
   "spoken": "Jetzt wird es echt: Lukas schreibt Ruby seine erste Nachricht, besucht ihre Schule und bekommt ein Namensschild.",
@@ -7789,6 +8594,11 @@
   "spoken": "seventeen",
   "text": "seventeen"
  },
+ "fdae306f5b92c4e4": {
+  "lang": "en-GB",
+  "spoken": "We're going to have a party on Saturday.",
+  "text": "We're going to have a party on Saturday."
+ },
  "fdbe7f8cd9d3856e": {
   "lang": "en-GB",
   "spoken": "Happy birthday, Ruby!",
@@ -7808,6 +8618,11 @@
   "lang": "en-GB",
   "spoken": "what",
   "text": "what"
+ },
+ "fe732067e164c842": {
+  "lang": "de-DE",
+  "spoken": "Oh no, there's no milk! I'll go to the shop!",
+  "text": "Oh no, there's no milk! I'll go to the shop!"
  },
  "fe91cbeb1d333a9d": {
   "lang": "de-DE",
@@ -7843,6 +8658,11 @@
   "lang": "de-DE",
   "spoken": "Höflichkeit ist in England sehr wichtig. Mit please und Could you klingst du gleich viel freundlicher.",
   "text": "Höflichkeit ist in England sehr wichtig. Mit please und Could you klingst du gleich viel freundlicher."
+ },
+ "ff88e2a14652df03": {
+  "lang": "en-GB",
+  "spoken": "The cheetah is the fastest animal on land.",
+  "text": "The cheetah is the fastest animal on land."
  },
  "ff8e98b9e2b1ecad": {
   "lang": "en-GB",

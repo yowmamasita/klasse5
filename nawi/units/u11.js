@@ -1,7 +1,7 @@
 /* Kapitel 11 – Körper und Gesundheit (RLP NaWi 5/6, Themenfeld 3.7).
    Nährstoffe, Pausenbrot, DGE-Ernährungskreis (2024), Weg der Nahrung, Darm, Gebiss, Zahnaufbau, Karies,
    Zähneputzen, Atmung (Lunge, Zwerchfell), Gasaustausch, Atemzüge zählen, Herz, Blutkreislauf, Puls,
-   Schlaf/Bewegung/Bildschirm. Fakten geprüft (Quellen im Bericht): DGE, KZBV, BZgA, WHO u. a. */
+   Rauchen und Sucht vorbeugen (Zigarette/E-Zigarette, Flimmerhärchen, Nein sagen, JuSchG), Schlaf/Bewegung/Bildschirm. Fakten geprüft (Quellen im Bericht): DGE, KZBV, BZgA, WHO u. a. */
 (() => {
   const UC = "#db2777";
   const TAU = Math.PI * 2;
@@ -27,14 +27,14 @@
 
   Deck.unit({
     id: "u11", num: 11, title: "Körper und Gesundheit", color: UC, soft: "#fce7f3",
-    subtitle: "Essen, Verdauung, Zähne, Atmung, Herz – und was dir guttut",
+    subtitle: "Essen, Verdauung, Zähne, Atmung, Herz – was dir guttut und was dir schadet",
     blurb: "Nährstoffe, Verdauung, Zähne, Atmung, Herz und Puls",
     goals: [
       "Die Nährstoffe und ihre Aufgaben kennen",
       "Den Weg der Nahrung durch den Körper beschreiben",
       "Gebiss, Zahnaufbau und Karies verstehen",
       "Atmung und Blutkreislauf erklären, Puls messen",
-      "Wissen, was Schlaf und Bewegung bewirken",
+      "Wissen, was Schlaf und Bewegung bewirken – und warum Rauchen schadet",
     ],
     icon(svg, el) {
       svg.append(
@@ -609,6 +609,158 @@
           s.step(async () => { s.sfx.pop(); await s.show(k1, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(k2, "up"); });
           s.step(async () => { s.sfx.whoosh(); sl.set(3); await s.wait(1500); s.say("Beim Rennen schlägt das Herz viel schneller. So bekommen die Muskeln mehr Sauerstoff."); });
+        },
+      },
+      /* R1 – Rauchen und Sucht vorbeugen ---------------------------------- */
+      {
+        title: "Was steckt in einer Zigarette?",
+        say: "Beim Rauchen verbrennt Tabak. Im Rauch stecken Nikotin, Teer und das giftige Gas Kohlenmonoxid.",
+        build(s) {
+          const sv = s.svg(520, 440);
+          bg(s, sv, 520, 440);
+          const smoke = s.el("g");
+          const glow = s.el("circle", { cx: 432, cy: 330, r: 22, fill: "#ff9a3c", opacity: 0.35 });
+          sv.append(smoke, glow,
+            s.el("rect", { x: 60, y: 316, width: 92, height: 28, rx: 4, fill: "#e8a04a", stroke: "#a0632a", "stroke-width": 2 }),
+            s.el("rect", { x: 150, y: 316, width: 272, height: 28, fill: "#fff", stroke: "#9ca3af", "stroke-width": 2 }),
+            s.el("rect", { x: 418, y: 316, width: 20, height: 28, rx: 3, fill: "#5d6678" }),
+            s.el("rect", { x: 432, y: 318, width: 10, height: 24, rx: 4, fill: "#e0322b" }),
+            s.el("text", { x: 106, y: 392, "text-anchor": "middle", class: "lbl", style: { fontWeight: 700 }, text: "Filter" }),
+            s.el("text", { x: 290, y: 392, "text-anchor": "middle", class: "lbl", style: { fontWeight: 700 }, text: "Tabak in Papier" }));
+          const P0 = Array.from({ length: 26 }, (_, i) => ({ k: i / 26, dx: (i * 37) % 23 - 11 }));
+          const puffs = P0.map(() => { const c = s.el("circle", { r: 10, fill: "#9aa3b2", opacity: 0 }); smoke.append(c); return c; });
+          s.loop(t => {
+            glow.setAttribute("opacity", 0.25 + 0.15 * Math.sin(t * 5));
+            P0.forEach((p, i) => {
+              const u = (t * 0.12 + p.k) % 1;
+              puffs[i].setAttribute("cx", 438 + p.dx * u * 3 + Math.sin(u * 9 + i) * 14 * u);
+              puffs[i].setAttribute("cy", 312 - u * 280);
+              puffs[i].setAttribute("r", 6 + u * 20);
+              puffs[i].setAttribute("opacity", 0.55 * (1 - u));
+            });
+          });
+          const L = [["Nikotin: macht abhängig", 70, "#7b4fd6"], ["Teer: klebriger Dreck", 140, "#8a5a2b"], ["Kohlenmonoxid: giftiges Gas", 210, "#dc3b2a"]];
+          const labs = L.map(([t, y, c]) => {
+            const g = s.el("g", { class: "later" },
+              s.el("text", { x: 30, y, class: "lbl", style: { fontWeight: 700, fill: c }, text: t }),
+              s.el("line", { x1: 30, y1: y + 10, x2: 300, y2: y + 10, stroke: c, "stroke-width": 2.5 }),
+              s.el("line", { x1: 300, y1: y + 10, x2: 405, y2: 150 + y * 0.3, stroke: c, "stroke-width": 2.5, "stroke-dasharray": "5 5" }));
+            sv.append(g); return g;
+          });
+          const e1 = exb(s, "Tabakrauch", P(s, "Im Rauch stecken über <b>4.800</b> verschiedene Stoffe. Mindestens <b>250</b> davon sind giftig oder können Krebs auslösen.", "small"));
+          const e2 = exb(s, "E-Zigarette", P(s, "Sie verbrennt nichts, sondern verdampft eine Flüssigkeit. Meist ist auch darin <b>Nikotin</b> – und das macht genauso abhängig.", "small"));
+          const m = merk(s, "<b>Nikotin</b> macht schnell <b>abhängig</b>: Der Körper gewöhnt sich daran und will immer mehr davon.", true, 21);
+          s.add(cols(s, 520, sv, stack(s, 14, P(s, "Eine Zigarette ist Tabak in Papier. Beim Rauchen <b>verbrennt</b> der Tabak, und man atmet den Rauch ein."), e1, e2, m)));
+          s.show(sv, "fade"); s.sound("match-strike", { vol: 0.5 });
+          s.step(async () => { for (const l of labs) { s.sfx.pop(); await s.show(l, "left"); } s.say("Nikotin, Teer und Kohlenmonoxid."); });
+          s.step(async () => { s.sfx.error(); await s.show(e1, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(e2, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* R2 ---------------------------------------------------------------- */
+      {
+        title: "Was Rauch in der Lunge macht",
+        say: "In den Bronchien sitzen winzige Flimmerhärchen. Sie schieben Schleim mit Staub nach oben aus der Lunge. Rauch legt sie lahm.",
+        build(s) {
+          const W = 560, H = 440;
+          const { canvas, g } = s.canvas(W, H);
+          let smoke = 0, tSmoke = 0, mucusX = 0;
+          const N = 26;
+          const dust = Array.from({ length: 14 }, (_, i) => ({ x: (i * 41) % W, y: 40 + (i * 53) % 180, st: 0 }));
+          const tar = [];
+          s.loop((t, dt) => {
+            dt = Math.min(dt || 0.016, 0.05);
+            smoke = s.fast ? tSmoke : smoke + (tSmoke - smoke) * Math.min(1, dt * 2);
+            g.fillStyle = "#fdf0f6"; g.fillRect(0, 0, W, H);
+            // air
+            g.fillStyle = smoke > 0.05 ? `rgba(154,163,178,${0.35 * smoke})` : "rgba(0,0,0,0)"; g.fillRect(0, 0, W, 250);
+            // cells
+            for (let i = 0; i < 8; i++) { g.fillStyle = "#f4a6b8"; g.strokeStyle = "#b0405e"; g.lineWidth = 2; g.beginPath(); g.roundRect(i * 70 + 2, 340, 66, 70, 10); g.fill(); g.stroke(); g.fillStyle = "#b0405e"; g.beginPath(); g.arc(i * 70 + 35, 378, 9, 0, TAU); g.fill(); }
+            // cilia
+            const amp = 0.55 * (1 - smoke) + 0.06;
+            g.strokeStyle = "#b0405e"; g.lineWidth = 3; g.lineCap = "round";
+            for (let i = 0; i < N; i++) {
+              const x = 12 + i * 21, a = Math.sin(t * 9 - i * 0.6) * amp - smoke * 0.9;
+              g.beginPath(); g.moveTo(x, 340); g.quadraticCurveTo(x + Math.sin(a) * 16, 322, x + Math.sin(a) * 34, 340 - Math.cos(a) * 36); g.stroke();
+            }
+            // mucus layer
+            const thick = 26 + smoke * 26;
+            mucusX = (mucusX + dt * 60 * (1 - smoke)) % 60;
+            g.fillStyle = "rgba(232,197,71,0.55)"; g.fillRect(0, 300 - thick, W, thick);
+            g.fillStyle = "rgba(200,160,40,0.6)";
+            for (let x = -60 + mucusX; x < W; x += 60) { g.beginPath(); g.ellipse(x + 30, 300 - thick / 2, 14, thick / 3, 0, 0, TAU); g.fill(); }
+            // dust: falls into the mucus and rides along
+            dust.forEach(d => {
+              if (d.st === 0) { d.y += dt * 40; if (d.y > 300 - thick / 2) d.st = 1; }
+              else d.x += dt * 60 * (1 - smoke);
+              if (d.x > W + 10) { d.x = -10; }
+              if (d.st === 1 && smoke < 0.5 && Math.random() < 0.002) { d.st = 0; d.y = 30; }
+              g.fillStyle = "#5d6678"; g.beginPath(); g.arc(d.x, d.y, 4, 0, TAU); g.fill();
+            });
+            // tar
+            if (tSmoke && tar.length < 70 && Math.random() < 0.3) tar.push({ x: Math.random() * W, y: 0, ty: 290 + Math.random() * 46 });
+            tar.forEach(p => { p.y = Math.min(p.ty, p.y + dt * 120); g.fillStyle = "#6b3e1f"; g.beginPath(); g.arc(p.x, p.y, 4.5, 0, TAU); g.fill(); });
+            // labels
+            g.font = "700 20px 'Atkinson Hyperlegible', sans-serif"; g.textAlign = "left"; g.textBaseline = "alphabetic"; g.fillStyle = "#1b2740";
+            g.fillText("Luft in der Bronchie", 16, 30);
+            g.fillText("Schleim", 16, 300 - thick - 8);
+            g.fillText("Flimmerhärchen", 16, 432);
+            g.textAlign = "right";
+            g.fillStyle = smoke > 0.5 ? "#dc3b2a" : "#138a5a";
+            g.fillText(smoke > 0.5 ? "Schleim bleibt liegen: Husten!" : "zum Rachen →", W - 14, 30);
+          });
+          const st = s.h("p", { class: "t", style: { fontWeight: 700, color: "var(--green)", minHeight: "36px" } }, "Ohne Rauch: Die Härchen arbeiten.");
+          const setSmoke = on => { tSmoke = on ? 1 : 0; if (!on) tar.length = 0; st.textContent = on ? "Mit Rauch: Die Härchen werden lahm." : "Ohne Rauch: Die Härchen arbeiten."; st.style.color = on ? "var(--red)" : "var(--green)"; on ? s.sfx.error() : s.sfx.success(); };
+          const b1 = s.h("button", { class: "btn", onclick: () => setSmoke(false) }, "Ohne Rauch");
+          const b2 = s.h("button", { class: "btn solid", onclick: () => setSmoke(true) }, "Mit Rauch");
+          const e1 = exb(s, "Gesund", P(s, "Die <b>Flimmerhärchen</b> schlagen ständig und schieben den Schleim mit Staub und Keimen aus der Lunge heraus.", "small"));
+          const e2 = exb(s, "Mit Rauch", P(s, "<b>Teer</b> verklebt die Härchen. Der Schleim bleibt liegen – Raucher müssen oft husten.", "small"));
+          const e3 = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "Weißt du noch? Gasaustausch"),
+            P(s, "<b>Kohlenmonoxid</b> verdrängt im Blut den <b>Sauerstoff</b>. Die Muskeln bekommen weniger davon – beim Sport geht schneller die Puste aus.", "small"));
+          s.add(cols(s, 560, canvas, stack(s, 10, s.h("div", { class: "row", style: { gap: "12px" } }, b1, b2), st, e1, e2, e3), 20));
+          s.show(canvas, "fade"); s.sfx.pop();
+          s.step(async () => { s.sfx.pop(); await s.show(e1, "up"); s.say("Die Härchen schieben den Schleim wie auf einem Förderband."); });
+          s.step(async () => { setSmoke(true); await s.wait(600); await s.show(e2, "up"); s.say("Rauch macht die Härchen lahm."); });
+          s.step(async () => { s.sound("atemzug", { vol: 0.5 }); await s.show(e3, "up"); });
+        },
+      },
+      /* R3 ---------------------------------------------------------------- */
+      {
+        title: "Sucht – und wie du Nein sagst",
+        say: "Sucht heißt: Man kann nicht mehr aufhören, obwohl man es möchte. Am besten fängst du gar nicht erst an. Nein sagen ist stark.",
+        build(s) {
+          const sv = s.svg(440, 440);
+          bg(s, sv, 440, 440);
+          const C = [220, 225], R = 132;
+          const N = [["Nikotin", "rein"], ["kurz ein", "gutes Gefühl"], ["Körper will", "mehr davon"], ["ohne: unruhig", "und gereizt"]];
+          const pos = N.map((_, i) => { const a = -Math.PI / 2 + i * Math.PI / 2; return [C[0] + Math.cos(a) * R, C[1] + Math.sin(a) * R]; });
+          const ring = s.el("circle", { cx: C[0], cy: C[1], r: R, fill: "none", stroke: UC, "stroke-width": 5, "stroke-dasharray": "14 10", class: "later" });
+          sv.append(ring, s.el("text", { x: C[0], y: C[1] + 12, "text-anchor": "middle", class: "lbl", style: { fontWeight: 800, fontSize: "34px", fill: UC }, text: "Sucht" }));
+          const dot = s.el("circle", { r: 11, fill: UC, opacity: 0 });
+          sv.append(dot);
+          const nodes = N.map(([a, b], i) => {
+            const [x, y] = pos[i];
+            const g = s.el("g", { class: "later" }, s.el("rect", { x: x - 76, y: y - 34, width: 152, height: 68, rx: 14, fill: "#fff", stroke: UC, "stroke-width": 3 }),
+              s.el("text", { x, y: y - 6, "text-anchor": "middle", class: "lbl", style: { fontWeight: 700, fontSize: "19px" }, text: a }),
+              s.el("text", { x, y: y + 19, "text-anchor": "middle", class: "lbl", style: { fontWeight: 700, fontSize: "19px" }, text: b }));
+            sv.append(g); return g;
+          });
+          let run = false;
+          s.loop(t => { if (!run) return; const a = -Math.PI / 2 + t * 0.9; dot.setAttribute("cx", C[0] + Math.cos(a) * R); dot.setAttribute("cy", C[1] + Math.sin(a) * R); dot.setAttribute("opacity", 1); ring.setAttribute("stroke-dashoffset", -t * 30); });
+          const e1 = exb(s, "Was ist Sucht?", P(s, "Man kann nicht mehr aufhören, obwohl man will. Das geht auch ohne Stoffe: <b>Handy</b> und <b>Computerspiele</b> können so fesseln, dass man kaum loskommt. Die WHO zählt Computerspielsucht zu den Krankheiten.", "small"));
+          const bub = (who, txt, right) => s.h("div", { class: "later", style: { alignSelf: right ? "flex-end" : "flex-start", maxWidth: "88%", background: right ? "#fce7f3" : "#eef2f7", border: "2px solid " + (right ? UC : "#c8d3de"), borderRadius: "16px", padding: "6px 14px", fontSize: "19px" }, html: `<b>${who}:</b> ${txt}` });
+          const q = bub("Emre", "Komm, probier mal! Alle machen das.", false);
+          const A = [bub("Mila", "Nein danke, ich hab keine Lust.", true), bub("Mila", "Ich will fit bleiben – ich spiele Fußball.", true), bub("Mila", "Echte Freunde akzeptieren ein Nein.", true)];
+          const chat = s.h("div", { class: "card later stack", style: { gap: "6px", padding: "10px 14px" } }, s.h("span", { class: "exlabel" }, "Nein sagen"), q, ...A);
+          const m = merk(s, "<b>Jugendschutzgesetz:</b> Zigaretten und E-Zigaretten – auch ohne Nikotin – dürfen nicht an Kinder und Jugendliche unter <b>18</b> verkauft werden.", true, 20);
+          s.add(cols(s, 440, sv, stack(s, 10, e1, chat, m), 20));
+          s.show(sv, "fade"); s.sfx.pop();
+          s.step(async () => { for (const n of nodes) { s.sfx.pop(); await s.show(n, "pop"); } await s.show(ring, "fade"); run = true; s.sfx.whoosh(); s.say("Ein Kreislauf: Ohne Nikotin wird man unruhig, also raucht man wieder."); });
+          s.step(async () => { s.sfx.pop(); await s.show(e1, "up"); });
+          s.step(async () => { s.show(chat, "up"); await s.wait(250); s.sound("gespraech", { vol: 0.3, dur: 2 }); await s.show(q, "left"); });
+          s.step(async () => { for (const a of A) { s.sfx.ding(); await s.show(a, "right"); await s.wait(250); } s.say("Du darfst immer Nein sagen. Wer dich drängt, ist kein guter Freund."); });
+          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(m, "up"); });
         },
       },
       /* 16 --------------------------------------------------------------- */

@@ -2,7 +2,7 @@
 
 Interactive, animated slide decks covering a whole Berlin Gymnasium Klasse 5 year
 (Rahmenlehrplan Berlin-Brandenburg), built for an iPad in landscape:
-**Mathe, Deutsch, Englisch, NaWi, GeWi, Musik, Kunst** — 7 subjects, 74 chapters, about 1,340 slides.
+**Mathe, Deutsch, Englisch, NaWi, GeWi, Musik, Kunst** — 7 subjects, 76 chapters, about 1,400 slides.
 
 - Plain HTML, CSS, JavaScript, SVG and canvas. No build step, no framework, no dependencies
   (fonts load from Google Fonts). Real photos and recorded sounds are stored in the repo (`*/media/`).

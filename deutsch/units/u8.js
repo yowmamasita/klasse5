@@ -1,4 +1,4 @@
-/* Kapitel 8 – Märchen, Fabeln, Gedichte (Grimm, Äsop/La Fontaine/Lessing, Sagen: Herakles/Odysseus/Ikarus nach Schwab, Kahlbutz, Schlangenkönig, Vers/Reim/Metrum, Erlkönig, Buchvorstellung, Vorlesen) */
+/* Kapitel 8 – Märchen, Fabeln, Gedichte (Grimm, Äsop/La Fontaine/Lessing, Sagen: Herakles/Odysseus/Ikarus nach Schwab, Kahlbutz, Schlangenkönig, Vers/Reim/Metrum, eigene Gedichte (Elfchen, Rondell, Haiku), Erlkönig, Buchvorstellung, Vorlesen) */
 (() => {
   const P = { blue: "#1d5bd0", red: "#dc3b2a", green: "#138a5a", violet: "#7b4fd6", orange: "#ee7a1a", ink: "#1b2740", pencil: "#5d6678", yellow: "#ffd94a", line: "#c8d3de", unit: "#0e7490", soft: "#dff3f7", gold: "#e0a800" };
   const later = el => { el.classList.add("later"); return el; };
@@ -18,8 +18,8 @@
   Deck.unit({
     id: "u8", num: 8, title: "Märchen, Fabeln, Gedichte", color: "#0e7490", soft: "#dff3f7",
     subtitle: "Es war einmal … und reimt sich das?",
-    blurb: "Märchen, Fabeln, Sagen, Reime, Balladen, Bücher vorstellen.",
-    goals: ["Märchen und ihre Merkmale erkennen", "Fabeln und Sagen verstehen – Lehre und wahrer Kern", "Vers, Strophe, Reim und Rhythmus in Gedichten entdecken", "Eine Ballade mit verteilten Rollen erleben", "Ein Buch vorstellen und gut vorlesen"],
+    blurb: "Märchen, Fabeln, Sagen, eigene Gedichte, Balladen.",
+    goals: ["Märchen und ihre Merkmale erkennen", "Fabeln und Sagen verstehen – Lehre und wahrer Kern", "Vers, Reim und Rhythmus entdecken – und selbst dichten: Elfchen, Rondell, Haiku", "Eine Ballade mit verteilten Rollen erleben", "Ein Buch vorstellen und gut vorlesen"],
     icon(svg, el) {
       svg.append(el("path", { d: "M8 18 Q22 12 35 18 V60 Q22 54 8 60 Z", fill: "#0e7490", opacity: .25 }), el("path", { d: "M35 18 Q48 12 62 18 V60 Q48 54 35 60 Z", fill: "#0e7490", opacity: .45 }),
         el("path", { d: "M50 4 l3 7 l7 1 l-5 5 l1 7 l-6 -3 l-6 3 l1 -7 l-5 -5 l7 -1 z", fill: "#e0a800" }));
@@ -775,6 +775,165 @@
           s.step(async () => { s.sfx.fanfare(); await s.show(p3, "left"); s.say("Frühling will nun einmarschiern."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
           s.step(async () => { s.sfx.pop(); await s.show(lf12, "up"); });
+        },
+      },
+      /* 12a – eigene Gedichte: Elfchen ------------------------------------- */
+      {
+        title: "Ein Elfchen schreiben",
+        say: "Jetzt dichtest du selbst! Ein Elfchen hat elf Wörter in fünf Zeilen: ein Wort, zwei Wörter, drei, vier und am Ende wieder eins.",
+        build(s) {
+          const EX = {
+            herbst: ["Herbst", [["Bunt"], ["Die", "Blätter"], ["tanzen", "im", "Wind."], ["Ich", "sammle", "die", "schönsten."], ["Herbst!"]], () => s.sound("wind", { vol: .35, dur: 2.5 })],
+            ubahn: ["U-Bahn", [["Gelb"], ["Die", "U-Bahn"], ["rumpelt", "unter", "Berlin."], ["Ich", "fahre", "zur", "Schule."], ["Pünktlich!"]], () => s.sound("ubahn-train", { vol: .35, dur: 2.5 })],
+            fussball: ["Fußball", [["Schnell"], ["Der", "Ball"], ["fliegt", "ins", "Tor."], ["Ich", "jubele", "ganz", "laut."], ["Tooor!"]], () => s.sound("crowd-cheer", { vol: .35, dur: 2.5 })],
+          };
+          const RULE = ["eine Farbe oder Eigenschaft", "ein Ding, das so ist", "Wo ist es? Was tut es?", "etwas über dich: Ich …", "ein Schlusswort"];
+          const N = [1, 2, 3, 4, 1];
+          const holders = N.map(() => s.h("div", { style: { display: "flex", gap: "6px", justifyContent: "center", alignItems: "center", minHeight: "58px", flexWrap: "nowrap" } }));
+          const ph = () => s.h("span", { style: { display: "inline-block", width: "64px", height: "44px", borderRadius: "10px", border: "2px dashed " + P.line } });
+          const rows = N.map((n, i) => s.h("div", { style: { display: "grid", gridTemplateColumns: "40px minmax(0, 1fr) 210px", gap: "10px", alignItems: "center", padding: "7px 0", borderBottom: i < 4 ? "2px solid " + P.line : "none" } },
+            s.h("span", { style: { width: "38px", height: "38px", borderRadius: "50%", display: "grid", placeItems: "center", background: P.unit, color: "#fff", font: "700 21px/1 var(--f-display)" } }, String(n)), holders[i],
+            s.h("p", { class: "small pencil", style: { fontSize: "19px", lineHeight: 1.25 } }, RULE[i])));
+          const box = t => s.h("span", { class: "a-pop", style: { display: "inline-grid", placeItems: "center", height: "50px", padding: "0 9px", borderRadius: "10px", background: "#fff", border: "2px solid " + P.unit, font: "700 24px/1 var(--f-display)", color: P.ink, whiteSpace: "nowrap" } }, t);
+          const cnt = s.h("span", { class: "huge mono", style: { color: P.unit } }, "0");
+          let words = 0, run = 0, cur = null;
+          const setCnt = n => { words = n; cnt.textContent = String(n); };
+          const reset = () => { holders.forEach((h, i) => h.replaceChildren(...Array.from({ length: N[i] }, ph))); setCnt(0); };
+          const fillLines = async (k, lines, id) => {
+            for (const i of lines) {
+              const ws = EX[k][1][i]; holders[i].replaceChildren();
+              for (const w of ws) { if (id !== run || !s.alive) return; holders[i].append(box(w)); setCnt(words + 1); s.sfx.note([0, 2, 4, 5, 7, 9, 11, 12, 14, 16, 17][words - 1] || 0, .14); if (!s.fast) await s.wait(170); }
+              if (!s.fast) await s.wait(200);
+            }
+          };
+          const tabs = Object.entries(EX).map(([k, e]) => { const b = s.h("button", { class: "btn", onclick: () => show(k, [0, 1, 2, 3, 4]) }, e[0]); b.dataset.k = k; return b; });
+          const show = async (k, lines) => {
+            const id = ++run;
+            if (cur !== k) { cur = k; reset(); tabs.forEach(b => b.classList.toggle("solid", b.dataset.k === k)); EX[k][2](); }
+            else if (lines[0] === 0) reset();
+            await fillLines(k, lines, id);
+            if (id === run && words === 11) s.say(EX[k][1].map(l => l.join(" ")).join(" "));
+          };
+          const card = s.h("div", { class: "card", style: { padding: "10px 16px", display: "flex", flexDirection: "column", gap: "6px" } }, s.h("div", { class: "row", style: { gap: "10px" } }, s.h("b", { style: { fontSize: "21px", color: P.pencil } }, "Thema:"), ...tabs), ...rows);
+          const count = s.h("div", { class: "card soft", style: { padding: "10px 16px", display: "flex", alignItems: "center", gap: "14px" } }, cnt, s.h("p", { class: "t", style: { fontSize: "22px" } }, "Wörter", s.h("br"), s.h("span", { class: "pencil" }, "von 11")));
+          const m = later(merk(s, { style: { fontSize: "21px" } }, "Ein ", B(s, "Elfchen"), " hat ", B(s, "11 Wörter"), " in 5 Zeilen: ", B(s, "1 – 2 – 3 – 4 – 1"), ". Reimen muss sich nichts!"));
+          const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Ein Elfchen passt auf jede Geburtstagskarte, auf ein Lesezeichen oder unter ein Foto im Fotoalbum.")));
+          const tip = later(s.h("div", { class: "card soft", style: { padding: "8px 16px" } }, s.h("p", { class: "small" }, B(s, "So gehst du vor: ", P.unit), "Thema wählen → Wörter dazu sammeln → in die fünf Zeilen verteilen → laut vorlesen und verbessern.")));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "1fr 330px", gap: "18px", alignItems: "start" }, s.h("div", { class: "stack", style: { gap: "12px" } }, card, tip), s.h("div", { class: "stack", style: { gap: "12px" } }, count, m, lf)));
+          reset(); cur = "herbst"; tabs[0].classList.add("solid"); s.sfx.pop();
+          s.step(async () => { EX.herbst[2](); s.sound("pencil-write", { vol: .4, dur: 1 }); await show("herbst", [0, 1]); s.say("Bunt. Die Blätter."); });
+          s.step(async () => { s.sound("pencil-write", { vol: .4, dur: 1.2 }); await show("herbst", [2, 3, 4]); s.sfx.success(); await s.show(tip, "up"); });
+          s.step(async () => { await show("ubahn", [0, 1, 2, 3, 4]); });
+          s.step(async () => { await show("fussball", [0, 1, 2, 3, 4]); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* 12b – eigene Gedichte: Rondell ------------------------------------- */
+      {
+        title: "Ein Rondell schreiben",
+        say: "Ein Rondell hat acht Zeilen. Die erste Zeile kommt dreimal vor: in Zeile eins, vier und sieben. Zeile zwei und Zeile acht sind gleich.",
+        build(s) {
+          const EX = {
+            herbst: ["Herbst", ["Der Herbst ist da.", "Die Blätter fallen leise.", "Der Wind pfeift durch die Straßen.", "Ich trinke heißen Kakao.", "Die Kastanien glänzen braun."], () => s.sound("wind", { vol: .3, dur: 2 })],
+            ubahn: ["U-Bahn", ["Die U-Bahn kommt.", "Die Türen gehen auf.", "Alle drängeln sich hinein.", "Ich finde keinen Sitzplatz.", "„Zurückbleiben, bitte!“"], () => s.sound("ubahn-tueren", { vol: .35, dur: 2.5 })],
+            fussball: ["Fußball", ["Heute ist Spieltag.", "Ich ziehe mein Trikot an.", "Das Stadion ist voll.", "Wir singen und wir hoffen.", "Tor in der letzten Minute!"], () => s.sound("crowd-cheer", { vol: .3, dur: 2.5 })],
+          };
+          // which source line goes into each of the 8 lines: A = own line 1, B = own line 2, x = free lines 3–5
+          const MAP = [0, 1, 2, 0, 3, 4, 0, 1];
+          const TAG = ["A", "B", "", "A", "", "", "A", "B"];
+          const TC = { A: P.red, B: P.blue, "": P.pencil };
+          const texts = MAP.map(() => s.h("p", { style: { margin: 0, fontSize: "23px", lineHeight: 1.2 } }, ""));
+          const rows = MAP.map((_, i) => s.h("div", { style: { display: "grid", gridTemplateColumns: "34px 44px 1fr", gap: "8px", alignItems: "center", minHeight: "44px", borderBottom: "2px solid " + P.line } },
+            s.h("span", { class: "small pencil", style: { textAlign: "right" } }, String(i + 1)),
+            s.h("b", { style: { display: "grid", placeItems: "center", height: "34px", borderRadius: "8px", background: TAG[i] ? TC[TAG[i]] : "transparent", color: "#fff", font: "700 20px/1 var(--f-display)" } }, TAG[i]), texts[i]));
+          let run = 0, cur = null;
+          const setLine = async (k, i, id) => {
+            if (id !== run || !s.alive) return;
+            const src = MAP[i], copy = (TAG[i] && i !== src) ;
+            texts[i].textContent = EX[k][1][src]; texts[i].style.color = TAG[i] ? TC[TAG[i]] : P.ink; texts[i].style.fontWeight = TAG[i] ? 700 : 400;
+            texts[i].classList.remove("a-left", "a-pop"); void texts[i].offsetWidth; texts[i].classList.add(copy ? "a-pop" : "a-left");
+            if (copy) { s.sfx.snap(); const o = texts[src]; o.classList.remove("a-pop"); void o.offsetWidth; o.classList.add("a-pop"); } else s.sfx.note(i, .15);
+            if (!s.fast) await s.wait(copy ? 520 : 420);
+          };
+          const tabs = Object.entries(EX).map(([k, e]) => { const b = s.h("button", { class: "btn", onclick: () => show(k, [0, 1, 2, 3, 4, 5, 6, 7]) }, e[0]); b.dataset.k = k; return b; });
+          const show = async (k, lines) => {
+            const id = ++run;
+            if (cur !== k) { cur = k; texts.forEach(t => (t.textContent = "")); tabs.forEach(b => b.classList.toggle("solid", b.dataset.k === k)); EX[k][2](); }
+            for (const i of lines) await setLine(k, i, id);
+          };
+          const card = s.h("div", { class: "card", style: { padding: "10px 16px", display: "flex", flexDirection: "column", gap: "2px" } }, s.h("div", { class: "row", style: { gap: "10px", marginBottom: "6px" } }, s.h("b", { style: { fontSize: "21px", color: P.pencil } }, "Thema:"), ...tabs), ...rows);
+          const PLAN = [["Zeile 1 = 4 = 7", P.red, "der wichtigste Satz, dreimal"], ["Zeile 2 = 8", P.blue, "kommt am Ende wieder"], ["Zeilen 3, 5, 6", P.pencil, "frei erfinden"]];
+          const plan = PLAN.map(([a, c, b]) => later(s.h("div", { class: "card", style: { padding: "8px 14px", borderColor: c } }, s.h("p", { style: { margin: 0, font: "700 22px/1.2 var(--f-display)", color: c } }, a), s.h("p", { class: "small" }, b))));
+          const m = later(merk(s, { style: { fontSize: "21px" } }, "Ein ", B(s, "Rondell"), " hat 8 Zeilen. Es dreht sich im Kreis – wie ein Karussell: Der erste Satz kommt immer wieder."));
+          const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Wie der Refrain in einem Lied oder ein Fangesang im Stadion: Was sich wiederholt, bleibt im Kopf.")));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "1fr 340px", gap: "18px", alignItems: "start" }, card, s.h("div", { class: "stack", style: { gap: "10px" } }, ...plan, m, lf)));
+          cur = "herbst"; tabs[0].classList.add("solid"); s.sfx.pop();
+          s.step(async () => { EX.herbst[2](); s.sound("pencil-write", { vol: .4, dur: 1.2 }); await show("herbst", [0, 1, 2]); s.say("Der Herbst ist da. Die Blätter fallen leise. Der Wind pfeift durch die Straßen."); });
+          s.step(async () => { await show("herbst", [3]); await s.show(plan[0], "left"); s.say("Zeile vier ist wieder die erste Zeile."); });
+          s.step(async () => { s.sound("pencil-write", { vol: .4, dur: 1 }); await show("herbst", [4, 5, 6, 7]); await s.show(plan[1], "left"); await s.show(plan[2], "left"); s.sfx.success(); });
+          s.step(async () => { await show("ubahn", [0, 1, 2, 3, 4, 5, 6, 7]); });
+          s.step(async () => { await show("fussball", [0, 1, 2, 3, 4, 5, 6, 7]); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* 12c – eigene Gedichte: Haiku --------------------------------------- */
+      {
+        title: "Ein Haiku schreiben",
+        say: "Das Haiku kommt aus Japan. Es hat drei Zeilen mit fünf, sieben und fünf Silben. Zusammen sind das siebzehn Silben.",
+        build(s) {
+          const EX = {
+            herbst: ["Herbst", ["Bun·tes·Laub·fällt·sacht", "der·Wind·trägt·es·weit·da·von", "ein·I·gel·schläft·ein"], () => s.sound("wind", { vol: .3, dur: 2 })],
+            ubahn: ["U-Bahn", ["U-·Bahn·im·Tun·nel", "Lich·ter·flie·gen·schnell·vor·bei", "A·le·xan·der·platz"], () => s.sound("ubahn-train", { vol: .3, dur: 2.5 })],
+            fussball: ["Fußball", ["Re·gen·auf·dem·Platz", "der·Ball·rollt·durch·nas·ses·Gras", "Tor·in·der·Pfüt·ze"], () => s.sound("rain", { vol: .3, dur: 2.5 })],
+          };
+          const NEED = [5, 7, 5];
+          // join syllables back into words: a syllable that ends a word is followed by a space in the source text
+          const WORDS = {
+            herbst: ["Buntes Laub fällt sacht,", "der Wind trägt es weit davon –", "ein Igel schläft ein."],
+            ubahn: ["U-Bahn im Tunnel,", "Lichter fliegen schnell vorbei –", "Alexanderplatz."],
+            fussball: ["Regen auf dem Platz,", "der Ball rollt durch nasses Gras –", "Tor in der Pfütze!"],
+          };
+          const chipRows = NEED.map(() => s.h("div", { style: { display: "flex", gap: "5px", flexWrap: "nowrap", minHeight: "54px", alignItems: "center" } }));
+          const counters = NEED.map(n => s.h("span", { style: { minWidth: "70px", height: "46px", borderRadius: "23px", display: "grid", placeItems: "center", font: "800 26px/1 var(--f-display)", background: P.soft, color: P.unit } }, "0"));
+          const plain = NEED.map(() => s.h("p", { class: "hand", style: { margin: 0, fontSize: "30px", minHeight: "33px" } }, ""));
+          const lines = NEED.map((n, i) => s.h("div", { style: { display: "flex", flexDirection: "column", gap: "6px", padding: "10px 0", borderBottom: i < 2 ? "2px solid " + P.line : "none" } },
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 70px", gap: "10px", alignItems: "center" } }, chipRows[i], counters[i]), plain[i]));
+          const total = s.h("span", { class: "big mono", style: { color: P.unit } }, "0");
+          let run = 0, cur = null, sum = 0;
+          const reset = () => { chipRows.forEach(r => r.replaceChildren()); counters.forEach(c => { c.textContent = "0"; c.style.background = P.soft; c.style.color = P.unit; }); plain.forEach(p => (p.textContent = "")); sum = 0; total.textContent = "0"; };
+          const doLine = async (k, i, id) => {
+            const syl = EX[k][1][i].split("·");
+            for (const [j, sy] of syl.entries()) {
+              if (id !== run || !s.alive) return;
+              chipRows[i].append(s.h("span", { class: "a-pop", style: { display: "inline-grid", placeItems: "center", height: "52px", padding: "0 10px", borderRadius: "10px", background: "#fff", border: "2px solid " + P.unit, font: "700 25px/1 var(--f-display)", whiteSpace: "nowrap" } }, sy));
+              counters[i].textContent = String(j + 1); sum++; total.textContent = String(sum);
+              s.sound("clap", { vol: .5 }); if (!s.fast) await s.wait(230);
+            }
+            if (syl.length === NEED[i]) { counters[i].style.background = P.green; counters[i].style.color = "#fff"; s.sfx.ding(); }
+            plain[i].textContent = WORDS[k][i]; plain[i].classList.remove("a-fade"); void plain[i].offsetWidth; plain[i].classList.add("a-fade");
+            if (!s.fast) await s.wait(250);
+          };
+          const tabs = Object.entries(EX).map(([k, e]) => { const b = s.h("button", { class: "btn", onclick: () => show(k, [0, 1, 2]) }, e[0]); b.dataset.k = k; return b; });
+          const show = async (k, idx) => {
+            const id = ++run;
+            if (cur !== k || idx[0] === 0) { cur = k; reset(); tabs.forEach(b => b.classList.toggle("solid", b.dataset.k === k)); EX[k][2](); }
+            for (const i of idx) await doLine(k, i, id);
+            if (id === run && sum === 17) s.say(WORDS[k].join(" "));
+          };
+          const card = s.h("div", { class: "card", style: { padding: "10px 16px", display: "flex", flexDirection: "column", gap: "4px" } }, s.h("div", { class: "row", style: { gap: "10px", marginBottom: "4px" } }, s.h("b", { style: { fontSize: "21px", color: P.pencil } }, "Thema:"), ...tabs), ...lines);
+          const clapAll = async () => { const id = ++run; for (const r of chipRows) for (const c of r.children) { if (id !== run || !s.alive) return; s.sound("clap", { vol: .6, force: true }); pulseOnce(c); await s.wait(300); } };
+          const sumCard = s.h("div", { class: "card soft", style: { padding: "8px 16px", display: "flex", alignItems: "center", gap: "12px" } }, total, s.h("p", { class: "t", style: { fontSize: "21px", flex: "1" } }, "Silben – ein Haiku hat ", B(s, "5 + 7 + 5 = 17"), "."), s.h("button", { class: "btn", onclick: () => clapAll() }, "Mitklatschen"));
+          const info = later(s.h("div", { class: "card", style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Das ", B(s, "Haiku"), " kommt aus ", B(s, "Japan"), ". Meist geht es um die Natur und eine Jahreszeit. Der berühmteste Haiku-Dichter ist ", B(s, "Matsuo Bashō"), " ", s.h("span", { style: { whiteSpace: "nowrap" } }, "(1644–1694)"), ".")));
+          const m = later(merk(s, { style: { fontSize: "21px" } }, "Haiku: ", B(s, "3 Zeilen"), " mit ", B(s, "5 – 7 – 5 Silben"), ". Klatsch die Silben mit, dann stimmt die Zahl!"));
+          const lf = later(life(s, { style: { padding: "10px 16px" } }, s.h("p", { class: "small" }, "Ein Haiku ist so kurz, dass es auf einen Klebezettel passt: ein kleines Gedicht für den Kühlschrank oder die Federmappe.")));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "1fr 360px", gap: "18px", alignItems: "start" }, s.h("div", { class: "stack", style: { gap: "10px" } }, card, sumCard), s.h("div", { class: "stack", style: { gap: "10px" } }, info, m, lf)));
+          reset(); cur = "herbst"; tabs[0].classList.add("solid"); s.sfx.pop();
+          s.step(async () => { EX.herbst[2](); await show("herbst", [0]); s.say("Bun-tes Laub fällt sacht. Fünf Silben."); });
+          s.step(async () => { await show("herbst", [1]); s.say("Sieben Silben."); });
+          s.step(async () => { await show("herbst", [2]); s.sfx.success(); await s.show(info, "up"); });
+          s.step(async () => { await show("ubahn", [0, 1, 2]); });
+          s.step(async () => { await show("fussball", [0, 1, 2]); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lf, "up"); });
         },
       },
       /* 13 --------------------------------------------------------------- */

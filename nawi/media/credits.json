@@ -246,6 +246,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Botanischer_Garten_-_Tropenhaus_(Glass_House)_-_geo.hlipp.de_-_35116.jpg",
   "orig": "File:Botanischer Garten - Tropenhaus (Glass House) - geo.hlipp.de - 35116.jpg"
  },
+ "brieftaube": {
+  "file": "brieftaube.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Brieftaube",
+  "author": "Sundaramoorthy K",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Homing_Pigeon.jpg",
+  "orig": "File:Homing Pigeon.jpg"
+ },
  "brille": {
   "file": "brille.jpg",
   "kind": "img",
@@ -482,6 +494,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Lepus_europaeus_(Uitkerke).jpg",
   "orig": "File:Lepus europaeus (Uitkerke).jpg"
+ },
+ "feldlinien-eisenspaene": {
+  "file": "feldlinien-eisenspaene.jpg",
+  "kind": "img",
+  "w": 1000,
+  "h": 550,
+  "title": "Eisenfeilspäne zeigen das Magnetfeld eines Stabmagneten",
+  "author": "MikeRun, Vera Wurmsdobler",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bar-magnet-iron-filings_max.jpg",
+  "orig": "File:Bar-magnet-iron-filings max.jpg"
  },
  "fennek": {
   "file": "fennek.jpg",
@@ -979,6 +1003,18 @@
   "source": "https://freesound.org/people/JavierZumer/sounds/165189/",
   "orig": "165189"
  },
+ "kompass": {
+  "file": "kompass.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 667,
+  "title": "Kompass",
+  "author": "Evan-Amos",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Plastic-compass.jpg",
+  "orig": "File:Plastic-compass.jpg"
+ },
  "kresse": {
   "file": "kresse.jpg",
   "kind": "img",
@@ -1002,6 +1038,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:2023_Elektroniczna_waga_kuchenna.jpg",
   "orig": "File:2023 Elektroniczna waga kuchenna.jpg"
+ },
+ "kuehlschrankmagnete": {
+  "file": "kuehlschrankmagnete.jpg",
+  "kind": "img",
+  "w": 538,
+  "h": 800,
+  "title": "Magnete am Kühlschrank",
+  "author": "Rumensz",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Refrigerator_magnets_1.JPG",
+  "orig": "File:Refrigerator magnets 1.JPG"
  },
  "kuh-muht": {
   "file": "kuh-muht.mp3",
@@ -1167,6 +1215,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Talpa_europaea_MHNT_Tete.jpg",
   "orig": "File:Talpa europaea MHNT Tete.jpg"
  },
+ "meeresschildkroete": {
+  "file": "meeresschildkroete.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 533,
+  "title": "Unechte Karettschildkröte (Meeresschildkröte)",
+  "author": "Cliff from Arlington, Virginia, USA",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Loggerhead_Sea_Turtle_(Caretta_caretta)_(3149756764).jpg",
+  "orig": "File:Loggerhead Sea Turtle (Caretta caretta) (3149756764).jpg"
+ },
  "meniskus": {
   "file": "meniskus.jpg",
   "kind": "img",
@@ -1214,6 +1274,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Total_Lunar_Eclipse_Totality_-_large_image.jpg",
   "orig": "File:Total Lunar Eclipse Totality - large image.jpg"
+ },
+ "mrt": {
+  "file": "mrt.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 730,
+  "title": "MRT-Gerät im Krankenhaus",
+  "author": "Jan Ainali",
+  "license": "CC BY 3.0",
+  "license_url": "https://creativecommons.org/licenses/by/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:MRI-Philips.JPG",
+  "orig": "File:MRI-Philips.JPG"
  },
  "muelltonnen": {
   "file": "muelltonnen.jpg",
@@ -1537,6 +1609,29 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Red_fox_(Vulpes_vulpes_crucigera)_Skalnate_Pleso_2.jpg",
   "orig": "File:Red fox (Vulpes vulpes crucigera) Skalnate Pleso 2.jpg"
+ },
+ "rotkehlchen": {
+  "file": "rotkehlchen.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 640,
+  "title": "Rotkehlchen",
+  "author": "Francis C. Franklin",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Erithacus_rubecula_with_cocked_head.jpg",
+  "orig": "File:Erithacus rubecula with cocked head.jpg"
+ },
+ "rotkehlchen-gesang": {
+  "file": "rotkehlchen-gesang.mp3",
+  "kind": "snd",
+  "dur": 8.0,
+  "title": "Rotkehlchen singt",
+  "author": "Listeningpost",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/Listeningpost/sounds/144884/",
+  "orig": "144884"
  },
  "rueckstrahler-fahrrad": {
   "file": "rueckstrahler-fahrrad.jpg",
@@ -1963,6 +2058,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:16-07-04-Abflug-Berlin-DSC_0122.jpg",
   "orig": "File:16-07-04-Abflug-Berlin-DSC 0122.jpg"
  },
+ "transrapid-shanghai": {
+  "file": "transrapid-shanghai.jpg",
+  "kind": "img",
+  "w": 800,
+  "h": 600,
+  "title": "Transrapid in Shanghai (Magnetschwebebahn)",
+  "author": "User JakeLM on en.wikipedia",
+  "license": "CC BY 2.5",
+  "license_url": "https://creativecommons.org/licenses/by/2.5",
+  "source": "https://commons.wikimedia.org/wiki/File:Maglev_june2005.jpg",
+  "orig": "File:Maglev june2005.jpg"
+ },
  "trommel": {
   "file": "trommel.mp3",
   "kind": "snd",
@@ -2196,6 +2303,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Wild_boars_in_a_park_in_Berlin-Spandau_12.jpg",
   "orig": "File:Wild boars in a park in Berlin-Spandau 12.jpg"
+ },
+ "windraeder": {
+  "file": "windraeder.jpg",
+  "kind": "img",
+  "w": 900,
+  "h": 675,
+  "title": "Windräder in Brandenburg",
+  "author": "Molgreen",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:20170225_xl_P1100220-Windkraftanlage-WKA--Windenergieanlage-WEA-in-Brandenburg--bei-Rehfelde.jpg",
+  "orig": "File:20170225 xl P1100220-Windkraftanlage-WKA--Windenergieanlage-WEA-in-Brandenburg--bei-Rehfelde.jpg"
  },
  "wolf": {
   "file": "wolf.jpg",

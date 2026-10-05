@@ -1,6 +1,7 @@
-/* Kapitel 12 – Strom und Stromkreis (RLP NaWi 5/6, Themenfeld 3.9 „Technik – Bewegung, Kraft und Energie“ / Elektrizität).
+/* Kapitel 12 – Strom und Magnete (RLP NaWi 5/6, Themenfeld 3.9 „Technik – Bewegung, Kraft und Energie“ / Elektrizität).
    Strom im Alltag, geschlossener Stromkreis, Fehler (Lücke, Kurzschluss), Taschenlampe, Schaltzeichen, Schaltplan,
-   Leiter und Isolatoren (→ Kap. 3), Reihen- und Parallelschaltung, Wohnung, UND-/ODER-Schaltung, Elektromagnet,
+   Leiter und Isolatoren (→ Kap. 3), Reihen- und Parallelschaltung, Wohnung, UND-/ODER-Schaltung,
+   Magnetismus (Alltag, Stoffe, Pole, Magnetfeld, Elementarmagnete, Abschirmung, Erde/Kompass, Magnetsinn, Maglev/MRT), Elektromagnet,
    Sicherheit (230 V, Schuko, Bahn 15.000 V / S-Bahn 750 V, Gewitter), Stromquellen, Spannungen, Strom sparen.
    Fakten geprüft (Quellen im Bericht): DB, Wikipedia, UBA, Destatis, DGUV u. a. */
 (() => {
@@ -146,14 +147,42 @@
     return v;
   }
 
+
+  /* ---------- magnets ---------- */
+  const NRED = "#dc3b2a", SGRN = "#138a5a";
+  /** SVG text whose colour wins over the .lbl class colour */
+  const TX = (s, x, y, text, { size = 22, fill = "var(--ink)", weight = 700, anchor = "middle" } = {}) =>
+    s.el("text", { x, y, "text-anchor": anchor, class: "lbl", text, style: { fill, fontSize: size + "px", fontWeight: weight } });
+  /** bar magnet centred at 0,0. first = pole on the left (or top if vertical) */
+  function barMag(s, { len = 200, th = 54, first = "S", vertical = false, fs = 28 } = {}) {
+    const second = first === "N" ? "S" : "N";
+    const col = p => (p === "N" ? NRED : SGRN);
+    const g = s.el("g");
+    if (!vertical) {
+      g.append(s.el("rect", { x: -len / 2, y: -th / 2, width: len / 2, height: th, fill: col(first) }),
+        s.el("rect", { x: 0, y: -th / 2, width: len / 2, height: th, fill: col(second) }),
+        s.el("rect", { x: -len / 2, y: -th / 2, width: len, height: th, rx: 6, fill: "none", stroke: WIRE, "stroke-width": 3 }),
+        TX(s, -len / 4, fs * 0.36, first, { fill: "#fff", size: fs }), TX(s, len / 4, fs * 0.36, second, { fill: "#fff", size: fs }));
+    } else {
+      g.append(s.el("rect", { x: -th / 2, y: -len / 2, width: th, height: len / 2, fill: col(first) }),
+        s.el("rect", { x: -th / 2, y: 0, width: th, height: len / 2, fill: col(second) }),
+        s.el("rect", { x: -th / 2, y: -len / 2, width: th, height: len, rx: 6, fill: "none", stroke: WIRE, "stroke-width": 3 }),
+        TX(s, 0, -len / 4 + fs * 0.36, first, { fill: "#fff", size: fs }), TX(s, 0, len / 4 + fs * 0.36, second, { fill: "#fff", size: fs }));
+    }
+    return g;
+  }
+  /** paper clip centred at 0,0 (vertical, ±22) */
+  const clipShape = (s, col = "#6b7280") => s.el("path", { d: "M-8,20 V-14 a8,8 0 0 1 16,0 V16 a5,5 0 0 1 -10,0 V-8", fill: "none", stroke: col, "stroke-width": 4, "stroke-linecap": "round" });
+  const clampN = (v, a, b) => Math.max(a, Math.min(b, v));
+
   Deck.unit({
-    id: "u12", num: 12, title: "Strom und Stromkreis", color: UC, soft: "#e8e7fb",
-    subtitle: "Wie Strom fließt – und warum du vorsichtig sein musst",
-    blurb: "Stromkreis, Schaltplan, Reihe und parallel, Magnet, Sicherheit",
+    id: "u12", num: 12, title: "Strom und Magnete", color: UC, soft: "#e8e7fb",
+    subtitle: "Wie Strom fließt, was Magnete können – und warum du vorsichtig sein musst",
+    blurb: "Stromkreis, Schaltplan, Magnete, Sicherheit",
     goals: [
-      "Den geschlossenen Stromkreis verstehen",
-      "Schaltzeichen kennen und Schaltpläne zeichnen",
+      "Den geschlossenen Stromkreis verstehen und Schaltpläne zeichnen",
       "Reihen-, Parallel-, UND- und ODER-Schaltung erklären",
+      "Magnetpole, Magnetfeld und den Kompass verstehen",
       "Wissen, wie ein Elektromagnet funktioniert",
       "Gefahren kennen: Steckdose, Bahn und Gewitter",
     ],
@@ -161,7 +190,8 @@
       svg.append(
         el("circle", { cx: 35, cy: 28, r: 20, fill: "#fff3a0", stroke: UC, "stroke-width": 3 }),
         el("rect", { x: 27, y: 46, width: 16, height: 12, rx: 2, fill: "#9ca3af", stroke: UC, "stroke-width": 2 }),
-        el("path", { d: "M38,12 L28,30 H36 L31,44 L44,24 H36 Z", fill: UC }));
+        el("path", { d: "M38,12 L28,30 H36 L31,44 L44,24 H36 Z", fill: UC }),
+        el("path", { d: "M52,44 V58 A7,7 0 0 0 66,58 V44", fill: "none", stroke: "#dc3b2a", "stroke-width": 5 }));
     },
     slides: [
       /* 1 ---------------------------------------------------------------- */
@@ -595,6 +625,523 @@
           s.step(async () => { await press(A); s.say("Haustür: Es klingelt."); });
           s.step(async () => { await press(B); s.say("Gartentür: Es klingelt auch."); });
           s.step(async () => { s.sfx.ding(); await s.show(m, "up"); s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* M1 – Magnetismus ------------------------------------------------- */
+      {
+        title: "Magnete im Alltag",
+        say: "Magnete begegnen dir jeden Tag: am Kühlschrank, an der Schranktür, am Fahrrad und im Kompass.",
+        build(s) {
+          const card = (title, top, html, extra = {}) => s.h("div", Object.assign({ class: "card later stack", style: { gap: "8px", padding: "12px 14px", alignItems: "center", textAlign: "center" } }, extra),
+            top, s.h("p", { class: "h2", style: { color: "var(--unit)", fontSize: "25px" } }, title), P(s, html, "small"));
+          // cabinet door seen from above
+          const dv = s.svg(220, 230);
+          dv.append(s.el("path", { d: "M30,112 V12 H190 V112", fill: "#f3e3c3", stroke: "#8a6a3a", "stroke-width": 6, "stroke-linejoin": "round" }),
+            s.el("rect", { x: 168, y: 96, width: 18, height: 12, fill: NRED }), T(s, 110, 64, "von oben", { size: 19, weight: 600, fill: "#8a6a3a" }));
+          const door = s.el("g", null, s.el("rect", { x: 30, y: 114, width: 160, height: 10, rx: 3, fill: "#c79a5b", stroke: "#8a6a3a", "stroke-width": 2 }), s.el("rect", { x: 168, y: 110, width: 18, height: 5, fill: "#6b7280" }));
+          dv.append(door, s.el("circle", { cx: 30, cy: 119, r: 6, fill: WIRE }));
+          let doorAng = 40, doorBusy = false;
+          const setDoor = a => { doorAng = a; door.setAttribute("transform", `rotate(${a} 30 119)`); };
+          setDoor(40);
+          const toggleDoor = async () => {
+            if (doorBusy) return; doorBusy = true;
+            if (doorAng > 0) { await s.tween({ from: doorAng, to: 0, dur: 420, ease: "in", update: setDoor }); s.sound("magnet-klick"); }
+            else { s.sfx.swoosh(); await s.tween({ from: 0, to: 40, dur: 500, ease: "out", update: setDoor }); }
+            doorBusy = false;
+          };
+          // bicycle wheel with spoke magnet
+          const wv = s.svg(220, 200);
+          const wheel = s.el("g", null, s.el("circle", { cx: 110, cy: 105, r: 88, fill: "none", stroke: WIRE, "stroke-width": 9 }),
+            ...[0, 30, 60, 90, 120, 150].map(a => s.el("line", { x1: 110 - 84 * Math.cos(a * Math.PI / 180), y1: 105 - 84 * Math.sin(a * Math.PI / 180), x2: 110 + 84 * Math.cos(a * Math.PI / 180), y2: 105 + 84 * Math.sin(a * Math.PI / 180), stroke: "#9ca3af", "stroke-width": 2 })),
+            s.el("rect", { x: 162, y: 99, width: 16, height: 12, rx: 2, fill: NRED }));
+          const fa = -70 * Math.PI / 180;
+          const sensor = s.el("rect", { x: 110 + 62 * Math.cos(fa) - 9, y: 105 + 62 * Math.sin(fa) - 9, width: 18, height: 18, rx: 3, fill: "#1b2740" });
+          wv.append(wheel, s.el("line", { x1: 110, y1: 105, x2: 110 + 104 * Math.cos(fa), y2: 105 + 104 * Math.sin(fa), stroke: "#4b5563", "stroke-width": 7, "stroke-linecap": "round" }), sensor, s.el("circle", { cx: 110, cy: 105, r: 9, fill: WIRE }));
+          const cnt = s.h("p", { class: "small", style: { fontWeight: 700 } }, "Umdrehungen: 0");
+          let wAng = 0, spin = false, turns = 0, flash = 0;
+          s.loop((t, dt) => {
+            dt = Math.min(dt || 0.016, 0.05);
+            if (spin) {
+              const before = Math.floor((wAng + 70) / 360);
+              wAng += dt * 260;
+              if (Math.floor((wAng + 70) / 360) > before) { turns++; flash = 0.18; cnt.textContent = "Umdrehungen: " + turns; s.sfx.tick(); }
+              wheel.setAttribute("transform", `rotate(${wAng} 110 105)`);
+            }
+            flash = Math.max(0, flash - dt);
+            sensor.setAttribute("fill", flash > 0 ? "#ffd94a" : "#1b2740");
+          });
+          const c1 = card("Kühlschrank", s.photo("kuehlschrankmagnete", { w: "100%", h: 230, pos: "50% 35%" }), "Magnete halten Zettel an der Tür. In der Gummidichtung steckt ein Magnetband: Es hält die Tür dicht zu.");
+          const c2 = card("Schranktür", dv, "Ein kleiner Magnet am Schrank zieht das Eisenplättchen der Tür an. Klack – zu! Tippe hier.", { onclick: toggleDoor });
+          c2.style.cursor = "pointer";
+          const c3 = card("Fahrradtacho", s.h("div", { class: "stack", style: { gap: "2px", alignItems: "center" } }, wv, cnt), "Bei jeder Umdrehung saust ein Magnet an der Speiche am Sensor vorbei. So zählt der Tacho mit.");
+          const c4 = card("Kompass", s.photo("kompass", { w: "100%", h: 230, pos: "50% 50%" }), "Die Nadel ist ein kleiner Magnet. Sie zeigt nach Norden.");
+          const m = merk(s, "Ein <b>Magnet</b> zieht Dinge aus Eisen an – sogar ohne sie zu berühren. Diese Kraft heißt <b>Magnetkraft</b>.", true, 21);
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } },
+            s.h("div", { class: "cols4", style: { gap: "14px", gridTemplateColumns: "repeat(4, minmax(0, 1fr))" } }, c1, c2, c3, c4), m));
+          s.sfx.pop();
+          s.step(async () => { s.sfx.pop(); await s.show(c1, "up"); await s.show(c2, "up"); await toggleDoor(); s.say("Klack: Der Magnet hält die Schranktür zu."); });
+          s.step(async () => { s.sound("bike-bell", { vol: 0.5 }); await s.show(c3, "up"); spin = true; s.say("Der Magnet an der Speiche löst bei jeder Umdrehung den Sensor aus."); });
+          s.step(async () => { s.sfx.pop(); await s.show(c4, "up"); s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* M2 ---------------------------------------------------------------- */
+      {
+        title: "Was zieht ein Magnet an?",
+        say: "Ziehe den Magneten über die Sachen. Nur manche springen hoch. Weißt du noch? In Kapitel drei hast du das schon ausprobiert.",
+        build(s) {
+          const v = s.svg(1060, 290);
+          v.append(s.el("rect", { x: 0, y: 252, width: 1060, height: 8, rx: 4, fill: "#e8dcc0" }));
+          const IT = [
+            ["Büroklammer", true, g => g.append(clipShape(s))],
+            ["Alu-Dose", false, g => g.append(s.el("rect", { x: -17, y: -30, width: 34, height: 60, rx: 6, fill: "#d1d5db", stroke: "#9ca3af", "stroke-width": 3 }), s.el("rect", { x: -17, y: -8, width: 34, height: 16, fill: "#60a5fa" }))],
+            ["Eisennagel", true, g => g.append(s.el("polygon", { points: "-4,-24 4,-24 1,30 -1,30", fill: "#6b7280" }), s.el("rect", { x: -12, y: -30, width: 24, height: 7, rx: 3, fill: "#4b5563" }))],
+            ["Kupferdraht", false, g => g.append(s.el("path", { d: "M-30,0 c6,-24 14,-24 20,0 s14,24 20,0 s14,-24 20,0", fill: "none", stroke: "#c26a3a", "stroke-width": 5 }))],
+            ["Kronkorken", true, g => { const pts = []; for (let i = 0; i < 42; i++) { const a = i / 42 * Math.PI * 2, r = i % 2 ? 20 : 24; pts.push((Math.cos(a) * r).toFixed(1) + "," + (Math.sin(a) * r).toFixed(1)); } g.append(s.el("polygon", { points: pts.join(" "), fill: "#c0c6cf", stroke: "#6b7280", "stroke-width": 2 }), s.el("circle", { r: 13, fill: "#e5e7eb" })); }],
+            ["Glasmurmel", false, g => g.append(s.el("circle", { r: 18, fill: "#9fd8f0", stroke: "#3b82b6", "stroke-width": 2 }), s.el("circle", { cx: -6, cy: -6, r: 5, fill: "#fff", opacity: 0.8 }))],
+            ["1-Cent-Münze", true, g => g.append(s.el("circle", { r: 20, fill: "#c26a3a", stroke: "#8a4520", "stroke-width": 3 }), s.el("circle", { r: 12, fill: "none", stroke: "#e3a37a", "stroke-width": 2 }))],
+            ["Bleistift", false, g => g.append(s.el("polygon", { points: "-34,-6 24,-6 34,0 24,6 -34,6", fill: "#ffd94a", stroke: "#b07800", "stroke-width": 2 }), s.el("polygon", { points: "24,-6 34,0 24,6", fill: "#f5d0a9" }))],
+          ];
+          const HOMEY = 222, STUCKY = 136, OFF = [-30, 30, -10, 10];
+          let mx = 70;
+          const stuck = [];
+          const place = o => o.g.setAttribute("transform", `translate(${o.x},${o.y}) scale(${o.sc})`);
+          const items = IT.map(([n, mag, draw], i) => {
+            const x = 70 + i * 131;
+            const g = s.el("g"); draw(g);
+            const o = { n, mag, g, x, y: HOMEY, sc: 1, home: x, flying: false };
+            v.append(g, T(s, x, 284, n, { size: 19, weight: 600 }));
+            place(o);
+            return o;
+          });
+          const magG = s.el("g", { style: { cursor: "grab" } }, barMag(s, { len: 100, th: 44, first: "S", vertical: true, fs: 24 }));
+          v.append(magG);
+          const grab = o => {
+            stuck.push(o); const k = stuck.length - 1; o.flying = true;
+            s.sound("magnet-klick");
+            const x0 = o.x, y0 = o.y;
+            s.tween({ from: 0, to: 1, dur: 240, ease: "in", update: t => { o.x = x0 + (mx + OFF[k] - x0) * t; o.y = y0 + (STUCKY - y0) * t; o.sc = 1 - 0.3 * t; place(o); } }).then(() => { o.flying = false; o.x = mx + OFF[k]; place(o); });
+          };
+          let armed = false;
+          const setMx = x => {
+            const prev = mx;
+            mx = clampN(x, 40, 1020);
+            magG.setAttribute("transform", `translate(${mx},62)`);
+            stuck.forEach((o, k) => { if (!o.flying) { o.x = mx + OFF[k]; place(o); } });
+            if (!armed) return;
+            const lo = Math.min(prev, mx) - 40, hi = Math.max(prev, mx) + 40;
+            items.forEach(o => { if (o.mag && !stuck.includes(o) && o.home > lo && o.home < hi) grab(o); });
+          };
+          setMx(70); armed = true;
+          let off = 0;
+          s.drag(magG, { space: v, onStart: p => { off = p.x - mx; }, onMove: p => setMx(p.x - off) });
+          const reset = async () => {
+            const back = stuck.splice(0);
+            if (!back.length) return;
+            s.sfx.swoosh();
+            await Promise.all(back.map(o => { const x0 = o.x, y0 = o.y; return s.tween({ from: 0, to: 1, dur: 500, ease: "bounce", update: t => { o.x = x0 + (o.home - x0) * t; o.y = y0 + (HOMEY - y0) * t; o.sc = 0.7 + 0.3 * t; place(o); } }); }));
+          };
+          const btn = s.h("button", { class: "btn", onclick: async () => { await reset(); s.tween({ from: mx, to: 70, dur: 500, ease: "inOut", update: setMx }); } }, "Alles zurück");
+          const chips = (arr, bg) => s.h("div", { class: "row", style: { gap: "8px" } }, ...arr.map(t => s.h("span", { class: "chip", style: { background: bg, fontSize: "19px" } }, t)));
+          const cY = s.h("div", { class: "card later stack", style: { gap: "8px", padding: "10px 16px" } }, s.h("p", { class: "t", style: { fontWeight: 700, color: "var(--green)" } }, "wird angezogen"), chips(["Eisen", "Stahl", "Nickel", "Cobalt"], "#dcf3e6"));
+          const cN = s.h("div", { class: "card later stack", style: { gap: "8px", padding: "10px 16px" } }, s.h("p", { class: "t", style: { fontWeight: 700, color: "var(--red)" } }, "wird nicht angezogen"), chips(["Kupfer", "Aluminium", "Gold", "Glas", "Holz", "Kunststoff"], "#fde2e0"));
+          const m = merk(s, "Magnete ziehen nur <b>Eisen</b>, <b>Nickel</b> und <b>Cobalt</b> an – und Stoffe, die sie enthalten, zum Beispiel <b>Stahl</b>. Nicht jedes Metall ist magnetisch!", true, 21);
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%", justifyContent: "center" } },
+            s.h("div", { class: "row", style: { gap: "16px", flexWrap: "nowrap", alignItems: "center", justifyContent: "space-between" } }, P(s, "Ziehe den Magneten mit dem Finger über die Sachen."), btn),
+            v, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: "14px" } }, cY, cN), m));
+          s.show(v, "fade"); s.sfx.pop();
+          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 70, to: 990, dur: 3400, ease: "linear", update: setMx }); s.say("Büroklammer, Nagel, Kronkorken und die Cent-Münze hängen am Magneten. Die anderen Sachen bleiben liegen."); });
+          s.step(async () => { s.sfx.success(); await s.show(cY, "left"); s.sfx.error(); await s.show(cN, "left"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* M3 ---------------------------------------------------------------- */
+      {
+        title: "Nordpol und Südpol",
+        say: "Jeder Magnet hat einen Nordpol und einen Südpol. Ungleiche Pole ziehen sich an, gleiche Pole stoßen sich ab. Schiebe den rechten Magneten.",
+        build(s) {
+          const v = s.svg(600, 380);
+          v.append(s.el("rect", { x: 0, y: 252, width: 600, height: 18, rx: 6, fill: "#e8dcc0" }));
+          v.append(s.el("g", { transform: "translate(130,220)" }, barMag(s, { len: 220, th: 60, first: "S" })));
+          const Bwrap = s.el("g");
+          let B = barMag(s, { len: 220, th: 60, first: "S" });
+          Bwrap.append(B);
+          const Bg = s.el("g", { style: { cursor: "grab" } }, Bwrap);
+          v.append(Bg);
+          const arrowP = (x, dir, col) => { const x2 = x + dir * 50; return `M${x - dir * 10},150 H${x2} M${x2 - dir * 14},140 L${x2},150 L${x2 - dir * 14},160`; };
+          const aA = s.el("path", { fill: "none", stroke: WIRE, "stroke-width": 5, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0 });
+          const aB = s.el("path", { fill: "none", stroke: WIRE, "stroke-width": 5, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: 0 });
+          const status = TX(s, 300, 60, "", { size: 28 });
+          v.append(aA, aB, status, T(s, 130, 320, "fest", { size: 19, weight: 600, fill: "#5d6678" }));
+          const bLab = T(s, 480, 320, "zum Schieben", { size: 19, weight: 600, fill: "#5d6678" });
+          v.append(bLab);
+          let bx = 480, flipped = false, busy = false;
+          const attract = () => !flipped;
+          const upd = () => {
+            Bg.setAttribute("transform", `translate(${bx},220)`);
+            bLab.setAttribute("x", bx);
+            const gap = bx - 350, near = gap < 120;
+            const col = attract() ? "#138a5a" : "#dc3b2a";
+            aA.setAttribute("d", arrowP(150, attract() ? 1 : -1)); aB.setAttribute("d", arrowP(bx - 20, attract() ? -1 : 1));
+            [aA, aB].forEach(a => { a.setAttribute("opacity", near ? 1 : 0); a.setAttribute("stroke", col); });
+            status.textContent = near ? (attract() ? "Sie ziehen sich an!" : "Sie stoßen sich ab!") : "";
+            status.style.fill = col;
+          };
+          const setB = x => { bx = clampN(x, attract() ? 350 : 372, 480); upd(); };
+          upd();
+          const release = async () => {
+            const gap = bx - 350;
+            if (gap >= 120) return;
+            if (attract()) { await s.tween({ from: bx, to: 350, dur: 220, ease: "in", update: setB }); s.sound("magnet-klick"); }
+            else { s.sfx.boing(); await s.tween({ from: bx, to: 480, dur: 600, ease: "out", update: setB }); }
+          };
+          let off = 0;
+          s.drag(Bg, { space: v, onStart: p => { off = p.x - bx; }, onMove: p => setB(p.x - off), onEnd: () => release() });
+          const flip = async () => {
+            if (busy) return; busy = true;
+            s.sfx.swoosh();
+            await s.tween({ from: 0, to: 180, dur: 450, ease: "inOut", update: a => Bwrap.setAttribute("transform", `rotate(${a})`) });
+            flipped = !flipped;
+            Bwrap.removeChild(B); B = barMag(s, { len: 220, th: 60, first: flipped ? "N" : "S" }); Bwrap.append(B);
+            Bwrap.removeAttribute("transform");
+            if (bx < 372) bx = 372;
+            upd(); await release(); busy = false;
+          };
+          const btn = s.h("button", { class: "btn solid", onclick: flip }, "Rechten Magneten umdrehen");
+          const m = merk(s, "Jeder Magnet hat einen <b>Nordpol</b> (rot) und einen <b>Südpol</b> (grün).<br><b>Ungleiche Pole</b> ziehen sich an.<br><b>Gleiche Pole</b> stoßen sich ab.", true, 21);
+          const lf = life(s, "Im Alltag", P(s, "• Holzeisenbahn: Die Wagen halten mit Magneten zusammen. Falsch herum stoßen sie sich ab.<br>• Federmappe und Tasche schließen mit einem Magnetverschluss.<br>• Halte zwei Magnete aneinander und dreh einen um: Du spürst das Schieben in der Hand.", "small"));
+          s.add(cols(s, 600, v, stack(s, 14, s.h("div", { class: "row" }, btn), m, lf)));
+          s.show(v, "fade"); s.sfx.pop();
+          s.step(async () => { s.sfx.whoosh(); await s.tween({ from: 480, to: 400, dur: 700, ease: "inOut", update: setB }); await release(); s.say("Nordpol und Südpol: Sie ziehen sich an. Klack!"); });
+          s.step(async () => {
+            await s.tween({ from: bx, to: 480, dur: 500, ease: "inOut", update: setB });
+            await flip(); await s.wait(200);
+            await s.tween({ from: 480, to: 380, dur: 700, ease: "inOut", update: setB }); await release();
+            s.say("Nordpol und Nordpol: Sie stoßen sich ab.");
+          });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* M4 ---------------------------------------------------------------- */
+      {
+        title: "Das Magnetfeld",
+        say: "Um einen Magneten herum wirkt seine Kraft. Diesen Raum nennt man Magnetfeld. Eisenspäne machen es sichtbar.",
+        build(s) {
+          const W = 600, H = 440;
+          const { canvas, g } = s.canvas(W, H);
+          const MX = 300, MY = 220, ML = 200, MH = 50;
+          const PN = { x: MX + ML / 2 - 16, y: MY }, PS = { x: MX - ML / 2 + 16, y: MY };
+          const field = (x, y) => {
+            let bx = 0, by = 0;
+            for (const [p, q] of [[PN, 1], [PS, -1]]) { const dx = x - p.x, dy = y - p.y; const r2 = dx * dx + dy * dy + 40; const r3 = r2 * Math.sqrt(r2); bx += q * dx / r3; by += q * dy / r3; }
+            return [bx, by];
+          };
+          const inMag = (x, y) => Math.abs(x - MX) < ML / 2 + 6 && Math.abs(y - MY) < MH / 2 + 6;
+          let seed = 7; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+          const F = [];
+          for (let i = 0; F.length < 1300 && i < 6000; i++) {
+            const x = 8 + rnd() * (W - 16), y = 8 + rnd() * (H - 16);
+            if (inMag(x, y)) continue;
+            const [bx, by] = field(x, y);
+            F.push({ x, y, r: rnd() * Math.PI, t: Math.atan2(by, bx) });
+          }
+          // field lines (traced from the N pole)
+          const lines = [];
+          for (const a of [-165, -140, -115, -90, -65, -40, -15, 15, 40, 65, 90, 115, 140, 165]) {
+            let x = PN.x + 20 * Math.cos(a * Math.PI / 180), y = PN.y + 20 * Math.sin(a * Math.PI / 180);
+            const pts = [[x, y]];
+            for (let k = 0; k < 2000; k++) {
+              const [bx, by] = field(x, y); const L = Math.hypot(bx, by) || 1;
+              x += 3 * bx / L; y += 3 * by / L; pts.push([x, y]);
+              if (Math.hypot(x - PS.x, y - PS.y) < 14 || x < -20 || x > W + 20 || y < -20 || y > H + 20) break;
+            }
+            lines.push(pts);
+          }
+          let filOn = 0, align = 0, lineP = 0, compOn = false;
+          const cp = { x: 300, y: 80, a: -Math.PI / 2 };
+          s.loop((t, dt) => {
+            dt = Math.min(dt || 0.016, 0.05);
+            g.fillStyle = "#fbf8ef"; g.fillRect(0, 0, W, H);
+            if (filOn > 0) {
+              g.strokeStyle = `rgba(61,68,82,${filOn})`; g.lineWidth = 1.7; g.lineCap = "round"; g.beginPath();
+              for (const f of F) {
+                let d = ((f.t - f.r) % Math.PI + Math.PI * 1.5) % Math.PI - Math.PI / 2;
+                const a = f.r + d * align, c = Math.cos(a) * 5, sn = Math.sin(a) * 5;
+                g.moveTo(f.x - c, f.y - sn); g.lineTo(f.x + c, f.y + sn);
+              }
+              g.stroke();
+            }
+            if (lineP > 0) {
+              g.strokeStyle = "#7b4fd6"; g.lineWidth = 2.6; g.fillStyle = "#7b4fd6";
+              for (const pts of lines) {
+                const n = Math.max(2, Math.floor(pts.length * lineP));
+                g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
+                for (let i = 1; i < n; i++) g.lineTo(pts[i][0], pts[i][1]);
+                g.stroke();
+                const mi = Math.floor(n / 2);
+                if (mi > 4 && mi < pts.length - 2) {
+                  const [x1, y1] = pts[mi], [x2, y2] = pts[mi + 1], an = Math.atan2(y2 - y1, x2 - x1);
+                  g.beginPath(); g.moveTo(x1 + Math.cos(an) * 9, y1 + Math.sin(an) * 9);
+                  g.lineTo(x1 + Math.cos(an + 2.5) * 9, y1 + Math.sin(an + 2.5) * 9); g.lineTo(x1 + Math.cos(an - 2.5) * 9, y1 + Math.sin(an - 2.5) * 9); g.closePath(); g.fill();
+                }
+              }
+            }
+            // magnet
+            g.fillStyle = SGRN; g.fillRect(MX - ML / 2, MY - MH / 2, ML / 2, MH);
+            g.fillStyle = NRED; g.fillRect(MX, MY - MH / 2, ML / 2, MH);
+            g.strokeStyle = WIRE; g.lineWidth = 3; g.strokeRect(MX - ML / 2, MY - MH / 2, ML, MH);
+            g.fillStyle = "#fff"; g.font = "700 28px 'Atkinson Hyperlegible', sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+            g.fillText("S", MX - ML / 4, MY + 1); g.fillText("N", MX + ML / 4, MY + 1);
+            // compass
+            if (compOn) {
+              const [bx, by] = field(cp.x, cp.y); const target = Math.atan2(by, bx);
+              let d = target - cp.a; d = Math.atan2(Math.sin(d), Math.cos(d)); cp.a += d * Math.min(1, dt * 7);
+              g.fillStyle = "#fff"; g.strokeStyle = WIRE; g.lineWidth = 3; g.beginPath(); g.arc(cp.x, cp.y, 26, 0, 7); g.fill(); g.stroke();
+              const c = Math.cos(cp.a), sn = Math.sin(cp.a), px = -sn * 6, py = c * 6;
+              g.fillStyle = NRED; g.beginPath(); g.moveTo(cp.x + c * 21, cp.y + sn * 21); g.lineTo(cp.x + px, cp.y + py); g.lineTo(cp.x - px, cp.y - py); g.closePath(); g.fill();
+              g.fillStyle = "#9ca3af"; g.beginPath(); g.moveTo(cp.x - c * 21, cp.y - sn * 21); g.lineTo(cp.x + px, cp.y + py); g.lineTo(cp.x - px, cp.y - py); g.closePath(); g.fill();
+              g.fillStyle = WIRE; g.beginPath(); g.arc(cp.x, cp.y, 3.5, 0, 7); g.fill();
+            }
+          });
+          const moveC = p => {
+            if (!compOn) return;
+            cp.x = clampN(p.x, 30, W - 30); cp.y = clampN(p.y, 30, H - 30);
+            if (Math.abs(cp.x - MX) < ML / 2 + 30 && Math.abs(cp.y - MY) < MH / 2 + 30) cp.y = cp.y < MY ? MY - MH / 2 - 30 : MY + MH / 2 + 30;
+          };
+          s.drag(canvas, { space: canvas, onStart: moveC, onMove: moveC });
+          const ph = s.photo("feldlinien-eisenspaene", { w: 460, h: 220, pos: "50% 50%", caption: "Echte Eisenspäne um einen Stabmagneten", cls: "later" });
+          const m = merk(s, "Um jeden Magneten ist ein <b>Magnetfeld</b>. <b>Feldlinien</b> zeigen es: Sie laufen außen vom <b>Nordpol</b> zum <b>Südpol</b>. An den Polen liegen sie am dichtesten – dort ist die Kraft am stärksten.", true, 21);
+          const ex = exb(s, "Kompass im Feld", P(s, "Ziehe den Kompass um den Magneten herum: Die Nadel dreht sich immer entlang der Feldlinien.", "small"));
+          s.add(cols(s, 600, canvas, stack(s, 14, ph, m, ex)));
+          s.show(canvas, "fade"); s.sfx.pop();
+          s.step(async () => {
+            s.sound("salz-rieseln", { vol: 0.6 });
+            await s.tween({ from: 0, to: 1, dur: 700, update: k => (filOn = k) });
+            s.sfx.whoosh();
+            await s.tween({ from: 0, to: 1, dur: 1600, ease: "inOut", update: k => (align = k) });
+            s.say("Die Eisenspäne drehen sich und bilden Linien.");
+          });
+          s.step(async () => { s.sfx.scribble(); await s.tween({ from: 0, to: 1, dur: 1600, ease: "inOut", update: k => (lineP = k) }); s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(ph, "zoom"); s.say("So sieht das in echt aus."); });
+          s.step(async () => {
+            compOn = true; s.sfx.pop(); s.show(ex, "up");
+            await s.tween({ from: 0, to: 1, dur: 3000, ease: "inOut", update: k => { const a = -Math.PI / 2 + k * Math.PI * 2; moveC({ x: MX + Math.cos(a) * 200, y: MY + Math.sin(a) * 130 }); } });
+          });
+        },
+      },
+      /* M5 ---------------------------------------------------------------- */
+      {
+        title: "Eisen wird zum Magneten",
+        say: "Streiche mit einem Magneten immer in dieselbe Richtung über einen Eisennagel. Dann wird der Nagel selbst zum Magneten.",
+        build(s) {
+          const v = s.svg(600, 440);
+          v.append(s.el("rect", { x: 0, y: 420, width: 600, height: 14, rx: 6, fill: "#e8dcc0" }));
+          const NY = 250, MID = 276;
+          const left = s.el("g"), right = s.el("g");
+          left.append(s.el("rect", { x: 30, y: 205, width: 22, height: 90, rx: 4, fill: "#6b7280", stroke: WIRE, "stroke-width": 2 }),
+            s.el("rect", { x: 52, y: 222, width: MID - 52, height: 56, fill: "#b8c0c9", stroke: WIRE, "stroke-width": 2 }));
+          right.append(s.el("rect", { x: MID, y: 222, width: 500 - MID, height: 56, fill: "#b8c0c9", stroke: WIRE, "stroke-width": 2 }),
+            s.el("polygon", { points: "500,222 552,250 500,278", fill: "#b8c0c9", stroke: WIRE, "stroke-width": 2 }));
+          const E = [];
+          let seed = 3; const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
+          for (let c = 0; c < 12; c++) for (const y of [236, 264]) {
+            const x = 75 + c * 36;
+            const g = s.el("g", null, s.el("rect", { x: -12, y: -4.5, width: 12, height: 9, fill: SGRN }), s.el("rect", { x: 0, y: -4.5, width: 12, height: 9, fill: NRED }));
+            const e = { x, y, g, r: rnd() * 360, k: 0, cur: 0 };
+            e.cur = e.r; (x < MID ? left : right).append(g); E.push(e);
+          }
+          const target = e => { let d = ((180 - e.r) % 360 + 540) % 360 - 180; return e.r + d * e.k; };
+          s.loop((t, dt) => {
+            dt = Math.min(dt || 0.016, 0.05);
+            E.forEach(e => { e.cur = s.fast ? target(e) : e.cur + (target(e) - e.cur) * Math.min(1, dt * 9); e.g.setAttribute("transform", `translate(${e.x},${e.y}) rotate(${e.cur})`); });
+          });
+          const labN = later(TX(s, 41, 196, "N", { size: 28, fill: NRED })), labS = later(TX(s, 530, 214, "S", { size: 28, fill: SGRN }));
+          const labS2 = later(TX(s, 246, 210, "S", { size: 28, fill: SGRN })), labN2 = later(TX(s, 306, 210, "N", { size: 28, fill: NRED }));
+          left.append(labN, labS2); right.append(labS, labN2);
+          const clipG = s.el("g", { transform: "translate(420,400)" }, clipShape(s));
+          right.append(clipG);
+          v.append(left, right);
+          const magG = s.el("g", null, barMag(s, { len: 120, th: 40, first: "S", vertical: true, fs: 24 }));
+          v.append(magG);
+          let mxp = 80, myp = 100;
+          const setMag = () => magG.setAttribute("transform", `translate(${mxp},${myp})`);
+          setMag();
+          let stroked = false, broken = false, busy = false;
+          const stroke = async () => {
+            if (stroked || busy) return; busy = true;
+            for (let pass = 0; pass < 3; pass++) {
+              s.sfx.tick();
+              await s.tween({ from: 100, to: 160, dur: 220, ease: "out", update: y => { myp = y; setMag(); } });
+              s.sfx.scribble();
+              await s.tween({ from: 80, to: 520, dur: 900, ease: "inOut", update: x => { mxp = x; setMag(); E.forEach(e => { if (e.x < x) e.k = Math.max(e.k, (pass + 1) / 3); }); } });
+              await s.tween({ from: 160, to: 100, dur: 220, ease: "out", update: y => { myp = y; setMag(); } });
+              if (pass < 2) await s.tween({ from: 520, to: 80, dur: 500, ease: "inOut", update: x => { mxp = x; setMag(); } });
+            }
+            await s.tween({ from: 0, to: 1, dur: 500, ease: "inOut", update: k => { mxp = 520 + 30 * k; myp = 100 - 20 * k; setMag(); } });
+            stroked = true; s.sfx.ding(); s.show(labN, "pop"); await s.show(labS, "pop");
+            s.sfx.whoosh();
+            await s.tween({ from: 0, to: 1, dur: 450, ease: "in", update: k => clipG.setAttribute("transform", `translate(${420 + 112 * k},${400 - 104 * k})`) });
+            s.sound("magnet-klick");
+            busy = false;
+          };
+          const brk = async () => {
+            if (!stroked || broken || busy) return; busy = true; broken = true;
+            s.sound("glas-bricht", { vol: 0.4 }); s.sfx.snap();
+            await s.tween({ from: 0, to: 1, dur: 500, ease: "back", update: k => { left.setAttribute("transform", `translate(${-24 * k},0)`); right.setAttribute("transform", `translate(${24 * k},0)`); } });
+            s.sfx.chord([0, 4, 7]); s.show(labS2, "pop"); await s.show(labN2, "pop");
+            busy = false;
+          };
+          const b1 = s.h("button", { class: "btn solid", onclick: stroke }, "Streichen");
+          const b2 = s.h("button", { class: "btn", onclick: brk }, "Zerbrechen");
+          const m = merk(s, "Im Eisen stecken winzige <b>Elementarmagnete</b>, meist durcheinander. Streichst du mit einem Magneten darüber, richten sie sich aus: Das Eisen wird <b>magnetisch</b>.", true, 21);
+          const ex = exb(s, "Durchgebrochen", P(s, "Brichst du einen Magneten durch, hast du <b>zwei Magnete</b> – jeder mit Nord- und Südpol. Einen Pol allein gibt es nicht.", "small"));
+          const lf = life(s, "Im Alltag", P(s, "• Ein magnetischer Schraubendreher hält die Schraube fest.<br>• Eine gestrichene Nähnadel wird zur Kompassnadel.<br>• Fallen lassen oder erhitzen bringt alles wieder durcheinander.", "small"));
+          s.add(cols(s, 600, stack(s, 10, v, s.h("div", { class: "row", style: { gap: "12px", justifyContent: "center" } }, b1, b2)), stack(s, 14, m, ex, lf)));
+          s.show(v, "fade"); s.sfx.pop();
+          s.step(async () => { await stroke(); s.say("Die Elementarmagnete zeigen jetzt alle in dieselbe Richtung. Der Nagel zieht die Büroklammer an."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { await brk(); s.sfx.pop(); await s.show(ex, "up"); s.say("Zwei Stücke, zwei Magnete. Jedes hat einen Nordpol und einen Südpol."); });
+          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* M6 ---------------------------------------------------------------- */
+      {
+        title: "Wirkt der Magnet hindurch?",
+        say: "Die Büroklammer schwebt unter dem Magneten. Schiebe verschiedene Platten dazwischen. Hält der Magnet sie noch fest?",
+        build(s) {
+          const v = s.svg(500, 480);
+          v.append(s.el("rect", { x: 0, y: 450, width: 500, height: 30, rx: 6, fill: "#e8dcc0" }),
+            s.el("path", { d: "M60,450 V30 H330", fill: "none", stroke: "#6b7280", "stroke-width": 10, "stroke-linecap": "round", "stroke-linejoin": "round" }),
+            s.el("rect", { x: 290, y: 30, width: 20, height: 22, fill: "#6b7280" }));
+          v.append(s.el("g", { transform: "translate(300,106)" }, barMag(s, { len: 110, th: 44, first: "S", vertical: true, fs: 24 })));
+          const fl = s.el("g", { opacity: 1 }, ...[-14, 0, 14].map(d => s.el("line", { x1: 300 + d, y1: 166, x2: 300 + d * 0.4, y2: 218, stroke: "#7b4fd6", "stroke-width": 2, "stroke-dasharray": "5 5" })));
+          v.append(fl);
+          const thread = s.el("line", { x1: 300, y1: 267, x2: 300, y2: 450, stroke: "#5d6678", "stroke-width": 2 });
+          const clipG = s.el("g", null, clipShape(s));
+          v.append(thread, clipG, s.el("circle", { cx: 300, cy: 450, r: 5, fill: "#5d6678" }));
+          const plate = s.el("rect", { x: -200, y: 182, width: 160, height: 18, rx: 3, fill: "#fff", stroke: "#9ca3af", "stroke-width": 2 });
+          v.append(plate);
+          let cy = 245, px = -200, cur = null, busy = false;
+          const setClip = () => { clipG.setAttribute("transform", `translate(300,${cy})`); thread.setAttribute("y1", cy + 22); };
+          const setPlate = () => plate.setAttribute("x", px);
+          setClip();
+          const MAT = [["Papier", "#ffffff", "#9ca3af", true], ["Holz", "#d9a066", "#8a5a2b", true], ["Glas", "#cfeaf5", "#3b82b6", true], ["Aluminium", "#d1d5db", "#6b7280", true], ["Kunststoff", "#93c5fd", "#1d5bd0", true], ["Eisenblech", "#6b7280", "#374151", false]];
+          const status = s.h("p", { class: "t", style: { fontWeight: 700, minHeight: "64px", color: "var(--ink)" } }, "Noch keine Platte dazwischen.");
+          const choose = async i => {
+            if (busy) return; busy = true;
+            const [name, fill, str, pass] = MAT[i];
+            if (cur !== null) { s.sfx.swoosh(); await s.tween({ from: px, to: -200, dur: 350, ease: "in", update: x => { px = x; setPlate(); } }); }
+            if (cy > 300) { fl.setAttribute("opacity", 1); s.sound("magnet-klick"); await s.tween({ from: cy, to: 245, dur: 300, ease: "in", update: y => { cy = y; setClip(); } }); }
+            cur = i; plate.setAttribute("fill", fill); plate.setAttribute("stroke", str);
+            s.sfx.whoosh();
+            await s.tween({ from: -200, to: 220, dur: 600, ease: "out", update: x => { px = x; setPlate(); } });
+            if (pass) {
+              s.sfx.ding(); status.textContent = name + ": Die Kraft wirkt hindurch. Die Klammer schwebt weiter."; status.style.color = "var(--green)";
+            } else {
+              fl.setAttribute("opacity", 0);
+              await s.tween({ from: 245, to: 425, dur: 650, ease: "bounce", update: y => { cy = y; setClip(); } }); s.sfx.drum();
+              status.textContent = name + " schirmt ab: Die Klammer fällt herunter!"; status.style.color = "var(--red)";
+            }
+            busy = false;
+          };
+          const btns = MAT.map(([n], i) => s.h("button", { class: "btn", style: { width: "100%" }, onclick: () => choose(i) }, n));
+          const m = merk(s, "Die Magnetkraft wirkt durch <b>Papier, Holz, Glas, Kunststoff</b> und <b>Aluminium</b> hindurch. <b>Eisen</b> schirmt sie ab: Die Feldlinien laufen dann durch das Eisenblech.", true, 21);
+          const lf = life(s, "Im Alltag", P(s, "• Ein Kühlschrankmagnet hält deinen Zettel – durch das Papier hindurch.<br>• Aquarium: Ein Magnet-Scheibenreiniger putzt innen. Du schiebst ihn von außen durch das Glas.<br>• An der Magnettafel halten Magnete ganze Plakate.", "small"));
+          s.add(cols(s, 500, v, stack(s, 12, status, s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "10px" } }, ...btns), m, lf)));
+          s.show(v, "fade"); s.sfx.pop();
+          s.step(async () => { await choose(0); s.say("Durch Papier wirkt die Kraft hindurch."); });
+          s.step(async () => { await choose(2); s.say("Auch durch Glas."); });
+          s.step(async () => { await choose(5); s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(lf, "up"); });
+        },
+      },
+      /* M7 ---------------------------------------------------------------- */
+      {
+        title: "Die Erde ist ein Magnet",
+        say: "Die Erde verhält sich wie ein riesiger Stabmagnet. Darum zeigt die Kompassnadel nach Norden.",
+        build(s) {
+          const v = s.svg(520, 520);
+          const CX = 260, CY = 270, R = 140, TILT = 11;
+          v.append(s.el("circle", { cx: CX, cy: CY, r: R, fill: "#8fc1ec", stroke: "#1d5bd0", "stroke-width": 3 }));
+          [[-70, "M200,170 q30,-30 70,-10 q20,30 -10,60 q-40,10 -60,-20 z"], [0, "M300,250 q40,-20 60,20 q0,50 -30,70 q-30,-10 -40,-50 z"], [0, "M170,300 q30,-10 40,30 q-10,40 -40,30 q-15,-30 0,-60 z"]].forEach(([, d]) => v.append(s.el("path", { d, fill: "#7cc37c", opacity: 0.85 })));
+          v.append(s.el("line", { x1: CX, y1: 96, x2: CX, y2: 444, stroke: "#1b2740", "stroke-width": 2.5, "stroke-dasharray": "8 6" }));
+          // field lines of a tilted dipole (S pole up = magnetic pole near the geographic north)
+          const fieldG = s.el("g", { transform: `rotate(${TILT} ${CX} ${CY})` });
+          const paths = [];
+          for (const Lk of [1.25, 1.5, 1.75]) for (const side of [1, -1]) {
+            const t0 = Math.asin(Math.sqrt(1 / Lk)), pts = [];
+            for (let i = 0; i <= 60; i++) { const th = t0 + (Math.PI - 2 * t0) * i / 60, r = Lk * R * Math.sin(th) ** 2; pts.push(`${(CX + side * r * Math.sin(th)).toFixed(1)},${(CY - r * Math.cos(th)).toFixed(1)}`); }
+            const p = s.el("path", { d: "M" + pts.join(" L"), fill: "none", stroke: "#7b4fd6", "stroke-width": 2.5, class: "later" });
+            paths.push(p); fieldG.append(p);
+          }
+          const mag = s.el("g", { transform: `translate(${CX},${CY}) rotate(${TILT})`, class: "later" }, barMag(s, { len: 170, th: 40, first: "S", vertical: true, fs: 26 }));
+          v.append(fieldG, mag);
+          const l1 = later(T(s, CX, 34, "Geografischer Nordpol", { size: 22 }));
+          const l2 = later(TX(s, CX, 70, "magnetisch: ein Südpol!", { size: 21, fill: SGRN }));
+          const l3 = later(T(s, CX, 506, "Geografischer Südpol", { size: 22 }));
+          v.append(l1, l2, l3);
+          // compass with turning housing
+          const cv = s.svg(200, 200, { width: 170, height: 170 });
+          const house = s.el("g", null, s.el("circle", { cx: 100, cy: 100, r: 94, fill: "#fff", stroke: WIRE, "stroke-width": 4 }),
+            ...[["N", 0], ["O", 90], ["S", 180], ["W", 270]].map(([l, a]) => { const r = a * Math.PI / 180; return TX(s, 100 + Math.sin(r) * 72, 100 - Math.cos(r) * 72 + 8, l, { size: 24, fill: l === "N" ? NRED : WIRE }); }));
+          cv.append(house, s.el("polygon", { points: "100,26 110,100 90,100", fill: NRED }), s.el("polygon", { points: "100,174 110,100 90,100", fill: "#9ca3af" }), s.el("circle", { cx: 100, cy: 100, r: 7, fill: WIRE }));
+          const setHouse = a => house.setAttribute("transform", `rotate(${a} 100 100)`);
+          setHouse(70);
+          const sl = s.slider({ label: "Kompass drehen", min: 0, max: 360, step: 5, value: 70, fmt: x => x + "°", onInput: setHouse });
+          const ph = s.photo("kompass", { w: 210, h: 170, pos: "50% 50%" });
+          const comp = s.h("div", { class: "stack later", style: { gap: "8px" } }, s.h("div", { class: "row", style: { gap: "16px", flexWrap: "nowrap", alignItems: "center" } }, cv, ph), sl);
+          const m = merk(s, "Die Erde ist ein riesiger Magnet. Die rote Spitze der Kompassnadel ist ihr Nordpol – sie zeigt nach Norden. Dort liegt also ein magnetischer <b>Südpol</b>: Ungleiche Pole ziehen sich an!", true, 21);
+          const ex = exb(s, "Der Pol wandert", P(s, "Der magnetische Pol liegt einige Hundert Kilometer neben dem geografischen Nordpol. Er wandert jedes Jahr ein Stück – zurzeit von Kanada in Richtung Sibirien.", "small"));
+          s.add(cols(s, 520, v, stack(s, 12, comp, m, ex)));
+          s.show(v, "fade"); s.sfx.pop();
+          s.step(async () => { s.sfx.pop(); await s.show(mag, "zoom"); s.say("Im Inneren der Erde stellen wir uns einen riesigen Stabmagneten vor."); });
+          s.step(async () => { s.sfx.scribble(); for (const p of paths) s.show(p, "draw"); await s.wait(500); s.show(l1, "fade"); s.show(l2, "fade"); await s.show(l3, "fade"); });
+          s.step(async () => {
+            s.sfx.pop(); await s.show(comp, "up");
+            await s.tween({ from: 70, to: 0, dur: 1500, ease: "inOut", update: a => { const q = Math.round(a / 5) * 5; sl.input.value = q; setHouse(a); } }); sl.set(0); s.sfx.ding();
+            s.say("Die Nadel zeigt immer nach Norden. Drehe den Kompass, bis das N unter der roten Spitze liegt.");
+          });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.pop(); await s.show(ex, "up"); });
+        },
+      },
+      /* M8 ---------------------------------------------------------------- */
+      {
+        title: "Tiere mit eingebautem Kompass",
+        say: "Manche Tiere spüren das Magnetfeld der Erde. Sie haben einen Magnetsinn und finden so ihren Weg.",
+        build(s) {
+          const card = (id, cap, title, html, extra) => s.h("div", { class: "card later stack", style: { gap: "8px", padding: "12px 14px" } },
+            s.photo(id, { w: "100%", h: 210, pos: "50% 45%", caption: cap }), s.h("p", { class: "h2", style: { color: "var(--unit)", fontSize: "25px" } }, title), P(s, html, "small"), extra || null);
+          const c1 = card("rotkehlchen", "Rotkehlchen", "Zugvögel", "Zugvögel wie das Rotkehlchen spüren das Magnetfeld – vermutlich mit den Augen. Entdeckt hat das der Forscher Wolfgang Wiltschko in den 1960er-Jahren in Frankfurt am Main.",
+            s.h("div", { class: "row" }, s.soundBtn("rotkehlchen-gesang", "Rotkehlchen singt")));
+          const c2 = card("meeresschildkroete", "Meeresschildkröte", "Meeresschildkröten", "Junge Meeresschildkröten schwimmen Tausende Kilometer durchs Meer. Sie merken sich das Magnetfeld ihrer Heimatküste und finden so zurück.");
+          const c3 = card("brieftaube", "Brieftaube", "Brieftauben", "Brieftauben finden über Hunderte Kilometer nach Hause. Dabei helfen ihnen ein innerer Kompass, die Sonne und ihr Geruchssinn.");
+          const m = merk(s, "Viele Tiere haben einen <b>Magnetsinn</b> – einen eingebauten Kompass. Wir Menschen brauchen dafür einen echten Kompass oder ein Handy.", true, 21);
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { gap: "14px", alignItems: "start" } }, c1, c2, c3), m));
+          s.sfx.pop();
+          s.step(async () => { s.sound("rotkehlchen-gesang", { vol: 0.6, dur: 4 }); await s.show(c1, "up"); s.say("Im Herbst fliegen viele Zugvögel nach Süden. Ihr Magnetsinn zeigt ihnen die Richtung."); });
+          s.step(async () => { s.sound("waves", { vol: 0.4, dur: 4 }); await s.show(c2, "up"); });
+          s.step(async () => { s.sfx.whoosh(); await s.show(c3, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* M9 ---------------------------------------------------------------- */
+      {
+        title: "Im Alltag: starke Magnete",
+        say: "Starke Magnete lassen Züge schweben, machen Bilder vom Inneren des Körpers und heben schweren Schrott.",
+        build(s) {
+          const card = (id, cap, pos, html) => s.h("div", { class: "card later stack", style: { gap: "8px", padding: "12px 14px" } },
+            s.photo(id, { w: "100%", h: 220, pos, caption: cap }), P(s, html, "small"));
+          const c1 = card("transrapid-shanghai", "Magnetschwebebahn", "50% 55%", "Magnete heben den Zug an und ziehen ihn vorwärts. Er <b>schwebt</b>, ohne die Schiene zu berühren. In Shanghai fährt er die rund 30&nbsp;km zum Flughafen in etwa 8&nbsp;Minuten.");
+          const c2 = card("mrt", "MRT im Krankenhaus", "50% 50%", "Ein riesiger Magnet hilft, Bilder vom Inneren des Körpers zu machen – ohne Röntgenstrahlen. Sein Feld ist etwa <b>30.000-mal</b> so stark wie das der Erde. Dabei klopft es laut.");
+          const c3 = card("magnetkran", "Kranmagnet auf dem Schrottplatz", "50% 40%", "Er hebt schwere Eisenteile – und lässt sie dann wieder fallen. Wie geht das? Das zeigt dir die <b>nächste Folie</b>!");
+          const m = merk(s, "Diese starken Magnete sind <b>Elektromagnete</b>: Sie arbeiten mit Strom und lassen sich ein- und ausschalten.", true, 21);
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } }, s.h("div", { class: "cols3", style: { gap: "14px", alignItems: "start" } }, c1, c2, c3), m));
+          s.sfx.pop();
+          s.step(async () => { s.sfx.whoosh(); await s.show(c1, "up"); s.say("Der Zug schwebt auf einem Magnetfeld."); });
+          s.step(async () => { await s.show(c2, "up"); for (let i = 0; i < 4; i++) { s.sfx.drum(); await s.wait(170); } });
+          s.step(async () => { s.sound("magnet-klick"); await s.show(c3, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
         },
       },
       /* 13 --------------------------------------------------------------- */

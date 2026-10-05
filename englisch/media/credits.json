@@ -104,6 +104,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:2016_LTI_TX4_London_black_cab.jpg",
   "orig": "File:2016 LTI TX4 London black cab.jpg"
  },
+ "blue-whale": {
+  "file": "blue-whale.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 394,
+  "title": "Blauwal beim Ausatmen",
+  "author": "AWeith",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Blow_of_a_blue_whale_in_the_Arctic_sea.jpg",
+  "orig": "File:Blow of a blue whale in the Arctic sea.jpg"
+ },
  "bonfire": {
   "file": "bonfire.jpg",
   "kind": "img",
@@ -207,6 +219,18 @@
   "license_url": "https://creativecommons.org/licenses/by/3.0/",
   "source": "https://freesound.org/people/Ndheger/sounds/118112/",
   "orig": "118112"
+ },
+ "cheetah": {
+  "file": "cheetah.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 467,
+  "title": "Gepard beim Rennen",
+  "author": "Mark Dumont",
+  "license": "CC BY 2.0",
+  "license_url": "https://creativecommons.org/licenses/by/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Cheetah_Run.jpg",
+  "orig": "File:Cheetah Run.jpg"
  },
  "cracker-bang": {
   "file": "cracker-bang.mp3",
@@ -334,6 +358,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Edinburgh_Castle_and_West_Princes_Street_Gardens_-_geograph.org.uk_-_4979535.jpg",
   "orig": "File:Edinburgh Castle and West Princes Street Gardens - geograph.org.uk - 4979535.jpg"
  },
+ "fernsehturm": {
+  "file": "fernsehturm.jpg",
+  "kind": "img",
+  "w": 309,
+  "h": 700,
+  "title": "Berliner Fernsehturm",
+  "author": "Christian Wolf (www.c-w-design.de)",
+  "license": "CC BY-SA 3.0 de",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "source": "https://commons.wikimedia.org/wiki/File:Berliner_Fernsehturm,_Sicht_vom_Neptunbrunnen_-_Berlin_Mitte.jpg",
+  "orig": "File:Berliner Fernsehturm, Sicht vom Neptunbrunnen - Berlin Mitte.jpg"
+ },
  "fireworks": {
   "file": "fireworks.jpg",
   "kind": "img",
@@ -392,6 +428,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
   "source": "https://commons.wikimedia.org/wiki/File:Full_English_breakfast_at_Sainsbury%27s_Low_Hall,_Chingford,_London.jpg",
   "orig": "File:Full English breakfast at Sainsbury's Low Hall, Chingford, London.jpg"
+ },
+ "giraffe": {
+  "file": "giraffe.jpg",
+  "kind": "img",
+  "w": 700,
+  "h": 466,
+  "title": "Giraffe",
+  "author": "Ssemmanda will",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Graceful_Giant_of_the_Savanna_(Giraffe)_04.jpg",
+  "orig": "File:Graceful Giant of the Savanna (Giraffe) 04.jpg"
  },
  "goldfish": {
   "file": "goldfish.jpg",
@@ -731,6 +779,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Heimtier_004_2023_08_26.jpg",
   "orig": "File:Heimtier 004 2023 08 26.jpg"
  },
+ "rain-clouds": {
+  "file": "rain-clouds.jpg",
+  "kind": "img",
+  "w": 640,
+  "h": 480,
+  "title": "Regenwolken über Sussex",
+  "author": "Stephen Craven",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Trains_passing_near_Southease_-_geograph.org.uk_-_1268335.jpg",
+  "orig": "File:Trains passing near Southease - geograph.org.uk - 1268335.jpg"
+ },
  "rain-oxford-street": {
   "file": "rain-oxford-street.jpg",
   "kind": "img",
@@ -893,6 +953,18 @@
   "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
   "source": "https://commons.wikimedia.org/wiki/File:Terraced_houses,_Wynyatt_Street_-_geograph.org.uk_-_3685539.jpg",
   "orig": "File:Terraced houses, Wynyatt Street - geograph.org.uk - 3685539.jpg"
+ },
+ "the-shard": {
+  "file": "the-shard.jpg",
+  "kind": "img",
+  "w": 470,
+  "h": 700,
+  "title": "The Shard, London",
+  "author": "Lewis Hulbert",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:The_Shard_from_Southwark_Bridge,_2017-05-27.jpg",
+  "orig": "File:The Shard from Southwark Bridge, 2017-05-27.jpg"
  },
  "tortoise": {
   "file": "tortoise.jpg",

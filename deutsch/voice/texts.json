@@ -1,4 +1,9 @@
 {
+ "00f33c347615dee9": {
+  "lang": "de-DE",
+  "spoken": "Der Bäcker backt die Pizza. Wichtig ist der Bäcker.",
+  "text": "Der Bäcker backt die Pizza. Wichtig ist der Bäcker."
+ },
  "010d41801b6638bb": {
   "lang": "de-DE",
   "spoken": "Titel, Autor, Ort.",
@@ -109,6 +114,11 @@
   "spoken": "Ein Gedicht von Joachim Ringelnatz: Die Ameisen. Wir entdecken Verse, Strophen und Reime.",
   "text": "Ein Gedicht von Joachim Ringelnatz: Die Ameisen. Wir entdecken Verse, Strophen und Reime."
  },
+ "0695797e168dd201": {
+  "lang": "de-DE",
+  "spoken": "Drei Seiten über Igel. Prüfe jede mit drei Fragen: Wer hat das geschrieben? Wann? Und warum?",
+  "text": "Drei Seiten über Igel. Prüfe jede mit drei Fragen: Wer hat das geschrieben? Wann? Und warum?"
+ },
  "06b752a6c700b2e7": {
   "lang": "de-DE",
   "spoken": "Zuerst überfliegst du den Text: Überschrift, Zwischenüberschriften, Bilder. Dann stellst du Fragen an den Text.",
@@ -139,6 +149,16 @@
   "spoken": "Wo?",
   "text": "Wo?"
  },
+ "083829feb06c192a": {
+  "lang": "de-DE",
+  "spoken": "Im Klassenchat taucht eine aufregende Nachricht auf. Aber stimmt sie? Achte auf die Warnzeichen.",
+  "text": "Im Klassenchat taucht eine aufregende Nachricht auf. Aber stimmt sie? Achte auf die Warnzeichen."
+ },
+ "08c633c9da008ebe": {
+  "lang": "de-DE",
+  "spoken": "Fotos von anderen darfst du nur mit Erlaubnis zeigen. Und Bilder aus dem Netz gehören dem, der sie gemacht hat.",
+  "text": "Fotos von anderen darfst du nur mit Erlaubnis zeigen. Und Bilder aus dem Netz gehören dem, der sie gemacht hat."
+ },
  "090c55fcd8f66e1f": {
   "lang": "de-DE",
   "spoken": "Vater und Sohn sprechen abwechselnd.",
@@ -158,6 +178,16 @@
   "lang": "de-DE",
   "spoken": "Schluss",
   "text": "Schluss"
+ },
+ "0a2888c555426575": {
+  "lang": "de-DE",
+  "spoken": "Die Schule fällt drei Wochen aus? Wirklich?",
+  "text": "Die Schule fällt drei Wochen aus? Wirklich?"
+ },
+ "0b3733fbcac47ba0": {
+  "lang": "de-DE",
+  "spoken": "Froschperspektive: Die Figur wirkt groß und mächtig.",
+  "text": "Froschperspektive: Die Figur wirkt groß und mächtig."
  },
  "0b5a73fd56326fb2": {
   "lang": "de-DE",
@@ -183,6 +213,11 @@
   "lang": "de-DE",
   "spoken": "Rot sind die Verben.",
   "text": "Rot sind die Verben."
+ },
+ "0ddb8c812949ebb5": {
+  "lang": "de-DE",
+  "spoken": "Medien bringen Informationen und Geschichten zu dir: Bücher, Radio, Filme, das Internet. Das Wort Medium heißt: das, was in der Mitte steht.",
+  "text": "Medien bringen Informationen und Geschichten zu dir: Bücher, Radio, Filme, das Internet. Das Wort Medium heißt: das, was in der Mitte steht."
  },
  "0e2d5ab79cfce212": {
   "lang": "de-DE",
@@ -264,6 +299,11 @@
   "spoken": "Bellt steht ganz am Ende.",
   "text": "Bellt steht ganz am Ende."
  },
+ "12f7a8becbe0af13": {
+  "lang": "de-DE",
+  "spoken": "Nur drei Bilder pro Sekunde: Der Ball springt ruckelig.",
+  "text": "Nur drei Bilder pro Sekunde: Der Ball springt ruckelig."
+ },
  "13869e6b3a6c8a17": {
   "lang": "de-DE",
   "spoken": "Die Siegessäule ist höher als das Tor.",
@@ -273,6 +313,11 @@
   "lang": "de-DE",
   "spoken": "Ich kaufe Eis, Käse, Olivenöl …",
   "text": "Ich kaufe Eis, Käse, Olivenöl …"
+ },
+ "146bd7f9d46eb3aa": {
+  "lang": "de-DE",
+  "spoken": "Schnell Der Ball fliegt ins Tor. Ich jubele ganz laut. Tooor!",
+  "text": "Schnell Der Ball fliegt ins Tor. Ich jubele ganz laut. Tooor!"
  },
  "148c26b8d35bee22": {
   "lang": "de-DE",
@@ -339,6 +384,11 @@
   "spoken": "Aber der Zug war schon abgefahren. Das war noch früher.",
   "text": "Aber der Zug war schon abgefahren. Das war noch früher."
  },
+ "170840fe5905d412": {
+  "lang": "de-DE",
+  "spoken": "Sehen und Hören: Fernsehen, Kinofilm, Video.",
+  "text": "Sehen und Hören: Fernsehen, Kinofilm, Video."
+ },
  "1718b4572e38160e": {
   "lang": "de-DE",
   "spoken": "Nachrichten gibt es auch für Kinder. Sie erklären schwierige Wörter und zeigen, warum etwas wichtig ist.",
@@ -364,6 +414,11 @@
   "spoken": "Zuerst faltest du das Blatt längs.",
   "text": "Zuerst faltest du das Blatt längs."
  },
+ "1870748be22d7023": {
+  "lang": "de-DE",
+  "spoken": "Ein Film besteht aus vielen einzelnen Bildern. Im Kino sind es 24 Bilder in jeder Sekunde. Beim Schnitt kommen die Aufnahmen in die richtige Reihenfolge.",
+  "text": "Ein Film besteht aus vielen einzelnen Bildern. Im Kino sind es 24 Bilder in jeder Sekunde. Beim Schnitt kommen die Aufnahmen in die richtige Reihenfolge."
+ },
  "187d62b1c84bb9db": {
   "lang": "de-DE",
   "spoken": "Jeder Ort wird eine Szene.",
@@ -388,6 +443,11 @@
   "lang": "de-DE",
   "spoken": "8 mal Nomen",
   "text": "8 mal Nomen"
+ },
+ "1a73f22bc5de5727": {
+  "lang": "de-DE",
+  "spoken": "Detail. Ein kleiner Ausschnitt.",
+  "text": "Detail. Ein kleiner Ausschnitt."
  },
  "1a88b01ecdeb900f": {
   "lang": "de-DE",
@@ -493,6 +553,11 @@
   "lang": "de-DE",
   "spoken": "Rad",
   "text": "Rad"
+ },
+ "22774baae63175c3": {
+  "lang": "de-DE",
+  "spoken": "Sieben Silben.",
+  "text": "Sieben Silben."
  },
  "22964a532dc1b41a": {
   "lang": "de-DE",
@@ -694,6 +759,11 @@
   "spoken": "werde und spielen bilden eine Klammer.",
   "text": "werde und spielen bilden eine Klammer."
  },
+ "2c4cd8d74c6f6438": {
+  "lang": "de-DE",
+  "spoken": "Adresse, Telefonnummer und Passwort bleiben privat.",
+  "text": "Adresse, Telefonnummer und Passwort bleiben privat."
+ },
  "2ce9c05ea60eec6d": {
   "lang": "de-DE",
   "spoken": "Attribute beschreiben ein Nomen genauer. Sie sind kein eigenes Satzglied, sondern wandern immer mit ihrem Nomen mit.",
@@ -784,6 +854,11 @@
   "spoken": "Erfinde dein eigenes Märchen! Tippe in jeder Spalte auf einen Baustein. Daraus entsteht ein Märchenanfang.",
   "text": "Erfinde dein eigenes Märchen! Tippe in jeder Spalte auf einen Baustein. Daraus entsteht ein Märchenanfang."
  },
+ "3454338f13ce95c4": {
+  "lang": "de-DE",
+  "spoken": "Bunt. Die Blätter.",
+  "text": "Bunt. Die Blätter."
+ },
  "3455a7517e48813d": {
   "lang": "de-DE",
   "spoken": "Hunde",
@@ -793,6 +868,11 @@
   "lang": "de-DE",
   "spoken": "Manchmal hat das Prädikat zwei Teile. Der zweite Teil wandert ans Satzende. So entsteht eine Klammer um den Satz.",
   "text": "Manchmal hat das Prädikat zwei Teile. Der zweite Teil wandert ans Satzende. So entsteht eine Klammer um den Satz."
+ },
+ "351c120e824b7967": {
+  "lang": "de-DE",
+  "spoken": "Eine Firma hat bezahlt, damit sie ganz oben steht. Das ist Werbung.",
+  "text": "Eine Firma hat bezahlt, damit sie ganz oben steht. Das ist Werbung."
  },
  "3540c755118e61a9": {
   "lang": "de-DE",
@@ -819,15 +899,35 @@
   "spoken": "Leg die Hand an deinen Hals. Beim summenden s spürst du ein Kribbeln. Beim zischenden s nicht.",
   "text": "Leg die Hand an deinen Hals. Beim summenden s spürst du ein Kribbeln. Beim zischenden s nicht."
  },
+ "36644a927f10baf8": {
+  "lang": "de-DE",
+  "spoken": "Im Forum steht etwas über Milch. Das schauen wir uns gleich genauer an.",
+  "text": "Im Forum steht etwas über Milch. Das schauen wir uns gleich genauer an."
+ },
+ "36e07da0dcfd8c4d": {
+  "lang": "de-DE",
+  "spoken": "Ich werde fotografieren: Futur. Ich werde fotografiert: Passiv.",
+  "text": "Ich werde fotografieren: Futur. Ich werde fotografiert: Passiv."
+ },
  "37ef6401b49e883a": {
   "lang": "de-DE",
   "spoken": "Im Sommer: Die Ameise arbeitet, die Grille spielt Geige.",
   "text": "Im Sommer: Die Ameise arbeitet, die Grille spielt Geige."
  },
+ "3829f9dd4c5f934a": {
+  "lang": "de-DE",
+  "spoken": "Ein Blick in Klasse sechs. Im Aktiv ist wichtig, wer etwas tut. Im Passiv ist wichtig, was passiert.",
+  "text": "Ein Blick in Klasse sechs. Im Aktiv ist wichtig, wer etwas tut. Im Passiv ist wichtig, was passiert."
+ },
  "385adbca2f8fc0f5": {
   "lang": "de-DE",
   "spoken": "Wessen Trikot ist grün? des Torwarts. Das ist der Genitiv.",
   "text": "Wessen Trikot ist grün? des Torwarts. Das ist der Genitiv."
+ },
+ "38c87ff2e155b428": {
+  "lang": "de-DE",
+  "spoken": "Sensation! Ein Hai in der Spree. Aber stimmt das?",
+  "text": "Sensation! Ein Hai in der Spree. Aber stimmt das?"
  },
  "3a158a0e0f3636e1": {
   "lang": "de-DE",
@@ -904,10 +1004,20 @@
   "spoken": "Es gibt drei wichtige Reimschemas: Paarreim, Kreuzreim und umarmender Reim.",
   "text": "Es gibt drei wichtige Reimschemas: Paarreim, Kreuzreim und umarmender Reim."
  },
+ "3fbc85f7e2fa3d53": {
+  "lang": "de-DE",
+  "spoken": "Eine Suchmaschine versteht keine langen Fragen so gut wie ein Mensch. Zieh die wichtigsten Wörter heraus. Das sind deine Suchbegriffe.",
+  "text": "Eine Suchmaschine versteht keine langen Fragen so gut wie ein Mensch. Zieh die wichtigsten Wörter heraus. Das sind deine Suchbegriffe."
+ },
  "3fd8a3418bc56eeb": {
   "lang": "de-DE",
   "spoken": "Auch was man nicht anfassen kann, ist ein Nomen. Zum Beispiel die Freude.",
   "text": "Auch was man nicht anfassen kann, ist ein Nomen. Zum Beispiel die Freude."
+ },
+ "4028c2cf3b30f045": {
+  "lang": "de-DE",
+  "spoken": "Kapitel 11. Medien: suchen, prüfen, hören, sehen. Klug im Netz, kreativ mit Ton und Film",
+  "text": "Kapitel 11. Medien: suchen, prüfen, hören, sehen. Klug im Netz, kreativ mit Ton und Film"
  },
  "4148a94107a3f4cf": {
   "lang": "de-DE",
@@ -928,6 +1038,11 @@
   "lang": "de-DE",
   "spoken": "Starke Verben lernt man am besten in drei Formen. Infinitiv, Präteritum und Partizip zwei. Viele folgen einem Vokal-Muster.",
   "text": "Starke Verben lernt man am besten in drei Formen. Infinitiv, Präteritum und Partizip zwei. Viele folgen einem Vokal-Muster."
+ },
+ "4263188b121eac5c": {
+  "lang": "de-DE",
+  "spoken": "Fernsehturm, Berlin, hoch. Das sind die wichtigen Wörter.",
+  "text": "Fernsehturm, Berlin, hoch. Das sind die wichtigen Wörter."
  },
  "4276648faf297222": {
   "lang": "de-DE",
@@ -1034,10 +1149,25 @@
   "spoken": "Eltern kommt von alt, wird aber mit e geschrieben.",
   "text": "Eltern kommt von alt, wird aber mit e geschrieben."
  },
+ "4937131486b5fd97": {
+  "lang": "de-DE",
+  "spoken": "Eine Autorin mit Namen, ein Datum, und sie will informieren. Gut!",
+  "text": "Eine Autorin mit Namen, ein Datum, und sie will informieren. Gut!"
+ },
  "49c9bcf124a55543": {
   "lang": "de-DE",
   "spoken": "Ich hätte mir mehr Bilder gewünscht.",
   "text": "Ich hätte mir mehr Bilder gewünscht."
+ },
+ "4a0f7d361ecf0dca": {
+  "lang": "de-DE",
+  "spoken": "Aufnehmen, anhören, verbessern. Fertig ist dein Hörspiel!",
+  "text": "Aufnehmen, anhören, verbessern. Fertig ist dein Hörspiel!"
+ },
+ "4a2749c5874f2a20": {
+  "lang": "de-DE",
+  "spoken": "Mila merkt es: „Oh nein, mein Turnbeutel!“",
+  "text": "Mila merkt es: „Oh nein, mein Turnbeutel!“"
  },
  "4b0c03f613f551d8": {
   "lang": "de-DE",
@@ -1058,6 +1188,11 @@
   "lang": "de-DE",
   "spoken": "Wen oder was feiern die Fans? den Torwart. Das ist der Akkusativ.",
   "text": "Wen oder was feiern die Fans? den Torwart. Das ist der Akkusativ."
+ },
+ "4bcc960fef505459": {
+  "lang": "de-DE",
+  "spoken": "Nora hat eine Woche lang aufgeschrieben, wie lange sie welche Medien nutzt. So ein Medientagebuch zeigt dir, wohin deine Zeit geht.",
+  "text": "Nora hat eine Woche lang aufgeschrieben, wie lange sie welche Medien nutzt. So ein Medientagebuch zeigt dir, wohin deine Zeit geht."
  },
  "4bf76b7b854a25c0": {
   "lang": "de-DE",
@@ -1094,10 +1229,20 @@
   "spoken": "Feuer",
   "text": "Feuer"
  },
+ "4d7ec068c1072965": {
+  "lang": "de-DE",
+  "spoken": "Die Pizza wird gebacken. Wichtig ist die Pizza.",
+  "text": "Die Pizza wird gebacken. Wichtig ist die Pizza."
+ },
  "4d9263b53b669665": {
   "lang": "de-DE",
   "spoken": "Jetzt liest du gründlich, Abschnitt für Abschnitt. Markiere nur die Schlüsselwörter, also die wichtigsten Wörter.",
   "text": "Jetzt liest du gründlich, Abschnitt für Abschnitt. Markiere nur die Schlüsselwörter, also die wichtigsten Wörter."
+ },
+ "4de22c2ecb3bdfb6": {
+  "lang": "de-DE",
+  "spoken": "Bevor gedreht wird, zeichnet man ein Storyboard. Das ist der Plan des Films, Bild für Bild, wie ein Comic.",
+  "text": "Bevor gedreht wird, zeichnet man ein Storyboard. Das ist der Plan des Films, Bild für Bild, wie ein Comic."
  },
  "4df1dafd70e21655": {
   "lang": "de-DE",
@@ -1219,6 +1364,11 @@
   "spoken": "Zahl, nehmen, wohnen, Uhr. Nach dem h kommt l, m, n oder r.",
   "text": "Zahl, nehmen, wohnen, Uhr. Nach dem h kommt l, m, n oder r."
  },
+ "551eec7c92a606de": {
+  "lang": "de-DE",
+  "spoken": "Bunt Die Blätter tanzen im Wind. Ich sammle die schönsten. Herbst!",
+  "text": "Bunt Die Blätter tanzen im Wind. Ich sammle die schönsten. Herbst!"
+ },
  "55c445d235a76a42": {
   "lang": "de-DE",
   "spoken": "Du nimmst wird zu Nimm!",
@@ -1314,6 +1464,11 @@
   "spoken": "Passt ein Wort nicht mehr in die Zeile, trennst du es. Du trennst nach Sprechsilben, so wie du langsam klatschst.",
   "text": "Passt ein Wort nicht mehr in die Zeile, trennst du es. Du trennst nach Sprechsilben, so wie du langsam klatschst."
  },
+ "5984d5f866aad949": {
+  "lang": "de-DE",
+  "spoken": "Im Film von 2001 hat der Dieb ein Handy.",
+  "text": "Im Film von 2001 hat der Dieb ein Handy."
+ },
  "59865e04e5511f04": {
   "lang": "de-DE",
   "spoken": "Erst ein Heft, dann das Heft.",
@@ -1328,6 +1483,11 @@
   "lang": "de-DE",
   "spoken": "Mit fünf Schritten verstehst du jeden Sachtext. Wie auf einer Treppe geht es Stufe für Stufe nach oben.",
   "text": "Mit fünf Schritten verstehst du jeden Sachtext. Wie auf einer Treppe geht es Stufe für Stufe nach oben."
+ },
+ "5a215a1d6a365502": {
+  "lang": "de-DE",
+  "spoken": "Mila möchte nicht. Dann bleibt das Foto privat.",
+  "text": "Mila möchte nicht. Dann bleibt das Foto privat."
  },
  "5ad8985ebf16c228": {
   "lang": "de-DE",
@@ -1364,6 +1524,11 @@
   "spoken": "Der Höhepunkt: In der Bank wird es richtig spannend.",
   "text": "Der Höhepunkt: In der Bank wird es richtig spannend."
  },
+ "5e64e87983c127d7": {
+  "lang": "de-DE",
+  "spoken": "Fotos kann man bearbeiten. Hier schwimmt angeblich ein Hai in der Spree. Schieb den Regler und vergleiche mit dem Original.",
+  "text": "Fotos kann man bearbeiten. Hier schwimmt angeblich ein Hai in der Spree. Schieb den Regler und vergleiche mit dem Original."
+ },
  "5e8f1a5ed74a10d8": {
   "lang": "de-DE",
   "spoken": "Das Genus sieht man dem Ding nicht an. Lerne jedes Nomen mit Artikel.",
@@ -1383,6 +1548,11 @@
   "lang": "de-DE",
   "spoken": "ihr, ihm, ihn, ihnen",
   "text": "ihr, ihm, ihn, ihnen"
+ },
+ "5fb35e1eb8678459": {
+  "lang": "de-DE",
+  "spoken": "Zellophanfolie knüllen klingen wie knisterndes Feuer.",
+  "text": "Zellophanfolie knüllen klingen wie knisterndes Feuer."
  },
  "5fbf17aa9b18c57c": {
   "lang": "de-DE",
@@ -1414,6 +1584,11 @@
   "spoken": "Damit ein Gespräch in der Klasse klappt, gibt es Regeln. Sie sorgen dafür, dass jeder zu Wort kommt.",
   "text": "Damit ein Gespräch in der Klasse klappt, gibt es Regeln. Sie sorgen dafür, dass jeder zu Wort kommt."
  },
+ "614fcb9aeac52db1": {
+  "lang": "de-DE",
+  "spoken": "Eine Firma will Futter verkaufen. Das ist Werbung.",
+  "text": "Eine Firma will Futter verkaufen. Das ist Werbung."
+ },
  "621b51a654c2ee19": {
   "lang": "de-DE",
   "spoken": "Zwei Strophen.",
@@ -1444,6 +1619,11 @@
   "spoken": "die Räder, mit d. raten, mit t.",
   "text": "die Räder, mit d. raten, mit t."
  },
+ "651fd6f1b40e67b3": {
+  "lang": "de-DE",
+  "spoken": "Rote Seiten bleiben hängen, grüne kommen durch.",
+  "text": "Rote Seiten bleiben hängen, grüne kommen durch."
+ },
  "65338d5f1ac14213": {
   "lang": "de-DE",
   "spoken": "Bus, Wasser, Straße, Fuß. Das s zischt.",
@@ -1453,6 +1633,11 @@
   "lang": "de-DE",
   "spoken": "Held: armer Schneider",
   "text": "Held: armer Schneider"
+ },
+ "65aa4f5bc111a16a": {
+  "lang": "de-DE",
+  "spoken": "Auch die Höhe der Kamera verändert die Wirkung. Von unten wirkt jemand groß und mächtig, von oben klein.",
+  "text": "Auch die Höhe der Kamera verändert die Wirkung. Von unten wirkt jemand groß und mächtig, von oben klein."
  },
  "673a5deaeaa923a1": {
   "lang": "de-DE",
@@ -1468,6 +1653,11 @@
   "lang": "de-DE",
   "spoken": "Wir wollen heute Pizza essen.",
   "text": "Wir wollen heute Pizza essen."
+ },
+ "678d19b35facf550": {
+  "lang": "de-DE",
+  "spoken": "Ein Rondell hat acht Zeilen. Die erste Zeile kommt dreimal vor: in Zeile eins, vier und sieben. Zeile zwei und Zeile acht sind gleich.",
+  "text": "Ein Rondell hat acht Zeilen. Die erste Zeile kommt dreimal vor: in Zeile eins, vier und sieben. Zeile zwei und Zeile acht sind gleich."
  },
  "67a7b242abc8d3af": {
   "lang": "de-DE",
@@ -1518,6 +1708,11 @@
   "lang": "de-DE",
   "spoken": "Saal, Haar, Paar, Waage",
   "text": "Saal, Haar, Paar, Waage"
+ },
+ "6b2d965477d9d7c4": {
+  "lang": "de-DE",
+  "spoken": "Ein Hörspiel erzählt eine Geschichte nur mit Tönen: mit Stimmen, Geräuschen und Musik. Die Bilder entstehen in deinem Kopf.",
+  "text": "Ein Hörspiel erzählt eine Geschichte nur mit Tönen: mit Stimmen, Geräuschen und Musik. Die Bilder entstehen in deinem Kopf."
  },
  "6bdaf8933d9c02ca": {
   "lang": "de-DE",
@@ -1579,6 +1774,11 @@
   "spoken": "Züge. Also Zug mit g.",
   "text": "Züge. Also Zug mit g."
  },
+ "6fa37eef0d3b7460": {
+  "lang": "de-DE",
+  "spoken": "Emil und die Detektive erschien 1929 als Buch. Seitdem wurde es mehrmals verfilmt. Jeder Film erzählt die Geschichte ein bisschen anders.",
+  "text": "Emil und die Detektive erschien 1929 als Buch. Seitdem wurde es mehrmals verfilmt. Jeder Film erzählt die Geschichte ein bisschen anders."
+ },
  "6fde07d9d6253707": {
   "lang": "de-DE",
   "spoken": "Statt Leon sagen wir er.",
@@ -1628,6 +1828,11 @@
   "lang": "de-DE",
   "spoken": "Locker, kurz, mit Emoji.",
   "text": "Locker, kurz, mit Emoji."
+ },
+ "720b372e9a9c3b2c": {
+  "lang": "de-DE",
+  "spoken": "Bun-tes Laub fällt sacht. Fünf Silben.",
+  "text": "Bun-tes Laub fällt sacht. Fünf Silben."
  },
  "722e31d212b71fae": {
   "lang": "de-DE",
@@ -1729,6 +1934,11 @@
   "spoken": "Sie hat lockige, rotbraune Haare, grüne Augen und eine runde Brille.",
   "text": "Sie hat lockige, rotbraune Haare, grüne Augen und eine runde Brille."
  },
+ "772e3395ba09a842": {
+  "lang": "de-DE",
+  "spoken": "Der Turnbeutel liegt noch auf dem Sitz.",
+  "text": "Der Turnbeutel liegt noch auf dem Sitz."
+ },
  "773849a50370d12d": {
   "lang": "de-DE",
   "spoken": "Emil steckt das Geld mit einer Nadel im Futter seiner Jacke fest. Im Zug schläft er ein.",
@@ -1783,6 +1993,11 @@
   "lang": "de-DE",
   "spoken": "Geburt, s, Tag. Geburtstag.",
   "text": "Geburt, s, Tag. Geburtstag."
+ },
+ "7b78b7c51d50aeb3": {
+  "lang": "de-DE",
+  "spoken": "zwei Kokosnussschalen klingen wie Pferdehufe.",
+  "text": "zwei Kokosnussschalen klingen wie Pferdehufe."
  },
  "7bbdf8a5f65bbfe6": {
   "lang": "de-DE",
@@ -1884,6 +2099,11 @@
   "spoken": "Wen oder was prüft der Kontrolleur? Die Fahrkarte.",
   "text": "Wen oder was prüft der Kontrolleur? Die Fahrkarte."
  },
+ "825b83bc58f5f2d3": {
+  "lang": "de-DE",
+  "spoken": "Halbtotale. Die Figur von Kopf bis Fuß.",
+  "text": "Halbtotale. Die Figur von Kopf bis Fuß."
+ },
  "827d9e268a8423bb": {
   "lang": "de-DE",
   "spoken": "neu",
@@ -1918,6 +2138,11 @@
   "lang": "de-DE",
   "spoken": "Achtzehnhundertzwölf erscheinen die Kinder- und Hausmärchen.",
   "text": "Achtzehnhundertzwölf erscheinen die Kinder- und Hausmärchen."
+ },
+ "85c64502fb5c7219": {
+  "lang": "de-DE",
+  "spoken": "Die Blinde Kuh gibt es nicht mehr. Auch im Internet verschwinden Dinge.",
+  "text": "Die Blinde Kuh gibt es nicht mehr. Auch im Internet verschwinden Dinge."
  },
  "85e87fc69a3b7df6": {
   "lang": "de-DE",
@@ -1963,6 +2188,11 @@
   "lang": "de-DE",
   "spoken": "Der Artikel ist der Begleiter des Nomens. Ein und eine sagen, etwas ist neu. Der, die und das sagen, wir kennen es schon.",
   "text": "Der Artikel ist der Begleiter des Nomens. Ein und eine sagen, etwas ist neu. Der, die und das sagen, wir kennen es schon."
+ },
+ "87c20c5f8f3a609d": {
+  "lang": "de-DE",
+  "spoken": "Buntes Laub fällt sacht, der Wind trägt es weit davon – ein Igel schläft ein.",
+  "text": "Buntes Laub fällt sacht, der Wind trägt es weit davon – ein Igel schläft ein."
  },
  "8816b393b4fcb6e5": {
   "lang": "de-DE",
@@ -2149,10 +2379,20 @@
   "spoken": "Bahnhof Zoo: Der Dieb steigt aus – Emil hinterher.",
   "text": "Bahnhof Zoo: Der Dieb steigt aus – Emil hinterher."
  },
+ "98d54b46d77e6f54": {
+  "lang": "de-DE",
+  "spoken": "Treffer: 368 Meter.",
+  "text": "Treffer: 368 Meter."
+ },
  "98dfff00a805f2e7": {
   "lang": "de-DE",
   "spoken": "Ich will nach Hause! – Wo sind die Mäuse?",
   "text": "Ich will nach Hause! – Wo sind die Mäuse?"
+ },
+ "99e26b6cc85483a7": {
+  "lang": "de-DE",
+  "spoken": "Montag bis Freitag.",
+  "text": "Montag bis Freitag."
  },
  "9a5ccfe88b98bf6a": {
   "lang": "de-DE",
@@ -2204,6 +2444,11 @@
   "spoken": "Ein paar Sonderfälle: ck bleibt zusammen. st darfst du trennen. Und einen einzelnen Vokal am Wortanfang trennst du nie ab.",
   "text": "Ein paar Sonderfälle: ck bleibt zusammen. st darfst du trennen. Und einen einzelnen Vokal am Wortanfang trennst du nie ab."
  },
+ "9d593f82aadb2796": {
+  "lang": "de-DE",
+  "spoken": "Jubel, Schuss, Anlauf? Diese Reihenfolge ergibt keinen Sinn.",
+  "text": "Jubel, Schuss, Anlauf? Diese Reihenfolge ergibt keinen Sinn."
+ },
  "9e70260e173b3701": {
   "lang": "de-DE",
   "spoken": "Kapitel 10. Bücher, Bühne und Sprachen. Ein ganzes Buch, ein Theaterstück, viele Sprachen",
@@ -2219,10 +2464,20 @@
   "spoken": "Straße, Fuß, groß, Grüße",
   "text": "Straße, Fuß, groß, Grüße"
  },
+ "9ff52f3f16bba37c": {
+  "lang": "de-DE",
+  "spoken": "Groß. Nur das Gesicht.",
+  "text": "Groß. Nur das Gesicht."
+ },
  "a01092aedfc17fca": {
   "lang": "de-DE",
   "spoken": "Haus, Häuser. Baum, Bäume. Maus, Mäuse. laut, läuten. Traum, träumen.",
   "text": "Haus, Häuser. Baum, Bäume. Maus, Mäuse. laut, läuten. Traum, träumen."
+ },
+ "a083d66af9233299": {
+  "lang": "de-DE",
+  "spoken": "Hören: Radio, Hörspiel, Hörbuch, Podcast.",
+  "text": "Hören: Radio, Hörspiel, Hörbuch, Podcast."
  },
  "a095af6ef38d0dd0": {
   "lang": "de-DE",
@@ -2273,6 +2528,11 @@
   "lang": "de-DE",
   "spoken": "Ich bin spät dran weil die U8 Verspätung hat.",
   "text": "Ich bin spät dran weil die U8 Verspätung hat."
+ },
+ "a272e7798c473beb": {
+  "lang": "de-DE",
+  "spoken": "Bei einem Buchtitel helfen Anführungszeichen.",
+  "text": "Bei einem Buchtitel helfen Anführungszeichen."
  },
  "a2b71c5bbdc79910": {
   "lang": "de-DE",
@@ -2519,6 +2779,11 @@
   "spoken": "Geräusche machen die Szene lebendig.",
   "text": "Geräusche machen die Szene lebendig."
  },
+ "b2ed1077f2e76b58": {
+  "lang": "de-DE",
+  "spoken": "1931: der erste Film, in Schwarz-Weiß.",
+  "text": "1931: der erste Film, in Schwarz-Weiß."
+ },
  "b2fee8c74963f153": {
   "lang": "de-DE",
   "spoken": "Am Sonntag backt Oma einen Apfelkuchen.",
@@ -2543,6 +2808,16 @@
   "lang": "de-DE",
   "spoken": "In der U-Bahn: Steigen Sie bitte ein!",
   "text": "In der U-Bahn: Steigen Sie bitte ein!"
+ },
+ "b461cc97b2c3e8e4": {
+  "lang": "de-DE",
+  "spoken": "Jetzt dichtest du selbst! Ein Elfchen hat elf Wörter in fünf Zeilen: ein Wort, zwei Wörter, drei, vier und am Ende wieder eins.",
+  "text": "Jetzt dichtest du selbst! Ein Elfchen hat elf Wörter in fünf Zeilen: ein Wort, zwei Wörter, drei, vier und am Ende wieder eins."
+ },
+ "b48777b869d5ed35": {
+  "lang": "de-DE",
+  "spoken": "„Nächster Halt!“ Mila springt auf und rennt zur Tür.",
+  "text": "„Nächster Halt!“ Mila springt auf und rennt zur Tür."
  },
  "b4c7017d5e9a607d": {
   "lang": "de-DE",
@@ -2579,6 +2854,11 @@
   "spoken": "Steht der Relativsatz mitten im Satz, braucht er zwei Kommas: eins davor und eins danach. Steht er am Ende, reicht eins.",
   "text": "Steht der Relativsatz mitten im Satz, braucht er zwei Kommas: eins davor und eins danach. Steht er am Ende, reicht eins."
  },
+ "b6fb2660d211f6eb": {
+  "lang": "de-DE",
+  "spoken": "Lesen: Buch, Zeitung, Zeitschrift, Comic.",
+  "text": "Lesen: Buch, Zeitung, Zeitschrift, Comic."
+ },
  "b73210e2624e2cfd": {
   "lang": "de-DE",
   "spoken": "Leon hat ein Tor geschossen.",
@@ -2588,6 +2868,11 @@
   "lang": "de-DE",
   "spoken": "Sachtexte begegnen dir jeden Tag. Sie beantworten eine Frage, die du gerade hast.",
   "text": "Sachtexte begegnen dir jeden Tag. Sie beantworten eine Frage, die du gerade hast."
+ },
+ "b7b3165e723dc21e": {
+  "lang": "de-DE",
+  "spoken": "Fünf Warnzeichen in einer Nachricht.",
+  "text": "Fünf Warnzeichen in einer Nachricht."
  },
  "b7e078c02506b17a": {
   "lang": "de-DE",
@@ -2599,10 +2884,20 @@
   "spoken": "Zum Schluss backst du die zweite Seite noch 2 bis 3 Minuten.",
   "text": "Zum Schluss backst du die zweite Seite noch 2 bis 3 Minuten."
  },
+ "b8246a06b0527d48": {
+  "lang": "de-DE",
+  "spoken": "Ein eigenes Hörspiel kannst du mit einem Handy oder Tablet aufnehmen. Du brauchst ein Skript, Sprecher und ein paar Dinge für Geräusche.",
+  "text": "Ein eigenes Hörspiel kannst du mit einem Handy oder Tablet aufnehmen. Du brauchst ein Skript, Sprecher und ein paar Dinge für Geräusche."
+ },
  "b8832ca25106afff": {
   "lang": "de-DE",
   "spoken": "Die Siegessäule ist mit 67 Metern höher.",
   "text": "Die Siegessäule ist mit 67 Metern höher."
+ },
+ "b89e67acab695ec8": {
+  "lang": "de-DE",
+  "spoken": "Ein Verein, ein Lexikon oder ein Forum?",
+  "text": "Ein Verein, ein Lexikon oder ein Forum?"
  },
  "b91ba1bee2afcd37": {
   "lang": "de-DE",
@@ -2729,6 +3024,11 @@
   "spoken": "Aus den Schlüsselwörtern machst du für jeden Abschnitt einen Satz. Am Ende beantwortest du deine Fragen.",
   "text": "Aus den Schlüsselwörtern machst du für jeden Abschnitt einen Satz. Am Ende beantwortest du deine Fragen."
  },
+ "c1e90a29c156c872": {
+  "lang": "de-DE",
+  "spoken": "Anlauf, Schuss, Jubel. Jetzt stimmt es.",
+  "text": "Anlauf, Schuss, Jubel. Jetzt stimmt es."
+ },
  "c22a0d3ecab37a7f": {
   "lang": "de-DE",
   "spoken": "Mein, dein, sein, ihr, unser, euer. Sie sagen, wem etwas gehört.",
@@ -2749,10 +3049,25 @@
   "spoken": "Wörter, die zusammenbleiben, bilden ein Satzglied.",
   "text": "Wörter, die zusammenbleiben, bilden ein Satzglied."
  },
+ "c327ad4fedd429ad": {
+  "lang": "de-DE",
+  "spoken": "Viele Geräusche in Filmen und Hörspielen sind nachgemacht. Ein Geräuschemacher benutzt dafür ganz alltägliche Dinge.",
+  "text": "Viele Geräusche in Filmen und Hörspielen sind nachgemacht. Ein Geräuschemacher benutzt dafür ganz alltägliche Dinge."
+ },
+ "c3960a4200b64442": {
+  "lang": "de-DE",
+  "spoken": "Vierundzwanzig Bilder pro Sekunde: Die Bewegung ist flüssig.",
+  "text": "Vierundzwanzig Bilder pro Sekunde: Die Bewegung ist flüssig."
+ },
  "c44d3e83f7bbffc3": {
   "lang": "de-DE",
   "spoken": "Meine Oma, die in Hamburg wohnt, kommt morgen. Zwei Kommas.",
   "text": "Meine Oma, die in Hamburg wohnt, kommt morgen. Zwei Kommas."
+ },
+ "c44d95d8f3284a0e": {
+  "lang": "de-DE",
+  "spoken": "Das Passiv baust du mit werden und dem Partizip zwei. Das Partizip steht am Ende des Satzes.",
+  "text": "Das Passiv baust du mit werden und dem Partizip zwei. Das Partizip steht am Ende des Satzes."
  },
  "c45173562a2f6fd8": {
   "lang": "de-DE",
@@ -2789,6 +3104,11 @@
   "spoken": "Der Bus, welcher zum Zoo fährt, ist voll.",
   "text": "Der Bus, welcher zum Zoo fährt, ist voll."
  },
+ "c65a38b6ba4cdcb3": {
+  "lang": "de-DE",
+  "spoken": "1954 in Farbe, 2001 ganz modern.",
+  "text": "1954 in Farbe, 2001 ganz modern."
+ },
  "c6c22f79f1323d02": {
   "lang": "de-DE",
   "spoken": "Das Präteritum erzählt von der Vergangenheit. Bei regelmäßigen Verben hängst du einfach te an den Stamm.",
@@ -2813,6 +3133,16 @@
   "lang": "de-DE",
   "spoken": "Schrippe, Stulle, Kiez.",
   "text": "Schrippe, Stulle, Kiez."
+ },
+ "c80ca60cbd4a516c": {
+  "lang": "de-DE",
+  "spoken": "Der Herbst ist da. Die Blätter fallen leise. Der Wind pfeift durch die Straßen.",
+  "text": "Der Herbst ist da. Die Blätter fallen leise. Der Wind pfeift durch die Straßen."
+ },
+ "c8f80f822f450068": {
+  "lang": "de-DE",
+  "spoken": "Das Urheberrecht gilt bis siebzig Jahre nach dem Tod.",
+  "text": "Das Urheberrecht gilt bis siebzig Jahre nach dem Tod."
  },
  "c969693a126dff92": {
   "lang": "de-DE",
@@ -2889,10 +3219,10 @@
   "spoken": "Nikolsburger Platz: Die Detektive halten Kriegsrat.",
   "text": "Nikolsburger Platz: Die Detektive halten Kriegsrat."
  },
- "cc4ad9993b5765e8": {
+ "cbe423d62d449601": {
   "lang": "de-DE",
-  "spoken": "Einen Kuchen kauft Leon heute am Alexanderplatz.",
-  "text": "Einen Kuchen kauft Leon heute am Alexanderplatz."
+  "spoken": "Im Film entscheidet die Kamera, wie viel du siehst. Das nennt man Einstellungsgröße: von der Totale bis zum Detail.",
+  "text": "Im Film entscheidet die Kamera, wie viel du siehst. Das nennt man Einstellungsgröße: von der Totale bis zum Detail."
  },
  "cc73ae984f0b9aac": {
   "lang": "de-DE",
@@ -2904,10 +3234,25 @@
   "spoken": "Paarreim. a a b b",
   "text": "Paarreim. a a b b"
  },
+ "cdcb815117ebe827": {
+  "lang": "de-DE",
+  "spoken": "Am Wochenende sind die Säulen höher.",
+  "text": "Am Wochenende sind die Säulen höher."
+ },
  "cdfb736e9916762f": {
   "lang": "de-DE",
   "spoken": "Gedichte haben einen Rhythmus. Betonte und unbetonte Silben wechseln sich ab, wie ein Takt in der Musik.",
   "text": "Gedichte haben einen Rhythmus. Betonte und unbetonte Silben wechseln sich ab, wie ein Takt in der Musik."
+ },
+ "ce0b5ae5f29fce7f": {
+  "lang": "de-DE",
+  "spoken": "Das Passiv findest du überall dort, wo es nicht so wichtig ist, wer etwas tut: im Rezept, in den Nachrichten und in der Schule.",
+  "text": "Das Passiv findest du überall dort, wo es nicht so wichtig ist, wer etwas tut: im Rezept, in den Nachrichten und in der Schule."
+ },
+ "ce119eabbfa4bba4": {
+  "lang": "de-DE",
+  "spoken": "Reis rieselt in einen Topf klingen wie prasselnder Regen.",
+  "text": "Reis rieselt in einen Topf klingen wie prasselnder Regen."
  },
  "ceb4e4bce5f19288": {
   "lang": "de-DE",
@@ -2923,6 +3268,11 @@
   "lang": "de-DE",
   "spoken": "das Eis, das",
   "text": "das Eis, das"
+ },
+ "cf2768ac48063d26": {
+  "lang": "de-DE",
+  "spoken": "In der U-Bahn. Mila sitzt mit ihrem Turnbeutel.",
+  "text": "In der U-Bahn. Mila sitzt mit ihrem Turnbeutel."
  },
  "cf76e34f57760a66": {
   "lang": "de-DE",
@@ -2948,6 +3298,11 @@
   "lang": "de-DE",
   "spoken": "Nur wenige Wörter haben einen doppelten Vokal. Aa, ee und oo. Lerne sie als Merkwörter.",
   "text": "Nur wenige Wörter haben einen doppelten Vokal. Aa, ee und oo. Lerne sie als Merkwörter."
+ },
+ "d19ac6594d3ae143": {
+  "lang": "de-DE",
+  "spoken": "Kindersuchmaschinen wie fragFINN zeigen nur Seiten, die Erwachsene vorher geprüft haben. Wie ein Sieb, das nur passende Seiten durchlässt.",
+  "text": "Kindersuchmaschinen wie fragFINN zeigen nur Seiten, die Erwachsene vorher geprüft haben. Wie ein Sieb, das nur passende Seiten durchlässt."
  },
  "d264d4e592fd1da6": {
   "lang": "de-DE",
@@ -2988,6 +3343,11 @@
   "lang": "de-DE",
   "spoken": "Nimm eine Jacke mit denn es wird kalt.",
   "text": "Nimm eine Jacke mit denn es wird kalt."
+ },
+ "d593078fdfac1a50": {
+  "lang": "de-DE",
+  "spoken": "Freundlich bleiben. Hinter jedem Namen steckt ein Mensch.",
+  "text": "Freundlich bleiben. Hinter jedem Namen steckt ein Mensch."
  },
  "d63be8e2c0516706": {
   "lang": "de-DE",
@@ -3039,10 +3399,25 @@
   "spoken": "Umarmender Reim. a b b a",
   "text": "Umarmender Reim. a b b a"
  },
+ "daa2ed11eaa6cfcb": {
+  "lang": "de-DE",
+  "spoken": "Gelb Die U-Bahn rumpelt unter Berlin. Ich fahre zur Schule. Pünktlich!",
+  "text": "Gelb Die U-Bahn rumpelt unter Berlin. Ich fahre zur Schule. Pünktlich!"
+ },
+ "dafd4f98b606cee7": {
+  "lang": "de-DE",
+  "spoken": "Das Haiku kommt aus Japan. Es hat drei Zeilen mit fünf, sieben und fünf Silben. Zusammen sind das siebzehn Silben.",
+  "text": "Das Haiku kommt aus Japan. Es hat drei Zeilen mit fünf, sieben und fünf Silben. Zusammen sind das siebzehn Silben."
+ },
  "db39add7253719e0": {
   "lang": "de-DE",
   "spoken": "Donau, Dampf, Schiff, Fahrt, s, Gesellschaft.",
   "text": "Donau, Dampf, Schiff, Fahrt, s, Gesellschaft."
+ },
+ "db6970bf5f4b56d9": {
+  "lang": "de-DE",
+  "spoken": "Zusammengezählt: Film liegt vorn – mit über fünf Stunden in der Woche.",
+  "text": "Zusammengezählt: Film liegt vorn – mit über fünf Stunden in der Woche."
  },
  "db72f8c0084e950d": {
   "lang": "de-DE",
@@ -3058,6 +3433,11 @@
   "lang": "de-DE",
   "spoken": "Katze, Platz, sitzen, Mütze",
   "text": "Katze, Platz, sitzen, Mütze"
+ },
+ "dcadf2f52783386c": {
+  "lang": "de-DE",
+  "spoken": "Ich werde abgeholt. Du wirst gerufen. Die Pizza wird gebacken.",
+  "text": "Ich werde abgeholt. Du wirst gerufen. Die Pizza wird gebacken."
  },
  "dce4642b1de04273": {
   "lang": "de-DE",
@@ -3079,10 +3459,20 @@
   "spoken": "Nach einem kurzen, betonten Vokal hörst du nur einen Mitlaut. Du schreibst ihn aber doppelt.",
   "text": "Nach einem kurzen, betonten Vokal hörst du nur einen Mitlaut. Du schreibst ihn aber doppelt."
  },
+ "dd98061874de16ac": {
+  "lang": "de-DE",
+  "spoken": "U-Bahn im Tunnel, Lichter fliegen schnell vorbei – Alexanderplatz.",
+  "text": "U-Bahn im Tunnel, Lichter fliegen schnell vorbei – Alexanderplatz."
+ },
  "dde90c52a015b802": {
   "lang": "de-DE",
   "spoken": "Herakles ist der stärkste Held der griechischen Sagen. Er muss zwölf schwere Aufgaben lösen. Drei davon schauen wir uns an.",
   "text": "Herakles ist der stärkste Held der griechischen Sagen. Er muss zwölf schwere Aufgaben lösen. Drei davon schauen wir uns an."
+ },
+ "de4763dfef6186da": {
+  "lang": "de-DE",
+  "spoken": "Im Skript stehen die Sätze und die Geräusche.",
+  "text": "Im Skript stehen die Sätze und die Geräusche."
  },
  "dec8528906faac49": {
   "lang": "de-DE",
@@ -3119,10 +3509,20 @@
   "spoken": "Sie nehmen wird zu Nehmen Sie!",
   "text": "Sie nehmen wird zu Nehmen Sie!"
  },
+ "e098e57f955fb146": {
+  "lang": "de-DE",
+  "spoken": "Digital: Handy, Tablet, Computer, Internet.",
+  "text": "Digital: Handy, Tablet, Computer, Internet."
+ },
  "e0cff3ad36abcb54": {
   "lang": "de-DE",
   "spoken": "Heute üben wir Elfmeter.",
   "text": "Heute üben wir Elfmeter."
+ },
+ "e0d6440ab6e6bcc5": {
+  "lang": "de-DE",
+  "spoken": "Schieb den Regler zurück: So sah das Original aus.",
+  "text": "Schieb den Regler zurück: So sah das Original aus."
  },
  "e1016675e9f047ca": {
   "lang": "de-DE",
@@ -3163,6 +3563,11 @@
   "lang": "de-DE",
   "spoken": "Das Dativobjekt findest du mit der Frage: Wem? Oft bekommt jemand etwas.",
   "text": "Das Dativobjekt findest du mit der Frage: Wem? Oft bekommt jemand etwas."
+ },
+ "e481183533276494": {
+  "lang": "de-DE",
+  "spoken": "Zeile vier ist wieder die erste Zeile.",
+  "text": "Zeile vier ist wieder die erste Zeile."
  },
  "e4960169b337da0c": {
   "lang": "de-DE",
@@ -3224,15 +3629,30 @@
   "spoken": "der Bus – Maskulinum.",
   "text": "der Bus – Maskulinum."
  },
+ "e86db45b31b48e25": {
+  "lang": "de-DE",
+  "spoken": "Regen auf dem Platz, der Ball rollt durch nasses Gras – Tor in der Pfütze!",
+  "text": "Regen auf dem Platz, der Ball rollt durch nasses Gras – Tor in der Pfütze!"
+ },
  "e8e52216ee970f86": {
   "lang": "de-DE",
   "spoken": "Wir stellen einen Satz um, wie Bausteine. Achte darauf, welche Wörter immer zusammenbleiben.",
   "text": "Wir stellen einen Satz um, wie Bausteine. Achte darauf, welche Wörter immer zusammenbleiben."
  },
+ "e90cc43bb4f2b47d": {
+  "lang": "de-DE",
+  "spoken": "Vogelperspektive: Die Figur wirkt klein.",
+  "text": "Vogelperspektive: Die Figur wirkt klein."
+ },
  "e9a7b2a781bbae35": {
   "lang": "de-DE",
   "spoken": "Wer steht wo? Wie sehen sie aus? Was fühlen sie?",
   "text": "Wer steht wo? Wie sehen sie aus? Was fühlen sie?"
+ },
+ "ea5298687f0163e6": {
+  "lang": "de-DE",
+  "spoken": "Auf der Fanseite steht sogar etwas Falsches. Milch macht Igel krank.",
+  "text": "Auf der Fanseite steht sogar etwas Falsches. Milch macht Igel krank."
  },
  "ea853d1cc56eb4e9": {
   "lang": "de-DE",
@@ -3289,6 +3709,11 @@
   "spoken": "das Mädchen: Wörter auf -chen sind immer Neutrum.",
   "text": "das Mädchen: Wörter auf -chen sind immer Neutrum."
  },
+ "eeae8b7b328ed2ae": {
+  "lang": "de-DE",
+  "spoken": "fragFINN und Helles Köpfchen.",
+  "text": "fragFINN und Helles Köpfchen."
+ },
  "f064cd60fe7de277": {
   "lang": "de-DE",
   "spoken": "Heute probt die Klasse 5a in der Aula.",
@@ -3308,6 +3733,11 @@
   "lang": "de-DE",
   "spoken": "Umgestellt. Das Prädikat bleibt an Platz zwei.",
   "text": "Umgestellt. Das Prädikat bleibt an Platz zwei."
+ },
+ "f14c5a2e066b1aed": {
+  "lang": "de-DE",
+  "spoken": "Einen Kuchen kauft die Katze heute am Alexanderplatz.",
+  "text": "Einen Kuchen kauft die Katze heute am Alexanderplatz."
  },
  "f19a06fcb8ed0fa8": {
   "lang": "de-DE",
@@ -3384,6 +3814,11 @@
   "spoken": "Ein berühmtes Berliner Kinderbuch: Emil und die Detektive von Erich Kästner, erschienen 1929. Emil fährt allein mit dem Zug nach Berlin.",
   "text": "Ein berühmtes Berliner Kinderbuch: Emil und die Detektive von Erich Kästner, erschienen 1929. Emil fährt allein mit dem Zug nach Berlin."
  },
+ "f4ac477bbd3fa62c": {
+  "lang": "de-DE",
+  "spoken": "Bevor du klickst, lies die Trefferliste genau. Ganz oben steht oft Werbung. Sie ist mit Gesponsert oder Anzeige markiert.",
+  "text": "Bevor du klickst, lies die Trefferliste genau. Ganz oben steht oft Werbung. Sie ist mit Gesponsert oder Anzeige markiert."
+ },
  "f57d98e1c28f39b9": {
   "lang": "de-DE",
   "spoken": "Zwei Tricks. Verlängere das Wort, dann hörst du den langen Vokal besser. Und such die Wortfamilie.",
@@ -3409,6 +3844,11 @@
   "spoken": "habe und gespielt umklammern den Satz.",
   "text": "habe und gespielt umklammern den Satz."
  },
+ "f787959f792e1961": {
+  "lang": "de-DE",
+  "spoken": "Der Fernsehturm wurde von 1965 bis 1969 gebaut.",
+  "text": "Der Fernsehturm wurde von 1965 bis 1969 gebaut."
+ },
  "f7b6723ede3ef588": {
   "lang": "de-DE",
   "spoken": "loben",
@@ -3428,6 +3868,11 @@
   "lang": "de-DE",
   "spoken": "Wessen Trikot? Des Torwarts.",
   "text": "Wessen Trikot? Des Torwarts."
+ },
+ "f9272dc68560d4b1": {
+  "lang": "de-DE",
+  "spoken": "Nah. Kopf und Oberkörper.",
+  "text": "Nah. Kopf und Oberkörper."
  },
  "f9478e44d08f7666": {
   "lang": "de-DE",
@@ -3518,6 +3963,11 @@
   "lang": "de-DE",
   "spoken": "Hauptfiguren und Inhalt, kurz erzählt.",
   "text": "Hauptfiguren und Inhalt, kurz erzählt."
+ },
+ "fdc2b6d582fcf316": {
+  "lang": "de-DE",
+  "spoken": "Manche Dinge bleiben privat. Und im Chat gilt: freundlich bleiben. Hinter jedem Namen steckt ein echter Mensch.",
+  "text": "Manche Dinge bleiben privat. Und im Chat gilt: freundlich bleiben. Hinter jedem Namen steckt ein echter Mensch."
  },
  "fdd45a43203aecc3": {
   "lang": "de-DE",

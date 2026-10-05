@@ -1,4 +1,5 @@
-/* Kapitel 6 – Sonne, Wärme und Wetter (NaWi 5/6, Berlin RLP 3.3 „Sonne – Wetter – Jahreszeiten“) */
+/* Kapitel 6 – Sonne, Wärme und Wetter (NaWi 5/6, Berlin RLP 3.3 „Sonne – Wetter – Jahreszeiten“).
+   Inkl. Energieformen, Energieumwandlung, Energieerhaltung/-entwertung, Energieträger. */
 (() => {
   const UC = "#2f7d32";
   const FONT = '"Atkinson Hyperlegible", system-ui, sans-serif';
@@ -55,6 +56,7 @@
     blurb: "Energie der Sonne, Wärme, Luft, Wetter, Wasserkreislauf, Klima",
     goals: [
       "Verstehen, warum die Sonne Energie für alles Leben liefert",
+      "Energieformen kennen und Energieumwandlungen beschreiben",
       "Wärmeleitung, Wärmeströmung und Wärmestrahlung erkennen",
       "Wetter messen und den Wasserkreislauf erklären",
       "Den Treibhauseffekt verstehen – und was du tun kannst",
@@ -131,6 +133,177 @@
           s.step(async () => { s.sfx.pop(); s.show(a1, "left"); await s.show(figs[1], "zoom"); s.say("Der Feldhase frisst Gras und Kräuter."); });
           s.step(async () => { s.sfx.pop(); s.show(a2, "left"); await s.show(figs[2], "zoom"); s.say("Der Fuchs frisst den Hasen."); });
           s.step(async () => { s.sfx.ding(); await s.show(life, "up"); });
+        },
+      },
+      /* E1 – Energieformen ------------------------------------------------ */
+      {
+        title: "Energie hat viele Formen",
+        say: "Energie gibt es in vielen Formen: als Licht, Wärme, Bewegung, Lage, in Stoffen gespeichert und als Strom.",
+        build(s) {
+          const icons = [];
+          const mk = (name, html, col, draw, snd) => {
+            const v = s.svg(110, 110, { style: { flex: "none" } });
+            draw(v);
+            const card = s.h("div", { class: "card later", style: { display: "flex", gap: "12px", alignItems: "center", padding: "12px 14px", cursor: "pointer" },
+              onclick: () => { snd(); v.classList.remove("a-bounce"); void v.getBoundingClientRect(); v.classList.add("a-bounce"); } },
+              v, s.h("div", { class: "stack", style: { gap: "4px" } }, s.h("p", { class: "h2", style: { color: col, fontSize: "25px" } }, name), P(s, html, "small")));
+            return card;
+          };
+          // 1 Licht
+          const rays = s.el("g");
+          const c1 = mk("Licht", "Sonnenlicht, Lampe, Lagerfeuer", "#b07800", v => { rays.append(sunS(s, 55, 55, 24)); v.append(rays); }, () => s.sfx.chord([0, 4, 7]));
+          // 2 Wärme
+          const heatW = s.el("g");
+          const c2 = mk("Wärme", "heißer Tee, Heizung, warmer Ofen", "#c0392b", v => {
+            v.append(s.el("rect", { x: 20, y: 66, width: 70, height: 36, rx: 8, fill: "#e0322b" }), s.el("rect", { x: 14, y: 60, width: 82, height: 10, rx: 4, fill: "#8a94a6" }), heatW);
+            [32, 55, 78].forEach(x => heatW.append(s.el("path", { d: `M${x},54 q-8,-9 0,-18 q8,-9 0,-18 q-8,-9 0,-14`, fill: "none", stroke: "#e0322b", "stroke-width": 4, "stroke-linecap": "round" })));
+          }, () => s.sound("sizzle", { vol: 0.4, dur: 1.5 }));
+          // 3 Bewegung
+          const ball = s.el("g");
+          const c3 = mk("Bewegungsenergie", "rollender Ball, fahrendes Fahrrad, Wind", "#2f7d32", v => {
+            v.append(s.el("line", { x1: 4, y1: 92, x2: 106, y2: 92, stroke: "#5d6678", "stroke-width": 4 }), ball);
+            ball.append(s.el("circle", { cx: 0, cy: 0, r: 16, fill: "#fff", stroke: "#1b2740", "stroke-width": 3 }), s.el("path", { d: "M-16,0 H16 M0,-16 V16", stroke: "#1b2740", "stroke-width": 2 }));
+          }, () => s.sound("ball-kick", { vol: 0.5 }));
+          // 4 Lage
+          const apple = s.el("g");
+          const c4 = mk("Lageenergie", "Apfel am Baum, Wasser im Stausee, du oben auf der Rutsche", "#7b4fd6", v => {
+            v.append(s.el("rect", { x: 70, y: 40, width: 12, height: 66, fill: "#8a5a2b" }), s.el("circle", { cx: 70, cy: 34, r: 30, fill: "#4caf50" }), s.el("line", { x1: 4, y1: 106, x2: 106, y2: 106, stroke: "#5d6678", "stroke-width": 4 }), apple);
+            apple.append(s.el("line", { x1: 0, y1: -14, x2: 0, y2: -4, stroke: "#5d4027", "stroke-width": 3 }), s.el("circle", { cx: 0, cy: 6, r: 11, fill: "#e0322b" }));
+          }, () => s.sfx.boing());
+          // 5 chemisch
+          const lvl = s.el("rect", { x: 34, y: 40, width: 42, height: 50, fill: "#3fae6a" });
+          const c5 = mk("Chemische Energie", "in Stoffen gespeichert: Brot, Holz, Benzin, Batterie", "#a0632a", v => {
+            v.append(s.el("rect", { x: 28, y: 22, width: 54, height: 74, rx: 8, fill: "#fff", stroke: "#1b2740", "stroke-width": 4 }), s.el("rect", { x: 44, y: 12, width: 22, height: 10, rx: 3, fill: "#1b2740" }), lvl);
+          }, () => s.sfx.coin());
+          // 6 elektrisch
+          const bolt = s.el("path", { d: "M62,10 L34,58 H54 L44,100 L78,46 H58 Z", fill: "#ffd94a", stroke: "#b07800", "stroke-width": 3, "stroke-linejoin": "round" });
+          const c6 = mk("Elektrische Energie", "Strom aus der Steckdose und aus dem Akku", "#1d5bd0", v => v.append(bolt), () => s.sfx.zap());
+          s.loop(t => {
+            rays.setAttribute("transform", `rotate(${t * 20} 55 55)`);
+            heatW.setAttribute("transform", `translate(0,${-((t * 14) % 8)})`); heatW.setAttribute("opacity", 0.6 + 0.4 * Math.sin(t * 4));
+            const bx = 20 + (Math.sin(t * 1.4) + 1) * 35; ball.setAttribute("transform", `translate(${bx},74) rotate(${bx * 3.6})`);
+            apple.setAttribute("transform", `translate(56,62) rotate(${Math.sin(t * 2.2) * 12} 0 -14)`);
+            const h = 10 + 40 * (0.5 + 0.5 * Math.sin(t * 1.6)); lvl.setAttribute("y", 90 - h); lvl.setAttribute("height", h);
+            bolt.setAttribute("opacity", Math.sin(t * 6) > -0.3 ? 1 : 0.3);
+          });
+          const all = [c1, c2, c3, c4, c5, c6];
+          const m = merk(s, "<b>Energie</b> steckt in vielem und hat viele <b>Formen</b>. Sehen kann man sie nicht – nur, was sie bewirkt: Es wird hell, warm, oder etwas bewegt sich.");
+          s.add(s.h("div", { class: "stack", style: { gap: "14px", height: "100%", justifyContent: "center" } },
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "14px" } }, ...all), m));
+          s.sfx.pop();
+          s.step(async () => { s.sfx.chord([0, 4, 7]); await s.show(c1, "up"); s.sound("fire", { vol: 0.3, dur: 2 }); await s.show(c2, "up"); s.say("Licht und Wärme."); });
+          s.step(async () => { s.sound("ball-kick", { vol: 0.4 }); await s.show(c3, "up"); s.sfx.boing(); await s.show(c4, "up"); s.say("Ein rollender Ball hat Bewegungsenergie. Ein Apfel oben am Baum hat Lageenergie: Er kann herunterfallen."); });
+          s.step(async () => { s.sfx.coin(); await s.show(c5, "up"); s.sfx.zap(); await s.show(c6, "up"); s.say("In Brot und Batterie ist Energie gespeichert. Und Strom ist elektrische Energie."); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* E2 – Energieumwandlung -------------------------------------------- */
+      {
+        title: "Energie wird umgewandelt",
+        say: "Energie wandert von einer Form in die andere, oft wie in einer Kette. Tippe auf eine Kette.",
+        build(s) {
+          const FORM = { licht: ["Licht", "#b07800", "#fff3c4"], chem: ["chemische Energie", "#a0632a", "#f6e4d0"], beweg: ["Bewegung", "#2f7d32", "#dcf3e6"], elek: ["elektrische Energie", "#1d5bd0", "#dde8fb"], waerme: ["Wärme", "#c0392b", "#fde2e0"] };
+          const solar = () => { const v = s.svg(60, 60, { style: { width: "56px", height: "56px" } }); v.append(s.el("rect", { x: 4, y: 10, width: 52, height: 40, fill: "#1d4ed8", stroke: "#1b2740", "stroke-width": 2 })); for (let i = 1; i < 4; i++) v.append(s.el("line", { x1: 4 + i * 13, y1: 10, x2: 4 + i * 13, y2: 50, stroke: "#93c5fd", "stroke-width": 1.5 })); v.append(s.el("line", { x1: 4, y1: 30, x2: 56, y2: 30, stroke: "#93c5fd", "stroke-width": 1.5 })); return v; };
+          const windrad = () => { const v = s.svg(60, 60, { style: { width: "56px", height: "56px" } }); const r = s.el("g", null, ...[0, 120, 240].map(a => s.el("path", { d: "M30,22 L27,2 L33,2 Z", fill: "#e5e7eb", stroke: "#6b7280", "stroke-width": 1.5, transform: `rotate(${a} 30 22)` }))); v.append(s.el("line", { x1: 30, y1: 22, x2: 30, y2: 58, stroke: "#9ca3af", "stroke-width": 4 }), r); s.loop(t => r.setAttribute("transform", `rotate(${t * 90} 30 22)`)); return v; };
+          const CH = [
+            { name: "Sonne → Fahrrad", nodes: [["☀️", "Sonne", "licht"], ["🌾", "Weizen", "chem"], ["🥪", "Leon isst Brot", "chem"], ["🚲", "Fahrrad", "beweg"]],
+              txt: "Der Weizen speichert das Sonnenlicht als <b>chemische Energie</b>. Leon isst sein Brot, seine Muskeln treten in die Pedale: Daraus wird <b>Bewegung</b>." },
+            { name: "Sonne → Lampe", nodes: [["☀️", "Sonne", "licht"], [solar, "Solarzelle", "elek"], ["🔋", "Akku", "chem"], ["💡", "Lampe", "licht"]],
+              txt: "Am Tag lädt die Solarzelle einen Akku. Nachts macht die Lampe daraus wieder <b>Licht</b> – zum Beispiel eine Solarleuchte im Garten." },
+            { name: "Wind → Wasserkocher", nodes: [["🌬️", "Wind", "beweg"], [windrad, "Windrad", "elek"], ["🔌", "Steckdose", "elek"], ["🫖", "Wasserkocher", "waerme"]],
+              txt: "Der Wind dreht das Windrad, ein Generator macht Strom. Im <b>Kohlekraftwerk</b> wird die chemische Energie der Kohle zu Wärme, Dampf dreht eine Turbine – und es entsteht Strom." },
+          ];
+          const row = s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 56px 1fr 56px 1fr 56px 1fr", gap: "6px", alignItems: "stretch", minHeight: "190px" } });
+          const txt = P(s, "", "small");
+          const exT = s.h("div", { class: "ex later" }, s.h("span", { class: "exlabel" }, "So geht's"), txt);
+          let flowOn = 0, busy = false, cur = -1;
+          const dots = [];
+          const show = async i => {
+            if (busy || i === cur) return; busy = true; cur = i;
+            btns.forEach((b, k) => b.classList.toggle("solid", k === i));
+            row.innerHTML = ""; dots.length = 0; flowOn = 0;
+            const els = [];
+            CH[i].nodes.forEach(([ic, name, f], k) => {
+              const [fl, col, bgc] = FORM[f];
+              const icon = typeof ic === "string" ? s.h("span", { style: { fontSize: "50px", lineHeight: "1" } }, ic) : ic();
+              const node = s.h("div", { class: "card later stack", style: { gap: "6px", alignItems: "center", justifyContent: "center", textAlign: "center", padding: "10px 8px" } },
+                icon, s.h("b", { style: { fontSize: "21px" } }, name), s.h("span", { class: "chip", style: { background: bgc, color: col, fontSize: "19px", fontWeight: 700 } }, fl));
+              row.append(node); els.push(node);
+              if (k < 3) {
+                const av = s.svg(56, 40, { class: "later", style: { alignSelf: "center" } });
+                av.append(s.el("path", { d: "M4,20 H44 M34,10 L46,20 L34,30", fill: "none", stroke: "#e8a400", "stroke-width": 5, "stroke-linecap": "round", "stroke-linejoin": "round" }));
+                const d = s.el("circle", { cx: 4, cy: 20, r: 6, fill: "#ffd23a", stroke: "#e09a00", "stroke-width": 2, opacity: 0 }); av.append(d); dots.push(d);
+                row.append(av); els.push(av);
+              }
+            });
+            txt.innerHTML = CH[i].txt;
+            for (const e of els) { if (e.tagName === "svg") s.sfx.tick(); else s.sfx.pop(); await s.show(e, e.tagName === "svg" ? "left" : "pop"); }
+            flowOn = 1; s.sfx.chord([0, 4, 7]);
+            await s.show(exT, "up");
+            busy = false;
+          };
+          s.loop(t => dots.forEach((d, k) => { const u = (t * 0.9 + k * 0.33) % 1; d.setAttribute("cx", 4 + u * 40); d.setAttribute("opacity", flowOn * Math.sin(Math.PI * u)); }));
+          const btns = CH.map((c, i) => s.h("button", { class: "btn", onclick: () => show(i) }, c.name));
+          const ph = s.h("div", { class: "life later", style: { display: "grid", gridTemplateColumns: "220px 1fr", gap: "12px", alignItems: "center" } },
+            s.photo("windraeder", { w: 220, h: 120, pos: "50% 45%" }), s.h("div", null, s.h("span", { class: "exlabel" }, "Im Alltag"), P(s, "Windräder in Brandenburg: Aus Wind wird Strom für Berlin und das Umland.", "small")));
+          const m = merk(s, "Energie wird <b>umgewandelt</b>: von einer Form in eine andere – oft viele Male hintereinander, wie in einer Kette.");
+          s.add(s.h("div", { class: "stack", style: { gap: "12px", height: "100%", justifyContent: "center" } },
+            s.h("div", { class: "row", style: { gap: "10px" } }, ...btns), row,
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", alignItems: "stretch" } }, exT, ph), m));
+          s.step(async () => { await show(0); s.say("Sonnenlicht wird im Weizen gespeichert, im Brot gegessen und mit den Muskeln zu Bewegung."); });
+          s.step(async () => { await show(1); });
+          s.step(async () => { await show(2); s.sound("wind", { vol: 0.4, dur: 3 }); await s.show(ph, "up"); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+        },
+      },
+      /* E3 – Energieerhaltung, Entwertung --------------------------------- */
+      {
+        title: "Energie geht nicht verloren",
+        say: "Der Ball springt immer niedriger. Seine Energie ist aber nicht weg: Sie wird zu Wärme und ein bisschen Schall.",
+        build(s) {
+          const W = 540, H = 440;
+          const { canvas, g } = s.canvas(W, H);
+          const FLOOR = 400, TOP = 70, H0 = FLOOR - TOP - 22;
+          let y = 0, v = 0, rem = 1, run = false, bounces = 0;
+          const drop = () => { y = H0; v = 0; rem = 1; bounces = 0; run = true; s.sfx.whoosh(); };
+          y = H0;
+          s.loop((t, dt) => {
+            dt = Math.min(dt || 0.016, 0.04);
+            if (run) {
+              const G = 1400;
+              v -= G * dt; y += v * dt;
+              if (y <= 0) {
+                y = 0; v = -v * 0.8; rem *= 0.64; bounces++;
+                if (s.alive) s.sound("ball-kick", { vol: Math.max(0.08, 0.5 * rem) });
+                if (rem < 0.03) { rem = 0; v = 0; run = false; s.sfx.ding(); }
+              }
+            }
+            const lage = Math.max(0, Math.min(rem, y / H0)), beweg = Math.max(0, rem - lage), warm = 1 - rem;
+            g.fillStyle = "#fffdf2"; g.fillRect(0, 0, W, H);
+            g.strokeStyle = "#c8d3de"; g.setLineDash([6, 6]); g.lineWidth = 2; g.beginPath(); g.moveTo(20, TOP); g.lineTo(250, TOP); g.stroke(); g.setLineDash([]);
+            g.fillStyle = "#c8a46a"; g.fillRect(0, FLOOR, 280, 14);
+            const by = FLOOR - 22 - y, sq = y < 4 && run ? 0.8 : 1;
+            g.fillStyle = warm > 0.5 ? "#f08a3c" : "#2f6dd6"; g.beginPath(); g.ellipse(140, by + 22 * (1 - sq), 22 / sq, 22 * sq, 0, 0, Math.PI * 2); g.fill();
+            label(g, "Start", 40, TOP - 16, "#5d6678", 19, "left");
+            // bars
+            const BX = [320, 395, 470], BH = 300, BB = 380;
+            [["Lage", lage, "#7b4fd6"], ["Bewegung", beweg, "#2f7d32"], ["Wärme", warm, "#e0322b"]].forEach(([n, val, col], i) => {
+              g.fillStyle = "#eef1f5"; g.fillRect(BX[i] - 26, BB - BH, 52, BH);
+              g.fillStyle = col; g.fillRect(BX[i] - 26, BB - BH * val, 52, BH * val);
+              label(g, Math.round(val * 100) + " %", BX[i], BB - BH - 22, col, 19);
+            });
+            label(g, "Lage", 320, BB + 24, "#7b4fd6", 19); label(g, "Bewegung", 405, BB + 50, "#2f7d32", 19); label(g, "Wärme", 470, BB + 24, "#e0322b", 19);
+          });
+          const btn = s.h("button", { class: "btn solid", onclick: drop }, "Ball fallen lassen");
+          const m = merk(s, "Energie geht <b>nie verloren</b> – sie wird nur umgewandelt. Am Ende wird aber oft ein Teil zu <b>Wärme</b>, die wir nicht mehr nutzen können. Man sagt: Die Energie wird <b>entwertet</b>.");
+          const ex = box(s, "ex", "Energieträger", "Stoffe, in denen Energie gespeichert ist, heißen <b>Energieträger</b>: Holz, Kohle, Benzin, Brot und der Akku in deinem Handy.");
+          const lf = box(s, "life", "Im Alltag", "Nach dem Radfahren ist dir warm. Fahrradbremsen werden beim Bremsen heiß. Und eine alte Glühlampe macht mehr Wärme als Licht.");
+          s.add(cols(s, stack(s, 8, canvas, s.h("div", { class: "center" }, btn)), stack(s, 12, m, ex, lf), 540));
+          s.show(canvas, "fade"); s.sfx.pop();
+          s.step(async () => { drop(); s.say("Oben hat der Ball Lageenergie. Beim Fallen wird sie zu Bewegungsenergie."); await s.wait(s.fast ? 0 : 2500); });
+          s.step(async () => { s.sfx.ding(); await s.show(m, "up"); });
+          s.step(async () => { s.sfx.coin(); await s.show(ex, "up"); });
+          s.step(async () => { s.sound("bike-bell", { vol: 0.4 }); await s.show(lf, "up"); });
         },
       },
       /* 2 ---------------------------------------------------------------- */

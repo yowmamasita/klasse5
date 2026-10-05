@@ -56,7 +56,7 @@
   Deck.unit({
     id: "u7", num: 7, title: "Erzählen und Schreiben", color: "#a21caf", soft: "#f7e3f9",
     subtitle: "Spannend erzählen, sachlich berichten",
-    blurb: "Spannungsbogen, Märchen, Bericht, Beschreibungen, Anleitung, E-Mail",
+    blurb: "Spannungsbogen, Märchen, Bericht, E-Mail.",
     goals: ["Eine Geschichte mit Spannungsbogen erzählen", "Wörtliche Rede, Gefühle und treffende Wörter nutzen", "Märchen weiterschreiben und selbst erfinden", "Bildergeschichten und Nacherzählungen schreiben", "Sachlich berichten; Personen, Tiere und Vorgänge beschreiben", "Briefe und E-Mails richtig aufbauen und überarbeiten"],
     icon(svg, el) {
       svg.append(el("path", { d: "M6 58 C 20 56, 30 20, 44 14 S 60 40, 66 56", fill: "none", stroke: "#a21caf", "stroke-width": 5, "stroke-linecap": "round" }),

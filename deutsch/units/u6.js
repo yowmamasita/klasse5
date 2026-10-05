@@ -52,7 +52,7 @@
   Deck.unit({
     id: "u6", num: 6, title: "Wörter bauen", color: U, soft: SOFT,
     subtitle: "Wortbausteine wie LEGO zusammenstecken",
-    blurb: "Zusammensetzungen, Präfixe, Suffixe, Wortfamilien, Wortfelder.",
+    blurb: "Zusammensetzungen, Präfixe, Suffixe, Wortfelder.",
     goals: ["Zusammengesetzte Wörter in Bausteine zerlegen", "Mit Präfixen und Suffixen neue Wörter bilden", "Wortfamilien finden – und damit richtig schreiben", "Mit Wortfeldern spannender erzählen", "Ober- und Unterbegriffe ordnen"],
     icon(svg, el) {
       const b = (x, y, w, c) => [el("rect", { x, y, width: w, height: 18, rx: 3, fill: c }), el("rect", { x: x + 4, y: y - 5, width: 8, height: 6, rx: 2, fill: c }), el("rect", { x: x + w - 12, y: y - 5, width: 8, height: 6, rx: 2, fill: c })];

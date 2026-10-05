@@ -54,7 +54,7 @@
   Deck.unit({
     id: "u9", num: 9, title: "Sachtexte, Sprechen und Zuhören", color: P.unit, soft: P.soft,
     subtitle: "Lesen wie ein Profi, reden wie ein Profi",
-    blurb: "Lesemethode, Diagramme, Medien, Gespräche, Meinung, Referat.",
+    blurb: "Lesemethode, Diagramme, Gespräche, Referat.",
     goals: ["Sachtexte von Geschichten unterscheiden", "Mit der 5-Schritt-Lesemethode einen Sachtext verstehen", "Diagramme, Tabellen und Medien verstehen", "Fair diskutieren und die eigene Meinung begründen", "Einen Kurzvortrag halten und Feedback geben"],
     icon(svg, el) {
       svg.append(el("rect", { x: 6, y: 10, width: 34, height: 46, rx: 4, fill: "#fff", stroke: P.unit, "stroke-width": 3 }),

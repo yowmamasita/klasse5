@@ -1,4 +1,4 @@
-/* Kapitel 8 – Daten und Diagramme (Urliste, Strichliste, Häufigkeitstabelle, Säulen-/Balkendiagramm) */
+/* Kapitel 8 – Daten und Diagramme (Urliste, Strichliste, Häufigkeitstabelle, Säulen-/Balken-/Kreisdiagramm, Mittelwert, Zentralwert) */
 (() => {
   const P = { blue: "#1d5bd0", red: "#dc3b2a", green: "#138a5a", violet: "#7b4fd6", orange: "#ee7a1a", ink: "#1b2740", pencil: "#5d6678", yellow: "#ffd94a", line: "#c8d3de", teal: "#0e7490" };
   const LBL = { font: "700 14px/1 var(--f-display)", letterSpacing: ".08em", textTransform: "uppercase", display: "block", marginBottom: "8px", color: "var(--green)" };
@@ -62,11 +62,81 @@
     return { svg, bars, set, grow, Y, B, L, R, Tp, slot, rescale, get yMax() { return yMax; } };
   }
 
+  /* row of value cards that can be sorted and then "crossed off" from both ends (Zentralwert) */
+  function medTrack(s, o) {
+    const H = o.top + o.ch + 96;
+    const el = s.h("div", { style: { position: "relative", width: o.w + "px", height: H + "px", margin: "0 auto" } });
+    let cards = [], n = 0, pos = [];
+    const X = k => (o.w - (n * o.cw + (n - 1) * o.gap)) / 2 + k * (o.cw + o.gap);
+    const put = (c, x, y) => { c.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`; };
+    const ann = () => s.h("div", { style: { position: "absolute", pointerEvents: "none" } });
+    function load(items) {
+      el.innerHTML = "";
+      cards = items.map(it => {
+        const c = s.h("div", { style: { position: "absolute", left: 0, top: o.top + "px", width: o.cw + "px", height: o.ch + "px", boxSizing: "border-box", background: "#fff", border: "3px solid var(--line)", borderRadius: "14px", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "6px", transition: "opacity .35s, border-color .3s, background .3s" } },
+          it.name ? s.h("span", { style: { font: "600 19px/1 var(--f-body)", color: P.pencil } }, it.name) : null,
+          s.h("span", { style: { font: "800 30px/1 var(--f-display)", color: P.teal } }, it.t));
+        c.v = it.v; el.append(c); return c;
+      });
+      n = cards.length; pos = cards.map((_, i) => i);
+      cards.forEach((c, i) => put(c, X(i), 0));
+    }
+    async function sort(dur = 1100) {
+      const order = cards.map((_, i) => i).sort((a, b) => cards[a].v - cards[b].v || a - b);
+      const target = []; order.forEach((ci, k) => (target[ci] = k));
+      const from = pos.slice();
+      s.sfx.whoosh();
+      await s.tween({ from: 0, to: 1, dur, ease: "inOut", update: t => cards.forEach((c, i) => put(c, X(from[i]) + (X(target[i]) - X(from[i])) * t, from[i] === target[i] ? 0 : (i % 2 ? 1 : -1) * Math.sin(Math.PI * t) * (o.top - 4))) });
+      pos = target; cards.forEach((c, i) => put(c, X(pos[i]), 0));
+    }
+    const at = k => cards[pos.indexOf(k)];
+    /* labFn(a) for odd n, labFn(a, b) for even n */
+    async function mark(labFn, gapMs = 320) {
+      const odd = n % 2 === 1, lo = odd ? (n - 1) / 2 : n / 2 - 1, hi = odd ? lo : lo + 1;
+      for (let k = 0; k < lo; k++) {
+        [at(k), at(n - 1 - k)].forEach(c => { c.style.opacity = ".32"; c.style.borderColor = "#c9d2dc"; });
+        s.sfx.pop(); await s.wait(gapMs);
+      }
+      for (let k = lo; k <= hi; k++) { const c = at(k); c.style.borderColor = P.red; c.style.background = "#fff1a8"; }
+      const yB = o.top + o.ch + 8, x0 = X(lo), x1 = X(hi) + o.cw;
+      const br = ann(); Object.assign(br.style, { left: x0 + 8 + "px", top: yB + "px", width: x1 - x0 - 16 + "px", height: "14px", border: `3px solid ${P.red}`, borderTop: "none", borderRadius: "0 0 8px 8px" });
+      const cx = (x0 + x1) / 2;
+      const lab = ann(); Object.assign(lab.style, { left: cx - 260 + "px", width: "520px", top: yB + 22 + "px", textAlign: "center", font: "800 23px/1.2 var(--f-display)", color: P.red });
+      lab.textContent = odd ? labFn(at(lo).v) : labFn(at(lo).v, at(hi).v);
+      el.append(br, lab);
+      if (lo > 0) {
+        [[0, lo - 1], [hi + 1, n - 1]].forEach(([a, b]) => {
+          const gx0 = X(a), gx1 = X(b) + o.cw;
+          const g = ann(); Object.assign(g.style, { left: gx0 + 8 + "px", top: yB + "px", width: gx1 - gx0 - 16 + "px", height: "12px", border: `2px dashed ${P.pencil}`, borderTop: "none" });
+          const t = ann(); Object.assign(t.style, { left: (gx0 + gx1) / 2 - 60 + "px", width: "120px", top: yB + 22 + "px", textAlign: "center", font: "600 20px/1.2 var(--f-body)", color: P.pencil });
+          t.textContent = `${lo} ${lo === 1 ? "Wert" : "Werte"}`;
+          el.append(g, t);
+        });
+      }
+      br.classList.add("a-fade"); lab.classList.add("a-pop");
+      s.sfx.chord([0, 4, 7]);
+    }
+    return { el, load, sort, mark };
+  }
+
+  /* pie-chart sector: angles in degrees, clockwise from 12 o'clock */
+  const D2R = Math.PI / 180;
+  const pieXY = (cx, cy, r, a) => [cx + r * Math.sin(a * D2R), cy - r * Math.cos(a * D2R)];
+  const pieD = (cx, cy, r, a0, a1) => {
+    a1 = Math.min(a1, a0 + 359.99);
+    if (a1 - a0 < 0.01) return "";
+    const p0 = pieXY(cx, cy, r, a0), p1 = pieXY(cx, cy, r, a1);
+    return `M${cx},${cy} L${p0[0].toFixed(2)},${p0[1].toFixed(2)} A${r},${r} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${p1[0].toFixed(2)},${p1[1].toFixed(2)} Z`;
+  };
+  /* stacked fraction a/b */
+  const frac = (s, a, b, col) => s.h("span", { style: { display: "inline-flex", flexDirection: "column", alignItems: "center", verticalAlign: "middle", font: "700 20px/1.05 var(--f-display)", color: col || "inherit", margin: "0 3px" } },
+    s.h("span", null, String(a)), s.h("span", { style: { borderTop: "2.5px solid currentColor", padding: "1px 3px 0", minWidth: "1em", textAlign: "center" } }, String(b)));
+
   Deck.unit({
     id: "u8", num: 8, title: "Daten und Diagramme", color: "#0e7490", soft: "#dff3f7",
     subtitle: "Zählen, ordnen, zeichnen, lesen",
-    blurb: "Umfragen auswerten: Strichliste, Tabelle, Säulen und Balken.",
-    goals: ["Daten sammeln: Umfrage, Zählen, Experiment", "Urliste → Strichliste → Häufigkeitstabelle", "Säulen- und Balkendiagramme zeichnen und lesen", "Häufigster Wert, Mittelwert und Spannweite", "Tricks durchschauen, Möglichkeiten zählen"],
+    blurb: "Umfragen auswerten: Strichliste, Tabelle, Säulen, Balken, Kreis.",
+    goals: ["Daten sammeln: Umfrage, Zählen, Experiment", "Urliste → Strichliste → Häufigkeitstabelle", "Säulen-, Balken- und Kreisdiagramme zeichnen und lesen", "Häufigster Wert, Mittelwert, Zentralwert und Spannweite", "Tricks durchschauen, Möglichkeiten zählen"],
     icon(svg, el) {
       [[10, 30, "#0e7490"], [26, 14, "#dc3b2a"], [42, 38, "#ffd94a"]].forEach(([x, y, c]) => svg.append(el("rect", { x, y, width: 13, height: 60 - y, rx: 3, fill: c })));
       svg.append(el("line", { x1: 6, x2: 62, y1: 60, y2: 60, stroke: "#1b2740", "stroke-width": 3 }));
@@ -583,6 +653,152 @@
           s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Die Spannweite ist der Abstand zwischen dem größten und dem kleinsten Wert."); });
         },
       },
+      /* 10d -------------------------------------------------------------- Zentralwert (ungerade) */
+      {
+        title: "Der Zentralwert (Median)",
+        say: "Sieben Kinder laufen beim Sportfest fünfzig Meter. Welche Zeit liegt genau in der Mitte?",
+        build(s) {
+          const items = [["Leon", 9.4], ["Nora", 8.6], ["Emre", 10.1], ["Mila", 8.9], ["Jonas", 9.7], ["Ida", 8.8], ["Tom", 9.0]].map(([name, v]) => ({ name, v, t: s.fmt(v, 1) + " s" }));
+          const tr = medTrack(s, { w: 1060, cw: 136, ch: 104, gap: 12, top: 30 });
+          tr.load(items);
+          const intro = s.h("p", { class: "t a-up" }, s.h("b", null, "50-m-Lauf beim Sportfest:"), " die Zeiten von 7 Kindern, so wie sie ins Ziel kamen.");
+          const st = s.h("p", { class: "h2", style: { color: P.teal, minHeight: "40px", textAlign: "center" } }, "");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "Zentralwert (Median):"), " Werte der Größe nach ordnen. Der Wert ", s.h("b", null, "genau in der Mitte"), " ist der Zentralwert. Links und rechts davon liegen gleich viele Werte.");
+          const ex2 = ex(s, "Noch ein Beispiel", { class: "ex later", style: { padding: "12px 18px" } },
+            s.h("p", { class: "small" }, "Tore in 5 Spielen: 3, 0, 1, 4, 1"),
+            s.h("p", { class: "small" }, "geordnet: 0, 1, ", s.h("b", { class: "red" }, "1"), ", 3, 4  →  Zentralwert ", s.h("b", { class: "red" }, "1 Tor")));
+          s.add(root(s, "stack", { justifyContent: "center", gap: "16px" }, intro, s.h("div", { class: "a-fade" }, tr.el), st,
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 400px", gap: "20px", alignItems: "stretch" } }, merk, ex2)));
+          s.sound("startschuss", { vol: .5 });
+          s.step(async () => { st.textContent = "1. Der Größe nach ordnen"; s.say("Zuerst ordnen wir die Zeiten: von der schnellsten zur langsamsten."); await tr.sort(); s.sfx.snap(); });
+          s.step(async () => { st.textContent = "2. Von beiden Seiten wegstreichen"; s.say("Jetzt streichen wir immer abwechselnd außen einen Wert weg, bis einer übrig bleibt."); await tr.mark(v => "Zentralwert: " + s.fmt(v, 1) + " s"); s.say("Neun Komma null Sekunden liegt genau in der Mitte. Drei Kinder waren schneller, drei langsamer."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); await s.show(ex2, "up"); });
+        },
+      },
+      /* 10e -------------------------------------------------------------- Zentralwert (gerade) */
+      {
+        title: "Zentralwert bei gerader Anzahl",
+        say: "Bei einer geraden Anzahl gibt es zwei Werte in der Mitte. Dann nimmt man den Mittelwert dieser beiden.",
+        build(s) {
+          const SETS = {
+            bus: { t: "Wartezeit auf den Bus an 6 Tagen", v: [4, 9, 2, 7, 5, 12], u: "min", d: 0 },
+            schuh: { t: "Schuhgrößen von 8 Kindern", v: [36, 34, 38, 35, 36, 39, 33, 37], u: "", d: 0 },
+            sprung: { t: "Weitsprung: 5 Versuche (in Metern)", v: [3.12, 2.98, 3.35, 3.05, 3.2], u: "m", d: 2 },
+          };
+          const tr = medTrack(s, { w: 1060, cw: 108, ch: 84, gap: 14, top: 30 });
+          const head = s.h("p", { class: "t", style: { fontWeight: 700, textAlign: "center" } });
+          let busy = false;
+          const lab = (st, a, b) => {
+            const f = x => s.fmt(x, st.d), u = st.u ? " " + st.u : "";
+            return b === undefined ? `Zentralwert: ${f(a)}${u}` : `Zentralwert: (${f(a)} + ${f(b)}) : 2 = ${s.fmt((a + b) / 2, st.d)}${u}`;
+          };
+          function load(key) { const st = SETS[key]; head.textContent = st.t; tr.load(st.v.map(v => ({ v, t: s.fmt(v, st.d) }))); return st; }
+          async function run(key, b) {
+            if (busy) return; busy = true; s.sfx.click();
+            [b1, b2, b3].forEach(x => x.classList.toggle("solid", x === b));
+            const st = load(key); await s.wait(300); await tr.sort(900); s.sfx.snap(); await tr.mark((a, c) => lab(st, a, c), 160); busy = false;
+          }
+          const b1 = s.h("button", { class: "btn solid", onclick: () => run("bus", b1) }, "Bus");
+          const b2 = s.h("button", { class: "btn", onclick: () => run("schuh", b2) }, "Schuhgrößen");
+          const b3 = s.h("button", { class: "btn", onclick: () => run("sprung", b3) }, "Weitsprung");
+          load("bus");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "21px", padding: "10px 18px 12px" } }, s.h("b", null, "Gerade Anzahl:"), " Es bleiben zwei Werte in der Mitte übrig. Der Zentralwert liegt genau zwischen ihnen: ", s.h("b", null, "(a + b) : 2"), ".");
+          const pick = s.h("div", { class: "ex later", style: { display: "flex", flexDirection: "column", gap: "10px", padding: "12px 18px" } }, s.h("span", { class: "exlabel" }, "Andere Daten"), s.h("div", { class: "row", style: { gap: "10px" } }, b1, b2, b3));
+          s.add(root(s, "stack", { justifyContent: "center", gap: "18px" }, head, s.h("div", { class: "a-fade" }, tr.el),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 560px", gap: "20px", alignItems: "stretch" } }, merk, pick)));
+          s.sfx.pop();
+          s.step(async () => { busy = true; s.say("Sechs Wartezeiten. Zuerst ordnen."); s.sound("bus-faehrt", { vol: .4, dur: 2.5 }); await tr.sort(); s.sfx.snap(); busy = false; });
+          s.step(async () => { busy = true; await tr.mark((a, c) => lab(SETS.bus, a, c)); s.say("Fünf und sieben bleiben übrig. Fünf plus sieben ist zwölf, geteilt durch zwei ist sechs. Der Zentralwert ist sechs Minuten."); busy = false; });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); await s.show(pick, "up"); s.say("Probier auch die Schuhgrößen und den Weitsprung aus!"); });
+        },
+      },
+      /* 10f -------------------------------------------------------------- Zentralwert vs. Mittelwert */
+      {
+        title: "Zentralwert oder Mittelwert?",
+        say: "Ein einziger Ausreißer kann den Mittelwert weit wegziehen. Der Zentralwert bleibt ruhig.",
+        build(s) {
+          const SETS = {
+            geld: { t: "Taschengeld pro Woche", names: ["Lina", "Ali", "Mia", "Ben", "Emre"], base: [4, 5, 5, 6], out: 50, min: 6, max: 50, step: 1, lo: 0, hi: 50, tick: 10, u: "€", d: 0, who: "Emre bekommt" },
+            lauf: { t: "50-m-Lauf: Jonas stolpert", names: ["Nora", "Ida", "Mila", "Tom", "Jonas"], base: [8.6, 8.8, 8.9, 9.0], out: 15.2, min: 9, max: 16, step: 0.1, lo: 8, hi: 16, tick: 1, u: "s", d: 1, who: "Jonas braucht" },
+          };
+          const W = 620, H = 370, AX = 236, L = 44, R = 590;
+          const svg = s.svg(W, H);
+          const axis = s.el("g"), dotsG = s.el("g");
+          const meanG = later(s.el("g")), medG = later(s.el("g"));
+          svg.append(axis, medG, meanG, dotsG);
+          const meanLine = s.el("line", { y1: 64, y2: AX, stroke: P.red, "stroke-width": 4, "stroke-dasharray": "9 7" });
+          const meanTri = s.el("polygon", { fill: P.red });
+          const meanT = T(s, 0, 46, "", { "font-size": 22, fill: P.red });
+          meanG.append(meanLine, meanTri, meanT);
+          const medLine = s.el("line", { y1: AX - 120, y2: AX + 46, stroke: P.green, "stroke-width": 4 });
+          const medTri = s.el("polygon", { fill: P.green });
+          const medT = T(s, 0, AX + 104, "", { "font-size": 22, fill: P.green });
+          medG.append(medLine, medTri, medT);
+          let cur, x = 0, X, dots = [];
+          const nf = (v, d) => s.fmt(Math.round(v * 100) / 100, Math.abs(v * 10 - Math.round(v * 10)) < 1e-6 ? (Math.abs(v - Math.round(v)) < 1e-6 ? 0 : 1) : 2);
+          const calcM = s.h("p", { class: "t later", style: { color: P.red } });
+          const calcZ = s.h("p", { class: "t later", style: { color: P.green } });
+          const head = s.h("p", { class: "t", style: { fontWeight: 700 } });
+          function setup(key) {
+            cur = SETS[key]; x = cur.out; head.textContent = cur.t;
+            X = v => L + (v - cur.lo) / (cur.hi - cur.lo) * (R - L);
+            axis.innerHTML = "";
+            axis.append(s.el("line", { x1: L - 14, x2: R + 14, y1: AX, y2: AX, stroke: P.ink, "stroke-width": 3 }));
+            for (let v = cur.lo; v <= cur.hi + 1e-9; v += cur.tick) axis.append(s.el("line", { x1: X(v), x2: X(v), y1: AX - 8, y2: AX + 8, stroke: P.ink, "stroke-width": 2 }), T(s, X(v), AX + 34, s.fmt(v) + (v === cur.hi ? " " + cur.u : ""), { "font-size": 19, "font-weight": 600, fill: P.pencil }));
+            dotsG.innerHTML = "";
+            dots = cur.names.map((n, i) => { const g = s.el("g"); g.append(s.el("circle", { r: 14, fill: i === 4 ? P.orange : P.teal, stroke: "#fff", "stroke-width": 2.5 })); dotsG.append(g); return g; });
+            render();
+          }
+          function render() {
+            const vals = [...cur.base, x];
+            const placed = [];
+            vals.map((v, i) => [v, i]).sort((a, b) => a[0] - b[0]).forEach(([v, i]) => {
+              let lv = 0; while (placed.some(p => p.lv === lv && Math.abs(p.x - X(v)) < 31)) lv++;
+              placed.push({ x: X(v), lv }); dots[i].setAttribute("transform", `translate(${X(v)},${AX - 22 - lv * 32})`);
+            });
+            const sum = vals.reduce((a, b) => a + b, 0), m = sum / 5, sorted = [...vals].sort((a, b) => a - b), z = sorted[2];
+            const xm = X(m), xz = X(z);
+            meanLine.setAttribute("x1", xm); meanLine.setAttribute("x2", xm); meanTri.setAttribute("points", `${xm - 10},${AX + 6} ${xm + 10},${AX + 6} ${xm},${AX - 8}`);
+            meanT.setAttribute("x", Math.max(130, Math.min(W - 130, xm))); meanT.textContent = `Mittelwert: ${nf(m)} ${cur.u}`;
+            medLine.setAttribute("x1", xz); medLine.setAttribute("x2", xz); medTri.setAttribute("points", `${xz - 10},${AX + 64} ${xz + 10},${AX + 64} ${xz},${AX + 48}`);
+            medT.setAttribute("x", Math.max(130, Math.min(W - 130, xz))); medT.textContent = `Zentralwert: ${nf(z)} ${cur.u}`;
+            calcM.replaceChildren(`Mittelwert: ${vals.map(v => s.fmt(v, cur.d)).join(" + ")} = ${nf(sum)}`, s.h("br"), `${nf(sum)} : 5 = ${nf(m)} ${cur.u}`);
+            calcZ.textContent = `Zentralwert: ${sorted.map(v => s.fmt(v, cur.d)).join(", ")} → ${nf(z)} ${cur.u}`;
+          }
+          const slWrap = s.h("div", { class: "later" });
+          let sl;
+          function mkSlider() {
+            slWrap.innerHTML = "";
+            sl = s.slider({ label: cur.who, min: cur.min, max: cur.max, step: cur.step, value: x, fmt: v => nf(v) + " " + cur.u, onInput: v => { x = Number(v); render(); } });
+            slWrap.append(sl);
+          }
+          setup("geld"); mkSlider();
+          let busy = false;
+          async function swap(key, b) { if (busy) return; s.sfx.click(); [b1, b2].forEach(q => q.classList.toggle("solid", q === b)); setup(key); mkSlider(); s.sfx.whoosh(); }
+          const b1 = s.h("button", { class: "btn solid", onclick: () => swap("geld", b1) }, "Taschengeld");
+          const b2 = s.h("button", { class: "btn", onclick: () => swap("lauf", b2) }, "50-m-Lauf");
+          const btns = s.h("div", { class: "row later", style: { gap: "10px" } }, b1, b2);
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "8px 16px 10px" } }, "Ein ", s.h("b", null, "Ausreißer"), " zieht den Mittelwert weit weg. Der ", s.h("b", null, "Zentralwert"), " bleibt fast gleich und zeigt besser, was „typisch“ ist.");
+          const lf = life(s, { class: "life later", style: { padding: "8px 16px" } }, s.h("p", { class: "small" }, "Bei Einkommen nennt man oft den Median: Ein paar Millionäre würden den Durchschnitt nach oben ziehen."));
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "620px 1fr", gap: "22px", alignItems: "center" },
+            ex(s, "Zahlenstrahl", { class: "ex a-left", style: { display: "flex", flexDirection: "column", gap: "4px", padding: "12px 14px" } }, head, svg),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, calcM, calcZ, slWrap, merk, lf, btns)));
+          dots.forEach(d => d.setAttribute("opacity", 0));
+          s.sfx.pop();
+          s.step(async () => {
+            s.say("Fünf Kinder sagen, wie viel Taschengeld sie pro Woche bekommen.");
+            for (const d of dots) { d.setAttribute("opacity", 1); s.sound("coins", { vol: .35, dur: .6 }); await s.wait(260); }
+            s.sfx.zap(); await s.show(medG, "fade"); await s.show(calcZ, "up");
+            s.say("Der Zentralwert ist fünf Euro. Das bekommen die meisten ungefähr.");
+          });
+          s.step(async () => { s.sfx.boing(); await s.show(meanG, "fade"); await s.show(calcM, "up"); s.say("Der Mittelwert ist aber vierzehn Euro! So viel bekommt hier fast niemand. Schuld ist Emre mit fünfzig Euro."); });
+          s.step(async () => {
+            await s.show(slWrap, "up"); s.say("Schieb Emres Taschengeld nach unten: Der Mittelwert wandert mit, der Zentralwert bleibt stehen.");
+            await s.tween({ from: 50, to: 7, dur: 1800, update: v => sl.set(Math.round(v)) }); sl.set(7); s.sfx.ding(); await s.wait(900); await s.tween({ from: 7, to: 50, dur: 1500, update: v => sl.set(Math.round(v)) }); sl.set(50); s.sfx.boing();
+          });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.show(lf, "up"); await s.show(btns, "up", 150); });
+        },
+      },
       /* 11 --------------------------------------------------------------- */
       {
         title: "Darstellungen wechseln",
@@ -605,6 +821,154 @@
           s.step(async () => { s.sfx.whoosh(); await s.show(c2, "right"); for (let i = 0; i < 7; i++) { ch.grow(i, D[i][1], 500); s.sfx.note(i * 2, 0.1); await s.wait(120); } await s.wait(400); s.say("Im Diagramm sieht man sofort: Samstag ist die höchste Säule."); });
           s.step(async () => { s.sfx.whoosh(); await s.show(c3, "right"); s.sound("pencil-write"); s.say("Im Text steht nur das Wichtigste."); });
           s.step(async () => { for (const g of [g1, g2, g3]) { s.show(g, "up"); s.sfx.pop(); await s.wait(250); } s.sfx.ding(); await s.show(merk, "up"); });
+        },
+      },
+      /* 11a -------------------------------------------------------------- Kreisdiagramm: Anteile */
+      {
+        title: "Das Kreisdiagramm",
+        say: "Ein Kreisdiagramm zeigt, welcher Teil vom Ganzen zu jeder Antwort gehört. Der ganze Kreis sind alle Kinder.",
+        build(s) {
+          const D = [["U-Bahn", 8, 1, 3, P.blue], ["Fahrrad", 6, 1, 4, P.green], ["zu Fuß", 6, 1, 4, P.orange], ["Bus", 3, 1, 8, P.violet], ["Auto", 1, 1, 24, P.red]];
+          const W = 420, C = 210, R = 190, svg = s.svg(W, W);
+          const disc = s.el("circle", { cx: C, cy: C, r: R, fill: "#eef2f6", stroke: P.ink, "stroke-width": 3 });
+          const ticks = s.el("g", { class: "later" });
+          for (let i = 0; i < 24; i++) { const p = pieXY(C, C, R, i * 15); ticks.append(s.el("line", { x1: C, y1: C, x2: p[0], y2: p[1], stroke: "#c8d3de", "stroke-width": 1.5 })); }
+          const secs = D.map(d => s.el("path", { d: "", fill: d[4], stroke: "#fff", "stroke-width": 3 }));
+          const labs = []; let a0 = 0;
+          D.forEach((d, i) => { const ang = d[1] * 15; if (ang >= 45) { const p = pieXY(C, C, R * 0.6, a0 + ang / 2); labs.push(later(T(s, p[0], p[1] + 8, ang + "°", { "font-size": 24, fill: "#fff" }))); } else labs.push(null); a0 += ang; });
+          const one = later(s.el("path", { d: pieD(C, C, R, 0, 15), fill: P.yellow, stroke: P.ink, "stroke-width": 2 }));
+          svg.append(disc, ticks, ...secs, one, ...labs.filter(Boolean), s.el("circle", { cx: C, cy: C, r: 5, fill: P.ink }));
+          const td = (k, st) => s.h("td", { style: Object.assign({ padding: "3px 10px", borderBottom: "2px solid var(--line)", fontSize: "21px", verticalAlign: "middle" }, st || {}) }, k);
+          const th = t => s.h("th", { style: { font: "700 19px/1 var(--f-body)", color: P.pencil, textAlign: "left", padding: "6px 10px", borderBottom: "3px solid var(--ink)" } }, t);
+          const rows = D.map(([n, k, a, b, c]) => {
+            const fr = s.h("span", { class: "later" }, frac(s, k, 24), " = ", frac(s, a, b, c));
+            const wk = s.h("span", { class: "later", style: { fontWeight: 700 } }, `${k} · 15° = `, s.h("b", { style: { color: c } }, k * 15 + "°"));
+            const tr = s.h("tr", null, td(s.h("span", { style: { display: "inline-flex", alignItems: "center", gap: "8px", fontWeight: 700 } }, s.h("span", { style: { width: "18px", height: "18px", borderRadius: "5px", background: c, display: "inline-block" } }), n)), td(String(k), { textAlign: "center", fontWeight: 700 }), td(fr), td(wk));
+            return { tr, fr, wk };
+          });
+          const sum = s.h("tr", { class: "later" }, td(s.h("b", null, "Alle"), { borderBottom: "none" }), td(s.h("b", null, "24"), { textAlign: "center", borderBottom: "none" }), td(s.h("span", null, frac(s, 24, 24), " = 1"), { borderBottom: "none" }), td(s.h("b", { class: "red" }, "360°"), { borderBottom: "none" }));
+          const table = s.h("table", { style: { borderCollapse: "collapse", width: "100%" } }, s.h("tr", null, th("Schulweg"), th("Kinder"), th("Anteil"), th("Winkel")), ...rows.map(r => r.tr), sum);
+          const intro = s.h("p", { class: "t a-up" }, s.h("b", null, "Schulweg der 5b"), " (24 Kinder, Beispiel). Ganzer Kreis = alle 24 Kinder = 360°.");
+          const oneT = s.h("p", { class: "t later", style: { color: P.teal } }, "1 Kind: 360° : 24 = ", s.h("b", null, "15°"));
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "8px 16px 10px" } }, s.h("b", null, "Kreisdiagramm:"), " zeigt ", s.h("b", null, "Anteile am Ganzen"), ". Winkel = Anteil von 360°.");
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "420px 1fr", gap: "24px", alignItems: "center" }, s.h("div", { class: "a-zoom" }, svg),
+            s.h("div", { class: "stack", style: { gap: "10px" } }, intro, oneT, s.h("div", { class: "card", style: { padding: "6px 8px" } }, table), merk)));
+          s.sfx.pop();
+          s.step(async () => {
+            s.say("Wir teilen den Kreis in vierundzwanzig gleiche Stücke, eins für jedes Kind. Dreihundertsechzig durch vierundzwanzig sind fünfzehn Grad.");
+            await s.show(ticks, "fade"); s.show(one, "pop"); s.sfx.zap(); await s.show(oneT, "up");
+          });
+          s.step(async () => {
+            s.hide(one); let a = 0;
+            for (let i = 0; i < D.length; i++) {
+              const ang = D[i][1] * 15, st = a;
+              s.show(rows[i].fr, "pop"); s.sfx.note(i * 2);
+              await s.tween({ from: 0, to: ang, dur: 250 + ang * 4, update: v => secs[i].setAttribute("d", pieD(C, C, R, st, st + v)) });
+              secs[i].setAttribute("d", pieD(C, C, R, st, st + ang));
+              s.show(rows[i].wk, "left"); if (labs[i]) s.show(labs[i], "pop");
+              a += ang; await s.wait(200);
+            }
+            s.sfx.success(); await s.show(sum, "up");
+            s.say("Acht von vierundzwanzig Kindern ist ein Drittel. Ein Drittel von dreihundertsechzig Grad sind hundertzwanzig Grad.");
+          });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); s.say("Ein Viertel ist ein rechter Winkel, ein Drittel sind hundertzwanzig Grad."); });
+        },
+      },
+      /* 11b -------------------------------------------------------------- Kreisdiagramm zeichnen */
+      {
+        title: "Ein Kreisdiagramm zeichnen",
+        say: "Wir zeichnen Leons Tag als Kreisdiagramm. Ein Tag hat vierundzwanzig Stunden, der Kreis dreihundertsechzig Grad.",
+        build(s) {
+          const D = [["Schlafen", 9, P.blue], ["Schule", 7, P.orange], ["Spielen, Freunde", 4, P.green], ["Hausaufgaben, Üben", 2, P.violet], ["Essen", 2, P.red]];
+          const W = 560, H = 560, C = [280, 290], R = 210, PR = 168;
+          const svg = s.svg(W, H);
+          const circ = later(s.el("circle", { cx: C[0], cy: C[1], r: R, fill: "#fff", stroke: P.ink, "stroke-width": 4 }));
+          const secs = D.map(d => s.el("path", { d: "", fill: d[2], opacity: .9 }));
+          const rays = D.map(() => s.el("line", { x1: C[0], y1: C[1], x2: C[0], y2: C[1], stroke: P.ink, "stroke-width": 4, "stroke-linecap": "round" }));
+          const start = later(s.el("line", { x1: C[0], y1: C[1], x2: C[0], y2: C[1] - R, stroke: P.ink, "stroke-width": 4, "stroke-linecap": "round" }));
+          const labs = []; let acc = 0;
+          D.forEach(([n, h]) => { const p = pieXY(C[0], C[1], R * (h <= 2 ? 0.72 : 0.6), acc + h * 7.5); labs.push(later(T(s, p[0], p[1] + 8, h + " h", { "font-size": 24, fill: "#fff" }))); acc += h * 15; });
+          /* Winkelmesser (half disk, 0° on the local +x axis, scale clockwise) */
+          const prot = s.el("g", { opacity: 0, "pointer-events": "none" });
+          prot.append(s.el("path", { d: `M${-PR},0 A${PR},${PR} 0 0 0 ${PR},0 Z`, fill: "rgba(214,234,248,.82)", stroke: "#4f7592", "stroke-width": 2.5 }));
+          for (let a = 0; a <= 180; a += 5) { const t = a * D2R, r0 = a % 30 === 0 ? PR - 22 : a % 10 === 0 ? PR - 15 : PR - 9; prot.append(s.el("line", { x1: r0 * Math.cos(t), y1: r0 * Math.sin(t), x2: PR * Math.cos(t), y2: PR * Math.sin(t), stroke: "#2c4a63", "stroke-width": a % 10 ? 1 : 1.8 })); }
+          for (let a = 30; a <= 150; a += 30) { const t = a * D2R, r = PR - 42; prot.append(s.el("text", { x: r * Math.cos(t), y: r * Math.sin(t) + 7, "text-anchor": "middle", "font-size": 19, "font-weight": 700, fill: P.blue, transform: `rotate(${a - 90} ${r * Math.cos(t)} ${r * Math.sin(t)})`, text: String(a) })); }
+          const mark = s.el("circle", { r: 9, fill: P.red, opacity: 0 });
+          svg.append(circ, ...secs, start, ...rays, ...labs, prot, mark, s.el("circle", { cx: C[0], cy: C[1], r: 6, fill: P.ink }));
+          const td = (k, st) => s.h("td", { style: Object.assign({ padding: "5px 10px", borderBottom: "2px solid var(--line)", fontSize: "21px" }, st || {}) }, k);
+          const ths = t => s.h("th", { style: { font: "700 19px/1 var(--f-body)", color: P.pencil, textAlign: "left", padding: "6px 10px", borderBottom: "3px solid var(--ink)" } }, t);
+          const angC = D.map(([, h, c]) => s.h("span", { class: "later", style: { fontWeight: 700 } }, `${h} · 15° = `, s.h("b", { style: { color: c } }, h * 15 + "°")));
+          const trs = D.map(([n, h, c], i) => s.h("tr", { style: { transition: "background .25s" } }, td(s.h("span", { style: { display: "inline-flex", alignItems: "center", gap: "8px", fontWeight: 700 } }, s.h("span", { style: { width: "18px", height: "18px", borderRadius: "5px", background: c, display: "inline-block", flex: "none" } }), n)), td(h + " h", { textAlign: "center" }), td(angC[i])));
+          const table = s.h("table", { style: { borderCollapse: "collapse", width: "100%" } }, s.h("tr", null, ths("Leons Tag"), ths("Zeit"), ths("Winkel")), ...trs);
+          const status = s.h("p", { class: "t", style: { color: P.teal, fontWeight: 700, minHeight: "32px" } }, "1 Stunde: 360° : 24 = 15°");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "19px", padding: "8px 16px 10px" } }, "Winkel ausrechnen → Kreis und Startlinie → Winkel ", s.h("b", null, "nacheinander"), " abtragen, immer ab der letzten Linie → färben, beschriften.");
+          let busy = false;
+          const dirAt = a => pieXY(C[0], C[1], 1, a);
+          async function sector(i, a0, slow) {
+            const [n, h] = D[i], ang = h * 15, dur = slow ? 1400 : 600;
+            trs.forEach((t, j) => (t.style.background = j === i ? "#fff1a8" : ""));
+            status.textContent = `${n}: ${ang}° abtragen`;
+            prot.setAttribute("transform", `translate(${C[0]},${C[1]}) rotate(${a0 - 90})`);
+            s.sfx.whoosh(); await s.tween({ dur: slow ? 600 : 250, update: v => prot.setAttribute("opacity", v) });
+            mark.setAttribute("opacity", 1); let last = -1;
+            await s.tween({ from: 0, to: ang, dur, ease: "out", update: v => { const p = pieXY(C[0], C[1], PR + 4, a0 + v); mark.setAttribute("cx", p[0]); mark.setAttribute("cy", p[1]); const k = Math.floor(v / 15); if (k > last) { last = k; s.sfx.tick(); } } });
+            s.sfx.ding();
+            await s.tween({ dur: slow ? 400 : 200, update: v => prot.setAttribute("opacity", 1 - v) });
+            mark.setAttribute("opacity", 0);
+            const e = pieXY(C[0], C[1], R, a0 + ang);
+            s.sound("pencil-write", { vol: .35, dur: .6 });
+            await s.tween({ dur: slow ? 600 : 300, update: v => { rays[i].setAttribute("x2", C[0] + (e[0] - C[0]) * v); rays[i].setAttribute("y2", C[1] + (e[1] - C[1]) * v); } });
+            await s.tween({ dur: slow ? 500 : 250, update: v => secs[i].setAttribute("d", pieD(C[0], C[1], R, a0, a0 + ang * v)) });
+            s.show(labs[i], "pop"); s.sfx.pop();
+          }
+          async function drawAll(from, to, slow) { let a0 = D.slice(0, from).reduce((x, d) => x + d[1] * 15, 0); for (let i = from; i < to; i++) { await sector(i, a0, slow); a0 += D[i][1] * 15; } }
+          const again = s.h("button", { class: "btn solid later", style: { alignSelf: "flex-start" }, onclick: async () => {
+            if (busy) return; busy = true; s.sfx.click();
+            secs.forEach(p => p.setAttribute("d", "")); rays.forEach(r => { r.setAttribute("x2", C[0]); r.setAttribute("y2", C[1]); }); s.hide(labs);
+            await drawAll(0, 5, false); trs.forEach(t => (t.style.background = "")); status.textContent = "Fertig: 24 Stunden = 360°"; busy = false;
+          } }, "Nochmal zeichnen");
+          s.add(root(s, "", { display: "grid", gridTemplateColumns: "560px 1fr", gap: "22px", alignItems: "center" }, s.h("div", { class: "a-fade" }, svg),
+            s.h("div", { class: "stack", style: { gap: "12px" } }, status, s.h("div", { class: "card", style: { padding: "6px 8px" } }, table), merk, again)));
+          s.sfx.pop();
+          s.step(async () => { s.say("Eine Stunde sind fünfzehn Grad. Neun Stunden Schlaf sind also hundertfünfunddreißig Grad."); for (let i = 0; i < 5; i++) { s.show(angC[i], "left"); s.sfx.count(i); await s.wait(230); } });
+          s.step(async () => { busy = true; status.textContent = "Kreis zeichnen, Startlinie nach oben"; s.sound("pencil-write", { vol: .4, dur: 1.2 }); await s.show(circ, "draw"); await s.show(start, "draw"); s.say("Zuerst den Kreis und eine Startlinie vom Mittelpunkt nach oben."); busy = false; });
+          s.step(async () => { busy = true; s.say("Den Winkelmesser an die Startlinie legen und hundertfünfunddreißig Grad abtragen."); await drawAll(0, 1, true); busy = false; });
+          s.step(async () => { busy = true; s.say("Die nächsten Winkel tragen wir immer ab der letzten Linie ab."); await drawAll(1, 5, false); trs.forEach(t => (t.style.background = "")); status.textContent = "Fertig: 24 Stunden = 360°"; busy = false; });
+          s.step(async () => { s.sfx.success(); await s.show(merk, "up"); s.show(again, "pop"); });
+        },
+      },
+      /* 11c -------------------------------------------------------------- Säulen oder Kreis? */
+      {
+        title: "Säulen oder Kreis?",
+        say: "So sind die Menschen in Berlin unterwegs. Dieselben Zahlen einmal als Kreis und einmal als Säulen.",
+        build(s) {
+          const D = [["zu Fuß", 34, P.orange], ["Rad", 18, P.green], ["Bus & Bahn", 26, P.blue], ["Auto", 22, P.red]];
+          const PW = 300, C = 150, R = 140, pie = s.svg(PW, PW);
+          const secs = D.map(d => s.el("path", { d: "", fill: d[2], stroke: "#fff", "stroke-width": 3 }));
+          const pl = []; let acc = 0;
+          D.forEach(([, v]) => { const p = pieXY(C, C, R * 0.62, acc + v * 1.8); pl.push(later(T(s, p[0], p[1] + 8, v + " %", { "font-size": 22, fill: "#fff" }))); acc += v * 3.6; });
+          const half = later(s.el("line", { x1: C, y1: C - R - 6, x2: C, y2: C + R + 6, stroke: P.ink, "stroke-width": 4, "stroke-dasharray": "10 7" }));
+          pie.append(...secs, half, ...pl);
+          const ch = colChart(s, { w: 440, h: 300, data: D.map(([l, , c]) => ({ l, v: 0, c })), yMax: 40, yStep: 10, L: 46, Tp: 30, bottom: 40, bw: .62, valSize: 20, labSize: 19, fmtV: v => Math.round(v) + " %" });
+          const q1 = s.h("p", { class: "small later", style: { color: P.teal, fontWeight: 700 } }, "Gut für: Welcher Teil vom Ganzen? Zu Fuß und Rad sind zusammen mehr als die Hälfte.");
+          const q2 = s.h("p", { class: "small later", style: { color: P.teal, fontWeight: 700 } }, "Gut für: Vergleichen. Bus & Bahn (26 %) liegt knapp vor dem Auto (22 %).");
+          const c1 = ex(s, "Kreisdiagramm", { class: "ex a-up", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px 14px" } }, pie, q1);
+          const c2 = ex(s, "Säulendiagramm", { class: "ex later", style: { display: "flex", flexDirection: "column", alignItems: "center", gap: "6px", padding: "12px 14px" } }, ch.svg, q2);
+          const intro = s.h("p", { class: "t a-up" }, s.h("b", null, "Wie sind die Berliner unterwegs?"), " Anteil an allen Wegen, 2023 (34 % = 34 von 100 Wegen)");
+          const merk = s.h("div", { class: "merk later", style: { fontSize: "20px", padding: "8px 16px 10px" } }, s.h("b", null, "Kreis:"), " Anteile am Ganzen (alles zusammen = 100 %). ", s.h("b", null, "Säulen:"), " Werte genau vergleichen.");
+          const lf = life(s, { class: "life later", style: { padding: "8px 16px" } }, s.h("p", { class: "small" }, "Kreisdiagramme siehst du bei Wahlergebnissen, beim Handy-Speicher oder bei „Wofür gebe ich mein Taschengeld aus?“"));
+          s.add(root(s, "stack", { justifyContent: "space-between", gap: "10px" }, intro,
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" } }, c1, c2),
+            s.h("div", { style: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" } }, merk, lf)));
+          s.sound("traffic", { vol: .3, dur: 2.5 });
+          s.step(async () => {
+            let a = 0;
+            for (let i = 0; i < D.length; i++) { const ang = D[i][1] * 3.6, st = a; s.sfx.note(i * 3); await s.tween({ from: 0, to: ang, dur: 500, update: v => secs[i].setAttribute("d", pieD(C, C, R, st, st + v)) }); secs[i].setAttribute("d", pieD(C, C, R, st, st + ang)); s.show(pl[i], "pop"); a += ang; }
+            s.say("Ein Drittel aller Wege gehen die Berliner zu Fuß.");
+          });
+          s.step(async () => { s.sfx.zap(); await s.show(half, "draw"); await s.show(q1, "up"); s.say("Die Linie teilt den Kreis in zwei Hälften. Zu Fuß und Rad sind zusammen zweiundfünfzig Prozent, also mehr als die Hälfte."); });
+          s.step(async () => { await s.show(c2, "right"); for (let i = 0; i < D.length; i++) { ch.grow(i, D[i][1], 500); s.sfx.note(i * 3, .1); await s.wait(150); } await s.wait(500); [0, 1].forEach(i => ch.bars[i].rect.setAttribute("opacity", .45)); s.sfx.zap(); await s.show(q2, "up"); s.say("Bei den Säulen sieht man genau: Bus und Bahn liegen knapp vor dem Auto."); });
+          s.step(async () => { s.sfx.ding(); await s.show(merk, "up"); await s.show(lf, "up"); });
         },
       },
       /* 12 --------------------------------------------------------------- */
@@ -739,7 +1103,7 @@
           const w = s.svg(470, 150), WD = [["Mo", 14, "☀️"], ["Di", 16, "☀️"], ["Mi", 11, "🌧️"], ["Do", 9, "🌧️"], ["Fr", 12, "⛅"]];
           const wBars = WD.map(([d, v, e], i) => { const x = 24 + i * 85, r = s.el("rect", { x, y: 120, width: 56, height: 0, rx: 5, fill: v > 12 ? P.orange : P.blue }), tv = T(s, x + 28, 0, v + "°", { "font-size": 19 }); tv.style.opacity = 0; w.append(r, tv, T(s, x + 28, 145, d, { "font-size": 19, "font-weight": 600 }), T(s, x + 84, 28, e, { "font-size": 22, "text-anchor": "end" })); return [r, tv, v]; });
           // Klassensprecherwahl
-          const vote = s.h("div", { class: "stack", style: { gap: "2px" } }, ...[["Mia", 11, P.violet], ["Jonte", 9, P.blue], ["Maggie", 8, P.green]].map(([n, k, c]) => { const t = tally(s, k, c, 250, 42); return s.h("div", { style: { display: "grid", gridTemplateColumns: "90px 1fr", alignItems: "center" } }, s.h("b", { style: { color: c, fontSize: "20px" } }, n), t.svg); }));
+          const vote = s.h("div", { class: "stack", style: { gap: "2px" } }, ...[["Mia", 11, P.violet], ["Emre", 9, P.blue], ["Lotta", 8, P.green]].map(([n, k, c]) => { const t = tally(s, k, c, 250, 42); return s.h("div", { style: { display: "grid", gridTemplateColumns: "90px 1fr", alignItems: "center" } }, s.h("b", { style: { color: c, fontSize: "20px" } }, n), t.svg); }));
           // Bildschirmzeit
           const bz = s.svg(470, 150), BZ = [["Spiele", 45, P.red], ["Musik", 30, P.violet], ["Lernen", 20, P.green]];
           const bzBars = BZ.map(([n, v, c], i) => { const y = 6 + i * 48, r = s.el("rect", { x: 96, y, width: 0, height: 36, rx: 5, fill: c }), tv = T(s, 0, y + 25, v + " min", { "font-size": 19, "text-anchor": "start" }); tv.style.opacity = 0; bz.append(T(s, 86, y + 25, n, { "font-size": 19, "text-anchor": "end", "font-weight": 600 }), r, tv); return [r, tv, v]; });

@@ -644,6 +644,18 @@
   "source": "https://commons.wikimedia.org/wiki/File:Berliner_Fernsehturm_and_Rotes_Rathaus_June_2023_01.jpg",
   "orig": "File:Berliner Fernsehturm and Rotes Rathaus June 2023 01.jpg"
  },
+ "filmklappe": {
+  "file": "filmklappe.jpg",
+  "kind": "img",
+  "w": 600,
+  "h": 449,
+  "title": "Filmklappe",
+  "author": "Starscream",
+  "license": "CC BY-SA 3.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Clapperboard_of_%22Black_Thursday%22.jpg",
+  "orig": "File:Clapperboard of \"Black Thursday\".jpg"
+ },
  "floete": {
   "file": "floete.mp3",
   "kind": "snd",
@@ -818,6 +830,18 @@
   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
   "source": "https://commons.wikimedia.org/wiki/File:Mosaico_Trabajos_H%C3%A9rcules_(M.A.N._Madrid)_01.jpg",
   "orig": "File:Mosaico Trabajos Hércules (M.A.N. Madrid) 01.jpg"
+ },
+ "hoerspiel-1949": {
+  "file": "hoerspiel-1949.jpg",
+  "kind": "img",
+  "w": 840,
+  "h": 610,
+  "title": "Aufnahme eines Hörspiels, Niederlande 1949",
+  "author": "Wiel van der Randen",
+  "license": "Public domain",
+  "license_url": "",
+  "source": "https://commons.wikimedia.org/wiki/File:Opname_van_een_hoorspel_Recording_a_radio_play.jpg",
+  "orig": "File:Opname van een hoorspel Recording a radio play.jpg"
  },
  "horse-gallop": {
   "file": "horse-gallop.mp3",
@@ -1004,6 +1028,17 @@
   "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
   "source": "https://freesound.org/people/pinkyfinger/sounds/68448/",
   "orig": "68448"
+ },
+ "kokosnuss-hufe": {
+  "file": "kokosnuss-hufe.mp3",
+  "kind": "snd",
+  "dur": 4.0,
+  "title": "Kokosnussschalen klappern wie Pferdehufe",
+  "author": "alanmcki",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/alanmcki/sounds/403025/",
+  "orig": "403025"
  },
  "kuerbisse": {
   "file": "kuerbisse.jpg",
@@ -1308,6 +1343,17 @@
   "source": "https://commons.wikimedia.org/wiki/File:Red_umbrella_-_Flickr_-_darko149.jpg",
   "orig": "File:Red umbrella - Flickr - darko149.jpg"
  },
+ "reis-rieselt": {
+  "file": "reis-rieselt.mp3",
+  "kind": "snd",
+  "dur": 4.0,
+  "title": "Reis rieselt",
+  "author": "alexarje",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "source": "https://freesound.org/people/alexarje/sounds/721760/",
+  "orig": "721760"
+ },
  "rotkaeppchen": {
   "file": "rotkaeppchen.jpg",
   "kind": "img",
@@ -1411,6 +1457,17 @@
   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
   "source": "https://commons.wikimedia.org/wiki/File:Villased_sokid,_STM_1998.jpg",
   "orig": "File:Villased sokid, STM 1998.jpg"
+ },
+ "spannungsmusik": {
+  "file": "spannungsmusik.mp3",
+  "kind": "snd",
+  "dur": 9.0,
+  "title": "Spannende Musik (Motiv)",
+  "author": "jhumbucker",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/jhumbucker/sounds/250546/",
+  "orig": "250546"
  },
  "spielplatz-schild": {
   "file": "spielplatz-schild.jpg",
@@ -1769,6 +1826,17 @@
   "license_url": "",
   "source": "https://commons.wikimedia.org/wiki/File:Tovenaarsleerling_S_Barth.png",
   "orig": "File:Tovenaarsleerling S Barth.png"
+ },
+ "zellophan": {
+  "file": "zellophan.mp3",
+  "kind": "snd",
+  "dur": 4.0,
+  "title": "Zellophanfolie knistert",
+  "author": "gggtrew",
+  "license": "CC0 1.0",
+  "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "source": "https://freesound.org/people/gggtrew/sounds/434765/",
+  "orig": "434765"
  },
  "ziege": {
   "file": "ziege.jpg",

@@ -34,6 +34,11 @@
   "spoken": "Mit einer Strichliste zählen wir die Urliste aus. Für jede Antwort ein Strich.",
   "text": "Mit einer Strichliste zählen wir die Urliste aus. Für jede Antwort ein Strich."
  },
+ "02e9dd62c55c3d19": {
+  "lang": "de-DE",
+  "spoken": "Probier auch die Schuhgrößen und den Weitsprung aus!",
+  "text": "Probier auch die Schuhgrößen und den Weitsprung aus!"
+ },
  "02f7021107cf8ce0": {
   "lang": "de-DE",
   "spoken": "Kapitel 3. Geraden und Winkel. Linien, Geodreieck, Winkel und Dreiecke",
@@ -73,6 +78,11 @@
   "lang": "de-DE",
   "spoken": "Der Nullpunkt liegt genau auf dem Scheitel.",
   "text": "Der Nullpunkt liegt genau auf dem Scheitel."
+ },
+ "04cf60e28adfce74": {
+  "lang": "de-DE",
+  "spoken": "Der Zentralwert ist fünf Euro. Das bekommen die meisten ungefähr.",
+  "text": "Der Zentralwert ist fünf Euro. Das bekommen die meisten ungefähr."
  },
  "0521fcdd0026c89d": {
   "lang": "de-DE",
@@ -234,6 +244,11 @@
   "spoken": "Ein Fußballfeld ist 105 Meter lang und 68 Meter breit.",
   "text": "Ein Fußballfeld ist 105 Meter lang und 68 Meter breit."
  },
+ "0e9754eab9d6110c": {
+  "lang": "de-DE",
+  "spoken": "Daneben liegt Beta. Zusammen ergeben sie eine gerade Linie: hundertachtzig Grad.",
+  "text": "Daneben liegt Beta. Zusammen ergeben sie eine gerade Linie: hundertachtzig Grad."
+ },
  "0f363ec3b0a9c526": {
   "lang": "de-DE",
   "spoken": "Kapitel 7. Umfang, Fläche und Rauminhalt. Zaun rundherum, Rasen innen drin, Kisten füllen",
@@ -274,6 +289,11 @@
   "spoken": "Kapitel 9. Zahlsysteme und Quadratzahlen. Bündeln, römisch, binär, hoch zwei",
   "text": "Kapitel 9. Zahlsysteme und Quadratzahlen. Bündeln, römisch, binär, hoch zwei"
  },
+ "12bca87c22e259e3": {
+  "lang": "de-DE",
+  "spoken": "Bei einer geraden Anzahl gibt es zwei Werte in der Mitte. Dann nimmt man den Mittelwert dieser beiden.",
+  "text": "Bei einer geraden Anzahl gibt es zwei Werte in der Mitte. Dann nimmt man den Mittelwert dieser beiden."
+ },
  "1398645a127dcc5e": {
   "lang": "de-DE",
   "spoken": "Wie wahrscheinlich ist eine Sechs? Wir teilen die günstigen Ergebnisse durch alle möglichen Ergebnisse.",
@@ -293,6 +313,11 @@
   "lang": "de-DE",
   "spoken": "Dose: ein Zylinder. Drachen: ein Drachenviereck.",
   "text": "Dose: ein Zylinder. Drachen: ein Drachenviereck."
+ },
+ "14adc3d997f44b39": {
+  "lang": "de-DE",
+  "spoken": "Jetzt schneidet eine Gerade zwei Parallelen. An beiden Kreuzungen entstehen die gleichen Winkel.",
+  "text": "Jetzt schneidet eine Gerade zwei Parallelen. An beiden Kreuzungen entstehen die gleichen Winkel."
  },
  "156cf6352f8a4af7": {
   "lang": "de-DE",
@@ -358,6 +383,11 @@
   "lang": "de-DE",
   "spoken": "Nimm von den hohen Türmen und gib den niedrigen, bis alle gleich hoch sind.",
   "text": "Nimm von den hohen Türmen und gib den niedrigen, bis alle gleich hoch sind."
+ },
+ "1b16f49f05fd4141": {
+  "lang": "de-DE",
+  "spoken": "Zwei Geraden kreuzen sich. Die beiden Winkel, die nebeneinander an einer Geraden liegen, heißen Nebenwinkel.",
+  "text": "Zwei Geraden kreuzen sich. Die beiden Winkel, die nebeneinander an einer Geraden liegen, heißen Nebenwinkel."
  },
  "1ba062e5d90d2743": {
   "lang": "de-DE",
@@ -449,10 +479,20 @@
   "spoken": "Schritt eins: Lies genau. Markiere, was gegeben ist, und was gesucht ist.",
   "text": "Schritt eins: Lies genau. Markiere, was gegeben ist, und was gesucht ist."
  },
+ "2185c8dd01989313": {
+  "lang": "de-DE",
+  "spoken": "Leiter und Boden: Nebenwinkel, zusammen hundertachtzig Grad.",
+  "text": "Leiter und Boden: Nebenwinkel, zusammen hundertachtzig Grad."
+ },
  "21bfb232e73c130f": {
   "lang": "de-DE",
   "spoken": "Sechs Städte, sechs Temperaturen. Welche ist am kältesten?",
   "text": "Sechs Städte, sechs Temperaturen. Welche ist am kältesten?"
+ },
+ "21d1067594bd9a8b": {
+  "lang": "de-DE",
+  "spoken": "Die nächsten Winkel tragen wir immer ab der letzten Linie ab.",
+  "text": "Die nächsten Winkel tragen wir immer ab der letzten Linie ab."
  },
  "22ed832db990e570": {
   "lang": "de-DE",
@@ -563,6 +603,11 @@
   "lang": "de-DE",
   "spoken": "Das Quadrat hat die größte Fläche.",
   "text": "Das Quadrat hat die größte Fläche."
+ },
+ "2a09809933dda16e": {
+  "lang": "de-DE",
+  "spoken": "Neun Komma null Sekunden liegt genau in der Mitte. Drei Kinder waren schneller, drei langsamer.",
+  "text": "Neun Komma null Sekunden liegt genau in der Mitte. Drei Kinder waren schneller, drei langsamer."
  },
  "2a1b48f40dab2224": {
   "lang": "de-DE",
@@ -689,6 +734,11 @@
   "spoken": "Schieb den Regler: Wie viele Fliesen braucht ein Quadrat mit zwölf Fliesen Seitenlänge?",
   "text": "Schieb den Regler: Wie viele Fliesen braucht ein Quadrat mit zwölf Fliesen Seitenlänge?"
  },
+ "322f25ac2f782b5e": {
+  "lang": "de-DE",
+  "spoken": "Schieb Emres Taschengeld nach unten: Der Mittelwert wandert mit, der Zentralwert bleibt stehen.",
+  "text": "Schieb Emres Taschengeld nach unten: Der Mittelwert wandert mit, der Zentralwert bleibt stehen."
+ },
  "32686badc256d40d": {
   "lang": "de-DE",
   "spoken": "Reichstagskuppel: Kuppel aus Glas – fast eine halbe Kugel.",
@@ -713,6 +763,11 @@
   "lang": "de-DE",
   "spoken": "Wenn du eine Figur in der Mitte faltest und beide Hälften genau aufeinander passen, ist sie achsensymmetrisch.",
   "text": "Wenn du eine Figur in der Mitte faltest und beide Hälften genau aufeinander passen, ist sie achsensymmetrisch."
+ },
+ "358ef16a1b5e7f8e": {
+  "lang": "de-DE",
+  "spoken": "Zuerst ordnen wir die Zeiten: von der schnellsten zur langsamsten.",
+  "text": "Zuerst ordnen wir die Zeiten: von der schnellsten zur langsamsten."
  },
  "35d89667ca0cfad7": {
   "lang": "de-DE",
@@ -808,6 +863,11 @@
   "lang": "de-DE",
   "spoken": "Das Doppelte heißt zwei mal, vermehrt um heißt plus.",
   "text": "Das Doppelte heißt zwei mal, vermehrt um heißt plus."
+ },
+ "3bba766d62969129": {
+  "lang": "de-DE",
+  "spoken": "Zuerst den Kreis und eine Startlinie vom Mittelpunkt nach oben.",
+  "text": "Zuerst den Kreis und eine Startlinie vom Mittelpunkt nach oben."
  },
  "3bcac87fa2086a17": {
   "lang": "de-DE",
@@ -934,6 +994,11 @@
   "spoken": "Zwei mal sechs: zwölf verschiedene Eis.",
   "text": "Zwei mal sechs: zwölf verschiedene Eis."
  },
+ "417b907d7f4f0390": {
+  "lang": "de-DE",
+  "spoken": "Bei den Säulen sieht man genau: Bus und Bahn liegen knapp vor dem Auto.",
+  "text": "Bei den Säulen sieht man genau: Bus und Bahn liegen knapp vor dem Auto."
+ },
  "4199f1213b5b45f8": {
   "lang": "de-DE",
   "spoken": "Stumpfwinklig: Bei B ist der Winkel größer als neunzig Grad.",
@@ -988,6 +1053,11 @@
   "lang": "de-DE",
   "spoken": "Mit einem Schrägbild sieht ein Würfel auf Karopapier räumlich aus. Wir zeichnen ihn Schritt für Schritt.",
   "text": "Mit einem Schrägbild sieht ein Würfel auf Karopapier räumlich aus. Wir zeichnen ihn Schritt für Schritt."
+ },
+ "4539c6263bb67a43": {
+  "lang": "de-DE",
+  "spoken": "Acht von vierundzwanzig Kindern ist ein Drittel. Ein Drittel von dreihundertsechzig Grad sind hundertzwanzig Grad.",
+  "text": "Acht von vierundzwanzig Kindern ist ein Drittel. Ein Drittel von dreihundertsechzig Grad sind hundertzwanzig Grad."
  },
  "456a32b663af0194": {
   "lang": "de-DE",
@@ -1059,6 +1129,11 @@
   "spoken": "Erst wählt er ein T-Shirt: drei Äste.",
   "text": "Erst wählt er ein T-Shirt: drei Äste."
  },
+ "4b386905d34c3a6a": {
+  "lang": "de-DE",
+  "spoken": "In Mannheim sind die Straßen wie ein Schachbrett angelegt. Tippe eine Karte an, dann läuft sie nochmal.",
+  "text": "In Mannheim sind die Straßen wie ein Schachbrett angelegt. Tippe eine Karte an, dann läuft sie nochmal."
+ },
  "4b604f74d81d973b": {
   "lang": "de-DE",
   "spoken": "Eine Sieben gibt es auf dem Würfel nicht: unmöglich. Eine Sechs ist möglich.",
@@ -1123,6 +1198,11 @@
   "lang": "de-DE",
   "spoken": "Beim Würfeln kam die Fünf am häufigsten, die Vier am seltensten.",
   "text": "Beim Würfeln kam die Fünf am häufigsten, die Vier am seltensten."
+ },
+ "4dc12e295303db8b": {
+  "lang": "de-DE",
+  "spoken": "Zieh am lila Punkt und probier es aus!",
+  "text": "Zieh am lila Punkt und probier es aus!"
  },
  "4dc60b93e60ce212": {
   "lang": "de-DE",
@@ -1254,6 +1334,11 @@
   "spoken": "Litfaßsäule: Ein Zylinder. Seit 1855 in Berlin, erfunden von Ernst Litfaß.",
   "text": "Litfaßsäule: Ein Zylinder. Seit 1855 in Berlin, erfunden von Ernst Litfaß."
  },
+ "54efb949b1345f93": {
+  "lang": "de-DE",
+  "spoken": "Die Linie teilt den Kreis in zwei Hälften. Zu Fuß und Rad sind zusammen zweiundfünfzig Prozent, also mehr als die Hälfte.",
+  "text": "Die Linie teilt den Kreis in zwei Hälften. Zu Fuß und Rad sind zusammen zweiundfünfzig Prozent, also mehr als die Hälfte."
+ },
  "55620674d68b2274": {
   "lang": "de-DE",
   "spoken": "Auf Zehntel runden: Die 6 ist 5 oder mehr – also aufrunden auf 2 Komma 5.",
@@ -1313,6 +1398,11 @@
   "lang": "de-DE",
   "spoken": "Sechs plus vier plus sechs plus vier sind zwanzig Zentimeter.",
   "text": "Sechs plus vier plus sechs plus vier sind zwanzig Zentimeter."
+ },
+ "582e660a8f01bcaa": {
+  "lang": "de-DE",
+  "spoken": "Ein einziger Ausreißer kann den Mittelwert weit wegziehen. Der Zentralwert bleibt ruhig.",
+  "text": "Ein einziger Ausreißer kann den Mittelwert weit wegziehen. Der Zentralwert bleibt ruhig."
  },
  "588a0cf0e978fd89": {
   "lang": "de-DE",
@@ -1378,6 +1468,11 @@
   "lang": "de-DE",
   "spoken": "Im Text steht nur das Wichtigste.",
   "text": "Im Text steht nur das Wichtigste."
+ },
+ "5d82f73dfaace157": {
+  "lang": "de-DE",
+  "spoken": "Sieben Kinder laufen beim Sportfest fünfzig Meter. Welche Zeit liegt genau in der Mitte?",
+  "text": "Sieben Kinder laufen beim Sportfest fünfzig Meter. Welche Zeit liegt genau in der Mitte?"
  },
  "5dbeecb2deb6fbca": {
   "lang": "de-DE",
@@ -1614,6 +1709,11 @@
   "spoken": "Spiegelst du eine Zahl an der Null, bekommst du ihre Gegenzahl. Aus drei wird minus drei.",
   "text": "Spiegelst du eine Zahl an der Null, bekommst du ihre Gegenzahl. Aus drei wird minus drei."
  },
+ "705ec16754ae4950": {
+  "lang": "de-DE",
+  "spoken": "So sind die Menschen in Berlin unterwegs. Dieselben Zahlen einmal als Kreis und einmal als Säulen.",
+  "text": "So sind die Menschen in Berlin unterwegs. Dieselben Zahlen einmal als Kreis und einmal als Säulen."
+ },
  "70d7698645cb9393": {
   "lang": "de-DE",
   "spoken": "Beide Wege ergeben 24 Quadratzentimeter.",
@@ -1623,6 +1723,11 @@
   "lang": "de-DE",
   "spoken": "Verschiebe es an g entlang, bis die lange Kante durch P geht.",
   "text": "Verschiebe es an g entlang, bis die lange Kante durch P geht."
+ },
+ "713b4c7f20b865cb": {
+  "lang": "de-DE",
+  "spoken": "Fünf und sieben bleiben übrig. Fünf plus sieben ist zwölf, geteilt durch zwei ist sechs. Der Zentralwert ist sechs Minuten.",
+  "text": "Fünf und sieben bleiben übrig. Fünf plus sieben ist zwölf, geteilt durch zwei ist sechs. Der Zentralwert ist sechs Minuten."
  },
  "7177c9eb73aa9210": {
   "lang": "de-DE",
@@ -1638,6 +1743,11 @@
   "lang": "de-DE",
   "spoken": "1. Schenkel zeichnen, Scheitel S markieren.",
   "text": "1. Schenkel zeichnen, Scheitel S markieren."
+ },
+ "71a387bf11813333": {
+  "lang": "de-DE",
+  "spoken": "Der Mittelwert ist aber vierzehn Euro! So viel bekommt hier fast niemand. Schuld ist Emre mit fünfzig Euro.",
+  "text": "Der Mittelwert ist aber vierzehn Euro! So viel bekommt hier fast niemand. Schuld ist Emre mit fünfzig Euro."
  },
  "724c3b43d166c36b": {
   "lang": "de-DE",
@@ -1703,6 +1813,11 @@
   "lang": "de-DE",
   "spoken": "Fünf geteilt durch ein Viertel: fünf mal vier, zwanzig Stücke.",
   "text": "Fünf geteilt durch ein Viertel: fünf mal vier, zwanzig Stücke."
+ },
+ "76b93949754c540c": {
+  "lang": "de-DE",
+  "spoken": "Neben-, Scheitel- und Stufenwinkel findest du an der Schere, an der Leiter, an Straßenbahngleisen und im Straßennetz.",
+  "text": "Neben-, Scheitel- und Stufenwinkel findest du an der Schere, an der Leiter, an Straßenbahngleisen und im Straßennetz."
  },
  "76dcecd7aaf1fc8b": {
   "lang": "de-DE",
@@ -1793,6 +1908,11 @@
   "lang": "de-DE",
   "spoken": "Fünfmal die Zwei malnehmen: zweiunddreißig.",
   "text": "Fünfmal die Zwei malnehmen: zweiunddreißig."
+ },
+ "7b8ee2ffc40b66cc": {
+  "lang": "de-DE",
+  "spoken": "Ein Drittel aller Wege gehen die Berliner zu Fuß.",
+  "text": "Ein Drittel aller Wege gehen die Berliner zu Fuß."
  },
  "7ba938bd565e7e17": {
   "lang": "de-DE",
@@ -1899,6 +2019,11 @@
   "spoken": "Auf Hunderter gerundet: die Zehner-Ziffer ist sieben, also aufrunden auf vierundsiebzigtausendfünfhundert.",
   "text": "Auf Hunderter gerundet: die Zehner-Ziffer ist sieben, also aufrunden auf vierundsiebzigtausendfünfhundert."
  },
+ "80179c02740f1dc1": {
+  "lang": "de-DE",
+  "spoken": "Jetzt streichen wir immer abwechselnd außen einen Wert weg, bis einer übrig bleibt.",
+  "text": "Jetzt streichen wir immer abwechselnd außen einen Wert weg, bis einer übrig bleibt."
+ },
  "806c6c5f1765bb44": {
   "lang": "de-DE",
   "spoken": "Der Mount Everest ist achttausendachthundertneunundvierzig Meter hoch: plus achttausendachthundertneunundvierzig.",
@@ -1994,10 +2119,20 @@
   "spoken": "Dreihundertachtundsechzig Meter sind sechsunddreißigtausendachthundert Zentimeter.",
   "text": "Dreihundertachtundsechzig Meter sind sechsunddreißigtausendachthundert Zentimeter."
  },
+ "869dd70f84695940": {
+  "lang": "de-DE",
+  "spoken": "Wir zeichnen Leons Tag als Kreisdiagramm. Ein Tag hat vierundzwanzig Stunden, der Kreis dreihundertsechzig Grad.",
+  "text": "Wir zeichnen Leons Tag als Kreisdiagramm. Ein Tag hat vierundzwanzig Stunden, der Kreis dreihundertsechzig Grad."
+ },
  "86ee333150bf5eae": {
   "lang": "de-DE",
   "spoken": "Drei Freunde teilen sich sieben Euro fünfzig. Teile wie gewohnt. Wenn du über das Komma gehst, setzt du auch im Ergebnis ein Komma.",
   "text": "Drei Freunde teilen sich sieben Euro fünfzig. Teile wie gewohnt. Wenn du über das Komma gehst, setzt du auch im Ergebnis ein Komma."
+ },
+ "8714ff7bcf2faf6c": {
+  "lang": "de-DE",
+  "spoken": "Sie passt genau auf Gamma! Alpha und Gamma sind gleich groß.",
+  "text": "Sie passt genau auf Gamma! Alpha und Gamma sind gleich groß."
  },
  "874657800a8554e4": {
   "lang": "de-DE",
@@ -2229,6 +2364,11 @@
   "spoken": "Zu je heißt mal: drei mal a.",
   "text": "Zu je heißt mal: drei mal a."
  },
+ "967b3627e84e343c": {
+  "lang": "de-DE",
+  "spoken": "Die Schienen sind parallel. Darum kreuzt die Straße beide unter dem gleichen Winkel.",
+  "text": "Die Schienen sind parallel. Darum kreuzt die Straße beide unter dem gleichen Winkel."
+ },
  "96e4085710e18fc5": {
   "lang": "de-DE",
   "spoken": "In jeder Sekunde schaffte er etwa zehn Komma vier Meter.",
@@ -2293,6 +2433,11 @@
   "lang": "de-DE",
   "spoken": "Eine Pizza wird in acht gleich große Stücke geschnitten. Du nimmst drei davon. Das sind drei Achtel.",
   "text": "Eine Pizza wird in acht gleich große Stücke geschnitten. Du nimmst drei davon. Das sind drei Achtel."
+ },
+ "99cf473791f30f4c": {
+  "lang": "de-DE",
+  "spoken": "Sechs Wartezeiten. Zuerst ordnen.",
+  "text": "Sechs Wartezeiten. Zuerst ordnen."
  },
  "9a4922627bc94a4c": {
   "lang": "de-DE",
@@ -2548,6 +2693,11 @@
   "lang": "de-DE",
   "spoken": "Der Mittelwert sagt, wie viel im Durchschnitt. Die Spannweite sagt, wie weit die Werte auseinanderliegen.",
   "text": "Der Mittelwert sagt, wie viel im Durchschnitt. Die Spannweite sagt, wie weit die Werte auseinanderliegen."
+ },
+ "a8dbfe02e557315a": {
+  "lang": "de-DE",
+  "spoken": "Den Winkelmesser an die Startlinie legen und hundertfünfunddreißig Grad abtragen.",
+  "text": "Den Winkelmesser an die Startlinie legen und hundertfünfunddreißig Grad abtragen."
  },
  "a949a7da3c02115f": {
   "lang": "de-DE",
@@ -2874,6 +3024,11 @@
   "spoken": "Drei mal zwei Fünftel heißt: dreimal zwei Fünftel zusammenzählen. Das sind sechs Fünftel.",
   "text": "Drei mal zwei Fünftel heißt: dreimal zwei Fünftel zusammenzählen. Das sind sechs Fünftel."
  },
+ "bb74302a980c8efd": {
+  "lang": "de-DE",
+  "spoken": "Stufenwinkel liegen an beiden Kreuzungen an der gleichen Stelle, wie bei einem F. Wir schieben Beta nach oben.",
+  "text": "Stufenwinkel liegen an beiden Kreuzungen an der gleichen Stelle, wie bei einem F. Wir schieben Beta nach oben."
+ },
  "bb91b9fe27719fa0": {
   "lang": "de-DE",
   "spoken": "Statt zwei mal zwei mal zwei mal zwei mal zwei schreiben wir kurz: zwei hoch fünf.",
@@ -2943,6 +3098,11 @@
   "lang": "de-DE",
   "spoken": "Dreieck: 3 Ecken, 3 Seiten",
   "text": "Dreieck: 3 Ecken, 3 Seiten"
+ },
+ "bea12001e9c7f417": {
+  "lang": "de-DE",
+  "spoken": "Wechselwinkel liegen über Kreuz, wie bei einem Z. Wir drehen Beta halb herum.",
+  "text": "Wechselwinkel liegen über Kreuz, wie bei einem Z. Wir drehen Beta halb herum."
  },
  "beb2e802f41a2c01": {
   "lang": "de-DE",
@@ -3023,6 +3183,11 @@
   "lang": "de-DE",
   "spoken": "Auch an der Tankstelle und im Stadion wird mit Kommazahlen malgenommen und geteilt.",
   "text": "Auch an der Tankstelle und im Stadion wird mit Kommazahlen malgenommen und geteilt."
+ },
+ "c481d101313479a1": {
+  "lang": "de-DE",
+  "spoken": "Hier ist der Winkel Alpha.",
+  "text": "Hier ist der Winkel Alpha."
  },
  "c4861f8a154da2b2": {
   "lang": "de-DE",
@@ -3214,6 +3379,11 @@
   "spoken": "Das sind 7 Zentimeter und 4 Millimeter.",
   "text": "Das sind 7 Zentimeter und 4 Millimeter."
  },
+ "cdb5d73d05e4d718": {
+  "lang": "de-DE",
+  "spoken": "Ist die Gerade k nicht parallel zu g, stimmt es nicht mehr!",
+  "text": "Ist die Gerade k nicht parallel zu g, stimmt es nicht mehr!"
+ },
  "cde9c234c2b7529a": {
   "lang": "de-DE",
   "spoken": "Jedes Kind bekommt sieben Stücke, eins bleibt übrig.",
@@ -3319,6 +3489,11 @@
   "spoken": "2520 ist durch alle Zahlen von 1 bis 10 teilbar.",
   "text": "2520 ist durch alle Zahlen von 1 bis 10 teilbar."
  },
+ "d3b9fe90e5e4110a": {
+  "lang": "de-DE",
+  "spoken": "An einer Kreuzung entstehen vier Winkel. Die Winkel, die sich am Scheitel gegenüberliegen, heißen Scheitelwinkel. Sie sind gleich groß.",
+  "text": "An einer Kreuzung entstehen vier Winkel. Die Winkel, die sich am Scheitel gegenüberliegen, heißen Scheitelwinkel. Sie sind gleich groß."
+ },
  "d45c279e3ef1ec48": {
   "lang": "de-DE",
   "spoken": "Vier Viertel sind ein Ganzes.",
@@ -3343,6 +3518,11 @@
   "lang": "de-DE",
   "spoken": "So sehen die vier Bauwerke in echt aus. Auf den Fotos wirken sie gleich groß – die Zahlen verraten, wie hoch sie wirklich sind.",
   "text": "So sehen die vier Bauwerke in echt aus. Auf den Fotos wirken sie gleich groß – die Zahlen verraten, wie hoch sie wirklich sind."
+ },
+ "d5ae7e6f43a6d755": {
+  "lang": "de-DE",
+  "spoken": "Gegenüber von Alpha liegt Gamma. Wir drehen eine Kopie von Alpha einmal halb herum.",
+  "text": "Gegenüber von Alpha liegt Gamma. Wir drehen eine Kopie von Alpha einmal halb herum."
  },
  "d685aac930efd555": {
   "lang": "de-DE",
@@ -3458,6 +3638,11 @@
   "lang": "de-DE",
   "spoken": "Fünf Reihen gehen nicht. Fünf ist kein Teiler von zwölf.",
   "text": "Fünf Reihen gehen nicht. Fünf ist kein Teiler von zwölf."
+ },
+ "dededdb5b8c79383": {
+  "lang": "de-DE",
+  "spoken": "Wir drehen die Gerade. Alpha wird größer, Beta kleiner – zusammen bleiben es hundertachtzig Grad.",
+  "text": "Wir drehen die Gerade. Alpha wird größer, Beta kleiner – zusammen bleiben es hundertachtzig Grad."
  },
  "df26d3c6664147e1": {
   "lang": "de-DE",
@@ -3654,6 +3839,11 @@
   "spoken": "Fertig: h steht senkrecht auf g. Rechter Winkel!",
   "text": "Fertig: h steht senkrecht auf g. Rechter Winkel!"
  },
+ "e860e3e5685eefa2": {
+  "lang": "de-DE",
+  "spoken": "Zieh am lila Punkt und probier beide Winkel aus.",
+  "text": "Zieh am lila Punkt und probier beide Winkel aus."
+ },
  "e8aaf5d51989a70d": {
   "lang": "de-DE",
   "spoken": "Doppelt so viel Äpfel: doppelt so teuer. Links mal zwei, rechts mal zwei.",
@@ -3664,6 +3854,11 @@
   "spoken": "Je weiter links, desto weiter ist die Zahl von der Null weg ins Minus.",
   "text": "Je weiter links, desto weiter ist die Zahl von der Null weg ins Minus."
  },
+ "e9076f0752707dda": {
+  "lang": "de-DE",
+  "spoken": "Wir teilen den Kreis in vierundzwanzig gleiche Stücke, eins für jedes Kind. Dreihundertsechzig durch vierundzwanzig sind fünfzehn Grad.",
+  "text": "Wir teilen den Kreis in vierundzwanzig gleiche Stücke, eins für jedes Kind. Dreihundertsechzig durch vierundzwanzig sind fünfzehn Grad."
+ },
  "e97acfb35a5862ab": {
   "lang": "de-DE",
   "spoken": "Welches Instrument ist am beliebtesten? Das sieht man hier noch nicht auf einen Blick.",
@@ -3673,6 +3868,11 @@
   "lang": "de-DE",
   "spoken": "Aufklappen: sechs gleiche Quadrate.",
   "text": "Aufklappen: sechs gleiche Quadrate."
+ },
+ "ea09171d00e0f4dd": {
+  "lang": "de-DE",
+  "spoken": "Fünf Kinder sagen, wie viel Taschengeld sie pro Woche bekommen.",
+  "text": "Fünf Kinder sagen, wie viel Taschengeld sie pro Woche bekommen."
  },
  "ea13215857819b72": {
   "lang": "de-DE",
@@ -3698,6 +3898,11 @@
   "lang": "de-DE",
   "spoken": "Aus drei, sechs wird minus drei, sechs. Das Boot fährt jetzt nach links.",
   "text": "Aus drei, sechs wird minus drei, sechs. Das Boot fährt jetzt nach links."
+ },
+ "eb6f2e7790376111": {
+  "lang": "de-DE",
+  "spoken": "Eine Stunde sind fünfzehn Grad. Neun Stunden Schlaf sind also hundertfünfunddreißig Grad.",
+  "text": "Eine Stunde sind fünfzehn Grad. Neun Stunden Schlaf sind also hundertfünfunddreißig Grad."
  },
  "eba4745a7f582aca": {
   "lang": "de-DE",
@@ -3833,6 +4038,16 @@
   "lang": "de-DE",
   "spoken": "Mia hat die meisten Stimmen.",
   "text": "Mia hat die meisten Stimmen."
+ },
+ "f877f5ca78509798": {
+  "lang": "de-DE",
+  "spoken": "Ein Kreisdiagramm zeigt, welcher Teil vom Ganzen zu jeder Antwort gehört. Der ganze Kreis sind alle Kinder.",
+  "text": "Ein Kreisdiagramm zeigt, welcher Teil vom Ganzen zu jeder Antwort gehört. Der ganze Kreis sind alle Kinder."
+ },
+ "f87e0714d0f7d1d9": {
+  "lang": "de-DE",
+  "spoken": "Alpha und Beta sind zusammen hundertachtzig Grad. Gamma und Beta auch. Also sind Alpha und Gamma gleich.",
+  "text": "Alpha und Beta sind zusammen hundertachtzig Grad. Gamma und Beta auch. Also sind Alpha und Gamma gleich."
  },
  "f88f563adb72f213": {
   "lang": "de-DE",
@@ -3988,6 +4203,11 @@
   "lang": "de-DE",
   "spoken": "Lege eine Hilfslinie des Geodreiecks genau auf g.",
   "text": "Lege eine Hilfslinie des Geodreiecks genau auf g."
+ },
+ "ff8fcbf7bdeb2c10": {
+  "lang": "de-DE",
+  "spoken": "Ein Viertel ist ein rechter Winkel, ein Drittel sind hundertzwanzig Grad.",
+  "text": "Ein Viertel ist ein rechter Winkel, ein Drittel sind hundertzwanzig Grad."
  },
  "ff92d91aa9640f76": {
   "lang": "de-DE",
